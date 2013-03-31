@@ -1,0 +1,476 @@
+﻿ONID;Start;End;Name;Operator
+ONID;0x0000;0x0000;(Reserved);(Reserved)
+ONID;0x0001;0x0001;Société Européenne des Satellites;Société Européenne des Satellites
+ONID;0x0002;0x0002;Société Européenne des Satellites;Société Européenne des Satellites
+ONID;0x0003;0x0019;Société Européenne des Satellites;Société Européenne des Satellites
+ONID;0x001A;0x001A;Quiero Televisión  ;Quiero Televisión  
+ONID;0x001B;0x001B;RAI;RAI
+ONID;0x001C;0x001C;Hellas-Sat S.A.;Hellas-Sat S.A.
+ONID;0x001D;0x001D;TELECOM ITALIA MEDIA BROADCASTING SRL;TELECOM ITALIA MEDIA BROADCASTING SRL
+ONID;0x001F;0x001F;Europe Online Networks S.A  ;Europe Online Networks S.A  
+ONID;0x0020;0x0020;Société Européenne des Satellites;Société Européenne des Satellites
+ONID;0x0021;0x0021;Hispasat S.A .;Hispasat S.A .
+ONID;0x0022;0x0022;Hispasat S.A .;Hispasat S.A .
+ONID;0x0023;0x0023;Hispasat S.A .;Hispasat S.A .
+ONID;0x0024;0x0024;Hispasat S.A .;Hispasat S.A .
+ONID;0x0025;0x0025;Hispasat S.A .;Hispasat S.A .
+ONID;0x0026;0x0026;Hispasat S.A .;Hispasat S.A .
+ONID;0x0027;0x0027;Hispasat FSS;Hispasat FSS
+ONID;0x0028;0x0028;Hispasat DBS;Hispasat DBS
+ONID;0x0029;0x0029;Hispasat America;Hispasat America
+ONID;0x002A;0x002A;Päijät-Hämeen Puhelin Oyj;Päijät-Hämeen Puhelin Oyj
+ONID;0x002B;0x002B;Digita Oy;Digita Oy
+ONID;0x002E;0x002E;Xantic BU Broadband;Xantic BU Broadband
+ONID;0x002F;0x002F;TVNZ  ;TVNZ  
+ONID;0x0030;0x0030;Canal+ SA (for Intelsat 601-325°E);Canal+ SA (for Intelsat 601-325°E)
+ONID;0x0031;0x0031;Hispasat S.A.;Hispasat S.A.
+ONID;0x0032;0x0032;Hispasat S.A.;Hispasat S.A.
+ONID;0x0033;0x0033;Hispasat S.A.;Hispasat S.A.
+ONID;0x0034;0x0034;Hispasat S.A.;Hispasat S.A.
+ONID;0x0035;0x0035;NetHold IMS;NetHold IMS
+ONID;0x0036;0x0036;TV Cabo Portugal  ;TV Cabo Portugal  
+ONID;0x0037;0x0037;France Telecom, CNES and DGA;France Telecom, CNES and DGA
+ONID;0x0038;0x0038;Hellenic Telecommunications Organization S.A .;Hellenic Telecommunications Organization S.A .
+ONID;0x0039;0x0039;Broadcast Australia Pty.;Broadcast Australia Pty.
+ONID;0x003A;0x003A;GeoTelecom Satellite Services;GeoTelecom Satellite Services
+ONID;0x003B;0x003B;BBC;BBC
+ONID;0x003C;0x003C;KPN Broadcast Services;KPN Broadcast Services
+ONID;0x003D;0x003D;Skylogic Italia S.A.;Skylogic Italia S.A.
+ONID;0x003E;0x003E;Eutelsat S.A.;Eutelsat S.A.
+ONID;0x003F;0x003F;Eutelsat S.A.;Eutelsat S.A.
+ONID;0x0040;0x0040;Hrvatski Telekom d.d;Hrvatski Telekom d.d
+ONID;0x0041;0x0041;Mindport  ;Mindport  
+ONID;0x0042;0x0042;DTV haber ve Gorsel yayýncilik;DTV haber ve Gorsel yayýncilik
+ONID;0x0043;0x0043;arena Sport Rechte und Marketing GmbH;arena Sport Rechte und Marketing GmbH
+ONID;0x0044;0x0044;VisionTV LLC;VisionTV LLC
+ONID;0x0045;0x0045;SES-Sirius;SES-Sirius
+ONID;0x0046;0x0046;Telenor ;Telenor 
+ONID;0x0047;0x0047;Telenor;Telenor
+ONID;0x0048;0x0048;STAR DIGITAL A.S .;STAR DIGITAL A.S .
+ONID;0x0049;0x0049;Sentech  ;Sentech  
+ONID;0x004A;0x004B;Rambouillet ES;Rambouillet ES
+ONID;0x004C;0x004C;Skylogic S.A.;Skylogic S.A.
+ONID;0x004D;0x004D;Skylogic S.A.;Skylogic S.A.
+ONID;0x004E;0x004F;Eutelsat S.A.;Eutelsat S.A.
+ONID;0x0050;0x0050;HRT – Croatian Radio and Television;HRT – Croatian Radio and Television
+ONID;0x0051;0x0051;Havas ;Havas 
+ONID;0x0052;0x0052;StarGuide Digital Networks ;StarGuide Digital Networks 
+ONID;0x0053;0x0053;PT Comunicações;PT Comunicações
+ONID;0x0054;0x0054;Teracom AB Satellite Services;Teracom AB Satellite Services
+ONID;0x0055;0x0055;NSAB (Teracom);NSAB (Teracom)
+ONID;0x0056;0x0056;Viasat Satellite Services AB;Viasat Satellite Services AB
+ONID;0x0058;0x0058;UBC Thailand ;UBC Thailand 
+ONID;0x0059;0x0059;Bharat Business Channel Limited;Bharat Business Channel Limited
+ONID;0x005A;0x005A;ICO Satellite Services G.P.;ICO Satellite Services G.P.
+ONID;0x005B;0x005B;ZON;ZON
+ONID;0x005E;0x005E;NSAB ;NSAB 
+ONID;0x005F;0x005F;NSAB ;NSAB 
+ONID;0x0060;0x0060;Kabel Deutschland ;Kabel Deutschland 
+ONID;0x0064;0x0064;T-Kábel;T-Kábel Magyarország Kft.
+ONID;0x0065;0x0065;France Telecom Orange;France Telecom Orange
+ONID;0x0066;0x0066;Zweites Deutsches Fernsehen - ZDF (cable contribution);Zweites Deutsches Fernsehen - ZDF
+ONID;0x0069;0x0069;Optus B3 156°E;Optus Communications
+ONID;0x0070;0x0070;BONUM1 36 Degrees East;NTV+
+ONID;0x0073;0x0073;PanAmSat 4 68.5°E;Pan American Satellite System
+ONID;0x007D;0x007D;Skylogic;Skylogic Italia
+ONID;0x007E;0x007F;Eutelsat Satellite System at 7°E;EUTELSAT – European Telecommunications Satellite Organization 
+ONID;0x0085;0x0085;BetaTechnik;BetaTechnik
+ONID;0x0090;0x0090;National network;TDF
+ONID;0x009A;0x009B;Eutelsat satellite system at 9°East;Rambouillet ES
+ONID;0x009C;0x009D;Eutelsat satellite system at 9°East;Skylogic S.A.
+ONID;0x009E;0x009F;Eutelsat satellite system at 9°East;Eutelsat S.A.
+ONID;0x00A0;0x00A0;National Cable Network;News Datacom
+ONID;0x00A1;0x00A1;DigiSTAR;STAR Television Productions Ltd (HK) (NDS)
+ONID;0x00A2;0x00A2;Sky Entertainment Services;NetSat Serviços Ltda (Brazil), Innova S. de R. L. (Mexico) and Multicountry Partnership L. P. (NDS)
+ONID;0x00A3;0x00A3;NDS Director systems;Various (product only sold by Tandberg TV) (NDS)
+ONID;0x00A4;0x00A4;ISkyB;STAR Television Productions Ltd (HK) (NDS)
+ONID;0x00A5;0x00A5;Indovision;PT. Matahari Lintas Cakrawala (MLC) (NDS)
+ONID;0x00A6;0x00A6;ART;ART (NDS)
+ONID;0x00A7;0x00A7;Globecast;France Telecom (NDS)
+ONID;0x00A8;0x00A8;Foxtel;Foxtel (Australia) (NDS)
+ONID;0x00A9;0x00A9;Sky New Zealand;Sky Network Television Ltd (NDS)
+ONID;0x00AA;0x00AA;OTE;OTE (Greece) (NDS)
+ONID;0x00AB;0x00AB;Yes Satellite Services;DBS (Israel) (NDS)
+ONID;0x00AC;0x00AC;(NDS satellite services);(NDS to be allocated)
+ONID;0x00AD;0x00AD;SkyLife;Korea Digital Broadcasting
+ONID;0x00AE;0x00AF;(NDS satellite services);(NDS to be allocated)
+ONID;0x00B0;0x00B3;TPS;La Télévision Par Satellite
+ONID;0x00B4;0x00B4;Telesat 107.3°W;Telesat Canada
+ONID;0x00B5;0x00B5;Telesat 111.1°W;Telesat Canada
+ONID;0x00B6;0x00B6;Telstra Saturn;TelstraSaturn Limited  
+ONID;0x00BA;0x00BA;Satellite Express – 6 (80°E);Satellite Express 
+ONID;0x00C0;0x00CD;Canal +;Canal+
+ONID;0x00D0;0x00D0;CCTV;China Central Television (NDS)
+ONID;0x00D1;0x00D1;Galaxy;Galaxy Satellite Broadcasting, Hong Kong (NDS)
+ONID;0x00D2;0x00DF;(NDS satellite services);(NDS to be allocated)
+ONID;0x00EB;0x00EB;Eurovision Network;European Broadcasting Union  
+ONID;0x0100;0x0100;ExpressVu;ExpressVu Inc.
+ONID;0x0101;0x0101;Bulsatcom AD;Bulsatcom AD
+ONID;0x0104;0x0104;MagtiSat;Magticom Ltd.
+ONID;0x010D;0x010D;Skylogic;Skylogic Italia
+ONID;0x010E;0x010F;Eutelsat Satellite System at 10°E;European Telecommunications Satellite Organization
+ONID;0x0110;0x0110;Mediaset;Mediaset 
+ONID;0x011F;0x011F;visAvision Network;European Telecommunications Satellite Organization
+ONID;0x013D;0x013D;Skylogic;Skylogic Italia
+ONID;0x013E;0x013F;Eutelsat Satellite System 13°E;European Telecommunications Satellite Organization
+ONID;0x016D;0x016D;Skylogic;Skylogic Italia
+ONID;0x016E;0x016F;Eutelsat Satellite System at 16°E;European Telecommunications Satellite Organization
+ONID;0x0170;0x0170;Audio Visual Global Joint Stock Company;Audio Visual Global Joint Stock Company
+ONID;0x01F4;0x01F4;MediaKabel B.V;
+ONID;0x022D;0x022D;Skylogic;Skylogic Italia
+ONID;0x022E;0x022F;Eutelsat Satellite System at 21.5°E;EUTELSAT – European Telecommunications Satellite Organization 
+ONID;0x026D;0x026D;Skylogic;Skylogic Italia
+ONID;0x026E;0x026F;Eutelsat Satellite System at 25.5°E;EUTELSAT – European Telecommunications Satellite Organization 
+ONID;0x029D;0x029D;Skylogic;Skylogic Italia
+ONID;0x029E;0x029F;Eutelsat Satellite System at 29°E;European Telecommunications Satellite Organization
+ONID;0x02BE;0x02BE;ARABSAT;ARABSAT - Arab Satellite Communications Organization
+ONID;0x02C0;0x02C0;MTV Networks Europe;MTV Networks Europe
+ONID;0x033D;0x033D;Skylogic at 33°E;Skylogic Italia
+ONID;0x033E;0x033F;Eutelsat Satellite System at 33°E;Eutelsat
+ONID;0x034E;0x034E;IRIB;IRIB
+ONID;0x036D;0x036D;Skylogic;Skylogic Italia
+ONID;0x036E;0x036F;Eutelsat Satellite System at 36°E;European Telecommunications Satellite Organization
+ONID;0x03E8;0x03E8;Telia;Telia, Sweden
+ONID;0x045D;0x045F;Eutelsat satellite system at 15°West;Eutelsat S.A.
+ONID;0x047D;0x047D;Skylogic;Skylogic Italia
+ONID;0x047E;0x047F;Eutelsat Satellite System at 12.5°W;EUTELSAT – European Telecommunications Satellite Organization 
+ONID;0x048D;0x048D;Skylogic;Skylogic Italia
+ONID;0x048E;0x048F;Eutelsat Satellite System at 48°E;European Telecommunications Satellite Organization
+ONID;0x049D;0x049F;Eutelsat satellite system at 11°West;Eutelsat S.A.
+ONID;0x0500;0x0500;Vinasat Center;Vinasat Center
+ONID;0x0510;0x0510;Almajd;Almajd Satellite Broadcasting FZ LLC
+ONID;0x052D;0x052D;Skylogic;Skylogic Italia
+ONID;0x052E;0x052F;Eutelsat Satellite System at 8°W;EUTELSAT – European Telecommunications Satellite Organization 
+ONID;0x053D;0x053F;Eutelsat satellite system at 53°East;Eutelsat S.A.
+ONID;0x055D;0x055D;Skylogic at 5°W;Skylogic Italia
+ONID;0x055E;0x055F;Eutelsat Satellite System at 5°W;Eutelsat
+ONID;0x0600;0x0600;UPC Satellite;UPC  
+ONID;0x0601;0x0601;UPC Cable;UPC  
+ONID;0x0602;0x0602;Tevel;Tevel Cable (Israel )
+ONID;0x071D;0x071D;Skylogic at 70.5°E;Skylogic Italia
+ONID;0x071E;0x071F;Eutelsat Satellite System at 70.5°E;Eutelsat S.A.
+ONID;0x077D;0x077D;Skylogic Satellite System at 7°W;Skylogic Italia
+ONID;0x077E;0x077F;Eutelsat Satellite System at 7°W;Eutelsat S.A.
+ONID;0x0800;0x0801;Nilesat 101;Nilesat
+ONID;0x0880;0x0880;MEASAT 1, 91.5°E;MEASAT Broadcast Network Systems SDN. BHD. (Kuala Lumpur, Malaysia)
+ONID;0x0882;0x0882;MEASAT 2, 91.5°E;MEASAT Broadcast Network Systems SDN. BHD. (Kuala Lumpur, Malaysia)
+ONID;0x0883;0x0883;MEASAT 2, 148.0°E;Hsin Chi Broadcast Company Ltd .
+ONID;0x088F;0x088F;MEASAT 3;MEASAT Broadcast Network Systems SDN. BHD. (Kuala Lumpur, Malaysia)
+ONID;0x08A0;0x08A0;Mainland Television Limited;Mainland Television Limited
+ONID;0x0E26;0x0E26;IRIB;IRIB
+ONID;0x0FFF;0x0FFF;Optus Networks;Optus Networks
+ONID;0x1000;0x1000;Optus B3 156°E;Optus Communications
+ONID;0x1001;0x1001;DISH Network;Echostar Communications
+ONID;0x1002;0x1002;Dish Network 61.5 W;Echostar Communications
+ONID;0x1003;0x1003;Dish Network 83 W;Echostar Communications
+ONID;0x1004;0x1004;Dish Network 119 W;Echostar Communications
+ONID;0x1005;0x1005;Dish Network 121 W;Echostar Communications
+ONID;0x1006;0x1006;Dish Network 148 W;Echostar Communications
+ONID;0x1007;0x1007;Dish Network 175 W;Echostar Communications
+ONID;0x1008;0x100B;Dish Network W - Z;Echostar Communications
+ONID;0x1010;0x1010;ABC TV;Australian Broadcasting Corporation  
+ONID;0x1011;0x1011;SBS;SBS Australia  
+ONID;0x1012;0x1012;Nine Network Australia;Nine Network Australia  
+ONID;0x1013;0x1013;Seven Network Australia;Seven Network Limited  
+ONID;0x1014;0x1014;Network TEN Australia;Network TEN Limited  
+ONID;0x1015;0x1015;WIN Television Australia;WIN Television Pty Ltd  
+ONID;0x1016;0x1016;Prime Television Australia;Prime Television Limited  
+ONID;0x1017;0x1017;Southern Cross Broadcasting Australia;Southern Cross Broadcasting (Australia) Limited  
+ONID;0x1018;0x1018;Telecasters Australia;Telecasters Australia Limited  
+ONID;0x1019;0x1019;NBN Australia;NBN Limited  
+ONID;0x101A;0x101A;Imparja Television Australia;Imparja Television Australia 
+ONID;0x101B;0x101F;(Reserved for Australian broadcaster);(Reserved for Australian broadcasters)
+ONID;0x1100;0x1100;GE Americom;GE American Communications
+ONID;0x1101;0x1101;MiTV Networks Broadcast Terrestrial Network - DVB-H;MiTV Networks Sdn Bhd Malaysia
+ONID;0x1102;0x1102;Dream Mobile TV;Philippines Multimedia System, Inc.
+ONID;0x1103;0x1103;PT MAC;PT. Mediatama Anugrah Citra
+ONID;0x1104;0x1104;Levira Mobile TV;Levira AS
+ONID;0x1105;0x1105;Mobision;Alsumaria TV
+ONID;0x1106;0x1106;Trenmobile;PT. Citra Karya Investasi
+ONID;0x1107;0x1107;VTC Mobile TV;VTC Mobile TV
+ONID;0x1700;0x1700;Echostar 2A;EchoStar Communications
+ONID;0x1701;0x1701;Echostar 2B;EchoStar Communications
+ONID;0x1702;0x1702;Echostar 2C;EchoStar Communications
+ONID;0x1703;0x1703;Echostar 2D;EchoStar Communications
+ONID;0x1704;0x1704;Echostar 2E;EchoStar Communications
+ONID;0x1705;0x1705;Echostar 2F;EchoStar Communications
+ONID;0x1706;0x1706;Echostar 2G;EchoStar Communications
+ONID;0x1707;0x1707;Echostar 2H;EchoStar Communications
+ONID;0x1708;0x1708;Echostar 2I;EchoStar Communications
+ONID;0x1709;0x1709;Echostar 2J;EchoStar Communications
+ONID;0x170A;0x170A;Echostar 2K;EchoStar Communications
+ONID;0x170B;0x170B;Echostar 2L;EchoStar Communications
+ONID;0x170C;0x170C;Echostar 2M;EchoStar Communications
+ONID;0x170D;0x170D;Echostar 2N;EchoStar Communications
+ONID;0x170E;0x170E;Echostar 2O;EchoStar Communications
+ONID;0x170F;0x170F;Echostar 2P;EchoStar Communications
+ONID;0x1710;0x1710;Echostar 2Q;EchoStar Communications
+ONID;0x1711;0x1711;Echostar 2R;EchoStar Communications
+ONID;0x1712;0x1712;Echostar 2S;EchoStar Communications
+ONID;0x1713;0x1713;Echostar 2T;EchoStar Communications
+ONID;0x1714;0x1714;Platforma HD;Platforma HD Ltd.
+ONID;0x1715;0x1715;Profit Group Terrestrial;Profit Group SpA
+ONID;0x1716;0x1716;JSC Mostelekom;JSC Mostelekom
+ONID;0x2000;0x2000;Thiacom 1 & 2 co-located 78.5°E;Shinawatra Satellite
+ONID;0x2014;0x2014;DTT - Andorran Digital Terrestrial Television;STA
+ONID;0x2024;0x2024;Australian Digital Terrestrial Television;Australian Broadcasting Authority 
+ONID;0x2028;0x2028;Austrian Digital Terrestrial Television;ORS - Austrian Broadcasting Services
+ONID;0x2038;0x2038;Belgian Digital Terrestrial Television;BIPT
+ONID;0x209E;0x209E;Taiwanese Digital Terrestrial Television;Directorate General of Telecommunications
+ONID;0x20AA;0x20AA;Comision Nacional de Television de Colombia;Comision Nacional de Television de Colombia
+ONID;0x20BF;0x20BF;Croatian Post and Electronic Communications Agency (HAKOM);Croatian Post and Electronic Communications Agency (HAKOM)
+ONID;0x20C4;0x20C4;Office Of the Commissioner of Electronic Communications and Postal Regulation;Office Of the Commissioner of Electronic Communications and Postal Regulation
+ONID;0x20CB;0x20CB;Czech Republic Digital Terrestrial Television;Czech Digital Group  
+ONID;0x20D0;0x20D0;Danish Digital Terrestrial Television;National Telecom Agency Denmark  
+ONID;0x20E9;0x20E9;Estonian Digital Terrestrial Television;Estonian National Communications Board
+ONID;0x20F6;0x20F6;Finnish Digital Terrestrial Television;Telecommunicatoins Administratoin Centre, Finland  
+ONID;0x20FA;0x20FA;French Digital Terrestrial Television;Conseil Superieur de l'AudioVisuel
+ONID;0x2114;0x2114;German Digital Terrestrial Television;IRT on behalf of the German DVB-T broadcasts 
+ONID;0x2124;0x2124;Gibraltar Regulatory Authority;Gibraltar Regulatory Authority
+ONID;0x2168;0x2168;Digital Terrestrial Network of Indonesia;Ministry of Communication and Information Technology of the Republic of Indonesia
+ONID;0x2174;0x2174;Irish Digital Terrestrial Television;Irish Telecommunications Regulator  
+ONID;0x2178;0x2178;Israeli Digital Terrestrial Television;BEZEQ (The Israel Telecommunication Corp Ltd .)
+ONID;0x217C;0x217C;Italian Digital Terrestrial Television;
+ONID;0x21AC;0x21AC;DTT - Latvian Digital Terrestrial Television;Electronic Communications Office
+ONID;0x21B8;0x21B8;DTT Lithuania;Communications Regulatory Authority
+ONID;0x21CA;0x21CA;Malaysian Technical Standards Forum Bhd (MTFSB);Malaysian Technical Standards Forum Bhd (MTFSB)
+ONID;0x2210;0x2210;Netherlands Digital Terrestrial Television;Nozema  
+ONID;0x2213;0x2213;DTT for Country of Curacao;Bureau Telecommunicatie en Post
+ONID;0x222A;0x222A;DTT - New Zealand Digial Terrestrial Television;TVNZ on behalf of Freeview New Zealand
+ONID;0x2242;0x2242;Norwegian Digital Terrestrial Television;Norwegian Regulator
+ONID;0x224F;0x224F;Autoridad Nacional de los Servicios Públicos;Autoridad Nacional de los Servicios Públicos
+ONID;0x2260;0x2260;DTT - Philippines Digital Terrestrial Television;NTA (porivionally ABS-CBN)
+ONID;0x2268;0x2268;DTT Poland;Office of Electronic Communications
+ONID;0x2283;0x2283;DTT - Russian Federation;RTRN
+ONID;0x22B0;0x22B0;DTT - Serbia JP Emisiona Tehnika i Veze;JP Emisiona Tehnika i Veze
+ONID;0x22BE;0x22BE;Singapore Digital Terrestrial Television;Singapore Broadcasting Authority  
+ONID;0x22BF;0x22BF;Telecommunications office of the Slovak republic;Telecommunications office of the Slovak republic
+ONID;0x22C1;0x22C1;DTT - Slovenian Digital Terrestrial Television;APEK
+ONID;0x22C6;0x22C6;DTT - South African Digital Terrestrial Television;South African Broadcasting Corporation Ltd. (SABC), pending formation of DZONGA
+ONID;0x22C7;0x22C7;DTT- Hungarian Digital Terrestrial Television;National Communications Authority, Hungary
+ONID;0x22C8;0x22C8;DTT- Portugal Digital Terrestrial Television;ANACOM- National Communications Authority
+ONID;0x22D4;0x22D4;Spanish Digital Terrestrial Television;“Spanish Broadcasting Regulator 
+ONID;0x22F1;0x22F1;Swedish Digital Terrestrial Television;“Swedish Broadcasting Regulator ”
+ONID;0x22F4;0x22F4;Swiss Digital Terrestrial Television;OFCOM
+ONID;0x233A;0x233A;UK Digital Terrestrial Television;Independent Television Commission 
+ONID;0x2B00;0x2B00;DTT – Sky New Zealand;Sky Network Television Limited
+ONID;0x3000;0x3000;PanAmSat 4 68.5°E;Pan American Satellite System
+ONID;0x5000;0x5000;Irdeto Mux System;Irdeto Test Laboratories
+ONID;0x616D;0x616D;BellSouth Entertainment;BellSouth Entertainment, Atlanta, GA, USA  
+ONID;0x6600;0x6600;UPC Satellite;UPC  
+ONID;0x6601;0x6601;UPC Cable;UPC  
+ONID;0x6602;0x6602;Comcast Media Center;Comcast Media Center
+ONID;0xA011;0xA011;Sichuan Cable TV Network;Sichuan Cable TV Network (PRC)
+ONID;0xA012;0xA012;China Network Systems;STAR Koos Finance Company (Taiwan)
+ONID;0xA013;0xA013;Versatel;Versatel (Russia)
+ONID;0xA014;0xA014;Chongqing Cable;Chongqing Municipality, PRC
+ONID;0XA015;0XA015;Guizhou Cable;Guizhou Province, PRC
+ONID;0xA016;0xA016;Hathway Cable;Hathway Cable and Datacom, India
+ONID;0xA017;0xA017;RCN;Rogers Cable Network, USA
+ONID;0xA018;0xA040;(NDS satellite services);(NDS to be allocated)
+ONID;0xA401;0xA401;ARD;ARD-Sternpunkte
+ONID;0xA509;0xA509;Welho Cable Network Helsinki;Welho
+ONID;0xA600;0xA600;Madritel;Madritel (Spain)
+ONID;0xA602;0xA602;Tevel;Tevel (Israel) (NDS)
+ONID;0xA603;0xA603;Globo Cabo (to be recycled);Globo Cabo (Brazil) (NDS)
+ONID;0xA604;0xA604;Cablemas (to be recycled);Cablemas (Mexico) (NDS)
+ONID;0xA605;0xA605;INC National Cable Network;Information Network Centre of SARFT (PRC) (NDS)
+ONID;0xA606;0xA607;Pepcom GmbH;Pepcom GmbH
+ONID;0xA900;0xA900;M-net Telekommunikations GmbH;M-net Telekommunikations GmbH
+ONID;0xF000;0xF000;SMALL CABLE NETWORKS;(Small cable network network operators)
+ONID;0xF001;0xF001;Deutsche Telekom;Deutsche Telekom AG
+ONID;0xF010;0xF010;Telefónica Cable;Telefónica Cable SA
+ONID;0xF020;0xF020;Cable and Wireless Communication;Cable and Wireless Communications
+ONID;0xF100;0xF100;Casema;Casema N.V .
+ONID;0xF750;0xF750;Telewest Communications Cable Network;Telewest Communications Plc  
+ONID;0xF751;0xF751;OMNE Communications;OMNE Communications Ltd.
+ONID;0xFBFC;0xFBFC;MATAV;MATAV (Israel ) (NDS)
+ONID;0xFBFD;0xFBFD;Com Hem ab;Com Hem ab
+ONID;0xFBFE;0xFBFE;TPS;La Télévision Par Satellite
+ONID;0xFBFF;0xFBFF;Sky Italia;Sky Italia Spa.
+ONID;0xFC10;0xFC10;Rhône Vision Cable;Rhône Vision Cable
+ONID;0xFC41;0xFC41;France Telecom Cable;France Telecom  
+ONID;0xFD00;0xFD00;National Cable Network;Lyonnaise Communications
+ONID;0xFE00;0xFE00;TeleDenmark Cable TV;TeleDenmark
+ONID;0xFEC0;0xFEFF;Network Interface Modules;Common Interface  
+ONID;0xFF00;0xFFFA;Private_temporary_use;ETSI
+
+TRANSP;Number;MHz
+TRANSP;49;10714
+TRANSP;50;10729
+TRANSP;51;10744
+TRANSP;52;10758
+TRANSP;53;10773
+TRANSP;54;10788
+TRANSP;55;10803
+TRANSP;56;10818
+TRANSP;57;10832
+TRANSP;58;10847
+TRANSP;59;10862
+TRANSP;60;10876
+TRANSP;61;10891
+TRANSP;62;10906
+TRANSP;63;10921
+TRANSP;64;10936
+TRANSP;33;10964
+TRANSP;34;10979
+TRANSP;35;10994
+TRANSP;36;11009
+TRANSP;37;11023
+TRANSP;38;11038
+TRANSP;39;11053
+TRANSP;40;11067
+TRANSP;41;11082
+TRANSP;42;11097
+TRANSP;43;11112
+TRANSP;44;11127
+TRANSP;45;11141
+TRANSP;46;11156
+TRANSP;47;11171
+TRANSP;48;11186
+TRANSP;1;11214
+TRANSP;2;11229
+TRANSP;3;11244
+TRANSP;4;11258
+TRANSP;5;11273
+TRANSP;6;11288
+TRANSP;7;11303
+TRANSP;8;11318
+TRANSP;9;11332
+TRANSP;10;11347
+TRANSP;11;11362
+TRANSP;12;11376
+TRANSP;13;11391
+TRANSP;14;11406
+TRANSP;15;11421
+TRANSP;16;11436
+TRANSP;17;11464
+TRANSP;18;11479
+TRANSP;19;11494
+TRANSP;20;11509
+TRANSP;21;11523
+TRANSP;22;11538
+TRANSP;23;11553
+TRANSP;24;11568
+TRANSP;25;11582
+TRANSP;26;11597
+TRANSP;27;11612
+TRANSP;28;11627
+TRANSP;29;11641
+TRANSP;30;11656
+TRANSP;31;11671
+TRANSP;32;11686
+TRANSP;65;11720
+TRANSP;66;11739
+TRANSP;67;11758
+TRANSP;68;11778
+TRANSP;69;11798
+TRANSP;70;11817
+TRANSP;71;11836
+TRANSP;72;11856
+TRANSP;73;11876
+TRANSP;74;11895
+TRANSP;75;11914
+TRANSP;76;11934
+TRANSP;77;11954
+TRANSP;78;11973
+TRANSP;79;11992
+TRANSP;80;12012
+TRANSP;81;12032
+TRANSP;82;12051
+TRANSP;83;12070
+TRANSP;84;12090
+TRANSP;85;12110
+TRANSP;86;12129
+TRANSP;87;12148
+TRANSP;88;12168
+TRANSP;89;12188
+TRANSP;90;12207
+TRANSP;91;12226
+TRANSP;92;12246
+TRANSP;93;12266
+TRANSP;94;12285
+TRANSP;95;12304
+TRANSP;96;12324
+TRANSP;97;12344
+TRANSP;98;12363
+TRANSP;99;12382
+TRANSP;100;12402
+TRANSP;101;12422
+TRANSP;102;12441
+TRANSP;103;12460
+TRANSP;104;12480
+TRANSP;105;12515
+TRANSP;106;12522
+TRANSP;107;12545
+TRANSP;108;12552
+TRANSP;109;12574
+TRANSP;110;12581
+TRANSP;111;12604
+TRANSP;112;12610
+TRANSP;113;12633
+TRANSP;114;12640
+TRANSP;115;12663
+TRANSP;116;12670
+TRANSP;117;12692
+TRANSP;118;12699
+TRANSP;119;12722
+TRANSP;120;12728
+
+SERVICETYPE;Number;Description
+SERVICETYPE;01;SD-TV
+SERVICETYPE;02;Radio
+SERVICETYPE;12;Daten/Test
+SERVICETYPE;25;HD-TV
+SERVICETYPE;211;Sky Select
+
+DVBT;Channel;MHz
+DVBT;21;474
+DVBT;22;482
+DVBT;23;490
+DVBT;24;498
+DVBT;25;506
+DVBT;26;514
+DVBT;27;522
+DVBT;28;530
+DVBT;29;538
+DVBT;30;546
+DVBT;31;554
+DVBT;32;562
+DVBT;33;570
+DVBT;34;578
+DVBT;35;586
+DVBT;36;594
+DVBT;37;602
+DVBT;38;610
+DVBT;39;618
+DVBT;40;626
+DVBT;41;634
+DVBT;42;642
+DVBT;43;650
+DVBT;44;658
+DVBT;45;666
+DVBT;46;674
+DVBT;47;682
+DVBT;48;690
+DVBT;49;698
+DVBT;50;706
+DVBT;51;714
+DVBT;52;722
+DVBT;53;730
+DVBT;54;738
+DVBT;55;746
+DVBT;56;754
+DVBT;57;762
+DVBT;58;770
+DVBT;59;778
+DVBT;60;786
+DVBT;61;794
+DVBT;62;802
+DVBT;63;810
+DVBT;64;818
+DVBT;65;826
+DVBT;66;834
+DVBT;67;842
+DVBT;68;850
+DVBT;69;858
