@@ -62,21 +62,24 @@ namespace ChanSort.Api
 
 
     #region GetChannelList()
-    public ChannelList GetChannelList(SignalSource signalSource, SignalType signalType, bool createIfNotExists)
+    public ChannelList GetChannelList(SignalSource criteriaMask)
     {
       foreach (var list in this.channelLists)
       {
-        if ((list.SignalSource&SignalSource.Digital) != (signalSource&SignalSource.Digital)) // match digital/analog
+        uint searchMask = (uint)criteriaMask;
+        uint listMask = (uint) list.SignalSource;
+
+        if ((listMask & 0x000F & searchMask) == 0) // digital/analog
           continue;
-        if (((int)list.SignalSource & 0x0F & (int)signalSource) == 0) // match any of cable/terrestrial/satellite
+        if ((listMask & 0x00F0 & searchMask) == 0) // air/cable/sat
           continue;
-        if (list.SignalType == signalType || list.SignalType == SignalType.Mixed) // match radio/tv/any
-          return list;
+        if ((listMask & 0x0F00 & searchMask) == 0) // tv/radio
+          continue;
+        if ((listMask & 0xF000) != (searchMask & 0xF000)) // preset list
+          continue;
+        return list;
       }
-      ChannelList newList = new ChannelList(signalSource, signalType);
-      if (createIfNotExists)
-        this.AddChannelList(newList);
-      return newList;
+      return null;
     }
     #endregion
   }

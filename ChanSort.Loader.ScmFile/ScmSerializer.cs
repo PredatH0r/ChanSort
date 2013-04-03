@@ -10,36 +10,27 @@ namespace ChanSort.Loader.ScmFile
 {
   class ScmSerializer : SerializerBase
   {
-    public struct ChannelAndFreq
-    {
-      public int Channel;
-      public decimal Frequency;
-
-      public ChannelAndFreq(int ch, decimal freq)
-      {
-        this.Channel = ch;
-        this.Frequency = freq;
-      }
-    }
-
     private readonly Dictionary<string, ModelConstants> modelConstants = new Dictionary<string, ModelConstants>();
     private readonly MappingPool<DataMapping> analogMappings = new MappingPool<DataMapping>("Analog");
     private readonly MappingPool<DataMapping> dvbctMappings = new MappingPool<DataMapping>("DVB-C/T");
     private readonly MappingPool<DataMapping> dvbsMappings = new MappingPool<DataMapping>("DVB-S");
-    private readonly MappingPool<DataMapping> hdplusMappings = new MappingPool<DataMapping>("AstraHDPlus");
+    private readonly MappingPool<DataMapping> hdplusMappings = new MappingPool<DataMapping>("AstraHD+");
     private readonly MappingPool<DataMapping> analogFineTuneMappings = new MappingPool<DataMapping>("FineTune");
     private readonly MappingPool<DataMapping> ptccableMappings = new MappingPool<DataMapping>("PTC");
     private readonly MappingPool<DataMapping> transponderMappings = new MappingPool<DataMapping>("TransponderDataBase");
-    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT, SignalType.Mixed);
-    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC, SignalType.Mixed);
-    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC, SignalType.Mixed);
-    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, SignalType.Mixed);
-    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS, SignalType.Mixed);
-    private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD, SignalType.Mixed);
+
+    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT|SignalSource.TvAndRadio, "analog Air");
+    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC|SignalSource.TvAndRadio, "analog Cable");
+    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv, "digital Air");
+    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.TvAndRadio, "digital Cable");
+    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.TvAndRadio, "Satellite");
+    private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Astra HD+");
+    
     private readonly Dictionary<int, decimal> avbtFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> avbcFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> dvbcFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> dvbtFrequency = new Dictionary<int, decimal>();
+    
     private byte[] avbtFileContent;
     private byte[] avbcFileContent;
     private byte[] dvbtFileContent;
@@ -323,7 +314,8 @@ namespace ChanSort.Loader.ScmFile
     #region MapAnalogChannel()
     private void MapAnalogChannel(DataMapping rawChannel, int slotIndex, ChannelList list, decimal freq)
     {
-      AnalogChannel ci = new AnalogChannel(slotIndex, list.SignalSource, rawChannel, freq, c.favoriteNotSetValue);
+      bool isCable = (list.SignalSource & SignalSource.Cable) != 0;
+      AnalogChannel ci = new AnalogChannel(slotIndex, isCable, rawChannel, freq, c.favoriteNotSetValue);
       if (!ci.InUse)
         return;
 
@@ -363,14 +355,15 @@ namespace ChanSort.Loader.ScmFile
       data = ReadFileContent(zip, fileName);
       if (data == null)
         return;
-      
+
+      bool isCable = (list.SignalSource & SignalSource.Cable) != 0;
       this.DataRoot.AddChannelList(list);
       DataMapping rawChannel = dvbctMappings.GetMapping(entrySize);
       rawChannel.SetDataPtr(data, 0);
       int count = data.Length / entrySize;
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        DigitalChannel ci = new DigitalChannel(slotIndex, list.SignalSource, rawChannel, frequency, c.favoriteNotSetValue);
+        DigitalChannel ci = new DigitalChannel(slotIndex, isCable, rawChannel, frequency, c.favoriteNotSetValue);
         if (ci.OldProgramNr != 0)
           this.DataRoot.AddChannel(list, ci);
 
@@ -456,7 +449,7 @@ namespace ChanSort.Loader.ScmFile
       mapping.SetDataPtr(dvbsFileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        SatChannel ci = new SatChannel(slotIndex, mapping, this.DataRoot, c.favoriteNotSetValue);
+        SatChannel ci = new SatChannel(slotIndex, SignalSource.StandardSat, mapping, this.DataRoot, c.favoriteNotSetValue);
         if (ci.InUse)
           this.DataRoot.AddChannel(this.dvbsChannels, ci);
 
@@ -479,9 +472,9 @@ namespace ChanSort.Loader.ScmFile
       mapping.SetDataPtr(hdplusFileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        SatChannel ci = new SatChannel(slotIndex, mapping, this.DataRoot, c.favoriteNotSetValue);
+        SatChannel ci = new SatChannel(slotIndex, SignalSource.AstraHdPlus, mapping, this.DataRoot, c.favoriteNotSetValue);
         if (ci.InUse)
-          this.hdplusChannels.AddChannel(ci);
+          this.DataRoot.AddChannel(this.hdplusChannels, ci);
         mapping.BaseOffset += entrySize;
       }
     }

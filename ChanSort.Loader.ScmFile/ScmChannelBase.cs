@@ -53,7 +53,6 @@ namespace ChanSort.Loader.ScmFile
       this.RecordIndex = slot;
       this.RecordOrder = slot;
       this.SignalSource = signalSource;
-      this.SignalType = SignalType.Mixed;
       this.OldProgramNr = data.GetWord(_ProgramNr);
       this.Name = data.GetString(_Name, data.Settings.GetInt("lenName"));
       this.Favorites = this.ParseRawFavorites();
@@ -96,15 +95,11 @@ namespace ChanSort.Loader.ScmFile
       this.TransportStreamId = data.GetWord(_TransportStreamId);
       this.ServiceType = data.GetByte(_ServiceType);
       this.SymbolRate = data.GetWord(_SymbolRate);
-    }
-    #endregion
 
-    #region GetSignalType()
-    protected SignalType GetSignalType(uint programNr)
-    {
-      if ((programNr & 0x4000) != 0)
-        return SignalType.Radio;
-      return SignalType.Tv;
+      if (this.ServiceType == (int)DvbServiceType.Radio)
+        this.SignalSource |= SignalSource.Radio;
+      else
+        this.SignalSource |= SignalSource.Tv;
     }
     #endregion
 

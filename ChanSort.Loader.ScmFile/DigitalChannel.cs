@@ -7,10 +7,12 @@ namespace ChanSort.Loader.ScmFile
   {
     private const string _ChannelOrTransponder = "offChannelTransponder";
 
-    public DigitalChannel(int slot, SignalSource signalSource, DataMapping data, 
+    public DigitalChannel(int slot, bool isCable, DataMapping data, 
       IDictionary<int, decimal> transpFreq, int favoriteNotSetValue) : 
       base(data, favoriteNotSetValue)
     {
+      var signalSource = SignalSource.Digital;
+      signalSource |= isCable ? SignalSource.Cable : SignalSource.Antenna;
       this.InitCommonData(slot, signalSource, data);
       this.InitDvbData(data);
 

@@ -2,6 +2,7 @@
 
 namespace ChanSort.Api
 {
+  #region enum SignalSource
   /// <summary>
   /// Bitmask for channel and list classification.
   /// An individual channel can only have one bit of each group set.
@@ -22,13 +23,14 @@ namespace ChanSort.Api
     // bit 9+10: TV/Radio
     Tv = 0x0100,
     Radio = 0x0200,
+    TvAndRadio= Tv|Radio,
     
     // bit 13-16: Preset list selector (AstraHD+, Freesat, TivuSat, CanalDigitalSat, ... for Samsung)
-    StandardSat = 0 << 24,
-    HdPlus = 1 << 24,
-    Freesat = 2 << 24,
-    TivuSat = 3 << 24,
-    CanalDigital = 4 << 24,
+    StandardSat = 0 << 12,
+    AstraHdPlus = 1 << 12,
+    Freesat = 2 << 12,
+    TivuSat = 3 << 12,
+    CanalDigital = 4 << 12,
 
     AnalogC=Analog + Cable, 
     AnalogT=Analog + Antenna, 
@@ -37,18 +39,26 @@ namespace ChanSort.Api
     DvbT= Digital + Antenna, 
     DvbCT= Digital + Cable + Antenna, 
     DvbS= Digital + Sat,
-    HdPlusD = Digital + HdPlus
+    HdPlusD = Digital + Sat + AstraHdPlus
   }
-
-  public enum SignalType { Tv = SignalSource.Tv, Radio = SignalSource.Radio, Mixed = SignalSource.Tv|SignalSource.Radio }
+  #endregion
 
   [Flags]
   public enum Favorites : byte { A = 0x01, B = 0x02, C = 0x04, D = 0x08, E = 0x10 }
 
   public enum UnsortedChannelMode
   {
-    AppendInOrder,
-    AppendAlphabetically,
-    Hide
+    AppendInOrder=0,
+    AppendAlphabetically=1,
+    Hide=2
   }
+
+  public enum DvbServiceType
+  {
+    SdTv = 1,
+    Radio = 2,
+    Data = 12,
+    HdTv = 25,
+    Option = 211
+  };
 }

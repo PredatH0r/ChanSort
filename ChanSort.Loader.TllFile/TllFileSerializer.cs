@@ -20,10 +20,16 @@ namespace ChanSort.Loader.TllFile
     private readonly string ERR_wrongChecksum = Resource.TllFileSerializer_ERR_wrongChecksum;
     private readonly string ERR_dupeChannel = Resource.TllFileSerializer_ERR_dupeChannel;
 
+    private readonly Dictionary<int, DvbsDataLayout> satConfigs = new Dictionary<int, DvbsDataLayout>();
     private readonly MappingPool<DataMapping> actMappings = new MappingPool<DataMapping>("Analog and DVB-C/T");
     private readonly MappingPool<DataMapping> dvbsMappings = new MappingPool<DataMapping>("DVB-S");
     private readonly MappingPool<FirmwareData> firmwareMappings = new MappingPool<FirmwareData>("Firmware");
-    private readonly Dictionary<int, DvbsDataLayout> satConfigs = new Dictionary<int, DvbsDataLayout>();
+
+    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv, "Analog TV");
+    private readonly ChannelList dtvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Tv, "DTV");
+    private readonly ChannelList radioChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Radio, "Radio");
+    private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat-DTV");
+    private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat-Radio");
 
     private byte[] fileContent;
 
@@ -60,7 +66,6 @@ namespace ChanSort.Loader.TllFile
     #region ctor()
     public TllFileSerializer(string inputFile) : base(inputFile)
     {
-
       this.Features.ChannelNameEdit = true;
       this.Features.EraseChannelData = true;
       this.Features.FileInformation = true;
@@ -74,6 +79,12 @@ namespace ChanSort.Loader.TllFile
                                        };
 
       this.ReadConfigurationFromIniFile();
+
+      this.DataRoot.AddChannelList(atvChannels);
+      this.DataRoot.AddChannelList(dtvChannels);
+      this.DataRoot.AddChannelList(radioChannels);
+      this.DataRoot.AddChannelList(satTvChannels);
+      this.DataRoot.AddChannelList(satRadioChannels);
     }
     #endregion
 
@@ -235,7 +246,7 @@ namespace ChanSort.Loader.TllFile
         actMapping.SetDataPtr(fileContent, off);
         ChannelInfo ci = channelFactory(i, actMapping);
 
-        var list = this.DataRoot.GetChannelList(ci.SignalSource, ci.SignalType, true);
+        var list = this.DataRoot.GetChannelList(ci.SignalSource);
         this.DataRoot.AddChannel(list, ci);
 
         off += recordSize;
@@ -415,7 +426,7 @@ namespace ChanSort.Loader.TllFile
           ++this.deletedChannelsSoft;
         else
         {
-          var list = this.DataRoot.GetChannelList(ci.SignalSource, ci.SignalType, true);
+          var list = this.DataRoot.GetChannelList(ci.SignalSource);
           var dupes = list.GetChannelByUid(ci.Uid);
           if (dupes.Count == 0)
           {
@@ -531,14 +542,9 @@ namespace ChanSort.Loader.TllFile
     #region ReorderActChannelsPhysically()
     private void ReorderActChannelsPhysically()
     {
-      var analogTv = this.DataRoot.GetChannelList(SignalSource.AnalogCT, SignalType.Tv, false);
-      var analogRadio = this.DataRoot.GetChannelList(SignalSource.AnalogCT, SignalType.Radio, false);
-      var analog = analogTv.Channels.Union(analogRadio.Channels).ToList();
-      this.ReorderChannelData(this.analogBlockOffset + 8, this.actChannelSize, this.analogChannelCount, analog);
+      this.ReorderChannelData(this.analogBlockOffset + 8, this.actChannelSize, this.analogChannelCount, this.atvChannels.Channels);
 
-      var dvbCtTv = this.DataRoot.GetChannelList(SignalSource.DvbCT, SignalType.Tv, false);
-      var dvbCtRadio = this.DataRoot.GetChannelList(SignalSource.DvbCT, SignalType.Radio, false);
-      var dvbCt = dvbCtTv.Channels.Union(dvbCtRadio.Channels).ToList();
+      var dvbCt = this.dtvChannels.Channels.Union(this.radioChannels.Channels).ToList();
       this.ReorderChannelData(this.dvbctBlockOffset + 8, this.actChannelSize, this.dvbctChannelCount, dvbCt);
     }
     #endregion

@@ -43,9 +43,8 @@ namespace ChanSort.Loader.TllFile
     protected void InitCommonData(int slot, SignalSource signalSource, DataMapping data)
     {
       this.RecordIndex = slot;
-      this.SignalSource = signalSource;
       var nr = data.GetWord(_ProgramNr);
-      this.SignalType = this.GetSignalType(nr);
+      this.SignalSource = signalSource | ((nr & 0x4000) == 0 ? SignalSource.Tv : SignalSource.Radio);
       this.OldProgramNr = (nr & 0x3FFF);
 
       this.ParseNames();
@@ -72,15 +71,6 @@ namespace ChanSort.Loader.TllFile
     }
     #endregion
 
-    #region GetSignalType()
-    protected SignalType GetSignalType(uint programNr)
-    {
-      if ((programNr & 0x4000) != 0)
-        return SignalType.Radio;
-      return SignalType.Tv;
-    }
-    #endregion
-
     #region ParseNames()
     private void ParseNames()
     {
@@ -98,7 +88,7 @@ namespace ChanSort.Loader.TllFile
     public override void UpdateRawData()
     {
       mapping.SetDataPtr(this.rawData, this.baseOffset);
-      mapping.SetWord(_ProgramNr, this.NewProgramNr + (this.SignalType == SignalType.Radio ? 0x4000 : 0));
+      mapping.SetWord(_ProgramNr, this.NewProgramNr | ((this.SignalSource & SignalSource.Radio) != 0 ? 0x4000 : 0));
       mapping.SetWord(_ProgramNr2, (mapping.GetWord(_ProgramNr2) & 0x0003) | (this.NewProgramNr << 2));
       if (this.IsNameModified)
       {

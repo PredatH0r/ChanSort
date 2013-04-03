@@ -39,7 +39,6 @@ namespace ChanSort.Ui
     private ISerializerPlugin currentPlugin;
     private SerializerBase currentTvSerializer;
     private Editor editor;
-    private readonly CsvFileSerializer csvSerializer = new CsvFileSerializer();
     private DataRoot dataRoot;
     private bool ignoreLanguageChange;
     private readonly string title;
@@ -325,7 +324,10 @@ namespace ChanSort.Ui
     private void LoadCsvFile()
     {
       if (File.Exists(this.currentCsvFile))
-        this.csvSerializer.Load(this.currentCsvFile, this.dataRoot);
+      {
+        var csvSerializer = new CsvFileSerializer(this.currentCsvFile, this.dataRoot);
+        csvSerializer.Load();
+      }
       else
       {
         foreach (var list in this.dataRoot.ChannelLists)
@@ -356,7 +358,10 @@ namespace ChanSort.Ui
 
           string ext = (Path.GetExtension(dlg.FileName) ?? "").ToLower();
           if (ext == ".csv")
-            this.csvSerializer.Load(dlg.FileName, this.dataRoot);
+          {
+            var csvSerializer = new CsvFileSerializer(dlg.FileName, this.dataRoot);
+            csvSerializer.Load();
+          }
           else if (ext == ".chl")
           {
             ChlFileSerializer loader = new ChlFileSerializer();
@@ -466,7 +471,8 @@ namespace ChanSort.Ui
 
     private void SaveReferenceFile()
     {
-      this.csvSerializer.Save(this.currentCsvFile, this.dataRoot, UnsortedChannelMode.Hide);
+      var csvSerializer = new CsvFileSerializer(this.currentCsvFile, this.dataRoot);
+      csvSerializer.Save();
     }
 
     #endregion

@@ -94,7 +94,7 @@ namespace Test.Loader.TllFile
           var fileName = Path.GetFileName(file) ?? "";
           int idx = fileName.IndexOf("-");
           string key = idx < 0 ? fileName : fileName.Substring(0, idx);
-          var satChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS, ChanSort.Api.SignalType.Tv, false);
+          var satChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS|ChanSort.Api.SignalSource.Tv);
           key += "\t" + serializer.ACTChannelLength+
             "\t"+serializer.HasDvbs+
             "\t"+serializer.SatChannelLength+
@@ -119,9 +119,9 @@ namespace Test.Loader.TllFile
           ExpectedData exp;
           key = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + Path.GetFileName(file);
           this.expectedData.TryGetValue(key, out exp);
-          var analogTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogCT, ChanSort.Api.SignalType.Tv, false);
-          var dtvTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbCT, ChanSort.Api.SignalType.Tv, false);
-          var satTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS, ChanSort.Api.SignalType.Tv, false);
+          var analogTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogCT|ChanSort.Api.SignalSource.Tv);
+          var dtvTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbCT|ChanSort.Api.SignalSource.Tv);
+          var satTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.Tv);
           if (exp != null)
           {
             this.expectedData.Remove(key);

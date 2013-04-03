@@ -34,6 +34,7 @@ namespace ChanSort.Api
              continue;
           }
           inQuote = !inQuote;
+          continue;
         }
         token.Append(ch);
       }

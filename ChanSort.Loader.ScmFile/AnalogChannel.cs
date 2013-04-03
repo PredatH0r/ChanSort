@@ -9,9 +9,11 @@ namespace ChanSort.Loader.ScmFile
 
     #region ctor()
 
-    public AnalogChannel(int slot, SignalSource signalSource, DataMapping mapping, decimal freq, int favoriteNotSetValue) :
+    public AnalogChannel(int slot, bool isCable, DataMapping mapping, decimal freq, int favoriteNotSetValue) :
       base(mapping, favoriteNotSetValue)
     {
+      var signalSource = SignalSource.Analog | SignalSource.Tv;
+      signalSource |= isCable ? SignalSource.Cable : SignalSource.Antenna;
       this.InitCommonData(slot, signalSource, mapping);
 
       this.FreqInMhz = (decimal)mapping.GetFloat(_Frequency); // C,D,E series have the value in the data record

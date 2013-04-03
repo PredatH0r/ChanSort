@@ -13,7 +13,6 @@ namespace ChanSort.Api
 
     public virtual bool IsDeleted { get; set; }
     public SignalSource SignalSource { get; protected set; }
-    public SignalType SignalType { get; protected set; }
     public int RecordIndex { get; set; }
     public int RecordOrder { get; set; }
     public int OldProgramNr { get; set; }
@@ -50,10 +49,9 @@ namespace ChanSort.Api
     /// <summary>
     /// Constructor for exiting TV channel
     /// </summary>
-    public ChannelInfo(SignalSource source, SignalType type, int index, int oldProgNr, string name)
+    public ChannelInfo(SignalSource source, int index, int oldProgNr, string name)
     {
       this.SignalSource = source;
-      this.SignalType = type;
       this.RecordIndex = index;
       this.RecordOrder = index;
       this.OldProgramNr = oldProgNr;
@@ -64,15 +62,9 @@ namespace ChanSort.Api
     /// <summary>
     /// Constructor for reference list channels which no longer exist in TV list
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="type"></param>
-    /// <param name="uid"></param>
-    /// <param name="newProgNr"></param>
-    /// <param name="name"></param>
-    public ChannelInfo(SignalSource source, SignalType type, string uid, int newProgNr, string name)
+    public ChannelInfo(SignalSource source, string uid, int newProgNr, string name)
     {
       this.SignalSource = source;
-      this.SignalType = type;
       this.Uid = uid;
       this.NewProgramNr = newProgNr;
       this.Name = name;
@@ -89,10 +81,8 @@ namespace ChanSort.Api
         {
           if ((this.SignalSource & SignalSource.Digital) == 0)
             this.uid = "A-0-" + (int)(this.FreqInMhz*20) + "-0";
-          else if (this.SignalSource == SignalSource.DvbS)
+          else if ((this.SignalSource & SignalSource.Sat) != 0)
             this.uid = "S" + this.SatPosition + "-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
-          else if (this.SignalSource == SignalSource.HdPlusD)
-            this.uid = "H" + this.OriginalNetworkId + "-" + this.ServiceId;
           else
             this.uid = "C-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId + "-" + this.ChannelOrTransponder;
         }
