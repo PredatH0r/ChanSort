@@ -112,7 +112,7 @@ namespace ChanSort.Loader.ScmFile
       if (this.IsNameModified)
       {
         mapping.SetString(_Name, this.Name, mapping.Settings.GetInt("lenName"));
-        mapping.SetByte(_NameLength, this.Name.Length);
+        mapping.SetByte(_NameLength, this.Name.Length * 2);
         this.IsNameModified = false;
       }
       this.UpdateRawFavorites();
@@ -129,14 +129,20 @@ namespace ChanSort.Loader.ScmFile
     {
       var offsets = mapping.GetOffsets(_Favorites);
       if (offsets.Length == 1) // series B,C
+      {
         mapping.SetByte(_Favorites, (byte)this.Favorites & 0x0F);
+        return;
+      }
 
       // series D,E
       byte fav = (byte)this.Favorites;
       byte mask = 0x01;
       foreach (int off in offsets)
       {
-        this.rawData[baseOffset + off] = (byte)((fav & mask) == 0 ? 0 : 1);
+        this.rawData[baseOffset + off + 0] = (byte)((fav & mask) == 0 ? 0 : 1);
+        this.rawData[baseOffset + off + 1] = 0;
+        this.rawData[baseOffset + off + 2] = 0;
+        this.rawData[baseOffset + off + 3] = 0;
         mask <<= 1;
       }
     }
@@ -145,7 +151,7 @@ namespace ChanSort.Loader.ScmFile
     #region UpdateChecksum()
     private void UpdateChecksum()
     {
-      var offChecksum = this.mapping.GetOffsets(_Checksum)[0];
+      var offChecksum = this.baseOffset + this.mapping.GetOffsets(_Checksum)[0];
       byte crc = 0;
       for (int i = this.baseOffset; i < offChecksum; i++)
         crc += this.rawData[i];

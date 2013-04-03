@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort.Ui\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5} = {A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}
 		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE} = {E972D8A1-2F5F-421C-AC91-CFF45E5191BE}
@@ -9,16 +9,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort.Ui\Cha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Api", "ChanSort.Api\ChanSort.Api.csproj", "{DCCFFA08-472B-4D17-BB90-8F513FC01392}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.TllFile", "ChanSort.Plugin.TllFile\ChanSort.Loader.TllFile.csproj", "{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.TllFile", "ChanSort.Loader.TllFile\ChanSort.Loader.TllFile.csproj", "{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67AED502-8AEB-45F2-9B95-AC42B6A5D2C4}"
 	ProjectSection(SolutionItems) = preProject
 		readme.txt = readme.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.TllFile", "Test.Plugin.TllFile\Test.Loader.TllFile.csproj", "{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.TllFile", "Test.Loader.TllFile\Test.Loader.TllFile.csproj", "{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.ScmFile", "ChanSort.Plugin.ScmFile\ChanSort.Loader.ScmFile.csproj", "{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.ScmFile", "ChanSort.Loader.ScmFile\ChanSort.Loader.ScmFile.csproj", "{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

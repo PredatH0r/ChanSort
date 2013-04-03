@@ -18,8 +18,8 @@ namespace ChanSort.Loader.ScmFile
 
     public byte MagicMarker { get { return data[BaseOffset]; } }
     public int SatelliteNr { get { return BitConverter.ToInt32(data, BaseOffset + 1); } }
-    public string Name { get { return utf16Encoding.GetString(data, BaseOffset + 9, 128); } }
+    public string Name { get { return utf16Encoding.GetString(data, BaseOffset + 9, 128).TrimEnd('\0'); } }
     public bool IsEast { get { return BitConverter.ToInt32(data, BaseOffset + 137) != 0; } }
-    public decimal Longitude { get { return (decimal)BitConverter.ToInt32(data, BaseOffset + 141) / 10; } }
+    public int Longitude { get { return BitConverter.ToInt32(data, BaseOffset + 141); } }
   }
 }

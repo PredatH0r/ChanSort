@@ -76,7 +76,7 @@
       <Name>ChanSort.Api</Name>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Plugin.TllFile\ChanSort.Loader.TllFile.csproj">
+    <ProjectReference Include="..\ChanSort.Loader.TllFile\ChanSort.Loader.TllFile.csproj">
       <Project>{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}</Project>
       <Name>ChanSort.Loader.TllFile</Name>
     </ProjectReference>

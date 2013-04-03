@@ -52,6 +52,7 @@ namespace ChanSort.Loader.ScmFile
     public ScmSerializer(string inputFile) : base(inputFile)
     {
       this.ReadConfigurationFromIniFile();
+      this.Features.ChannelNameEdit = true;
     }
     #endregion
 
@@ -392,7 +393,8 @@ namespace ChanSort.Loader.ScmFile
       {
         if (satMapping.MagicMarker != 0x55)
           throw new IOException("Unknown SatDataBase.dat format");        
-        string location = string.Format("{0}{1}", satMapping.Longitude, satMapping.IsEast ? "E" : "W");
+        string location = string.Format("{0}.{1}{2}", 
+          satMapping.Longitude/10, satMapping.Longitude%10, satMapping.IsEast ? "E" : "W");
 
         Satellite satellite = new Satellite(satMapping.SatelliteNr);
         satellite.Name = satMapping.Name;
