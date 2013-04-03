@@ -433,7 +433,7 @@
     <value>Senderliste:</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort v2013-03-30 - Senderlisten Editor für LG und Samsung TV</value>
+    <value>ChanSort {0} - Senderlisten Editor für LG und Samsung TV</value>
   </data>
   <data name="miMoveUp.Caption" xml:space="preserve">
     <value>Nach oben</value>

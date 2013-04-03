@@ -20,10 +20,10 @@ using DevExpress.XtraGrid.Views.Grid;
 
 namespace ChanSort.Ui
 {
-  // http://www.lg-forum.com/lg-led-plasma-lcd-fernseher/5098-channeleditor-40.html
-  // http://www.lg-hack.info/cgi-bin/sn_forumr.cgi?fid=2677&cid=2674&tid=2690&pg=1&sc=20&x=0
   public partial class MainForm : XtraForm
   {
+    private const string Version = "v2013-04-03";
+
     #region enum EditMode
     private enum EditMode
     {
@@ -59,7 +59,8 @@ namespace ChanSort.Ui
       this.SetControlsEnabled(false);
       if (!Settings.Default.WindowSize.IsEmpty)
         this.Size = Settings.Default.WindowSize;
-      this.title = this.Text;
+      this.title = string.Format(this.Text, Version);
+      this.Text = title;
       this.plugins = this.LoadSerializerPlugins();
       this.FillMenuWithIsoEncodings();
 
@@ -244,6 +245,8 @@ namespace ChanSort.Ui
     #region UpdateFavoritesEditor()
     private void UpdateFavoritesEditor(Favorites favorites)
     {
+      this.miFavSet.Strings.Clear();
+      this.miFavUnset.Strings.Clear();
       this.repositoryItemCheckedComboBoxEdit1.Items.Clear();
       this.repositoryItemCheckedComboBoxEdit2.Items.Clear();
       byte mask = 0x01;
@@ -256,6 +259,10 @@ namespace ChanSort.Ui
           this.repositoryItemCheckedComboBoxEdit1.Items.Add(c);
           this.repositoryItemCheckedComboBoxEdit2.Items.Add(c);
           regex += c;
+
+          string str = c.ToString();
+          this.miFavSet.Strings.Add(str);
+          this.miFavUnset.Strings.Add(str);
         }
       }
       regex += "]*";
@@ -1063,6 +1070,14 @@ namespace ChanSort.Ui
     }
     #endregion
 
+    #region RefreshGrid()
+    private void RefreshGrid(GridView grid)
+    {
+      grid.BeginDataUpdate();
+      grid.EndDataUpdate();
+    }
+    #endregion
+
     #region ShowTvCountrySettings()
     private void ShowTvCountrySettings()
     {
@@ -1385,7 +1400,11 @@ namespace ChanSort.Ui
         else if (this.gviewInput.FocusedColumn == this.colFavorites && e.Value is string)
           e.Value = ChannelInfo.ParseFavString((string)e.Value);
         else if (gviewInput.FocusedColumn == this.colName)
-          this.VerifyChannelNameModified(this.gviewInput.GetFocusedRow() as ChannelInfo, e.Value as string);
+        {
+          var ci = this.gviewInput.GetFocusedRow() as ChannelInfo;
+          this.VerifyChannelNameModified(ci, e.Value as string);
+          this.BeginInvoke((Action) (() => RefreshGrid(this.gviewOutput)));
+        }
         dataRoot.NeedsSaving = true;
       } catch(Exception ex) { HandleException(ex); }
     }
@@ -1457,7 +1476,10 @@ namespace ChanSort.Ui
         else if (this.gviewOutput.FocusedColumn == this.colOutFav && e.Value is string)
           e.Value = ChannelInfo.ParseFavString((string) e.Value);
         else if (gviewOutput.FocusedColumn == this.colOutName)
+        {
           this.VerifyChannelNameModified(this.gviewOutput.GetFocusedRow() as ChannelInfo, e.Value as string);
+          this.BeginInvoke((Action) (() => RefreshGrid(this.gviewOutput)));
+        }
         dataRoot.NeedsSaving = true;
       }
       catch (Exception ex) { HandleException(ex); }

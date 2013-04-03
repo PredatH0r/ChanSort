@@ -49,21 +49,18 @@ namespace ChanSort.Api
       if (!int.TryParse(parts[2], out transportStreamId)) return;
       string uid = parts[3].Replace("\"", "");
       SignalSource signalSource;
-      switch (uid[0])
-      {
-        case 'S': signalSource = SignalSource.DvbS; break;
-        case 'C': signalSource = SignalSource.DvbCT; break;
-        case 'A': signalSource = SignalSource.AnalogCT; break;
-        case 'H': signalSource = SignalSource.HdPlusD; break;
-        default: return;
-      }
-      var signalType = slot < 0x4000 ? SignalType.Tv : SignalType.Radio;
-      var channelList = dataRoot.GetChannelList(signalSource, signalType, true);
+      SignalType signalType;
+      if (!GetSignalSourceAndType(ref slot, uid, parts, out signalSource, out signalType)) 
+        return;
+
       string name = parts[4].Replace("\"", "");
+      ChannelList channelList = dataRoot.GetChannelList(signalSource, signalType, true);
+      
+
       IEnumerable<ChannelInfo> channels = FindChannels(channelList, name, uid);
       var channel = channels == null ? null : channels.FirstOrDefault(c => c.NewProgramNr == 0);
       if (channel != null)
-        channel.NewProgramNr = slot & 0x3FFF;
+        channel.NewProgramNr = slot;
       else
       {
         channel = new ChannelInfo(signalSource, signalType, uid, slot, name);
@@ -71,6 +68,34 @@ namespace ChanSort.Api
         channelList.AddChannel(channel);
       }
     }
+
+    private static bool GetSignalSourceAndType(ref int slot, string uid, string[] parts, out SignalSource signalSource, out SignalType signalType)
+    {
+      // new lists store a bitmask which defines the type of channel and list it came from
+      if (parts.Length >= 6)
+      {
+        signalSource = (SignalSource)int.Parse(parts[5]);
+        signalType = (SignalType)((int)signalSource & (int)SignalType.Mixed);
+        return true;
+      }
+
+      // compatibility for older lists
+      signalSource = 0;
+      signalType = 0;
+      switch (uid[0])
+      {
+        case 'S': signalSource = SignalSource.DvbS; break;
+        case 'C': signalSource = SignalSource.DvbCT; break;
+        case 'A': signalSource = SignalSource.AnalogCT; break;
+        case 'H': signalSource = SignalSource.HdPlusD; break;
+        default: return false;
+      }
+      signalType = slot < 0x4000 ? SignalType.Tv : SignalType.Radio;
+      signalSource |= (SignalSource)signalType;
+      slot &= 0x3FFFF;
+      return true;
+    }
+
     #endregion
 
     #region FindChannels()
