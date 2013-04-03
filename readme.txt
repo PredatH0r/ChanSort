@@ -1,71 +1,111 @@
-ChanSort v2012-12-26
+Version v2013-03-04 ========================================================
 
-Allgemeines==========================================================
+This version is a major release and includes a complete re-write of the code 
+for loading/saving TV-data files (SCM, TLL) and reference lists (CSV).
 
-!!! Die Verwendung dieses Programms erfolgt auf eigene Gefahr! Es ist
-!!! möglich, dass durch die Verwendung das TV Gerät beschädigt wird
+New features:
+- added support for LG's LX-models
+- channel names can now be edited for both LG and Samsung 
+- menu item for (un-)setting favorite #5 for Samsung series E
 
-Die Vorliegende Version unterstützt folgende TV-Geräte:
-LG-Electronics: Serien CS, LD, LE, LH, LM, LK, LV, LW, PM
-Samsung: Serien B, C, D und E
-
-Eine Diskussion zum Thema "ChannelEditor" für LG Fernseher mit näheren
-Infos rund um ChanSort befindet sich hier:
-http://www.lg-forum.com/lg-led-plasma-lcd-fernseher/5098-channeleditor-45.html
-http://www.hifi-forum.de/viewthread-145-5061.html
-http://forum.lg.de/viewtopic.php?f=16&t=5097&sid=3dbbc693bbbaef643a624b82206b4ac0&start=10
-
-Systemvoraussetzungen ================================================
-
-- Microsoft .NET Framework 3.5
-- für LG TVs der Serien CS, LM und PM ist eine programmierbare Fernbedienung 
-  nötig (z.B. Logitech Harmony 300, One-For-All URC3920, ...)
+Bug fixes:
+- Samsung channel lists are now loaded/saved correctly 
+  (program numbers, favorites, locking, frequencies, ...)
+- loading a reference list for a Samsung .SCM file which contains both
+  air and cable channels or satellite and AstraHD+ lists caused the items
+  to be only applied to the first list (showing not-found channels in red)
 
 
-Benutzung ============================================================
+About ChanSort =============================================================
 
-LG Fernseher
+ChanSort is a program to manage your LG or Samsung TV's channel list on your PC.
 
-1) Zuerst muss man am Fernseher das geheime "In-Start" Menü aktivieren
-und dort mit dem "TV Link Loader" die Senderliste auf einen USB-Stick
-speichern.
+It allows you to change program numbers and channel names, select your favorites, 
+set a parental lock and much more. With its multi-selection capabilities and the
+side-by-side view of your sorted list and the available channels a list can be
+created in no-time.
 
-Bei der LM-Serie (2012) benötigt man eine programmierbare Fernbedienung, da
-weder die Standard-FB noch der Fernseher eine Zugangsmöglichkeit bietet.
-Einige Wege um in das Menü zu gelangen, werden auf dieser Seite beschrieben:
-http://openlgtv.org.ru/wiki/index.php/Access_hidden_service_menus_/_modes
+You can apply reference lists to your TV data file to restore a previous order, 
+e.g. after running a channel scan. You can even apply the same reference list
+to your LG and Samsung TV.
 
-Gelingt es, den Infrarot-Befehl für "In-Start" an den Fernseher zu senden,
-drückt man anschließend auf "Settings" (Original-FB) oder "Menu" (Harmony).
-Dann stehen das Hotel-Menü und der TV-Link-Loader zur Auswahl.
+You can get get the latest version and support on  
+https://sourceforge.net/projects/chansort/?source=navbar
+
+
+Supported models ===========================================================
+
+LG
+------
+    Series: CS, DM, LD, LE, LH, LK, LM*, LS, LV, LW, LX, PM, PT
+    Lists: Analog TV, DTV (DVB-C/T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
   
-2) Mit ChanSort die TLL Datei am USB-Stick öffnen. Dies muss immer
-  Die Original-Datei des TV sein und nicht eine bereits sortierte.
-  Falls eine gleichnamige CSV-Datei mit einer bestehenden Sortierung 
-  existiert wird diese automatisch eingelesen.
-3) Die gewünschte Senderliste zusammenstellen. Am einfachsten in der
-  rechten Ansicht in Spalte "Sendername" den Namen eintippen, dann in
-  der Liste doppelclicken.
-  In der Mitte kann eingestellt werden, wo in der sortierten Liste der
-  neue Sender landet. Dazu einen Programmplatz in der linken Liste 
-  auswählen und in der Mitte eventuell "Dahinter".
-4) Dateien speichern
-  Die TLL-Datei erhält eine 9 als erste Ziffer, um die Originaldatei
-  nicht zu überschreiben. 
-5) Senderliste auf USB Stick speichern und über den TV Link Loader in
-  den Fernseher laden.
+    * NOTE: See system requirements for LM-Series.
+    Other models might also work, but have not been tested. 
+    If you have a .TLL file of a series not listed here, please send it to me.
 
-Samsung Fernseher
-
-  Im Menü "Sender" / "Kanalliste übertragen" / "Auf USB exportieren"
-
-Kontakt ==============================================================
-
-Benutzer "Pred" auf www.lg-forum.com
-Email: horst@beham.biz
+    Instructions on how to access the hidden service-menu for transferring the 
+    channel list from/to USB can be found here:
+    https://sourceforge.net/p/chansort/wiki/Home/
+    http://www.ullrich.es/job/service-menue/lg-tlledit-lg-sendersortierung/
 
 
-Versionen ============================================================
+Samsung 
+-------
+    Series: B*, C, D, E
+    Lists: Air analog, Air digital, Cable analog, Cable digital, Sat digital, Astra HD+
+
+    * NOTE: the "Air Analog"-List of the B-Series doesn't support all editing features
+    due to a lack of test files. If you have such a file, please send it to me.
+
+    Instructions for transferring the channel list can be found on:
+    http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-importieren/
+
+
+! USE AT YOUR OWN RISK !
+------------------------
+This software was written without access to any official documentation from either
+Samsung or LG about the file formats involved. Without full knowledge about there 
+specifics there is a chance of unwanted side-effects or damage to your TV.
+
+
+System requirements =========================================================
+
+- USB-Stick to transfer the channel list between your TV and PC
+- For LG's LM-series you need a programmable remote control to access the service menu
+  for transferring the list to/from USB. (e.g. Logitech Harmony 300, One-For-All URC3920,...)
+  Details can be found on the ChanSort wiki and on 
+  http://openlgtv.org.ru/wiki/index.php/Access_hidden_service_menus_/_modes
+- Microsoft .NET Framework 3.5 (included in WinXP SP3, Vista, Win7, Win8)
+
+
+License ===============================================================
+
+GNU General Public Licence, Version 3: http://www.gnu.org/licenses/gpl.html
+Source code available on https://sourceforge.net/projects/chansort/
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+
+Change log ====================================================================
+
+2013-03-04 (major release)
+- complete re-write of the code for loading/saving TV-data files (SCM, TLL) 
+  and reference lists (CSV).
+- added support for LG's LX-models
+- channel names can now be edited for both LG and Samsung 
+- menu item for (un-)setting favorite #5 for Samsung series E
+- Samsung channel lists are now loaded/saved correctly 
+  (program numbers, favorites, locking, frequencies, ...)
+- loading a reference list for a Samsung .SCM file which contains both
+  air and cable channels or satellite and AstraHD+ channels caused the items
+  to be mixed up and all shown in the first list (showing not-found channels in red)
 
 2013-03-30
 - FIX: bei nicht-LM Geräten wurden die DVB-S Programmnummern falsch ausgelesen
@@ -182,45 +222,3 @@ Versionen ============================================================
 
 2012-10-24 (#1)
 - erste Veröffentlichung
-
-Source Code ==========================================================
-
-The user interface (ChanSort.Ui project) is using the commercial "WinForms"
-UI component library from Developer Express. You can get a trial version
-from http://www.devexpress.com/Subscriptions/DXperience/WhatsNew2012v1/winforms.xml
-The trial version will periodically show popup-windows reminding you to
-obtain a license.
-
-As long as you dont make any changes to the UI, you can exclude the 
-ChanSort.Ui project from the build list and copy all files from the 
-"Program" directory to "Source\Debug".
-
-Alternatively you can just compile the other projects and drop the generated
-DLL-File into the "Program" folder and start ChanEdit.exe there
-
-Lizenz ===============================================================
-
-This is free and unencumbered software released into the public domain.
-
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
-
-In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-For more information, please refer to <http://unlicense.org/>

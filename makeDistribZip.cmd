@@ -15,9 +15,10 @@ for %%f in (Utils Data XtraEditors XtraBars XtraGrid XtraLayout) do call :copyDl
 
 cd ..
 del Website\ChanSort.zip 2>nul
-copy Source\readme.txt .
-"c:\program files (x86)\7-Zip\7z.exe" a -tzip Website\ChanSort.zip Source -x!Source\_ReSharper* -x!Source\Debug -x!Source\TestResults -x!Source\*\obj -x!Source\ipch Program readme.txt
-del readme.txt
+copy Source\readme.txt %target%
+cd %target%
+"c:\program files (x86)\7-Zip\7z.exe" a -tzip ChanSort.zip *
+
 
 pause
 goto:eof
