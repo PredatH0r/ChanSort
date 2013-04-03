@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.ScmFile
@@ -27,6 +28,8 @@ namespace ChanSort.Loader.ScmFile
     private const string _SymbolRate = "offSymbolRate";
 
     private static readonly Encoding Utf16BigEndian = new UnicodeEncoding(true, false);
+    private static readonly byte[] favoriteSetValue = new byte[] { 1, 0, 0, 0 };
+    private readonly byte[] favoriteNotSetValue;
 
     protected readonly DataMapping mapping;
     protected readonly byte[] rawData;
@@ -34,12 +37,13 @@ namespace ChanSort.Loader.ScmFile
 
     internal bool InUse { get; set; }
 
-    protected ScmChannelBase(DataMapping data)
+    protected ScmChannelBase(DataMapping data, int favoriteNotSetValue)
     {
       this.mapping = data;
       this.rawData = data.Data;
       this.baseOffset = data.BaseOffset;
       this.mapping.DefaultEncoding = Utf16BigEndian;
+      this.favoriteNotSetValue = BitConverter.GetBytes(favoriteNotSetValue);
     }
 
     #region InitCommonData()
@@ -71,7 +75,7 @@ namespace ChanSort.Loader.ScmFile
       byte mask = 0x01;
       foreach (int off in offsets)
       {
-        if ((System.BitConverter.ToInt32(this.rawData, baseOffset + off) + 1) > 1) // -1 and 0 mean "not set"
+        if ((BitConverter.ToInt32(this.rawData, baseOffset + off) + 1) > 1) // unset/set: D=0, E=-1
           fav |= mask;
         mask <<= 1;
       }
@@ -139,10 +143,8 @@ namespace ChanSort.Loader.ScmFile
       byte mask = 0x01;
       foreach (int off in offsets)
       {
-        this.rawData[baseOffset + off + 0] = (byte)((fav & mask) == 0 ? 0 : 1);
-        this.rawData[baseOffset + off + 1] = 0;
-        this.rawData[baseOffset + off + 2] = 0;
-        this.rawData[baseOffset + off + 3] = 0;
+        // unset/set: D-Series=0/1, E-Series=-1/1
+        Array.Copy((fav & mask) == 0 ? favoriteNotSetValue : favoriteSetValue, 0, this.rawData, baseOffset + off, 4);
         mask <<= 1;
       }
     }

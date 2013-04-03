@@ -9,7 +9,8 @@ namespace ChanSort.Loader.ScmFile
 
     #region ctor()
 
-    public AnalogChannel(int slot, SignalSource signalSource, DataMapping mapping, decimal freq) : base(mapping)
+    public AnalogChannel(int slot, SignalSource signalSource, DataMapping mapping, decimal freq, int favoriteNotSetValue) :
+      base(mapping, favoriteNotSetValue)
     {
       this.InitCommonData(slot, signalSource, mapping);
 

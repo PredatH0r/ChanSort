@@ -7,7 +7,9 @@ namespace ChanSort.Loader.ScmFile
   {
     private const string _ChannelOrTransponder = "offChannelTransponder";
 
-    public DigitalChannel(int slot, SignalSource signalSource, DataMapping data, IDictionary<int, decimal> transpFreq) : base(data)
+    public DigitalChannel(int slot, SignalSource signalSource, DataMapping data, 
+      IDictionary<int, decimal> transpFreq, int favoriteNotSetValue) : 
+      base(data, favoriteNotSetValue)
     {
       this.InitCommonData(slot, signalSource, data);
       this.InitDvbData(data);

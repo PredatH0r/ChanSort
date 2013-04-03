@@ -14,6 +14,7 @@ namespace ChanSort.Loader.ScmFile
     public readonly int dvbtFineTuneLength;
     public readonly Favorites supportedFavorites;
     public readonly int ptcLength;
+    public readonly int favoriteNotSetValue;
 
     public ModelConstants(IniFile.Section iniSection)
     {
@@ -31,6 +32,7 @@ namespace ChanSort.Loader.ScmFile
       for (int i = 0; i < numFavorites; i++)
         mask = (mask << 1) | 1;
       this.supportedFavorites = (Favorites)mask;
+      this.favoriteNotSetValue = iniSection.GetInt("FavoriteNotSet");
     }
   }
 }

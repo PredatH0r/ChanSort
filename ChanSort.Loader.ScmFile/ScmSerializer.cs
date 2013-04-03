@@ -323,7 +323,7 @@ namespace ChanSort.Loader.ScmFile
     #region MapAnalogChannel()
     private void MapAnalogChannel(DataMapping rawChannel, int slotIndex, ChannelList list, decimal freq)
     {
-      AnalogChannel ci = new AnalogChannel(slotIndex, list.SignalSource, rawChannel, freq);
+      AnalogChannel ci = new AnalogChannel(slotIndex, list.SignalSource, rawChannel, freq, c.favoriteNotSetValue);
       if (!ci.InUse)
         return;
 
@@ -370,7 +370,7 @@ namespace ChanSort.Loader.ScmFile
       int count = data.Length / entrySize;
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        DigitalChannel ci = new DigitalChannel(slotIndex, list.SignalSource, rawChannel, frequency);
+        DigitalChannel ci = new DigitalChannel(slotIndex, list.SignalSource, rawChannel, frequency, c.favoriteNotSetValue);
         if (ci.OldProgramNr != 0)
           this.DataRoot.AddChannel(list, ci);
 
@@ -456,7 +456,7 @@ namespace ChanSort.Loader.ScmFile
       mapping.SetDataPtr(dvbsFileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        SatChannel ci = new SatChannel(slotIndex, mapping, this.DataRoot);
+        SatChannel ci = new SatChannel(slotIndex, mapping, this.DataRoot, c.favoriteNotSetValue);
         if (ci.InUse)
           this.DataRoot.AddChannel(this.dvbsChannels, ci);
 
@@ -479,7 +479,7 @@ namespace ChanSort.Loader.ScmFile
       mapping.SetDataPtr(hdplusFileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        SatChannel ci = new SatChannel(slotIndex, mapping, this.DataRoot);
+        SatChannel ci = new SatChannel(slotIndex, mapping, this.DataRoot, c.favoriteNotSetValue);
         if (ci.InUse)
           this.hdplusChannels.AddChannel(ci);
         mapping.BaseOffset += entrySize;

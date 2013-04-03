@@ -6,7 +6,8 @@ namespace ChanSort.Loader.ScmFile
   {
     private const string _TransponderIndex = "offTransponderIndex";
 
-    public SatChannel(int slot, DataMapping data, DataRoot dataRoot) : base(data)
+    public SatChannel(int slot, DataMapping data, DataRoot dataRoot, int favoriteNotSetValue) : 
+      base(data, favoriteNotSetValue)
     {
       this.InitCommonData(slot, SignalSource.DvbS, data);
       if (!this.InUse)
