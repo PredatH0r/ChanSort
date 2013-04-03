@@ -709,12 +709,12 @@ namespace ChanSort.Loader.TllFile
           {
             if (fileContent[off + i - j] == 101 && fileContent[off + i - j - 6] == 100)
               // check for Volume/MaxVolue to be 101/100
-              return this.firmwareBlockOffset + i - j - 15;
+              return i - j - 15;
           }
-          return -1;
+          return 0;
         }
       }
-      return -1;
+      return 0;
     }
     #endregion
 

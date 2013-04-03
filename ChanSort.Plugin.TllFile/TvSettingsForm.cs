@@ -24,22 +24,36 @@ namespace ChanSort.Loader.TllFile
       var mapping = this.tvSerializer.GetFirmwareMapping();
       if (mapping != null)
       {
-        this.cbAutoChannelUpdate.Checked = mapping.SettingsAutomaticChannelUpdate;
-        this.cbHbbTv.Checked = mapping.HbbTvEnabled;
-        this.cbHotelMode.Checked = mapping.HotelModeEnabled;
-        this.cbDtvUpdate.Checked = mapping.HotelModeDtvUpdate;
+        this.grpInformation.Visible = false;
+        this.Height -= this.grpInformation.Height;
+      }
 
-        this.grpFirmwareNote.Visible = false;
-        this.Height -= this.grpFirmwareNote.Height;
+      if (mapping == null || !mapping.SupportsAutoChannelUpdate)
+      {
+        this.grpSetup.Visible = false;
+        this.Height -= this.grpSetup.Height;
       }
       else
       {
-        this.cbAutoChannelUpdate.Enabled = false;
-        this.cbHbbTv.Enabled = false;
-        this.cbHotelMode.Enabled = false;
-        this.cbDtvUpdate.Enabled = false;
+        this.cbAutoChannelUpdate.Checked = mapping.SettingsAutomaticChannelUpdate;        
       }
-    }
+
+      if (mapping == null || !mapping.SupportsHbbTv)
+        this.cbHbbTv.Enabled = false;
+      else
+        this.cbHbbTv.Checked = mapping.HbbTvEnabled;
+
+      if (mapping == null || !mapping.SupportsHotelMenu)
+      {
+        this.grpHotelMode.Visible = false;
+        this.Height -= this.grpHotelMode.Height;
+      }
+      else
+      {
+        this.cbHotelMode.Checked = mapping.HotelModeEnabled;
+        this.cbDtvUpdate.Checked = mapping.HotelModeDtvUpdate;        
+      }
+    }    
 
     private void btnOk_Click(object sender, EventArgs e)
     {
@@ -60,6 +74,11 @@ namespace ChanSort.Loader.TllFile
       this.comboBoxEdit1.Properties.TextEditStyle = this.cbCustomCountry.Checked
                                                       ? TextEditStyles.Standard
                                                       : TextEditStyles.DisableTextEditor;
+    }
+
+    private void lblHotelMenuAutoDetect_Click(object sender, EventArgs e)
+    {
+      this.lblHotelMenuAutoDetect.Text = this.tvSerializer.GetHotelMenuOffset().ToString();
     }
   }
 }

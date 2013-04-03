@@ -104,7 +104,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ChanSort.Plugin.TllFile.ini">
+    <None Include="ChanSort.Loader.TllFile.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

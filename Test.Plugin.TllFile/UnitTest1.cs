@@ -55,7 +55,7 @@ namespace Test.Loader.TllFile
         new ExpectedData(@"decklen\xxLW570S-ZD00001.TLL", 0, 30, 1598, 0, 339), // 184/68
         new ExpectedData(@"NeuerScan\xxLM340S-ZA00001.TLL", 34, 317, 1698, 129, 264), // 188/68
         new ExpectedData(@"wagnale\xxLM611S-ZA00001.TLL", 0, 13, 1094, 0, 191), // 188/68
-        new ExpectedData(@"_Pred\xxLM620S-ZE00021.TLL", 0, 11, 1303, 0, 191), // 192/72
+        new ExpectedData(@"_Pred\xxLM620S-ZE00021.TLL", 0, 11, 1303, 0, 191) // 192/72
       };
 
       foreach (var entry in expected)
@@ -71,7 +71,6 @@ namespace Test.Loader.TllFile
     #region TestLoadingAllTllFilesInTestFilesDirectory()
     [TestMethod]
     [DeploymentItem("ChanSort.Loader.TllFile\\ChanSort.Loader.TllFile.ini")]
-    [DeploymentItem("ChanSort.Loader.TllFile2\\ChanSort.Loader.TllFile2.ini")]
     public void TestLoadingAllTllFilesInTestFilesDirectory()
     {
       TllFileSerializerPlugin plugin = new TllFileSerializerPlugin();
@@ -154,7 +153,7 @@ namespace Test.Loader.TllFile
 
     private string GetModel(string filePath)
     {
-      string name = Path.GetFileName(filePath);
+      string name = Path.GetFileName(filePath)??"";
       if (name.StartsWith("xx"))
       {
         int idx = name.IndexOf("-");

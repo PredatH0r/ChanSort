@@ -17,10 +17,13 @@ namespace ChanSort.Loader.TllFile
     {
     }
 
+    public bool SupportsHbbTv { get { return this.GetOffsets(offHbbTvEnabled).Length > 0; } }
+    public bool SupportsHotelMenu { get { return this.GetOffsets(offHotelModeEnabled).Length > 0; } }
+    public bool SupportsAutoChannelUpdate { get { return this.GetOffsets(offSettingsChannelUpdate).Length > 0; } }
+
     public long Size { get { return this.GetDword(offSize); } }
     public bool SystemLocked { get { return this.GetByte(offSystemLock) != 0; } }    
     public string TvPassword { get { return CodeToString((uint)this.GetDword(offTvPassword)); } }
-
 
     public bool SettingsAutomaticChannelUpdate
     {
@@ -28,11 +31,13 @@ namespace ChanSort.Loader.TllFile
       set { this.SetByte(offSettingsChannelUpdate, (byte) (value ? 1 : 0)); }
     }
 
+
     public bool HbbTvEnabled
     {
       get { return this.GetByte(offHbbTvEnabled) != 0; }
       set { this.SetByte(offHbbTvEnabled, (byte)(value ? 1 : 0)); }
     }
+
 
     public bool HotelModeEnabled
     {

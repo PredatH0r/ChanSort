@@ -29,7 +29,7 @@
     private void InitializeComponent()
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TvSettingsForm));
-      this.grpSettings = new DevExpress.XtraEditors.GroupControl();
+      this.grpOption = new DevExpress.XtraEditors.GroupControl();
       this.cbHbbTv = new DevExpress.XtraEditors.CheckEdit();
       this.cbCustomCountry = new DevExpress.XtraEditors.CheckEdit();
       this.comboBoxEdit1 = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -42,11 +42,12 @@
       this.cbDtvUpdate = new DevExpress.XtraEditors.CheckEdit();
       this.cbHotelMode = new DevExpress.XtraEditors.CheckEdit();
       this.cbAutoChannelUpdate = new DevExpress.XtraEditors.CheckEdit();
-      this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-      this.grpFirmwareNote = new DevExpress.XtraEditors.GroupControl();
+      this.grpSetup = new DevExpress.XtraEditors.GroupControl();
+      this.grpInformation = new DevExpress.XtraEditors.GroupControl();
       this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
-      ((System.ComponentModel.ISupportInitialize)(this.grpSettings)).BeginInit();
-      this.grpSettings.SuspendLayout();
+      this.lblHotelMenuAutoDetect = new DevExpress.XtraEditors.LabelControl();
+      ((System.ComponentModel.ISupportInitialize)(this.grpOption)).BeginInit();
+      this.grpOption.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.cbHbbTv.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbCustomCountry.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit1.Properties)).BeginInit();
@@ -55,20 +56,20 @@
       ((System.ComponentModel.ISupportInitialize)(this.cbDtvUpdate.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbHotelMode.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbAutoChannelUpdate.Properties)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
-      this.groupControl1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.grpFirmwareNote)).BeginInit();
-      this.grpFirmwareNote.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.grpSetup)).BeginInit();
+      this.grpSetup.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.grpInformation)).BeginInit();
+      this.grpInformation.SuspendLayout();
       this.SuspendLayout();
       // 
-      // grpSettings
+      // grpOption
       // 
-      this.grpSettings.Controls.Add(this.cbHbbTv);
-      this.grpSettings.Controls.Add(this.cbCustomCountry);
-      this.grpSettings.Controls.Add(this.comboBoxEdit1);
-      this.grpSettings.Controls.Add(this.labelControl1);
-      resources.ApplyResources(this.grpSettings, "grpSettings");
-      this.grpSettings.Name = "grpSettings";
+      this.grpOption.Controls.Add(this.cbHbbTv);
+      this.grpOption.Controls.Add(this.cbCustomCountry);
+      this.grpOption.Controls.Add(this.comboBoxEdit1);
+      this.grpOption.Controls.Add(this.labelControl1);
+      resources.ApplyResources(this.grpOption, "grpOption");
+      this.grpOption.Name = "grpOption";
       // 
       // cbHbbTv
       // 
@@ -146,22 +147,29 @@
       this.cbAutoChannelUpdate.Name = "cbAutoChannelUpdate";
       this.cbAutoChannelUpdate.Properties.Caption = resources.GetString("cbAutoChannelUpdate.Properties.Caption");
       // 
-      // groupControl1
+      // grpSetup
       // 
-      this.groupControl1.Controls.Add(this.cbAutoChannelUpdate);
-      resources.ApplyResources(this.groupControl1, "groupControl1");
-      this.groupControl1.Name = "groupControl1";
+      this.grpSetup.Controls.Add(this.cbAutoChannelUpdate);
+      resources.ApplyResources(this.grpSetup, "grpSetup");
+      this.grpSetup.Name = "grpSetup";
       // 
-      // grpFirmwareNote
+      // grpInformation
       // 
-      this.grpFirmwareNote.Controls.Add(this.labelControl4);
-      resources.ApplyResources(this.grpFirmwareNote, "grpFirmwareNote");
-      this.grpFirmwareNote.Name = "grpFirmwareNote";
+      this.grpInformation.Controls.Add(this.labelControl4);
+      resources.ApplyResources(this.grpInformation, "grpInformation");
+      this.grpInformation.Name = "grpInformation";
       // 
       // labelControl4
       // 
       resources.ApplyResources(this.labelControl4, "labelControl4");
       this.labelControl4.Name = "labelControl4";
+      // 
+      // lblHotelMenuAutoDetect
+      // 
+      resources.ApplyResources(this.lblHotelMenuAutoDetect, "lblHotelMenuAutoDetect");
+      this.lblHotelMenuAutoDetect.Appearance.ForeColor = ((System.Drawing.Color)(resources.GetObject("labelControl5.Appearance.ForeColor")));
+      this.lblHotelMenuAutoDetect.Name = "lblHotelMenuAutoDetect";
+      this.lblHotelMenuAutoDetect.Click += new System.EventHandler(this.lblHotelMenuAutoDetect_Click);
       // 
       // TvSettingsForm
       // 
@@ -170,20 +178,21 @@
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
+      this.Controls.Add(this.lblHotelMenuAutoDetect);
       this.Controls.Add(this.grpHotelMode);
       this.Controls.Add(this.btnCancel);
       this.Controls.Add(this.btnOk);
-      this.Controls.Add(this.grpSettings);
-      this.Controls.Add(this.groupControl1);
-      this.Controls.Add(this.grpFirmwareNote);
+      this.Controls.Add(this.grpOption);
+      this.Controls.Add(this.grpSetup);
+      this.Controls.Add(this.grpInformation);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "TvSettingsForm";
       this.Load += new System.EventHandler(this.TvSettingsForm_Load);
-      ((System.ComponentModel.ISupportInitialize)(this.grpSettings)).EndInit();
-      this.grpSettings.ResumeLayout(false);
-      this.grpSettings.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.grpOption)).EndInit();
+      this.grpOption.ResumeLayout(false);
+      this.grpOption.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.cbHbbTv.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbCustomCountry.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit1.Properties)).EndInit();
@@ -193,17 +202,18 @@
       ((System.ComponentModel.ISupportInitialize)(this.cbDtvUpdate.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbHotelMode.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbAutoChannelUpdate.Properties)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
-      this.groupControl1.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.grpFirmwareNote)).EndInit();
-      this.grpFirmwareNote.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.grpSetup)).EndInit();
+      this.grpSetup.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.grpInformation)).EndInit();
+      this.grpInformation.ResumeLayout(false);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
     #endregion
 
-    private DevExpress.XtraEditors.GroupControl grpSettings;
+    private DevExpress.XtraEditors.GroupControl grpOption;
     private DevExpress.XtraEditors.ComboBoxEdit comboBoxEdit1;
     private DevExpress.XtraEditors.LabelControl labelControl1;
     private DevExpress.XtraEditors.SimpleButton btnOk;
@@ -214,10 +224,11 @@
     private DevExpress.XtraEditors.CheckEdit cbDtvUpdate;
     private DevExpress.XtraEditors.CheckEdit cbHotelMode;
     private DevExpress.XtraEditors.CheckEdit cbAutoChannelUpdate;
-    private DevExpress.XtraEditors.GroupControl groupControl1;
+    private DevExpress.XtraEditors.GroupControl grpSetup;
     private DevExpress.XtraEditors.LabelControl labelControl3;
     private DevExpress.XtraEditors.LabelControl labelControl2;
-    private DevExpress.XtraEditors.GroupControl grpFirmwareNote;
+    private DevExpress.XtraEditors.GroupControl grpInformation;
     private DevExpress.XtraEditors.LabelControl labelControl4;
+    private DevExpress.XtraEditors.LabelControl lblHotelMenuAutoDetect;
   }
 }
