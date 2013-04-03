@@ -14,9 +14,9 @@ namespace ChanSort.Api
       this.caption = caption;
     }
 
-    public void AddMapping(T mapping) 
+    public void AddMapping(int dataLength, T mapping) 
     {
-      mappings[mapping.DataLength] = mapping;
+      mappings[dataLength] = mapping;
     }
 
     public T GetMapping(int dataLength, bool throwException = true)

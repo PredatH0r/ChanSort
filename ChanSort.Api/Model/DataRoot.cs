@@ -74,7 +74,8 @@ namespace ChanSort.Api
           return list;
       }
       ChannelList newList = new ChannelList(signalSource, signalType);
-      this.AddChannelList(newList);
+      if (createIfNotExists)
+        this.AddChannelList(newList);
       return newList;
     }
     #endregion

@@ -70,7 +70,8 @@ namespace ChanSort.Api
           null, "iso-8859-5", "iso-8859-6", "iso-8859-7", "iso-8859-8", "iso-8859-9", "iso-8859-10", "iso-8859-11", 
           null, "iso-8859-13", "iso-8859-14", "iso-8859-15", null, null, null, null,
           null, // codePages2 prefix
-          "utf-16", "x-cp20949", "x-cp20936", "utf-16", "utf-8", null, null, null
+          "utf-16", "x-cp20949", "x-cp20936", "utf-16", "utf-8", null, null, null,
+          "utf-8", null, null, null, "utf-8"
         };
 
     static readonly string[] codePages2 =
@@ -89,49 +90,73 @@ namespace ChanSort.Api
     public Encoding DefaultEncoding { get; set; }
 
     #region GetChannelNames()
-    public unsafe void GetChannelNames(byte* name, int len, out string longName, out string shortName)
+    public void GetChannelNames(byte[] name, int off, int len, out string longName, out string shortName)
     {
-      StringBuilder sbLong = new StringBuilder();
-      StringBuilder sbShort = new StringBuilder();
+      longName = "";
+      shortName = "";
+      if (len == 0)
+        return;
+      byte b = name[off];
+      if (b == 0)
+        return;
+
       Decoder decoder = this.DefaultEncoding.GetDecoder();
-      bool inShortMode = false;
-      for (int i = 0; i < len; i++)
+      bool singleByteChar = true;
+      if (b < 0x20)
       {
-        byte b = name[i];
-        if (b == 0x00)
-          break;
-        if (b == 0x10) // prefix for 3-byte code page
+        if (b == 0x10) // prefix for 2-byte code page
         {
-          int cpIndex = name[i + 1] * 256 + name[i + 2];
-          i += 2;
+          int cpIndex = name[off + 1] * 256 + name[off + 2];
+          off += 2;
+          len -= 2;
           SetDecoder(codePages2, cpIndex, ref decoder);
-          continue;
         }
         if (b <= 0x1F)
-        {
           SetDecoder(codePages1, b, ref decoder);
-          continue;
-        }
+        singleByteChar = b < 0x10;
+        ++off;
+        --len;
+      }
+      if (!singleByteChar)
+      {
+        char[] buffer = new char[100];
+        int l= decoder.GetChars(name, off, len, buffer, 0, false);
+        longName = new string(buffer, 0, l);
+        return;
+      }
+
+      StringBuilder sbLong = new StringBuilder();
+      StringBuilder sbShort = new StringBuilder();
+      bool inShortMode = false;
+      for (int c = 0; c < len; c++)
+      {
+        int i = off + c;
+        b = name[i];
+        if (b == 0x00)
+          break;
 
         char ch = '\0';
-        switch (b)
+        if (singleByteChar)
         {
-          case 0x86: inShortMode = true; break;
-          case 0x87: inShortMode = false; break;
-          case 0x8a: ch = '\n'; break;
-          default:
-            // read as many bytes as necessary to get a character
-            char[] charArray = new char[1];
-            fixed (char* pCh = charArray)
-            {
-              byte* start = name + i;
-              for (int j = 1; i < len && decoder.GetChars(start, j, pCh, 1, true) == 0; ++j)
-                ++i;
-            }
-            ch = charArray[0];
-            break;
+          switch (b)
+          {
+            case 0x86: inShortMode = true; continue;
+            case 0x87: inShortMode = false; continue;
+            case 0x8a: ch = '\n'; break;
+            default:
+              if (b >= 0x80 && b <= 0x9f) // DVB-S control characters
+                continue;
+              break;
+          }
         }
-
+        if (ch == '\0')
+        {
+          // read as many bytes as necessary to get a character
+          char[] charArray = new char[1];
+          for (int byteCnt = 1; decoder.GetChars(name, i, byteCnt, charArray, 0) == 0; byteCnt++)
+            ++i;
+          ch = charArray[0];
+        }
         if (ch == '\0')
           continue;
 

@@ -5,11 +5,15 @@ using System.Data.SqlClient;
 using System.Text;
 using ChanSort.Api;
 
-namespace ChanSort.Plugin.TllFile
+namespace ChanSort.Loader.TllFile
 {
+  /// <summary>
+  /// For research purposes this class writes DVB-S channel information into a database
+  /// It is not used for production.
+  /// </summary>
   public partial class TllFileSerializer
   {
-    #region SQL
+    #region SQL (create table)
 
     /*
      
@@ -53,9 +57,12 @@ from channel c inner join chanseq s on s.listid=c.listid and s.slot=c.slot
 */
     #endregion
 
-    private unsafe void StoreToDatabase()
+    #region StoreToDatabase()
+    private void StoreToDatabase()
     {
-      return;
+      if (this.dvbsBlockSize == 0)
+        return;
+
       var list = this.DataRoot.GetChannelList(SignalSource.DvbS, SignalType.Tv, false);
       if (list == null)
         return;
@@ -69,45 +76,12 @@ from channel c inner join chanseq s on s.listid=c.listid and s.slot=c.slot
         {
           var listId = InsertListData(cmd);
 
-          fixed (byte* ptr = this.fileContent)
-          {
-            InsertSequenceData(ptr, cmd, listId);
-            InsertChannelData(ptr, cmd, listId);
-          }
+          InsertChannelLinkedList(cmd, listId);
+          InsertChannelData(cmd, listId);
         }
       }
     }
-
-    private unsafe void InsertSequenceData(byte* ptr, DbCommand cmd, int listId)
-    {
-      cmd.Parameters.Clear();
-      cmd.CommandText = "insert into chanseq(listid,seq,slot) values (" + listId + ",@seq,@slot)";
-      var pSeq = cmd.CreateParameter();
-      pSeq.ParameterName = "@seq";
-      pSeq.DbType = DbType.Int32;
-      cmd.Parameters.Add(pSeq);
-      var pSlot = cmd.CreateParameter();
-      pSlot.ParameterName = "@slot";
-      pSlot.DbType = DbType.Int32;
-      cmd.Parameters.Add(pSlot);
-
-      SatChannelListHeader* header = (SatChannelListHeader*) (ptr + this.dvbsChannelHeaderOffset);
-
-      int seq = 0;
-      ushort tableIndex = header->LinkedListStartIndex;
-      while(tableIndex != 0xFFFF)
-      {
-        ushort* entry = (ushort*)(ptr + this.dvbsChannelLinkedListOffset + tableIndex*c.sizeOfZappingTableEntry);
-        pSeq.Value = seq;
-        if (entry[2] != tableIndex)
-          break;
-        pSlot.Value = (int)tableIndex;
-        cmd.ExecuteNonQuery();
-
-        tableIndex = entry[1];
-        ++seq;
-      }
-    }
+    #endregion
 
     #region InsertListData()
     private int InsertListData(DbCommand cmd)
@@ -127,36 +101,75 @@ from channel c inner join chanseq s on s.listid=c.listid and s.slot=c.slot
     }
     #endregion
 
+    #region InsertChannelLinkedList()
+    private void InsertChannelLinkedList(DbCommand cmd, int listId)
+    {
+      cmd.Parameters.Clear();
+      cmd.CommandText = "insert into chanseq(listid,seq,slot) values (" + listId + ",@seq,@slot)";
+      var pSeq = cmd.CreateParameter();
+      pSeq.ParameterName = "@seq";
+      pSeq.DbType = DbType.Int32;
+      cmd.Parameters.Add(pSeq);
+      var pSlot = cmd.CreateParameter();
+      pSlot.ParameterName = "@slot";
+      pSlot.DbType = DbType.Int32;
+      cmd.Parameters.Add(pSlot);
+
+      SatChannelListHeader header = new SatChannelListHeader(this.fileContent,
+                                                             this.dvbsBlockOffset + this.satConfig.ChannelListHeaderOffset);
+      int seq = 0;
+      int tableIndex = header.LinkedListStartIndex;
+      int linkedListOffset = this.satConfig.SequenceTableOffset;
+      while (tableIndex != 0xFFFF)
+      {
+        int entryOffset = linkedListOffset + tableIndex * satConfig.sizeOfChannelLinkedListEntry;
+        pSeq.Value = seq;
+        if (BitConverter.ToInt16(this.fileContent, entryOffset + 4) != tableIndex)
+          break;
+        pSlot.Value = tableIndex;
+        cmd.ExecuteNonQuery();
+
+        tableIndex = BitConverter.ToInt16(this.fileContent, entryOffset + 2);
+        ++seq;
+      }
+    }
+    #endregion
+
     #region InsertChannelData()
-    private unsafe void InsertChannelData(byte* ptr, DbCommand cmd, int listId)
+    private void InsertChannelData(DbCommand cmd, int listId)
     {
       PrepareChannelInsert(cmd);
 
-      dvbsMapping.DataPtr = ptr + this.dvbsChannelListOffset;
+      DvbStringDecoder decoder = new DvbStringDecoder(this.DefaultEncoding);
+      DataMapping dvbsMapping = this.dvbsMappings.GetMapping(this.dvbsBlockSize);
+      dvbsMapping.SetDataPtr(this.fileContent, this.dvbsBlockOffset + this.satConfig.ChannelListOffset);
       for (int slot = 0; slot < this.dvbsChannelCount; slot++)
       {
         cmd.Parameters["@listid"].Value = listId;
         cmd.Parameters["@slot"].Value = slot;
         cmd.Parameters["@seq"].Value = DBNull.Value;
-        cmd.Parameters["@isdel"].Value = dvbsMapping.InUse ? 0 : 1;
-        cmd.Parameters["@progmask"].Value = dvbsMapping.ProgramNr;
-        cmd.Parameters["@prognr"].Value = (dvbsMapping.ProgramNr & 0x3FFF);
-        cmd.Parameters["@progfix"].Value = dvbsMapping.ProgramNrPreset;
-        cmd.Parameters["@name"].Value = dvbsMapping.Name;
-        cmd.Parameters["@tpnr"].Value = dvbsMapping.TransponderIndex;
-        var transp = this.DataRoot.Transponder.TryGet(dvbsMapping.TransponderIndex);
+        cmd.Parameters["@isdel"].Value = dvbsMapping.GetFlag("InUse") ? 0 : 1;
+        cmd.Parameters["@progmask"].Value = dvbsMapping.GetWord("offProgramNr");
+        cmd.Parameters["@prognr"].Value = dvbsMapping.GetWord("offProgramNr") & 0x3FFF;
+        cmd.Parameters["@progfix"].Value = dvbsMapping.GetWord("offProgramNrPreset");
+        int absNameOffset = dvbsMapping.BaseOffset + dvbsMapping.GetOffsets("offName")[0];
+        string longName, shortName;
+        decoder.GetChannelNames(fileContent, absNameOffset, dvbsMapping.GetByte("offNameLength"), out longName, out shortName);
+        cmd.Parameters["@name"].Value = longName;
+        cmd.Parameters["@tpnr"].Value = dvbsMapping.GetWord("offTransponderIndex");
+        var transp = this.DataRoot.Transponder.TryGet(dvbsMapping.GetWord("offTransponderIndex"));
         cmd.Parameters["@satnr"].Value = transp == null ? (object)DBNull.Value : transp.Satellite.Id;
         cmd.Parameters["@onid"].Value = transp == null ? (object)DBNull.Value : transp.OriginalNetworkId;
         cmd.Parameters["@tsid"].Value = transp == null ? (object)DBNull.Value : transp.TransportStreamId;
-        cmd.Parameters["@ssid"].Value = (int)dvbsMapping.ServiceId;
+        cmd.Parameters["@ssid"].Value = (int)dvbsMapping.GetWord("offServiceId");
         cmd.Parameters["@uid"].Value = transp == null
                                          ? (object) DBNull.Value
                                          : transp.TransportStreamId + "-" + transp.OriginalNetworkId + "-" +
-                                           dvbsMapping.ServiceId;
+                                           dvbsMapping.GetWord("offServiceId");
         cmd.Parameters["@favcrypt"].Value = (int)dvbsMapping.GetByte("offFavorites");
         cmd.Parameters["@lockskiphide"].Value = (int)dvbsMapping.GetByte("offLock");
         cmd.ExecuteNonQuery();
-        dvbsMapping.Next();
+        dvbsMapping.BaseOffset += this.satConfig.dvbsChannelLength;
       }
     }
     #endregion

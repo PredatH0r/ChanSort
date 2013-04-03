@@ -1,202 +1,194 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace ChanSort.Api
 {
-  public unsafe class DataMapping
+  public class DataMapping
   {
-    protected readonly Encoding stringEncoding;
     protected readonly IniFile.Section settings;
-    protected readonly int length;
+    private int baseOffset;
+    private byte[] data { get; set; }
+    public Encoding DefaultEncoding { get; set; }
 
     #region ctor()
-    public DataMapping(IniFile.Section settings, int structureLength, Encoding stringEncoding)
+    public DataMapping(IniFile.Section settings)
     {
       this.settings = settings;
-      this.length = structureLength;
-      this.stringEncoding = stringEncoding;
+      this.DefaultEncoding = Encoding.Default;
     }
     #endregion
 
-    #region DataPtr
-    public byte* DataPtr { get; set; }
-    #endregion
-
-    #region DataLength
-    public int DataLength { get { return this.length; } }
-    #endregion
-
-    #region Next()
-    public void Next()
+    #region SetDataPtr(), Data, BaseOffset
+    public void SetDataPtr(byte[] data, int baseOffset)
     {
-      this.DataPtr += this.length;
+      this.data = data;
+      this.baseOffset = baseOffset;
     }
+
+    public byte[] Data { get { return this.data; } }
+    public int BaseOffset { get { return this.baseOffset; } set { this.baseOffset = value; } }
     #endregion
 
+    
     #region GetOffsets()
-    protected int[] GetOffsets(string key)
+    public int[] GetOffsets(string key)
     {
       return settings.GetIntList(key);
     }
     #endregion
 
+    public IniFile.Section Settings { get { return this.settings; } }
 
-    #region GetByte()
-    public byte GetByte(int off)
-    {
-      return off < 0 ? (byte)0 : this.DataPtr[off];
-    }
 
+    #region Byte
     public byte GetByte(string key)
     {
       var offsets = settings.GetIntList(key);
-      return offsets.Length > 0 ? this.GetByte(offsets[0]) : (byte)0;
+      if (offsets.Length==0) return 0;
+      return this.data[baseOffset + offsets[0]];
+    }
+
+    public void SetByte(string key, int value)
+    {
+      var offsets = settings.GetIntList(key);
+      foreach (int offset in offsets)
+        this.data[baseOffset + offset] = (byte)value;
     }
     #endregion
 
-    #region GetWord()
-    public ushort GetWord(int off)
-    {
-      return off < 0 ? (ushort)0 : *(ushort*) (this.DataPtr + off);
-    }
-
+    #region Word
     public ushort GetWord(string key)
     {
       var offsets = settings.GetIntList(key);
-      return offsets.Length > 0 ? this.GetWord(offsets[0]) : (ushort)0;
-    }
-    #endregion
-
-    #region GetDword()
-    public uint GetDword(int off)
-    {
-      return off < 0 ? 0 : *(uint*) (this.DataPtr + off);
-    }
-
-    public uint GetDword(string key)
-    {
-      var offsets = settings.GetIntList(key);
-      return offsets.Length > 0 ? this.GetDword(offsets[0]) : 0;
-    }
-    #endregion
-
-    #region GetFloat()
-    public float GetFloat(int off)
-    {
-      return off < 0 ? 0 : *(float*) (this.DataPtr + off);
-    }
-
-    public float GetFloat(string key)
-    {
-      var offsets = settings.GetIntList(key);
-      return offsets.Length > 0 ? this.GetFloat(offsets[0]) : 0;
-    }
-    #endregion
-
-    #region GetFlag()
-    public bool GetFlag(int offset, byte mask)
-    {
-      return offset >= 0 && (this.GetByte(offset) & mask) != 0;
-    }
-
-    public bool GetFlag(string valueKey, string maskKey)
-    {
-      byte mask = (byte)settings.GetInt(maskKey);
-      var offsets = settings.GetIntList(valueKey);
-      return offsets.Length > 0 && this.GetFlag(offsets[0], mask);
-    }
-    #endregion
-
-    #region GetString()
-    public string GetString(int offset, int maxByteLen)
-    {
-      if (offset < 0) return null;
-      byte[] buffer = new byte[maxByteLen];
-      for (int i = 0; i < maxByteLen; i++)
-        buffer[i] = this.DataPtr[offset + i];
-      return stringEncoding.GetString(buffer).TrimEnd('\0');
-    }
-
-    public string GetString(string key, int maxLen)
-    {
-      var offsets = settings.GetIntList(key);
-      return offsets.Length == 0 ? null : GetString(offsets[0], maxLen);
-    }
-    #endregion
-
-
-    #region SetByte()
-    public void SetByte(int off, byte value)
-    {
-      if (off >= 0)
-        this.DataPtr[off] = value;
-    }
-
-    public void SetByte(string key, byte value)
-    {
-      var offsets = settings.GetIntList(key);
-      foreach(int offset in offsets)
-        this.SetByte(offset, value);
-    }
-    #endregion
-
-    #region SetWord()
-    public void SetWord(int off, int value)
-    {
-      if (off >= 0)
-        *(ushort*) (this.DataPtr + off) = (ushort)value;
+      if (offsets.Length == 0) return 0;
+      return BitConverter.ToUInt16(this.data, baseOffset + offsets[0]);
     }
 
     public void SetWord(string key, int value)
     {
       var offsets = settings.GetIntList(key);
       foreach (int offset in offsets)
-        this.SetWord(offset, value);
+      {
+        this.data[baseOffset + offset + 0] = (byte)value;
+        this.data[baseOffset + offset + 1] = (byte)(value>>8);
+      }
     }
     #endregion
 
-    #region SetDword()
-    public void SetDword(int off, uint value)
+    #region DWord
+    public long GetDword(string key)
     {
-      if (off >= 0)
-        *(uint*) (this.DataPtr + off) = value;
+      var offsets = settings.GetIntList(key);
+      if (offsets.Length == 0) return 0;
+      return BitConverter.ToUInt32(this.data, baseOffset + offsets[0]);
     }
 
-    public void SetDword(string key, uint value)
+    public void SetDword(string key, long value)
     {
       var offsets = settings.GetIntList(key);
       foreach (int offset in offsets)
-        this.SetDword(offset, value);
+      {
+        this.data[baseOffset + offset + 0] = (byte)value;
+        this.data[baseOffset + offset + 1] = (byte)(value >> 8);
+        this.data[baseOffset + offset + 2] = (byte)(value >> 16);
+        this.data[baseOffset + offset + 3] = (byte)(value >> 24);
+      }
     }
     #endregion
 
-    #region SetFloat()
-    public void SetFloat(int off, float value)
+    #region Float
+    public float GetFloat(string key)
     {
-      if (off >= 0)
-        *(float*)(this.DataPtr + off) = value;
+      var offsets = settings.GetIntList(key);
+      if (offsets.Length == 0) return 0;
+      return BitConverter.ToSingle(this.data, baseOffset + offsets[0]);
     }
 
     public void SetFloat(string key, float value)
     {
       var offsets = settings.GetIntList(key);
+      var bytes = BitConverter.GetBytes(value);
       foreach (int offset in offsets)
-        this.SetFloat(offset, value);
+      {
+        for (int i = 0; i < 4; i++)
+          this.data[baseOffset + offset + i] = bytes[i];
+      }
+    }
+    #endregion
+
+    #region GetFlag
+
+    public bool GetFlag(string key)
+    {
+      return GetFlag("off" + key, "mask" + key);
+    }
+
+    public bool GetFlag(string valueKey, string maskKey)
+    {
+      int mask = settings.GetInt(maskKey);
+      return GetFlag(valueKey, mask);
+    }
+
+    public bool GetFlag(string valueKey, int mask)
+    {
+      if (mask == 0) return false;
+      var offsets = settings.GetIntList(valueKey);
+      if (offsets.Length == 0) return false;
+      return (this.data[baseOffset + offsets[0]] & mask) == mask;
     }
     #endregion
 
     #region SetFlag()
-    public void SetFlag(int offset, byte mask, bool set)
+    public void SetFlag(string key, bool value)
     {
-      byte val = this.GetByte(offset);
-      this.SetByte(offset, (byte)(set ? val | mask : val & ~mask));
+      this.SetFlag("off" + key, "mask" + key, value);
     }
 
-    public void SetFlag(string valueKey, string maskKey, bool set)
+    public void SetFlag(string valueKey, string maskKey, bool value)
     {
-      byte mask = (byte)settings.GetInt(maskKey);
+      int mask = settings.GetInt(maskKey);
+      SetFlag(valueKey, mask, value);
+    }
+
+    public void SetFlag(string valueKey, int mask, bool value)
+    {
+      if (mask == 0) return;
       var offsets = settings.GetIntList(valueKey);
-      foreach (int offset in offsets)
-        this.SetFlag(offset, mask, set);
+      foreach (var offset in offsets)
+      {
+        if (value)
+          this.data[baseOffset + offset] |= (byte)mask;
+        else
+          this.data[baseOffset + offset] &= (byte)~mask;
+      }
+    }
+    #endregion
+
+
+    #region GetString()
+    public string GetString(string key, int maxLen)
+    {
+      var offsets = settings.GetIntList(key);
+      if (offsets.Length == 0) return null;
+      int length = this.GetByte(key + "Length");
+      if (length == 0)
+        length = maxLen;
+      var encoding = this.DefaultEncoding;
+      return encoding.GetString(this.data, baseOffset + offsets[0], length).TrimEnd('\0');
+    }
+    #endregion
+
+    #region SetString()
+    public void SetString(string key, string text, int maxLen)
+    {
+      var bytes = this.DefaultEncoding.GetBytes(text);
+      int len = Math.Min(bytes.Length, maxLen);
+      foreach (var offset in settings.GetIntList(key))
+      {
+        Array.Copy(bytes, 0, this.data, baseOffset + offset, len);
+        for (int i = len; i < maxLen; i++)
+          this.data[baseOffset + offset + i] = 0;
+      }
     }
     #endregion
   }

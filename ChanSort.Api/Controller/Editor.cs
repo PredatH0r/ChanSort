@@ -7,6 +7,7 @@ namespace ChanSort.Api
   {
     public DataRoot DataRoot;
     public ChannelList ChannelList;
+    private UnsortedChannelMode unsortedChannelMode;
 
 #if false
     #region LoadDvbViewerFiles()
@@ -271,6 +272,72 @@ namespace ChanSort.Api
         this.DataRoot.NeedsSaving = true;
       }
     }
+    #endregion
+
+
+    #region AutoNumberingForUnassignedChannels()
+
+    public void AutoNumberingForUnassignedChannels(UnsortedChannelMode mode)
+    {
+      this.unsortedChannelMode = mode;
+      foreach (var list in DataRoot.ChannelLists)
+      {
+        var sortedChannels = list.Channels.OrderBy(ChanSortCriteria).ToList();
+        int maxProgNr = 0;
+
+        foreach (var appChannel in sortedChannels)
+        {
+          if (appChannel.RecordIndex < 0)
+            continue;
+
+          if (appChannel.NewProgramNr <= 0 && mode == UnsortedChannelMode.Hide)
+            continue;
+
+          int progNr = GetNewProgramNr(appChannel, ref maxProgNr);
+          appChannel.NewProgramNr = progNr;
+        }
+      }
+    }
+
+    #region ChanSortCriteria()
+    private string ChanSortCriteria(ChannelInfo channel)
+    {
+      // explicitly sorted
+      if (channel.NewProgramNr != 0)
+        return channel.NewProgramNr.ToString("d4");
+
+      // eventually hide unsorted channels
+      if (this.unsortedChannelMode == UnsortedChannelMode.Hide)
+        return "Z";
+
+      // eventually append in old order
+      if (this.unsortedChannelMode == UnsortedChannelMode.AppendInOrder)
+        return "B" + channel.OldProgramNr.ToString("d4");
+
+      // sort alphabetically, with "." and "" on the bottom
+      if (channel.Name == ".")
+        return "B";
+      if (channel.Name == "")
+        return "C";
+      return "A" + channel.Name;
+    }
+    #endregion
+
+    #region GetNewProgramNr()
+    private int GetNewProgramNr(ChannelInfo appChannel, ref int maxPrNr)
+    {
+      int prNr = appChannel.NewProgramNr;
+      if (prNr > maxPrNr)
+        maxPrNr = prNr;
+      if (prNr == 0)
+      {
+        if (appChannel.OldProgramNr != 0 && this.unsortedChannelMode != UnsortedChannelMode.Hide)
+          prNr = ++maxPrNr;
+      }
+      return prNr;
+    }
+    #endregion
+
     #endregion
   }
 }

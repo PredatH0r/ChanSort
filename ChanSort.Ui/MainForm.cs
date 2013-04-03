@@ -68,6 +68,7 @@ namespace ChanSort.Ui
       this.grpOutputList.BindingContext = bcLeft;
       this.lastFocusedGrid = this.gviewInput;
       this.comboEditMode.SelectedIndex = (int) this.curEditMode;
+      this.comboUnsortedAction.SelectedIndex = (int)UnsortedChannelMode.Hide;
       this.ActiveControl = this.gridInput;
     }
     #endregion
@@ -94,7 +95,7 @@ namespace ChanSort.Ui
     {
       var list = new List<ISerializerPlugin>();
       string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-      foreach (var file in Directory.GetFiles(exeDir, "ChanSort.Plugin.*.dll"))
+      foreach (var file in Directory.GetFiles(exeDir, "ChanSort.Loader.*.dll"))
       {
         try
         {
@@ -185,7 +186,7 @@ namespace ChanSort.Ui
         this.currentPlugin = plugin;
         this.currentTvSerializer = newSerializer;
         this.currentTvSerializer.DefaultEncoding = this.defaultEncoding;
-        this.btnResetChannelData.Visible = newSerializer.SupportsEraseChannelData;
+        this.btnResetChannelData.Visible = newSerializer.Features.EraseChannelData;
         if (!this.LoadTvDataFile())
           return;
         this.LoadCsvFile();
@@ -204,8 +205,8 @@ namespace ChanSort.Ui
 
         this.SetControlsEnabled(!this.dataRoot.IsEmpty);
         this.UpdateFavoritesEditor(this.dataRoot.SupportedFavorites);
-        this.colName.OptionsColumn.AllowEdit = this.currentTvSerializer.SupportsChannelNameEdit;
-        this.colOutName.OptionsColumn.AllowEdit = this.currentTvSerializer.SupportsChannelNameEdit;
+        this.colName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
+        this.colOutName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
 
         if (this.dataRoot.Warnings.Length > 0)
         {
@@ -432,6 +433,7 @@ namespace ChanSort.Ui
       {
         this.gviewInput.BeginDataUpdate();
         this.gviewOutput.BeginDataUpdate();
+        this.editor.AutoNumberingForUnassignedChannels((UnsortedChannelMode)this.comboUnsortedAction.SelectedIndex);
         this.SaveReferenceFile();
         this.SaveTvDataFile();
         this.dataRoot.NeedsSaving = false;
@@ -476,7 +478,7 @@ namespace ChanSort.Ui
           if (!File.Exists(bakFile))
             File.Copy(currentTvFile, bakFile);
         }
-        this.currentTvSerializer.Save(this.currentTvFile, this.currentCsvFile, (UnsortedChannelMode)this.comboUnsortedAction.SelectedIndex);
+        this.currentTvSerializer.Save(this.currentTvFile, this.currentCsvFile);
       }
       finally
       {

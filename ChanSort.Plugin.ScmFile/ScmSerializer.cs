@@ -1,23 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Linq;
 using System.Windows.Forms;
 using ChanSort.Api;
 using ICSharpCode.SharpZipLib.Zip;
 
-namespace ChanSort.Plugin.ScmFile
+namespace ChanSort.Loader.ScmFile
 {
   class ScmSerializer : SerializerBase
   {
+    public struct ChannelAndFreq
+    {
+      public int Channel;
+      public decimal Frequency;
+
+      public ChannelAndFreq(int ch, decimal freq)
+      {
+        this.Channel = ch;
+        this.Frequency = freq;
+      }
+    }
+
     private readonly Dictionary<string, ModelConstants> modelConstants = new Dictionary<string, ModelConstants>();
-    private readonly MappingPool<AnalogChannelDataMapping> analogMappings = new MappingPool<AnalogChannelDataMapping>("Analog");
-    private readonly MappingPool<DvbCtChannelDataMapping> dvbctMappings = new MappingPool<DvbCtChannelDataMapping>("DVB-C/T");
-    private readonly MappingPool<DvbSChannelDataMapping> dvbsMappings = new MappingPool<DvbSChannelDataMapping>("DVB-S");
-    private readonly MappingPool<DvbSChannelDataMapping> hdplusMappings = new MappingPool<DvbSChannelDataMapping>("AstraHDPlus");
+    private readonly MappingPool<DataMapping> analogMappings = new MappingPool<DataMapping>("Analog");
+    private readonly MappingPool<DataMapping> dvbctMappings = new MappingPool<DataMapping>("DVB-C/T");
+    private readonly MappingPool<DataMapping> dvbsMappings = new MappingPool<DataMapping>("DVB-S");
+    private readonly MappingPool<DataMapping> hdplusMappings = new MappingPool<DataMapping>("AstraHDPlus");
     private readonly MappingPool<DataMapping> analogFineTuneMappings = new MappingPool<DataMapping>("FineTune");
+    private readonly MappingPool<DataMapping> ptccableMappings = new MappingPool<DataMapping>("PTC");
+    private readonly MappingPool<DataMapping> transponderMappings = new MappingPool<DataMapping>("TransponderDataBase");
     private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT, SignalType.Mixed);
     private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC, SignalType.Mixed);
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC, SignalType.Mixed);
@@ -26,13 +38,14 @@ namespace ChanSort.Plugin.ScmFile
     private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD, SignalType.Mixed);
     private readonly Dictionary<int, decimal> avbtFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> avbcFrequency = new Dictionary<int, decimal>();
+    private readonly Dictionary<int, decimal> dvbcFrequency = new Dictionary<int, decimal>();
+    private readonly Dictionary<int, decimal> dvbtFrequency = new Dictionary<int, decimal>();
     private byte[] avbtFileContent;
     private byte[] avbcFileContent;
     private byte[] dvbtFileContent;
     private byte[] dvbcFileContent;
     private byte[] dvbsFileContent;
     private byte[] hdplusFileContent;
-    private UnsortedChannelMode unsortedChannelMode;
     private ModelConstants c;
 
     #region ctor()
@@ -61,15 +74,19 @@ namespace ChanSort.Plugin.ScmFile
         if (section.Name.StartsWith("Series:"))
           modelConstants.Add(section.Name, new ModelConstants(section));
         else if (section.Name.StartsWith("Analog:"))
-          analogMappings.AddMapping(new AnalogChannelDataMapping(section, len));
+          analogMappings.AddMapping(len, new DataMapping(section));
         else if (section.Name.StartsWith("DvbCT:"))
-          dvbctMappings.AddMapping(new DvbCtChannelDataMapping(section, len));
+          dvbctMappings.AddMapping(len, new DataMapping(section));
         else if (section.Name.StartsWith("DvbS:"))
-          dvbsMappings.AddMapping(new DvbSChannelDataMapping(section, len));
+          dvbsMappings.AddMapping(len, new DataMapping(section));
         else if (section.Name.StartsWith("FineTune:"))
-          analogFineTuneMappings.AddMapping(new DataMapping(section, len, null));
+          analogFineTuneMappings.AddMapping(len, new DataMapping(section));
         else if (section.Name.StartsWith("AstraHDPlusD:"))
-          hdplusMappings.AddMapping(new DvbSChannelDataMapping(section, len));
+          hdplusMappings.AddMapping(len, new DataMapping(section));
+        else if (section.Name.StartsWith("TransponderDataBase.dat:"))
+          transponderMappings.AddMapping(len, new DataMapping(section));
+        else if (section.Name.StartsWith("PTC:"))
+          ptccableMappings.AddMapping(len, new DataMapping(section));
       }
     }
     #endregion
@@ -85,8 +102,10 @@ namespace ChanSort.Plugin.ScmFile
         ReadAnalogFineTuning(zip);
         ReadAnalogChannels(zip, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
         ReadAnalogChannels(zip, "map-CableA", this.avbcChannels, out this.avbcFileContent, this.avbcFrequency);
-        ReadDvbctChannels(zip, "map-AirD", this.dvbtChannels, out this.dvbtFileContent);
-        ReadDvbctChannels(zip, "map-CableD", this.dvbcChannels, out this.dvbcFileContent);
+        ReadDvbTransponderFrequenciesFromPtc(zip, "PTCAIR", this.dvbtFrequency);
+        ReadDvbctChannels(zip, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
+        ReadDvbTransponderFrequenciesFromPtc(zip, "PTCCABLE", this.dvbcFrequency);
+        ReadDvbctChannels(zip, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
         ReadSatellites(zip);
         ReadTransponder(zip, "TransponderDataBase.dat");
         ReadTransponder(zip, "UserTransponderDataBase.dat");
@@ -250,7 +269,7 @@ namespace ChanSort.Plugin.ScmFile
 
 
     #region ReadAnalogFineTuning()
-    private unsafe void ReadAnalogFineTuning(ZipFile zip)
+    private void ReadAnalogFineTuning(ZipFile zip)
     {
       int entrySize = c.avbtFineTuneLength;
       if (entrySize == 0)
@@ -261,25 +280,22 @@ namespace ChanSort.Plugin.ScmFile
         return;
 
       var mapping = analogFineTuneMappings.GetMapping(c.avbtFineTuneLength);
-      fixed (byte* ptr = data)
+      mapping.SetDataPtr(data, 0);
+      int count = data.Length / c.avbtFineTuneLength;
+      for (int i = 0; i < count; i++)
       {
-        mapping.DataPtr = ptr;
-        int count = data.Length / mapping.DataLength;
-        for (int i = 0; i < count; i++)
-        {
-          bool isCable = mapping.GetFlag("offIsCable", "maskIsCable"); // HACK: this is just a guess
-          int slot = mapping.GetWord("offSlotNr");
-          float freq = mapping.GetFloat("offFrequency");
-          var dict = isCable ? avbcFrequency : avbtFrequency;
-          dict[slot] = (decimal)freq;
-          mapping.Next();
-        }
+        bool isCable = mapping.GetFlag("offIsCable", "maskIsCable"); // HACK: this is just a guess
+        int slot = mapping.GetWord("offSlotNr");
+        float freq = mapping.GetFloat("offFrequency");
+        var dict = isCable ? avbcFrequency : avbtFrequency;
+        dict[slot] = (decimal)freq;
+        mapping.BaseOffset += c.avbtFineTuneLength;
       }
     }
     #endregion
 
     #region ReadAnalogChannels()
-    private unsafe void ReadAnalogChannels(ZipFile zip, string fileName, ChannelList list, out byte[] data, Dictionary<int,decimal> freq)
+    private void ReadAnalogChannels(ZipFile zip, string fileName, ChannelList list, out byte[] data, Dictionary<int,decimal> freq)
     {
       data = null;
       int entrySize = c.avbtChannelLength;
@@ -291,48 +307,52 @@ namespace ChanSort.Plugin.ScmFile
         return;
 
       this.DataRoot.AddChannelList(list);
-      fixed (byte* ptr = data)
-      {
-        var rawChannel = analogMappings.GetMapping(entrySize);
-        rawChannel.DataPtr = ptr;
-        int count = data.Length / entrySize;
+      var rawChannel = analogMappings.GetMapping(entrySize);
+      rawChannel.SetDataPtr(data, 0);
+      int count = data.Length / entrySize;
 
-        for (int slotIndex = 0; slotIndex < count; slotIndex++)
-        {
-          MapAnalogChannel(rawChannel, slotIndex, list, freq);
-          rawChannel.DataPtr += entrySize;
-        }
+      for (int slotIndex = 0; slotIndex < count; slotIndex++)
+      {
+        MapAnalogChannel(rawChannel, slotIndex, list, freq.TryGet(slotIndex));
+        rawChannel.BaseOffset += entrySize;
       }
     }
     #endregion
 
     #region MapAnalogChannel()
-    private unsafe void MapAnalogChannel(AnalogChannelDataMapping rawChannel, int slotIndex, ChannelList list, Dictionary<int,decimal> freq)
+    private void MapAnalogChannel(DataMapping rawChannel, int slotIndex, ChannelList list, decimal freq)
     {
-      if (!rawChannel.InUse)
+      AnalogChannel ci = new AnalogChannel(slotIndex, list.SignalSource, rawChannel, freq);
+      if (!ci.InUse)
         return;
-
-      if (rawChannel.Checksum != CalcChecksum(rawChannel.DataPtr, c.avbtChannelLength))
-        this.DataRoot.Warnings.AppendFormat("{0}: Incorrect checksum for channel index {1}\r\n", list, slotIndex);
-
-      ChannelInfo ci = new ChannelInfo(list.SignalSource, list.SignalType, slotIndex, rawChannel.ProgramNr, rawChannel.Name);
-      ci.FreqInMhz = (decimal)Math.Round(rawChannel.Frequency, 2);
-      if (ci.FreqInMhz == 0)
-        ci.FreqInMhz = freq.TryGet(ci.RecordIndex);
-      if (ci.FreqInMhz == 0)
-        ci.FreqInMhz = slotIndex;
-      ci.Lock = rawChannel.Lock;
-      ci.Skip = rawChannel.Skip;
-      ci.Favorites = rawChannel.Favorites;
 
       this.DataRoot.AddChannel(list, ci);
     }
-
     #endregion
 
 
+    #region ReadDvbTransponderFrequenciesFromPtc()
+    private void ReadDvbTransponderFrequenciesFromPtc(ZipFile zip, string file, IDictionary<int, decimal> table)
+    {
+      byte[] data = ReadFileContent(zip, file);
+      if (data == null)
+        return;
+
+      var mapping = ptccableMappings.GetMapping(c.ptcLength);
+      mapping.SetDataPtr(data, 0);
+      int count = data.Length / c.ptcLength;
+      for (int i = 0; i < count; i++)
+      {
+        int transp = mapping.GetWord("offChannelTransponder");
+        float freq = mapping.GetFloat("offFrequency");
+        table[transp] = (decimal)freq;
+        mapping.BaseOffset += c.ptcLength;
+      }
+    }
+    #endregion
+
     #region ReadDvbctChannels()
-    private unsafe void ReadDvbctChannels(ZipFile zip, string fileName, ChannelList list, out byte[] data)
+    private void ReadDvbctChannels(ZipFile zip, string fileName, ChannelList list, out byte[] data, Dictionary<int, decimal> frequency)
     {
       data = null;
       int entrySize = c.dvbtChannelLength;
@@ -344,204 +364,123 @@ namespace ChanSort.Plugin.ScmFile
         return;
       
       this.DataRoot.AddChannelList(list);
-      fixed (byte* ptr = data)
+      DataMapping rawChannel = dvbctMappings.GetMapping(entrySize);
+      rawChannel.SetDataPtr(data, 0);
+      int count = data.Length / entrySize;
+      for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        DvbCtChannelDataMapping rawChannel = dvbctMappings.GetMapping(entrySize);
-        rawChannel.DataPtr = ptr;
-        int count = data.Length / entrySize;
-        for (int slotIndex = 0; slotIndex < count; slotIndex++)
-        {
-          MapDvbctChannel(rawChannel, slotIndex, list);
-          rawChannel.Next();
-        }
+        DigitalChannel ci = new DigitalChannel(slotIndex, list.SignalSource, rawChannel, frequency);
+        if (ci.OldProgramNr != 0)
+          this.DataRoot.AddChannel(list, ci);
+
+        rawChannel.BaseOffset += entrySize;
       }
     }
     #endregion
 
-    #region MapDvbctChannel()
-    private unsafe void MapDvbctChannel(DvbCtChannelDataMapping rawChannel, int slotIndex, ChannelList list)
-    {
-      if (rawChannel.ProgramNr == 0)
-        return;
-      if (rawChannel.Checksum != CalcChecksum(rawChannel.DataPtr, rawChannel.DataLength))
-        this.DataRoot.Warnings.AppendFormat("{0}: Incorrect checksum for channel index {1}\r\n", list, slotIndex);
-
-      ChannelInfo ci = new ChannelInfo(list.SignalSource, list.SignalType, slotIndex, rawChannel.ProgramNr, rawChannel.Name);
-      ci.VideoPid = rawChannel.VideoPid;
-      ci.ServiceId = rawChannel.ServiceId;
-      ci.ServiceType = rawChannel.ServiceType;
-      ci.TransportStreamId = rawChannel.TransportStreamId;
-      ci.FreqInMhz = LookupData.Instance.GetDvbtTransponderFrequency(rawChannel.ChannelOrTransponder);
-      ci.OriginalNetworkId = rawChannel.OriginalNetworkId;
-      ci.Favorites = rawChannel.Favorites;
-      ci.Lock = rawChannel.Lock;
-      ci.ShortName = rawChannel.ShortName;
-      ci.SymbolRate = rawChannel.SymbolRate;
-      ci.Encrypted = rawChannel.Encrypted;
-      ci.ChannelOrTransponder = rawChannel.ChannelOrTransponder.ToString();
-
-      this.DataRoot.AddChannel(list, ci);
-    }
-
-    #endregion
-
 
     #region ReadSatellites()
-    private unsafe void ReadSatellites(ZipFile zip)
+    private void ReadSatellites(ZipFile zip)
     {
       byte[] data = ReadFileContent(zip, "SatDataBase.dat");
       if (data == null)
         return;
 
-      var utf16Encoding = new UnicodeEncoding(false, false);
-      fixed (byte* ptr = data)
+      SatelliteMapping satMapping = new SatelliteMapping(data, 4);
+      int count = data.Length/this.c.dvbsSatelliteLength;
+      for (int i = 0; i < count; i++)
       {
-        int count = data.Length/this.c.dvbsSatelliteLength;
-        for (int i = 0; i < count; i++)
-        {
-          SatDataBase* sat = (SatDataBase*)(ptr + 4 + i * this.c.dvbsSatelliteLength);
-          if (sat->Magic0x55 != 0x55)
-            throw new IOException("Unknown SatDataBase.dat format");
-          string name = utf16Encoding.GetString((byte*)sat->Name, 64*2);
-          string location = string.Format("{0}.{1}{2}", sat->LongitudeTimes10/10, sat->LongitudeTimes10%10, sat->IsWest != 0 ? "W" : "E");
+        if (satMapping.MagicMarker != 0x55)
+          throw new IOException("Unknown SatDataBase.dat format");        
+        string location = string.Format("{0}{1}", satMapping.Longitude, satMapping.IsEast ? "E" : "W");
 
-          Satellite satellite = new Satellite(sat->SatelliteNr);
-          satellite.Name = name;
-          satellite.OrbitalPosition = location;
-          this.DataRoot.Satellites.Add(sat->SatelliteNr, satellite);
-        }
+        Satellite satellite = new Satellite(satMapping.SatelliteNr);
+        satellite.Name = satMapping.Name;
+        satellite.OrbitalPosition = location;
+        this.DataRoot.Satellites.Add(satMapping.SatelliteNr, satellite);
+
+        satMapping.BaseOffset += this.c.dvbsSatelliteLength;
       }
     }
     #endregion
 
     #region ReadTransponder()
 
-    private unsafe void ReadTransponder(ZipFile zip, string fileName)
+    private void ReadTransponder(ZipFile zip, string fileName)
     {
       byte[] data = ReadFileContent(zip, fileName);
       if (data == null)
         return;
 
-      fixed (byte* ptr = data)
+      int count = (data.Length-4)/c.dvbsTransponderLength;
+      var mapping = this.transponderMappings.GetMapping(c.dvbsTransponderLength);
+      for (int i=0; i<count; i++)
       {
-        int count = data.Length/c.dvbsTransponderLength;
-        for (int i=0; i<count; i++)
+        mapping.SetDataPtr(data, 4 + i * c.dvbsTransponderLength);
+        if (mapping.GetByte("offMagicByte") == 0)
+          continue;
+
+        int transponderNr = (int)mapping.GetDword("offTransponderIndex");
+        if (transponderNr == 0)
+          continue;
+
+        int satelliteNr = (int)mapping.GetDword("offSatelliteIndex");
+        var sat = this.DataRoot.Satellites.TryGet(satelliteNr);
+        if (sat == null)
         {
-          int baseOffset = 4 + i*c.dvbsTransponderLength;
-          TransponderDataBase* trans = (TransponderDataBase*) (ptr + baseOffset);
-          if (trans->Magic0x55 == 0)
-            continue;
-
-          if (trans->TransponderNr == 0)
-            continue;
-
-          var sat = this.DataRoot.Satellites.TryGet(trans->SatelliteNr);
-          if (sat == null)
-          {
-            DataRoot.Warnings.Append(string.Format("Transponder #{0} references invalid satellite #{1}",
-                                                   trans->TransponderNr, trans->SatelliteNr));
-            continue;
-          }
-          Transponder transponder = new Transponder(trans->TransponderNr);
-          transponder.FrequencyInMhz = (uint) (trans->Frequency/1000);
-          transponder.Polarity = trans->IsVerticalPolarity == 1 ? 'V' : 'H';
-          transponder.SymbolRate = trans->SymbolRate/1000;
-          this.DataRoot.AddTransponder(sat, transponder);
+          DataRoot.Warnings.Append(string.Format("Transponder #{0} references invalid satellite #{1}",
+            transponderNr, satelliteNr));
+          continue;
         }
+        Transponder transponder = new Transponder(transponderNr);
+        transponder.FrequencyInMhz = (uint)(mapping.GetDword("offFrequency")/1000);
+        transponder.SymbolRate = (int) (mapping.GetDword("offSymbolRate")/1000);
+        this.DataRoot.AddTransponder(sat, transponder);
       }
     }
     #endregion
 
     #region ReadDvbsChannels()
-    private unsafe void ReadDvbsChannels(ZipFile zip)
+    private void ReadDvbsChannels(ZipFile zip)
     {
       this.dvbsFileContent = ReadFileContent(zip, "map-SateD");
       if (this.dvbsFileContent == null)
         return;
 
       this.DataRoot.AddChannelList(this.dvbsChannels);
-      fixed (byte* ptr = this.dvbsFileContent)
+      int entrySize = c.dvbsChannelLength;
+      int count = this.dvbsFileContent.Length/entrySize;
+      DataMapping mapping = dvbsMappings.GetMapping(entrySize);
+      mapping.SetDataPtr(dvbsFileContent, 0);
+      for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        int entrySize = c.dvbsChannelLength;
-        int count = this.dvbsFileContent.Length/entrySize;
-        DvbSChannelDataMapping mapping = dvbsMappings.GetMapping(entrySize);
-        mapping.DataPtr = ptr;
-        for (int slotIndex = 0; slotIndex < count; slotIndex++)
-        {
-          MapDvbsChannel(this.dvbsChannels, mapping, slotIndex);
-          mapping.Next();
-        }
+        SatChannel ci = new SatChannel(slotIndex, mapping, this.DataRoot);
+        if (ci.InUse)
+          this.DataRoot.AddChannel(this.dvbsChannels, ci);
+
+        mapping.BaseOffset += entrySize;
       }
     }
     #endregion
-
-    #region MapDvbsChannel()
-    private void MapDvbsChannel(ChannelList channelList, DvbSChannelDataMapping rawChannel, int slotIndex)
-    {
-      if (!rawChannel.InUse)
-        return;
-
-      Transponder transponder = this.DataRoot.Transponder.TryGet(rawChannel.TransponderNr);
-      Satellite satellite = transponder == null ? null : transponder.Satellite;
-      string satPosition = satellite != null ? satellite.OrbitalPosition : "#" + rawChannel.SatelliteNr;
-      
-      string satName = satellite != null ? satellite.Name : null;
-
-      ChannelInfo ci = new ChannelInfo(channelList.SignalSource, SignalType.Mixed, slotIndex, rawChannel.ProgramNr, rawChannel.Name);
-      ci.Satellite = satName;     
-      ci.SatPosition = satPosition;
-      ci.VideoPid = rawChannel.VideoPid;
-      ci.ServiceId = rawChannel.ServiceId;
-      ci.ServiceType = rawChannel.ServiceType;
-      ci.TransportStreamId = rawChannel.TransportStreamId;
-      ci.OriginalNetworkId = rawChannel.OriginalNetworkId;
-      ci.Favorites = rawChannel.Favorites;
-      ci.Encrypted = rawChannel.Encrypted;
-      ci.Lock = rawChannel.Lock;
-      ci.ShortName = rawChannel.ShortName;
-
-      if (transponder != null)
-      {
-        ci.Transponder = transponder;
-        ci.FreqInMhz = transponder.FrequencyInMhz;
-        ci.ChannelOrTransponder = this.GetTransponderChannelNumber((ushort)transponder.FrequencyInMhz);
-        ci.SymbolRate = transponder.SymbolRate;
-        ci.Polarity = transponder.Polarity;
-      }
-
-      this.DataRoot.AddChannel(channelList, ci);
-    }
-
-    #endregion
-
-    #region GetTransponderChannelNumber()
-    private string GetTransponderChannelNumber(ushort frequency)
-    {
-      int nr = LookupData.Instance.GetTransponderNumber(frequency);
-      return nr <= 0 ? "" : nr.ToString("d3");
-    }
-    #endregion
-
 
     #region ReadAstraHdPlusChannels()
-    private unsafe void ReadAstraHdPlusChannels(ZipFile zip)
+    private void ReadAstraHdPlusChannels(ZipFile zip)
     {
       this.hdplusFileContent = ReadFileContent(zip, "map-AstraHDPlusD");
       if (hdplusFileContent == null || c.hdplusChannelLength == 0)
         return;
 
       this.DataRoot.AddChannelList(this.hdplusChannels);
-      fixed (byte* ptr = hdplusFileContent)
+      int entrySize = c.hdplusChannelLength;
+      int count = hdplusFileContent.Length / entrySize;
+      DataMapping mapping = hdplusMappings.GetMapping(entrySize);
+      mapping.SetDataPtr(hdplusFileContent, 0);
+      for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        int entrySize = c.hdplusChannelLength;
-        int count = hdplusFileContent.Length / entrySize;
-        DvbSChannelDataMapping mapping = hdplusMappings.GetMapping(entrySize);
-        mapping.DataPtr = ptr;
-        for (int slotIndex = 0; slotIndex < count; slotIndex++)
-        {
-          MapDvbsChannel(this.hdplusChannels, mapping, slotIndex);
-          mapping.Next();
-        }
+        SatChannel ci = new SatChannel(slotIndex, mapping, this.DataRoot);
+        if (ci.InUse)
+          this.hdplusChannels.AddChannel(ci);
+        mapping.BaseOffset += entrySize;
       }
     }
     #endregion
@@ -562,13 +501,9 @@ namespace ChanSort.Plugin.ScmFile
     }
     #endregion
 
-
-    private unsafe delegate void UpdateFunc(ChannelInfo channelInfo, byte* fileContent);
-
     #region Save()
-    public override unsafe void Save(string tvOutputFile, string csvOutputFile, UnsortedChannelMode unsortedMode)
+    public override void Save(string tvOutputFile, string csvOutputFile)
     {
-      this.unsortedChannelMode = unsortedMode;
       if (tvOutputFile != this.FileName)
       {
         File.Copy(this.FileName, tvOutputFile);
@@ -577,19 +512,19 @@ namespace ChanSort.Plugin.ScmFile
       using (ZipFile zip = new ZipFile(tvOutputFile))
       {
         zip.BeginUpdate();
-        this.SaveChannels(zip, "map-AirA", this.avbtChannels, this.UpdateAnalogChannel, ref this.avbtFileContent);
-        this.SaveChannels(zip, "map-CableA", this.avbcChannels, this.UpdateAnalogChannel, ref this.avbcFileContent);
-        this.SaveChannels(zip, "map-AirD", this.dvbtChannels, this.UpdateDvbctChannel, ref this.dvbtFileContent);
-        this.SaveChannels(zip, "map-CableD", this.dvbcChannels, this.UpdateDvbctChannel, ref this.dvbcFileContent);
-        this.SaveChannels(zip, "map-SateD", this.dvbsChannels, this.UpdateDvbsChannel, ref this.dvbsFileContent);
-        this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, this.UpdateHdPlusChannel, ref this.hdplusFileContent);
+        this.SaveChannels(zip, "map-AirA", this.avbtChannels, ref this.avbtFileContent);
+        this.SaveChannels(zip, "map-CableA", this.avbcChannels, ref this.avbcFileContent);
+        this.SaveChannels(zip, "map-AirD", this.dvbtChannels, ref this.dvbtFileContent);
+        this.SaveChannels(zip, "map-CableD", this.dvbcChannels, ref this.dvbcFileContent);
+        this.SaveChannels(zip, "map-SateD", this.dvbsChannels, ref this.dvbsFileContent);
+        this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, ref this.hdplusFileContent);
         zip.CommitUpdate();
       }
     }
     #endregion
 
     #region SaveChannels()
-    private unsafe void SaveChannels(ZipFile zip, string fileName, ChannelList channels, UpdateFunc updateChannel, ref byte[] fileContent)
+    private void SaveChannels(ZipFile zip, string fileName, ChannelList channels, ref byte[] fileContent)
     {
       if (fileContent == null)
         return;
@@ -598,7 +533,7 @@ namespace ChanSort.Plugin.ScmFile
       string tempFilePath = Path.GetTempFileName();
       using (var stream = new FileStream(tempFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
       {
-        this.WriteChannels(channels, updateChannel, fileContent, stream);
+        this.WriteChannels(channels, fileContent, stream);
         stream.Flush();
         stream.Seek(0, SeekOrigin.Begin);
         int size = (int)new FileInfo(tempFilePath).Length;
@@ -611,122 +546,15 @@ namespace ChanSort.Plugin.ScmFile
     #endregion
 
     #region WriteChannels()
-    private unsafe void WriteChannels(ChannelList list, UpdateFunc updateChannel, byte[] fileContent, FileStream stream)
+    private void WriteChannels(ChannelList list, byte[] fileContent, FileStream stream)
     {
-      fixed (byte* ptr = fileContent)
+      foreach (var channel in list.Channels)
       {
-        int maxSlot = 0;
-        foreach (var channel in list.Channels.OrderBy(ChannelComparer))
-        {
-          if (channel.RecordIndex < 0) // channel only exists in reference list
-            continue;
-
-          int newProgNr;
-          if (channel.NewProgramNr == 0 && this.unsortedChannelMode == UnsortedChannelMode.Hide)
-            newProgNr = 0;
-          else
-          {
-            newProgNr = channel.NewProgramNr != 0 ? channel.NewProgramNr : ++maxSlot;
-            if (newProgNr > maxSlot)
-              maxSlot = channel.NewProgramNr;
-          }
-
-          var channels = new List<ChannelInfo>();
-          channels.Add(channel);
-          channels.AddRange(channel.Duplicates);
-          foreach (var channelInstance in channels)
-          {
-            channelInstance.OldProgramNr = newProgNr;
-            updateChannel(channelInstance, ptr);
-          }
-        }
-
-        stream.Write(fileContent, 0, fileContent.Length);
-#if false
-        if (count == 0 || count%padToPageSize != 0)
-        {
-          byte[] padding = new byte[(padToPageSize - count%padToPageSize) * entrySize];
-          stream.Write(padding, 0, padding.Length);
-        }
-#endif
+        channel.UpdateRawData();
+        channel.OldProgramNr = channel.NewProgramNr;
       }
-    }
-    #endregion
 
-    #region UpdateAnalogChannel()
-    private unsafe void UpdateAnalogChannel(ChannelInfo channel, byte* ptr)
-    {
-      AnalogChannelDataMapping raw = analogMappings.GetMapping(c.avbtChannelLength);
-      int startOffset = channel.RecordIndex * raw.DataLength;
-      raw.DataPtr = ptr + startOffset;
-      raw.ProgramNr = (ushort)channel.OldProgramNr;
-      raw.Favorites = channel.Favorites;
-      raw.Lock = channel.Lock;
-      raw.Checksum = CalcChecksum(raw.DataPtr, raw.DataLength);
-    }
-    #endregion
-
-    #region UpdateDvbctChannel()
-    private unsafe void UpdateDvbctChannel(ChannelInfo channel, byte* ptr)
-    {
-      DvbCtChannelDataMapping raw = dvbctMappings.GetMapping(c.dvbtChannelLength);
-      int startOffset = channel.RecordIndex * raw.DataLength;
-      raw.DataPtr = ptr + startOffset;
-      raw.ProgramNr = (ushort)channel.OldProgramNr;
-      raw.Favorites = channel.Favorites;
-      raw.Lock = channel.Lock;
-      raw.Checksum = CalcChecksum(raw.DataPtr, raw.DataLength);
-    }
-    #endregion
-
-    #region UpdateDvbsChannel()
-    private unsafe void UpdateDvbsChannel(ChannelInfo channel, byte* ptr)
-    {
-      DvbSChannelDataMapping raw = dvbsMappings.GetMapping(c.dvbsChannelLength);
-      int startOffset = channel.RecordIndex*raw.DataLength;
-      raw.DataPtr = (ptr + startOffset);
-      raw.ProgramNr = (ushort)channel.OldProgramNr;
-      raw.Favorites = channel.Favorites;
-      raw.Lock = channel.Lock;
-      raw.Checksum = CalcChecksum(raw.DataPtr, raw.DataLength);
-    }
-    #endregion
-
-    #region UpdateHdPlusChannel()
-    private unsafe void UpdateHdPlusChannel(ChannelInfo channel, byte* ptr)
-    {
-      DvbSChannelDataMapping raw = hdplusMappings.GetMapping(c.hdplusChannelLength);
-      int startOffset = channel.RecordIndex * raw.DataLength;
-      raw.DataPtr = (ptr + startOffset);
-      raw.ProgramNr = (ushort)channel.OldProgramNr;
-      raw.Favorites = channel.Favorites;
-      raw.Lock = channel.Lock;
-      raw.Checksum = CalcChecksum(raw.DataPtr, raw.DataLength);
-    }
-    #endregion
-
-    #region CalcChecksum()
-    private static unsafe byte CalcChecksum(byte* ptr, int length)
-    {
-      byte checksum = 0;
-      for (int i = 1; i < length; i++)
-        checksum += *ptr++;
-      return checksum;
-    }
-    #endregion
-
-    #region ChannelComparer()
-    private string ChannelComparer(ChannelInfo channel)
-    {
-      if (channel.NewProgramNr != 0)
-        return "A" + channel.NewProgramNr.ToString("d4");
-      if (channel.OldProgramNr != 0)
-      {
-        if (this.unsortedChannelMode == UnsortedChannelMode.AppendInOrder)
-          return "B" + channel.OldProgramNr.ToString("d4");
-        return "B" + channel.Name;
-      }
-      return "Z";
+      stream.Write(fileContent, 0, fileContent.Length);
     }
     #endregion
 

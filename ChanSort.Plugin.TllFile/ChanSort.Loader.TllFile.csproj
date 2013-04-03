@@ -8,8 +8,8 @@
     <ProjectGuid>{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChanSort.Plugin.TllFile</RootNamespace>
-    <AssemblyName>ChanSort.Plugin.TllFile</AssemblyName>
+    <RootNamespace>ChanSort.Loader.TllFile</RootNamespace>
+    <AssemblyName>ChanSort.Loader.TllFile</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -36,7 +36,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -68,11 +68,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActChannelDataMapping.cs" />
-    <Compile Include="ChannelDataMapping.cs" />
-    <Compile Include="DvbsChannelDataMapping.cs" />
-    <Compile Include="FirmwareDataMapping.cs" />
-    <Compile Include="ModelConstants.cs" />
+    <Compile Include="AnalogChannel.cs" />
+    <Compile Include="DtvChannel.cs" />
+    <Compile Include="DvbsDataLayout.cs" />
+    <Compile Include="FirmwareData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.de.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -84,10 +83,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="SatChannel.cs" />
+    <Compile Include="SatChannelListHeader.cs" />
+    <Compile Include="SatTransponder.cs" />
+    <Compile Include="TllChannelBase.cs" />
     <Compile Include="TllFileSerializer.cs" />
     <Compile Include="TllFileSerializer.sql.cs" />
     <Compile Include="TllFileSerializerPlugin.cs" />
-    <Compile Include="TllStructures.cs" />
     <Compile Include="TvSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

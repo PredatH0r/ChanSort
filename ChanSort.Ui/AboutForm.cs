@@ -29,7 +29,7 @@ For providing example TLL files, error feedback and other helpful information";
     private void gvPlugins_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
     {
       if (e.Column == this.colPlugin)
-        e.Value = (Path.GetFileName(e.Row.GetType().Assembly.Location) ?? "").Replace("ChanSort.Plugin.", "");
+        e.Value = (Path.GetFileName(e.Row.GetType().Assembly.Location) ?? "").Replace("ChanSort.Loader.", "");
     }
 
     private void picDonate_Click(object sender, System.EventArgs e)

@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using ChanSort.Plugin.TllFile;
+using ChanSort.Loader.TllFile;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Test.Plugin.TllFile
+namespace Test.Loader.TllFile
 {
   [TestClass]
   public class UnitTest1
@@ -52,10 +52,10 @@ namespace Test.Plugin.TllFile
         new ExpectedData(@"FranzSteinert\xxCS460S-ZA00001.TLL", 0, 0, 1261, 0, 200), // ?/68
         new ExpectedData(@"Klausi1\xxLK950S-ZA00001.TLL", 37, 390, 2695, 150, 491), // 184/68
         new ExpectedData(@"MP3Chris2712\xxLV570S-ZB00001.TLL", 0, 12, 2895, 0, 669), // 184/68
-        new ExpectedData(@"decklen\xxLW570S-ZD00001.TLL", 0, 30, 1587, 0, 339), // 184/68
+        new ExpectedData(@"decklen\xxLW570S-ZD00001.TLL", 0, 30, 1598, 0, 339), // 184/68
         new ExpectedData(@"NeuerScan\xxLM340S-ZA00001.TLL", 34, 317, 1698, 129, 264), // 188/68
         new ExpectedData(@"wagnale\xxLM611S-ZA00001.TLL", 0, 13, 1094, 0, 191), // 188/68
-        new ExpectedData(@"_Pred\xxLM620S-ZE00021.TLL", 0, 11, 1302, 0, 191), // 192/72
+        new ExpectedData(@"_Pred\xxLM620S-ZE00021.TLL", 0, 11, 1303, 0, 191), // 192/72
       };
 
       foreach (var entry in expected)
@@ -70,7 +70,8 @@ namespace Test.Plugin.TllFile
 
     #region TestLoadingAllTllFilesInTestFilesDirectory()
     [TestMethod]
-    [DeploymentItem("ChanSort.Plugin.TllFile\\ChanSort.Plugin.TllFile.ini")]
+    [DeploymentItem("ChanSort.Loader.TllFile\\ChanSort.Loader.TllFile.ini")]
+    [DeploymentItem("ChanSort.Loader.TllFile2\\ChanSort.Loader.TllFile2.ini")]
     public void TestLoadingAllTllFilesInTestFilesDirectory()
     {
       TllFileSerializerPlugin plugin = new TllFileSerializerPlugin();
@@ -78,10 +79,10 @@ namespace Test.Plugin.TllFile
       StringBuilder errors = new StringBuilder();
       var list = this.FindAllTllFiles();
       var models = new Dictionary<string,string>();
-      var firmwareSize = new Dictionary<uint, string>();
+      var firmwareSize = new Dictionary<int, string>();
       foreach(var file in list)
       {
-        if (file.Contains("GlobalClone"))
+        if (file.Contains("GlobalClone") || file.Contains("CountrySettings"))
           continue;
         Debug.Print("Testing " + file);
         try
@@ -103,14 +104,14 @@ namespace Test.Plugin.TllFile
           models[key] = relPath;
 
           var model = this.GetModel(file);
-          if (firmwareSize.ContainsKey(serializer.FirmwareDataLength))
+          if (firmwareSize.ContainsKey(serializer.FirmwareBlockSize))
           {
-            string x = firmwareSize[serializer.FirmwareDataLength];
+            string x = firmwareSize[serializer.FirmwareBlockSize];
             if (!x.Contains(model))
-              firmwareSize[serializer.FirmwareDataLength] = x + ", " + model;
+              firmwareSize[serializer.FirmwareBlockSize] = x + ", " + model;
           }
           else
-            firmwareSize[serializer.FirmwareDataLength] = model;
+            firmwareSize[serializer.FirmwareBlockSize] = model;
 
 
 

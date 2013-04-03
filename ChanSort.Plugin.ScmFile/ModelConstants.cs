@@ -1,6 +1,6 @@
 ﻿using ChanSort.Api;
 
-namespace ChanSort.Plugin.ScmFile
+namespace ChanSort.Loader.ScmFile
 {
   internal class ModelConstants
   {
@@ -13,12 +13,14 @@ namespace ChanSort.Plugin.ScmFile
     public readonly int avbtFineTuneLength;
     public readonly int dvbtFineTuneLength;
     public readonly Favorites supportedFavorites;
+    public readonly int ptcLength;
 
     public ModelConstants(IniFile.Section iniSection)
     {
       this.avbtChannelLength = iniSection.GetInt("map-AirA");
       this.dvbtChannelLength = iniSection.GetInt("map-AirD");
       this.dvbsChannelLength = iniSection.GetInt("map-SateD");
+      this.ptcLength = iniSection.GetInt("PTC");
       this.hdplusChannelLength = iniSection.GetInt("map-AstraHDPlusD");
       this.dvbsSatelliteLength = iniSection.GetInt("SatDataBase.dat");
       this.dvbsTransponderLength = iniSection.GetInt("TransponderDataBase.dat");

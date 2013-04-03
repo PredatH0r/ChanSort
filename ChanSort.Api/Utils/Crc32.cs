@@ -34,11 +34,11 @@
     #endregion
 
     #region CalcCrc32()
-    public static unsafe uint CalcCrc32(byte* block, int length)
+    public static uint CalcCrc32(byte[] block, int start, int length)
     {
       uint crc32 = CrcMask;
       for (int i = 0; i < length; i++)
-        crc32 = crc32Table[(crc32 & 0xff) ^ block[i]] ^ (crc32 >> 8);
+        crc32 = crc32Table[(crc32 & 0xff) ^ block[start + i]] ^ (crc32 >> 8);
       return crc32;
     }
     #endregion

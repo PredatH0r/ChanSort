@@ -2,7 +2,7 @@
 
 namespace ChanSort.Plugin.TllFile
 {
-  public class FirmwareDataMapping : DataMapping
+  public class FirmwareData : DataMapping
   {
     private const string offSize = "offSize";
     private const string offSystemLock = "offSystemLock";
@@ -10,20 +10,16 @@ namespace ChanSort.Plugin.TllFile
     private const string offHbbTvEnabled = "offHbbTvEnabled";
     private const string offHotelModeEnabled = "offHotelModeEnabled";
     private const string offHotelModeDtvUpdate = "offHotelModeDtvUpdate";
-    private const string offHotelMenuAccessCode = "offHotelMenuAccessCode";
-    private const string offHotelMenuPin = "offHotelMenuPin";
     private const string offSettingsChannelUpdate = "offSettingsChannelUpdate";
 
-    public FirmwareDataMapping(IniFile.Section settings, int structureLength) : 
-      base(settings, structureLength, null)
+    public FirmwareData(IniFile.Section settings) : 
+      base(settings)
     {
     }
 
-    public uint Size { get { return this.GetDword(offSize); } }
+    public long Size { get { return this.GetDword(offSize); } }
     public bool SystemLocked { get { return this.GetByte(offSystemLock) != 0; } }    
-    public string TvPassword { get { return CodeToString(this.GetDword(offTvPassword)); } }
-    public string HotelMenuAccessCode { get { return CodeToString(this.GetDword(offHotelMenuAccessCode)); } }
-    public string HotelMenuPin { get { return CodeToString(this.GetDword(offHotelMenuPin)); } }
+    public string TvPassword { get { return CodeToString((uint)this.GetDword(offTvPassword)); } }
 
 
     public bool SettingsAutomaticChannelUpdate

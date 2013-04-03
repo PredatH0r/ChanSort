@@ -2,17 +2,17 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: InternalsVisibleTo("Test.Loader.TllFile")]
+[assembly: InternalsVisibleTo("Test.Plugin.TllFile")]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ChanSort.Loader.TllFile")]
+[assembly: AssemblyTitle("ChanSort.Plugin.TllFile2")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ChanSort.Loader.TllFile")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyProduct("ChanSort.Plugin.TllFile2")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("387d8661-ecb3-4957-afca-9a156a90f384")]
+[assembly: Guid("f4702e0e-8277-44c6-b709-4d1c78654837")]
 
 // Version information for an assembly consists of the following four values:
 //

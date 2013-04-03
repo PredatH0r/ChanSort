@@ -9,8 +9,8 @@
     <ProjectGuid>{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Test.Plugin.TllFile</RootNamespace>
-    <AssemblyName>Test.Plugin.TllFile</AssemblyName>
+    <RootNamespace>Test.Loader.TllFile</RootNamespace>
+    <AssemblyName>Test.Loader.TllFile</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -76,10 +76,9 @@
       <Name>ChanSort.Api</Name>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Plugin.TllFile\ChanSort.Plugin.TllFile.csproj">
+    <ProjectReference Include="..\ChanSort.Plugin.TllFile\ChanSort.Loader.TllFile.csproj">
       <Project>{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}</Project>
-      <Name>ChanSort.Plugin.TllFile</Name>
-      <Private>True</Private>
+      <Name>ChanSort.Loader.TllFile</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,4 @@
-﻿#define SYMBOL_RATE_ROUNDING
-#undef STORE_DVBS_CHANNELS_IN_DATABASE
+﻿#define FIX_SYMBOL_RATE
 
 using System;
 using System.Collections.Generic;
@@ -10,9 +9,9 @@ using System.Text;
 using System.Windows.Forms;
 using ChanSort.Api;
 
-namespace ChanSort.Loader.TllFile
+namespace ChanSort.Plugin.TllFile
 {
-  public partial class TllFileSerializer : SerializerBase
+  public class TllFileSerializer : SerializerBase
   {
     private const long MaxFileSize = 2000000;
     private readonly string ERR_fileTooBig = Resource.TllFileSerializerPlugin_ERR_fileTooBig;
@@ -55,7 +54,7 @@ namespace ChanSort.Loader.TllFile
     private int deletedChannelsSoft;
     private int dvbsChannelsAtPr0;
 
-    private bool removeDeletedActChannels = false;
+    private bool removeDeletedActChannels;
 
     #region ctor()
     public TllFileSerializer(string inputFile) : base(inputFile)
@@ -123,10 +122,6 @@ namespace ChanSort.Loader.TllFile
       this.ReadDvbCtChannels(ref off);
       this.ReadDvbSBlock(ref off);
       this.ReadSettingsBlock(ref off);
-
-#if STORE_DVBS_CHANNELS_IN_DATABASE
-      this.StoreToDatabase();
-#endif
     }
 
     #endregion
@@ -353,7 +348,7 @@ namespace ChanSort.Loader.TllFile
       {
         if (data.SatIndex == 0xFF)
           continue;
-#if SYMBOL_RATE_ROUNDING
+#if FIX_SYMBOL_RATE
         ushort sr = (ushort)(data.SymbolRate & 0x7FFF);
         if (sr % 100 >= 95)
           data.SymbolRate = (ushort)((data.SymbolRate & 0x8000) | ((sr / 100 + 1) * 100));
@@ -389,13 +384,13 @@ namespace ChanSort.Loader.TllFile
       this.nextChannelIndex = new Dictionary<int, int>();
       for (int i = 0; i < satConfig.dvbsMaxChannelCount; i++)
       {
-        int offEntry = off + i*satConfig.sizeOfChannelLinkedListEntry;
+        int offEntry = off + i*satConfig.sizeOfChannelIndexTableEntry;
         int cur = BitConverter.ToUInt16(fileContent, offEntry + 4);
         if (cur != i)
           break;
         this.nextChannelIndex.Add(cur, BitConverter.ToUInt16(fileContent, offEntry + 2));
       }
-      off += satConfig.dvbsMaxChannelCount*satConfig.sizeOfChannelLinkedListEntry;
+      off += satConfig.dvbsMaxChannelCount*satConfig.sizeOfChannelIndexTableEntry;
     }
     #endregion
 

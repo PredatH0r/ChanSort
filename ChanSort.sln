@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Ui", "ChanSort.Ui\ChanSort.Ui.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort.Ui\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5} = {A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}
 		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE} = {E972D8A1-2F5F-421C-AC91-CFF45E5191BE}
@@ -9,42 +9,63 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Ui", "ChanSort.Ui\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Api", "ChanSort.Api\ChanSort.Api.csproj", "{DCCFFA08-472B-4D17-BB90-8F513FC01392}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Plugin.TllFile", "ChanSort.Plugin.TllFile\ChanSort.Plugin.TllFile.csproj", "{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.TllFile", "ChanSort.Plugin.TllFile\ChanSort.Loader.TllFile.csproj", "{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67AED502-8AEB-45F2-9B95-AC42B6A5D2C4}"
 	ProjectSection(SolutionItems) = preProject
-		FileFormat.docx = FileFormat.docx
 		readme.txt = readme.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Plugin.TllFile", "Test.Plugin.TllFile\Test.Plugin.TllFile.csproj", "{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.TllFile", "Test.Plugin.TllFile\Test.Loader.TllFile.csproj", "{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Plugin.ScmFile", "ChanSort.Plugin.ScmFile\ChanSort.Plugin.ScmFile.csproj", "{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.ScmFile", "ChanSort.Plugin.ScmFile\ChanSort.Loader.ScmFile.csproj", "{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = ChanSort1.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}.Debug|x86.ActiveCfg = Debug|x86
 		{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}.Debug|x86.Build.0 = Debug|x86
+		{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}.Release|x86.ActiveCfg = Release|x86
 		{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}.Release|x86.Build.0 = Release|x86
+		{DCCFFA08-472B-4D17-BB90-8F513FC01392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCCFFA08-472B-4D17-BB90-8F513FC01392}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCCFFA08-472B-4D17-BB90-8F513FC01392}.Debug|x86.ActiveCfg = Debug|x86
 		{DCCFFA08-472B-4D17-BB90-8F513FC01392}.Debug|x86.Build.0 = Debug|x86
+		{DCCFFA08-472B-4D17-BB90-8F513FC01392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCCFFA08-472B-4D17-BB90-8F513FC01392}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DCCFFA08-472B-4D17-BB90-8F513FC01392}.Release|x86.ActiveCfg = Release|Any CPU
+		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}.Debug|x86.ActiveCfg = Debug|x86
 		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}.Debug|x86.Build.0 = Debug|x86
+		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}.Release|x86.ActiveCfg = Release|Any CPU
+		{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}.Debug|x86.ActiveCfg = Debug|x86
 		{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}.Debug|x86.Build.0 = Debug|x86
+		{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Debug|x86.ActiveCfg = Debug|x86
 		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Debug|x86.Build.0 = Debug|x86
+		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

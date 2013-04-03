@@ -4,13 +4,24 @@ namespace ChanSort.Api
 {
   public abstract class SerializerBase
   {
+    public class SupportedFeatures
+    {
+      public bool EraseChannelData { get; set; }
+      public bool ChannelNameEdit { get; set; }
+      public bool FileInformation { get; set; }
+
+      public bool DeviceSettings { get; set; }
+    }
+
     private Encoding defaultEncoding;
 
     public string FileName { get; set; }
     public DataRoot DataRoot { get; protected set; }
+    public SupportedFeatures Features { get; private set; }
 
     protected SerializerBase(string inputFile)
     {
+      this.Features = new SupportedFeatures();
       this.FileName = inputFile;
       this.DataRoot = new DataRoot();
       this.defaultEncoding = Encoding.GetEncoding("iso-8859-9");
@@ -18,7 +29,7 @@ namespace ChanSort.Api
 
     public abstract string DisplayName { get; }
     public abstract void Load();
-    public abstract void Save(string tvOutputFile, string csvOutputFile, UnsortedChannelMode unsortedChannelMode);
+    public abstract void Save(string tvOutputFile, string csvOutputFile);
 
     public virtual Encoding DefaultEncoding
     {
@@ -26,13 +37,10 @@ namespace ChanSort.Api
       set { this.defaultEncoding = value; }
     }
 
-    public bool SupportsEraseChannelData { get; protected set; }
     public virtual void EraseChannelData() { }
 
     public virtual string GetFileInformation() { return ""; }
 
     public virtual void ShowDeviceSettingsForm(object parentWindow) { }
-
-    public bool SupportsChannelNameEdit { get; protected set; }
   }
 }

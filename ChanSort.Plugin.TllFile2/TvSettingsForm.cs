@@ -2,7 +2,7 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 
-namespace ChanSort.Loader.TllFile
+namespace ChanSort.Plugin.TllFile
 {
   public partial class TvSettingsForm : XtraForm
   {

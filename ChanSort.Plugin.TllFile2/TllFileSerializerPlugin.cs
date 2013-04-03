@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using ChanSort.Api;
 
-namespace ChanSort.Loader.TllFile
+namespace ChanSort.Plugin.TllFile
 {
   public class TllFileSerializerPlugin : ISerializerPlugin
   {

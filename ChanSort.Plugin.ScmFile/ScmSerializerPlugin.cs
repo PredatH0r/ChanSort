@@ -1,6 +1,6 @@
 ﻿using ChanSort.Api;
 
-namespace ChanSort.Plugin.ScmFile
+namespace ChanSort.Loader.ScmFile
 {
   public class ScmSerializerPlugin : ISerializerPlugin
   {

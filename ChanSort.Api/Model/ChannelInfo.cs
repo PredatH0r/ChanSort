@@ -11,8 +11,9 @@ namespace ChanSort.Api
     /// </summary>
     public readonly List<ChannelInfo> Duplicates = new List<ChannelInfo>();
 
-    public SignalSource SignalSource { get; private set; }
-    public SignalType SignalType { get; private set; }
+    public virtual bool IsDeleted { get; set; }
+    public SignalSource SignalSource { get; protected set; }
+    public SignalType SignalType { get; protected set; }
     public int RecordIndex { get; set; }
     public int RecordOrder { get; set; }
     public int OldProgramNr { get; set; }
@@ -42,6 +43,10 @@ namespace ChanSort.Api
     public bool IsNameModified { get; set; }
 
     #region ctor()
+    protected ChannelInfo()
+    {      
+    }
+
     /// <summary>
     /// Constructor for exiting TV channel
     /// </summary>
@@ -201,5 +206,13 @@ namespace ChanSort.Api
         this.AddDebug(ptr[i]);
     }
     #endregion
+
+    public virtual void UpdateRawData()
+    {
+    }
+
+    public virtual void ChangeEncoding(System.Text.Encoding encoding)
+    {     
+    }
   }
 }

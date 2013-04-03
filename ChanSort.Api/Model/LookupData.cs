@@ -46,13 +46,6 @@ namespace ChanSort.Api
     }
     #endregion
 
-    #region GetDvbtTransponderFrequency()
-    public int GetDvbtTransponderFrequency(int transponderNr)
-    {
-      return this.dvbtFreqInMhzByTransponder.TryGet(transponderNr);
-    }
-    #endregion
-
     #region GetServiceTypeDescription()
     public string GetServiceTypeDescription(int serviceType)
     {

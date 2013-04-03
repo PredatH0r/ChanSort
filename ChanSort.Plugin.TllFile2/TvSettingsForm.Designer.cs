@@ -1,4 +1,4 @@
-﻿namespace ChanSort.Loader.TllFile
+﻿namespace ChanSort.Plugin.TllFile
 {
   partial class TvSettingsForm
   {
