@@ -4,7 +4,6 @@ namespace ChanSort.Loader.ScmFile
 {
   internal class AnalogChannel : ScmChannelBase
   {
-    private const string _Skip = "Skip";
     private const string _Frequency = "offFrequency";
 
     #region ctor()
@@ -21,7 +20,6 @@ namespace ChanSort.Loader.ScmFile
         this.FreqInMhz = freq;
       if (this.FreqInMhz == 0) // fallback since Freq is part of the UID and requires a unique value
         this.FreqInMhz = slot;
-      this.Skip = mapping.GetFlag(_Skip);
       this.ChannelOrTransponder = "";
     }
 

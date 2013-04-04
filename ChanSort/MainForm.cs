@@ -22,7 +22,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    private const string Version = "v2013-04-03";
+    private const string Version = "v2013-04-04";
 
     #region enum EditMode
     private enum EditMode

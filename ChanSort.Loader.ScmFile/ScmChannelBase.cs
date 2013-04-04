@@ -107,6 +107,7 @@ namespace ChanSort.Loader.ScmFile
     public override void UpdateRawData()
     {
       mapping.SetDataPtr(this.rawData, this.baseOffset);
+      mapping.SetFlag(_InUse, this.InUse);
       mapping.SetWord(_ProgramNr, this.NewProgramNr);
       if (this.IsNameModified)
       {

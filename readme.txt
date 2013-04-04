@@ -1,19 +1,12 @@
-Version v2013-03-04 ========================================================
+Version v2013-04-04 ========================================================
 
-This version is a major release and includes a complete re-write of the code 
-for loading/saving TV-data files (SCM, TLL) and reference lists (CSV).
-
-New features:
-- added support for LG's LX-models
-- channel names can now be edited for both LG and Samsung 
-- menu item for (un-)setting favorite #5 for Samsung series E
+This is a bugfix release for major version v2013-04-03
 
 Bug fixes:
-- Samsung channel lists are now loaded/saved correctly 
-  (program numbers, favorites, locking, frequencies, ...)
-- loading a reference list for a Samsung .SCM file which contains both
-  air and cable channels or satellite and AstraHD+ lists caused the items
-  to be only applied to the first list (showing not-found channels in red)
+- Deleting channels for Samsung TVs now stores the files correctly (no longer
+  showing them all on Pr #0 on your TV)
+
+The complete change log can be found at the end of this document
 
 
 About ChanSort =============================================================
@@ -95,7 +88,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ====================================================================
 
-2013-03-04 (major release)
+2013-04-04
+- Deleting channels for Samsung TVs now stores the files correctly (no longer
+  showing them all on Pr #0 on your TV)
+
+
+2013-04-03 (major release)
 - complete re-write of the code for loading/saving TV-data files (SCM, TLL) 
   and reference lists (CSV).
 - added support for LG's LX-models
