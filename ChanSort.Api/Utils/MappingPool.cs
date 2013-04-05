@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace ChanSort.Api
 {
@@ -26,7 +26,7 @@ namespace ChanSort.Api
 
       T mapping;
       if (!mappings.TryGetValue(dataLength, out mapping) && throwException)
-        throw new Exception(string.Format(ERR_unknownACTChannelDataLength, this.caption, dataLength));
+        throw new FileLoadException(string.Format(ERR_unknownACTChannelDataLength, this.caption, dataLength));
       return mapping;
     }
   }

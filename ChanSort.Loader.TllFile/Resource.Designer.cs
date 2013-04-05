@@ -95,14 +95,5 @@ namespace ChanSort.Loader.TllFile {
                 return ResourceManager.GetString("TllFileSerializerPlugin_ERR_modelUnknown", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LG-Electronics *.tll Loader.
-        /// </summary>
-        internal static string TllFileSerializerPlugin_PluginName {
-            get {
-                return ResourceManager.GetString("TllFileSerializerPlugin_PluginName", resourceCulture);
-            }
-        }
     }
 }

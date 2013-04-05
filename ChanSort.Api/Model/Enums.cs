@@ -50,7 +50,7 @@ namespace ChanSort.Api
   {
     AppendInOrder=0,
     AppendAlphabetically=1,
-    Hide=2
+    MarkDeleted=2
   }
 
   public enum DvbServiceType

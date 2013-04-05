@@ -119,17 +119,17 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="labelControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 15</value>
+    <value>12, 92</value>
   </data>
   <data name="labelControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 13</value>
+    <value>78, 13</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="labelControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="labelControl1.Text" xml:space="preserve">
-    <value>Latest version:</value>
+    <value>Project website:</value>
   </data>
   <data name="&gt;&gt;labelControl1.Name" xml:space="preserve">
     <value>labelControl1</value>
@@ -144,34 +144,34 @@
     <value>9</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="hyperLinkEdit1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="lnkDownload.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="hyperLinkEdit1.EditValue" xml:space="preserve">
-    <value>http://beham.biz/ChanSort/</value>
+  <data name="lnkDownload.EditValue" xml:space="preserve">
+    <value>http://sourceforge.net/p/chansort/</value>
   </data>
-  <data name="hyperLinkEdit1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>144, 13</value>
+  <data name="lnkDownload.Location" type="System.Drawing.Point, System.Drawing">
+    <value>108, 90</value>
   </data>
-  <data name="hyperLinkEdit1.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
+  <data name="lnkDownload.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
     <value>Transparent</value>
   </data>
-  <data name="hyperLinkEdit1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>436, 18</value>
+  <data name="lnkDownload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>338, 18</value>
   </data>
-  <data name="hyperLinkEdit1.TabIndex" type="System.Int32, mscorlib">
+  <data name="lnkDownload.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;hyperLinkEdit1.Name" xml:space="preserve">
-    <value>hyperLinkEdit1</value>
+  <data name="&gt;&gt;lnkDownload.Name" xml:space="preserve">
+    <value>lnkDownload</value>
   </data>
-  <data name="&gt;&gt;hyperLinkEdit1.Type" xml:space="preserve">
+  <data name="&gt;&gt;lnkDownload.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.HyperLinkEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;hyperLinkEdit1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lnkDownload.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;hyperLinkEdit1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lnkDownload.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="gcPlugins.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -228,77 +228,68 @@
   <data name="&gt;&gt;gcPlugins.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.GridControl, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;gcPlugins.Parent" xml:space="preserve">
-    <value>xtraTabPage2</value>
+  <data name="lnkEmail.EditValue" xml:space="preserve">
+    <value>horst@beham.biz</value>
   </data>
-  <data name="&gt;&gt;gcPlugins.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="lnkEmail.Location" type="System.Drawing.Point, System.Drawing">
+    <value>108, 31</value>
   </data>
-  <data name="hyperLinkEdit2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="hyperLinkEdit2.EditValue" xml:space="preserve">
-    <value>http://www.lg-forum.com/lg-led-plasma-lcd-fernseher/5098-channeleditor-45.html</value>
-  </data>
-  <data name="hyperLinkEdit2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>144, 32</value>
-  </data>
-  <data name="hyperLinkEdit2.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
+  <data name="lnkEmail.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
     <value>Transparent</value>
   </data>
-  <data name="hyperLinkEdit2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>436, 18</value>
+  <data name="lnkEmail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 18</value>
   </data>
-  <data name="hyperLinkEdit2.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="lnkEmail.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
-  <data name="&gt;&gt;hyperLinkEdit2.Name" xml:space="preserve">
-    <value>hyperLinkEdit2</value>
+  <data name="&gt;&gt;lnkEmail.Name" xml:space="preserve">
+    <value>lnkEmail</value>
   </data>
-  <data name="&gt;&gt;hyperLinkEdit2.Type" xml:space="preserve">
+  <data name="&gt;&gt;lnkEmail.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.HyperLinkEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;hyperLinkEdit2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lnkEmail.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;hyperLinkEdit2.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="labelControl3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 34</value>
-  </data>
-  <data name="labelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>85, 13</value>
-  </data>
-  <data name="labelControl3.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="labelControl3.Text" xml:space="preserve">
-    <value>Online discussion:</value>
-  </data>
-  <data name="&gt;&gt;labelControl3.Name" xml:space="preserve">
-    <value>labelControl3</value>
-  </data>
-  <data name="&gt;&gt;labelControl3.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;labelControl3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;labelControl3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lnkEmail.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="labelControl4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 56</value>
+  <data name="labelControl2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
-  <data name="labelControl4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 13</value>
+  <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 13</value>
   </data>
-  <data name="labelControl4.TabIndex" type="System.Int32, mscorlib">
+  <data name="labelControl2.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="labelControl2.Text" xml:space="preserve">
+    <value>Program author:</value>
+  </data>
+  <data name="&gt;&gt;labelControl2.Name" xml:space="preserve">
+    <value>labelControl2</value>
+  </data>
+  <data name="&gt;&gt;labelControl2.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;labelControl2.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="labelControl4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 68</value>
+  </data>
+  <data name="labelControl4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 13</value>
+  </data>
+  <data name="labelControl4.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
   <data name="labelControl4.Text" xml:space="preserve">
-    <value>Contact:</value>
+    <value>License:</value>
   </data>
   <data name="&gt;&gt;labelControl4.Name" xml:space="preserve">
     <value>labelControl4</value>
@@ -312,17 +303,47 @@
   <data name="&gt;&gt;labelControl4.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="lnkLicense.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="lnkLicense.EditValue" xml:space="preserve">
+    <value>GNU GPLv3</value>
+  </data>
+  <data name="lnkLicense.Location" type="System.Drawing.Point, System.Drawing">
+    <value>108, 66</value>
+  </data>
+  <data name="lnkLicense.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
+    <value>Transparent</value>
+  </data>
+  <data name="lnkLicense.Size" type="System.Drawing.Size, System.Drawing">
+    <value>338, 18</value>
+  </data>
+  <data name="lnkLicense.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;lnkLicense.Name" xml:space="preserve">
+    <value>lnkLicense</value>
+  </data>
+  <data name="&gt;&gt;lnkLicense.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.HyperLinkEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;lnkLicense.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lnkLicense.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="labelControl5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>147, 56</value>
+    <value>12, 116</value>
   </data>
   <data name="labelControl5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 13</value>
+    <value>38, 13</value>
   </data>
   <data name="labelControl5.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>12</value>
   </data>
   <data name="labelControl5.Text" xml:space="preserve">
-    <value>User "Pred" @  www.lg-forum.com  |</value>
+    <value>Credits:</value>
   </data>
   <data name="&gt;&gt;labelControl5.Name" xml:space="preserve">
     <value>labelControl5</value>
@@ -334,49 +355,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelControl5.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="hyperLinkEdit3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="hyperLinkEdit3.EditValue" xml:space="preserve">
-    <value>mailto:horst@beham.biz</value>
-  </data>
-  <data name="hyperLinkEdit3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>328, 54</value>
-  </data>
-  <data name="hyperLinkEdit3.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
-    <value>Transparent</value>
-  </data>
-  <data name="hyperLinkEdit3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 18</value>
-  </data>
-  <data name="hyperLinkEdit3.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;hyperLinkEdit3.Name" xml:space="preserve">
-    <value>hyperLinkEdit3</value>
-  </data>
-  <data name="&gt;&gt;hyperLinkEdit3.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.HyperLinkEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;hyperLinkEdit3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;hyperLinkEdit3.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="txtCredits.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="txtCredits.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="txtCredits.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+    <value>108, 113</value>
   </data>
   <data name="txtCredits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 272</value>
+    <value>374, 120</value>
   </data>
   <data name="txtCredits.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>13</value>
   </data>
   <data name="&gt;&gt;txtCredits.Name" xml:space="preserve">
     <value>txtCredits</value>
@@ -385,117 +376,60 @@
     <value>DevExpress.XtraEditors.MemoEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;txtCredits.Parent" xml:space="preserve">
-    <value>xtraTabPage1</value>
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;txtCredits.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="xtraTabControl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="xtraTabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 134</value>
-  </data>
-  <data name="xtraTabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 272</value>
-  </data>
-  <data name="xtraTabPage1.Text" xml:space="preserve">
-    <value>Credits</value>
-  </data>
-  <data name="&gt;&gt;xtraTabPage1.Name" xml:space="preserve">
-    <value>xtraTabPage1</value>
-  </data>
-  <data name="&gt;&gt;xtraTabPage1.Type" xml:space="preserve">
-    <value>DevExpress.XtraTab.XtraTabPage, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;xtraTabPage1.Parent" xml:space="preserve">
-    <value>xtraTabControl1</value>
-  </data>
-  <data name="&gt;&gt;xtraTabPage1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="xtraTabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>568, 300</value>
-  </data>
-  <data name="xtraTabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="xtraTabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 272</value>
-  </data>
-  <data name="xtraTabPage2.Text" xml:space="preserve">
-    <value>Plugins</value>
-  </data>
-  <data name="&gt;&gt;xtraTabPage2.Name" xml:space="preserve">
-    <value>xtraTabPage2</value>
-  </data>
-  <data name="&gt;&gt;xtraTabPage2.Type" xml:space="preserve">
-    <value>DevExpress.XtraTab.XtraTabPage, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;xtraTabPage2.Parent" xml:space="preserve">
-    <value>xtraTabControl1</value>
-  </data>
-  <data name="&gt;&gt;xtraTabPage2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;xtraTabControl1.Name" xml:space="preserve">
-    <value>xtraTabControl1</value>
-  </data>
-  <data name="&gt;&gt;xtraTabControl1.Type" xml:space="preserve">
-    <value>DevExpress.XtraTab.XtraTabControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;xtraTabControl1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;xtraTabControl1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="picDonate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>214, 78</value>
+  <data name="simpleButton1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
-  <data name="picDonate.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
-    <value>Transparent</value>
+  <data name="simpleButton1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 210</value>
   </data>
-  <data name="picDonate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 58</value>
+  <data name="simpleButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
-  <data name="picDonate.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+  <data name="simpleButton1.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
   </data>
-  <data name="&gt;&gt;picDonate.Name" xml:space="preserve">
-    <value>picDonate</value>
+  <data name="simpleButton1.Text" xml:space="preserve">
+    <value>Close</value>
   </data>
-  <data name="&gt;&gt;picDonate.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.PictureEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  <data name="&gt;&gt;simpleButton1.Name" xml:space="preserve">
+    <value>simpleButton1</value>
   </data>
-  <data name="&gt;&gt;picDonate.Parent" xml:space="preserve">
+  <data name="&gt;&gt;simpleButton1.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;simpleButton1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;picDonate.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;simpleButton1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="labelControl2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 88</value>
+  <data name="labelControl3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 12</value>
   </data>
-  <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 13</value>
+  <data name="labelControl3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 13</value>
   </data>
-  <data name="labelControl2.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+  <data name="labelControl3.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
   </data>
-  <data name="labelControl2.Text" xml:space="preserve">
-    <value>If you like this program:</value>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Horst Beham</value>
   </data>
-  <data name="&gt;&gt;labelControl2.Name" xml:space="preserve">
-    <value>labelControl2</value>
+  <data name="&gt;&gt;labelControl3.Name" xml:space="preserve">
+    <value>labelControl3</value>
   </data>
-  <data name="&gt;&gt;labelControl2.Type" xml:space="preserve">
+  <data name="&gt;&gt;labelControl3.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;labelControl2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelControl3.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;labelControl2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;labelControl3.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -505,7 +439,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>592, 446</value>
+    <value>494, 245</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using ChanSort.Api;
 using DevExpress.XtraEditors;
 
@@ -10,7 +9,6 @@ namespace ChanSort.Ui
     public AboutForm(IList<ISerializerPlugin> plugins)
     {
       InitializeComponent();
-      this.picDonate.Image = Properties.Resources.Donate;
       this.gcPlugins.DataSource = plugins;
       
       this.txtCredits.Text = @"PDA-User:
@@ -26,23 +24,19 @@ Many more on lg-forum.com:
 For providing example TLL files, error feedback and other helpful information";
     }
 
-    private void gvPlugins_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
+    private void lnkLicense_OpenLink(object sender, DevExpress.XtraEditors.Controls.OpenLinkEventArgs e)
     {
-      if (e.Column == this.colPlugin)
-        e.Value = (Path.GetFileName(e.Row.GetType().Assembly.Location) ?? "").Replace("ChanSort.Loader.", "");
+      BrowserHelper.OpenUrl("http://www.gnu.org/licenses/gpl.html");
     }
 
-    private void picDonate_Click(object sender, System.EventArgs e)
+    private void lnkEmail_OpenLink(object sender, DevExpress.XtraEditors.Controls.OpenLinkEventArgs e)
     {
-      try
-      {
-        string fileName = Path.GetTempFileName() + ".html";
-        File.WriteAllText(fileName, Properties.Resources.paypal_button);
-        System.Diagnostics.Process.Start(fileName);
-      }
-      catch
-      {
-      }
+      BrowserHelper.OpenMail("mailto:horst@beham.biz&subject=ChanSort%20" + MainForm.AppVersion);
+    }
+
+    private void lnkDownload_OpenLink(object sender, DevExpress.XtraEditors.Controls.OpenLinkEventArgs e)
+    {
+      BrowserHelper.OpenUrl(this.lnkDownload.Text);
     }
   }
 }

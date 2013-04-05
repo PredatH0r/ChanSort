@@ -68,7 +68,7 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete all channel data.
+        ///   Looks up a localized string similar to Erase all channel data.
         /// </summary>
         internal static string MainForm_btnResetChannelData_Click_Caption {
             get {

@@ -14,6 +14,7 @@ namespace ChanSort.Loader.TllFile
 {
   public partial class TllFileSerializer : SerializerBase
   {
+    private const long DVBS_S2 = 0x0032532D53425644; // reverse of "DVBS-S2\0"
     private const long MaxFileSize = 2000000;
     private readonly string ERR_fileTooBig = Resource.TllFileSerializerPlugin_ERR_fileTooBig;
     private readonly string ERR_modelUnknown = Resource.TllFileSerializerPlugin_ERR_modelUnknown;
@@ -83,8 +84,6 @@ namespace ChanSort.Loader.TllFile
       this.DataRoot.AddChannelList(atvChannels);
       this.DataRoot.AddChannelList(dtvChannels);
       this.DataRoot.AddChannelList(radioChannels);
-      this.DataRoot.AddChannelList(satTvChannels);
-      this.DataRoot.AddChannelList(satRadioChannels);
     }
     #endregion
 
@@ -123,7 +122,7 @@ namespace ChanSort.Loader.TllFile
     {
       long fileSize = new FileInfo(this.FileName).Length;
       if (fileSize > MaxFileSize)
-        throw new InvalidOperationException(string.Format(ERR_fileTooBig, fileSize, MaxFileSize));
+        throw new FileLoadException(string.Format(ERR_fileTooBig, fileSize, MaxFileSize));
 
       this.fileContent = File.ReadAllBytes(this.FileName);
       int off = 0;
@@ -146,7 +145,7 @@ namespace ChanSort.Loader.TllFile
     private void ReadFileHeader(ref int off)
     {
       if (fileContent.Length < 4)
-        throw new InvalidOperationException(ERR_modelUnknown);
+        throw new FileLoadException(ERR_modelUnknown);
       if (BitConverter.ToUInt32(fileContent, off) == 0x5A5A5A5A)
         off += 4;
     }
@@ -184,7 +183,7 @@ namespace ChanSort.Loader.TllFile
     private void ReadDvbSBlock(ref int off)
     {
       int blockSize;
-      if (!IsDvbsBlock(off, out blockSize))
+      if (!IsDvbsBlock(ref off, out blockSize))
         return;
 
       this.dvbsBlockSize = blockSize;
@@ -259,7 +258,7 @@ namespace ChanSort.Loader.TllFile
     {
       long len = BitConverter.ToUInt32(fileContent, off);
       if (len < minSize || off + 4 + len > fileContent.Length)
-        throw new InvalidOperationException(ERR_modelUnknown);
+        throw new FileLoadException(ERR_modelUnknown);
       return (int)len;
     }
     #endregion
@@ -268,17 +267,17 @@ namespace ChanSort.Loader.TllFile
     private int GetActChannelRecordSize(int off, int blockSize, int channelCount)
     {
       if ((blockSize - 4) % channelCount != 0)
-        throw new InvalidOperationException(ERR_modelUnknown);
+        throw new FileLoadException(ERR_modelUnknown);
       int recordSize = (blockSize - 4) / channelCount;
       if (off + channelCount * recordSize > fileContent.Length)
-        throw new InvalidOperationException(ERR_modelUnknown);
+        throw new FileLoadException(ERR_modelUnknown);
       return recordSize;
     }
     #endregion
 
 
     #region IsDvbsBlock()
-    private bool IsDvbsBlock(int off, out int blockSize)
+    private bool IsDvbsBlock(ref int off, out int blockSize)
     {
       blockSize = 0;
       if (off >= fileContent.Length)
@@ -286,16 +285,30 @@ namespace ChanSort.Loader.TllFile
       blockSize = this.GetBlockSize(off);
       if (blockSize < 12)
         return false;
-      ulong blockId = BitConverter.ToUInt64(fileContent, off + 8);
-      if (blockId != 0x0032532D53425644) // reverse "DVBS-S2\0"
-        return false;
-      return true;
+      long blockId = BitConverter.ToInt64(fileContent, off + 8);
+      if (blockId == DVBS_S2)
+        return true;
+
+      if (blockId == -1)
+      {
+        this.satConfig = satConfigs.TryGet(blockSize);
+        if (this.satConfig != null)
+        {
+          this.EraseDvbsBlock(off);
+          this.UpdateDvbsChecksums();
+          return true;
+        }
+      }
+      return false;
     }
     #endregion
 
     #region ReadDvbsSubblocks()
     private void ReadDvbsSubblocks(ref int off)
     {
+      this.DataRoot.AddChannelList(satTvChannels);
+      this.DataRoot.AddChannelList(satRadioChannels);
+
       this.ScanDvbSSubBlockChecksums(off);
 
       // subblock 1 (DVBS header)
@@ -334,7 +347,7 @@ namespace ChanSort.Loader.TllFile
         uint fileCrc = BitConverter.ToUInt32(fileContent, off);
         uint calcCrc = Crc32.CalcCrc32(fileContent, off + 4, subblockLength);
         if (fileCrc != calcCrc)
-          throw new IOException(string.Format(ERR_wrongChecksum, calcCrc, fileCrc));
+          throw new FileLoadException(string.Format(ERR_wrongChecksum, calcCrc, fileCrc));
         off += 4 + subblockLength;
       }
     }
@@ -468,7 +481,84 @@ namespace ChanSort.Loader.TllFile
     #endregion
 
 
-    
+    #region EraseDvbsBlock()
+
+    /// <summary>
+    /// The model LM640T has the whole DVB-S2 block filled with 0xFF bytes, including the checksums.
+    /// When a file (even the originally saved one) is loaded back, the TV crashes and performs a factory reset.
+    /// </summary>
+    private void EraseDvbsBlock(int off)
+    {
+      this.dvbsBlockOffset = off;
+      this.dvbsBlockSize = satConfig.dvbsBlockTotalLength;
+      this.dvbsSubblockCrcOffset = new int[satConfig.dvbsSubblockLength.Length];
+
+      int p = this.dvbsBlockOffset + 4;
+      for (int i = 0; i < this.dvbsBlockSize; i++)
+        this.fileContent[p++] = 0;
+
+      using (MemoryStream stream = new MemoryStream(this.fileContent))
+      using (BinaryWriter wrt = new BinaryWriter(stream))
+      {
+        stream.Seek(this.dvbsBlockOffset+4, SeekOrigin.Begin); // skip length
+
+        // header
+        this.dvbsSubblockCrcOffset[0] = (int)stream.Position;
+        stream.Seek(4, SeekOrigin.Current); // skip CRC32
+        stream.Write(Encoding.ASCII.GetBytes("DVBS-S2\0"), 0, 8);
+        wrt.Write((ushort) 7);
+        wrt.Write((ushort) 4);
+
+        // satellite
+        this.dvbsSubblockCrcOffset[1] = (int)stream.Position;
+        stream.Seek(4, SeekOrigin.Current); // skip CRC32
+        stream.Seek(2 + satConfig.satCount/8 + 2 + 2 + satConfig.satCount + 2, SeekOrigin.Current);
+        for (int i = 0; i < satConfig.satCount; i++)
+        {
+          stream.Seek(36, SeekOrigin.Current);
+          wrt.Write((short) -1);
+          wrt.Write((short) -1);
+          stream.Seek(2 + 2, SeekOrigin.Current);
+        }
+
+        // transponders
+        this.dvbsSubblockCrcOffset[2] = (int)stream.Position;
+        stream.Seek(4, SeekOrigin.Current); // skip CRC32
+        stream.Seek(5*2 + satConfig.transponderCount/8, SeekOrigin.Current);
+        wrt.Write((short) -1);
+        wrt.Write((short) -1);
+        stream.Seek(2 + (satConfig.transponderCount - 1)*6 + 2, SeekOrigin.Current);
+        for (int i = 0; i < satConfig.transponderCount; i++)
+        {
+          wrt.Write(-1);
+          wrt.Write((ushort)0);
+          wrt.Write((short)-1);
+          wrt.Write((byte)0xfe);
+          for (int j = 9; j < satConfig.transponderLength; j++)
+            wrt.Write((byte)0xFF);
+        }
+
+        // channels
+        this.dvbsSubblockCrcOffset[3] = (int)stream.Position;
+        stream.Seek(4, SeekOrigin.Current); // skip CRC32
+        stream.Seek(12 + satConfig.dvbsMaxChannelCount/8, SeekOrigin.Current);
+        wrt.Write((short) -1);
+        wrt.Write((short) -1);
+        stream.Seek(4 + (satConfig.dvbsMaxChannelCount - 1)*8, SeekOrigin.Current);
+        for (int i = 0; i < satConfig.dvbsMaxChannelCount*satConfig.dvbsChannelLength; i++)
+          wrt.Write((byte) 0xFF);
+
+        // sat/LNB-config
+        this.dvbsSubblockCrcOffset[4] = (int)stream.Position;
+        stream.Seek(4, SeekOrigin.Current); // skip CRC32
+        stream.Seek(2, SeekOrigin.Current);
+        wrt.Write((byte) 1);
+        stream.Seek(satConfig.lnbCount/8 - 1, SeekOrigin.Current);
+      }
+    }
+    #endregion
+
+
     #region Save()
     public override void Save(string tvOutputFile, string csvOutputFile)
     {

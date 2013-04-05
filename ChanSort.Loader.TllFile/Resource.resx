@@ -107,9 +107,6 @@
   <data name="TllFileSerializerPlugin_ERR_fileTooBig" xml:space="preserve">
     <value>File size {0} is larger than allowed maxiumum of {1}</value>
   </data>
-  <data name="TllFileSerializerPlugin_PluginName" xml:space="preserve">
-    <value>LG-Electronics *.tll Loader</value>
-  </data>
   <data name="TllFileSerializer_ERR_dupeChannel" xml:space="preserve">
     <value>Channel #{0} (Pr# {1}) was erased because it is a duplicate of channel #{2} (Pr# {3}): {4}</value>
   </data>

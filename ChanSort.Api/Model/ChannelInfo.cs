@@ -96,7 +96,7 @@ namespace ChanSort.Api
 
     public override string ToString()
     {
-      return this.Name;
+      return this.NewProgramNr + ": " + this.Name;
     }
 
     public override bool Equals(object obj)

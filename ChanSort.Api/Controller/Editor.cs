@@ -122,15 +122,16 @@ namespace ChanSort.Api
       ChannelInfo lastInsertedChannel = null;
       int progNr = this.ChannelList.InsertProgramNumber;
       int relativeChannelNumber = 0;
-      foreach(var channel in this.ChannelList.Channels)
+      foreach(var channel in this.ChannelList.Channels.Where(c => c.NewProgramNr>=progNr).OrderBy(c=>c.NewProgramNr))
       {
-        if (channel.NewProgramNr != 0 && channel.NewProgramNr >= progNr)
+        //if (channel.NewProgramNr != 0 && channel.NewProgramNr >= progNr)
         {
           int gap = count - (channel.NewProgramNr - progNr - relativeChannelNumber);
-          if (gap <= 0)
-            break;
-          channel.NewProgramNr += gap;
-          ++relativeChannelNumber;
+          if (gap > 0)
+          {
+            channel.NewProgramNr += gap;
+            ++relativeChannelNumber;
+          }
         }
       }
 
@@ -154,24 +155,28 @@ namespace ChanSort.Api
 
     #region RemoveChannels()
 
-    public void RemoveChannels(IList<ChannelInfo> channels)
+    public void RemoveChannels(IList<ChannelInfo> channels, bool closeGap)
     {
       if (channels.Count == 0) return;
 
       this.ChannelList.InsertProgramNumber = channels[0].NewProgramNr;
+      var orderedChannelList = this.ChannelList.Channels.Where(c => c.NewProgramNr > 0).OrderBy(c => c.NewProgramNr);
       foreach (var channel in channels)
       {
         if (channel.NewProgramNr == 0)
           continue;
-        int prevNr = channel.NewProgramNr;
-        foreach (var channel2 in this.ChannelList.Channels)
+        if (closeGap)
         {
-          if (channel2.NewProgramNr > channel.NewProgramNr)
+          int prevNr = channel.NewProgramNr;
+          foreach (var channel2 in orderedChannelList)
           {
-            if (prevNr != -1 && channel2.NewProgramNr != prevNr + 1) // don't pull down numbers after a gap
-              break;
-            prevNr = channel2.NewProgramNr;
-            --channel2.NewProgramNr;
+            if (channel2.NewProgramNr > channel.NewProgramNr)
+            {
+              if (prevNr != -1 && channel2.NewProgramNr != prevNr + 1) // don't pull down numbers after a gap
+                break;
+              prevNr = channel2.NewProgramNr;
+              --channel2.NewProgramNr;
+            }
           }
         }
         channel.NewProgramNr = 0;
@@ -225,7 +230,7 @@ namespace ChanSort.Api
     #endregion
 
     #region SetSlotNumber()
-    public void SetSlotNumber(IList<ChannelInfo> channels, int slot, bool swap)
+    public void SetSlotNumber(IList<ChannelInfo> channels, int slot, bool swap, bool closeGap)
     {
       if (channels.Count == 0) return;
       if (swap)
@@ -243,7 +248,7 @@ namespace ChanSort.Api
       }
       else
       {
-        this.RemoveChannels(channels);
+        this.RemoveChannels(channels, closeGap);
         this.ChannelList.InsertProgramNumber = slot;
         this.AddChannels(channels);
       }
@@ -266,7 +271,7 @@ namespace ChanSort.Api
 
         var list = new List<ChannelInfo>();
         list.Add(channel);
-        this.RemoveChannels(list);
+        this.RemoveChannels(list, false);
         this.ChannelList.InsertProgramNumber = progNr++;
         this.AddChannels(list);
         this.DataRoot.NeedsSaving = true;
@@ -290,7 +295,7 @@ namespace ChanSort.Api
           if (appChannel.RecordIndex < 0)
             continue;
 
-          if (appChannel.NewProgramNr <= 0 && mode == UnsortedChannelMode.Hide)
+          if (appChannel.NewProgramNr <= 0 && mode == UnsortedChannelMode.MarkDeleted)
             continue;
 
           int progNr = GetNewProgramNr(appChannel, ref maxProgNr);
@@ -307,7 +312,7 @@ namespace ChanSort.Api
         return channel.NewProgramNr.ToString("d4");
 
       // eventually hide unsorted channels
-      if (this.unsortedChannelMode == UnsortedChannelMode.Hide)
+      if (this.unsortedChannelMode == UnsortedChannelMode.MarkDeleted)
         return "Z";
 
       // eventually append in old order
@@ -331,7 +336,7 @@ namespace ChanSort.Api
         maxPrNr = prNr;
       if (prNr == 0)
       {
-        if (appChannel.OldProgramNr != 0 && this.unsortedChannelMode != UnsortedChannelMode.Hide)
+        if (appChannel.OldProgramNr != 0 && this.unsortedChannelMode != UnsortedChannelMode.MarkDeleted)
           prNr = ++maxPrNr;
       }
       return prNr;

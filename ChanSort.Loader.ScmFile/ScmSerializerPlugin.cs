@@ -4,7 +4,7 @@ namespace ChanSort.Loader.ScmFile
 {
   public class ScmSerializerPlugin : ISerializerPlugin
   {
-    public string PluginName { get { return "Samsung *.scm Loader"; } }
+    public string PluginName { get { return "Samsung *.scm"; } }
     public string FileFilter { get { return "*.scm"; } }
     
     public SerializerBase CreateSerializer(string inputFile)

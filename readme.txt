@@ -1,10 +1,16 @@
-Version v2013-04-04 ========================================================
+Version v2013-04-05 ========================================================
 
-This is a bugfix release for major version v2013-04-03
+New:
+- Redesigned user interface
+- Editing option to close or keep gaps when moving/deleting channels
+- Support for LG LMxxxT models, which export an invalid DVB-S data block
+- Opening a file automatically shows the first non-empty channel list
+- Reloading a TV-file will show the last opened list
 
-Bug fixes:
-- Deleting channels for Samsung TVs now stores the files correctly (no longer
-  showing them all on Pr #0 on your TV)
+Fixed:
+- Deleting rows caused incorrect selections in the left list. Successive
+  deletes resulted in the loss of the first channel.
+- Duplicate Pr# was assigned to channels when they were added out of order
 
 The complete change log can be found at the end of this document
 
@@ -88,10 +94,19 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ====================================================================
 
+2013-04-05
+- Redesigned user interface
+- Editing option to close or keep gaps when moving/deleting channels
+- Support for LG LMxxxT models, which export an invalid DVB-S data block
+- Opening a file automatically shows the first non-empty channel list
+- Reloading a TV-file will show the last opened list
+- FIX: Deleting rows caused incorrect selections in the left list. Successive
+  deletes resulted in the loss of the first channel.
+- FIX: Duplicate Pr# was assigned to channels when they were added out of order
+
 2013-04-04
 - Deleting channels for Samsung TVs now stores the files correctly (no longer
   showing them all on Pr #0 on your TV)
-
 
 2013-04-03 (major release)
 - complete re-write of the code for loading/saving TV-data files (SCM, TLL) 

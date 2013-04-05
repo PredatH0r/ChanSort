@@ -13,6 +13,7 @@
     public readonly int lnbCount;
     public readonly int lnbLength;
     public readonly int[] dvbsSubblockLength;
+    public readonly int dvbsBlockTotalLength;
 
     public int LnbBlockHeaderSize = 12;
 
@@ -36,6 +37,9 @@
                                     12 + dvbsMaxChannelCount/8 + dvbsMaxChannelCount*sizeOfChannelLinkedListEntry + dvbsMaxChannelCount * dvbsChannelLength, // channels
                                     LnbBlockHeaderSize - 4 + lnbCount * lnbLength // sat/LNB-Config
                                   };
+      
+      foreach (int len in this.dvbsSubblockLength)
+        this.dvbsBlockTotalLength += len + 4;
     }
 
     /// <summary>

@@ -119,10 +119,10 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="labelControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 13</value>
+    <value>81, 13</value>
   </data>
   <data name="labelControl1.Text" xml:space="preserve">
-    <value>Aktuelle Version:</value>
+    <value>Projektwebseite:</value>
   </data>
   <data name="colDisplayText.Caption" xml:space="preserve">
     <value>Beschreibung</value>
@@ -130,33 +130,26 @@
   <data name="colFileTypes.Caption" xml:space="preserve">
     <value>Dateitypen</value>
   </data>
-  <data name="labelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>86, 13</value>
-  </data>
-  <data name="labelControl3.Text" xml:space="preserve">
-    <value>Online Diskussion:</value>
-  </data>
-  <data name="labelControl4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 13</value>
-  </data>
-  <data name="labelControl4.Text" xml:space="preserve">
-    <value>Kontakt:</value>
-  </data>
-  <data name="xtraTabPage1.Text" xml:space="preserve">
-    <value>Gruß und Dank</value>
-  </data>
-  <data name="xtraTabPage2.Text" xml:space="preserve">
-    <value>Erweiterungen</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="picDonate.EditValue" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 13</value>
+    <value>78, 13</value>
   </data>
   <data name="labelControl2.Text" xml:space="preserve">
-    <value>Wenn dir das Programm gefällt:</value>
+    <value>Programmautor:</value>
+  </data>
+  <data name="labelControl4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 13</value>
+  </data>
+  <data name="labelControl4.Text" xml:space="preserve">
+    <value>Lizenz:</value>
+  </data>
+  <data name="labelControl5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 13</value>
+  </data>
+  <data name="labelControl5.Text" xml:space="preserve">
+    <value>Referenzen:</value>
+  </data>
+  <data name="simpleButton1.Text" xml:space="preserve">
+    <value>Schließen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Über ChanSort</value>

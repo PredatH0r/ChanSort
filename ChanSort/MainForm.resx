@@ -123,16 +123,16 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="splitContainerControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 59</value>
+    <value>0, 109</value>
   </data>
   <metadata name="dsChannels.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>361, 17</value>
   </metadata>
-  <data name="gridOutput.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="gridLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="gridOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 85</value>
+  <data name="gridLeft.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 54</value>
   </data>
   <data name="colIndex1.Caption" xml:space="preserve">
     <value>Pr. index</value>
@@ -163,7 +163,7 @@
     <value>1</value>
   </data>
   <data name="colOutName.Width" type="System.Int32, mscorlib">
-    <value>180</value>
+    <value>158</value>
   </data>
   <data name="colOutFav.Caption" xml:space="preserve">
     <value>Favorites</value>
@@ -195,29 +195,44 @@
   <data name="colUid1.Caption" xml:space="preserve">
     <value>UID</value>
   </data>
-  <data name="gridOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>332, 436</value>
+  <data name="colOutLock.Caption" xml:space="preserve">
+    <value>Lock</value>
   </data>
-  <data name="gridOutput.TabIndex" type="System.Int32, mscorlib">
+  <data name="colOutLock.ToolTip" xml:space="preserve">
+    <value>Parental lock</value>
+  </data>
+  <data name="colOutLock.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colOutLock.VisibleIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="colOutLock.Width" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
+    <value>339, 417</value>
+  </data>
+  <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;gridOutput.Name" xml:space="preserve">
-    <value>gridOutput</value>
+  <data name="&gt;&gt;gridLeft.Name" xml:space="preserve">
+    <value>gridLeft</value>
   </data>
-  <data name="&gt;&gt;gridOutput.Type" xml:space="preserve">
+  <data name="&gt;&gt;gridLeft.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.GridControl, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;gridOutput.Parent" xml:space="preserve">
+  <data name="&gt;&gt;gridLeft.Parent" xml:space="preserve">
     <value>grpOutputList</value>
   </data>
-  <data name="&gt;&gt;gridOutput.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;gridLeft.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="lblHotkeyLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 521</value>
+    <value>2, 471</value>
   </data>
   <data name="lblHotkeyLeft.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -243,920 +258,6 @@
   <data name="&gt;&gt;lblHotkeyLeft.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="comboEditMode.EditValue" xml:space="preserve">
-    <value>Insert after</value>
-  </data>
-  <data name="comboEditMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 7</value>
-  </data>
-  <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>475, 17</value>
-  </metadata>
-  <data name="miFile.Caption" xml:space="preserve">
-    <value>&amp;File</value>
-  </data>
-  <data name="miOpen.Caption" xml:space="preserve">
-    <value>&amp;Open TV data file...</value>
-  </data>
-  <data name="miReload.Caption" xml:space="preserve">
-    <value>&amp;Reload</value>
-  </data>
-  <data name="miRestoreOriginal.Caption" xml:space="preserve">
-    <value>Restore backup</value>
-  </data>
-  <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>File &amp;information...</value>
-  </data>
-  <data name="miSave.Caption" xml:space="preserve">
-    <value>&amp;Save</value>
-  </data>
-  <data name="miSaveAs.Caption" xml:space="preserve">
-    <value>Save &amp;as...</value>
-  </data>
-  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Import reference list...</value>
-  </data>
-  <data name="miQuit.Caption" xml:space="preserve">
-    <value>&amp;Quit</value>
-  </data>
-  <data name="miEdit.Caption" xml:space="preserve">
-    <value>&amp;Edit</value>
-  </data>
-  <data name="miAddChannel.Caption" xml:space="preserve">
-    <value>&amp;Add channels</value>
-  </data>
-  <data name="miRemove.Caption" xml:space="preserve">
-    <value>&amp;Remove channels</value>
-  </data>
-  <data name="miReplace.Caption" xml:space="preserve">
-    <value>Re&amp;place channel</value>
-  </data>
-  <data name="miSort.Caption" xml:space="preserve">
-    <value>Sor&amp;t channels alphabetically</value>
-  </data>
-  <data name="miRenum.Caption" xml:space="preserve">
-    <value>Re&amp;number channels</value>
-  </data>
-  <data name="mnuFavSet.Caption" xml:space="preserve">
-    <value>Add to &amp;Favorites</value>
-  </data>
-  <data name="miFavSet.Caption" xml:space="preserve">
-    <value>Favoriten setzen</value>
-  </data>
-  <data name="mnuFavUnset.Caption" xml:space="preserve">
-    <value>Remove from Favorites</value>
-  </data>
-  <data name="miFavUnset.Caption" xml:space="preserve">
-    <value>Favoriten entfernen</value>
-  </data>
-  <data name="miLockOn.Caption" xml:space="preserve">
-    <value>&amp;Lock channel: on</value>
-  </data>
-  <data name="miLockOff.Caption" xml:space="preserve">
-    <value>Lock channel: off</value>
-  </data>
-  <data name="miSkipOn.Caption" xml:space="preserve">
-    <value>&amp;Skip channel: on</value>
-  </data>
-  <data name="miSkipOff.Caption" xml:space="preserve">
-    <value>Skip channel: off</value>
-  </data>
-  <data name="miHideOn.Caption" xml:space="preserve">
-    <value>&amp;Hide channel: on</value>
-  </data>
-  <data name="miHideOff.Caption" xml:space="preserve">
-    <value>Hide channel: off</value>
-  </data>
-  <data name="barSubItem2.Caption" xml:space="preserve">
-    <value>TV-Set</value>
-  </data>
-  <data name="miTvSettings.Caption" xml:space="preserve">
-    <value>Device setting...</value>
-  </data>
-  <data name="mnuOptions.Caption" xml:space="preserve">
-    <value>&amp;Settings</value>
-  </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
-    <value>&amp;Language</value>
-  </data>
-  <data name="miEnglish.Caption" xml:space="preserve">
-    <value>&amp;English</value>
-  </data>
-  <data name="miGerman.Caption" xml:space="preserve">
-    <value>&amp;Deutsch</value>
-  </data>
-  <data name="mnuCharset.Caption" xml:space="preserve">
-    <value>&amp;Character set</value>
-  </data>
-  <data name="miCharsetForm.Caption" xml:space="preserve">
-    <value>Alle &amp;Zeichensätze...</value>
-  </data>
-  <data name="miIsoCharSets.Caption" xml:space="preserve">
-    <value>ISO Zeichensätze</value>
-  </data>
-  <data name="mnuHelp.Caption" xml:space="preserve">
-    <value>&amp;Help</value>
-  </data>
-  <data name="miAbout.Caption" xml:space="preserve">
-    <value>&amp;About ChanSort...</value>
-  </data>
-  <data name="bar1.Text" xml:space="preserve">
-    <value>Tools</value>
-  </data>
-  <assembly alias="DevExpress.XtraBars.v12.2" name="DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
-        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
-        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
-        Xxl+0wEL
-</value>
-  </data>
-  <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
-        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
-        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
-        KphCYAEL
-</value>
-  </data>
-  <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
-        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
-        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
-        ZMgcwAEL
-</value>
-  </data>
-  <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
-        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
-        X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
-        WIeWYGkVXQEL
-</value>
-  </data>
-  <data name="barDockControlTop.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="barDockControlTop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="barDockControlTop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 25</value>
-  </data>
-  <data name="&gt;&gt;barDockControlTop.Name" xml:space="preserve">
-    <value>barDockControlTop</value>
-  </data>
-  <data name="&gt;&gt;barDockControlTop.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarDockControl, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;barDockControlTop.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;barDockControlTop.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="barDockControlBottom.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="barDockControlBottom.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 599</value>
-  </data>
-  <data name="barDockControlBottom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 0</value>
-  </data>
-  <data name="&gt;&gt;barDockControlBottom.Name" xml:space="preserve">
-    <value>barDockControlBottom</value>
-  </data>
-  <data name="&gt;&gt;barDockControlBottom.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarDockControl, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;barDockControlBottom.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;barDockControlBottom.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="barDockControlLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="barDockControlLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 25</value>
-  </data>
-  <data name="barDockControlLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 574</value>
-  </data>
-  <data name="&gt;&gt;barDockControlLeft.Name" xml:space="preserve">
-    <value>barDockControlLeft</value>
-  </data>
-  <data name="&gt;&gt;barDockControlLeft.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarDockControl, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;barDockControlLeft.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;barDockControlLeft.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="barDockControlRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="barDockControlRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1474, 25</value>
-  </data>
-  <data name="barDockControlRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 574</value>
-  </data>
-  <data name="&gt;&gt;barDockControlRight.Name" xml:space="preserve">
-    <value>barDockControlRight</value>
-  </data>
-  <data name="&gt;&gt;barDockControlRight.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarDockControl, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;barDockControlRight.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;barDockControlRight.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 599</value>
-  </data>
-  <data name="comboUnsortedAction.EditValue" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="comboUnsortedAction.Location" type="System.Drawing.Point, System.Drawing">
-    <value>511, 7</value>
-  </data>
-  <data name="comboUnsortedAction.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v12.2">
-    <value>Combo</value>
-  </data>
-  <data name="comboUnsortedAction.Properties.Items" xml:space="preserve">
-    <value>Append at end in current order</value>
-  </data>
-  <data name="comboUnsortedAction.Properties.Items1" xml:space="preserve">
-    <value>Append at end in alphabetical order</value>
-  </data>
-  <data name="comboUnsortedAction.Properties.Items2" xml:space="preserve">
-    <value>Delete (=set to Pr# 0)</value>
-  </data>
-  <data name="comboUnsortedAction.Size" type="System.Drawing.Size, System.Drawing">
-    <value>250, 20</value>
-  </data>
-  <data name="comboUnsortedAction.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;comboUnsortedAction.Name" xml:space="preserve">
-    <value>comboUnsortedAction</value>
-  </data>
-  <data name="&gt;&gt;comboUnsortedAction.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;comboUnsortedAction.Parent" xml:space="preserve">
-    <value>grpTopPanel</value>
-  </data>
-  <data name="&gt;&gt;comboUnsortedAction.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="labelControl3.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v12.2">
-    <value>Vertical</value>
-  </data>
-  <data name="labelControl3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>316, 10</value>
-  </data>
-  <data name="labelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>189, 13</value>
-  </data>
-  <data name="labelControl3.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="labelControl3.Text" xml:space="preserve">
-    <value>Channels not sorted explicitly:</value>
-  </data>
-  <data name="&gt;&gt;labelControl3.Name" xml:space="preserve">
-    <value>labelControl3</value>
-  </data>
-  <data name="&gt;&gt;labelControl3.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;labelControl3.Parent" xml:space="preserve">
-    <value>grpTopPanel</value>
-  </data>
-  <data name="&gt;&gt;labelControl3.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btnResetChannelData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>784, 6</value>
-  </data>
-  <data name="btnResetChannelData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 23</value>
-  </data>
-  <data name="btnResetChannelData.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="btnResetChannelData.Text" xml:space="preserve">
-    <value>Erase all channel data</value>
-  </data>
-  <data name="&gt;&gt;btnResetChannelData.Name" xml:space="preserve">
-    <value>btnResetChannelData</value>
-  </data>
-  <data name="&gt;&gt;btnResetChannelData.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;btnResetChannelData.Parent" xml:space="preserve">
-    <value>grpTopPanel</value>
-  </data>
-  <data name="&gt;&gt;btnResetChannelData.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="comboChannelList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>92, 7</value>
-  </data>
-  <data name="comboChannelList.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v12.2">
-    <value>Combo</value>
-  </data>
-  <data name="comboChannelList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 20</value>
-  </data>
-  <data name="comboChannelList.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;comboChannelList.Name" xml:space="preserve">
-    <value>comboChannelList</value>
-  </data>
-  <data name="&gt;&gt;comboChannelList.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;comboChannelList.Parent" xml:space="preserve">
-    <value>grpTopPanel</value>
-  </data>
-  <data name="&gt;&gt;comboChannelList.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="labelControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 10</value>
-  </data>
-  <data name="labelControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 13</value>
-  </data>
-  <data name="labelControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="labelControl1.Text" xml:space="preserve">
-    <value>Channel list:</value>
-  </data>
-  <data name="&gt;&gt;labelControl1.Name" xml:space="preserve">
-    <value>labelControl1</value>
-  </data>
-  <data name="&gt;&gt;labelControl1.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;labelControl1.Parent" xml:space="preserve">
-    <value>grpTopPanel</value>
-  </data>
-  <data name="&gt;&gt;labelControl1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="grpTopPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="grpTopPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 25</value>
-  </data>
-  <data name="grpTopPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 34</value>
-  </data>
-  <data name="grpTopPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="grpTopPanel.Text" xml:space="preserve">
-    <value>groupControl1</value>
-  </data>
-  <data name="&gt;&gt;grpTopPanel.Name" xml:space="preserve">
-    <value>grpTopPanel</value>
-  </data>
-  <data name="&gt;&gt;grpTopPanel.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;grpTopPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;grpTopPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - Channel List Editor for LG and Samsung TVs</value>
-  </data>
-  <data name="&gt;&gt;dsChannels.Name" xml:space="preserve">
-    <value>dsChannels</value>
-  </data>
-  <data name="&gt;&gt;dsChannels.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;gviewOutput.Name" xml:space="preserve">
-    <value>gviewOutput</value>
-  </data>
-  <data name="&gt;&gt;gviewOutput.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Views.Grid.GridView, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colIndex1.Name" xml:space="preserve">
-    <value>colIndex1</value>
-  </data>
-  <data name="&gt;&gt;colIndex1.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colOutSlot.Name" xml:space="preserve">
-    <value>colOutSlot</value>
-  </data>
-  <data name="&gt;&gt;colOutSlot.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colOutName.Name" xml:space="preserve">
-    <value>colOutName</value>
-  </data>
-  <data name="&gt;&gt;colOutName.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colOutFav.Name" xml:space="preserve">
-    <value>colOutFav</value>
-  </data>
-  <data name="&gt;&gt;colOutFav.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit1.Name" xml:space="preserve">
-    <value>repositoryItemCheckedComboBoxEdit1</value>
-  </data>
-  <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit1.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colUid1.Name" xml:space="preserve">
-    <value>colUid1</value>
-  </data>
-  <data name="&gt;&gt;colUid1.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;barManager1.Name" xml:space="preserve">
-    <value>barManager1</value>
-  </data>
-  <data name="&gt;&gt;barManager1.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarManager, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;bar1.Name" xml:space="preserve">
-    <value>bar1</value>
-  </data>
-  <data name="&gt;&gt;bar1.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.Bar, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFile.Name" xml:space="preserve">
-    <value>miFile</value>
-  </data>
-  <data name="&gt;&gt;miFile.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miOpen.Name" xml:space="preserve">
-    <value>miOpen</value>
-  </data>
-  <data name="&gt;&gt;miOpen.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miReload.Name" xml:space="preserve">
-    <value>miReload</value>
-  </data>
-  <data name="&gt;&gt;miReload.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miRestoreOriginal.Name" xml:space="preserve">
-    <value>miRestoreOriginal</value>
-  </data>
-  <data name="&gt;&gt;miRestoreOriginal.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFileInformation.Name" xml:space="preserve">
-    <value>miFileInformation</value>
-  </data>
-  <data name="&gt;&gt;miFileInformation.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miSave.Name" xml:space="preserve">
-    <value>miSave</value>
-  </data>
-  <data name="&gt;&gt;miSave.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miSaveAs.Name" xml:space="preserve">
-    <value>miSaveAs</value>
-  </data>
-  <data name="&gt;&gt;miSaveAs.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miOpenReferenceFile.Name" xml:space="preserve">
-    <value>miOpenReferenceFile</value>
-  </data>
-  <data name="&gt;&gt;miOpenReferenceFile.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miQuit.Name" xml:space="preserve">
-    <value>miQuit</value>
-  </data>
-  <data name="&gt;&gt;miQuit.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miEdit.Name" xml:space="preserve">
-    <value>miEdit</value>
-  </data>
-  <data name="&gt;&gt;miEdit.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miAddChannel.Name" xml:space="preserve">
-    <value>miAddChannel</value>
-  </data>
-  <data name="&gt;&gt;miAddChannel.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miRemove.Name" xml:space="preserve">
-    <value>miRemove</value>
-  </data>
-  <data name="&gt;&gt;miRemove.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miReplace.Name" xml:space="preserve">
-    <value>miReplace</value>
-  </data>
-  <data name="&gt;&gt;miReplace.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miSort.Name" xml:space="preserve">
-    <value>miSort</value>
-  </data>
-  <data name="&gt;&gt;miSort.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miRenum.Name" xml:space="preserve">
-    <value>miRenum</value>
-  </data>
-  <data name="&gt;&gt;miRenum.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;mnuFavSet.Name" xml:space="preserve">
-    <value>mnuFavSet</value>
-  </data>
-  <data name="&gt;&gt;mnuFavSet.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavSet.Name" xml:space="preserve">
-    <value>miFavSet</value>
-  </data>
-  <data name="&gt;&gt;miFavSet.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;mnuFavUnset.Name" xml:space="preserve">
-    <value>mnuFavUnset</value>
-  </data>
-  <data name="&gt;&gt;mnuFavUnset.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavUnset.Name" xml:space="preserve">
-    <value>miFavUnset</value>
-  </data>
-  <data name="&gt;&gt;miFavUnset.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miLockOn.Name" xml:space="preserve">
-    <value>miLockOn</value>
-  </data>
-  <data name="&gt;&gt;miLockOn.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miLockOff.Name" xml:space="preserve">
-    <value>miLockOff</value>
-  </data>
-  <data name="&gt;&gt;miLockOff.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miSkipOn.Name" xml:space="preserve">
-    <value>miSkipOn</value>
-  </data>
-  <data name="&gt;&gt;miSkipOn.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miSkipOff.Name" xml:space="preserve">
-    <value>miSkipOff</value>
-  </data>
-  <data name="&gt;&gt;miSkipOff.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miHideOn.Name" xml:space="preserve">
-    <value>miHideOn</value>
-  </data>
-  <data name="&gt;&gt;miHideOn.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miHideOff.Name" xml:space="preserve">
-    <value>miHideOff</value>
-  </data>
-  <data name="&gt;&gt;miHideOff.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;barSubItem2.Name" xml:space="preserve">
-    <value>barSubItem2</value>
-  </data>
-  <data name="&gt;&gt;barSubItem2.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miTvSettings.Name" xml:space="preserve">
-    <value>miTvSettings</value>
-  </data>
-  <data name="&gt;&gt;miTvSettings.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;mnuOptions.Name" xml:space="preserve">
-    <value>mnuOptions</value>
-  </data>
-  <data name="&gt;&gt;mnuOptions.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;barSubItem1.Name" xml:space="preserve">
-    <value>barSubItem1</value>
-  </data>
-  <data name="&gt;&gt;barSubItem1.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miEnglish.Name" xml:space="preserve">
-    <value>miEnglish</value>
-  </data>
-  <data name="&gt;&gt;miEnglish.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miGerman.Name" xml:space="preserve">
-    <value>miGerman</value>
-  </data>
-  <data name="&gt;&gt;miGerman.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;mnuCharset.Name" xml:space="preserve">
-    <value>mnuCharset</value>
-  </data>
-  <data name="&gt;&gt;mnuCharset.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miCharsetForm.Name" xml:space="preserve">
-    <value>miCharsetForm</value>
-  </data>
-  <data name="&gt;&gt;miCharsetForm.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miIsoCharSets.Name" xml:space="preserve">
-    <value>miIsoCharSets</value>
-  </data>
-  <data name="&gt;&gt;miIsoCharSets.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;mnuHelp.Name" xml:space="preserve">
-    <value>mnuHelp</value>
-  </data>
-  <data name="&gt;&gt;mnuHelp.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miAbout.Name" xml:space="preserve">
-    <value>miAbout</value>
-  </data>
-  <data name="&gt;&gt;miAbout.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;sharedImageCollection1.Name" xml:space="preserve">
-    <value>sharedImageCollection1</value>
-  </data>
-  <data name="&gt;&gt;sharedImageCollection1.Type" xml:space="preserve">
-    <value>DevExpress.Utils.SharedImageCollection, DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miMoveUp.Name" xml:space="preserve">
-    <value>miMoveUp</value>
-  </data>
-  <data name="&gt;&gt;miMoveUp.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miMoveDown.Name" xml:space="preserve">
-    <value>miMoveDown</value>
-  </data>
-  <data name="&gt;&gt;miMoveDown.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;gviewInput.Name" xml:space="preserve">
-    <value>gviewInput</value>
-  </data>
-  <data name="&gt;&gt;gviewInput.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Views.Grid.GridView, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colIndex.Name" xml:space="preserve">
-    <value>colIndex</value>
-  </data>
-  <data name="&gt;&gt;colIndex.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colSlotOld.Name" xml:space="preserve">
-    <value>colSlotOld</value>
-  </data>
-  <data name="&gt;&gt;colSlotOld.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colSlotNew.Name" xml:space="preserve">
-    <value>colSlotNew</value>
-  </data>
-  <data name="&gt;&gt;colSlotNew.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colName.Name" xml:space="preserve">
-    <value>colName</value>
-  </data>
-  <data name="&gt;&gt;colName.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colShortName.Name" xml:space="preserve">
-    <value>colShortName</value>
-  </data>
-  <data name="&gt;&gt;colShortName.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colFavorites.Name" xml:space="preserve">
-    <value>colFavorites</value>
-  </data>
-  <data name="&gt;&gt;colFavorites.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit2.Name" xml:space="preserve">
-    <value>repositoryItemCheckedComboBoxEdit2</value>
-  </data>
-  <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit2.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colLock.Name" xml:space="preserve">
-    <value>colLock</value>
-  </data>
-  <data name="&gt;&gt;colLock.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colSkip.Name" xml:space="preserve">
-    <value>colSkip</value>
-  </data>
-  <data name="&gt;&gt;colSkip.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colHidden.Name" xml:space="preserve">
-    <value>colHidden</value>
-  </data>
-  <data name="&gt;&gt;colHidden.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colEncrypted.Name" xml:space="preserve">
-    <value>colEncrypted</value>
-  </data>
-  <data name="&gt;&gt;colEncrypted.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colChannelOrTransponder.Name" xml:space="preserve">
-    <value>colChannelOrTransponder</value>
-  </data>
-  <data name="&gt;&gt;colChannelOrTransponder.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colFreqInMhz.Name" xml:space="preserve">
-    <value>colFreqInMhz</value>
-  </data>
-  <data name="&gt;&gt;colFreqInMhz.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colServiceId.Name" xml:space="preserve">
-    <value>colServiceId</value>
-  </data>
-  <data name="&gt;&gt;colServiceId.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colVideoPid.Name" xml:space="preserve">
-    <value>colVideoPid</value>
-  </data>
-  <data name="&gt;&gt;colVideoPid.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colAudioPid.Name" xml:space="preserve">
-    <value>colAudioPid</value>
-  </data>
-  <data name="&gt;&gt;colAudioPid.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colServiceType.Name" xml:space="preserve">
-    <value>colServiceType</value>
-  </data>
-  <data name="&gt;&gt;colServiceType.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colServiceTypeName.Name" xml:space="preserve">
-    <value>colServiceTypeName</value>
-  </data>
-  <data name="&gt;&gt;colServiceTypeName.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colSatellite.Name" xml:space="preserve">
-    <value>colSatellite</value>
-  </data>
-  <data name="&gt;&gt;colSatellite.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colNetworkId.Name" xml:space="preserve">
-    <value>colNetworkId</value>
-  </data>
-  <data name="&gt;&gt;colNetworkId.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colTransportStreamId.Name" xml:space="preserve">
-    <value>colTransportStreamId</value>
-  </data>
-  <data name="&gt;&gt;colTransportStreamId.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colSymbolRate.Name" xml:space="preserve">
-    <value>colSymbolRate</value>
-  </data>
-  <data name="&gt;&gt;colSymbolRate.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colPolarity.Name" xml:space="preserve">
-    <value>colPolarity</value>
-  </data>
-  <data name="&gt;&gt;colPolarity.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colUid.Name" xml:space="preserve">
-    <value>colUid</value>
-  </data>
-  <data name="&gt;&gt;colUid.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colNetworkName.Name" xml:space="preserve">
-    <value>colNetworkName</value>
-  </data>
-  <data name="&gt;&gt;colNetworkName.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colNetworkOperator.Name" xml:space="preserve">
-    <value>colNetworkOperator</value>
-  </data>
-  <data name="&gt;&gt;colNetworkOperator.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colDebug.Name" xml:space="preserve">
-    <value>colDebug</value>
-  </data>
-  <data name="&gt;&gt;colDebug.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colLogicalIndex.Name" xml:space="preserve">
-    <value>colLogicalIndex</value>
-  </data>
-  <data name="&gt;&gt;colLogicalIndex.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;defaultLookAndFeel1.Name" xml:space="preserve">
-    <value>defaultLookAndFeel1</value>
-  </data>
-  <data name="&gt;&gt;defaultLookAndFeel1.Type" xml:space="preserve">
-    <value>DevExpress.LookAndFeel.DefaultLookAndFeel, DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;splashScreenManager1.Name" xml:space="preserve">
-    <value>splashScreenManager1</value>
-  </data>
-  <data name="&gt;&gt;splashScreenManager1.Type" xml:space="preserve">
-    <value>DevExpress.XtraSplashScreen.SplashScreenManager, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;mnuContext.Name" xml:space="preserve">
-    <value>mnuContext</value>
-  </data>
-  <data name="&gt;&gt;mnuContext.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.PopupMenu, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MainForm</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <metadata name="sharedImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>600, 17</value>
   </metadata>
@@ -1168,7 +269,7 @@
         a2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAAChEZXZFeHByZXNzLlV0aWxzLkltYWdlQ29sbGVjdGlvblN0
         cmVhbWVyAgAAAAlJbWFnZVNpemUERGF0YQQHE1N5c3RlbS5EcmF3aW5nLlNpemUDAAAAAgIAAAAF/P//
         /xNTeXN0ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAwAAABAAAAAQAAAACQUAAAAP
-        BQAAABRDAAACDgMAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAARnQU1BAACxjwv8
+        BQAAAMBJAAACDgMAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAACukAAArpAf11ztMAAAAqdEVYdENyZWF0aW9uIFRpbWUATWkgMSBNcnogMjAwNiAx
         NToxMDo1MSArMDEwMP/NqUUAAAAHdElNRQfWAwEODCaDia/cAAACZ0lEQVQ4T82S7UsTUBSH75eCCAx6
         oTAqg7BMRKjoQ6S9Oa1I10gzU8PUZmYpKEamy8gCX8iS2YxqiRmREMrUltEoLdSMps458wXUEiW0UToN
@@ -1435,11 +536,25 @@
         yMjaykgkFrmycsvSbNrMdDIJvTNXwTk8Zqtf8fGBtTst9XHCeWlfCLKgcw10KO+X44IeFHbQ4vC0ZQKd
         BU25oE+nK5DlAjr9T4HMAlcqIFiBQAemTNAmuI07BW7Sq8HJggRT7Sz47uDNWhggoBjTQnov/f4bvmET
         bqiCRBvTQAWNQ3RZENP+Gf2EJXRlAqnS17lium7DHJaYmMb3KMxhiQ7dAovxvA/msGQsgTks2Yar6gWi
-        aB5TNw92LAAAAABJRU5ErkJggrkAAACJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAB
-        c1JHQgCuzhzpAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAE5JREFUOE/NjDEK
-        ACAMxPr/TyvSDK1YONGhgVsCOfvGuITMwV1DXhwsHXeAvNXBHlUD8mS0AXky2oA8GW1AHkykiCLkbQ8E
-        yB2cDNkrZhM78X2f66M48wAAAABJRU5ErkJggrUDAACJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAA
-        AB/z/2EAAAABc1JHQgCuzhzpAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvwAADr8BOAVTJAAAAAd0
+        aB5TNw92LAAAAABJRU5ErkJgggEEAACJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAB
+        c1JHQgCuzhzpAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAABp0RVh0U29mdHdh
+        cmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAADcElEQVQ4T22TfUzUdRzHf0cixdOhcqGWQYN8ILVyjoqt
+        cCqZohMk6Q6PxzgRROGgLj2OIwQlFSQTNSAYAYcHiBJJwGCjIkhE/qA2yD+I0ZU6HmKw8Tx49ePnprn1
+        x/v73+v1+X4/370F4HH+HB74rbyjDGPtSaLLIwkp/pDDpREYb+ipbq/C8tDC7Oys1X8Z6Zifn7fq+qOL
+        jIYUzjSncrYljYxmA6mNOvT1iSTUxBBVFkpKhZ7ue91fz8zMyJ4SdPbdIa1ez+W2bAwNScTeCCf6egia
+        qkN8VKEi0qwiyhyMqjiAmHwNHd0dTE9P50iCofHBZzKbTpHbloWu7hhHrodKYFRlMJEiHF4ehLosEGWJ
+        PweL97H3ki/JRSe5/+C+yKMQKm+bSW80oK9L4HCVWgLDRKi5t4GFhQU+b0wnsMiP/QW78MvbiW/uu/gY
+        vGn6uYm5uTmZkH7LyOnmFGlypFlJ2LUg8ar+fP/rd5IgtSaZvSK468o2dlx6B58v3mKLYROn89MZGxsT
+        hOiSCHF6IqHlB9FUqLn403mymjO5298pCcp/KSO93oiuJpE3z73BlszNvGpcR4hBzcjIiExQXQlEK275
+        UOkB4swaCfq//P3PX3imrmVD2it4pLix+9j7DA0NyQRl7gccqYzgQOEegq4GUHfnFrXttfQ/6JfAjp7b
+        3Gy9SVFTIS99/AJrTqxmpVaBv3Y/w8PDgqD5KgL1N0Hsubodn/Nvs/kTT9bGuWNqKZMEETlhuEQqUGic
+        cUlU4Jy0HLnGkdiMGEZHRwUhq+ocuy/sZNtFb7yzt7L17Gts/Gw919pNjwR5YazUPc+KRBGMd8Q+zg4n
+        lZzCykLGx8cF4ce7P/CecTte4oJeP7MRz1PrcE92xTdtByGZajYkrWdZghyH4/bYHn0OG81SvDRedHZ1
+        PvrGqakpQ0F1QcsmrSfuBldc9S+yWueC8/FlOEY7YB9rh22cCMbaYK2xxiPcg7zSPAYHB6VOLPZAGLAM
+        CCe+/FTmFrUGRfwKlmudcIx3wC7OlmeP2rA0xpolYUtYpVyF4YKB3t97ZeLznnRhMRMTE4LpW5OVn9aP
+        l0PdcAqWY6O0Qa6U46ZyIyAhgBJzCX19fY+L9JRgMZOTk0LPvR7MtWZyinLIyM0gOz8bU7WJ1rZWLBbL
+        w8UbP2EQ/gUmBYNGMnqJRAAAAABJRU5ErkJggrUDAACJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAA
+        AB/z/2EAAAABc1JHQgCuzhzpAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAAd0
         SU1FB9oLGQsqD9YxgrUAAAAHdEVYdEF1dGhvcgCprsxIAAAADHRFWHREZXNjcmlwdGlvbgATCSEjAAAA
         CnRFWHRDb3B5cmlnaHQArA/MOgAAAA50RVh0Q3JlYXRpb24gdGltZQA19w8JAAAACXRFWHRTb2Z0d2Fy
         ZQBdcP86AAAAC3RFWHREaXNjbGFpbWVyALfAtI8AAAAIdEVYdFdhcm5pbmcAwBvmhwAAAAd0RVh0U291
@@ -1454,14 +569,279 @@
         7zqNz1uHqrC6h3xrkBb/bapqvQTFczMKruCqKoYffrY/azAVqSmtdHHPrYVvIsNIGq01eiaij1BlFVr+
         rqc08Q584ayhHWNJCSvTHnh/iu3YGbZWhtlZF8sQTifsSKOl3pnogfxISBNZiT3wAa29m+hYmLycTGKR
         C+Jth0TZR0TmE0w1pVNnNfB8ZupfA42hmqLL/ZiVEZr8gXiwM9COtUyHvVxHrbkYZ2UxbvG00aHkHqD6
-        A6hW1582hiNtAAAAAElFTkSuQmCCCw==
+        A6hW1582hiNtAAAAAElFTkSuQmCCYAMAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAA
+        AAFzUkdCAK7OHOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAA68AAAOvAGVvHJJAAAAGnRFWHRTb2Z0
+        d2FyZQBQYWludC5ORVQgdjMuNS4xMDD0cqEAAALPSURBVDhPdY9bSFNxHMd9sMSkRHMrTDFjplmZilHg
+        tbzg9RTeyPCyWd6WoqVWCBkZDnFGpRS6zBR1Zbq01CKdYurwtpm31Cb9HqPAh/Po27f/2dZDLD/w5fw4
+        fL+fndl4F3eLzlR9rLqk1A5Jn01QUcvUjlw1jSLVFApNmTQ985snd7IaJ4hTavuF/olitchGQFLaq6hU
+        zyKwdhQeD8bhVjMFr/p5+DcuI1i1icCmVfg0LMD94TQ8a8bhXzuGwjYdjpf1NZgEnkVdyoYpQvngOko0
+        S7jR+xW33q2i8v0G7g4ZUT6wwd6tQNq5iKtt80hTzSKvQw9JsVppEhyTdymVkwTpB4JsiFD4iXBtkJCp
+        IaSojUho/4aLLSsIadIj6NEsfBXTSG2egXdJz2OTwDX+ZpS03cCPrRGapgmNOkLdBKFimJCnMSKtcw1R
+        zUsIblyAX50OpWo9whSf+SPx5dEmAcNOFCblUl4Y+PtjhBz264VsnN1PSH9tBNexjmiVINAjr2sRIQot
+        fyhCxgk789yMSZKsMvBVWkIR+xv5TJTV9wOp3ZuIa11FrnoFofVfeHFErtX4L3ZiJklqMfAVowQ5k+QO
+        EK70bEH69juCn8xvO0YW7Dr+C5PkcEnsS0pGCAXsK6RMkqYcwUB02K+17ESs5HDQRwaMjXgd9LFsrGCS
+        bK6yR4+M3i2UvtJhJiEEJIsDnRWbI0vAIhf6U3XUycmyseJAWdcckt8Yob5TDZLGgoJc2FhkjnDnJmJE
+        4nzb0rfCIa9jDqk9RnTIy0CJ/iCif5MYgGGJS72lb4VD6nMdn9FrhEJ+DxR7GhRzEhTla45wx/lDIxFV
+        W/pW2IrDZUlRT2f484oJGILcflN6OCgtzBx2z5+TbMc42ntZ+v/F7vCF65x7fuvLTGf7y9pAj8XlSD8I
+        Ee4C0f5Y1tljru6OLcs+lr0sriynLBFuNrax+QM2YLHCx6xDMQAAAABJRU5ErkJgggs=
 </value>
   </data>
-  <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>03/28/2013 23:00:31</value>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
   </data>
-  <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
-    <value>16, 16</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1474, 599</value>
+  </data>
+  <data name="rbInsertSwap.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 24</value>
+  </data>
+  <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>475, 17</value>
+  </metadata>
+  <data name="miFile.Caption" xml:space="preserve">
+    <value>&amp;File</value>
+  </data>
+  <data name="miOpen.Caption" xml:space="preserve">
+    <value>&amp;Open TV data file...</value>
+  </data>
+  <data name="miReload.Caption" xml:space="preserve">
+    <value>&amp;Reload</value>
+  </data>
+  <data name="miRestoreOriginal.Caption" xml:space="preserve">
+    <value>Restore backup</value>
+  </data>
+  <data name="miFileInformation.Caption" xml:space="preserve">
+    <value>File &amp;information...</value>
+  </data>
+  <data name="miSave.Caption" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="miSaveAs.Caption" xml:space="preserve">
+    <value>Save &amp;as...</value>
+  </data>
+  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
+    <value>Import reference list...</value>
+  </data>
+  <data name="miQuit.Caption" xml:space="preserve">
+    <value>&amp;Quit</value>
+  </data>
+  <data name="miEdit.Caption" xml:space="preserve">
+    <value>&amp;Edit</value>
+  </data>
+  <data name="miAddChannel.Caption" xml:space="preserve">
+    <value>&amp;Add channels</value>
+  </data>
+  <data name="miRemove.Caption" xml:space="preserve">
+    <value>&amp;Remove channels</value>
+  </data>
+  <data name="miSort.Caption" xml:space="preserve">
+    <value>Sor&amp;t channels alphabetically</value>
+  </data>
+  <data name="miRenum.Caption" xml:space="preserve">
+    <value>Re&amp;number channels</value>
+  </data>
+  <data name="mnuFavSet.Caption" xml:space="preserve">
+    <value>Add to &amp;Favorites</value>
+  </data>
+  <data name="miFavSet.Caption" xml:space="preserve">
+    <value>Favoriten setzen</value>
+  </data>
+  <data name="mnuFavUnset.Caption" xml:space="preserve">
+    <value>Remove from Favorites</value>
+  </data>
+  <data name="miFavUnset.Caption" xml:space="preserve">
+    <value>Favoriten entfernen</value>
+  </data>
+  <data name="miLockOn.Caption" xml:space="preserve">
+    <value>&amp;Lock channel: on</value>
+  </data>
+  <data name="miLockOff.Caption" xml:space="preserve">
+    <value>Lock channel: off</value>
+  </data>
+  <data name="miSkipOn.Caption" xml:space="preserve">
+    <value>&amp;Skip channel: on</value>
+  </data>
+  <data name="miSkipOff.Caption" xml:space="preserve">
+    <value>Skip channel: off</value>
+  </data>
+  <data name="miHideOn.Caption" xml:space="preserve">
+    <value>&amp;Hide channel: on</value>
+  </data>
+  <data name="miHideOff.Caption" xml:space="preserve">
+    <value>Hide channel: off</value>
+  </data>
+  <data name="barSubItem2.Caption" xml:space="preserve">
+    <value>TV-Set</value>
+  </data>
+  <data name="miTvSettings.Caption" xml:space="preserve">
+    <value>Device setting...</value>
+  </data>
+  <data name="miEraseChannelData.Caption" xml:space="preserve">
+    <value>Erase all channel data</value>
+  </data>
+  <data name="mnuOptions.Caption" xml:space="preserve">
+    <value>&amp;Settings</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>&amp;Language</value>
+  </data>
+  <data name="miEnglish.Caption" xml:space="preserve">
+    <value>&amp;English</value>
+  </data>
+  <data name="miGerman.Caption" xml:space="preserve">
+    <value>&amp;Deutsch</value>
+  </data>
+  <data name="mnuCharset.Caption" xml:space="preserve">
+    <value>&amp;Character set</value>
+  </data>
+  <data name="miCharsetForm.Caption" xml:space="preserve">
+    <value>Alle &amp;Zeichensätze...</value>
+  </data>
+  <data name="miIsoCharSets.Caption" xml:space="preserve">
+    <value>ISO Zeichensätze</value>
+  </data>
+  <data name="mnuHelp.Caption" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="miWiki.Caption" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="miOpenWebsite.Caption" xml:space="preserve">
+    <value>ChanSort website...</value>
+  </data>
+  <data name="miAbout.Caption" xml:space="preserve">
+    <value>&amp;About ChanSort...</value>
+  </data>
+  <data name="bar1.Text" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <assembly alias="DevExpress.XtraBars.v12.2" name="DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
+        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
+        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
+        Xxl+0wEL
+</value>
+  </data>
+  <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
+        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
+        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
+        KphCYAEL
+</value>
+  </data>
+  <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
+        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
+        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
+        ZMgcwAEL
+</value>
+  </data>
+  <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
+        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
+        X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
+        WIeWYGkVXQEL
+</value>
+  </data>
+  <data name="barDockControlTop.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="barDockControlTop.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="barDockControlTop.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1474, 31</value>
+  </data>
+  <data name="&gt;&gt;barDockControlTop.Name" xml:space="preserve">
+    <value>barDockControlTop</value>
+  </data>
+  <data name="&gt;&gt;barDockControlTop.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarDockControl, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;barDockControlTop.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;barDockControlTop.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="barDockControlBottom.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="barDockControlBottom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 599</value>
+  </data>
+  <data name="barDockControlBottom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1474, 0</value>
+  </data>
+  <data name="&gt;&gt;barDockControlBottom.Name" xml:space="preserve">
+    <value>barDockControlBottom</value>
+  </data>
+  <data name="&gt;&gt;barDockControlBottom.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarDockControl, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;barDockControlBottom.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;barDockControlBottom.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="barDockControlLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="barDockControlLeft.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 31</value>
+  </data>
+  <data name="barDockControlLeft.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 568</value>
+  </data>
+  <data name="&gt;&gt;barDockControlLeft.Name" xml:space="preserve">
+    <value>barDockControlLeft</value>
+  </data>
+  <data name="&gt;&gt;barDockControlLeft.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarDockControl, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;barDockControlLeft.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;barDockControlLeft.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="barDockControlRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="barDockControlRight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1474, 31</value>
+  </data>
+  <data name="barDockControlRight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 568</value>
+  </data>
+  <data name="&gt;&gt;barDockControlRight.Name" xml:space="preserve">
+    <value>barDockControlRight</value>
+  </data>
+  <data name="&gt;&gt;barDockControlRight.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarDockControl, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;barDockControlRight.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;barDockControlRight.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="miMoveUp.Caption" xml:space="preserve">
     <value>Move up</value>
@@ -1469,74 +849,150 @@
   <data name="miMoveDown.Caption" xml:space="preserve">
     <value>Move down</value>
   </data>
-  <data name="comboEditMode.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v12.2">
-    <value>Combo</value>
+  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
+    <value>swap</value>
   </data>
-  <data name="comboEditMode.Properties.Items" xml:space="preserve">
-    <value>Insert before</value>
+  <assembly alias="DevExpress.Data.v12.2" name="DevExpress.Data.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="rbInsertSwap.Properties.GlyphAlignment" type="DevExpress.Utils.HorzAlignment, DevExpress.Data.v12.2">
+    <value>Far</value>
   </data>
-  <data name="comboEditMode.Properties.Items1" xml:space="preserve">
-    <value>Insert after</value>
+  <data name="rbInsertSwap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 19</value>
   </data>
-  <data name="comboEditMode.Properties.Items2" xml:space="preserve">
-    <value>Swap</value>
-  </data>
-  <data name="comboEditMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 20</value>
-  </data>
-  <data name="comboEditMode.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;comboEditMode.Name" xml:space="preserve">
-    <value>comboEditMode</value>
-  </data>
-  <data name="&gt;&gt;comboEditMode.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;comboEditMode.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
-  </data>
-  <data name="&gt;&gt;comboEditMode.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="btnSyncFromLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>273, 34</value>
-  </data>
-  <data name="btnSyncFromLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 23</value>
-  </data>
-  <data name="btnSyncFromLeft.TabIndex" type="System.Int32, mscorlib">
+  <data name="rbInsertSwap.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <data name="btnSyncFromLeft.Text" xml:space="preserve">
-    <value>Filter &gt;</value>
+  <data name="&gt;&gt;rbInsertSwap.Name" xml:space="preserve">
+    <value>rbInsertSwap</value>
   </data>
-  <data name="btnSyncFromLeft.ToolTip" xml:space="preserve">
-    <value>Filter for current channel in right list</value>
+  <data name="&gt;&gt;rbInsertSwap.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;btnSyncFromLeft.Name" xml:space="preserve">
-    <value>btnSyncFromLeft</value>
+  <data name="&gt;&gt;rbInsertSwap.Parent" xml:space="preserve">
+    <value>grpTopPanel</value>
   </data>
-  <data name="&gt;&gt;btnSyncFromLeft.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  <data name="&gt;&gt;rbInsertSwap.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;btnSyncFromLeft.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
+  <data name="rbInsertAfter.EditValue" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="&gt;&gt;btnSyncFromLeft.ZOrder" xml:space="preserve">
+  <data name="rbInsertAfter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 24</value>
+  </data>
+  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
+    <value>after</value>
+  </data>
+  <data name="rbInsertAfter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 19</value>
+  </data>
+  <data name="rbInsertAfter.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;rbInsertAfter.Name" xml:space="preserve">
+    <value>rbInsertAfter</value>
+  </data>
+  <data name="&gt;&gt;rbInsertAfter.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;rbInsertAfter.Parent" xml:space="preserve">
+    <value>grpTopPanel</value>
+  </data>
+  <data name="&gt;&gt;rbInsertAfter.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="rbInsertBefore.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 5</value>
+  </data>
+  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
+    <value>before</value>
+  </data>
+  <data name="rbInsertBefore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 19</value>
+  </data>
+  <data name="rbInsertBefore.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;rbInsertBefore.Name" xml:space="preserve">
+    <value>rbInsertBefore</value>
+  </data>
+  <data name="&gt;&gt;rbInsertBefore.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;rbInsertBefore.Parent" xml:space="preserve">
+    <value>grpTopPanel</value>
+  </data>
+  <data name="&gt;&gt;rbInsertBefore.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cbCloseGap.EditValue" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbCloseGap.Location" type="System.Drawing.Point, System.Drawing">
+    <value>311, 25</value>
+  </data>
+  <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
+    <value>Close gap when moving/deleting a channel</value>
+  </data>
+  <data name="cbCloseGap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>322, 19</value>
+  </data>
+  <data name="cbCloseGap.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="cbCloseGap.ToolTip" xml:space="preserve">
+    <value>When active, all channels after the current one will be automatically renumbered</value>
+  </data>
+  <data name="&gt;&gt;cbCloseGap.Name" xml:space="preserve">
+    <value>cbCloseGap</value>
+  </data>
+  <data name="&gt;&gt;cbCloseGap.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbCloseGap.Parent" xml:space="preserve">
+    <value>grpTopPanel</value>
+  </data>
+  <data name="&gt;&gt;cbCloseGap.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cbAppendUnsortedChannels.EditValue" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbAppendUnsortedChannels.Location" type="System.Drawing.Point, System.Drawing">
+    <value>311, 4</value>
+  </data>
+  <data name="cbAppendUnsortedChannels.Properties.Caption" xml:space="preserve">
+    <value>Auto-append unsorted channels when saving file</value>
+  </data>
+  <data name="cbAppendUnsortedChannels.Size" type="System.Drawing.Size, System.Drawing">
+    <value>322, 19</value>
+  </data>
+  <data name="cbAppendUnsortedChannels.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;cbAppendUnsortedChannels.Name" xml:space="preserve">
+    <value>cbAppendUnsortedChannels</value>
+  </data>
+  <data name="&gt;&gt;cbAppendUnsortedChannels.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbAppendUnsortedChannels.Parent" xml:space="preserve">
+    <value>grpTopPanel</value>
+  </data>
+  <data name="&gt;&gt;cbAppendUnsortedChannels.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="labelControl2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>165, 10</value>
+    <value>7, 8</value>
   </data>
   <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 13</value>
+    <value>62, 13</value>
   </data>
   <data name="labelControl2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="labelControl2.Text" xml:space="preserve">
-    <value>Mode:</value>
+    <value>Insert mode:</value>
   </data>
   <data name="&gt;&gt;labelControl2.Name" xml:space="preserve">
     <value>labelControl2</value>
@@ -1545,178 +1001,112 @@
     <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl2.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
+    <value>grpTopPanel</value>
   </data>
   <data name="&gt;&gt;labelControl2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="btnClearLeftFilter.Appearance.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 8.25pt, style=Strikeout</value>
-  </data>
-  <data name="btnClearLeftFilter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 34</value>
-  </data>
-  <data name="btnClearLeftFilter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 23</value>
-  </data>
-  <data name="btnClearLeftFilter.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="btnClearLeftFilter.Text" xml:space="preserve">
-    <value>Filter</value>
-  </data>
-  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
-    <value>Reset filter</value>
-  </data>
-  <data name="&gt;&gt;btnClearLeftFilter.Name" xml:space="preserve">
-    <value>btnClearLeftFilter</value>
-  </data>
-  <data name="&gt;&gt;btnClearLeftFilter.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;btnClearLeftFilter.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
-  </data>
-  <data name="&gt;&gt;btnClearLeftFilter.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="btnRenum.Location" type="System.Drawing.Point, System.Drawing">
-    <value>147, 35</value>
-  </data>
-  <data name="btnRenum.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
-  </data>
-  <data name="btnRenum.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="btnRenum.Text" xml:space="preserve">
-    <value>1-999</value>
-  </data>
-  <data name="btnRenum.ToolTip" xml:space="preserve">
-    <value>Renumber selected channels</value>
-  </data>
-  <data name="&gt;&gt;btnRenum.Name" xml:space="preserve">
-    <value>btnRenum</value>
-  </data>
-  <data name="&gt;&gt;btnRenum.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;btnRenum.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
-  </data>
-  <data name="&gt;&gt;btnRenum.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="btnSort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>118, 34</value>
-  </data>
-  <data name="btnSort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
-  </data>
-  <data name="btnSort.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="btnSort.Text" xml:space="preserve">
-    <value>A-Z</value>
-  </data>
-  <data name="btnSort.ToolTip" xml:space="preserve">
-    <value>Sort selected channels alphabetically</value>
-  </data>
-  <data name="&gt;&gt;btnSort.Name" xml:space="preserve">
-    <value>btnSort</value>
-  </data>
-  <data name="&gt;&gt;btnSort.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;btnSort.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
-  </data>
-  <data name="&gt;&gt;btnSort.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="btnDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>34, 34</value>
+  <data name="picDonate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
-  <data name="btnDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
+  <data name="picDonate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1296, 8</value>
   </data>
-  <data name="btnDown.TabIndex" type="System.Int32, mscorlib">
+  <data name="picDonate.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
+    <value>Transparent</value>
+  </data>
+  <data name="picDonate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 54</value>
+  </data>
+  <data name="picDonate.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;picDonate.Name" xml:space="preserve">
+    <value>picDonate</value>
+  </data>
+  <data name="&gt;&gt;picDonate.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.PictureEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;picDonate.Parent" xml:space="preserve">
+    <value>grpTopPanel</value>
+  </data>
+  <data name="&gt;&gt;picDonate.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="btnDown.Text" xml:space="preserve">
-    <value>v</value>
+  <data name="tabChannelList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
-  <data name="btnDown.ToolTip" xml:space="preserve">
-    <value>Move selected channels down</value>
+  <data name="tabChannelList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 54</value>
   </data>
-  <data name="&gt;&gt;btnDown.Name" xml:space="preserve">
-    <value>btnDown</value>
+  <data name="pageEmpty.Size" type="System.Drawing.Size, System.Drawing">
+    <value>632, 0</value>
   </data>
-  <data name="&gt;&gt;btnDown.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  <data name="pageEmpty.Text" xml:space="preserve">
+    <value>No file loaded</value>
   </data>
-  <data name="&gt;&gt;btnDown.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
+  <data name="&gt;&gt;pageEmpty.Name" xml:space="preserve">
+    <value>pageEmpty</value>
   </data>
-  <data name="&gt;&gt;btnDown.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;pageEmpty.Type" xml:space="preserve">
+    <value>DevExpress.XtraTab.XtraTabPage, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="btnUp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 34</value>
+  <data name="&gt;&gt;pageEmpty.Parent" xml:space="preserve">
+    <value>tabChannelList</value>
   </data>
-  <data name="btnUp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
+  <data name="&gt;&gt;pageEmpty.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="btnUp.TabIndex" type="System.Int32, mscorlib">
+  <data name="tabChannelList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>638, 22</value>
+  </data>
+  <data name="tabChannelList.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="btnUp.Text" xml:space="preserve">
-    <value>^</value>
+  <data name="&gt;&gt;tabChannelList.Name" xml:space="preserve">
+    <value>tabChannelList</value>
   </data>
-  <data name="btnUp.ToolTip" xml:space="preserve">
-    <value>Move selected channels up</value>
+  <data name="&gt;&gt;tabChannelList.Type" xml:space="preserve">
+    <value>DevExpress.XtraTab.XtraTabControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;btnUp.Name" xml:space="preserve">
-    <value>btnUp</value>
+  <data name="&gt;&gt;tabChannelList.Parent" xml:space="preserve">
+    <value>grpTopPanel</value>
   </data>
-  <data name="&gt;&gt;btnUp.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;btnUp.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
-  </data>
-  <data name="&gt;&gt;btnUp.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;tabChannelList.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="btnRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>75, 34</value>
+  <data name="labelControl11.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v12.2">
+    <value>Vertical</value>
   </data>
-  <data name="btnRemove.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
+  <data name="labelControl11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>169, 8</value>
   </data>
-  <data name="btnRemove.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="labelControl11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 13</value>
   </data>
-  <data name="btnRemove.Text" xml:space="preserve">
-    <value>&gt;&gt;</value>
+  <data name="labelControl11.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="btnRemove.ToolTip" xml:space="preserve">
-    <value>Remove selected channels</value>
+  <data name="labelControl11.Text" xml:space="preserve">
+    <value>Set Pr#:</value>
   </data>
-  <data name="&gt;&gt;btnRemove.Name" xml:space="preserve">
-    <value>btnRemove</value>
+  <data name="labelControl11.ToolTip" xml:space="preserve">
+    <value>Program number for insert and set operations</value>
   </data>
-  <data name="&gt;&gt;btnRemove.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  <data name="&gt;&gt;labelControl11.Name" xml:space="preserve">
+    <value>labelControl11</value>
   </data>
-  <data name="&gt;&gt;btnRemove.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
+  <data name="&gt;&gt;labelControl11.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;btnRemove.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;labelControl11.Parent" xml:space="preserve">
+    <value>grpTopPanel</value>
+  </data>
+  <data name="&gt;&gt;labelControl11.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="txtSetSlot.Location" type="System.Drawing.Point, System.Drawing">
-    <value>90, 8</value>
+    <value>169, 24</value>
   </data>
   <data name="txtSetSlot.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v12.2">
     <value>OK</value>
@@ -1740,39 +1130,834 @@
     <value>DevExpress.XtraEditors.ButtonEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;txtSetSlot.Parent" xml:space="preserve">
-    <value>pnlEditControls</value>
+    <value>grpTopPanel</value>
   </data>
   <data name="&gt;&gt;txtSetSlot.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="labelControl11.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v12.2">
-    <value>Vertical</value>
+  <data name="grpTopPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
   </data>
-  <data name="labelControl11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 11</value>
+  <data name="grpTopPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 31</value>
   </data>
-  <data name="labelControl11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 13</value>
+  <data name="grpTopPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1474, 78</value>
   </data>
-  <data name="labelControl11.TabIndex" type="System.Int32, mscorlib">
+  <data name="grpTopPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="labelControl11.Text" xml:space="preserve">
-    <value>Set Pr#:</value>
+  <data name="grpTopPanel.Text" xml:space="preserve">
+    <value>groupControl1</value>
   </data>
-  <data name="labelControl11.ToolTip" xml:space="preserve">
-    <value>Program number for insert and set operations</value>
+  <data name="&gt;&gt;grpTopPanel.Name" xml:space="preserve">
+    <value>grpTopPanel</value>
   </data>
-  <data name="&gt;&gt;labelControl11.Name" xml:space="preserve">
-    <value>labelControl11</value>
+  <data name="&gt;&gt;grpTopPanel.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;labelControl11.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  <data name="&gt;&gt;grpTopPanel.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="&gt;&gt;labelControl11.Parent" xml:space="preserve">
+  <data name="&gt;&gt;grpTopPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - Channel List Editor for LG and Samsung TVs</value>
+  </data>
+  <data name="&gt;&gt;dsChannels.Name" xml:space="preserve">
+    <value>dsChannels</value>
+  </data>
+  <data name="&gt;&gt;dsChannels.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gviewLeft.Name" xml:space="preserve">
+    <value>gviewLeft</value>
+  </data>
+  <data name="&gt;&gt;gviewLeft.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Views.Grid.GridView, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colIndex1.Name" xml:space="preserve">
+    <value>colIndex1</value>
+  </data>
+  <data name="&gt;&gt;colIndex1.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colOutSlot.Name" xml:space="preserve">
+    <value>colOutSlot</value>
+  </data>
+  <data name="&gt;&gt;colOutSlot.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colOutName.Name" xml:space="preserve">
+    <value>colOutName</value>
+  </data>
+  <data name="&gt;&gt;colOutName.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colOutFav.Name" xml:space="preserve">
+    <value>colOutFav</value>
+  </data>
+  <data name="&gt;&gt;colOutFav.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit1.Name" xml:space="preserve">
+    <value>repositoryItemCheckedComboBoxEdit1</value>
+  </data>
+  <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit1.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colUid1.Name" xml:space="preserve">
+    <value>colUid1</value>
+  </data>
+  <data name="&gt;&gt;colUid1.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colOutLock.Name" xml:space="preserve">
+    <value>colOutLock</value>
+  </data>
+  <data name="&gt;&gt;colOutLock.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;sharedImageCollection1.Name" xml:space="preserve">
+    <value>sharedImageCollection1</value>
+  </data>
+  <data name="&gt;&gt;sharedImageCollection1.Type" xml:space="preserve">
+    <value>DevExpress.Utils.SharedImageCollection, DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
+    <value>gviewRight</value>
+  </data>
+  <data name="&gt;&gt;gviewRight.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Views.Grid.GridView, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colIndex.Name" xml:space="preserve">
+    <value>colIndex</value>
+  </data>
+  <data name="&gt;&gt;colIndex.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colSlotOld.Name" xml:space="preserve">
+    <value>colSlotOld</value>
+  </data>
+  <data name="&gt;&gt;colSlotOld.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colSlotNew.Name" xml:space="preserve">
+    <value>colSlotNew</value>
+  </data>
+  <data name="&gt;&gt;colSlotNew.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colName.Name" xml:space="preserve">
+    <value>colName</value>
+  </data>
+  <data name="&gt;&gt;colName.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colShortName.Name" xml:space="preserve">
+    <value>colShortName</value>
+  </data>
+  <data name="&gt;&gt;colShortName.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colFavorites.Name" xml:space="preserve">
+    <value>colFavorites</value>
+  </data>
+  <data name="&gt;&gt;colFavorites.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit2.Name" xml:space="preserve">
+    <value>repositoryItemCheckedComboBoxEdit2</value>
+  </data>
+  <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit2.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colLock.Name" xml:space="preserve">
+    <value>colLock</value>
+  </data>
+  <data name="&gt;&gt;colLock.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colSkip.Name" xml:space="preserve">
+    <value>colSkip</value>
+  </data>
+  <data name="&gt;&gt;colSkip.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colHidden.Name" xml:space="preserve">
+    <value>colHidden</value>
+  </data>
+  <data name="&gt;&gt;colHidden.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colEncrypted.Name" xml:space="preserve">
+    <value>colEncrypted</value>
+  </data>
+  <data name="&gt;&gt;colEncrypted.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colChannelOrTransponder.Name" xml:space="preserve">
+    <value>colChannelOrTransponder</value>
+  </data>
+  <data name="&gt;&gt;colChannelOrTransponder.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colFreqInMhz.Name" xml:space="preserve">
+    <value>colFreqInMhz</value>
+  </data>
+  <data name="&gt;&gt;colFreqInMhz.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colServiceId.Name" xml:space="preserve">
+    <value>colServiceId</value>
+  </data>
+  <data name="&gt;&gt;colServiceId.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colVideoPid.Name" xml:space="preserve">
+    <value>colVideoPid</value>
+  </data>
+  <data name="&gt;&gt;colVideoPid.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colAudioPid.Name" xml:space="preserve">
+    <value>colAudioPid</value>
+  </data>
+  <data name="&gt;&gt;colAudioPid.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colServiceType.Name" xml:space="preserve">
+    <value>colServiceType</value>
+  </data>
+  <data name="&gt;&gt;colServiceType.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colServiceTypeName.Name" xml:space="preserve">
+    <value>colServiceTypeName</value>
+  </data>
+  <data name="&gt;&gt;colServiceTypeName.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colSatellite.Name" xml:space="preserve">
+    <value>colSatellite</value>
+  </data>
+  <data name="&gt;&gt;colSatellite.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colNetworkId.Name" xml:space="preserve">
+    <value>colNetworkId</value>
+  </data>
+  <data name="&gt;&gt;colNetworkId.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colTransportStreamId.Name" xml:space="preserve">
+    <value>colTransportStreamId</value>
+  </data>
+  <data name="&gt;&gt;colTransportStreamId.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colSymbolRate.Name" xml:space="preserve">
+    <value>colSymbolRate</value>
+  </data>
+  <data name="&gt;&gt;colSymbolRate.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colPolarity.Name" xml:space="preserve">
+    <value>colPolarity</value>
+  </data>
+  <data name="&gt;&gt;colPolarity.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colUid.Name" xml:space="preserve">
+    <value>colUid</value>
+  </data>
+  <data name="&gt;&gt;colUid.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colNetworkName.Name" xml:space="preserve">
+    <value>colNetworkName</value>
+  </data>
+  <data name="&gt;&gt;colNetworkName.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colNetworkOperator.Name" xml:space="preserve">
+    <value>colNetworkOperator</value>
+  </data>
+  <data name="&gt;&gt;colNetworkOperator.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colDebug.Name" xml:space="preserve">
+    <value>colDebug</value>
+  </data>
+  <data name="&gt;&gt;colDebug.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colLogicalIndex.Name" xml:space="preserve">
+    <value>colLogicalIndex</value>
+  </data>
+  <data name="&gt;&gt;colLogicalIndex.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;barManager1.Name" xml:space="preserve">
+    <value>barManager1</value>
+  </data>
+  <data name="&gt;&gt;barManager1.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarManager, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;bar1.Name" xml:space="preserve">
+    <value>bar1</value>
+  </data>
+  <data name="&gt;&gt;bar1.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.Bar, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFile.Name" xml:space="preserve">
+    <value>miFile</value>
+  </data>
+  <data name="&gt;&gt;miFile.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miOpen.Name" xml:space="preserve">
+    <value>miOpen</value>
+  </data>
+  <data name="&gt;&gt;miOpen.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miReload.Name" xml:space="preserve">
+    <value>miReload</value>
+  </data>
+  <data name="&gt;&gt;miReload.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miRestoreOriginal.Name" xml:space="preserve">
+    <value>miRestoreOriginal</value>
+  </data>
+  <data name="&gt;&gt;miRestoreOriginal.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFileInformation.Name" xml:space="preserve">
+    <value>miFileInformation</value>
+  </data>
+  <data name="&gt;&gt;miFileInformation.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miSave.Name" xml:space="preserve">
+    <value>miSave</value>
+  </data>
+  <data name="&gt;&gt;miSave.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miSaveAs.Name" xml:space="preserve">
+    <value>miSaveAs</value>
+  </data>
+  <data name="&gt;&gt;miSaveAs.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miOpenReferenceFile.Name" xml:space="preserve">
+    <value>miOpenReferenceFile</value>
+  </data>
+  <data name="&gt;&gt;miOpenReferenceFile.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miQuit.Name" xml:space="preserve">
+    <value>miQuit</value>
+  </data>
+  <data name="&gt;&gt;miQuit.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miEdit.Name" xml:space="preserve">
+    <value>miEdit</value>
+  </data>
+  <data name="&gt;&gt;miEdit.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miAddChannel.Name" xml:space="preserve">
+    <value>miAddChannel</value>
+  </data>
+  <data name="&gt;&gt;miAddChannel.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miRemove.Name" xml:space="preserve">
+    <value>miRemove</value>
+  </data>
+  <data name="&gt;&gt;miRemove.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miSort.Name" xml:space="preserve">
+    <value>miSort</value>
+  </data>
+  <data name="&gt;&gt;miSort.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miRenum.Name" xml:space="preserve">
+    <value>miRenum</value>
+  </data>
+  <data name="&gt;&gt;miRenum.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;mnuFavSet.Name" xml:space="preserve">
+    <value>mnuFavSet</value>
+  </data>
+  <data name="&gt;&gt;mnuFavSet.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavSet.Name" xml:space="preserve">
+    <value>miFavSet</value>
+  </data>
+  <data name="&gt;&gt;miFavSet.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;mnuFavUnset.Name" xml:space="preserve">
+    <value>mnuFavUnset</value>
+  </data>
+  <data name="&gt;&gt;mnuFavUnset.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavUnset.Name" xml:space="preserve">
+    <value>miFavUnset</value>
+  </data>
+  <data name="&gt;&gt;miFavUnset.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miLockOn.Name" xml:space="preserve">
+    <value>miLockOn</value>
+  </data>
+  <data name="&gt;&gt;miLockOn.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miLockOff.Name" xml:space="preserve">
+    <value>miLockOff</value>
+  </data>
+  <data name="&gt;&gt;miLockOff.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miSkipOn.Name" xml:space="preserve">
+    <value>miSkipOn</value>
+  </data>
+  <data name="&gt;&gt;miSkipOn.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miSkipOff.Name" xml:space="preserve">
+    <value>miSkipOff</value>
+  </data>
+  <data name="&gt;&gt;miSkipOff.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miHideOn.Name" xml:space="preserve">
+    <value>miHideOn</value>
+  </data>
+  <data name="&gt;&gt;miHideOn.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miHideOff.Name" xml:space="preserve">
+    <value>miHideOff</value>
+  </data>
+  <data name="&gt;&gt;miHideOff.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;barSubItem2.Name" xml:space="preserve">
+    <value>barSubItem2</value>
+  </data>
+  <data name="&gt;&gt;barSubItem2.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miTvSettings.Name" xml:space="preserve">
+    <value>miTvSettings</value>
+  </data>
+  <data name="&gt;&gt;miTvSettings.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miEraseChannelData.Name" xml:space="preserve">
+    <value>miEraseChannelData</value>
+  </data>
+  <data name="&gt;&gt;miEraseChannelData.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;mnuOptions.Name" xml:space="preserve">
+    <value>mnuOptions</value>
+  </data>
+  <data name="&gt;&gt;mnuOptions.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;barSubItem1.Name" xml:space="preserve">
+    <value>barSubItem1</value>
+  </data>
+  <data name="&gt;&gt;barSubItem1.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miEnglish.Name" xml:space="preserve">
+    <value>miEnglish</value>
+  </data>
+  <data name="&gt;&gt;miEnglish.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miGerman.Name" xml:space="preserve">
+    <value>miGerman</value>
+  </data>
+  <data name="&gt;&gt;miGerman.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;mnuCharset.Name" xml:space="preserve">
+    <value>mnuCharset</value>
+  </data>
+  <data name="&gt;&gt;mnuCharset.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miCharsetForm.Name" xml:space="preserve">
+    <value>miCharsetForm</value>
+  </data>
+  <data name="&gt;&gt;miCharsetForm.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miIsoCharSets.Name" xml:space="preserve">
+    <value>miIsoCharSets</value>
+  </data>
+  <data name="&gt;&gt;miIsoCharSets.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;mnuHelp.Name" xml:space="preserve">
+    <value>mnuHelp</value>
+  </data>
+  <data name="&gt;&gt;mnuHelp.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miWiki.Name" xml:space="preserve">
+    <value>miWiki</value>
+  </data>
+  <data name="&gt;&gt;miWiki.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miOpenWebsite.Name" xml:space="preserve">
+    <value>miOpenWebsite</value>
+  </data>
+  <data name="&gt;&gt;miOpenWebsite.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miAbout.Name" xml:space="preserve">
+    <value>miAbout</value>
+  </data>
+  <data name="&gt;&gt;miAbout.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miMoveUp.Name" xml:space="preserve">
+    <value>miMoveUp</value>
+  </data>
+  <data name="&gt;&gt;miMoveUp.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miMoveDown.Name" xml:space="preserve">
+    <value>miMoveDown</value>
+  </data>
+  <data name="&gt;&gt;miMoveDown.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;defaultLookAndFeel1.Name" xml:space="preserve">
+    <value>defaultLookAndFeel1</value>
+  </data>
+  <data name="&gt;&gt;defaultLookAndFeel1.Type" xml:space="preserve">
+    <value>DevExpress.LookAndFeel.DefaultLookAndFeel, DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;splashScreenManager1.Name" xml:space="preserve">
+    <value>splashScreenManager1</value>
+  </data>
+  <data name="&gt;&gt;splashScreenManager1.Type" xml:space="preserve">
+    <value>DevExpress.XtraSplashScreen.SplashScreenManager, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;mnuContext.Name" xml:space="preserve">
+    <value>mnuContext</value>
+  </data>
+  <data name="&gt;&gt;mnuContext.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.PopupMenu, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
+    <value>04/06/2013 01:32:12</value>
+  </data>
+  <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
+    <value>16, 16</value>
+  </data>
+  <data name="btnToggleLock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 5</value>
+  </data>
+  <data name="btnToggleLock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnToggleLock.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;btnToggleLock.Name" xml:space="preserve">
+    <value>btnToggleLock</value>
+  </data>
+  <data name="&gt;&gt;btnToggleLock.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnToggleLock.Parent" xml:space="preserve">
     <value>pnlEditControls</value>
   </data>
-  <data name="&gt;&gt;labelControl11.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;btnToggleLock.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnToggleFavE.Location" type="System.Drawing.Point, System.Drawing">
+    <value>232, 5</value>
+  </data>
+  <data name="btnToggleFavE.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnToggleFavE.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="btnToggleFavE.Text" xml:space="preserve">
+    <value>±E</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavE.Name" xml:space="preserve">
+    <value>btnToggleFavE</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavE.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavE.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavE.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnToggleFavD.Location" type="System.Drawing.Point, System.Drawing">
+    <value>207, 5</value>
+  </data>
+  <data name="btnToggleFavD.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnToggleFavD.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="btnToggleFavD.Text" xml:space="preserve">
+    <value>±D</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavD.Name" xml:space="preserve">
+    <value>btnToggleFavD</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavD.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavD.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavD.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnToggleFavC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>182, 5</value>
+  </data>
+  <data name="btnToggleFavC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnToggleFavC.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="btnToggleFavC.Text" xml:space="preserve">
+    <value>±C</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavC.Name" xml:space="preserve">
+    <value>btnToggleFavC</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavC.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavC.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavC.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnToggleFavB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>157, 5</value>
+  </data>
+  <data name="btnToggleFavB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnToggleFavB.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="btnToggleFavB.Text" xml:space="preserve">
+    <value>±B</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavB.Name" xml:space="preserve">
+    <value>btnToggleFavB</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavB.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavB.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavB.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnToggleFavA.Location" type="System.Drawing.Point, System.Drawing">
+    <value>132, 5</value>
+  </data>
+  <data name="btnToggleFavA.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnToggleFavA.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="btnToggleFavA.Text" xml:space="preserve">
+    <value>±A</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavA.Name" xml:space="preserve">
+    <value>btnToggleFavA</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavA.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavA.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavA.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="btnClearLeftFilter.Appearance.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 8.25pt, style=Strikeout</value>
+  </data>
+  <data name="btnClearLeftFilter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>304, 5</value>
+  </data>
+  <data name="btnClearLeftFilter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnClearLeftFilter.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
+    <value>Reset filter</value>
+  </data>
+  <data name="&gt;&gt;btnClearLeftFilter.Name" xml:space="preserve">
+    <value>btnClearLeftFilter</value>
+  </data>
+  <data name="&gt;&gt;btnClearLeftFilter.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnClearLeftFilter.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnClearLeftFilter.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="btnRenum.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 5</value>
+  </data>
+  <data name="btnRenum.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnRenum.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="btnRenum.Text" xml:space="preserve">
+    <value>1-999</value>
+  </data>
+  <data name="btnRenum.ToolTip" xml:space="preserve">
+    <value>Renumber selected channels</value>
+  </data>
+  <data name="&gt;&gt;btnRenum.Name" xml:space="preserve">
+    <value>btnRenum</value>
+  </data>
+  <data name="&gt;&gt;btnRenum.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnRenum.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnRenum.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="btnDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>34, 5</value>
+  </data>
+  <data name="btnDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnDown.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="btnDown.Text" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="btnDown.ToolTip" xml:space="preserve">
+    <value>Move selected channels down</value>
+  </data>
+  <data name="&gt;&gt;btnDown.Name" xml:space="preserve">
+    <value>btnDown</value>
+  </data>
+  <data name="&gt;&gt;btnDown.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnDown.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnDown.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="btnUp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 5</value>
+  </data>
+  <data name="btnUp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnUp.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="btnUp.Text" xml:space="preserve">
+    <value>^</value>
+  </data>
+  <data name="btnUp.ToolTip" xml:space="preserve">
+    <value>Move selected channels up</value>
+  </data>
+  <data name="&gt;&gt;btnUp.Name" xml:space="preserve">
+    <value>btnUp</value>
+  </data>
+  <data name="&gt;&gt;btnUp.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnUp.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnUp.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="btnRemove.Location" type="System.Drawing.Point, System.Drawing">
+    <value>63, 5</value>
+  </data>
+  <data name="btnRemove.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnRemove.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="btnRemove.Text" xml:space="preserve">
+    <value>&gt;&gt;</value>
+  </data>
+  <data name="btnRemove.ToolTip" xml:space="preserve">
+    <value>Remove selected channels</value>
+  </data>
+  <data name="&gt;&gt;btnRemove.Name" xml:space="preserve">
+    <value>btnRemove</value>
+  </data>
+  <data name="&gt;&gt;btnRemove.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnRemove.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnRemove.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
   <data name="pnlEditControls.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1782,7 +1967,7 @@
     <value>2, 21</value>
   </data>
   <data name="pnlEditControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>332, 64</value>
+    <value>339, 33</value>
   </data>
   <data name="pnlEditControls.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1806,7 +1991,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>336, 540</value>
+    <value>343, 490</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1829,11 +2014,11 @@
   <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
     <value>Panel1</value>
   </data>
-  <data name="gridInput.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="gridRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="gridInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 85</value>
+  <data name="gridRight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 54</value>
   </data>
   <data name="colIndex.Caption" xml:space="preserve">
     <value>Pr. index</value>
@@ -2132,29 +2317,29 @@
   <data name="colLogicalIndex.Caption" xml:space="preserve">
     <value>Order</value>
   </data>
-  <data name="gridInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1130, 436</value>
+  <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1122, 417</value>
   </data>
-  <data name="gridInput.TabIndex" type="System.Int32, mscorlib">
+  <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;gridInput.Name" xml:space="preserve">
-    <value>gridInput</value>
+  <data name="&gt;&gt;gridRight.Name" xml:space="preserve">
+    <value>gridRight</value>
   </data>
-  <data name="&gt;&gt;gridInput.Type" xml:space="preserve">
+  <data name="&gt;&gt;gridRight.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.GridControl, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;gridInput.Parent" xml:space="preserve">
+  <data name="&gt;&gt;gridRight.Parent" xml:space="preserve">
     <value>grpInputList</value>
   </data>
-  <data name="&gt;&gt;gridInput.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;gridRight.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="lblHotkeyRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 521</value>
+    <value>2, 471</value>
   </data>
   <data name="lblHotkeyRight.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2180,41 +2365,41 @@
   <data name="&gt;&gt;lblHotkeyRight.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnCloneChannelList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 5</value>
+  <data name="btnAddAll.Location" type="System.Drawing.Point, System.Drawing">
+    <value>44, 5</value>
   </data>
-  <data name="btnCloneChannelList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>263, 23</value>
+  <data name="btnAddAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 23</value>
   </data>
-  <data name="btnCloneChannelList.TabIndex" type="System.Int32, mscorlib">
+  <data name="btnAddAll.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="btnCloneChannelList.Text" xml:space="preserve">
-    <value>&lt;&lt; Add all (copy current channel setup)</value>
+  <data name="btnAddAll.Text" xml:space="preserve">
+    <value>&lt;&lt; Add all</value>
   </data>
-  <data name="btnCloneChannelList.ToolTip" xml:space="preserve">
-    <value>Filter for current channel in left list</value>
+  <data name="btnAddAll.ToolTip" xml:space="preserve">
+    <value>Append all currently unsorted channels at the end of the list</value>
   </data>
-  <data name="&gt;&gt;btnCloneChannelList.Name" xml:space="preserve">
-    <value>btnCloneChannelList</value>
+  <data name="&gt;&gt;btnAddAll.Name" xml:space="preserve">
+    <value>btnAddAll</value>
   </data>
-  <data name="&gt;&gt;btnCloneChannelList.Type" xml:space="preserve">
+  <data name="&gt;&gt;btnAddAll.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;btnCloneChannelList.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnAddAll.Parent" xml:space="preserve">
     <value>panelControl3</value>
   </data>
-  <data name="&gt;&gt;btnCloneChannelList.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;btnAddAll.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="btnClearRightFilter.Appearance.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Strikeout</value>
   </data>
   <data name="btnClearRightFilter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 34</value>
+    <value>171, 5</value>
   </data>
   <data name="btnClearRightFilter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 23</value>
+    <value>66, 23</value>
   </data>
   <data name="btnClearRightFilter.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2237,35 +2422,8 @@
   <data name="&gt;&gt;btnClearRightFilter.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnSyncFromRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 34</value>
-  </data>
-  <data name="btnSyncFromRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 23</value>
-  </data>
-  <data name="btnSyncFromRight.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="btnSyncFromRight.Text" xml:space="preserve">
-    <value>&lt; Filter</value>
-  </data>
-  <data name="btnSyncFromRight.ToolTip" xml:space="preserve">
-    <value>Filter for current channel in left list</value>
-  </data>
-  <data name="&gt;&gt;btnSyncFromRight.Name" xml:space="preserve">
-    <value>btnSyncFromRight</value>
-  </data>
-  <data name="&gt;&gt;btnSyncFromRight.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;btnSyncFromRight.Parent" xml:space="preserve">
-    <value>panelControl3</value>
-  </data>
-  <data name="&gt;&gt;btnSyncFromRight.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="btnAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 36</value>
+    <value>5, 5</value>
   </data>
   <data name="btnAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -2289,7 +2447,7 @@
     <value>panelControl3</value>
   </data>
   <data name="&gt;&gt;btnAdd.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="panelControl3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -2298,7 +2456,7 @@
     <value>2, 21</value>
   </data>
   <data name="panelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1130, 64</value>
+    <value>1122, 33</value>
   </data>
   <data name="panelControl3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2322,7 +2480,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1134, 540</value>
+    <value>1126, 490</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2346,7 +2504,7 @@
     <value>Panel2</value>
   </data>
   <data name="splitContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 540</value>
+    <value>1474, 490</value>
   </data>
   <data name="splitContainerControl1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>

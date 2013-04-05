@@ -113,7 +113,7 @@ namespace ChanSort.Loader.ScmFile
       if (DetectModelFromCloneInfoFile(zip)) return;
       if (DetectModelFromContentFileLengths(zip)) return;
       if (DetectModelFromFileName()) return;
-      throw new IOException("Unable to determine TV model from file content or name");
+      throw new FileLoadException("Unable to determine TV model from file content or name");
     }
     #endregion
 
@@ -385,7 +385,7 @@ namespace ChanSort.Loader.ScmFile
       for (int i = 0; i < count; i++)
       {
         if (satMapping.MagicMarker != 0x55)
-          throw new IOException("Unknown SatDataBase.dat format");        
+          throw new FileLoadException("Unknown SatDataBase.dat format");        
         string location = string.Format("{0}.{1}{2}", 
           satMapping.Longitude/10, satMapping.Longitude%10, satMapping.IsEast ? "E" : "W");
 

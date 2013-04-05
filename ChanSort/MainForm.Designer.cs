@@ -28,79 +28,37 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
       this.grpOutputList = new DevExpress.XtraEditors.GroupControl();
-      this.gridOutput = new DevExpress.XtraGrid.GridControl();
-      this.dsChannels = new System.Windows.Forms.BindingSource();
-      this.gviewOutput = new DevExpress.XtraGrid.Views.Grid.GridView();
+      this.gridLeft = new DevExpress.XtraGrid.GridControl();
+      this.dsChannels = new System.Windows.Forms.BindingSource(this.components);
+      this.gviewLeft = new DevExpress.XtraGrid.Views.Grid.GridView();
       this.colIndex1 = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutSlot = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutFav = new DevExpress.XtraGrid.Columns.GridColumn();
       this.repositoryItemCheckedComboBoxEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit();
       this.colUid1 = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colOutLock = new DevExpress.XtraGrid.Columns.GridColumn();
       this.lblHotkeyLeft = new DevExpress.XtraEditors.LabelControl();
       this.pnlEditControls = new DevExpress.XtraEditors.PanelControl();
-      this.comboEditMode = new DevExpress.XtraEditors.ComboBoxEdit();
-      this.barManager1 = new DevExpress.XtraBars.BarManager();
-      this.bar1 = new DevExpress.XtraBars.Bar();
-      this.miFile = new DevExpress.XtraBars.BarSubItem();
-      this.miOpen = new DevExpress.XtraBars.BarButtonItem();
-      this.miReload = new DevExpress.XtraBars.BarButtonItem();
-      this.miRestoreOriginal = new DevExpress.XtraBars.BarButtonItem();
-      this.miFileInformation = new DevExpress.XtraBars.BarButtonItem();
-      this.miSave = new DevExpress.XtraBars.BarButtonItem();
-      this.miSaveAs = new DevExpress.XtraBars.BarButtonItem();
-      this.miOpenReferenceFile = new DevExpress.XtraBars.BarButtonItem();
-      this.miQuit = new DevExpress.XtraBars.BarButtonItem();
-      this.miEdit = new DevExpress.XtraBars.BarSubItem();
-      this.miAddChannel = new DevExpress.XtraBars.BarButtonItem();
-      this.miRemove = new DevExpress.XtraBars.BarButtonItem();
-      this.miReplace = new DevExpress.XtraBars.BarButtonItem();
-      this.miSort = new DevExpress.XtraBars.BarButtonItem();
-      this.miRenum = new DevExpress.XtraBars.BarButtonItem();
-      this.mnuFavSet = new DevExpress.XtraBars.BarSubItem();
-      this.miFavSet = new DevExpress.XtraBars.BarListItem();
-      this.mnuFavUnset = new DevExpress.XtraBars.BarSubItem();
-      this.miFavUnset = new DevExpress.XtraBars.BarListItem();
-      this.miLockOn = new DevExpress.XtraBars.BarButtonItem();
-      this.miLockOff = new DevExpress.XtraBars.BarButtonItem();
-      this.miSkipOn = new DevExpress.XtraBars.BarButtonItem();
-      this.miSkipOff = new DevExpress.XtraBars.BarButtonItem();
-      this.miHideOn = new DevExpress.XtraBars.BarButtonItem();
-      this.miHideOff = new DevExpress.XtraBars.BarButtonItem();
-      this.barSubItem2 = new DevExpress.XtraBars.BarSubItem();
-      this.miTvSettings = new DevExpress.XtraBars.BarButtonItem();
-      this.mnuOptions = new DevExpress.XtraBars.BarSubItem();
-      this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
-      this.miEnglish = new DevExpress.XtraBars.BarButtonItem();
-      this.miGerman = new DevExpress.XtraBars.BarButtonItem();
-      this.mnuCharset = new DevExpress.XtraBars.BarSubItem();
-      this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
-      this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
-      this.mnuHelp = new DevExpress.XtraBars.BarSubItem();
-      this.miAbout = new DevExpress.XtraBars.BarButtonItem();
-      this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
-      this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
-      this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
-      this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-      this.sharedImageCollection1 = new DevExpress.Utils.SharedImageCollection();
-      this.miMoveUp = new DevExpress.XtraBars.BarButtonItem();
-      this.miMoveDown = new DevExpress.XtraBars.BarButtonItem();
-      this.btnSyncFromLeft = new DevExpress.XtraEditors.SimpleButton();
-      this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+      this.btnToggleLock = new DevExpress.XtraEditors.SimpleButton();
+      this.sharedImageCollection1 = new DevExpress.Utils.SharedImageCollection(this.components);
+      this.btnToggleFavE = new DevExpress.XtraEditors.SimpleButton();
+      this.btnToggleFavD = new DevExpress.XtraEditors.SimpleButton();
+      this.btnToggleFavC = new DevExpress.XtraEditors.SimpleButton();
+      this.btnToggleFavB = new DevExpress.XtraEditors.SimpleButton();
+      this.btnToggleFavA = new DevExpress.XtraEditors.SimpleButton();
       this.btnClearLeftFilter = new DevExpress.XtraEditors.SimpleButton();
       this.btnRenum = new DevExpress.XtraEditors.SimpleButton();
-      this.btnSort = new DevExpress.XtraEditors.SimpleButton();
       this.btnDown = new DevExpress.XtraEditors.SimpleButton();
       this.btnUp = new DevExpress.XtraEditors.SimpleButton();
       this.btnRemove = new DevExpress.XtraEditors.SimpleButton();
-      this.txtSetSlot = new DevExpress.XtraEditors.ButtonEdit();
-      this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
       this.grpInputList = new DevExpress.XtraEditors.GroupControl();
-      this.gridInput = new DevExpress.XtraGrid.GridControl();
-      this.gviewInput = new DevExpress.XtraGrid.Views.Grid.GridView();
+      this.gridRight = new DevExpress.XtraGrid.GridControl();
+      this.gviewRight = new DevExpress.XtraGrid.Views.Grid.GridView();
       this.colIndex = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSlotOld = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSlotNew = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -131,44 +89,100 @@
       this.colLogicalIndex = new DevExpress.XtraGrid.Columns.GridColumn();
       this.lblHotkeyRight = new DevExpress.XtraEditors.LabelControl();
       this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
-      this.btnCloneChannelList = new DevExpress.XtraEditors.SimpleButton();
+      this.btnAddAll = new DevExpress.XtraEditors.SimpleButton();
       this.btnClearRightFilter = new DevExpress.XtraEditors.SimpleButton();
-      this.btnSyncFromRight = new DevExpress.XtraEditors.SimpleButton();
       this.btnAdd = new DevExpress.XtraEditors.SimpleButton();
-      this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+      this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+      this.bar1 = new DevExpress.XtraBars.Bar();
+      this.miFile = new DevExpress.XtraBars.BarSubItem();
+      this.miOpen = new DevExpress.XtraBars.BarButtonItem();
+      this.miReload = new DevExpress.XtraBars.BarButtonItem();
+      this.miRestoreOriginal = new DevExpress.XtraBars.BarButtonItem();
+      this.miFileInformation = new DevExpress.XtraBars.BarButtonItem();
+      this.miSave = new DevExpress.XtraBars.BarButtonItem();
+      this.miSaveAs = new DevExpress.XtraBars.BarButtonItem();
+      this.miOpenReferenceFile = new DevExpress.XtraBars.BarButtonItem();
+      this.miQuit = new DevExpress.XtraBars.BarButtonItem();
+      this.miEdit = new DevExpress.XtraBars.BarSubItem();
+      this.miAddChannel = new DevExpress.XtraBars.BarButtonItem();
+      this.miRemove = new DevExpress.XtraBars.BarButtonItem();
+      this.miSort = new DevExpress.XtraBars.BarButtonItem();
+      this.miRenum = new DevExpress.XtraBars.BarButtonItem();
+      this.mnuFavSet = new DevExpress.XtraBars.BarSubItem();
+      this.miFavSet = new DevExpress.XtraBars.BarListItem();
+      this.mnuFavUnset = new DevExpress.XtraBars.BarSubItem();
+      this.miFavUnset = new DevExpress.XtraBars.BarListItem();
+      this.miLockOn = new DevExpress.XtraBars.BarButtonItem();
+      this.miLockOff = new DevExpress.XtraBars.BarButtonItem();
+      this.miSkipOn = new DevExpress.XtraBars.BarButtonItem();
+      this.miSkipOff = new DevExpress.XtraBars.BarButtonItem();
+      this.miHideOn = new DevExpress.XtraBars.BarButtonItem();
+      this.miHideOff = new DevExpress.XtraBars.BarButtonItem();
+      this.barSubItem2 = new DevExpress.XtraBars.BarSubItem();
+      this.miTvSettings = new DevExpress.XtraBars.BarButtonItem();
+      this.miEraseChannelData = new DevExpress.XtraBars.BarButtonItem();
+      this.mnuOptions = new DevExpress.XtraBars.BarSubItem();
+      this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
+      this.miEnglish = new DevExpress.XtraBars.BarButtonItem();
+      this.miGerman = new DevExpress.XtraBars.BarButtonItem();
+      this.mnuCharset = new DevExpress.XtraBars.BarSubItem();
+      this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
+      this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
+      this.mnuHelp = new DevExpress.XtraBars.BarSubItem();
+      this.miWiki = new DevExpress.XtraBars.BarButtonItem();
+      this.miOpenWebsite = new DevExpress.XtraBars.BarButtonItem();
+      this.miAbout = new DevExpress.XtraBars.BarButtonItem();
+      this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+      this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+      this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+      this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+      this.miMoveUp = new DevExpress.XtraBars.BarButtonItem();
+      this.miMoveDown = new DevExpress.XtraBars.BarButtonItem();
+      this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+      this.txtSetSlot = new DevExpress.XtraEditors.ButtonEdit();
+      this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+      this.picDonate = new DevExpress.XtraEditors.PictureEdit();
+      this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
       this.splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ChanSort.Ui.WaitForm1), true, true);
       this.grpTopPanel = new DevExpress.XtraEditors.GroupControl();
-      this.comboUnsortedAction = new DevExpress.XtraEditors.ComboBoxEdit();
-      this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-      this.btnResetChannelData = new DevExpress.XtraEditors.SimpleButton();
-      this.comboChannelList = new DevExpress.XtraEditors.ComboBoxEdit();
-      this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-      this.mnuContext = new DevExpress.XtraBars.PopupMenu();
+      this.rbInsertSwap = new DevExpress.XtraEditors.CheckEdit();
+      this.rbInsertAfter = new DevExpress.XtraEditors.CheckEdit();
+      this.rbInsertBefore = new DevExpress.XtraEditors.CheckEdit();
+      this.cbCloseGap = new DevExpress.XtraEditors.CheckEdit();
+      this.cbAppendUnsortedChannels = new DevExpress.XtraEditors.CheckEdit();
+      this.tabChannelList = new DevExpress.XtraTab.XtraTabControl();
+      this.pageEmpty = new DevExpress.XtraTab.XtraTabPage();
+      this.mnuContext = new DevExpress.XtraBars.PopupMenu(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
       this.grpOutputList.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.gridOutput)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gridLeft)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.dsChannels)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.gviewOutput)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gviewLeft)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckedComboBoxEdit1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).BeginInit();
       this.pnlEditControls.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.comboEditMode.Properties)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.txtSetSlot.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).BeginInit();
       this.grpInputList.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.gridInput)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.gviewInput)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gridRight)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gviewRight)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckedComboBoxEdit2)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).BeginInit();
       this.panelControl3.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.txtSetSlot.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.picDonate.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpTopPanel)).BeginInit();
       this.grpTopPanel.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.comboUnsortedAction.Properties)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.comboChannelList.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.rbInsertSwap.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.rbInsertAfter.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.rbInsertBefore.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.cbCloseGap.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.cbAppendUnsortedChannels.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.tabChannelList)).BeginInit();
+      this.tabChannelList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.mnuContext)).BeginInit();
       this.SuspendLayout();
       // 
@@ -180,66 +194,69 @@
       resources.ApplyResources(this.splitContainerControl1.Panel1, "splitContainerControl1.Panel1");
       this.splitContainerControl1.Panel2.Controls.Add(this.grpInputList);
       resources.ApplyResources(this.splitContainerControl1.Panel2, "splitContainerControl1.Panel2");
-      this.splitContainerControl1.SplitterPosition = 336;
+      this.splitContainerControl1.SplitterPosition = 343;
       // 
       // grpOutputList
       // 
-      this.grpOutputList.Controls.Add(this.gridOutput);
+      this.grpOutputList.Controls.Add(this.gridLeft);
       this.grpOutputList.Controls.Add(this.lblHotkeyLeft);
       this.grpOutputList.Controls.Add(this.pnlEditControls);
       resources.ApplyResources(this.grpOutputList, "grpOutputList");
       this.grpOutputList.Name = "grpOutputList";
+      this.grpOutputList.Enter += new System.EventHandler(this.grpOutputList_Enter);
       // 
-      // gridOutput
+      // gridLeft
       // 
-      this.gridOutput.DataSource = this.dsChannels;
-      resources.ApplyResources(this.gridOutput, "gridOutput");
-      this.gridOutput.MainView = this.gviewOutput;
-      this.gridOutput.Name = "gridOutput";
-      this.gridOutput.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+      this.gridLeft.DataSource = this.dsChannels;
+      resources.ApplyResources(this.gridLeft, "gridLeft");
+      this.gridLeft.MainView = this.gviewLeft;
+      this.gridLeft.Name = "gridLeft";
+      this.gridLeft.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckedComboBoxEdit1});
-      this.gridOutput.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gviewOutput});
-      this.gridOutput.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridOutput_ProcessGridKey);
-      this.gridOutput.Enter += new System.EventHandler(this.gridOutput_Enter);
+      this.gridLeft.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gviewLeft});
+      this.gridLeft.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridLeft_ProcessGridKey);
       // 
       // dsChannels
       // 
       this.dsChannels.DataSource = typeof(ChanSort.Api.ChannelInfo);
       // 
-      // gviewOutput
+      // gviewLeft
       // 
-      this.gviewOutput.Appearance.HeaderPanel.Options.UseTextOptions = true;
-      this.gviewOutput.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
-      this.gviewOutput.ColumnPanelRowHeight = 35;
-      this.gviewOutput.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+      this.gviewLeft.Appearance.HeaderPanel.Options.UseTextOptions = true;
+      this.gviewLeft.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+      this.gviewLeft.ColumnPanelRowHeight = 35;
+      this.gviewLeft.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIndex1,
             this.colOutSlot,
             this.colOutName,
             this.colOutFav,
-            this.colUid1});
-      this.gviewOutput.GridControl = this.gridOutput;
-      this.gviewOutput.Name = "gviewOutput";
-      this.gviewOutput.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
-      this.gviewOutput.OptionsCustomization.AllowGroup = false;
-      this.gviewOutput.OptionsLayout.LayoutVersion = "2";
-      this.gviewOutput.OptionsSelection.MultiSelect = true;
-      this.gviewOutput.OptionsView.ColumnAutoWidth = false;
-      this.gviewOutput.OptionsView.ShowAutoFilterRow = true;
-      this.gviewOutput.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
-      this.gviewOutput.OptionsView.ShowGroupPanel = false;
-      this.gviewOutput.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            this.colUid1,
+            this.colOutLock});
+      this.gviewLeft.GridControl = this.gridLeft;
+      this.gviewLeft.Name = "gviewLeft";
+      this.gviewLeft.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
+      this.gviewLeft.OptionsCustomization.AllowGroup = false;
+      this.gviewLeft.OptionsLayout.LayoutVersion = "2";
+      this.gviewLeft.OptionsSelection.MultiSelect = true;
+      this.gviewLeft.OptionsView.ColumnAutoWidth = false;
+      this.gviewLeft.OptionsView.ShowAutoFilterRow = true;
+      this.gviewLeft.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
+      this.gviewLeft.OptionsView.ShowGroupPanel = false;
+      this.gviewLeft.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOutSlot, DevExpress.Data.ColumnSortOrder.Ascending)});
-      this.gviewOutput.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.gviewOutput_RowClick);
-      this.gviewOutput.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gviewOutput_RowCellStyle);
-      this.gviewOutput.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gviewOutput_PopupMenuShowing);
-      this.gviewOutput.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.gviewOutput_SelectionChanged);
-      this.gviewOutput.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewOutput_FocusedRowChanged);
-      this.gviewOutput.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewOutput_CellValueChanged);
-      this.gviewOutput.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewOutput_CustomColumnDisplayText);
-      this.gviewOutput.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewOutput_LayoutUpgrade);
-      this.gviewOutput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gview_MouseDown);
-      this.gviewOutput.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gviewOutput_ValidatingEditor);
+      this.gviewLeft.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.gviewLeft_RowClick);
+      this.gviewLeft.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gviewLeft_RowCellStyle);
+      this.gviewLeft.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gviewLeft_PopupMenuShowing);
+      this.gviewLeft.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.gviewLeft_SelectionChanged);
+      this.gviewLeft.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gview_ShowingEditor);
+      this.gviewLeft.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewLeft_FocusedRowChanged);
+      this.gviewLeft.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewLeft_CellValueChanged);
+      this.gviewLeft.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewLeft_CustomColumnDisplayText);
+      this.gviewLeft.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewLeft_LayoutUpgrade);
+      this.gviewLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gview_MouseDown);
+      this.gviewLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gview_MouseUp);
+      this.gviewLeft.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gviewLeft_ValidatingEditor);
       // 
       // colIndex1
       // 
@@ -293,6 +310,12 @@
       this.colUid1.Name = "colUid1";
       this.colUid1.OptionsColumn.AllowEdit = false;
       // 
+      // colOutLock
+      // 
+      resources.ApplyResources(this.colOutLock, "colOutLock");
+      this.colOutLock.FieldName = "Lock";
+      this.colOutLock.Name = "colOutLock";
+      // 
       // lblHotkeyLeft
       // 
       resources.ApplyResources(this.lblHotkeyLeft, "lblHotkeyLeft");
@@ -300,511 +323,27 @@
       // 
       // pnlEditControls
       // 
-      this.pnlEditControls.Controls.Add(this.comboEditMode);
-      this.pnlEditControls.Controls.Add(this.btnSyncFromLeft);
-      this.pnlEditControls.Controls.Add(this.labelControl2);
+      this.pnlEditControls.Controls.Add(this.btnToggleLock);
+      this.pnlEditControls.Controls.Add(this.btnToggleFavE);
+      this.pnlEditControls.Controls.Add(this.btnToggleFavD);
+      this.pnlEditControls.Controls.Add(this.btnToggleFavC);
+      this.pnlEditControls.Controls.Add(this.btnToggleFavB);
+      this.pnlEditControls.Controls.Add(this.btnToggleFavA);
       this.pnlEditControls.Controls.Add(this.btnClearLeftFilter);
       this.pnlEditControls.Controls.Add(this.btnRenum);
-      this.pnlEditControls.Controls.Add(this.btnSort);
       this.pnlEditControls.Controls.Add(this.btnDown);
       this.pnlEditControls.Controls.Add(this.btnUp);
       this.pnlEditControls.Controls.Add(this.btnRemove);
-      this.pnlEditControls.Controls.Add(this.txtSetSlot);
-      this.pnlEditControls.Controls.Add(this.labelControl11);
       resources.ApplyResources(this.pnlEditControls, "pnlEditControls");
       this.pnlEditControls.Name = "pnlEditControls";
       // 
-      // comboEditMode
-      // 
-      resources.ApplyResources(this.comboEditMode, "comboEditMode");
-      this.comboEditMode.MenuManager = this.barManager1;
-      this.comboEditMode.Name = "comboEditMode";
-      this.comboEditMode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject("comboEditMode.Properties.Buttons"))))});
-      this.comboEditMode.Properties.Items.AddRange(new object[] {
-            resources.GetString("comboEditMode.Properties.Items"),
-            resources.GetString("comboEditMode.Properties.Items1"),
-            resources.GetString("comboEditMode.Properties.Items2")});
-      this.comboEditMode.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-      this.comboEditMode.SelectedIndexChanged += new System.EventHandler(this.comboEditMode_SelectedIndexChanged);
-      // 
-      // barManager1
-      // 
-      this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
-            this.bar1});
-      this.barManager1.Categories.AddRange(new DevExpress.XtraBars.BarManagerCategory[] {
-            ((DevExpress.XtraBars.BarManagerCategory)(resources.GetObject("barManager1.Categories"))),
-            ((DevExpress.XtraBars.BarManagerCategory)(resources.GetObject("barManager1.Categories1"))),
-            ((DevExpress.XtraBars.BarManagerCategory)(resources.GetObject("barManager1.Categories2"))),
-            ((DevExpress.XtraBars.BarManagerCategory)(resources.GetObject("barManager1.Categories3")))});
-      this.barManager1.DockControls.Add(this.barDockControlTop);
-      this.barManager1.DockControls.Add(this.barDockControlBottom);
-      this.barManager1.DockControls.Add(this.barDockControlLeft);
-      this.barManager1.DockControls.Add(this.barDockControlRight);
-      this.barManager1.Form = this;
-      this.barManager1.Images = this.sharedImageCollection1;
-      this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.mnuOptions,
-            this.barSubItem1,
-            this.miEnglish,
-            this.miGerman,
-            this.miFile,
-            this.miOpen,
-            this.miOpenReferenceFile,
-            this.miReload,
-            this.miRestoreOriginal,
-            this.miFileInformation,
-            this.miSave,
-            this.miSaveAs,
-            this.miQuit,
-            this.mnuHelp,
-            this.miAbout,
-            this.mnuCharset,
-            this.miIsoCharSets,
-            this.miCharsetForm,
-            this.miEdit,
-            this.miMoveUp,
-            this.miMoveDown,
-            this.miAddChannel,
-            this.miRemove,
-            this.miReplace,
-            this.miSort,
-            this.miRenum,
-            this.mnuFavSet,
-            this.miFavSet,
-            this.mnuFavUnset,
-            this.miFavUnset,
-            this.miLockOn,
-            this.miLockOff,
-            this.miSkipOn,
-            this.miSkipOff,
-            this.miHideOn,
-            this.miHideOff,
-            this.barSubItem2,
-            this.miTvSettings});
-      this.barManager1.MaxItemId = 49;
-      // 
-      // bar1
-      // 
-      this.bar1.BarName = "Tools";
-      this.bar1.DockCol = 0;
-      this.bar1.DockRow = 0;
-      this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
-      this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miFile),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miOpen),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSave),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miEdit, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavSet),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miLockOn),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSkipOn),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miHideOn),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem2, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miTvSettings),
-            new DevExpress.XtraBars.LinkPersistInfo(this.mnuOptions, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.mnuHelp, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miAbout)});
-      resources.ApplyResources(this.bar1, "bar1");
-      // 
-      // miFile
-      // 
-      resources.ApplyResources(this.miFile, "miFile");
-      this.miFile.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
-      this.miFile.Id = 4;
-      this.miFile.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miOpen),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miRestoreOriginal),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miFileInformation),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSave),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miQuit, true)});
-      this.miFile.Name = "miFile";
-      // 
-      // miOpen
-      // 
-      resources.ApplyResources(this.miOpen, "miOpen");
-      this.miOpen.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
-      this.miOpen.Id = 5;
-      this.miOpen.ImageIndex = 3;
-      this.miOpen.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O));
-      this.miOpen.Name = "miOpen";
-      this.miOpen.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpen_ItemClick);
-      // 
-      // miReload
-      // 
-      resources.ApplyResources(this.miReload, "miReload");
-      this.miReload.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
-      this.miReload.Enabled = false;
-      this.miReload.Id = 7;
-      this.miReload.ImageIndex = 5;
-      this.miReload.Name = "miReload";
-      this.miReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miReload_ItemClick);
-      // 
-      // miRestoreOriginal
-      // 
-      resources.ApplyResources(this.miRestoreOriginal, "miRestoreOriginal");
-      this.miRestoreOriginal.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
-      this.miRestoreOriginal.Id = 42;
-      this.miRestoreOriginal.Name = "miRestoreOriginal";
-      this.miRestoreOriginal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRestoreOriginal_ItemClick);
-      // 
-      // miFileInformation
-      // 
-      resources.ApplyResources(this.miFileInformation, "miFileInformation");
-      this.miFileInformation.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
-      this.miFileInformation.Id = 43;
-      this.miFileInformation.Name = "miFileInformation";
-      this.miFileInformation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miFileInformation_ItemClick);
-      // 
-      // miSave
-      // 
-      resources.ApplyResources(this.miSave, "miSave");
-      this.miSave.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
-      this.miSave.Enabled = false;
-      this.miSave.Id = 6;
-      this.miSave.ImageIndex = 4;
-      this.miSave.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S));
-      this.miSave.Name = "miSave";
-      this.miSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSave_ItemClick);
-      // 
-      // miSaveAs
-      // 
-      resources.ApplyResources(this.miSaveAs, "miSaveAs");
-      this.miSaveAs.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
-      this.miSaveAs.Enabled = false;
-      this.miSaveAs.Id = 8;
-      this.miSaveAs.ImageIndex = 6;
-      this.miSaveAs.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-                | System.Windows.Forms.Keys.S));
-      this.miSaveAs.Name = "miSaveAs";
-      this.miSaveAs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveAs_ItemClick);
-      // 
-      // miOpenReferenceFile
-      // 
-      resources.ApplyResources(this.miOpenReferenceFile, "miOpenReferenceFile");
-      this.miOpenReferenceFile.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
-      this.miOpenReferenceFile.Id = 44;
-      this.miOpenReferenceFile.ImageIndex = 23;
-      this.miOpenReferenceFile.Name = "miOpenReferenceFile";
-      this.miOpenReferenceFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpenReferenceFile_ItemClick);
-      // 
-      // miQuit
-      // 
-      resources.ApplyResources(this.miQuit, "miQuit");
-      this.miQuit.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
-      this.miQuit.Id = 9;
-      this.miQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4));
-      this.miQuit.Name = "miQuit";
-      this.miQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miQuit_ItemClick);
-      // 
-      // miEdit
-      // 
-      resources.ApplyResources(this.miEdit, "miEdit");
-      this.miEdit.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miEdit.Id = 22;
-      this.miEdit.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miAddChannel),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miRemove),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miReplace),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSort),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miRenum),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuFavSet, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavUnset),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miLockOn, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miLockOff),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSkipOn, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSkipOff),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miHideOn, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miHideOff)});
-      this.miEdit.Name = "miEdit";
-      // 
-      // miAddChannel
-      // 
-      resources.ApplyResources(this.miAddChannel, "miAddChannel");
-      this.miAddChannel.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miAddChannel.Id = 39;
-      this.miAddChannel.ImageIndex = 20;
-      this.miAddChannel.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Add));
-      this.miAddChannel.Name = "miAddChannel";
-      // 
-      // miRemove
-      // 
-      resources.ApplyResources(this.miRemove, "miRemove");
-      this.miRemove.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miRemove.Id = 25;
-      this.miRemove.ImageIndex = 11;
-      this.miRemove.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X));
-      this.miRemove.Name = "miRemove";
-      this.miRemove.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRemove_ItemClick);
-      // 
-      // miReplace
-      // 
-      resources.ApplyResources(this.miReplace, "miReplace");
-      this.miReplace.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miReplace.Id = 26;
-      this.miReplace.ImageIndex = 12;
-      this.miReplace.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R));
-      this.miReplace.Name = "miReplace";
-      this.miReplace.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miReplace_ItemClick);
-      // 
-      // miSort
-      // 
-      resources.ApplyResources(this.miSort, "miSort");
-      this.miSort.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miSort.Id = 40;
-      this.miSort.ImageIndex = 21;
-      this.miSort.Name = "miSort";
-      // 
-      // miRenum
-      // 
-      resources.ApplyResources(this.miRenum, "miRenum");
-      this.miRenum.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miRenum.Id = 41;
-      this.miRenum.ImageIndex = 22;
-      this.miRenum.Name = "miRenum";
-      // 
-      // mnuFavSet
-      // 
-      resources.ApplyResources(this.mnuFavSet, "mnuFavSet");
-      this.mnuFavSet.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.mnuFavSet.Id = 37;
-      this.mnuFavSet.ImageIndex = 13;
-      this.mnuFavSet.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-                | System.Windows.Forms.Keys.F));
-      this.mnuFavSet.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miFavSet)});
-      this.mnuFavSet.Name = "mnuFavSet";
-      this.mnuFavSet.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
-      // 
-      // miFavSet
-      // 
-      resources.ApplyResources(this.miFavSet, "miFavSet");
-      this.miFavSet.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miFavSet.Id = 20;
-      this.miFavSet.Name = "miFavSet";
-      this.miFavSet.ShowNumbers = true;
-      this.miFavSet.Strings.AddRange(new object[] {
-            "A",
-            "B",
-            "C",
-            "D"});
-      this.miFavSet.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.miFavSet_ListItemClick);
-      // 
-      // mnuFavUnset
-      // 
-      resources.ApplyResources(this.mnuFavUnset, "mnuFavUnset");
-      this.mnuFavUnset.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.mnuFavUnset.Id = 38;
-      this.mnuFavUnset.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miFavUnset)});
-      this.mnuFavUnset.Name = "mnuFavUnset";
-      // 
-      // miFavUnset
-      // 
-      resources.ApplyResources(this.miFavUnset, "miFavUnset");
-      this.miFavUnset.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miFavUnset.Id = 21;
-      this.miFavUnset.Name = "miFavUnset";
-      this.miFavUnset.Strings.AddRange(new object[] {
-            "A",
-            "B",
-            "C",
-            "D"});
-      this.miFavUnset.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.miFavUnset_ListItemClick);
-      // 
-      // miLockOn
-      // 
-      resources.ApplyResources(this.miLockOn, "miLockOn");
-      this.miLockOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miLockOn.Id = 27;
-      this.miLockOn.ImageIndex = 15;
-      this.miLockOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L));
-      this.miLockOn.Name = "miLockOn";
-      this.miLockOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miLockOn_ItemClick);
-      // 
-      // miLockOff
-      // 
-      resources.ApplyResources(this.miLockOff, "miLockOff");
-      this.miLockOff.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miLockOff.Id = 28;
-      this.miLockOff.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-                | System.Windows.Forms.Keys.L));
-      this.miLockOff.Name = "miLockOff";
-      this.miLockOff.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miLockOff_ItemClick);
-      // 
-      // miSkipOn
-      // 
-      resources.ApplyResources(this.miSkipOn, "miSkipOn");
-      this.miSkipOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miSkipOn.Id = 29;
-      this.miSkipOn.ImageIndex = 16;
-      this.miSkipOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K));
-      this.miSkipOn.Name = "miSkipOn";
-      this.miSkipOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSkipOn_ItemClick);
-      // 
-      // miSkipOff
-      // 
-      resources.ApplyResources(this.miSkipOff, "miSkipOff");
-      this.miSkipOff.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miSkipOff.Id = 30;
-      this.miSkipOff.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-                | System.Windows.Forms.Keys.K));
-      this.miSkipOff.Name = "miSkipOff";
-      this.miSkipOff.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSkipOff_ItemClick);
-      // 
-      // miHideOn
-      // 
-      resources.ApplyResources(this.miHideOn, "miHideOn");
-      this.miHideOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miHideOn.Id = 31;
-      this.miHideOn.ImageIndex = 17;
-      this.miHideOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H));
-      this.miHideOn.Name = "miHideOn";
-      this.miHideOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miHideOn_ItemClick);
-      // 
-      // miHideOff
-      // 
-      resources.ApplyResources(this.miHideOff, "miHideOff");
-      this.miHideOff.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miHideOff.Id = 32;
-      this.miHideOff.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-                | System.Windows.Forms.Keys.H));
-      this.miHideOff.Name = "miHideOff";
-      this.miHideOff.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miHideOff_ItemClick);
-      // 
-      // barSubItem2
-      // 
-      resources.ApplyResources(this.barSubItem2, "barSubItem2");
-      this.barSubItem2.Id = 47;
-      this.barSubItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miTvSettings)});
-      this.barSubItem2.Name = "barSubItem2";
-      // 
-      // miTvSettings
-      // 
-      resources.ApplyResources(this.miTvSettings, "miTvSettings");
-      this.miTvSettings.Id = 48;
-      this.miTvSettings.ImageIndex = 27;
-      this.miTvSettings.Name = "miTvSettings";
-      this.miTvSettings.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTvCountrySetup_ItemClick);
-      // 
-      // mnuOptions
-      // 
-      resources.ApplyResources(this.mnuOptions, "mnuOptions");
-      this.mnuOptions.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
-      this.mnuOptions.Id = 34;
-      this.mnuOptions.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barSubItem1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuCharset, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
-      this.mnuOptions.Name = "mnuOptions";
-      // 
-      // barSubItem1
-      // 
-      resources.ApplyResources(this.barSubItem1, "barSubItem1");
-      this.barSubItem1.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
-      this.barSubItem1.Id = 0;
-      this.barSubItem1.ImageIndex = 14;
-      this.barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miEnglish),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miGerman)});
-      this.barSubItem1.Name = "barSubItem1";
-      this.barSubItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
-      // 
-      // miEnglish
-      // 
-      this.miEnglish.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
-      resources.ApplyResources(this.miEnglish, "miEnglish");
-      this.miEnglish.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
-      this.miEnglish.Id = 2;
-      this.miEnglish.ImageIndex = 0;
-      this.miEnglish.Name = "miEnglish";
-      this.miEnglish.Tag = "en";
-      this.miEnglish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
-      // 
-      // miGerman
-      // 
-      this.miGerman.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
-      resources.ApplyResources(this.miGerman, "miGerman");
-      this.miGerman.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
-      this.miGerman.Id = 1;
-      this.miGerman.ImageIndex = 1;
-      this.miGerman.Name = "miGerman";
-      this.miGerman.Tag = "de-DE";
-      this.miGerman.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
-      // 
-      // mnuCharset
-      // 
-      resources.ApplyResources(this.mnuCharset, "mnuCharset");
-      this.mnuCharset.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
-      this.mnuCharset.Id = 15;
-      this.mnuCharset.ImageIndex = 9;
-      this.mnuCharset.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miCharsetForm),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miIsoCharSets, true)});
-      this.mnuCharset.Name = "mnuCharset";
-      this.mnuCharset.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
-      // 
-      // miCharsetForm
-      // 
-      resources.ApplyResources(this.miCharsetForm, "miCharsetForm");
-      this.miCharsetForm.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
-      this.miCharsetForm.Id = 13;
-      this.miCharsetForm.ImageIndex = 9;
-      this.miCharsetForm.Name = "miCharsetForm";
-      this.miCharsetForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCharset_ItemClick);
-      // 
-      // miIsoCharSets
-      // 
-      resources.ApplyResources(this.miIsoCharSets, "miIsoCharSets");
-      this.miIsoCharSets.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
-      this.miIsoCharSets.Id = 14;
-      this.miIsoCharSets.Name = "miIsoCharSets";
-      this.miIsoCharSets.ShowNumbers = true;
-      this.miIsoCharSets.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.miIsoCharSets_ListItemClick);
-      // 
-      // mnuHelp
-      // 
-      resources.ApplyResources(this.mnuHelp, "mnuHelp");
-      this.mnuHelp.CategoryGuid = new System.Guid("0d554574-30e8-4d31-9a70-da702a984260");
-      this.mnuHelp.Id = 10;
-      this.mnuHelp.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miAbout)});
-      this.mnuHelp.Name = "mnuHelp";
-      // 
-      // miAbout
-      // 
-      resources.ApplyResources(this.miAbout, "miAbout");
-      this.miAbout.CategoryGuid = new System.Guid("0d554574-30e8-4d31-9a70-da702a984260");
-      this.miAbout.Id = 11;
-      this.miAbout.ImageIndex = 7;
-      this.miAbout.Name = "miAbout";
-      this.miAbout.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miAbout_ItemClick);
-      // 
-      // barDockControlTop
-      // 
-      this.barDockControlTop.CausesValidation = false;
-      resources.ApplyResources(this.barDockControlTop, "barDockControlTop");
-      // 
-      // barDockControlBottom
-      // 
-      this.barDockControlBottom.CausesValidation = false;
-      resources.ApplyResources(this.barDockControlBottom, "barDockControlBottom");
-      // 
-      // barDockControlLeft
-      // 
-      this.barDockControlLeft.CausesValidation = false;
-      resources.ApplyResources(this.barDockControlLeft, "barDockControlLeft");
-      // 
-      // barDockControlRight
-      // 
-      this.barDockControlRight.CausesValidation = false;
-      resources.ApplyResources(this.barDockControlRight, "barDockControlRight");
+      // btnToggleLock
+      // 
+      this.btnToggleLock.ImageIndex = 15;
+      this.btnToggleLock.ImageList = this.sharedImageCollection1;
+      resources.ApplyResources(this.btnToggleLock, "btnToggleLock");
+      this.btnToggleLock.Name = "btnToggleLock";
+      this.btnToggleLock.Click += new System.EventHandler(this.btnToggleLock_Click);
       // 
       // sharedImageCollection1
       // 
@@ -812,45 +351,50 @@
       // 
       // 
       this.sharedImageCollection1.ImageSource.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("sharedImageCollection1.ImageSource.ImageStream")));
-      this.sharedImageCollection1.ImageSource.Images.SetKeyName(24, "0088.png");
-      this.sharedImageCollection1.ImageSource.Images.SetKeyName(25, "0089.png");
-      this.sharedImageCollection1.ImageSource.Images.SetKeyName(26, "0119.png");
-      this.sharedImageCollection1.ImageSource.Images.SetKeyName(27, "0025.png");
       this.sharedImageCollection1.ParentControl = this;
       // 
-      // miMoveUp
+      // btnToggleFavE
       // 
-      resources.ApplyResources(this.miMoveUp, "miMoveUp");
-      this.miMoveUp.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miMoveUp.Id = 45;
-      this.miMoveUp.ImageIndex = 24;
-      this.miMoveUp.Name = "miMoveUp";
-      this.miMoveUp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miMoveUp_ItemClick);
+      this.btnToggleFavE.ImageList = this.sharedImageCollection1;
+      resources.ApplyResources(this.btnToggleFavE, "btnToggleFavE");
+      this.btnToggleFavE.Name = "btnToggleFavE";
+      this.btnToggleFavE.Tag = "";
+      this.btnToggleFavE.Click += new System.EventHandler(this.btnToggleFav_Click);
       // 
-      // miMoveDown
+      // btnToggleFavD
       // 
-      resources.ApplyResources(this.miMoveDown, "miMoveDown");
-      this.miMoveDown.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miMoveDown.Id = 46;
-      this.miMoveDown.ImageIndex = 25;
-      this.miMoveDown.Name = "miMoveDown";
-      this.miMoveDown.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miMoveDown_ItemClick);
+      this.btnToggleFavD.ImageList = this.sharedImageCollection1;
+      resources.ApplyResources(this.btnToggleFavD, "btnToggleFavD");
+      this.btnToggleFavD.Name = "btnToggleFavD";
+      this.btnToggleFavD.Click += new System.EventHandler(this.btnToggleFav_Click);
       // 
-      // btnSyncFromLeft
+      // btnToggleFavC
       // 
-      resources.ApplyResources(this.btnSyncFromLeft, "btnSyncFromLeft");
-      this.btnSyncFromLeft.Name = "btnSyncFromLeft";
-      this.btnSyncFromLeft.Click += new System.EventHandler(this.btnSyncFromLeft_Click);
+      this.btnToggleFavC.ImageList = this.sharedImageCollection1;
+      resources.ApplyResources(this.btnToggleFavC, "btnToggleFavC");
+      this.btnToggleFavC.Name = "btnToggleFavC";
+      this.btnToggleFavC.Click += new System.EventHandler(this.btnToggleFav_Click);
       // 
-      // labelControl2
+      // btnToggleFavB
       // 
-      resources.ApplyResources(this.labelControl2, "labelControl2");
-      this.labelControl2.Name = "labelControl2";
+      this.btnToggleFavB.ImageList = this.sharedImageCollection1;
+      resources.ApplyResources(this.btnToggleFavB, "btnToggleFavB");
+      this.btnToggleFavB.Name = "btnToggleFavB";
+      this.btnToggleFavB.Click += new System.EventHandler(this.btnToggleFav_Click);
+      // 
+      // btnToggleFavA
+      // 
+      this.btnToggleFavA.ImageList = this.sharedImageCollection1;
+      resources.ApplyResources(this.btnToggleFavA, "btnToggleFavA");
+      this.btnToggleFavA.Name = "btnToggleFavA";
+      this.btnToggleFavA.Click += new System.EventHandler(this.btnToggleFav_Click);
       // 
       // btnClearLeftFilter
       // 
       this.btnClearLeftFilter.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("btnClearLeftFilter.Appearance.Font")));
       this.btnClearLeftFilter.Appearance.Options.UseFont = true;
+      this.btnClearLeftFilter.ImageIndex = 28;
+      this.btnClearLeftFilter.ImageList = this.sharedImageCollection1;
       resources.ApplyResources(this.btnClearLeftFilter, "btnClearLeftFilter");
       this.btnClearLeftFilter.Name = "btnClearLeftFilter";
       this.btnClearLeftFilter.Click += new System.EventHandler(this.btnClearLeftFilter_Click);
@@ -862,14 +406,6 @@
       resources.ApplyResources(this.btnRenum, "btnRenum");
       this.btnRenum.Name = "btnRenum";
       this.btnRenum.Click += new System.EventHandler(this.btnRenum_Click);
-      // 
-      // btnSort
-      // 
-      this.btnSort.ImageIndex = 21;
-      this.btnSort.ImageList = this.sharedImageCollection1;
-      resources.ApplyResources(this.btnSort, "btnSort");
-      this.btnSort.Name = "btnSort";
-      this.btnSort.Click += new System.EventHandler(this.btnSort_Click);
       // 
       // btnDown
       // 
@@ -895,50 +431,33 @@
       this.btnRemove.Name = "btnRemove";
       this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
       // 
-      // txtSetSlot
-      // 
-      resources.ApplyResources(this.txtSetSlot, "txtSetSlot");
-      this.txtSetSlot.Name = "txtSetSlot";
-      this.txtSetSlot.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject("txtSetSlot.Properties.Buttons"))))});
-      this.txtSetSlot.Properties.Mask.EditMask = resources.GetString("txtSetSlot.Properties.Mask.EditMask");
-      this.txtSetSlot.Properties.Mask.MaskType = ((DevExpress.XtraEditors.Mask.MaskType)(resources.GetObject("txtSetSlot.Properties.Mask.MaskType")));
-      this.txtSetSlot.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.txtSetSlot_ButtonClick);
-      this.txtSetSlot.EditValueChanged += new System.EventHandler(this.txtSetSlot_EditValueChanged);
-      this.txtSetSlot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSetSlot_KeyDown);
-      // 
-      // labelControl11
-      // 
-      resources.ApplyResources(this.labelControl11, "labelControl11");
-      this.labelControl11.Name = "labelControl11";
-      // 
       // grpInputList
       // 
-      this.grpInputList.Controls.Add(this.gridInput);
+      this.grpInputList.Controls.Add(this.gridRight);
       this.grpInputList.Controls.Add(this.lblHotkeyRight);
       this.grpInputList.Controls.Add(this.panelControl3);
       resources.ApplyResources(this.grpInputList, "grpInputList");
       this.grpInputList.Name = "grpInputList";
+      this.grpInputList.Enter += new System.EventHandler(this.grpInputList_Enter);
       // 
-      // gridInput
+      // gridRight
       // 
-      this.gridInput.DataSource = this.dsChannels;
-      resources.ApplyResources(this.gridInput, "gridInput");
-      this.gridInput.MainView = this.gviewInput;
-      this.gridInput.Name = "gridInput";
-      this.gridInput.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+      this.gridRight.DataSource = this.dsChannels;
+      resources.ApplyResources(this.gridRight, "gridRight");
+      this.gridRight.MainView = this.gviewRight;
+      this.gridRight.Name = "gridRight";
+      this.gridRight.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckedComboBoxEdit2});
-      this.gridInput.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gviewInput});
-      this.gridInput.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridInput_ProcessGridKey);
-      this.gridInput.Enter += new System.EventHandler(this.gridInput_Enter);
+      this.gridRight.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gviewRight});
+      this.gridRight.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridRight_ProcessGridKey);
       // 
-      // gviewInput
+      // gviewRight
       // 
-      this.gviewInput.Appearance.HeaderPanel.Options.UseTextOptions = true;
-      this.gviewInput.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
-      this.gviewInput.ColumnPanelRowHeight = 35;
-      this.gviewInput.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+      this.gviewRight.Appearance.HeaderPanel.Options.UseTextOptions = true;
+      this.gviewRight.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+      this.gviewRight.ColumnPanelRowHeight = 35;
+      this.gviewRight.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIndex,
             this.colSlotOld,
             this.colSlotNew,
@@ -966,27 +485,29 @@
             this.colNetworkOperator,
             this.colDebug,
             this.colLogicalIndex});
-      this.gviewInput.GridControl = this.gridInput;
-      this.gviewInput.Name = "gviewInput";
-      this.gviewInput.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
-      this.gviewInput.OptionsCustomization.AllowGroup = false;
-      this.gviewInput.OptionsLayout.LayoutVersion = "3";
-      this.gviewInput.OptionsSelection.MultiSelect = true;
-      this.gviewInput.OptionsView.ColumnAutoWidth = false;
-      this.gviewInput.OptionsView.ShowAutoFilterRow = true;
-      this.gviewInput.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
-      this.gviewInput.OptionsView.ShowGroupPanel = false;
-      this.gviewInput.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+      this.gviewRight.GridControl = this.gridRight;
+      this.gviewRight.Name = "gviewRight";
+      this.gviewRight.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
+      this.gviewRight.OptionsCustomization.AllowGroup = false;
+      this.gviewRight.OptionsLayout.LayoutVersion = "3";
+      this.gviewRight.OptionsSelection.MultiSelect = true;
+      this.gviewRight.OptionsView.ColumnAutoWidth = false;
+      this.gviewRight.OptionsView.ShowAutoFilterRow = true;
+      this.gviewRight.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
+      this.gviewRight.OptionsView.ShowGroupPanel = false;
+      this.gviewRight.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colSlotOld, DevExpress.Data.ColumnSortOrder.Ascending)});
-      this.gviewInput.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.gviewInput_RowClick);
-      this.gviewInput.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gviewInput_RowCellStyle);
-      this.gviewInput.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gviewInput_PopupMenuShowing);
-      this.gviewInput.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewInput_FocusedRowChanged);
-      this.gviewInput.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewInput_CellValueChanged);
-      this.gviewInput.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewInput_CustomColumnDisplayText);
-      this.gviewInput.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewInput_LayoutUpgrade);
-      this.gviewInput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gview_MouseDown);
-      this.gviewInput.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gviewInput_ValidatingEditor);
+      this.gviewRight.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.gviewRight_RowClick);
+      this.gviewRight.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gviewRight_RowCellStyle);
+      this.gviewRight.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gviewRight_PopupMenuShowing);
+      this.gviewRight.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gview_ShowingEditor);
+      this.gviewRight.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewRight_FocusedRowChanged);
+      this.gviewRight.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewRight_CellValueChanged);
+      this.gviewRight.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewRight_CustomColumnDisplayText);
+      this.gviewRight.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewRight_LayoutUpgrade);
+      this.gviewRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gview_MouseDown);
+      this.gviewRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gview_MouseUp);
+      this.gviewRight.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gviewRight_ValidatingEditor);
       // 
       // colIndex
       // 
@@ -1200,40 +721,582 @@
       // 
       // panelControl3
       // 
-      this.panelControl3.Controls.Add(this.btnCloneChannelList);
+      this.panelControl3.Controls.Add(this.btnAddAll);
       this.panelControl3.Controls.Add(this.btnClearRightFilter);
-      this.panelControl3.Controls.Add(this.btnSyncFromRight);
       this.panelControl3.Controls.Add(this.btnAdd);
       resources.ApplyResources(this.panelControl3, "panelControl3");
       this.panelControl3.Name = "panelControl3";
       // 
-      // btnCloneChannelList
+      // btnAddAll
       // 
-      resources.ApplyResources(this.btnCloneChannelList, "btnCloneChannelList");
-      this.btnCloneChannelList.Name = "btnCloneChannelList";
-      this.btnCloneChannelList.Click += new System.EventHandler(this.btnCloneChannelList_Click);
+      resources.ApplyResources(this.btnAddAll, "btnAddAll");
+      this.btnAddAll.Name = "btnAddAll";
+      this.btnAddAll.Click += new System.EventHandler(this.btnAddAll_Click);
       // 
       // btnClearRightFilter
       // 
       this.btnClearRightFilter.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("btnClearRightFilter.Appearance.Font")));
       this.btnClearRightFilter.Appearance.Options.UseFont = true;
+      this.btnClearRightFilter.ImageIndex = 28;
+      this.btnClearRightFilter.ImageList = this.sharedImageCollection1;
       resources.ApplyResources(this.btnClearRightFilter, "btnClearRightFilter");
       this.btnClearRightFilter.Name = "btnClearRightFilter";
       this.btnClearRightFilter.Click += new System.EventHandler(this.btnClearRightFilter_Click);
       // 
-      // btnSyncFromRight
-      // 
-      resources.ApplyResources(this.btnSyncFromRight, "btnSyncFromRight");
-      this.btnSyncFromRight.Name = "btnSyncFromRight";
-      this.btnSyncFromRight.Click += new System.EventHandler(this.btnSyncFromRight_Click);
-      // 
       // btnAdd
       // 
-      this.btnAdd.ImageIndex = 20;
+      this.btnAdd.ImageIndex = 26;
       this.btnAdd.ImageList = this.sharedImageCollection1;
       resources.ApplyResources(this.btnAdd, "btnAdd");
       this.btnAdd.Name = "btnAdd";
       this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+      // 
+      // barManager1
+      // 
+      this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.bar1});
+      this.barManager1.Categories.AddRange(new DevExpress.XtraBars.BarManagerCategory[] {
+            ((DevExpress.XtraBars.BarManagerCategory)(resources.GetObject("barManager1.Categories"))),
+            ((DevExpress.XtraBars.BarManagerCategory)(resources.GetObject("barManager1.Categories1"))),
+            ((DevExpress.XtraBars.BarManagerCategory)(resources.GetObject("barManager1.Categories2"))),
+            ((DevExpress.XtraBars.BarManagerCategory)(resources.GetObject("barManager1.Categories3")))});
+      this.barManager1.DockControls.Add(this.barDockControlTop);
+      this.barManager1.DockControls.Add(this.barDockControlBottom);
+      this.barManager1.DockControls.Add(this.barDockControlLeft);
+      this.barManager1.DockControls.Add(this.barDockControlRight);
+      this.barManager1.Form = this;
+      this.barManager1.Images = this.sharedImageCollection1;
+      this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.mnuOptions,
+            this.barSubItem1,
+            this.miEnglish,
+            this.miGerman,
+            this.miFile,
+            this.miOpen,
+            this.miOpenReferenceFile,
+            this.miReload,
+            this.miRestoreOriginal,
+            this.miFileInformation,
+            this.miSave,
+            this.miSaveAs,
+            this.miQuit,
+            this.mnuHelp,
+            this.miAbout,
+            this.mnuCharset,
+            this.miIsoCharSets,
+            this.miCharsetForm,
+            this.miEdit,
+            this.miMoveUp,
+            this.miMoveDown,
+            this.miAddChannel,
+            this.miRemove,
+            this.miSort,
+            this.miRenum,
+            this.mnuFavSet,
+            this.miFavSet,
+            this.mnuFavUnset,
+            this.miFavUnset,
+            this.miLockOn,
+            this.miLockOff,
+            this.miSkipOn,
+            this.miSkipOff,
+            this.miHideOn,
+            this.miHideOff,
+            this.barSubItem2,
+            this.miTvSettings,
+            this.miEraseChannelData,
+            this.miOpenWebsite,
+            this.miWiki});
+      this.barManager1.MaxItemId = 52;
+      // 
+      // bar1
+      // 
+      this.bar1.BarName = "Tools";
+      this.bar1.DockCol = 0;
+      this.bar1.DockRow = 0;
+      this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+      this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miFile),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miOpen),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSave),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miEdit, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavSet),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miLockOn),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSkipOn),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miHideOn),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem2, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miTvSettings),
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuOptions, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuHelp, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miAbout)});
+      resources.ApplyResources(this.bar1, "bar1");
+      // 
+      // miFile
+      // 
+      resources.ApplyResources(this.miFile, "miFile");
+      this.miFile.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
+      this.miFile.Id = 4;
+      this.miFile.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miOpen),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRestoreOriginal),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miFileInformation),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSave),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miQuit, true)});
+      this.miFile.Name = "miFile";
+      // 
+      // miOpen
+      // 
+      resources.ApplyResources(this.miOpen, "miOpen");
+      this.miOpen.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
+      this.miOpen.Id = 5;
+      this.miOpen.ImageIndex = 3;
+      this.miOpen.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O));
+      this.miOpen.Name = "miOpen";
+      this.miOpen.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpen_ItemClick);
+      // 
+      // miReload
+      // 
+      resources.ApplyResources(this.miReload, "miReload");
+      this.miReload.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
+      this.miReload.Enabled = false;
+      this.miReload.Id = 7;
+      this.miReload.ImageIndex = 5;
+      this.miReload.Name = "miReload";
+      this.miReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miReload_ItemClick);
+      // 
+      // miRestoreOriginal
+      // 
+      resources.ApplyResources(this.miRestoreOriginal, "miRestoreOriginal");
+      this.miRestoreOriginal.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
+      this.miRestoreOriginal.Id = 42;
+      this.miRestoreOriginal.Name = "miRestoreOriginal";
+      this.miRestoreOriginal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRestoreOriginal_ItemClick);
+      // 
+      // miFileInformation
+      // 
+      resources.ApplyResources(this.miFileInformation, "miFileInformation");
+      this.miFileInformation.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
+      this.miFileInformation.Id = 43;
+      this.miFileInformation.Name = "miFileInformation";
+      this.miFileInformation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miFileInformation_ItemClick);
+      // 
+      // miSave
+      // 
+      resources.ApplyResources(this.miSave, "miSave");
+      this.miSave.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
+      this.miSave.Enabled = false;
+      this.miSave.Id = 6;
+      this.miSave.ImageIndex = 4;
+      this.miSave.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S));
+      this.miSave.Name = "miSave";
+      this.miSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSave_ItemClick);
+      // 
+      // miSaveAs
+      // 
+      resources.ApplyResources(this.miSaveAs, "miSaveAs");
+      this.miSaveAs.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
+      this.miSaveAs.Enabled = false;
+      this.miSaveAs.Id = 8;
+      this.miSaveAs.ImageIndex = 6;
+      this.miSaveAs.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.S));
+      this.miSaveAs.Name = "miSaveAs";
+      this.miSaveAs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveAs_ItemClick);
+      // 
+      // miOpenReferenceFile
+      // 
+      resources.ApplyResources(this.miOpenReferenceFile, "miOpenReferenceFile");
+      this.miOpenReferenceFile.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
+      this.miOpenReferenceFile.Id = 44;
+      this.miOpenReferenceFile.ImageIndex = 23;
+      this.miOpenReferenceFile.Name = "miOpenReferenceFile";
+      this.miOpenReferenceFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpenReferenceFile_ItemClick);
+      // 
+      // miQuit
+      // 
+      resources.ApplyResources(this.miQuit, "miQuit");
+      this.miQuit.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
+      this.miQuit.Id = 9;
+      this.miQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4));
+      this.miQuit.Name = "miQuit";
+      this.miQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miQuit_ItemClick);
+      // 
+      // miEdit
+      // 
+      resources.ApplyResources(this.miEdit, "miEdit");
+      this.miEdit.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miEdit.Id = 22;
+      this.miEdit.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miAddChannel),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRemove),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSort),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRenum),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuFavSet, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavUnset),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miLockOn, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miLockOff),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSkipOn, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSkipOff),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miHideOn, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miHideOff)});
+      this.miEdit.Name = "miEdit";
+      // 
+      // miAddChannel
+      // 
+      resources.ApplyResources(this.miAddChannel, "miAddChannel");
+      this.miAddChannel.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miAddChannel.Id = 39;
+      this.miAddChannel.ImageIndex = 20;
+      this.miAddChannel.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Add));
+      this.miAddChannel.Name = "miAddChannel";
+      // 
+      // miRemove
+      // 
+      resources.ApplyResources(this.miRemove, "miRemove");
+      this.miRemove.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miRemove.Id = 25;
+      this.miRemove.ImageIndex = 11;
+      this.miRemove.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X));
+      this.miRemove.Name = "miRemove";
+      this.miRemove.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRemove_ItemClick);
+      // 
+      // miSort
+      // 
+      resources.ApplyResources(this.miSort, "miSort");
+      this.miSort.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miSort.Id = 40;
+      this.miSort.ImageIndex = 21;
+      this.miSort.Name = "miSort";
+      this.miSort.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSort_ItemClick);
+      // 
+      // miRenum
+      // 
+      resources.ApplyResources(this.miRenum, "miRenum");
+      this.miRenum.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miRenum.Id = 41;
+      this.miRenum.ImageIndex = 22;
+      this.miRenum.Name = "miRenum";
+      this.miRenum.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenum_ItemClick);
+      // 
+      // mnuFavSet
+      // 
+      resources.ApplyResources(this.mnuFavSet, "mnuFavSet");
+      this.mnuFavSet.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.mnuFavSet.Id = 37;
+      this.mnuFavSet.ImageIndex = 13;
+      this.mnuFavSet.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.F));
+      this.mnuFavSet.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miFavSet)});
+      this.mnuFavSet.Name = "mnuFavSet";
+      this.mnuFavSet.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
+      // 
+      // miFavSet
+      // 
+      resources.ApplyResources(this.miFavSet, "miFavSet");
+      this.miFavSet.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miFavSet.Id = 20;
+      this.miFavSet.Name = "miFavSet";
+      this.miFavSet.ShowNumbers = true;
+      this.miFavSet.Strings.AddRange(new object[] {
+            "A",
+            "B",
+            "C",
+            "D"});
+      this.miFavSet.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.miFavSet_ListItemClick);
+      // 
+      // mnuFavUnset
+      // 
+      resources.ApplyResources(this.mnuFavUnset, "mnuFavUnset");
+      this.mnuFavUnset.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.mnuFavUnset.Id = 38;
+      this.mnuFavUnset.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miFavUnset)});
+      this.mnuFavUnset.Name = "mnuFavUnset";
+      // 
+      // miFavUnset
+      // 
+      resources.ApplyResources(this.miFavUnset, "miFavUnset");
+      this.miFavUnset.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miFavUnset.Id = 21;
+      this.miFavUnset.Name = "miFavUnset";
+      this.miFavUnset.Strings.AddRange(new object[] {
+            "A",
+            "B",
+            "C",
+            "D"});
+      this.miFavUnset.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.miFavUnset_ListItemClick);
+      // 
+      // miLockOn
+      // 
+      resources.ApplyResources(this.miLockOn, "miLockOn");
+      this.miLockOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miLockOn.Id = 27;
+      this.miLockOn.ImageIndex = 15;
+      this.miLockOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L));
+      this.miLockOn.Name = "miLockOn";
+      this.miLockOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miLockOn_ItemClick);
+      // 
+      // miLockOff
+      // 
+      resources.ApplyResources(this.miLockOff, "miLockOff");
+      this.miLockOff.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miLockOff.Id = 28;
+      this.miLockOff.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.L));
+      this.miLockOff.Name = "miLockOff";
+      this.miLockOff.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miLockOff_ItemClick);
+      // 
+      // miSkipOn
+      // 
+      resources.ApplyResources(this.miSkipOn, "miSkipOn");
+      this.miSkipOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miSkipOn.Id = 29;
+      this.miSkipOn.ImageIndex = 16;
+      this.miSkipOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K));
+      this.miSkipOn.Name = "miSkipOn";
+      this.miSkipOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSkipOn_ItemClick);
+      // 
+      // miSkipOff
+      // 
+      resources.ApplyResources(this.miSkipOff, "miSkipOff");
+      this.miSkipOff.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miSkipOff.Id = 30;
+      this.miSkipOff.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.K));
+      this.miSkipOff.Name = "miSkipOff";
+      this.miSkipOff.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSkipOff_ItemClick);
+      // 
+      // miHideOn
+      // 
+      resources.ApplyResources(this.miHideOn, "miHideOn");
+      this.miHideOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miHideOn.Id = 31;
+      this.miHideOn.ImageIndex = 17;
+      this.miHideOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H));
+      this.miHideOn.Name = "miHideOn";
+      this.miHideOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miHideOn_ItemClick);
+      // 
+      // miHideOff
+      // 
+      resources.ApplyResources(this.miHideOff, "miHideOff");
+      this.miHideOff.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miHideOff.Id = 32;
+      this.miHideOff.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.H));
+      this.miHideOff.Name = "miHideOff";
+      this.miHideOff.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miHideOff_ItemClick);
+      // 
+      // barSubItem2
+      // 
+      resources.ApplyResources(this.barSubItem2, "barSubItem2");
+      this.barSubItem2.Id = 47;
+      this.barSubItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miTvSettings),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miEraseChannelData)});
+      this.barSubItem2.Name = "barSubItem2";
+      // 
+      // miTvSettings
+      // 
+      resources.ApplyResources(this.miTvSettings, "miTvSettings");
+      this.miTvSettings.Id = 48;
+      this.miTvSettings.ImageIndex = 27;
+      this.miTvSettings.Name = "miTvSettings";
+      this.miTvSettings.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTvCountrySetup_ItemClick);
+      // 
+      // miEraseChannelData
+      // 
+      resources.ApplyResources(this.miEraseChannelData, "miEraseChannelData");
+      this.miEraseChannelData.Id = 49;
+      this.miEraseChannelData.Name = "miEraseChannelData";
+      this.miEraseChannelData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miEraseChannelData_ItemClick);
+      // 
+      // mnuOptions
+      // 
+      resources.ApplyResources(this.mnuOptions, "mnuOptions");
+      this.mnuOptions.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
+      this.mnuOptions.Id = 34;
+      this.mnuOptions.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barSubItem1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuCharset, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+      this.mnuOptions.Name = "mnuOptions";
+      // 
+      // barSubItem1
+      // 
+      resources.ApplyResources(this.barSubItem1, "barSubItem1");
+      this.barSubItem1.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
+      this.barSubItem1.Id = 0;
+      this.barSubItem1.ImageIndex = 14;
+      this.barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miEnglish),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miGerman)});
+      this.barSubItem1.Name = "barSubItem1";
+      this.barSubItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
+      // 
+      // miEnglish
+      // 
+      this.miEnglish.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miEnglish, "miEnglish");
+      this.miEnglish.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
+      this.miEnglish.Id = 2;
+      this.miEnglish.ImageIndex = 0;
+      this.miEnglish.Name = "miEnglish";
+      this.miEnglish.Tag = "en";
+      this.miEnglish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
+      // miGerman
+      // 
+      this.miGerman.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miGerman, "miGerman");
+      this.miGerman.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
+      this.miGerman.Id = 1;
+      this.miGerman.ImageIndex = 1;
+      this.miGerman.Name = "miGerman";
+      this.miGerman.Tag = "de-DE";
+      this.miGerman.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
+      // mnuCharset
+      // 
+      resources.ApplyResources(this.mnuCharset, "mnuCharset");
+      this.mnuCharset.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
+      this.mnuCharset.Id = 15;
+      this.mnuCharset.ImageIndex = 9;
+      this.mnuCharset.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miCharsetForm),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miIsoCharSets, true)});
+      this.mnuCharset.Name = "mnuCharset";
+      this.mnuCharset.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
+      // 
+      // miCharsetForm
+      // 
+      resources.ApplyResources(this.miCharsetForm, "miCharsetForm");
+      this.miCharsetForm.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
+      this.miCharsetForm.Id = 13;
+      this.miCharsetForm.ImageIndex = 9;
+      this.miCharsetForm.Name = "miCharsetForm";
+      this.miCharsetForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCharset_ItemClick);
+      // 
+      // miIsoCharSets
+      // 
+      resources.ApplyResources(this.miIsoCharSets, "miIsoCharSets");
+      this.miIsoCharSets.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
+      this.miIsoCharSets.Id = 14;
+      this.miIsoCharSets.Name = "miIsoCharSets";
+      this.miIsoCharSets.ShowNumbers = true;
+      this.miIsoCharSets.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.miIsoCharSets_ListItemClick);
+      // 
+      // mnuHelp
+      // 
+      resources.ApplyResources(this.mnuHelp, "mnuHelp");
+      this.mnuHelp.CategoryGuid = new System.Guid("0d554574-30e8-4d31-9a70-da702a984260");
+      this.mnuHelp.Id = 10;
+      this.mnuHelp.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miWiki),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miOpenWebsite),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miAbout)});
+      this.mnuHelp.Name = "mnuHelp";
+      // 
+      // miWiki
+      // 
+      resources.ApplyResources(this.miWiki, "miWiki");
+      this.miWiki.Id = 51;
+      this.miWiki.Name = "miWiki";
+      this.miWiki.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miWiki_ItemClick);
+      // 
+      // miOpenWebsite
+      // 
+      resources.ApplyResources(this.miOpenWebsite, "miOpenWebsite");
+      this.miOpenWebsite.Id = 50;
+      this.miOpenWebsite.Name = "miOpenWebsite";
+      this.miOpenWebsite.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpenWebsite_ItemClick);
+      // 
+      // miAbout
+      // 
+      resources.ApplyResources(this.miAbout, "miAbout");
+      this.miAbout.CategoryGuid = new System.Guid("0d554574-30e8-4d31-9a70-da702a984260");
+      this.miAbout.Id = 11;
+      this.miAbout.ImageIndex = 7;
+      this.miAbout.Name = "miAbout";
+      this.miAbout.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miAbout_ItemClick);
+      // 
+      // barDockControlTop
+      // 
+      this.barDockControlTop.CausesValidation = false;
+      resources.ApplyResources(this.barDockControlTop, "barDockControlTop");
+      // 
+      // barDockControlBottom
+      // 
+      this.barDockControlBottom.CausesValidation = false;
+      resources.ApplyResources(this.barDockControlBottom, "barDockControlBottom");
+      // 
+      // barDockControlLeft
+      // 
+      this.barDockControlLeft.CausesValidation = false;
+      resources.ApplyResources(this.barDockControlLeft, "barDockControlLeft");
+      // 
+      // barDockControlRight
+      // 
+      this.barDockControlRight.CausesValidation = false;
+      resources.ApplyResources(this.barDockControlRight, "barDockControlRight");
+      // 
+      // miMoveUp
+      // 
+      resources.ApplyResources(this.miMoveUp, "miMoveUp");
+      this.miMoveUp.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miMoveUp.Id = 45;
+      this.miMoveUp.ImageIndex = 24;
+      this.miMoveUp.Name = "miMoveUp";
+      this.miMoveUp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miMoveUp_ItemClick);
+      // 
+      // miMoveDown
+      // 
+      resources.ApplyResources(this.miMoveDown, "miMoveDown");
+      this.miMoveDown.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miMoveDown.Id = 46;
+      this.miMoveDown.ImageIndex = 25;
+      this.miMoveDown.Name = "miMoveDown";
+      this.miMoveDown.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miMoveDown_ItemClick);
+      // 
+      // labelControl2
+      // 
+      resources.ApplyResources(this.labelControl2, "labelControl2");
+      this.labelControl2.Name = "labelControl2";
+      // 
+      // txtSetSlot
+      // 
+      resources.ApplyResources(this.txtSetSlot, "txtSetSlot");
+      this.txtSetSlot.Name = "txtSetSlot";
+      this.txtSetSlot.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject("txtSetSlot.Properties.Buttons"))))});
+      this.txtSetSlot.Properties.Mask.EditMask = resources.GetString("txtSetSlot.Properties.Mask.EditMask");
+      this.txtSetSlot.Properties.Mask.MaskType = ((DevExpress.XtraEditors.Mask.MaskType)(resources.GetObject("txtSetSlot.Properties.Mask.MaskType")));
+      this.txtSetSlot.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.txtSetSlot_ButtonClick);
+      this.txtSetSlot.EditValueChanged += new System.EventHandler(this.txtSetSlot_EditValueChanged);
+      this.txtSetSlot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSetSlot_KeyDown);
+      // 
+      // labelControl11
+      // 
+      resources.ApplyResources(this.labelControl11, "labelControl11");
+      this.labelControl11.Name = "labelControl11";
+      // 
+      // picDonate
+      // 
+      resources.ApplyResources(this.picDonate, "picDonate");
+      this.picDonate.EditValue = global::ChanSort.Ui.Properties.Resources.Donate;
+      this.picDonate.MenuManager = this.barManager1;
+      this.picDonate.Name = "picDonate";
+      this.picDonate.Properties.Appearance.BackColor = ((System.Drawing.Color)(resources.GetObject("picDonate.Properties.Appearance.BackColor")));
+      this.picDonate.Properties.Appearance.Options.UseBackColor = true;
+      this.picDonate.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+      this.picDonate.Properties.PictureAlignment = System.Drawing.ContentAlignment.TopLeft;
+      this.picDonate.Click += new System.EventHandler(this.picDonate_Click);
       // 
       // defaultLookAndFeel1
       // 
@@ -1241,54 +1304,82 @@
       // 
       // grpTopPanel
       // 
-      this.grpTopPanel.Controls.Add(this.comboUnsortedAction);
-      this.grpTopPanel.Controls.Add(this.labelControl3);
-      this.grpTopPanel.Controls.Add(this.btnResetChannelData);
-      this.grpTopPanel.Controls.Add(this.comboChannelList);
-      this.grpTopPanel.Controls.Add(this.labelControl1);
+      this.grpTopPanel.Controls.Add(this.rbInsertSwap);
+      this.grpTopPanel.Controls.Add(this.rbInsertAfter);
+      this.grpTopPanel.Controls.Add(this.rbInsertBefore);
+      this.grpTopPanel.Controls.Add(this.cbCloseGap);
+      this.grpTopPanel.Controls.Add(this.cbAppendUnsortedChannels);
+      this.grpTopPanel.Controls.Add(this.labelControl2);
+      this.grpTopPanel.Controls.Add(this.picDonate);
+      this.grpTopPanel.Controls.Add(this.tabChannelList);
+      this.grpTopPanel.Controls.Add(this.labelControl11);
+      this.grpTopPanel.Controls.Add(this.txtSetSlot);
       resources.ApplyResources(this.grpTopPanel, "grpTopPanel");
       this.grpTopPanel.Name = "grpTopPanel";
       this.grpTopPanel.ShowCaption = false;
       // 
-      // comboUnsortedAction
+      // rbInsertSwap
       // 
-      resources.ApplyResources(this.comboUnsortedAction, "comboUnsortedAction");
-      this.comboUnsortedAction.MenuManager = this.barManager1;
-      this.comboUnsortedAction.Name = "comboUnsortedAction";
-      this.comboUnsortedAction.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject("comboUnsortedAction.Properties.Buttons"))))});
-      this.comboUnsortedAction.Properties.Items.AddRange(new object[] {
-            resources.GetString("comboUnsortedAction.Properties.Items"),
-            resources.GetString("comboUnsortedAction.Properties.Items1"),
-            resources.GetString("comboUnsortedAction.Properties.Items2")});
-      this.comboUnsortedAction.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+      resources.ApplyResources(this.rbInsertSwap, "rbInsertSwap");
+      this.rbInsertSwap.MenuManager = this.barManager1;
+      this.rbInsertSwap.Name = "rbInsertSwap";
+      this.rbInsertSwap.Properties.Appearance.Options.UseTextOptions = true;
+      this.rbInsertSwap.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+      this.rbInsertSwap.Properties.Caption = resources.GetString("rbInsertSwap.Properties.Caption");
+      this.rbInsertSwap.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
+      this.rbInsertSwap.Properties.GlyphAlignment = ((DevExpress.Utils.HorzAlignment)(resources.GetObject("rbInsertSwap.Properties.GlyphAlignment")));
+      this.rbInsertSwap.Properties.RadioGroupIndex = 1;
+      this.rbInsertSwap.TabStop = false;
+      this.rbInsertSwap.CheckedChanged += new System.EventHandler(this.rbInsertMode_CheckedChanged);
       // 
-      // labelControl3
+      // rbInsertAfter
       // 
-      this.labelControl3.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-      resources.ApplyResources(this.labelControl3, "labelControl3");
-      this.labelControl3.Name = "labelControl3";
+      resources.ApplyResources(this.rbInsertAfter, "rbInsertAfter");
+      this.rbInsertAfter.MenuManager = this.barManager1;
+      this.rbInsertAfter.Name = "rbInsertAfter";
+      this.rbInsertAfter.Properties.Caption = resources.GetString("rbInsertAfter.Properties.Caption");
+      this.rbInsertAfter.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
+      this.rbInsertAfter.Properties.RadioGroupIndex = 1;
+      this.rbInsertAfter.CheckedChanged += new System.EventHandler(this.rbInsertMode_CheckedChanged);
       // 
-      // btnResetChannelData
+      // rbInsertBefore
       // 
-      resources.ApplyResources(this.btnResetChannelData, "btnResetChannelData");
-      this.btnResetChannelData.Name = "btnResetChannelData";
-      this.btnResetChannelData.Click += new System.EventHandler(this.btnResetChannelData_Click);
+      resources.ApplyResources(this.rbInsertBefore, "rbInsertBefore");
+      this.rbInsertBefore.MenuManager = this.barManager1;
+      this.rbInsertBefore.Name = "rbInsertBefore";
+      this.rbInsertBefore.Properties.Caption = resources.GetString("rbInsertBefore.Properties.Caption");
+      this.rbInsertBefore.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
+      this.rbInsertBefore.Properties.RadioGroupIndex = 1;
+      this.rbInsertBefore.TabStop = false;
+      this.rbInsertBefore.CheckedChanged += new System.EventHandler(this.rbInsertMode_CheckedChanged);
       // 
-      // comboChannelList
+      // cbCloseGap
       // 
-      resources.ApplyResources(this.comboChannelList, "comboChannelList");
-      this.comboChannelList.MenuManager = this.barManager1;
-      this.comboChannelList.Name = "comboChannelList";
-      this.comboChannelList.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject("comboChannelList.Properties.Buttons"))))});
-      this.comboChannelList.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-      this.comboChannelList.SelectedIndexChanged += new System.EventHandler(this.comboChannelList_SelectedIndexChanged);
+      resources.ApplyResources(this.cbCloseGap, "cbCloseGap");
+      this.cbCloseGap.MenuManager = this.barManager1;
+      this.cbCloseGap.Name = "cbCloseGap";
+      this.cbCloseGap.Properties.Caption = resources.GetString("cbCloseGap.Properties.Caption");
       // 
-      // labelControl1
+      // cbAppendUnsortedChannels
       // 
-      resources.ApplyResources(this.labelControl1, "labelControl1");
-      this.labelControl1.Name = "labelControl1";
+      resources.ApplyResources(this.cbAppendUnsortedChannels, "cbAppendUnsortedChannels");
+      this.cbAppendUnsortedChannels.MenuManager = this.barManager1;
+      this.cbAppendUnsortedChannels.Name = "cbAppendUnsortedChannels";
+      this.cbAppendUnsortedChannels.Properties.Caption = resources.GetString("cbAppendUnsortedChannels.Properties.Caption");
+      // 
+      // tabChannelList
+      // 
+      resources.ApplyResources(this.tabChannelList, "tabChannelList");
+      this.tabChannelList.Name = "tabChannelList";
+      this.tabChannelList.SelectedTabPage = this.pageEmpty;
+      this.tabChannelList.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.pageEmpty});
+      this.tabChannelList.SelectedPageChanged += new DevExpress.XtraTab.TabPageChangedEventHandler(this.tabChannelList_SelectedPageChanged);
+      // 
+      // pageEmpty
+      // 
+      this.pageEmpty.Name = "pageEmpty";
+      resources.ApplyResources(this.pageEmpty, "pageEmpty");
       // 
       // mnuContext
       // 
@@ -1297,7 +1388,6 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miMoveDown),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAddChannel),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRemove),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miReplace),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSort),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRenum),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuFavSet, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -1330,30 +1420,34 @@
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).EndInit();
       this.grpOutputList.ResumeLayout(false);
       this.grpOutputList.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.gridOutput)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gridLeft)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.dsChannels)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.gviewOutput)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gviewLeft)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckedComboBoxEdit1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).EndInit();
       this.pnlEditControls.ResumeLayout(false);
-      this.pnlEditControls.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.comboEditMode.Properties)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.txtSetSlot.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).EndInit();
       this.grpInputList.ResumeLayout(false);
       this.grpInputList.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.gridInput)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.gviewInput)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gridRight)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gviewRight)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckedComboBoxEdit2)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).EndInit();
       this.panelControl3.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.txtSetSlot.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.picDonate.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpTopPanel)).EndInit();
       this.grpTopPanel.ResumeLayout(false);
       this.grpTopPanel.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.comboUnsortedAction.Properties)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.comboChannelList.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.rbInsertSwap.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.rbInsertAfter.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.rbInsertBefore.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.cbCloseGap.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.cbAppendUnsortedChannels.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.tabChannelList)).EndInit();
+      this.tabChannelList.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.mnuContext)).EndInit();
       this.ResumeLayout(false);
 
@@ -1362,8 +1456,8 @@
     #endregion
 
     private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel1;
-    private DevExpress.XtraGrid.GridControl gridInput;
-    private DevExpress.XtraGrid.Views.Grid.GridView gviewInput;
+    private DevExpress.XtraGrid.GridControl gridRight;
+    private DevExpress.XtraGrid.Views.Grid.GridView gviewRight;
     private System.Windows.Forms.BindingSource dsChannels;
     private DevExpress.XtraGrid.Columns.GridColumn colIndex;
     private DevExpress.XtraGrid.Columns.GridColumn colSlotOld;
@@ -1374,8 +1468,8 @@
     private DevExpress.XtraEditors.SimpleButton btnRemove;
     private DevExpress.XtraEditors.GroupControl grpInputList;
     private DevExpress.XtraEditors.SimpleButton btnAdd;
-    private DevExpress.XtraGrid.GridControl gridOutput;
-    private DevExpress.XtraGrid.Views.Grid.GridView gviewOutput;
+    private DevExpress.XtraGrid.GridControl gridLeft;
+    private DevExpress.XtraGrid.Views.Grid.GridView gviewLeft;
     private DevExpress.XtraGrid.Columns.GridColumn colOutSlot;
     private DevExpress.XtraGrid.Columns.GridColumn colOutName;
     private DevExpress.XtraEditors.SimpleButton btnDown;
@@ -1385,7 +1479,6 @@
     private DevExpress.XtraEditors.ButtonEdit txtSetSlot;
     private DevExpress.XtraEditors.LabelControl labelControl11;
     private DevExpress.XtraGrid.Columns.GridColumn colEncrypted;
-    private DevExpress.XtraEditors.SimpleButton btnSort;
     private DevExpress.XtraBars.BarManager barManager1;
     private DevExpress.XtraBars.Bar bar1;
     private DevExpress.XtraBars.BarSubItem barSubItem1;
@@ -1407,8 +1500,6 @@
     private DevExpress.XtraBars.BarButtonItem miCharsetForm;
     private DevExpress.XtraBars.BarListItem miIsoCharSets;
     private DevExpress.XtraBars.BarSubItem mnuCharset;
-    private DevExpress.XtraEditors.SimpleButton btnSyncFromRight;
-    private DevExpress.XtraEditors.SimpleButton btnSyncFromLeft;
     private DevExpress.XtraEditors.SimpleButton btnClearRightFilter;
     private DevExpress.XtraEditors.SimpleButton btnClearLeftFilter;
     private DevExpress.XtraGrid.Columns.GridColumn colAudioPid;
@@ -1429,8 +1520,6 @@
     private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
     private DevExpress.XtraEditors.PanelControl pnlEditControls;
     private DevExpress.XtraEditors.GroupControl grpTopPanel;
-    private DevExpress.XtraEditors.ComboBoxEdit comboChannelList;
-    private DevExpress.XtraEditors.LabelControl labelControl1;
     private DevExpress.XtraEditors.PanelControl panelControl3;
     private DevExpress.XtraEditors.LabelControl labelControl2;
     private DevExpress.XtraGrid.Columns.GridColumn colOutFav;
@@ -1443,7 +1532,6 @@
     private DevExpress.XtraBars.BarListItem miFavSet;
     private DevExpress.XtraBars.BarListItem miFavUnset;
     private DevExpress.XtraBars.BarButtonItem miRemove;
-    private DevExpress.XtraBars.BarButtonItem miReplace;
     private DevExpress.XtraBars.BarButtonItem miLockOn;
     private DevExpress.XtraBars.BarButtonItem miLockOff;
     private DevExpress.XtraBars.BarButtonItem miSkipOn;
@@ -1462,19 +1550,33 @@
     private DevExpress.XtraGrid.Columns.GridColumn colNetworkOperator;
     private DevExpress.XtraGrid.Columns.GridColumn colDebug;
     private DevExpress.XtraGrid.Columns.GridColumn colServiceTypeName;
-    private DevExpress.XtraEditors.SimpleButton btnResetChannelData;
     private DevExpress.XtraBars.BarButtonItem miRestoreOriginal;
-    private DevExpress.XtraEditors.ComboBoxEdit comboUnsortedAction;
-    private DevExpress.XtraEditors.LabelControl labelControl3;
     private DevExpress.XtraGrid.Columns.GridColumn colLogicalIndex;
     private DevExpress.XtraBars.BarButtonItem miFileInformation;
     private DevExpress.XtraBars.BarButtonItem miOpenReferenceFile;
-    private DevExpress.XtraEditors.SimpleButton btnCloneChannelList;
+    private DevExpress.XtraEditors.SimpleButton btnAddAll;
     private DevExpress.XtraBars.BarButtonItem miMoveUp;
     private DevExpress.XtraBars.BarButtonItem miMoveDown;
-    private DevExpress.XtraEditors.ComboBoxEdit comboEditMode;
     private DevExpress.XtraBars.BarSubItem barSubItem2;
     private DevExpress.XtraBars.BarButtonItem miTvSettings;
+    private DevExpress.XtraBars.BarButtonItem miEraseChannelData;
+    private DevExpress.XtraEditors.PictureEdit picDonate;
+    private DevExpress.XtraBars.BarButtonItem miOpenWebsite;
+    private DevExpress.XtraBars.BarButtonItem miWiki;
+    private DevExpress.XtraTab.XtraTabControl tabChannelList;
+    private DevExpress.XtraTab.XtraTabPage pageEmpty;
+    private DevExpress.XtraEditors.CheckEdit cbCloseGap;
+    private DevExpress.XtraEditors.CheckEdit cbAppendUnsortedChannels;
+    private DevExpress.XtraEditors.CheckEdit rbInsertSwap;
+    private DevExpress.XtraEditors.CheckEdit rbInsertAfter;
+    private DevExpress.XtraEditors.CheckEdit rbInsertBefore;
+    private DevExpress.XtraEditors.SimpleButton btnToggleLock;
+    private DevExpress.XtraEditors.SimpleButton btnToggleFavE;
+    private DevExpress.XtraEditors.SimpleButton btnToggleFavD;
+    private DevExpress.XtraEditors.SimpleButton btnToggleFavC;
+    private DevExpress.XtraEditors.SimpleButton btnToggleFavB;
+    private DevExpress.XtraEditors.SimpleButton btnToggleFavA;
+    private DevExpress.XtraGrid.Columns.GridColumn colOutLock;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }
