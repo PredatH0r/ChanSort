@@ -987,7 +987,7 @@ namespace ChanSort.Ui
     private void NavigateToChannel(ChannelInfo channel, GridView view)
     {
       if (channel == null) return;
-      int rowHandle = this.gviewRight.GetRowHandle(this.currentChannelList.Channels.IndexOf(channel));
+      int rowHandle = view.GetRowHandle(this.currentChannelList.Channels.IndexOf(channel));
       if (view.IsValidRowHandle(rowHandle))
       {
         this.SelectFocusedRow(view, rowHandle);

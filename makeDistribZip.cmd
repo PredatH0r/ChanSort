@@ -17,7 +17,7 @@ cd ..
 del Website\ChanSort.zip 2>nul
 copy Source\readme.txt %target%
 cd %target%
-c:\cygwin\bin\date +%Y-%m-%d>%TEMP%\date.txt
+c:\cygwin\bin\date "+%%Y-%%m-%%d">%TEMP%\date.txt
 set /p curdate=<%temp%\date.txt
 "c:\program files (x86)\7-Zip\7z.exe" a -tzip ChanSort_%curdate%.zip *
 
