@@ -1,16 +1,13 @@
-Version v2013-04-05 ========================================================
+Version v2013-04-06 ========================================================
 
-New:
-- Redesigned user interface
-- Editing option to close or keep gaps when moving/deleting channels
-- Support for LG LMxxxT models, which export an invalid DVB-S data block
-- Opening a file automatically shows the first non-empty channel list
-- Reloading a TV-file will show the last opened list
+This is a maintenance release based on version v2013-04-05, which brought a 
+refurbished user interface and fixes for various usability issues.
 
 Fixed:
-- Deleting rows caused incorrect selections in the left list. Successive
-  deletes resulted in the loss of the first channel.
-- Duplicate Pr# was assigned to channels when they were added out of order
+- When double-clicking a channel in the right list, which was already part of the
+  sorted list, the wrong channel was selected in the left list.
+- new application icon which is licensed free-to-use
+  
 
 The complete change log can be found at the end of this document
 
