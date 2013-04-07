@@ -208,7 +208,7 @@
   <data name="lblHotkeyLeft.Text" xml:space="preserve">
     <value>F3: Filter | F4: Liste | -: nach oben | +: nach unten | Entf: entfernen</value>
   </data>
-  <data name="sharedImageCollection1.ImageSource.ImageStream" type="DevExpress.Utils.ImageCollectionStreamer, DevExpress.Utils.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="globalImageCollection1.ImageSource.ImageStream" type="DevExpress.Utils.ImageCollectionStreamer, DevExpress.Utils.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFpEZXZFeHByZXNzLlV0aWxzLnYxMi4yLCBWZXJzaW9uPTEyLjIu
         Ni4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEMAwAAAFFT
@@ -569,9 +569,6 @@
   <data name="miRemove.Caption" xml:space="preserve">
     <value>Sender &amp;entfernen</value>
   </data>
-  <data name="miReplace.Caption" xml:space="preserve">
-    <value>Sender erset&amp;zen</value>
-  </data>
   <data name="miSort.Caption" xml:space="preserve">
     <value>Sender alphabetisch sortieren</value>
   </data>
@@ -604,6 +601,9 @@
   </data>
   <data name="barSubItem2.Caption" xml:space="preserve">
     <value>TV-Gerät</value>
+  </data>
+  <data name="miTvSettings.Caption" xml:space="preserve">
+    <value>Geräte&amp;einstellungen...</value>
   </data>
   <data name="miEraseChannelData.Caption" xml:space="preserve">
     <value>Alle Senderdaten löschen</value>

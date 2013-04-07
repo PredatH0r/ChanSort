@@ -1,12 +1,11 @@
-Version v2013-04-06 ========================================================
+Version v2013-04-07 ========================================================
 
 This is a maintenance release based on version v2013-04-05, which brought a 
 refurbished user interface and fixes for various usability issues.
 
 Fixed:
-- When double-clicking a channel in the right list, which was already part of the
-  sorted list, the wrong channel was selected in the left list.
-- new application icon which is licensed free-to-use
+- saving a .TLL file after loading a reference list which contained channels
+  that are no longer inside the .TLL caused an error during saving.
   
 
 The complete change log can be found at the end of this document
@@ -90,6 +89,15 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ====================================================================
+
+2013-04-07
+- FIX: saving a .TLL file after loading a reference list which contained channels
+  that are no longer inside the .TLL caused an error during saving.
+
+2013-04-06
+- FIX: When double-clicking a channel in the right list, which was already part of the
+  sorted list, the wrong channel was selected in the left list.
+- new application icon which is licensed free-to-use
 
 2013-04-05
 - Redesigned user interface
