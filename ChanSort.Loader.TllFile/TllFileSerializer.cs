@@ -1,5 +1,6 @@
 ﻿#define SYMBOL_RATE_ROUNDING
-#undef STORE_DVBS_CHANNELS_IN_DATABASE
+//#define STORE_DVBS_CHANNELS_IN_DATABASE
+//#define TESTING_LM640T_HACK
 
 using System;
 using System.Collections.Generic;
@@ -309,7 +310,7 @@ namespace ChanSort.Loader.TllFile
       this.DataRoot.AddChannelList(satTvChannels);
       this.DataRoot.AddChannelList(satRadioChannels);
 
-      this.ScanDvbSSubBlockChecksums(off);
+      this.VerifyDvbsSubblockChecksums(off);
 
       // subblock 1 (DVBS header)
       off += 16;
@@ -329,15 +330,15 @@ namespace ChanSort.Loader.TllFile
       off += satConfig.dvbsMaxChannelCount/8; // skip allocation bitmap
       this.ReadDvbsChannelLinkedList(ref off);
 
-      this.ReadDvbSChannels(ref off, header.LinkedListStartIndex);
+      this.ReadDvbsChannels(ref off, header.LinkedListStartIndex);
 
       // subblock 5 (satellite/LNB config)
       off += satConfig.LnbBlockHeaderSize + satConfig.lnbCount*satConfig.lnbLength;
     }
     #endregion
 
-    #region ScanDvbSSubBlockChecksums()
-    private void ScanDvbSSubBlockChecksums(int off)
+    #region VerifyDvbsSubblockChecksums()
+    private void VerifyDvbsSubblockChecksums(int off)
     {      
       this.dvbsSubblockCrcOffset = new int[satConfig.dvbsSubblockLength.Length];
       for (int i = 0; i < dvbsSubblockCrcOffset.Length; i++)
@@ -423,8 +424,8 @@ namespace ChanSort.Loader.TllFile
     }
     #endregion
 
-    #region ReadDvbSChannels()
-    private void ReadDvbSChannels(ref int off, int startIndex)
+    #region ReadDvbsChannels()
+    private void ReadDvbsChannels(ref int off, int startIndex)
     {
       var mapping = this.dvbsMappings.GetMapping(satConfig.dvbsChannelLength);
       int index = startIndex;
@@ -505,10 +506,16 @@ namespace ChanSort.Loader.TllFile
         // header
         this.dvbsSubblockCrcOffset[0] = (int)stream.Position;
         stream.Seek(4, SeekOrigin.Current); // skip CRC32
+#if TESTING_LM640T_HACK
+        stream.Write(Encoding.ASCII.GetBytes("DVBS-S2\0"), 0, 8);
+        //stream.Write(new byte[] { 255, 255, 255, 255, 255, 255, 255, 255 }, 0, 8);
+        wrt.Write((ushort)0);
+        wrt.Write((ushort)0);
+#else
         stream.Write(Encoding.ASCII.GetBytes("DVBS-S2\0"), 0, 8);
         wrt.Write((ushort) 7);
         wrt.Write((ushort) 4);
-
+#endif
         // satellite
         this.dvbsSubblockCrcOffset[1] = (int)stream.Position;
         stream.Seek(4, SeekOrigin.Current); // skip CRC32
@@ -613,7 +620,7 @@ namespace ChanSort.Loader.TllFile
       newDvbctChannelCount = 0;
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        foreach (TllChannelBase channel in list.Channels)
+        foreach (ChannelInfo channel in list.Channels)
         {
           if (channel.NewProgramNr != 0)
           {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -23,7 +22,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-04-07";
+    public const string AppVersion = "v2013-04-08";
 
     #region enum EditMode
     private enum EditMode
@@ -74,9 +73,13 @@ namespace ChanSort.Ui
       else this.rbInsertSwap.Checked = true;
       this.cbAppendUnsortedChannels.Checked = true;
       this.ActiveControl = this.gridRight;
+    }
+    #endregion
 
-      Xaron.UIHelpers.ImageListDumper.WriteToDirectory(this.globalImageCollection1.ImageSource, @"c:\temp\chansort", "",
-                                                       ImageFormat.Png);
+    #region InitAppAfterMainWindowWasShown()
+    private void InitAppAfterMainWindowWasShown()
+    {
+      this.BeginInvoke((Action)UpdateCheck.CheckForNewVersion);
     }
     #endregion
 
@@ -1146,7 +1149,8 @@ namespace ChanSort.Ui
     #region MainForm_Load
     private void MainForm_Load(object sender, EventArgs e)
     {
-      TryExecute(this.LoadSettings);
+      this.TryExecute(this.LoadSettings);
+      this.TryExecute(this.InitAppAfterMainWindowWasShown);
     }
     #endregion
 

@@ -89,7 +89,6 @@
     <Compile Include="GlobalImageCollection.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ImageListDumper.cs" />
     <Compile Include="InfoBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +109,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="UpdateCheck.cs" />
     <Compile Include="WaitForm1.cs">
       <SubType>Form</SubType>
     </Compile>

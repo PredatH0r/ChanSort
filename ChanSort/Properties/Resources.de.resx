@@ -227,4 +227,11 @@ Möchten Sie fortfahren?</value>
 Die Fehlermeldung lautet:
 </value>
   </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Message" xml:space="preserve">
+    <value>Eine neuere Version ist verfügbar: v{0}.
+Möchten Sie die Downloadseite öffnen?</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
+    <value>Neue Version</value>
+  </data>
 </root>

@@ -333,5 +333,24 @@ namespace ChanSort.Ui.Properties {
                 return ResourceManager.GetString("paypal_button", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Version.
+        /// </summary>
+        internal static string UpdateCheck_NotifyAboutNewVersion_Caption {
+            get {
+                return ResourceManager.GetString("UpdateCheck_NotifyAboutNewVersion_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A newer version is available: v{0}.
+        ///Do you want to open the download website?.
+        /// </summary>
+        internal static string UpdateCheck_NotifyAboutNewVersion_Message {
+            get {
+                return ResourceManager.GetString("UpdateCheck_NotifyAboutNewVersion_Message", resourceCulture);
+            }
+        }
     }
 }

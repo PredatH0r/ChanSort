@@ -226,4 +226,11 @@ The error message is:
   <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
     <value>File write error</value>
   </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Message" xml:space="preserve">
+    <value>A newer version is available: v{0}.
+Do you want to open the download website?</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
+    <value>New Version</value>
+  </data>
 </root>
