@@ -9,10 +9,12 @@ namespace ChanSort.Loader.DbFile
 {
   class DbSerializer : SerializerBase
   {
-    private const int BITS_InUse = 0x10000;
+    private const int BITS_Tv = 0x10000;
     private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.TvAndRadio, "Analog");
-    private readonly ChannelList dtvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.TvAndRadio, "DVB-C/T");
-    private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS | SignalSource.TvAndRadio, "Satellite");
+    private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Tv, "DTV");
+    private readonly ChannelList dtvRadioChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Radio, "Radio");
+    private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat-TV");
+    private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat-Radio");
 
     #region ctor()
     public DbSerializer(string inputFile) : base(inputFile)
@@ -20,8 +22,10 @@ namespace ChanSort.Loader.DbFile
       this.Features.ChannelNameEdit = true;
 
       this.DataRoot.AddChannelList(this.atvChannels);
-      this.DataRoot.AddChannelList(this.dtvChannels);
-      this.DataRoot.AddChannelList(this.satChannels);
+      this.DataRoot.AddChannelList(this.dtvTvChannels);
+      this.DataRoot.AddChannelList(this.dtvRadioChannels);
+      this.DataRoot.AddChannelList(this.satTvChannels);
+      this.DataRoot.AddChannelList(this.satRadioChannels);
     }
     #endregion
 
@@ -121,7 +125,7 @@ namespace ChanSort.Loader.DbFile
     private void ReadAnalogChannel(SQLiteDataReader r, IDictionary<string, int> field)
     {
       var bits = r.GetInt32(field["list_bits"]);
-      if ((bits & BITS_InUse) == 0)
+      if ((bits & BITS_Tv) == 0)
         return;
 
       ChannelInfo channel = new ChannelInfo(SignalSource.Analog|SignalSource.Tv,
@@ -138,21 +142,21 @@ namespace ChanSort.Loader.DbFile
     #region ReadDtvChannels()
     private void ReadDtvChannels(SQLiteCommand cmd)
     {
-      this.ReadDigitalChannels(cmd, "EuroDTVChanList", SignalSource.DvbCT, this.dtvChannels);
+      this.ReadDigitalChannels(cmd, "EuroDTVChanList", SignalSource.DvbCT, this.dtvTvChannels, this.dtvRadioChannels);
     }
     #endregion
 
     #region ReadSatChannels()
     private void ReadSatChannels(SQLiteCommand cmd)
     {
-      this.ReadDigitalChannels(cmd, "EuroSATChanList", SignalSource.DvbS, this.satChannels);
+      this.ReadDigitalChannels(cmd, "EuroSATChanList", SignalSource.DvbS, this.satTvChannels, this.satRadioChannels);
     }
     #endregion
 
     #region ReadDigitalChannels()
-    private void ReadDigitalChannels(SQLiteCommand cmd, string table, SignalSource signalSource, ChannelList channels)
+    private void ReadDigitalChannels(SQLiteCommand cmd, string table, SignalSource signalSource, ChannelList tvChannels, ChannelList radioChannels)
     {
-      string[] fieldNames = { "channel_handle", "channel_number", "list_bits", "channel_label", "frequency",
+      string[] fieldNames = { "channel_handle", "channel_number", "channel_label", "frequency",
                             "dvb_service_type", "onid", "tsid", "sid", "sat_id", "channel_order" };
       var sql = this.GetQuery(table, fieldNames);
       var fields = this.GetFieldMap(fieldNames);
@@ -161,18 +165,14 @@ namespace ChanSort.Loader.DbFile
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
-          ReadDigitalChannel(r, fields, signalSource, channels);
+          ReadDigitalChannel(r, fields, signalSource, tvChannels, radioChannels);
       }
     }
     #endregion
 
     #region ReadDigitalChannel()
-    private void ReadDigitalChannel(SQLiteDataReader r, IDictionary<string, int> field, SignalSource signalSource, ChannelList channels)
+    private void ReadDigitalChannel(SQLiteDataReader r, IDictionary<string, int> field, SignalSource signalSource, ChannelList tvChannels, ChannelList radioChannels)
     {
-      var bits = r.GetInt32(field["list_bits"]);
-      if ((bits & BITS_InUse) == 0)
-        return;
-
       var name = r.GetString(field["channel_label"]);
       string longName, shortName;
       this.GetChannelNames(name, out longName, out shortName);
@@ -210,7 +210,7 @@ namespace ChanSort.Loader.DbFile
           }
         }
       }
-      this.DataRoot.AddChannel(channels, channel);
+      this.DataRoot.AddChannel(serviceType == 2 ? radioChannels : tvChannels, channel);
     }
 
     #endregion
