@@ -165,6 +165,7 @@ namespace ChanSort.Loader.ScmFile
                                 DetectModelFromTranspoderDatabase(zip)
                               };
 
+      // note: E and F series use an identical format, so we only care about E here
       string validCandidates = "BCDE";
       foreach (var candidateList in candidates)
       {
@@ -364,7 +365,7 @@ namespace ChanSort.Loader.ScmFile
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
         DigitalChannel ci = new DigitalChannel(slotIndex, isCable, rawChannel, frequency, c.favoriteNotSetValue);
-        if (ci.OldProgramNr != 0)
+        if (ci.OldProgramNr != -1)
           this.DataRoot.AddChannel(list, ci);
 
         rawChannel.BaseOffset += entrySize;

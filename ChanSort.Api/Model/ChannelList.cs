@@ -19,6 +19,7 @@ namespace ChanSort.Api
     {
       this.source = source;
       this.ShortCaption = caption;
+      this.FirstProgramNumber = (source & SignalSource.Digital) != 0 ? 1 : 0;
     }
 
     public string ShortCaption { get; private set; }
@@ -34,7 +35,7 @@ namespace ChanSort.Api
       get 
       { 
         string cap = this.ShortCaption;
-        int validChannelCount = this.Channels.Count(ch => ch.OldProgramNr != 0);
+        int validChannelCount = this.Channels.Count(ch => ch.OldProgramNr != -1);
         return cap + " (" + validChannelCount + ")";
       }
     }
@@ -44,9 +45,11 @@ namespace ChanSort.Api
     public int InsertProgramNumber
     {
       get { return this.Count == 0 ? 1 : this.insertProgramNr; }
-      set { this.insertProgramNr = Math.Max(1, value); }
+      set { this.insertProgramNr = Math.Max(this.FirstProgramNumber, value); }
     }
     #endregion
+
+    public int FirstProgramNumber { get; set; }
 
     #region AddChannel()
     public string AddChannel(ChannelInfo ci)
@@ -63,7 +66,7 @@ namespace ChanSort.Api
 
       string warning2 = null;
       bool isDupeProgNr = false;
-      if (ci.OldProgramNr != 0)
+      if (ci.OldProgramNr != -1)
       {
         ChannelInfo other;
         this.channelByProgNr.TryGetValue(ci.OldProgramNr, out other);

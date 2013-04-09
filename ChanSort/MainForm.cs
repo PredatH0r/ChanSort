@@ -17,12 +17,13 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraTab;
 
 namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-04-08";
+    public const string AppVersion = "v2013-04-09";
 
     #region enum EditMode
     private enum EditMode
@@ -259,17 +260,21 @@ namespace ChanSort.Ui
     private void FillChannelListCombo()
     {
       this.tabChannelList.TabPages.Clear();
-      bool firstNonEmpty = true;
+      XtraTabPage firstNonEmpty = null;
       foreach (var list in this.dataRoot.ChannelLists)
       {
         var tab = this.tabChannelList.TabPages.Add(list.Caption);
         tab.Tag = list;
-        if (firstNonEmpty && list.Count > 0)
-        {
-          tabChannelList.SelectedTabPage = tab;
-          firstNonEmpty = false;
-        }
+        if (firstNonEmpty == null && list.Count > 0)
+          firstNonEmpty = tab;
       }
+
+      if (firstNonEmpty == null)
+        firstNonEmpty = tabChannelList.TabPages[0];
+      if (firstNonEmpty == this.tabChannelList.SelectedTabPage)
+        this.ShowChannelList((ChannelList)firstNonEmpty.Tag);
+      else
+        this.tabChannelList.SelectedTabPage = firstNonEmpty;
     }
 
     #endregion
@@ -314,9 +319,10 @@ namespace ChanSort.Ui
         return null;
       }
       string extension = (Path.GetExtension(inputFileName) ?? "").ToUpper();
+      string upperFileName = Path.GetFileName(inputFileName).ToUpper();
       foreach (var plugin in this.plugins)
       {
-        if ((plugin.FileFilter.ToUpper()+"|").Contains("*"+extension))
+        if ((plugin.FileFilter.ToUpper()+"|").Contains("*"+extension) || plugin.FileFilter.ToUpper() == upperFileName)
           return plugin;
       }
 
@@ -680,7 +686,7 @@ namespace ChanSort.Ui
         maxNr = Math.Max(maxNr, channel.NewProgramNr);
       foreach (var channel in this.currentChannelList.Channels)
       {
-        if (channel.NewProgramNr == 0 && !channel.IsDeleted)
+        if (channel.NewProgramNr == -1 && !channel.IsDeleted)
           channel.NewProgramNr = maxNr++;
       }
       this.gviewRight.EndDataUpdate();
@@ -875,7 +881,7 @@ namespace ChanSort.Ui
     {
       this.gviewLeft.BeginSort();
       this.gviewLeft.ClearColumnsFilter();
-      this.colOutSlot.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>0");
+      this.colOutSlot.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>-1");
       this.gviewLeft.EndSort();
     }
 
@@ -883,7 +889,7 @@ namespace ChanSort.Ui
     {
       this.gviewRight.BeginSort();
       this.gviewRight.ClearColumnsFilter();
-      this.colSlotOld.FilterInfo = new ColumnFilterInfo("[OldProgramNr]<>0");
+      this.colSlotOld.FilterInfo = new ColumnFilterInfo("[OldProgramNr]<>-1");
       this.gviewRight.EndSort();
     }
     #endregion
@@ -892,9 +898,9 @@ namespace ChanSort.Ui
     private void LoadInputGridLayout(SignalSource newSource)
     {
       string newLayout;
-      if ((newSource & SignalSource.Digital) == 0)
+      if ((newSource & SignalSource.Analog) != 0)
         newLayout = Settings.Default.InputGridLayoutAnalog;
-      else if (newSource == SignalSource.DvbS)
+      else if ((newSource & SignalSource.DvbS) != 0)
         newLayout = Settings.Default.InputGridLayoutDvbS; 
       else
         newLayout = Settings.Default.InputGridLayoutDvbCT;
@@ -1456,7 +1462,7 @@ namespace ChanSort.Ui
       if (e.Column == this.colSlotNew)
       {
         if (!(e.Value is int)) return;
-        if ((int) e.Value == 0)
+        if ((int) e.Value == -1)
           e.DisplayText = string.Empty;
       }
       else if (e.Column == this.colFavorites)
@@ -1473,12 +1479,12 @@ namespace ChanSort.Ui
     {
       ChannelInfo channel = (ChannelInfo)this.gviewRight.GetRow(e.RowHandle);
       if (channel == null) return;
-      if (channel.OldProgramNr == 0)
+      if (channel.OldProgramNr == -1)
       {
         e.Appearance.ForeColor = Color.Red;
         e.Appearance.Options.UseForeColor = true;
       }
-      else if (channel.NewProgramNr != 0)
+      else if (channel.NewProgramNr != -1)
       {
         e.Appearance.ForeColor = Color.Gray;
         e.Appearance.Options.UseForeColor = true;
@@ -1590,7 +1596,7 @@ namespace ChanSort.Ui
     {
       var channel = (ChannelInfo)this.gviewLeft.GetRow(e.RowHandle);
       if (channel == null) return;
-      if (channel.OldProgramNr == 0)
+      if (channel.OldProgramNr == -1)
       {
         e.Appearance.ForeColor = Color.Red;
         e.Appearance.Options.UseForeColor = true;

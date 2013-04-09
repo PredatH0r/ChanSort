@@ -1,12 +1,14 @@
-Version v2013-04-07 ========================================================
+Version v2013-04-10a ========================================================
 
 This is a maintenance release based on version v2013-04-05, which brought a 
 refurbished user interface and fixes for various usability issues.
 
+New:
+- Added support for Toshiba *.db channel lists (read only so far)
+- Allow Pr #0 for analog channels
+
 Fixed:
-- saving a .TLL file after loading a reference list which contained channels
-  that are no longer inside the .TLL caused an error during saving.
-  
+- first channel list only got populated after switching between tabs
 
 The complete change log can be found at the end of this document
 
@@ -89,6 +91,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ====================================================================
+
+2013-04-08
+- Added support for Samsung F-Series.
+- Added online check for updated program version
 
 2013-04-07
 - FIX: saving a .TLL file after loading a reference list which contained channels

@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.TllFile", "Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.ScmFile", "ChanSort.Loader.ScmFile\ChanSort.Loader.ScmFile.csproj", "{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.DbFile", "ChanSort.Loader.DbFile\ChanSort.Loader.DbFile.csproj", "{F6F02792-07F1-48D5-9AF3-F945CA5E3931}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = ChanSort1.vsmdi
@@ -67,6 +69,13 @@ Global
 		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}.Release|x86.ActiveCfg = Release|Any CPU
+		{F6F02792-07F1-48D5-9AF3-F945CA5E3931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6F02792-07F1-48D5-9AF3-F945CA5E3931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6F02792-07F1-48D5-9AF3-F945CA5E3931}.Debug|x86.ActiveCfg = Debug|x86
+		{F6F02792-07F1-48D5-9AF3-F945CA5E3931}.Debug|x86.Build.0 = Debug|x86
+		{F6F02792-07F1-48D5-9AF3-F945CA5E3931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6F02792-07F1-48D5-9AF3-F945CA5E3931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6F02792-07F1-48D5-9AF3-F945CA5E3931}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

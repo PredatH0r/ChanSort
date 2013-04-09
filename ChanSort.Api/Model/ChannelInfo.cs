@@ -12,7 +12,7 @@ namespace ChanSort.Api
     public readonly List<ChannelInfo> Duplicates = new List<ChannelInfo>();
 
     public virtual bool IsDeleted { get; set; }
-    public SignalSource SignalSource { get; protected set; }
+    public SignalSource SignalSource { get; set; }
     public int RecordIndex { get; set; }
     public int RecordOrder { get; set; }
     public int OldProgramNr { get; set; }
@@ -43,7 +43,8 @@ namespace ChanSort.Api
 
     #region ctor()
     protected ChannelInfo()
-    {      
+    {
+      this.NewProgramNr = -1;
     }
 
     /// <summary>
@@ -54,6 +55,7 @@ namespace ChanSort.Api
       this.SignalSource = source;
       this.RecordIndex = index;
       this.RecordOrder = index;
+      this.NewProgramNr = -1;
       this.OldProgramNr = oldProgNr;
       this.Name = name;
       this.Encrypted = null;
@@ -66,6 +68,7 @@ namespace ChanSort.Api
     {
       this.SignalSource = source;
       this.Uid = uid;
+      this.OldProgramNr = -1;
       this.NewProgramNr = newProgNr;
       this.Name = name;
       this.Encrypted = null;

@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using ChanSort.Ui.Properties;
 using DevExpress.XtraEditors;
 
@@ -11,40 +12,45 @@ namespace ChanSort.Ui
 
     public static void CheckForNewVersion()
     {
-      try
-      {
-        var check = new UpdateCheck();
-        check.Check();
-      }
-      catch
-      {
-      }
+      var check = new UpdateCheck();
+      Thread thread = new Thread(check.Check);
+      thread.Start();
     }
 
     private void Check()
     {
+      try
+      {
+        var newVersion = this.GetLatestVersion();
+        if (newVersion.CompareTo(MainForm.AppVersion.TrimStart('v')) > 0)
+          this.NotifyAboutNewVersion(newVersion);
+      }
+      catch { }
+    }
+
+    private string GetLatestVersion()
+    {
       // NOTE: tried using WebRequest class, but that causes massive timeout problems after program start (DLL loading/init?)
+      byte[] buffer = new byte[100000];
+      int len;
       using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
       {
-        sock.ReceiveTimeout = 1000;
+        sock.ReceiveTimeout = 5000;
         sock.Connect("sourceforge.net", 80);
         var request = Encoding.UTF8.GetBytes("GET /projects/chansort/ HTTP/1.1\r\nHost: sourceforge.net\r\n\r\n");
         sock.Send(request);
-        byte[] buffer = new byte[100000];
-        int len = sock.Receive(buffer);
-        var response = Encoding.ASCII.GetString(buffer, 0, len);
-        int start = response.IndexOf(SearchString);
-        if (start >= 0)
-        {
-          int end = response.IndexOf(".zip", start);
-          if (end == start + SearchString.Length + 10)
-          {
-            string newVersion = response.Substring(start + SearchString.Length, 10);
-            if (newVersion.CompareTo(MainForm.AppVersion.TrimStart('v')) > 0)
-              this.NotifyAboutNewVersion(newVersion);
-          }
-        }
-      }      
+        len = sock.Receive(buffer);
+      }
+
+      var response = Encoding.ASCII.GetString(buffer, 0, len);
+      int start = response.IndexOf(SearchString);
+      if (start >= 0)
+      {
+        int end = response.IndexOf(".zip", start);
+        if (end == start + SearchString.Length + 10)
+          return response.Substring(start + SearchString.Length, 10);
+      }
+      return string.Empty;
     }
 
     private void NotifyAboutNewVersion(string newVersion)

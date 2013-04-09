@@ -88,8 +88,9 @@ namespace ChanSort.Loader.TllFile
     public override void UpdateRawData()
     {
       mapping.SetDataPtr(this.rawData, this.baseOffset);
-      mapping.SetWord(_ProgramNr, this.NewProgramNr | ((this.SignalSource & SignalSource.Radio) != 0 ? 0x4000 : 0));
-      mapping.SetWord(_ProgramNr2, (mapping.GetWord(_ProgramNr2) & 0x0003) | (this.NewProgramNr << 2));
+      int progNr = this.NewProgramNr == -1 ? 0 : this.NewProgramNr;
+      mapping.SetWord(_ProgramNr, progNr | ((this.SignalSource & SignalSource.Radio) != 0 ? 0x4000 : 0));
+      mapping.SetWord(_ProgramNr2, (mapping.GetWord(_ProgramNr2) & 0x0003) | (progNr << 2));
       if (this.IsNameModified)
       {
         mapping.SetString(_Name, this.Name, 40);
@@ -101,7 +102,7 @@ namespace ChanSort.Loader.TllFile
       mapping.SetFlag(_Skip, this.Skip);
       mapping.SetFlag(_Lock, this.Lock);
       mapping.SetFlag(_Hide, this.Hidden);
-      if (this.NewProgramNr == 0)
+      if (this.NewProgramNr == -1)
       {
         mapping.SetFlag(_Deleted, true);
         mapping.SetByte("off"+_Moved, 0); //skip,lock,hide,moved

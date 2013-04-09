@@ -74,7 +74,7 @@ namespace ChanSort.Api
         return;
 
       IEnumerable<ChannelInfo> channels = FindChannels(channelList, name, uid);
-      var channel = channels == null ? null : channels.FirstOrDefault(c => c.NewProgramNr == 0);
+      var channel = channels == null ? null : channels.FirstOrDefault(c => c.NewProgramNr == -1);
       if (channel != null)
       {
         channel.NewProgramNr = programNr;
@@ -138,7 +138,7 @@ namespace ChanSort.Api
       if (!this.clearedLists.Contains(channelList))
       {
         foreach (var channel in channelList.Channels)
-          channel.NewProgramNr = 0;
+          channel.NewProgramNr = -1;
         this.clearedLists.Add(channelList);
       }
       return channelList;
@@ -206,7 +206,7 @@ namespace ChanSort.Api
       {
         foreach (var channelList in dataRoot.ChannelLists)
         {
-          foreach (var channel in channelList.Channels.Where(ch => ch.NewProgramNr != 0).OrderBy(ch => ch.NewProgramNr))
+          foreach (var channel in channelList.Channels.Where(ch => ch.NewProgramNr != -1).OrderBy(ch => ch.NewProgramNr))
           {
             string line = string.Format("{0},{1},{2},{3},\"{4}\",{5},{6}",
                                         "", // past: channel.RecordIndex,

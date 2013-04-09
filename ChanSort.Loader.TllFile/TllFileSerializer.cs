@@ -622,11 +622,11 @@ namespace ChanSort.Loader.TllFile
       {
         foreach (ChannelInfo channel in list.Channels)
         {
-          if (channel.NewProgramNr != 0)
+          if (channel.NewProgramNr != -1)
           {
-            if ((channel.SignalSource & SignalSource.Digital) == 0)
+            if ((channel.SignalSource & SignalSource.Analog) != 0)
               ++newAnalogChannelCount;
-            else if (channel.SignalSource != SignalSource.DvbS)
+            else if ((channel.SignalSource & SignalSource.DvbCT) != 0)
               ++newDvbctChannelCount;
           }
           channel.OldProgramNr = channel.NewProgramNr;

@@ -117,7 +117,7 @@ namespace ChanSort.Loader.ScmFile
       }
       this.UpdateRawFavorites();
       mapping.SetFlag(_Lock, this.Lock);
-      if (this.NewProgramNr == 0)
+      if (this.NewProgramNr == -1)
         mapping.SetFlag(_Deleted, true);
 
       this.UpdateChecksum();

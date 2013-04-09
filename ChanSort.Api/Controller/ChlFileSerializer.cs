@@ -25,7 +25,7 @@ namespace ChanSort.Api
       this.warnings.Remove(0, this.warnings.Length);
 
       foreach (var channel in this.channelList.Channels)
-        channel.NewProgramNr = 0;
+        channel.NewProgramNr = -1;
 
       using (var stream = new StreamReader(fileName, System.Text.Encoding.Default))
       {
@@ -80,7 +80,7 @@ namespace ChanSort.Api
 
       foreach(var channel in channels)
       {
-        if (channel.NewProgramNr != 0)
+        if (channel.NewProgramNr != -1)
           continue;
         ++found;
         if (found > 1)
