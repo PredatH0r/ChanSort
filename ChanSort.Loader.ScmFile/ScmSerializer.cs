@@ -498,7 +498,7 @@ namespace ChanSort.Loader.ScmFile
     #endregion
 
     #region Save()
-    public override void Save(string tvOutputFile, string csvOutputFile)
+    public override void Save(string tvOutputFile)
     {
       if (tvOutputFile != this.FileName)
       {

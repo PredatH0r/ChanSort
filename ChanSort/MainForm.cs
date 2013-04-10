@@ -23,7 +23,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-04-09";
+    public const string AppVersion = "v2013-04-11";
 
     #region enum EditMode
     private enum EditMode
@@ -528,7 +528,7 @@ namespace ChanSort.Ui
           if (!File.Exists(bakFile))
             File.Copy(currentTvFile, bakFile);
         }
-        this.currentTvSerializer.Save(this.currentTvFile, this.currentCsvFile);
+        this.currentTvSerializer.Save(this.currentTvFile);
       }
       finally
       {

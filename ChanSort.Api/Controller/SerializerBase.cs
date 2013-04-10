@@ -29,7 +29,7 @@ namespace ChanSort.Api
 
     public abstract string DisplayName { get; }
     public abstract void Load();
-    public abstract void Save(string tvOutputFile, string csvOutputFile);
+    public abstract void Save(string tvOutputFile);
 
     public virtual Encoding DefaultEncoding
     {

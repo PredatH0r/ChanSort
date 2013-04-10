@@ -4,8 +4,8 @@ namespace ChanSort.Loader.DbFile
 {
   public class DbSerializerPlugin : ISerializerPlugin
   {
-    public string PluginName { get { return "Toshiba chmgt.db"; } }
-    public string FileFilter { get { return "chmgt.db"; } }
+    public string PluginName { get { return "Toshiba *.zip"; } }
+    public string FileFilter { get { return "*.zip"; } }
     
     public SerializerBase CreateSerializer(string inputFile)
     {

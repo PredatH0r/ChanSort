@@ -875,7 +875,7 @@
     <value>False</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - Senderlisten Editor für LG und Samsung TV</value>
+    <value>ChanSort {0} - Senderlisten-Editor für Samsung, LG und Toshiba TVs</value>
   </data>
   <data name="btnToggleLock.Text" xml:space="preserve">
     <value>Kindersicherung</value>

@@ -1,10 +1,10 @@
-Version v2013-04-10a ========================================================
+Version v2013-04-11 ========================================================
 
 This is a maintenance release based on version v2013-04-05, which brought a 
 refurbished user interface and fixes for various usability issues.
 
 New:
-- Added support for Toshiba *.db channel lists (read only so far)
+- Added support for Toshiba *.zip channel lists (containing chmgt.db list)
 - Allow Pr #0 for analog channels
 
 Fixed:
@@ -91,6 +91,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ====================================================================
+
+2013-04-11
+- added support for Toshiba *.zip channel lists (containing chmgt.db list)
+- allow Pr #0 for analog channels
+- FIX: first channel list only got populated after switching between tabs
 
 2013-04-08
 - Added support for Samsung F-Series.

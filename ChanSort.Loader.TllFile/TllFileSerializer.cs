@@ -567,7 +567,7 @@ namespace ChanSort.Loader.TllFile
 
 
     #region Save()
-    public override void Save(string tvOutputFile, string csvOutputFile)
+    public override void Save(string tvOutputFile)
     {
       int newAnalogChannelCount;
       int newDvbctChannelCount;
