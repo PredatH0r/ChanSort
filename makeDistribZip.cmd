@@ -7,7 +7,7 @@ copy debug\ChanSort.exe* "%target%"
 copy debug\ChanSort.*.dll "%target%"
 copy debug\ChanSort.*.ini "%target%"
 copy debug\Lookup.csv "%target%"
-copy DLL\*.dll "%target%"
+copy DLL\* "%target%"
 mkdir "%target%\de" 2>nul
 xcopy /siy debug\de "%target%\de"
 copy readme.txt "%target%"

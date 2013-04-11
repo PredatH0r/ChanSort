@@ -15,7 +15,8 @@ The complete change log can be found at the end of this document
 
 About ChanSort =============================================================
 
-ChanSort is a program to manage your LG or Samsung TV's channel list on your PC.
+ChanSort is a program to manage your Samsung, LG or Toshiba TV's channel list
+on your PC.
 
 It allows you to change program numbers and channel names, select your favorites, 
 set a parental lock and much more. With its multi-selection capabilities and the
@@ -57,6 +58,11 @@ Samsung
 
     Instructions for transferring the channel list can be found on:
     http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-importieren/
+
+Toshiba
+-------
+    Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.
+    (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
 
 
 ! USE AT YOUR OWN RISK !
