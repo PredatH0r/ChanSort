@@ -52,13 +52,4 @@ namespace ChanSort.Api
     AppendAlphabetically=1,
     MarkDeleted=2
   }
-
-  public enum DvbServiceType
-  {
-    SdTv = 1,
-    Radio = 2,
-    Data = 12,
-    HdTv = 25,
-    Option = 211
-  };
 }

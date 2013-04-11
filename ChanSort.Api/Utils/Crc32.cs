@@ -44,6 +44,7 @@
     #endregion
 
     #region Crack()
+#if false
     public static unsafe int Crack(byte* block, int maxLen, uint checksum)
     {
       uint crc32 = CrcMask;
@@ -55,6 +56,7 @@
       }
       return 0;
     }
+#endif
     #endregion
   }
 }

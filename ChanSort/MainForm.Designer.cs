@@ -36,6 +36,7 @@
       this.dsChannels = new System.Windows.Forms.BindingSource(this.components);
       this.gviewLeft = new DevExpress.XtraGrid.Views.Grid.GridView();
       this.colIndex1 = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colOutServiceType = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutSlot = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutFav = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -153,7 +154,7 @@
       this.tabChannelList = new DevExpress.XtraTab.XtraTabControl();
       this.pageEmpty = new DevExpress.XtraTab.XtraTabPage();
       this.mnuContext = new DevExpress.XtraBars.PopupMenu(this.components);
-      this.colOutServiceType = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colSignalSource = new DevExpress.XtraGrid.Columns.GridColumn();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -194,7 +195,7 @@
       resources.ApplyResources(this.splitContainerControl1.Panel1, "splitContainerControl1.Panel1");
       this.splitContainerControl1.Panel2.Controls.Add(this.grpInputList);
       resources.ApplyResources(this.splitContainerControl1.Panel2, "splitContainerControl1.Panel2");
-      this.splitContainerControl1.SplitterPosition = 343;
+      this.splitContainerControl1.SplitterPosition = 386;
       // 
       // grpOutputList
       // 
@@ -264,6 +265,13 @@
       resources.ApplyResources(this.colIndex1, "colIndex1");
       this.colIndex1.FieldName = "RecordIndex";
       this.colIndex1.Name = "colIndex1";
+      // 
+      // colOutServiceType
+      // 
+      resources.ApplyResources(this.colOutServiceType, "colOutServiceType");
+      this.colOutServiceType.FieldName = "ServiceTypeName";
+      this.colOutServiceType.Name = "colOutServiceType";
+      this.colOutServiceType.OptionsColumn.AllowEdit = false;
       // 
       // colOutSlot
       // 
@@ -477,7 +485,8 @@
             this.colNetworkName,
             this.colNetworkOperator,
             this.colDebug,
-            this.colLogicalIndex});
+            this.colLogicalIndex,
+            this.colSignalSource});
       this.gviewRight.GridControl = this.gridRight;
       this.gviewRight.Name = "gviewRight";
       this.gviewRight.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
@@ -1394,12 +1403,12 @@
       this.mnuContext.Manager = this.barManager1;
       this.mnuContext.Name = "mnuContext";
       // 
-      // colOutServiceType
+      // colSignalSource
       // 
-      resources.ApplyResources(this.colOutServiceType, "colOutServiceType");
-      this.colOutServiceType.FieldName = "ServiceTypeName";
-      this.colOutServiceType.Name = "colOutServiceType";
-      this.colOutServiceType.OptionsColumn.AllowEdit = false;
+      resources.ApplyResources(this.colSignalSource, "colSignalSource");
+      this.colSignalSource.FieldName = "SignalSource";
+      this.colSignalSource.Name = "colSignalSource";
+      this.colSignalSource.OptionsColumn.AllowEdit = false;
       // 
       // MainForm
       // 
@@ -1577,6 +1586,7 @@
     private DevExpress.XtraEditors.SimpleButton btnToggleFavA;
     private DevExpress.XtraGrid.Columns.GridColumn colOutLock;
     private DevExpress.XtraGrid.Columns.GridColumn colOutServiceType;
+    private DevExpress.XtraGrid.Columns.GridColumn colSignalSource;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

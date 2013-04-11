@@ -136,18 +136,15 @@ namespace ChanSort.Api
           break;
 
         char ch = '\0';
-        if (singleByteChar)
+        switch (b)
         {
-          switch (b)
-          {
-            case 0x86: inShortMode = true; continue;
-            case 0x87: inShortMode = false; continue;
-            case 0x8a: ch = '\n'; break;
-            default:
-              if (b >= 0x80 && b <= 0x9f) // DVB-S control characters
-                continue;
-              break;
-          }
+          case 0x86: inShortMode = true; continue;
+          case 0x87: inShortMode = false; continue;
+          case 0x8a: ch = '\n'; break;
+          default:
+            if (b >= 0x80 && b <= 0x9f) // DVB-S control characters
+              continue;
+            break;
         }
         if (ch == '\0')
         {
@@ -215,6 +212,25 @@ namespace ChanSort.Api
       }
 
       return new byte[0];
+    }
+    #endregion
+
+    #region GetEncoding()
+    /// <summary>
+    /// Pass in either a value &lt;=0x1F excluding 0x10 or 0x10xxyy
+    /// </summary>
+    public static Encoding GetEncoding(int encodingMarker)
+    {
+      string enc = null;
+      if (encodingMarker < 0x20)
+        enc = codePages1[encodingMarker];
+      else
+      {
+        encodingMarker &= 0xFFFF;
+        if (encodingMarker < codePages2.Length)
+          enc = codePages2[encodingMarker];
+      }
+      return enc == null ? null : Encoding.GetEncoding(enc);
     }
     #endregion
   }

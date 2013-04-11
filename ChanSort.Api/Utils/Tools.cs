@@ -12,18 +12,6 @@ namespace ChanSort.Api
       return val;
     }
 
-    public static unsafe string GetString(this Encoding encoding, byte* str, int len)
-    {
-      byte[] copy = new byte[len];
-      for (int i = 0; i < len; i++)
-        copy[i] = *str++;
-      string name = encoding.GetString(copy, 0, len);
-      int idx = name.IndexOf('\0');
-      if (idx >= 0)
-        name = name.Substring(0, idx);
-      return name;
-    }
-
     public static string GetAnalogChannelNumber(int freq)
     {
       if (freq < 41) return "";

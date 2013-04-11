@@ -21,7 +21,7 @@ namespace ChanSort.Loader.ScmFile
       if (freq == 0)
         freq = transp*8 + 106;
 
-      this.ChannelOrTransponder = ((int)(freq-106)/8).ToString();
+      this.ChannelOrTransponder = LookupData.Instance.GetDvbtChannel(freq).ToString();
       this.FreqInMhz = freq;
     }
   }

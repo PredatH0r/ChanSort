@@ -5,14 +5,15 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</ProjectGuid>
+    <ProjectGuid>{68DA8072-3A29-4076-9F64-D66F38349585}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChanSort.Api</RootNamespace>
-    <AssemblyName>ChanSort.Api</AssemblyName>
+    <RootNamespace>ChanSort.Loader.Panasonic</RootNamespace>
+    <AssemblyName>ChanSort.Loader.Panasonic</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,67 +52,33 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.84.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\ChlFileSerializer.cs" />
-    <Compile Include="Controller\CsvFileSerializer.cs" />
-    <Compile Include="Controller\Editor.cs" />
-    <Compile Include="Controller\ISerializerPlugin.cs" />
-    <Compile Include="Model\ChannelList.cs" />
-    <Compile Include="Model\Enums.cs" />
-    <Compile Include="Model\LookupData.cs" />
-    <Compile Include="Model\NetworkInfo.cs" />
-    <Compile Include="Model\Satellite.cs" />
-    <Compile Include="Model\Transponder.cs" />
-    <Compile Include="Resources.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <None Include="Utils\ChannelMappingBase.cs" />
-    <Compile Include="Utils\DataMapping.cs" />
-    <Compile Include="Utils\Crc32.cs" />
-    <Compile Include="Utils\CsvFile.cs" />
-    <None Include="Utils\DvbChannelMappingBase.cs" />
-    <Compile Include="Utils\DvbStringDecoder.cs" />
-    <Compile Include="Utils\IniFile.cs" />
-    <Compile Include="Model\ChannelInfo.cs" />
-    <Compile Include="Controller\SerializerBase.cs" />
-    <Compile Include="Model\DataRoot.cs" />
+    <Compile Include="DbChannel.cs" />
+    <Compile Include="Serializer.cs" />
+    <Compile Include="SerializerPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\MappingPool.cs" />
-    <Compile Include="Utils\Tools.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Lookup.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources.de.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
+      <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
+      <Name>ChanSort.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -222,7 +222,7 @@
     <value>35</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>339, 417</value>
+    <value>382, 417</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -872,6 +872,12 @@
   <data name="&gt;&gt;colIndex1.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;colOutServiceType.Name" xml:space="preserve">
+    <value>colOutServiceType</value>
+  </data>
+  <data name="&gt;&gt;colOutServiceType.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;colOutSlot.Name" xml:space="preserve">
     <value>colOutSlot</value>
   </data>
@@ -1358,10 +1364,10 @@
   <data name="&gt;&gt;mnuContext.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.PopupMenu, DevExpress.XtraBars.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;colOutServiceType.Name" xml:space="preserve">
-    <value>colOutServiceType</value>
+  <data name="&gt;&gt;colSignalSource.Name" xml:space="preserve">
+    <value>colSignalSource</value>
   </data>
-  <data name="&gt;&gt;colOutServiceType.Type" xml:space="preserve">
+  <data name="&gt;&gt;colSignalSource.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
@@ -1371,7 +1377,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>04/08/2013 10:45:01</value>
+    <value>04/11/2013 21:59:42</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1659,7 +1665,7 @@
     <value>2, 21</value>
   </data>
   <data name="pnlEditControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>339, 33</value>
+    <value>382, 33</value>
   </data>
   <data name="pnlEditControls.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1683,7 +1689,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>343, 490</value>
+    <value>386, 490</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2009,8 +2015,11 @@
   <data name="colLogicalIndex.Caption" xml:space="preserve">
     <value>Order</value>
   </data>
+  <data name="colSignalSource.Caption" xml:space="preserve">
+    <value>Signal source</value>
+  </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1122, 417</value>
+    <value>1079, 417</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2148,7 +2157,7 @@
     <value>2, 21</value>
   </data>
   <data name="panelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1122, 33</value>
+    <value>1079, 33</value>
   </data>
   <data name="panelControl3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2172,7 +2181,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1126, 490</value>
+    <value>1083, 490</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

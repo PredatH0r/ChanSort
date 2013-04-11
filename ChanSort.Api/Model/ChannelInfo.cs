@@ -99,7 +99,8 @@ namespace ChanSort.Api
 
     public override string ToString()
     {
-      return this.NewProgramNr + ": " + this.Name;
+      string nr = this.NewProgramNr != -1 ? this.NewProgramNr.ToString() : "@" + this.RecordIndex;
+      return nr + ": " + this.Name;
     }
 
     public override bool Equals(object obj)
@@ -193,10 +194,10 @@ namespace ChanSort.Api
         this.Debug += " " + val.ToString("x4");
     }
 
-    public unsafe void AddDebug(byte* ptr, int len)
+    public void AddDebug(byte[] data, int offset, int len)
     {
       for (int i = 0; i < len; i++)
-        this.AddDebug(ptr[i]);
+        this.AddDebug(data[offset + i]);
     }
     #endregion
 

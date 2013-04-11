@@ -96,10 +96,7 @@ namespace ChanSort.Loader.ScmFile
       this.ServiceType = data.GetByte(_ServiceType);
       this.SymbolRate = data.GetWord(_SymbolRate);
 
-      if (this.ServiceType == (int)DvbServiceType.Radio)
-        this.SignalSource |= SignalSource.Radio;
-      else
-        this.SignalSource |= SignalSource.Tv;
+      this.SignalSource |= LookupData.Instance.IsRadioOrTv(this.ServiceType);
     }
     #endregion
 

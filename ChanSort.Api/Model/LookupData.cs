@@ -187,5 +187,30 @@ namespace ChanSort.Api
       this.AddServiceType(serviceType, fields[2]);
     }
     #endregion
+
+    #region IsRadioOrTv()
+    public SignalSource IsRadioOrTv(int dvbServiceType)
+    {
+      switch (dvbServiceType)
+      {
+        case 0x01: // SD MPEG1
+        case 0x11: // MPEG2-HD
+        case 0x16: // H264/AVC-SD
+        case 0x19: // H264/AVC-HD
+          return SignalSource.Tv;
+        case 0x02:
+        case 0x0A:
+          return SignalSource.Radio;
+      }
+      return 0;
+    }
+    #endregion
+
+    #region GetDvbtChannel()
+    public object GetDvbtChannel(decimal freq)
+    {
+      return ((int) (freq - 106)/8);
+    }
+    #endregion
   }
 }

@@ -54,6 +54,11 @@ namespace ChanSort.Api
     #region AddChannel()
     public virtual void AddChannel(ChannelList list, ChannelInfo channel)
     {
+      if (list == null)
+      {
+        warnings.AppendFormat("No list found to add channel '{0}'\r\n", channel);
+        return;
+      }
       string warning = list.AddChannel(channel);
       if (warning != null)
         this.Warnings.AppendLine(warning);
