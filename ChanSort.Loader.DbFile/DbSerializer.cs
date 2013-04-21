@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using ChanSort.Api;
 using ICSharpCode.SharpZipLib.Zip;
 
-namespace ChanSort.Loader.DbFile
+namespace ChanSort.Loader.Toshiba
 {
   class DbSerializer : SerializerBase
   {

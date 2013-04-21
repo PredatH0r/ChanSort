@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChanSort.Loader.TllFile
+namespace ChanSort.Loader.LG
 {
   internal class SatChannelListHeader
   {

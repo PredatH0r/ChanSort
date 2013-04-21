@@ -2,14 +2,16 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+[assembly:InternalsVisibleTo("Test.Loader")]
+
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ChanSort.Loader.ScmFile")]
+[assembly: AssemblyTitle("ChanSort.Loader.Samsung")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ChanSort.Loader.ScmFile")]
+[assembly: AssemblyProduct("ChanSort.Loader.Samsung")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

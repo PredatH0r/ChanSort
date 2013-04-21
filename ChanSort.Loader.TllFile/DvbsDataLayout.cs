@@ -1,4 +1,4 @@
-﻿namespace ChanSort.Loader.TllFile
+﻿namespace ChanSort.Loader.LG
 {
   public class DvbsDataLayout
   {

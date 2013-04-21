@@ -1,6 +1,6 @@
 ﻿using ChanSort.Api;
 
-namespace ChanSort.Loader.DbFile
+namespace ChanSort.Loader.Toshiba
 {
   public class DbSerializerPlugin : ISerializerPlugin
   {

@@ -1,82 +1,99 @@
-Version v2013-04-11 ========================================================
+Version v2013-04-21 =======================================================
 
 This is a maintenance release based on version v2013-04-05, which brought a 
 refurbished user interface and fixes for various usability issues.
 
-New:
-- Added support for Toshiba *.zip channel lists (containing chmgt.db list)
-- Allow Pr #0 for analog channels
-
-Fixed:
-- first channel list only got populated after switching between tabs
+- Fix: Encryption flag for Samsung analog and DVB-C/T lists now shown
+  correctly
+- Added "Remove channels" function to right list. E.g. you can use this to
+  search and select encrypted channels in the right list and remove them 
+  (from the sorted list).
+- Text editor for channel number or name now only opens after holding the
+  left mouse button down for at least 0.5sec. This prevents it from opening
+  when you double-click a channel.
+- Added "Edit channel name" function to menus (due to the editor no longer
+  opening automatically after a short click on the name)
+- Warnings and information about TV file content are no longer shown when
+  opening the file. It can be viewed by using the 
+  "File / Show file information" menu item.
+- Added experimental loader for Panasonic TV files. Saving is not
+  supported yet!
 
 The complete change log can be found at the end of this document
 
 
-About ChanSort =============================================================
+About ChanSort ============================================================
 
-ChanSort is a program to manage your Samsung, LG or Toshiba TV's channel list
-on your PC.
+ChanSort is a program to manage your Samsung, LG or Toshiba TV's channel 
+list on your PC.
 
-It allows you to change program numbers and channel names, select your favorites, 
-set a parental lock and much more. With its multi-selection capabilities and the
-side-by-side view of your sorted list and the available channels a list can be
-created in no-time.
+It allows you to change program numbers and channel names, select your 
+favorites, set a parental lock and much more. With its multi-selection 
+capabilities and the side-by-side view of your sorted list and the available
+channels a list can be created in no-time.
 
-You can apply reference lists to your TV data file to restore a previous order, 
-e.g. after running a channel scan. You can even apply the same reference list
-to your LG and Samsung TV.
+You can apply reference lists to your TV data file to restore a previous 
+order, e.g. after running a channel scan. You can even apply the same 
+reference list to TVs from different manufacturers.
 
 You can get get the latest version and support on  
-https://sourceforge.net/projects/chansort/?source=navbar
+http://sourceforge.net/p/chansort/discussion/ or by contacting me by email:
+mailto:horst@beham.biz
 
 
-Supported models ===========================================================
-
-LG
-------
-    Series: CS, DM, LD, LE, LH, LK, LM*, LS, LV, LW, LX, PM, PT
-    Lists: Analog TV, DTV (DVB-C/T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
-  
-    * NOTE: See system requirements for LM-Series.
-    Other models might also work, but have not been tested. 
-    If you have a .TLL file of a series not listed here, please send it to me.
-
-    Instructions on how to access the hidden service-menu for transferring the 
-    channel list from/to USB can be found here:
-    https://sourceforge.net/p/chansort/wiki/Home/
-    http://www.ullrich.es/job/service-menue/lg-tlledit-lg-sendersortierung/
-
+Supported TV models =======================================================
 
 Samsung 
 -------
-    Series: B*, C, D, E
-    Lists: Air analog, Air digital, Cable analog, Cable digital, Sat digital, Astra HD+
+    Series: B*, C, D, E, F
+    Lists:  Air analog, Air digital, Cable analog, Cable digital, 
+            Sat digital, Astra HD+
 
-    * NOTE: the "Air Analog"-List of the B-Series doesn't support all editing features
-    due to a lack of test files. If you have such a file, please send it to me.
+    * NOTE: the "Air Analog"-List of the B-Series doesn't support all 
+    editing features due to a lack of test files. If you have such a file,
+    please send it to me.
 
     Instructions for transferring the channel list can be found on:
     http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-importieren/
 
+LG
+------
+    Series: CS, DM, LD, LE, LH, LK, LM*, LS, LV, LW, LX, PM, PT
+    Lists:  Analog TV, DTV (DVB-C/T), Radio (DVB-C/T), Sat-DTV (DVB-S2),
+            Sat-Radio (DVB-S2)
+  
+    * NOTE: See system requirements for LM-Series.
+            Model xxLM640T is not supported due to its broken firmware.
+    Other models might also work, but have not been tested. If you have a
+    .TLL file of a series not listed here, please send it to me.
+    
+    Instructions on how to access the hidden service-menu for transferring
+    the channel list from/to USB can be found here:
+    https://sourceforge.net/p/chansort/wiki/Home/
+    http://www.ullrich.es/job/service-menue/lg-tlledit-lg-sendersortierung/
+
+
+
 Toshiba
 -------
-    Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.
+    Models that export a .zip file containing chmgt.db, dvbSysData.db and
+    dvbMainData.db files.
     (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
 
 
 ! USE AT YOUR OWN RISK !
 ------------------------
-This software was written without access to any official documentation from either
-Samsung or LG about the file formats involved. Without full knowledge about there 
-specifics there is a chance of unwanted side-effects or damage to your TV.
+This software was written without access to official documentation about 
+the file formats involved. Without full knowledge about the specifics of a
+format there is a chance of unwanted side-effects or damage to your TV.
 
 
-System requirements =========================================================
+System requirements =======================================================
 
 - USB-Stick to transfer the channel list between your TV and PC
-- For LG's LM-series you need a programmable remote control to access the service menu
-  for transferring the list to/from USB. (e.g. Logitech Harmony 300, One-For-All URC3920,...)
+- For LG's LM-series you need a programmable remote control to access the 
+  service menu for transferring the list to/from USB. 
+  (e.g. Logitech Harmony 300, One-For-All URC3920,...)
   Details can be found on the ChanSort wiki and on 
   http://openlgtv.org.ru/wiki/index.php/Access_hidden_service_menus_/_modes
 - Microsoft .NET Framework 3.5 (included in WinXP SP3, Vista, Win7, Win8)
@@ -85,7 +102,7 @@ System requirements =========================================================
 License ===============================================================
 
 GNU General Public Licence, Version 3: http://www.gnu.org/licenses/gpl.html
-Source code available on https://sourceforge.net/projects/chansort/
+Source code available on http://sourceforge.net/projects/chansort/
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -96,7 +113,24 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 
-Change log ====================================================================
+Change log ================================================================
+
+2013-04-21
+- Fix: Encryption flag for Samsung analog and DVB-C/T lists now shown 
+  correctly
+- Added "Remove channels" function to right list. E.g. you can use this to
+  search and select encrypted channels in the right list and remove them 
+  (from the sorted list).
+- Text editor for channel number or name now only opens after holding the
+  left mouse button down for at least 0.5sec. This prevents it from opening 
+  when you double-click a channel.
+- Added "Edit channel name" function to menus (due to the editor no longer
+  opening automatically after a short click on the name)
+- Warnings and information about TV file content are no longer shown when
+  opening the file. It can be viewed by using the 
+  "File / Show file information" menu item.
+- Added experimental loader for Panasonic TV files. 
+  Saving is not supported yet!
 
 2013-04-11
 - added support for Toshiba *.zip channel lists (containing chmgt.db list)
@@ -108,12 +142,12 @@ Change log ====================================================================
 - Added online check for updated program version
 
 2013-04-07
-- FIX: saving a .TLL file after loading a reference list which contained channels
-  that are no longer inside the .TLL caused an error during saving.
+- FIX: saving a .TLL file after loading a reference list which contained 
+  channels that are no longer inside the .TLL caused an error during saving
 
 2013-04-06
-- FIX: When double-clicking a channel in the right list, which was already part of the
-  sorted list, the wrong channel was selected in the left list.
+- FIX: When double-clicking a channel in the right list, which was already 
+  part of the sorted list, the wrong channel was selected in the left list.
 - new application icon which is licensed free-to-use
 
 2013-04-05
@@ -122,16 +156,17 @@ Change log ====================================================================
 - Support for LG LMxxxT models, which export an invalid DVB-S data block
 - Opening a file automatically shows the first non-empty channel list
 - Reloading a TV-file will show the last opened list
-- FIX: Deleting rows caused incorrect selections in the left list. Successive
-  deletes resulted in the loss of the first channel.
-- FIX: Duplicate Pr# was assigned to channels when they were added out of order
+- FIX: Deleting rows caused incorrect selections in the left list. 
+  Successive deletes resulted in the loss of the first channel.
+- FIX: Duplicate Pr# was assigned to channels when they were added out of
+  order
 
 2013-04-04
-- Deleting channels for Samsung TVs now stores the files correctly (no longer
-  showing them all on Pr #0 on your TV)
+- Deleting channels for Samsung TVs now stores the files correctly 
+  (no longer showing them all on Pr #0 on your TV)
 
 2013-04-03 (major release)
-- complete re-write of the code for loading/saving TV-data files (SCM, TLL) 
+- complete re-write of the code for loading/saving TV-data files (SCM, TLL)
   and reference lists (CSV).
 - added support for LG's LX-models
 - channel names can now be edited for both LG and Samsung 
@@ -139,8 +174,9 @@ Change log ====================================================================
 - Samsung channel lists are now loaded/saved correctly 
   (program numbers, favorites, locking, frequencies, ...)
 - loading a reference list for a Samsung .SCM file which contains both
-  air and cable channels or satellite and AstraHD+ channels caused the items
-  to be mixed up and all shown in the first list (showing not-found channels in red)
+  air and cable channels or satellite and AstraHD+ channels caused the 
+  items to be mixed up and all shown in the first list (showing not-found
+  channels in red)
 
 2013-03-30
 - FIX: bei nicht-LM Geräten wurden die DVB-S Programmnummern falsch ausgelesen

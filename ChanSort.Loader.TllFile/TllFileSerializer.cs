@@ -11,7 +11,7 @@ using System.Text;
 using System.Windows.Forms;
 using ChanSort.Api;
 
-namespace ChanSort.Loader.TllFile
+namespace ChanSort.Loader.LG
 {
   public partial class TllFileSerializer : SerializerBase
   {

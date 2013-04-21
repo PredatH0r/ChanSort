@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChanSort.Api;
 
-namespace ChanSort.Loader.ScmFile
+namespace ChanSort.Loader.Samsung
 {
   public class DigitalChannel : ScmChannelBase
   {

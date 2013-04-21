@@ -1,6 +1,6 @@
 ﻿using ChanSort.Api;
 
-namespace ChanSort.Loader.ScmFile
+namespace ChanSort.Loader.Samsung
 {
   class SatChannel : ScmChannelBase
   {

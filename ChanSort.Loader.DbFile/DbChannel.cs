@@ -3,7 +3,7 @@ using System.Data.SQLite;
 using System.Text;
 using ChanSort.Api;
 
-namespace ChanSort.Loader.DbFile
+namespace ChanSort.Loader.Toshiba
 {
   internal class DbChannel : ChannelInfo
   {

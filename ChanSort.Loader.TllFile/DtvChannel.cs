@@ -1,6 +1,6 @@
 ﻿using ChanSort.Api;
 
-namespace ChanSort.Loader.TllFile
+namespace ChanSort.Loader.LG
 {
   public class DtvChannel : TllChannelBase
   {

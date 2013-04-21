@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Text;
 using ChanSort.Api;
 
-namespace ChanSort.Loader.TllFile
+namespace ChanSort.Loader.LG
 {
   /// <summary>
   /// For research purposes this class writes DVB-S channel information into a database

@@ -56,7 +56,7 @@
       this.btnRenum = new DevExpress.XtraEditors.SimpleButton();
       this.btnDown = new DevExpress.XtraEditors.SimpleButton();
       this.btnUp = new DevExpress.XtraEditors.SimpleButton();
-      this.btnRemove = new DevExpress.XtraEditors.SimpleButton();
+      this.btnRemoveLeft = new DevExpress.XtraEditors.SimpleButton();
       this.grpInputList = new DevExpress.XtraEditors.GroupControl();
       this.gridRight = new DevExpress.XtraGrid.GridControl();
       this.gviewRight = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -88,8 +88,10 @@
       this.colNetworkOperator = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colDebug = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colLogicalIndex = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colSignalSource = new DevExpress.XtraGrid.Columns.GridColumn();
       this.lblHotkeyRight = new DevExpress.XtraEditors.LabelControl();
       this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
+      this.btnRemoveRight = new DevExpress.XtraEditors.SimpleButton();
       this.btnAddAll = new DevExpress.XtraEditors.SimpleButton();
       this.btnClearRightFilter = new DevExpress.XtraEditors.SimpleButton();
       this.btnAdd = new DevExpress.XtraEditors.SimpleButton();
@@ -107,6 +109,7 @@
       this.miEdit = new DevExpress.XtraBars.BarSubItem();
       this.miAddChannel = new DevExpress.XtraBars.BarButtonItem();
       this.miRemove = new DevExpress.XtraBars.BarButtonItem();
+      this.miRenameChannel = new DevExpress.XtraBars.BarButtonItem();
       this.miSort = new DevExpress.XtraBars.BarButtonItem();
       this.miRenum = new DevExpress.XtraBars.BarButtonItem();
       this.mnuFavSet = new DevExpress.XtraBars.BarSubItem();
@@ -154,7 +157,7 @@
       this.tabChannelList = new DevExpress.XtraTab.XtraTabControl();
       this.pageEmpty = new DevExpress.XtraTab.XtraTabPage();
       this.mnuContext = new DevExpress.XtraBars.PopupMenu(this.components);
-      this.colSignalSource = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.timerEditDelay = new System.Windows.Forms.Timer(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -342,7 +345,7 @@
       this.pnlEditControls.Controls.Add(this.btnRenum);
       this.pnlEditControls.Controls.Add(this.btnDown);
       this.pnlEditControls.Controls.Add(this.btnUp);
-      this.pnlEditControls.Controls.Add(this.btnRemove);
+      this.pnlEditControls.Controls.Add(this.btnRemoveLeft);
       resources.ApplyResources(this.pnlEditControls, "pnlEditControls");
       this.pnlEditControls.Name = "pnlEditControls";
       // 
@@ -424,13 +427,13 @@
       this.btnUp.Name = "btnUp";
       this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
       // 
-      // btnRemove
+      // btnRemoveLeft
       // 
-      this.btnRemove.ImageIndex = 11;
-      this.btnRemove.ImageList = this.globalImageCollection1;
-      resources.ApplyResources(this.btnRemove, "btnRemove");
-      this.btnRemove.Name = "btnRemove";
-      this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+      this.btnRemoveLeft.ImageIndex = 11;
+      this.btnRemoveLeft.ImageList = this.globalImageCollection1;
+      resources.ApplyResources(this.btnRemoveLeft, "btnRemoveLeft");
+      this.btnRemoveLeft.Name = "btnRemoveLeft";
+      this.btnRemoveLeft.Click += new System.EventHandler(this.btnRemoveLeft_Click);
       // 
       // grpInputList
       // 
@@ -716,6 +719,13 @@
       this.colLogicalIndex.OptionsColumn.AllowEdit = false;
       this.colLogicalIndex.OptionsColumn.ReadOnly = true;
       // 
+      // colSignalSource
+      // 
+      resources.ApplyResources(this.colSignalSource, "colSignalSource");
+      this.colSignalSource.FieldName = "SignalSource";
+      this.colSignalSource.Name = "colSignalSource";
+      this.colSignalSource.OptionsColumn.AllowEdit = false;
+      // 
       // lblHotkeyRight
       // 
       resources.ApplyResources(this.lblHotkeyRight, "lblHotkeyRight");
@@ -723,11 +733,20 @@
       // 
       // panelControl3
       // 
+      this.panelControl3.Controls.Add(this.btnRemoveRight);
       this.panelControl3.Controls.Add(this.btnAddAll);
       this.panelControl3.Controls.Add(this.btnClearRightFilter);
       this.panelControl3.Controls.Add(this.btnAdd);
       resources.ApplyResources(this.panelControl3, "panelControl3");
       this.panelControl3.Name = "panelControl3";
+      // 
+      // btnRemoveRight
+      // 
+      this.btnRemoveRight.ImageIndex = 11;
+      this.btnRemoveRight.ImageList = this.globalImageCollection1;
+      resources.ApplyResources(this.btnRemoveRight, "btnRemoveRight");
+      this.btnRemoveRight.Name = "btnRemoveRight";
+      this.btnRemoveRight.Click += new System.EventHandler(this.btnRemoveRight_Click);
       // 
       // btnAddAll
       // 
@@ -792,6 +811,7 @@
             this.miMoveDown,
             this.miAddChannel,
             this.miRemove,
+            this.miRenameChannel,
             this.miSort,
             this.miRenum,
             this.mnuFavSet,
@@ -809,7 +829,7 @@
             this.miEraseChannelData,
             this.miOpenWebsite,
             this.miWiki});
-      this.barManager1.MaxItemId = 52;
+      this.barManager1.MaxItemId = 53;
       // 
       // bar1
       // 
@@ -938,6 +958,7 @@
       this.miEdit.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miAddChannel),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRemove),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRenameChannel),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSort),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRenum),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuFavSet, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -968,6 +989,16 @@
       this.miRemove.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X));
       this.miRemove.Name = "miRemove";
       this.miRemove.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRemove_ItemClick);
+      // 
+      // miRenameChannel
+      // 
+      resources.ApplyResources(this.miRenameChannel, "miRenameChannel");
+      this.miRenameChannel.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miRenameChannel.Id = 52;
+      this.miRenameChannel.ImageIndex = 29;
+      this.miRenameChannel.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
+      this.miRenameChannel.Name = "miRenameChannel";
+      this.miRenameChannel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenameChannel_ItemClick);
       // 
       // miSort
       // 
@@ -1390,6 +1421,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miMoveDown),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAddChannel),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRemove),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRenameChannel),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSort),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRenum),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuFavSet, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -1403,12 +1435,10 @@
       this.mnuContext.Manager = this.barManager1;
       this.mnuContext.Name = "mnuContext";
       // 
-      // colSignalSource
+      // timerEditDelay
       // 
-      resources.ApplyResources(this.colSignalSource, "colSignalSource");
-      this.colSignalSource.FieldName = "SignalSource";
-      this.colSignalSource.Name = "colSignalSource";
-      this.colSignalSource.OptionsColumn.AllowEdit = false;
+      this.timerEditDelay.Interval = 500;
+      this.timerEditDelay.Tick += new System.EventHandler(this.timerEditDelay_Tick);
       // 
       // MainForm
       // 
@@ -1473,7 +1503,7 @@
     private DevExpress.XtraGrid.Columns.GridColumn colUid;
     private DevExpress.XtraGrid.Columns.GridColumn colName;
     private DevExpress.XtraEditors.GroupControl grpOutputList;
-    private DevExpress.XtraEditors.SimpleButton btnRemove;
+    private DevExpress.XtraEditors.SimpleButton btnRemoveLeft;
     private DevExpress.XtraEditors.GroupControl grpInputList;
     private DevExpress.XtraEditors.SimpleButton btnAdd;
     private DevExpress.XtraGrid.GridControl gridLeft;
@@ -1587,6 +1617,9 @@
     private DevExpress.XtraGrid.Columns.GridColumn colOutLock;
     private DevExpress.XtraGrid.Columns.GridColumn colOutServiceType;
     private DevExpress.XtraGrid.Columns.GridColumn colSignalSource;
+    private DevExpress.XtraEditors.SimpleButton btnRemoveRight;
+    private System.Windows.Forms.Timer timerEditDelay;
+    private DevExpress.XtraBars.BarButtonItem miRenameChannel;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

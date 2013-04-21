@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace ChanSort.Loader.ScmFile
+namespace ChanSort.Loader.Samsung
 {
   internal class SatelliteMapping
   {

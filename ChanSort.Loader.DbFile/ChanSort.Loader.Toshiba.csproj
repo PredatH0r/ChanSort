@@ -8,8 +8,8 @@
     <ProjectGuid>{F6F02792-07F1-48D5-9AF3-F945CA5E3931}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChanSort.Loader.DbFile</RootNamespace>
-    <AssemblyName>ChanSort.Loader.DbFile</AssemblyName>
+    <RootNamespace>ChanSort.Loader.Toshiba</RootNamespace>
+    <AssemblyName>ChanSort.Loader.Toshiba</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

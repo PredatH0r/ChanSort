@@ -2,7 +2,7 @@
 using System.Text;
 using ChanSort.Api;
 
-namespace ChanSort.Loader.ScmFile
+namespace ChanSort.Loader.Samsung
 {
   public class ScmChannelBase : ChannelInfo
   {

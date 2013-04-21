@@ -9,8 +9,8 @@
     <ProjectGuid>{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Test.Loader.TllFile</RootNamespace>
-    <AssemblyName>Test.Loader.TllFile</AssemblyName>
+    <RootNamespace>Test.Loader</RootNamespace>
+    <AssemblyName>Test.Loader</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -67,8 +67,10 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LgTest.cs" />
+    <Compile Include="LoaderTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="SamsungTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
@@ -76,9 +78,21 @@
       <Name>ChanSort.Api</Name>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.TllFile\ChanSort.Loader.TllFile.csproj">
+    <ProjectReference Include="..\ChanSort.Loader.DbFile\ChanSort.Loader.Toshiba.csproj">
+      <Project>{F6F02792-07F1-48D5-9AF3-F945CA5E3931}</Project>
+      <Name>ChanSort.Loader.Toshiba</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj">
+      <Project>{68DA8072-3A29-4076-9F64-D66F38349585}</Project>
+      <Name>ChanSort.Loader.Panasonic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.ScmFile\ChanSort.Loader.Samsung.csproj">
+      <Project>{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}</Project>
+      <Name>ChanSort.Loader.Samsung</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.TllFile\ChanSort.Loader.LG.csproj">
       <Project>{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}</Project>
-      <Name>ChanSort.Loader.TllFile</Name>
+      <Name>ChanSort.Loader.LG</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

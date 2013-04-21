@@ -82,7 +82,9 @@ namespace ChanSort.Loader.Panasonic
       int freq = r.GetInt32(field["freq"]);
       if ((this.SignalSource & SignalSource.Sat) != 0)
       {
+// ReSharper disable PossibleLossOfFraction
         this.FreqInMhz = freq/10;
+// ReSharper restore PossibleLossOfFraction
         int satId = r.GetInt32(field["physical_ch"]) >> 12;
         var sat = dataRoot.Satellites.TryGet(satId);
         if (sat != null)

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using ChanSort.Api;
 using ICSharpCode.SharpZipLib.Zip;
 
-namespace ChanSort.Loader.ScmFile
+namespace ChanSort.Loader.Samsung
 {
   class ScmSerializer : SerializerBase
   {
@@ -180,10 +180,10 @@ namespace ChanSort.Loader.ScmFile
         validCandidates = newValidCandidats;
       }
 
-      if (validCandidates.Length != 1)
+      if (validCandidates.Length == 0)
         return false;
 
-      this.modelConstants.TryGetValue("Series:" + validCandidates, out this.c);
+      this.modelConstants.TryGetValue("Series:" + validCandidates[0], out this.c);
       return true;
     }
 
@@ -365,7 +365,7 @@ namespace ChanSort.Loader.ScmFile
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
         DigitalChannel ci = new DigitalChannel(slotIndex, isCable, rawChannel, frequency, c.favoriteNotSetValue);
-        if (ci.OldProgramNr != -1)
+        if (ci.OldProgramNr > 0)
           this.DataRoot.AddChannel(list, ci);
 
         rawChannel.BaseOffset += entrySize;

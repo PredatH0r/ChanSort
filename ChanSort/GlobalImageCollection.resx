@@ -120,16 +120,16 @@
   <metadata name="sharedImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="DevExpress.Utils.v12.2" name="DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.Utils.v12.2" name="DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="sharedImageCollection1.ImageSource.ImageStream" type="DevExpress.Utils.ImageCollectionStreamer, DevExpress.Utils.v12.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFpEZXZFeHByZXNzLlV0aWxzLnYxMi4yLCBWZXJzaW9uPTEyLjIu
-        Ni4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEMAwAAAFFT
+        OC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEMAwAAAFFT
         eXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRv
         a2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAAChEZXZFeHByZXNzLlV0aWxzLkltYWdlQ29sbGVjdGlvblN0
         cmVhbWVyAgAAAAlJbWFnZVNpemUERGF0YQQHE1N5c3RlbS5EcmF3aW5nLlNpemUDAAAAAgIAAAAF/P//
         /xNTeXN0ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAwAAABAAAAAQAAAACQUAAAAP
-        BQAAALhJAAACDgMAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAARnQU1BAACxjwv8
+        BQAAAJNLAAACDgMAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAACukAAArpAf11ztMAAAAqdEVYdENyZWF0aW9uIFRpbWUATWkgMSBNcnogMjAwNiAx
         NToxMDo1MSArMDEwMP/NqUUAAAAHdElNRQfWAwEODCaDia/cAAACZ0lEQVQ4T82S7UsTUBSH75eCCAx6
         oTAqg7BMRKjoQ6S9Oa1I10gzU8PUZmYpKEamy8gCX8iS2YxqiRmREMrUltEoLdSMps458wXUEiW0UToN
@@ -397,7 +397,7 @@
         BU25oE+nK5DlAjr9T4HMAlcqIFiBQAemTNAmuI07BW7Sq8HJggRT7Sz47uDNWhggoBjTQnov/f4bvmET
         bqiCRBvTQAWNQ3RZENP+Gf2EJXRlAqnS17lium7DHJaYmMb3KMxhiQ7dAovxvA/msGQsgTks2Yar6gWi
         aB5TNw92LAAAAABJRU5ErkJggvkDAACJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAAE
-        Z0FNQQAAsY8L/GEFAAAACXBIWXMAAA7BAAAOwQG4kWvtAAAAGnRFWHRTb2Z0d2FyZQBQYWludC5ORVQg
+        Z0FNQQAAsY8L/GEFAAAACXBIWXMAAA6/AAAOvwE4BVMkAAAAGnRFWHRTb2Z0d2FyZQBQYWludC5ORVQg
         djMuNS4xMDD0cqEAAAN1SURBVDhPbZNrUJRlGIa/JXGL06KyoZZCA3kgtXIcKmYKRyVTbARJ2sXlGCuC
         KCwU6bIsISgeQDJJA4IhYHEBUSIJGJihIkhEflAzkD+IoS11OMTADOeBq4/PGc2Zftzvv+t63vd55xaA
         x/lzeOC38o4yjLUniSqPILj4Qw6XhmO8oae6vQrLQwuzs7NW/2WkY35+3qrrjy4yGlI405zKuZY0MpoN
@@ -443,12 +443,20 @@
         lL7SYSYhBCSLA50VmyNLwCIX+lN11MnJsrHiQFnXHJLfGKG+Uw2SxoKCXNhYZI5w5yZiROJ829K3wiGv
         Yw6pPUZ0yMtAif4gon+TGIBhiUu9pW+FQ+pzHZ/Ra4RCfg8UexoUcxIU5WuOcMf5QyMRVVv6VtiKw2VJ
         UU9n+POKCRiC3H5TejgoLcwcds+fk2zHONp7Wfr/xe7wheuce37ry0xn+8vaQI/F5Ug/CBHuAtH+WNbZ
-        Y67uji3LPpa9LK4spywRbja2sfkDNmCxwsesQzEAAAAASUVORK5CYIIL
+        Y67uji3LPpa9LK4spywRbja2sfkDNmCxwsesQzEAAAAASUVORK5CYILXAQAAiVBORw0KGgoAAAANSUhE
+        UgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIA
+        AA7CARUoSoAAAAAHdElNRQfWAxoOERLaSefrAAAAGnRFWHRTb2Z0d2FyZQBQYWludC5ORVQgdjMuNS4x
+        MDD0cqEAAAEzSURBVDhPYxg8YNbs6RcaGhr+E4N7+7tWQ7UhAEiCWABSC9WGADADPnx4jxeDQH8kEwzH
+        QLWjGnD8+DGsGCQH0vju1bH/59cWgtlQ7cS5AKTh/evj/y+tyfq/sDn0D04DsNmOrHlJeziYD8TGUO34
+        XQBS/PbZ0f/nV2X+X9AchqkZBHC5AKz56ZH/J+an/F/QArG5syEL5nRGKI3dBe/fv/tfEG35/9Dqrv+L
+        W0PBmp/fOQWLRpBmVAP+/fuLohmkwcdJ7X92uBmYfebgeqD4e5gBrBCdUAAS/PXrJ9yAd+/eghSBNW5e
+        Oe3/oUOH/p8+fer/o0ePYAZwgDXCAEgQGfz79+//9+/f/798+RKs6enTp/9fvXqF7AI2iE4o6OnrXAyS
+        IAZ393YsBmpB+J98wMAAAEBy/BniHbchAAAAAElFTkSuQmCCCw==
 </value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>04/07/2013 16:39:41</value>
+    <value>04/21/2013 20:54:27</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">

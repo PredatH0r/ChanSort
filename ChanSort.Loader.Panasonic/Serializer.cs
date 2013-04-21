@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
@@ -9,8 +10,8 @@ namespace ChanSort.Loader.Panasonic
 {
   class Serializer : SerializerBase
   {
-    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv, "Analog");
-    private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.DvbS | SignalSource.Tv, "DTV");
+    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv, "Analog TV");
+    private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.DvbS | SignalSource.Tv, "Digital TV");
     private readonly ChannelList dtvRadioChannels = new ChannelList(SignalSource.DvbCT | SignalSource.DvbS | SignalSource.Radio, "Radio");
 
     private string tempFile;
@@ -147,8 +148,49 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
 
+    #region Save()
     public override void Save(string tvOutputFile)
     {
+      this.FileName = tvOutputFile;
+
+      string channelConnString = "Data Source=" + this.tempFile;
+      using (var conn = new SQLiteConnection(channelConnString))
+      {
+        conn.Open();
+        using (var cmd = conn.CreateCommand())
+        {
+          using (var trans = conn.BeginTransaction())
+          {
+            this.WriteChannels(cmd, this.atvChannels);
+            this.WriteChannels(cmd, this.dtvTvChannels);
+            this.WriteChannels(cmd, this.dtvRadioChannels);
+            trans.Commit();
+          }
+        }
+      }
+
+      this.CypherFile(this.tempFile, this.FileName);
     }
+    #endregion
+
+    #region WriteChannels()
+    private void WriteChannels(SQLiteCommand cmd, ChannelList channelList)
+    {
+      cmd.CommandText = "update SVL set ... child_lock=@lock, skip=@skip where rowid=@rowid";
+      cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@child_lock", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@skip", DbType.Int32));
+      cmd.Prepare();
+      foreach (DbChannel channel in channelList.Channels)
+      {
+        channel.UpdateRawData();
+        cmd.Parameters["@rowid"].Value = channel.RecordIndex;
+        cmd.Parameters["@child_lock"].Value = channel.Lock;
+        cmd.Parameters["@skip"].Value = channel.Skip;
+        cmd.ExecuteNonQuery();
+      }
+    }
+    #endregion
+
   }
 }

@@ -23,7 +23,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-04-11";
+    public const string AppVersion = "v2013-04-21";
 
     #region enum EditMode
     private enum EditMode
@@ -224,16 +224,6 @@ namespace ChanSort.Ui
         this.UpdateFavoritesEditor(this.dataRoot.SupportedFavorites);
         this.colName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
         this.colOutName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
-
-        if (this.dataRoot.Warnings.Length > 0)
-        {
-          var lines = this.dataRoot.Warnings.ToString().Split('\n');
-          Array.Sort(lines);
-          var sortedWarnings = String.Join("\n", lines);
-          InfoBox.Show(this,
-                       Resources.MainForm_LoadFiles_ValidationWarningMsg + "\r\n\r\n" + sortedWarnings,
-                       Resources.MainForm_LoadFiles_ValidationWarningCap);
-        }
       }
       catch (Exception ex)
       {
@@ -948,6 +938,7 @@ namespace ChanSort.Ui
       if (col == this.colIndex) return col.Visible;
       if (col == this.colUid) return col.Visible;
       if (col == this.colDebug) return colDebug.Visible;
+      if (col == this.colSignalSource) return col.Visible;
       if (col == this.colLogicalIndex) return colLogicalIndex.Visible;
       if (col == this.colPolarity) return false;
 
@@ -1043,7 +1034,6 @@ namespace ChanSort.Ui
       this.miRenum.Visibility = visLeft;
       this.miMoveUp.Visibility = visLeft;
       this.miMoveDown.Visibility = visLeft;
-      this.miRemove.Visibility = visLeft;
       this.miAddChannel.Visibility = visRight;
 
       var sel = this.gviewLeft.GetSelectedRows();
@@ -1096,6 +1086,15 @@ namespace ChanSort.Ui
       if (this.currentTvSerializer == null)
         return;
       var info = this.currentTvSerializer.GetFileInformation();
+
+      if (this.dataRoot.Warnings.Length > 0)
+      {
+        var lines = this.dataRoot.Warnings.ToString().Split('\n');
+        Array.Sort(lines);
+        var sortedWarnings = String.Join("\n", lines);
+        info += Resources.MainForm_LoadFiles_ValidationWarningMsg + "\r\n\r\n" + sortedWarnings;
+      }
+
       InfoBox.Show(this, info, this.miFileInformation.Caption.Replace("...", "").Replace("&",""));
     }
     #endregion
@@ -1147,6 +1146,20 @@ namespace ChanSort.Ui
       foreach (var channel in list)
         channel.Lock = setLock;
       this.RefreshGrid(gviewLeft, gviewRight);
+    }
+    #endregion
+
+    #region RenameChannel()
+    private void RenameChannel()
+    {
+      if (this.lastFocusedGrid == null) return;
+
+      if (this.lastFocusedGrid == this.gviewLeft)
+        this.gviewLeft.FocusedColumn = this.colOutName;
+      else
+        this.gviewRight.FocusedColumn = this.colName;
+      this.dontOpenEditor = false;
+      this.lastFocusedGrid.ShowEditor();
     }
     #endregion
 
@@ -1233,6 +1246,11 @@ namespace ChanSort.Ui
     private void miRemove_ItemClick(object sender, ItemClickEventArgs e)
     {
       this.TryExecute(() => this.RemoveChannels(this.lastFocusedGrid, this.cbCloseGap.Checked));
+    }
+
+    private void miRenameChannel_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      this.TryExecute(this.RenameChannel);
     }
 
     private void miSort_ItemClick(object sender, ItemClickEventArgs e)
@@ -1389,9 +1407,9 @@ namespace ChanSort.Ui
     }
     #endregion
 
-    #region gview_MouseDown, gview_MouseUp, gview_ShowingEditor
+    #region gview_MouseDown, gview_MouseUp, timerEditDelay_Tick, gview_ShowingEditor
 
-    // these 3 event handler in combination override the default row-selection and editor-opening 
+    // these 4 event handler in combination override the default row-selection and editor-opening 
     // behavior of the grid control.
 
     private void gview_MouseDown(object sender, MouseEventArgs e)
@@ -1405,26 +1423,35 @@ namespace ChanSort.Ui
         if (ModifierKeys == Keys.None)
         {
           if (hit.RowHandle != view.FocusedRowHandle)
-          {
             SelectFocusedRow(view, hit.RowHandle);
-            this.dontOpenEditor = true;
-          }
-          else if (e.Clicks > 1)
-            this.dontOpenEditor = true;
+          this.timerEditDelay.Start();
         }
-        else if (ModifierKeys == Keys.Control && !view.IsRowSelected(hit.RowHandle))
-          this.BeginInvoke((Action)(()=>view.SelectRow(hit.RowHandle)));
-      }
+        else
+        {
+          if (ModifierKeys == Keys.Control && !view.IsRowSelected(hit.RowHandle))
+            this.BeginInvoke((Action) (() => view.SelectRow(hit.RowHandle)));
+        }
+      }    
       else if (e.Button == MouseButtons.Right)
       {
         if (!view.IsRowSelected(hit.RowHandle))
           SelectFocusedRow(view, hit.RowHandle);
       }
+
+      this.dontOpenEditor = true;
     }
 
     private void gview_MouseUp(object sender, MouseEventArgs e)
     {
-      this.BeginInvoke((Action) (() => this.dontOpenEditor = false));
+      this.timerEditDelay.Stop();
+    }
+
+    private void timerEditDelay_Tick(object sender, EventArgs e)
+    {
+      this.timerEditDelay.Stop();
+      this.dontOpenEditor = false;
+      if (this.lastFocusedGrid != null)
+        this.lastFocusedGrid.ShowEditor();
     }
 
     private void gview_ShowingEditor(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1712,11 +1739,16 @@ namespace ChanSort.Ui
     }
     #endregion
 
-    #region btnRemove_Click
+    #region btnRemoveLeft_Click, btnRemoveRight_Click
 
-    private void btnRemove_Click(object sender, EventArgs e)
+    private void btnRemoveLeft_Click(object sender, EventArgs e)
     {
       TryExecute(() => this.RemoveChannels(this.gviewLeft, this.cbCloseGap.Checked));
+    }
+
+    private void btnRemoveRight_Click(object sender, EventArgs e)
+    {
+      this.TryExecute(() => this.RemoveChannels(this.gviewRight, this.cbCloseGap.Checked));
     }
     #endregion
 
@@ -1847,5 +1879,6 @@ namespace ChanSort.Ui
       this.SetActiveGrid(this.gviewRight);
     }
     #endregion
+
   }
 }
