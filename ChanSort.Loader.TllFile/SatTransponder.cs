@@ -1,31 +1,52 @@
-﻿using System;
+﻿using System.Globalization;
+using ChanSort.Api;
 
 namespace ChanSort.Loader.LG
 {
   internal class SatTransponder
   {
-    private readonly byte[] data;
-    public int BaseOffset { get; set; }
+    private const string _Frequency = "offFrequency";
+    private const string _OriginalNetworkId = "offOriginalNetworkId";
+    private const string _TransportStreamId = "offTransportStreamId";
+    private const string _SymbolRate = "offSymbolRate";
+    private const string _SatIndex = "offSatIndex";
 
-    public SatTransponder(byte[] data)
+    private readonly DataMapping mapping;
+    private readonly byte[] data;
+    private readonly int offset;
+    private int symbolRate;
+
+    public SatTransponder(DataMapping mapping)
     {
-      this.data = data;
+      this.mapping = mapping;
+      this.data = mapping.Data;
+      this.offset = mapping.BaseOffset;
+
+      this.Frequency = mapping.GetWord(_Frequency);
+      this.OriginalNetworkId = mapping.GetWord(_OriginalNetworkId);
+      this.TransportStreamId = mapping.GetWord(_TransportStreamId);
+      this.symbolRate = mapping.GetWord(_SymbolRate);
+      string strFactor = mapping.Settings.GetString("symbolRateFactor");
+      decimal factor;
+      if (!string.IsNullOrEmpty(strFactor) && decimal.TryParse(strFactor, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out factor))
+        this.symbolRate = (int)(this.symbolRate * factor);
+      this.SatIndex = mapping.GetByte(_SatIndex);
     }
 
-    public int Frequency { get { return BitConverter.ToInt16(data, BaseOffset + 12); } }
-    public int OriginalNetworkId { get { return BitConverter.ToInt16(data, BaseOffset + 18); } }
-    public int TransportStreamId { get { return BitConverter.ToInt16(data, BaseOffset + 20); } }
+    public int Frequency { get; private set; }
+    public int OriginalNetworkId { get; private set; }
+    public int TransportStreamId { get; private set; }
+    public int SatIndex { get; private set; }
 
     public int SymbolRate
     {
-      get { return BitConverter.ToInt16(data, BaseOffset + 25); }
+      get { return symbolRate; }
       set
       {
-        data[BaseOffset + 25] = (byte)value;
-        data[BaseOffset + 26] = (byte)(value >> 8);
+        mapping.SetDataPtr(this.data, this.offset);
+        mapping.SetWord(_SymbolRate, value);
+        this.symbolRate = value;
       }
     }
-
-    public int SatIndex { get { return data[BaseOffset + 36]; } }
   }
 }

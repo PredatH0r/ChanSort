@@ -23,7 +23,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-04-21";
+    public const string AppVersion = "v2013-04-28a";
 
     #region enum EditMode
     private enum EditMode
@@ -224,12 +224,15 @@ namespace ChanSort.Ui
         this.UpdateFavoritesEditor(this.dataRoot.SupportedFavorites);
         this.colName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
         this.colOutName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
+
+        if (this.dataRoot.Warnings.Length > 0 && this.miShowWarningsAfterLoad.Checked)
+          this.BeginInvoke((Action)this.ShowFileInformation);
       }
       catch (Exception ex)
       {
         if (!(ex is IOException))
           throw;
-        string name = newSerializer != null ? newSerializer.DisplayName : plugin.PluginName;
+        string name = newSerializer != null ? newSerializer.DisplayName : plugin != null ? plugin.PluginName : "Loader";
         XtraMessageBox.Show(this, name + "\n\n" + ex.Message, Resources.MainForm_LoadFiles_IOException,
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
         this.currentPlugin = null;
@@ -309,7 +312,7 @@ namespace ChanSort.Ui
         return null;
       }
       string extension = (Path.GetExtension(inputFileName) ?? "").ToUpper();
-      string upperFileName = Path.GetFileName(inputFileName).ToUpper();
+      string upperFileName = (Path.GetFileName(inputFileName) ??"").ToUpper();
       foreach (var plugin in this.plugins)
       {
         if ((plugin.FileFilter.ToUpper()+"|").Contains("*"+extension) || plugin.FileFilter.ToUpper() == upperFileName)
@@ -324,6 +327,7 @@ namespace ChanSort.Ui
     #region LoadTvDataFile()
     private bool LoadTvDataFile()
     {
+      this.currentTvSerializer.EraseDuplicateChannels = this.miEraseDuplicateChannels.Checked;
       this.currentTvSerializer.Load();
       this.dataRoot = this.currentTvSerializer.DataRoot;
       return true;
@@ -741,6 +745,9 @@ namespace ChanSort.Ui
 
       this.SetGridLayout(this.gviewLeft, Settings.Default.OutputListLayout);
 
+      this.miEraseDuplicateChannels.Checked = Settings.Default.EraseDuplicateChannels;
+      this.miShowWarningsAfterLoad.Checked = Settings.Default.ShowWarningsAfterLoading;
+
       this.ClearLeftFilter();
     }
     #endregion
@@ -803,6 +810,9 @@ namespace ChanSort.Ui
       Settings.Default.OutputListLayout = GetGridLayout(this.gviewLeft);
       if (this.currentChannelList != null)
         SaveInputGridLayout(this.currentChannelList.SignalSource);
+      Settings.Default.EraseDuplicateChannels = this.miEraseDuplicateChannels.Checked;
+      Settings.Default.ShowWarningsAfterLoading = this.miShowWarningsAfterLoad.Checked;
+
       Settings.Default.Save();
     }
 
@@ -908,12 +918,12 @@ namespace ChanSort.Ui
     private void SaveInputGridLayout(SignalSource signalSource)
     {
       string currentLayout = GetGridLayout(this.gviewRight);
-      switch (signalSource)
-      {
-        case SignalSource.Analog: Settings.Default.InputGridLayoutAnalog = currentLayout; break;
-        case SignalSource.DvbCT: Settings.Default.InputGridLayoutDvbCT = currentLayout; break;
-        case SignalSource.DvbS: Settings.Default.InputGridLayoutDvbS = currentLayout; break;
-      }
+      if ((signalSource & SignalSource.Analog) != 0)
+        Settings.Default.InputGridLayoutAnalog = currentLayout;
+      else if ((signalSource & SignalSource.DvbS) != 0)
+        Settings.Default.InputGridLayoutDvbS = currentLayout;
+      else //if ((signalSource & SignalSource.DvbCT) != 0)
+        Settings.Default.InputGridLayoutDvbCT = currentLayout;
     }
     #endregion
 
@@ -1092,7 +1102,7 @@ namespace ChanSort.Ui
         var lines = this.dataRoot.Warnings.ToString().Split('\n');
         Array.Sort(lines);
         var sortedWarnings = String.Join("\n", lines);
-        info += Resources.MainForm_LoadFiles_ValidationWarningMsg + "\r\n\r\n" + sortedWarnings;
+        info += "\r\n\r\n\r\n" + Resources.MainForm_LoadFiles_ValidationWarningMsg + "\r\n\r\n" + sortedWarnings;
       }
 
       InfoBox.Show(this, info, this.miFileInformation.Caption.Replace("...", "").Replace("&",""));
@@ -1401,7 +1411,7 @@ namespace ChanSort.Ui
     #endregion
 
     #region tabChannelList_SelectedPageChanged
-    private void tabChannelList_SelectedPageChanged(object sender, DevExpress.XtraTab.TabPageChangedEventArgs e)
+    private void tabChannelList_SelectedPageChanged(object sender, TabPageChangedEventArgs e)
     {
       this.TryExecute(() => ShowChannelList(e.Page == null ? null : (ChannelList)e.Page.Tag));
     }

@@ -47,16 +47,18 @@
     /// </summary>
     public int ChannelListHeaderOffset
     {
-      get { return 4 + this.dvbsSubblockLength[0] + this.dvbsSubblockLength[1] + this.dvbsSubblockLength[2]; }
+      get { return 4 + 4 + this.dvbsSubblockLength[0] + 4 + this.dvbsSubblockLength[1] + 4 + this.dvbsSubblockLength[2]; }
     }
 
     /// <summary>
     /// relative to start of DVBS-Block (including the intial 4 length bytes)
     /// </summary>
-    public int SequenceTableOffset
-    {
-      get { return ChannelListHeaderOffset + 12 + dvbsMaxChannelCount/8; }
-    }
+    public int AllocationBitmapOffset { get { return ChannelListHeaderOffset + 16; } }
+
+    /// <summary>
+    /// relative to start of DVBS-Block (including the intial 4 length bytes)
+    /// </summary>
+    public int SequenceTableOffset { get { return this.AllocationBitmapOffset + dvbsMaxChannelCount/8; } }
 
     /// <summary>
     /// relative to start of DVBS-Block (including the intial 4 length bytes)
@@ -65,5 +67,6 @@
     {
       get { return SequenceTableOffset + dvbsMaxChannelCount*sizeOfChannelLinkedListEntry; }
     }
+
   }
 }

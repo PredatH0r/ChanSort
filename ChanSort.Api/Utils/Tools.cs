@@ -24,5 +24,19 @@ namespace ChanSort.Api
       if (freq <= 1000) return ((freq - 471)/8 + 21).ToString("d2"); // Band IV, V
       return "";
     }
+
+    public static void SetInt16(byte[] data, int offset, int value)
+    {
+      data[offset+0] = (byte)value;
+      data[offset + 1] = (byte) (value >> 8);
+    }
+
+    public static void SetInt32(byte[] data, int offset, int value)
+    {
+      data[offset + 0] = (byte)value;
+      data[offset + 1] = (byte)(value >> 8);
+      data[offset + 2] = (byte)(value >> 16);
+      data[offset + 3] = (byte)(value >> 24);
+    }
   }
 }

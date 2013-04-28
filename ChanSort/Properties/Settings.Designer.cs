@@ -262,5 +262,29 @@ namespace ChanSort.Ui.Properties {
                 this["LeftPanelWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowWarningsAfterLoading {
+            get {
+                return ((bool)(this["ShowWarningsAfterLoading"]));
+            }
+            set {
+                this["ShowWarningsAfterLoading"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EraseDuplicateChannels {
+            get {
+                return ((bool)(this["EraseDuplicateChannels"]));
+            }
+            set {
+                this["EraseDuplicateChannels"] = value;
+            }
+        }
     }
 }

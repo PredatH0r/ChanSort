@@ -18,6 +18,7 @@ namespace ChanSort.Api
     public string FileName { get; set; }
     public DataRoot DataRoot { get; protected set; }
     public SupportedFeatures Features { get; private set; }
+    public bool EraseDuplicateChannels { get; set; }
 
     protected SerializerBase(string inputFile)
     {

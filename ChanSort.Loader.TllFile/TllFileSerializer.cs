@@ -24,7 +24,8 @@ namespace ChanSort.Loader.LG
 
     private readonly Dictionary<int, DvbsDataLayout> satConfigs = new Dictionary<int, DvbsDataLayout>();
     private readonly MappingPool<DataMapping> actMappings = new MappingPool<DataMapping>("Analog and DVB-C/T");
-    private readonly MappingPool<DataMapping> dvbsMappings = new MappingPool<DataMapping>("DVB-S");
+    private readonly MappingPool<DataMapping> dvbsMappings = new MappingPool<DataMapping>("DVB-S Channel");
+    private readonly MappingPool<DataMapping> dvbsTransponderMappings = new MappingPool<DataMapping>("DVB-S Transponder");
     private readonly MappingPool<FirmwareData> firmwareMappings = new MappingPool<FirmwareData>("Firmware");
 
     private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv, "Analog TV");
@@ -106,6 +107,8 @@ namespace ChanSort.Loader.LG
           actMappings.AddMapping(recordLength, new DataMapping(section));
         else if (section.Name.StartsWith("SatChannelDataMapping"))
           dvbsMappings.AddMapping(recordLength, new DataMapping(section));
+        else if (section.Name.StartsWith("TransponderDataMapping"))
+          dvbsTransponderMappings.AddMapping(recordLength, new DataMapping(section));
         else if (section.Name.StartsWith("FirmwareData"))
           firmwareMappings.AddMapping(recordLength, new FirmwareData(section));
       }
@@ -372,10 +375,11 @@ namespace ChanSort.Loader.LG
     #region ReadTransponderData()
     private void ReadTransponderData(ref int off)
     {
-      var data = new SatTransponder(fileContent);
-      data.BaseOffset = off;
+      var mapping = this.dvbsTransponderMappings.GetMapping(this.satConfig.transponderLength);
       for (int i=0; i<satConfig.transponderCount; i++)
       {
+        mapping.SetDataPtr(this.fileContent, off + i*satConfig.transponderLength);
+        var data = new SatTransponder(mapping);
         if (data.SatIndex == 0xFF)
           continue;
 #if SYMBOL_RATE_ROUNDING
@@ -394,8 +398,6 @@ namespace ChanSort.Loader.LG
 
         var sat = this.DataRoot.Satellites.TryGet(data.SatIndex/2);
         this.DataRoot.AddTransponder(sat, transponder);
-
-        data.BaseOffset += satConfig.transponderLength;
       }
 
       if (this.isDvbsSymbolRateDiv2)
@@ -454,7 +456,8 @@ namespace ChanSort.Loader.LG
             // program list, so we erase all dupes here
             this.DataRoot.Warnings.AppendFormat(ERR_dupeChannel, ci.RecordIndex, ci.OldProgramNr, dupes[0].RecordIndex,
                                                 dupes[0].OldProgramNr, dupes[0].Name).AppendLine();
-            this.EraseDuplicateDvbsChannel(recordOffset, satConfig);
+            if (this.EraseDuplicateChannels)
+              this.EraseDuplicateDvbsChannel(index, recordOffset, satConfig);
             ++this.duplicateChannels;
           }
         }
@@ -467,10 +470,35 @@ namespace ChanSort.Loader.LG
     #endregion
 
     #region EraseDuplicateDvbsChannel()
-    private void EraseDuplicateDvbsChannel(int off, DvbsDataLayout c)
+    private void EraseDuplicateDvbsChannel(int index, int off, DvbsDataLayout c)
     {
+      // erase channel data
       for (int i = 0; i < c.dvbsChannelLength; i++)
         fileContent[off++] = 0xFF;
+
+      // remove channel record from linked list
+      int listBaseOff = this.dvbsBlockOffset + c.SequenceTableOffset;
+      int listEntryOff = listBaseOff + index*c.sizeOfChannelLinkedListEntry;
+      int prevRecordIndex = BitConverter.ToInt16(fileContent, listEntryOff + 0);
+      int nextRecordIndex = BitConverter.ToInt16(fileContent, listEntryOff + 2);
+      Tools.SetInt16(fileContent, listEntryOff + 0, 0);
+      Tools.SetInt16(fileContent, listEntryOff + 2, 0);
+      Tools.SetInt16(fileContent, listEntryOff + 4, 0);
+      Tools.SetInt16(fileContent, listBaseOff + prevRecordIndex * c.sizeOfChannelLinkedListEntry + 2, nextRecordIndex);
+      Tools.SetInt16(fileContent, listBaseOff + nextRecordIndex*c.sizeOfChannelLinkedListEntry + 0, prevRecordIndex);
+      var header = new SatChannelListHeader(this.fileContent, this.dvbsBlockOffset + c.ChannelListHeaderOffset);
+      if (header.LinkedListStartIndex == index)
+        header.LinkedListStartIndex = nextRecordIndex;
+      if (header.LinkedListEndIndex1 == index)
+        header.LinkedListEndIndex1 = prevRecordIndex;
+      if (header.LinkedListEndIndex2 == index)
+        header.LinkedListEndIndex2 = prevRecordIndex;
+      --header.ChannelCount;
+
+      // remove channel from allocation bitmap
+      int allocBitmapOffset = dvbsBlockOffset + c.AllocationBitmapOffset + (index/8);
+      int mask = 1 << (index & 7);
+      this.fileContent[allocBitmapOffset] &= (byte)~mask;
     }
     #endregion
 
@@ -579,7 +607,7 @@ namespace ChanSort.Loader.LG
         newDvbctChannelCount = this.dvbctChannelCount;
       }
 
-      if (this.reorderPhysically || this.removeDeletedActChannels)
+      if (this.reorderPhysically || removeDeletedActChannels)
         this.ReorderActChannelsPhysically();
 
       if (satConfig != null)
@@ -658,7 +686,7 @@ namespace ChanSort.Loader.LG
       int slot = 0;
       foreach (ChannelInfo appChannel in sortedList)
       {
-        if (appChannel.NewProgramNr <= 0 && this.removeDeletedActChannels)
+        if (appChannel.NewProgramNr <= 0 && removeDeletedActChannels)
           continue;
         if (appChannel.RecordIndex != slot)
         {

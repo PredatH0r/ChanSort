@@ -117,6 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="gridLeft.EmbeddedNavigator.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <assembly alias="DevExpress.Data.v12.2" name="DevExpress.Data.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="gridLeft.EmbeddedNavigator.AllowHtmlTextInToolTip" type="DevExpress.Utils.DefaultBoolean, DevExpress.Data.v12.2">
+    <value>Default</value>
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left</value>
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.BackgroundImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Tile</value>
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
+  </data>
+  <assembly alias="DevExpress.XtraEditors.v12.2" name="DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="gridLeft.EmbeddedNavigator.TextLocation" type="DevExpress.XtraEditors.NavigatorButtonsTextLocation, DevExpress.XtraEditors.v12.2">
+    <value>Center</value>
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="DevExpress.Utils.v12.2" name="DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="gridLeft.EmbeddedNavigator.ToolTipIconType" type="DevExpress.Utils.ToolTipIconType, DevExpress.Utils.v12.2">
+    <value>None</value>
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.ToolTipTitle" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="gviewLeft.Appearance.HeaderPanel.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="gviewLeft.Appearance.HeaderPanel.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="colOutSlot.Caption" xml:space="preserve">
     <value>Neue Pr#</value>
   </data>
@@ -129,13 +173,34 @@
   <data name="colOutFav.Caption" xml:space="preserve">
     <value>Favoriten</value>
   </data>
+  <data name="repositoryItemCheckedComboBoxEdit1.Mask.AutoComplete" type="DevExpress.XtraEditors.Mask.AutoCompleteType, DevExpress.XtraEditors.v12.2">
+    <value>Default</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="repositoryItemCheckedComboBoxEdit1.Mask.BeepOnError" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit1.Mask.IgnoreMaskBlank" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit1.Mask.PlaceHolder" type="System.Char, mscorlib" xml:space="preserve">
+    <value>_</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit1.Mask.SaveLiteral" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit1.Mask.ShowPlaceHolders" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit1.Mask.UseMaskAsDisplayFormat" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="colOutLock.Caption" xml:space="preserve">
     <value>Ge- sperrt</value>
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
     <value>Kindersicherung</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lblHotkeyLeft.Size" type="System.Drawing.Size, System.Drawing">
     <value>333, 17</value>
   </data>
@@ -229,6 +294,12 @@
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Zeichensatz</value>
   </data>
+  <data name="miEraseDuplicateChannels.Caption" xml:space="preserve">
+    <value>Mehrfach vorhandene Sender löschen</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
+    <value>Warnungen nach dem Laden einer Datei anzeigen</value>
+  </data>
   <data name="mnuHelp.Caption" xml:space="preserve">
     <value>&amp;Hilfe</value>
   </data>
@@ -279,35 +350,167 @@
         WIeWYGkVXQEL
 </value>
   </data>
+  <data name="barDockControlTop.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="barDockControlTop.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="barDockControlBottom.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="barDockControlBottom.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="barDockControlLeft.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="barDockControlLeft.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="barDockControlRight.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="barDockControlRight.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="miMoveUp.Caption" xml:space="preserve">
     <value>Nach oben</value>
   </data>
   <data name="miMoveDown.Caption" xml:space="preserve">
     <value>Nach unten</value>
   </data>
+  <data name="rbInsertSwap.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="rbInsertSwap.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="rbInsertSwap.Properties.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="rbInsertSwap.Properties.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="rbInsertSwap.Properties.AutoHeight" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
     <value>tauschen</value>
+  </data>
+  <data name="rbInsertSwap.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertSwap.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertSwap.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertAfter.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="rbInsertAfter.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="rbInsertAfter.Properties.AutoHeight" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
     <value>dahinter</value>
   </data>
+  <data name="rbInsertAfter.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertAfter.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertAfter.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertBefore.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="rbInsertBefore.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="rbInsertBefore.Properties.AutoHeight" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
     <value>davor</value>
+  </data>
+  <data name="rbInsertBefore.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertBefore.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertBefore.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbCloseGap.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="cbCloseGap.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="cbCloseGap.Properties.AutoHeight" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
     <value>Lücken beim Verschieben/Entfernen von Sendern schließen</value>
   </data>
+  <data name="cbCloseGap.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbCloseGap.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbCloseGap.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
+  </data>
   <data name="cbCloseGap.ToolTip" xml:space="preserve">
     <value>Wenn aktiv, werden folgende Programmnummer automatisch vorgerückt</value>
   </data>
+  <data name="cbAppendUnsortedChannels.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="cbAppendUnsortedChannels.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="cbAppendUnsortedChannels.Properties.AutoHeight" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="cbAppendUnsortedChannels.Properties.Caption" xml:space="preserve">
     <value>Unsortierte Sender beim Speichern automatisch anhängen</value>
+  </data>
+  <data name="cbAppendUnsortedChannels.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbAppendUnsortedChannels.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbAppendUnsortedChannels.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
   </data>
   <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 13</value>
   </data>
   <data name="labelControl2.Text" xml:space="preserve">
     <value>Einfügemodus:</value>
+  </data>
+  <data name="picDonate.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="picDonate.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="picDonate.Properties.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="picDonate.Properties.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="pageEmpty.Text" xml:space="preserve">
     <value>Keine Datei geladen</value>
@@ -318,11 +521,53 @@
   <data name="labelControl11.ToolTip" xml:space="preserve">
     <value>Programplatz für Einfügen und Festlegen</value>
   </data>
+  <data name="txtSetSlot.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="txtSetSlot.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="txtSetSlot.Properties.AutoHeight" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.AutoComplete" type="DevExpress.XtraEditors.Mask.AutoCompleteType, DevExpress.XtraEditors.v12.2">
+    <value>Default</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.BeepOnError" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.IgnoreMaskBlank" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.PlaceHolder" type="System.Char, mscorlib" xml:space="preserve">
+    <value>_</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.SaveLiteral" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.ShowPlaceHolders" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.UseMaskAsDisplayFormat" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txtSetSlot.Properties.NullValuePrompt" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtSetSlot.Properties.NullValuePromptShowForEmptyValue" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>ChanSort {0} - Senderlisten-Editor für Samsung, LG und Toshiba TVs</value>
   </data>
   <data name="btnToggleLock.Text" xml:space="preserve">
     <value>Kindersicherung</value>
+  </data>
+  <data name="btnClearLeftFilter.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="btnClearLeftFilter.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
     <value>Filter entfernen</value>
@@ -338,6 +583,45 @@
   </data>
   <data name="grpOutputList.Text" xml:space="preserve">
     <value>Sortierte Sender (.csv)</value>
+  </data>
+  <data name="gridRight.EmbeddedNavigator.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="gridRight.EmbeddedNavigator.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="gridRight.EmbeddedNavigator.AllowHtmlTextInToolTip" type="DevExpress.Utils.DefaultBoolean, DevExpress.Data.v12.2">
+    <value>Default</value>
+  </data>
+  <data name="gridRight.EmbeddedNavigator.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left</value>
+  </data>
+  <data name="gridRight.EmbeddedNavigator.BackgroundImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="gridRight.EmbeddedNavigator.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Tile</value>
+  </data>
+  <data name="gridRight.EmbeddedNavigator.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
+  </data>
+  <data name="gridRight.EmbeddedNavigator.TextLocation" type="DevExpress.XtraEditors.NavigatorButtonsTextLocation, DevExpress.XtraEditors.v12.2">
+    <value>Center</value>
+  </data>
+  <data name="gridRight.EmbeddedNavigator.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gridRight.EmbeddedNavigator.ToolTipIconType" type="DevExpress.Utils.ToolTipIconType, DevExpress.Utils.v12.2">
+    <value>None</value>
+  </data>
+  <data name="gridRight.EmbeddedNavigator.ToolTipTitle" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gviewRight.Appearance.HeaderPanel.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="gviewRight.Appearance.HeaderPanel.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="colSlotOld.Caption" xml:space="preserve">
     <value>Alte Pr#</value>
@@ -359,6 +643,27 @@
   </data>
   <data name="colFavorites.Caption" xml:space="preserve">
     <value>Favoriten</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit2.Mask.AutoComplete" type="DevExpress.XtraEditors.Mask.AutoCompleteType, DevExpress.XtraEditors.v12.2">
+    <value>Default</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit2.Mask.BeepOnError" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit2.Mask.IgnoreMaskBlank" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit2.Mask.PlaceHolder" type="System.Char, mscorlib" xml:space="preserve">
+    <value>_</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit2.Mask.SaveLiteral" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit2.Mask.ShowPlaceHolders" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="repositoryItemCheckedComboBoxEdit2.Mask.UseMaskAsDisplayFormat" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="colLock.Caption" xml:space="preserve">
     <value>Ge- sperrt</value>
@@ -407,6 +712,12 @@
   </data>
   <data name="btnRemoveRight.ToolTip" xml:space="preserve">
     <value>Sender aus sortierter Liste entfernen</value>
+  </data>
+  <data name="btnClearRightFilter.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="btnClearRightFilter.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
     <value>Filter entfernen</value>

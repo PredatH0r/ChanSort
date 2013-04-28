@@ -1,23 +1,12 @@
-Version v2013-04-21 =======================================================
+Version v2013-04-28 =======================================================
 
-This is a maintenance release based on version v2013-04-05, which brought a 
-refurbished user interface and fixes for various usability issues.
-
-- Fix: Encryption flag for Samsung analog and DVB-C/T lists now shown
-  correctly
-- Added "Remove channels" function to right list. E.g. you can use this to
-  search and select encrypted channels in the right list and remove them 
-  (from the sorted list).
-- Text editor for channel number or name now only opens after holding the
-  left mouse button down for at least 0.5sec. This prevents it from opening
-  when you double-click a channel.
-- Added "Edit channel name" function to menus (due to the editor no longer
-  opening automatically after a short click on the name)
-- Warnings and information about TV file content are no longer shown when
-  opening the file. It can be viewed by using the 
-  "File / Show file information" menu item.
-- Added experimental loader for Panasonic TV files. Saving is not
-  supported yet!
+Changes:
+- Added support for LG's 2013 LA-series DVB-S channel lists.
+  Due to a lack of test files containing analog or DVB-C/T channels, these
+  lists are not supported yet. If you have a TLL file with such channels 
+  please send it to horst@beham.biz.
+- Improved clean-up of LG channel lists with duplicate channels
+- Fixed: Sorting and column layout is now preserved when switching lists
 
 The complete change log can be found at the end of this document
 
@@ -114,6 +103,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-04-27
+- Added support for LG's 2013 LA-series (DVB-S only)
 
 2013-04-21
 - Fix: Encryption flag for Samsung analog and DVB-C/T lists now shown 
