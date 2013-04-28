@@ -775,8 +775,7 @@ namespace ChanSort.Loader.LG
               ++newAnalogChannelCount;
             else if ((channel.SignalSource & SignalSource.DvbCT) != 0)
               ++newDvbctChannelCount;
-          }
-          channel.OldProgramNr = channel.NewProgramNr;
+          }          
           channel.UpdateRawData();
         }
       }

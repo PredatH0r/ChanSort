@@ -109,6 +109,8 @@ namespace ChanSort.Loader.LG
       }
       else
         mapping.SetFlag(_Moved, true);
+
+      this.OldProgramNr = this.NewProgramNr;
     }
     #endregion
 

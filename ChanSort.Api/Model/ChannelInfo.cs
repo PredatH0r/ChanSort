@@ -68,6 +68,8 @@ namespace ChanSort.Api
     {
       this.SignalSource = source;
       this.Uid = uid;
+      this.RecordIndex = -1;
+      this.RecordOrder = -1;
       this.OldProgramNr = -1;
       this.NewProgramNr = newProgNr;
       this.Name = name;

@@ -10,6 +10,8 @@ Changes:
 - Fixed: Program number and channel name can be edited again by directly 
   typing the number or name on the keyboard.
 - Fixed: Sorting and column layout is now preserved when switching lists
+- Fixed: Missing channels from a reference list appeared as valid channels
+  in the UI after saving a TLL file.
 
 The complete change log can be found at the end of this document
 
@@ -117,6 +119,8 @@ Change log ================================================================
 - Fixed: Program number and channel name can be edited again by directly 
   typing the number or name on the keyboard.
 - Fixed: Sorting and column layout is now preserved when switching lists
+- Fixed: Missing channels from a reference list appeared as valid channels
+  in the UI after saving a TLL file.
 
 2013-04-21
 - Fix: Encryption flag for Samsung analog and DVB-C/T lists now shown 
