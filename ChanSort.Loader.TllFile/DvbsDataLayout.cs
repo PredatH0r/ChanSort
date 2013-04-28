@@ -45,6 +45,14 @@
     /// <summary>
     /// relative to start of DVBS-Block (including the intial 4 length bytes)
     /// </summary>
+    public int TransponderTableOffset
+    {
+      get { return 4 + 4 + dvbsSubblockLength[0] + 4 + dvbsSubblockLength[1] + sizeOfTransponderBlockHeader; }
+    }
+
+    /// <summary>
+    /// relative to start of DVBS-Block (including the intial 4 length bytes)
+    /// </summary>
     public int ChannelListHeaderOffset
     {
       get { return 4 + 4 + this.dvbsSubblockLength[0] + 4 + this.dvbsSubblockLength[1] + 4 + this.dvbsSubblockLength[2]; }
@@ -67,6 +75,7 @@
     {
       get { return SequenceTableOffset + dvbsMaxChannelCount*sizeOfChannelLinkedListEntry; }
     }
+
 
   }
 }

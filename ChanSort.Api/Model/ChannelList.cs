@@ -127,5 +127,21 @@ namespace ChanSort.Api
       return this.channels.Where(c => c.NewProgramNr == newProgNr).ToList();
     }
     #endregion
+
+    #region RemoveChannel()
+    public void RemoveChannel(ChannelInfo channel)
+    {
+      this.channels.Remove(channel);
+      var list = this.channelByUid.TryGet(channel.Uid);
+      if (list != null && list.Contains(channel))
+        list.Remove(channel);
+      list = this.channelByName.TryGet(channel.Name);
+      if (list != null && list.Contains(channel))
+        list.Remove(channel);
+      var chan = this.channelByProgNr.TryGet(channel.OldProgramNr);
+      if (ReferenceEquals(chan, channel))
+        this.channelByProgNr.Remove(channel.OldProgramNr);
+    }
+    #endregion
   }
 }

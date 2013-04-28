@@ -22,6 +22,7 @@ namespace ChanSort.Loader.LG
       Transponder transponder = dataRoot.Transponder.TryGet(transponderIndex);
       Satellite sat = transponder.Satellite;
 
+      this.Transponder = transponder;
       this.Satellite = sat.Name;
       this.SatPosition = sat.OrbitalPosition;
       this.RecordOrder = order;

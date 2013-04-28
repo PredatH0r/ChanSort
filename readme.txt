@@ -1,11 +1,14 @@
-Version v2013-04-28 =======================================================
+Version v2013-04-29a ======================================================
 
 Changes:
 - Added support for LG's 2013 LA-series DVB-S channel lists.
   Due to a lack of test files containing analog or DVB-C/T channels, these
   lists are not supported yet. If you have a TLL file with such channels 
   please send it to horst@beham.biz.
-- Improved clean-up of LG channel lists with duplicate channels
+- Improved clean-up of LG channel lists. This should solve problems with
+  program numbers changing randomly or inability to change them at all.
+- Fixed: Program number and channel name can be edited again by directly 
+  typing the number or name on the keyboard.
 - Fixed: Sorting and column layout is now preserved when switching lists
 
 The complete change log can be found at the end of this document
@@ -104,8 +107,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ================================================================
 
-2013-04-27
-- Added support for LG's 2013 LA-series (DVB-S only)
+2013-04-29a (inofficial alpha)
+- Added support for LG's 2013 LA-series DVB-S channel lists.
+  Due to a lack of test files containing analog or DVB-C/T channels, these
+  lists are not supported yet. If you have a TLL file with such channels 
+  please send it to horst@beham.biz.
+- Improved clean-up of LG channel lists. This should solve problems with
+  program numbers changing randomly or inability to change them at all.
+- Fixed: Program number and channel name can be edited again by directly 
+  typing the number or name on the keyboard.
+- Fixed: Sorting and column layout is now preserved when switching lists
 
 2013-04-21
 - Fix: Encryption flag for Samsung analog and DVB-C/T lists now shown 

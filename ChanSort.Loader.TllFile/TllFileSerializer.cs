@@ -1,4 +1,4 @@
-﻿#define SYMBOL_RATE_ROUNDING
+﻿//#define SYMBOL_RATE_ROUNDING
 //#define STORE_DVBS_CHANNELS_IN_DATABASE
 //#define TESTING_LM640T_HACK
 
@@ -73,6 +73,7 @@ namespace ChanSort.Loader.LG
       this.Features.EraseChannelData = true;
       this.Features.FileInformation = true;
       this.Features.DeviceSettings = true;
+      this.Features.CleanUpChannelData = true;
       this.SupportedTvCountryCodes = new List<string>
                                        {
                                          "___ (None)", "AUT (Austria)", "BEL (Belgium)", "CHE (Switzerland)", 
@@ -137,6 +138,9 @@ namespace ChanSort.Loader.LG
       this.ReadDvbCtChannels(ref off);
       this.ReadDvbSBlock(ref off);
       this.ReadSettingsBlock(ref off);
+
+      if (this.EraseDuplicateChannels)
+        this.CleanUpChannelData();
 
 #if STORE_DVBS_CHANNELS_IN_DATABASE
       this.StoreToDatabase();
@@ -331,7 +335,7 @@ namespace ChanSort.Loader.LG
       this.dvbsChannelCount = header.ChannelCount;
       off += header.Size;
       off += satConfig.dvbsMaxChannelCount/8; // skip allocation bitmap
-      this.ReadDvbsChannelLinkedList(ref off);
+      this.ReadDvbsChannelLinkedList(header, ref off);
 
       this.ReadDvbsChannels(ref off, header.LinkedListStartIndex);
 
@@ -379,24 +383,13 @@ namespace ChanSort.Loader.LG
       for (int i=0; i<satConfig.transponderCount; i++)
       {
         mapping.SetDataPtr(this.fileContent, off + i*satConfig.transponderLength);
-        var data = new SatTransponder(mapping);
-        if (data.SatIndex == 0xFF)
+        SatTransponder transponder = new SatTransponder(i, mapping, this.DataRoot);
+        if (transponder.Satellite == null)
           continue;
-#if SYMBOL_RATE_ROUNDING
-        ushort sr = (ushort)(data.SymbolRate & 0x7FFF);
-        if (sr % 100 >= 95)
-          data.SymbolRate = (ushort)((data.SymbolRate & 0x8000) | ((sr / 100 + 1) * 100));
-#endif
-
-        Transponder transponder = new Transponder(i);
-        transponder.FrequencyInMhz = data.Frequency;
-        transponder.OriginalNetworkId = data.OriginalNetworkId;
-        transponder.TransportStreamId = data.TransportStreamId;
-        transponder.SymbolRate = data.SymbolRate & 0x7FFF;
-        if (data.SymbolRate == 11000)
+        if (transponder.SymbolRate == 11000)
           this.isDvbsSymbolRateDiv2 = true;
 
-        var sat = this.DataRoot.Satellites.TryGet(data.SatIndex/2);
+        var sat = transponder.Satellite;
         this.DataRoot.AddTransponder(sat, transponder);
       }
 
@@ -411,16 +404,16 @@ namespace ChanSort.Loader.LG
     #endregion
 
     #region ReadDvbsChannelLinkedList()
-    private void ReadDvbsChannelLinkedList(ref int off)
+    private void ReadDvbsChannelLinkedList(SatChannelListHeader header, ref int off)
     {
       this.nextChannelIndex = new Dictionary<int, int>();
-      for (int i = 0; i < satConfig.dvbsMaxChannelCount; i++)
+      int index = header.LinkedListStartIndex;
+      while (index != 0xFFFF)
       {
-        int offEntry = off + i*satConfig.sizeOfChannelLinkedListEntry;
-        int cur = BitConverter.ToUInt16(fileContent, offEntry + 4);
-        if (cur != i)
-          break;
-        this.nextChannelIndex.Add(cur, BitConverter.ToUInt16(fileContent, offEntry + 2));
+        int offEntry = off + index*satConfig.sizeOfChannelLinkedListEntry;
+        int nextIndex = BitConverter.ToUInt16(fileContent, offEntry + 2);
+        this.nextChannelIndex.Add(index, nextIndex);
+        index = nextIndex;
       }
       off += satConfig.dvbsMaxChannelCount*satConfig.sizeOfChannelLinkedListEntry;
     }
@@ -438,67 +431,35 @@ namespace ChanSort.Loader.LG
         SatChannel ci = new SatChannel(i, index, mapping, this.DataRoot);
         if (!ci.InUse)
           ++this.deletedChannelsHard;
-        else if (ci.IsDeleted)
-          ++this.deletedChannelsSoft;
         else
         {
+          if (ci.IsDeleted)
+          {
+            ci.OldProgramNr = -1;
+            ci.NewProgramNr = -1;
+            ++this.deletedChannelsSoft;
+          }
+
           var list = this.DataRoot.GetChannelList(ci.SignalSource);
           var dupes = list.GetChannelByUid(ci.Uid);
           if (dupes.Count == 0)
           {
-            if (ci.OldProgramNr == 0)
+            if (ci.OldProgramNr == 0 && !ci.IsDeleted)
               ++this.dvbsChannelsAtPr0;
-            this.DataRoot.AddChannel(list, ci);
           }
           else
           {
-            // duplicate channels (ONID,TSID,SSID) cause the TV to randomly reorder channels and show wrong ones in the 
-            // program list, so we erase all dupes here
             this.DataRoot.Warnings.AppendFormat(ERR_dupeChannel, ci.RecordIndex, ci.OldProgramNr, dupes[0].RecordIndex,
                                                 dupes[0].OldProgramNr, dupes[0].Name).AppendLine();
-            if (this.EraseDuplicateChannels)
-              this.EraseDuplicateDvbsChannel(index, recordOffset, satConfig);
             ++this.duplicateChannels;
           }
+          this.DataRoot.AddChannel(list, ci);
         }
 
         if (!this.nextChannelIndex.TryGetValue(index, out index) || index == -1)
           break;
       }
       off += satConfig.dvbsMaxChannelCount * satConfig.dvbsChannelLength;
-    }
-    #endregion
-
-    #region EraseDuplicateDvbsChannel()
-    private void EraseDuplicateDvbsChannel(int index, int off, DvbsDataLayout c)
-    {
-      // erase channel data
-      for (int i = 0; i < c.dvbsChannelLength; i++)
-        fileContent[off++] = 0xFF;
-
-      // remove channel record from linked list
-      int listBaseOff = this.dvbsBlockOffset + c.SequenceTableOffset;
-      int listEntryOff = listBaseOff + index*c.sizeOfChannelLinkedListEntry;
-      int prevRecordIndex = BitConverter.ToInt16(fileContent, listEntryOff + 0);
-      int nextRecordIndex = BitConverter.ToInt16(fileContent, listEntryOff + 2);
-      Tools.SetInt16(fileContent, listEntryOff + 0, 0);
-      Tools.SetInt16(fileContent, listEntryOff + 2, 0);
-      Tools.SetInt16(fileContent, listEntryOff + 4, 0);
-      Tools.SetInt16(fileContent, listBaseOff + prevRecordIndex * c.sizeOfChannelLinkedListEntry + 2, nextRecordIndex);
-      Tools.SetInt16(fileContent, listBaseOff + nextRecordIndex*c.sizeOfChannelLinkedListEntry + 0, prevRecordIndex);
-      var header = new SatChannelListHeader(this.fileContent, this.dvbsBlockOffset + c.ChannelListHeaderOffset);
-      if (header.LinkedListStartIndex == index)
-        header.LinkedListStartIndex = nextRecordIndex;
-      if (header.LinkedListEndIndex1 == index)
-        header.LinkedListEndIndex1 = prevRecordIndex;
-      if (header.LinkedListEndIndex2 == index)
-        header.LinkedListEndIndex2 = prevRecordIndex;
-      --header.ChannelCount;
-
-      // remove channel from allocation bitmap
-      int allocBitmapOffset = dvbsBlockOffset + c.AllocationBitmapOffset + (index/8);
-      int mask = 1 << (index & 7);
-      this.fileContent[allocBitmapOffset] &= (byte)~mask;
     }
     #endregion
 
@@ -509,6 +470,7 @@ namespace ChanSort.Loader.LG
     }
     #endregion
 
+    // Test code for fixing broken DVB-S block of xxLM640T ==========
 
     #region EraseDvbsBlock()
 
@@ -593,6 +555,163 @@ namespace ChanSort.Loader.LG
     }
     #endregion
 
+    // Sat channel list cleanup ==================
+
+    #region CleanUpChannelData()
+    public override string CleanUpChannelData()
+    {
+      this.ResetChannelInformationInTransponderData();
+
+      byte[] sortedChannels = new byte[this.satConfig.dvbsMaxChannelCount*this.satConfig.dvbsChannelLength];
+
+      var channelsByTransponder =
+        this.satTvChannels.Channels.Union(this.satRadioChannels.Channels).OrderBy(PhysicalChannelOrder).ToList();
+      int prevChannelOrderId = -1;
+      int prevTransponderIndex = -1;
+      int channelCounter = 0;
+      int removedCounter = 0;
+      SatTransponder currentTransponder = null;
+      foreach (var channel in channelsByTransponder)
+      {
+        SatChannel satChannel = channel as SatChannel;
+        if (satChannel == null) // ignore proxy channels created by a reference list
+          continue;
+        RelocateChannelData(satChannel, ref prevChannelOrderId, sortedChannels, ref removedCounter,
+                            ref prevTransponderIndex, ref channelCounter, ref currentTransponder);
+      }
+      if (currentTransponder != null)
+      {
+        currentTransponder.LastChannelIndex = channelCounter - 1;
+        currentTransponder.ChannelCount = channelCounter - currentTransponder.FirstChannelIndex;
+      }
+
+      // copy temp data back to fileContent and clear remainder
+      Tools.MemCopy(sortedChannels, 0, 
+                    this.fileContent, this.dvbsBlockOffset + satConfig.ChannelListOffset,
+                    channelCounter*satConfig.dvbsChannelLength);
+      Tools.MemSet(this.fileContent,
+                   this.dvbsBlockOffset + satConfig.ChannelListOffset + channelCounter*satConfig.dvbsChannelLength, 0xFF,
+                   (satConfig.dvbsMaxChannelCount - channelCounter)*satConfig.dvbsChannelLength);
+
+      UpdateChannelAllocationBitmap(channelCounter);
+      UpdateChannelLinkedList(channelCounter);
+
+      return string.Format("{0} duplicate channels were detected and removed", removedCounter);
+    }
+    #endregion
+
+    #region ResetChannelInformationInTransponderData()
+    private void ResetChannelInformationInTransponderData()
+    {
+      foreach (SatTransponder transponder in this.DataRoot.Transponder.Values)
+      {
+        transponder.FirstChannelIndex = 0xFFFF;
+        transponder.LastChannelIndex = 0xFFFF;
+        transponder.ChannelCount = 0;
+      }
+    }
+    #endregion
+
+    #region PhysicalChannelOrder()
+    private int PhysicalChannelOrder(ChannelInfo channel)
+    {
+      return (channel.Transponder.Id << 16) + channel.ServiceId;
+    }
+    #endregion
+
+    #region RelocateChannelData()
+    private void RelocateChannelData(SatChannel channel, ref int prevChannelOrderId,
+                                     byte[] sortedChannels, ref int removed, ref int prevTransponderIndex, ref int counter,
+                                     ref SatTransponder currentTransponder)
+    {
+      if (RemoveChannelIfDupe(channel, ref prevChannelOrderId, ref removed))
+        return;
+
+      UpdateChannelIndexInTransponderData(channel, ref prevTransponderIndex, counter, ref currentTransponder);
+
+      Tools.MemCopy(this.fileContent,
+                    this.dvbsBlockOffset + satConfig.ChannelListOffset + channel.RecordIndex*satConfig.dvbsChannelLength,
+                    sortedChannels,
+                    counter*satConfig.dvbsChannelLength,
+                    satConfig.dvbsChannelLength);
+
+      channel.RecordIndex = counter++;
+      channel.baseOffset = this.dvbsBlockOffset + satConfig.ChannelListOffset + channel.RecordIndex*satConfig.dvbsChannelLength;
+    }
+    #endregion
+
+    #region RemoveChannelIfDupe()
+    private bool RemoveChannelIfDupe(SatChannel channel, ref int prevOrder, ref int removed)
+    {
+      int order = this.PhysicalChannelOrder(channel);
+      if (order == prevOrder)
+      {
+        var list = this.DataRoot.GetChannelList(channel.SignalSource);
+        list.RemoveChannel(channel);
+        ++removed;
+        channel.NewProgramNr = -1;
+        channel.OldProgramNr = -1;
+        return true;
+      }
+      prevOrder = order;
+      return false;
+    }
+    #endregion
+
+    #region UpdateChannelIndexInTransponderData()
+    private void UpdateChannelIndexInTransponderData(SatChannel channel, ref int prevTransponderIndex, int counter,
+                                                    ref SatTransponder transponder)
+    {
+      if (channel.Transponder.Id == prevTransponderIndex) 
+        return;
+
+      if (transponder != null)
+      {
+        transponder.LastChannelIndex = counter - 1;
+        transponder.ChannelCount = counter - transponder.FirstChannelIndex;
+      }
+
+      transponder = (SatTransponder)channel.Transponder;
+      transponder.FirstChannelIndex = counter;
+      prevTransponderIndex = channel.Transponder.Id;
+    }
+    #endregion
+
+    #region UpdateChannelAllocationBitmap()
+    private void UpdateChannelAllocationBitmap(int counter)
+    {
+      Tools.MemSet(fileContent, this.dvbsBlockOffset + satConfig.AllocationBitmapOffset, 0, satConfig.dvbsMaxChannelCount / 8);
+      Tools.MemSet(fileContent, this.dvbsBlockOffset + satConfig.AllocationBitmapOffset, 0xFF, counter / 8);
+      if (counter % 8 != 0)
+        fileContent[this.dvbsBlockOffset + satConfig.AllocationBitmapOffset + counter / 8] = (byte)(0xFF >> (8 - counter % 8));
+    }
+    #endregion
+
+    #region UpdateChannelLinkedList()
+    private void UpdateChannelLinkedList(int counter)
+    {
+      var header = new SatChannelListHeader(this.fileContent, this.dvbsBlockOffset + satConfig.ChannelListHeaderOffset);
+      header.LinkedListStartIndex = 0;
+      header.LinkedListEndIndex1 = counter - 1;
+      header.LinkedListEndIndex2 = counter - 1;
+      header.ChannelCount = counter;
+
+      // update linked list
+      var off = this.dvbsBlockOffset + satConfig.SequenceTableOffset;
+      for (int i = 0; i < counter; i++)
+      {
+        Tools.SetInt16(this.fileContent, off + 0, i - 1);
+        Tools.SetInt16(this.fileContent, off + 2, i + 1);
+        Tools.SetInt16(this.fileContent, off + 4, i);
+        off += satConfig.sizeOfChannelLinkedListEntry;
+      }
+      Tools.SetInt16(this.fileContent, off - satConfig.sizeOfChannelLinkedListEntry + 2, 0xFFFF);
+      Tools.MemSet(fileContent, off, 0, (satConfig.dvbsMaxChannelCount - counter) * satConfig.sizeOfChannelLinkedListEntry);
+    }
+    #endregion
+
+
+    // Saving ====================================
 
     #region Save()
     public override void Save(string tvOutputFile)

@@ -30,7 +30,7 @@ namespace ChanSort.Loader.LG
 
     protected readonly DataMapping mapping;
     protected readonly byte[] rawData;
-    internal readonly int baseOffset;
+    internal int baseOffset;
 
     protected TllChannelBase(DataMapping data)
     {

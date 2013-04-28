@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 
 namespace ChanSort.Api
 {
@@ -37,6 +36,18 @@ namespace ChanSort.Api
       data[offset + 1] = (byte)(value >> 8);
       data[offset + 2] = (byte)(value >> 16);
       data[offset + 3] = (byte)(value >> 24);
+    }
+
+    public static void MemCopy(byte[] source, int sourceIndex, byte[] dest, int destIndex, int count)
+    {
+      for (int i = 0; i < count; i++)
+        dest[destIndex + i] = source[sourceIndex + i];
+    }
+
+    public static void MemSet(byte[] data, int offset, byte value, int count)
+    {
+      for (int i = 0; i < count; i++)
+        data[offset++] = value;
     }
   }
 }

@@ -9,6 +9,7 @@ namespace ChanSort.Api
       public bool EraseChannelData { get; set; }
       public bool ChannelNameEdit { get; set; }
       public bool FileInformation { get; set; }
+      public bool CleanUpChannelData { get; set; }
 
       public bool DeviceSettings { get; set; }
     }
@@ -43,5 +44,7 @@ namespace ChanSort.Api
     public virtual string GetFileInformation() { return ""; }
 
     public virtual void ShowDeviceSettingsForm(object parentWindow) { }
+
+    public virtual string CleanUpChannelData() { return ""; }
   }
 }

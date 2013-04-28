@@ -23,7 +23,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-04-28a";
+    public const string AppVersion = "v2013-04-29";
 
     #region enum EditMode
     private enum EditMode
@@ -208,7 +208,7 @@ namespace ChanSort.Ui
         this.currentTvSerializer.DefaultEncoding = this.defaultEncoding;
         this.miEraseChannelData.Enabled = newSerializer.Features.EraseChannelData;
         if (!this.LoadTvDataFile())
-          return;
+          return;        
         this.LoadCsvFile();
 
         this.editor = new Editor();
@@ -357,7 +357,7 @@ namespace ChanSort.Ui
     #region LoadCsvFile()
     private void LoadCsvFile()
     {
-      if (File.Exists(this.currentCsvFile))
+      if (File.Exists(this.currentCsvFile) && this.miAutoLoadRefList.Checked)
       {
         var csvSerializer = new CsvFileSerializer(this.currentCsvFile, this.dataRoot);
         csvSerializer.Load();
@@ -747,7 +747,9 @@ namespace ChanSort.Ui
 
       this.miEraseDuplicateChannels.Checked = Settings.Default.EraseDuplicateChannels;
       this.miShowWarningsAfterLoad.Checked = Settings.Default.ShowWarningsAfterLoading;
-
+      this.miAutoLoadRefList.Checked = Settings.Default.AutoLoadRefList;
+      this.cbAppendUnsortedChannels.Checked = Settings.Default.AutoAppendUnsortedChannels;
+      this.cbCloseGap.Checked = Settings.Default.CloseGaps;
       this.ClearLeftFilter();
     }
     #endregion
@@ -812,7 +814,9 @@ namespace ChanSort.Ui
         SaveInputGridLayout(this.currentChannelList.SignalSource);
       Settings.Default.EraseDuplicateChannels = this.miEraseDuplicateChannels.Checked;
       Settings.Default.ShowWarningsAfterLoading = this.miShowWarningsAfterLoad.Checked;
-
+      Settings.Default.AutoLoadRefList = this.miAutoLoadRefList.Checked;
+      Settings.Default.AutoAppendUnsortedChannels = this.cbAppendUnsortedChannels.Checked;
+      Settings.Default.CloseGaps = this.cbCloseGap.Checked;
       Settings.Default.Save();
     }
 
@@ -1051,6 +1055,8 @@ namespace ChanSort.Ui
       this.miMoveUp.Enabled = channel != null && channel.NewProgramNr > 1;
 
       this.miTvSettings.Enabled = this.currentTvSerializer != null;
+      this.miCleanupChannels.Visibility = this.currentTvSerializer != null &&
+        this.currentTvSerializer.Features.CleanUpChannelData ? BarItemVisibility.Always : BarItemVisibility.Never;
     }
     #endregion
 
@@ -1170,6 +1176,19 @@ namespace ChanSort.Ui
         this.gviewRight.FocusedColumn = this.colName;
       this.dontOpenEditor = false;
       this.lastFocusedGrid.ShowEditor();
+    }
+    #endregion
+
+    #region CleanupChannelData()
+    private void CleanupChannelData()
+    {
+      if (this.currentTvSerializer != null && this.currentTvSerializer.Features.CleanUpChannelData)
+      {
+        var msg = this.currentTvSerializer.CleanUpChannelData();
+        this.FillChannelListCombo();
+        InfoBox.Show(this, msg, this.miCleanupChannels.Caption);
+        this.RefreshGrid(gviewLeft, gviewRight);
+      }
     }
     #endregion
 
@@ -1363,6 +1382,11 @@ namespace ChanSort.Ui
       });
     }
 
+    private void miCleanupChannels_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      this.TryExecute(this.CleanupChannelData);
+    }
+
     #endregion
 
     #region Character set menu
@@ -1454,6 +1478,7 @@ namespace ChanSort.Ui
     private void gview_MouseUp(object sender, MouseEventArgs e)
     {
       this.timerEditDelay.Stop();
+      this.BeginInvoke((Action) (() => { this.dontOpenEditor = false; }));
     }
 
     private void timerEditDelay_Tick(object sender, EventArgs e)

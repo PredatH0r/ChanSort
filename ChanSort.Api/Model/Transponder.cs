@@ -8,7 +8,7 @@
     public Satellite Satellite { get; set; }
     public decimal FrequencyInMhz { get; set; }
     public int Number { get; set; }
-    public int SymbolRate { get; set; }
+    public virtual int SymbolRate { get; set; }
     public char Polarity { get; set; }
     public int OriginalNetworkId { get; set; }
     public int TransportStreamId { get; set; }

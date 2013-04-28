@@ -286,5 +286,41 @@ namespace ChanSort.Ui.Properties {
                 this["EraseDuplicateChannels"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoLoadRefList {
+            get {
+                return ((bool)(this["AutoLoadRefList"]));
+            }
+            set {
+                this["AutoLoadRefList"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoAppendUnsortedChannels {
+            get {
+                return ((bool)(this["AutoAppendUnsortedChannels"]));
+            }
+            set {
+                this["AutoAppendUnsortedChannels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CloseGaps {
+            get {
+                return ((bool)(this["CloseGaps"]));
+            }
+            set {
+                this["CloseGaps"] = value;
+            }
+        }
     }
 }
