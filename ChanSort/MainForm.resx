@@ -395,9 +395,6 @@
   <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
     <value>Show warnings after loading file</value>
   </data>
-  <data name="miAutoLoadRefList.Caption" xml:space="preserve">
-    <value>Load reference list automatically</value>
-  </data>
   <data name="miEraseDuplicateChannels.Caption" xml:space="preserve">
     <value>Cleanup TV data file after loading</value>
   </data>
@@ -636,7 +633,7 @@
     <value>True</value>
   </data>
   <data name="cbCloseGap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>311, 25</value>
+    <value>263, 6</value>
   </data>
   <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
     <value>Close gap when moving/deleting a channel</value>
@@ -662,33 +659,6 @@
   <data name="&gt;&gt;cbCloseGap.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="cbAppendUnsortedChannels.EditValue" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cbAppendUnsortedChannels.Location" type="System.Drawing.Point, System.Drawing">
-    <value>311, 4</value>
-  </data>
-  <data name="cbAppendUnsortedChannels.Properties.Caption" xml:space="preserve">
-    <value>Auto-append unsorted channels when saving file</value>
-  </data>
-  <data name="cbAppendUnsortedChannels.Size" type="System.Drawing.Size, System.Drawing">
-    <value>322, 19</value>
-  </data>
-  <data name="cbAppendUnsortedChannels.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;cbAppendUnsortedChannels.Name" xml:space="preserve">
-    <value>cbAppendUnsortedChannels</value>
-  </data>
-  <data name="&gt;&gt;cbAppendUnsortedChannels.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;cbAppendUnsortedChannels.Parent" xml:space="preserve">
-    <value>grpTopPanel</value>
-  </data>
-  <data name="&gt;&gt;cbAppendUnsortedChannels.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="labelControl2.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 8</value>
   </data>
@@ -711,7 +681,7 @@
     <value>grpTopPanel</value>
   </data>
   <data name="&gt;&gt;labelControl2.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="picDonate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -738,7 +708,7 @@
     <value>grpTopPanel</value>
   </data>
   <data name="&gt;&gt;picDonate.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="tabChannelList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -780,7 +750,7 @@
     <value>grpTopPanel</value>
   </data>
   <data name="&gt;&gt;tabChannelList.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="labelControl11.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v12.2">
     <value>Vertical</value>
@@ -810,7 +780,7 @@
     <value>grpTopPanel</value>
   </data>
   <data name="&gt;&gt;labelControl11.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="txtSetSlot.Location" type="System.Drawing.Point, System.Drawing">
     <value>169, 24</value>
@@ -840,7 +810,7 @@
     <value>grpTopPanel</value>
   </data>
   <data name="&gt;&gt;txtSetSlot.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>8</value>
   </data>
   <data name="grpTopPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -1349,12 +1319,6 @@
   <data name="&gt;&gt;miShowWarningsAfterLoad.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarCheckItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miAutoLoadRefList.Name" xml:space="preserve">
-    <value>miAutoLoadRefList</value>
-  </data>
-  <data name="&gt;&gt;miAutoLoadRefList.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarCheckItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;miEraseDuplicateChannels.Name" xml:space="preserve">
     <value>miEraseDuplicateChannels</value>
   </data>
@@ -1434,7 +1398,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>04/29/2013 00:24:15</value>
+    <value>05/03/2013 17:24:18</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>

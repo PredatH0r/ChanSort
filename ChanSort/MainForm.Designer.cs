@@ -133,7 +133,6 @@
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
       this.miShowWarningsAfterLoad = new DevExpress.XtraBars.BarCheckItem();
-      this.miAutoLoadRefList = new DevExpress.XtraBars.BarCheckItem();
       this.miEraseDuplicateChannels = new DevExpress.XtraBars.BarCheckItem();
       this.mnuHelp = new DevExpress.XtraBars.BarSubItem();
       this.miWiki = new DevExpress.XtraBars.BarButtonItem();
@@ -157,7 +156,6 @@
       this.rbInsertAfter = new DevExpress.XtraEditors.CheckEdit();
       this.rbInsertBefore = new DevExpress.XtraEditors.CheckEdit();
       this.cbCloseGap = new DevExpress.XtraEditors.CheckEdit();
-      this.cbAppendUnsortedChannels = new DevExpress.XtraEditors.CheckEdit();
       this.tabChannelList = new DevExpress.XtraTab.XtraTabControl();
       this.pageEmpty = new DevExpress.XtraTab.XtraTabPage();
       this.mnuContext = new DevExpress.XtraBars.PopupMenu(this.components);
@@ -188,7 +186,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.rbInsertAfter.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.rbInsertBefore.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbCloseGap.Properties)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.cbAppendUnsortedChannels.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.tabChannelList)).BeginInit();
       this.tabChannelList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.mnuContext)).BeginInit();
@@ -835,7 +832,6 @@
             this.miWiki,
             this.miEraseDuplicateChannels,
             this.miShowWarningsAfterLoad,
-            this.miAutoLoadRefList,
             this.miCleanupChannels});
       this.barManager1.MaxItemId = 57;
       // 
@@ -1168,7 +1164,6 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barSubItem1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuCharset, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.miShowWarningsAfterLoad),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miAutoLoadRefList),
             new DevExpress.XtraBars.LinkPersistInfo(this.miEraseDuplicateChannels)});
       this.mnuOptions.Name = "mnuOptions";
       // 
@@ -1241,13 +1236,6 @@
       resources.ApplyResources(this.miShowWarningsAfterLoad, "miShowWarningsAfterLoad");
       this.miShowWarningsAfterLoad.Id = 54;
       this.miShowWarningsAfterLoad.Name = "miShowWarningsAfterLoad";
-      // 
-      // miAutoLoadRefList
-      // 
-      resources.ApplyResources(this.miAutoLoadRefList, "miAutoLoadRefList");
-      this.miAutoLoadRefList.Checked = true;
-      this.miAutoLoadRefList.Id = 55;
-      this.miAutoLoadRefList.Name = "miAutoLoadRefList";
       // 
       // miEraseDuplicateChannels
       // 
@@ -1379,7 +1367,6 @@
       this.grpTopPanel.Controls.Add(this.rbInsertAfter);
       this.grpTopPanel.Controls.Add(this.rbInsertBefore);
       this.grpTopPanel.Controls.Add(this.cbCloseGap);
-      this.grpTopPanel.Controls.Add(this.cbAppendUnsortedChannels);
       this.grpTopPanel.Controls.Add(this.labelControl2);
       this.grpTopPanel.Controls.Add(this.picDonate);
       this.grpTopPanel.Controls.Add(this.tabChannelList);
@@ -1430,13 +1417,6 @@
       this.cbCloseGap.MenuManager = this.barManager1;
       this.cbCloseGap.Name = "cbCloseGap";
       this.cbCloseGap.Properties.Caption = resources.GetString("cbCloseGap.Properties.Caption");
-      // 
-      // cbAppendUnsortedChannels
-      // 
-      resources.ApplyResources(this.cbAppendUnsortedChannels, "cbAppendUnsortedChannels");
-      this.cbAppendUnsortedChannels.MenuManager = this.barManager1;
-      this.cbAppendUnsortedChannels.Name = "cbAppendUnsortedChannels";
-      this.cbAppendUnsortedChannels.Properties.Caption = resources.GetString("cbAppendUnsortedChannels.Properties.Caption");
       // 
       // tabChannelList
       // 
@@ -1521,7 +1501,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.rbInsertAfter.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.rbInsertBefore.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbCloseGap.Properties)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.cbAppendUnsortedChannels.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.tabChannelList)).EndInit();
       this.tabChannelList.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.mnuContext)).EndInit();
@@ -1642,7 +1621,6 @@
     private DevExpress.XtraTab.XtraTabControl tabChannelList;
     private DevExpress.XtraTab.XtraTabPage pageEmpty;
     private DevExpress.XtraEditors.CheckEdit cbCloseGap;
-    private DevExpress.XtraEditors.CheckEdit cbAppendUnsortedChannels;
     private DevExpress.XtraEditors.CheckEdit rbInsertSwap;
     private DevExpress.XtraEditors.CheckEdit rbInsertAfter;
     private DevExpress.XtraEditors.CheckEdit rbInsertBefore;
@@ -1660,7 +1638,6 @@
     private DevExpress.XtraBars.BarButtonItem miRenameChannel;
     private DevExpress.XtraBars.BarCheckItem miEraseDuplicateChannels;
     private DevExpress.XtraBars.BarCheckItem miShowWarningsAfterLoad;
-    private DevExpress.XtraBars.BarCheckItem miAutoLoadRefList;
     private DevExpress.XtraBars.BarButtonItem miCleanupChannels;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }

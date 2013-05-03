@@ -6,8 +6,10 @@ namespace ChanSort.Loader.LG
   {
     private const string _SatConfigIndex = "offSatelliteNr";
     private const string _TransponderIndex = "offTransponderIndex";
+    private const string _ProgramNrPreset = "offProgramNrPreset";
 
     public bool InUse { get; private set; }
+    public int ProgramNrPreset { get; private set; }
 
     public SatChannel(int order, int slot, DataMapping data, DataRoot dataRoot) : base(data)
     {
@@ -18,6 +20,7 @@ namespace ChanSort.Loader.LG
       this.InitCommonData(slot, SignalSource.DvbS, data);
       this.InitDvbData(data);
 
+      this.ProgramNrPreset = data.GetWord(_ProgramNrPreset);
       int transponderIndex = data.GetWord(_TransponderIndex);
       Transponder transponder = dataRoot.Transponder.TryGet(transponderIndex);
       Satellite sat = transponder.Satellite;
@@ -36,10 +39,11 @@ namespace ChanSort.Loader.LG
     public override void UpdateRawData()
     {
       base.UpdateRawData();
-
-//      bool deleted = this.NewProgramNr == 0;
-//      if (deleted)
- //       mapping.SetWord(_SatConfigIndex, 0xFFFF);
+#if false
+      bool deleted = this.NewProgramNr == -1;
+      if (deleted)
+        mapping.SetWord(_SatConfigIndex, 0xFFFF);
+#endif
     }
   }
 }

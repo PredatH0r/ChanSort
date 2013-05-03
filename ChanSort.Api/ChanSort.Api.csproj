@@ -83,6 +83,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="Utils\ChannelMappingBase.cs" />
+    <Compile Include="Utils\BrowserHelper.cs" />
     <Compile Include="Utils\DataMapping.cs" />
     <Compile Include="Utils\Crc32.cs" />
     <Compile Include="Utils\CsvFile.cs" />

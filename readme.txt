@@ -1,10 +1,12 @@
-Version v2013-04-29a ======================================================
+Version v2013-05-03 =======================================================
 
 Changes:
+- Added Assistants for loading and saving files
 - Added support for LG's 2013 LA-series DVB-S channel lists.
   Due to a lack of test files containing analog or DVB-C/T channels, these
   lists are not supported yet. If you have a TLL file with such channels 
   please send it to horst@beham.biz.
+- Added support for LG's LH3000 model
 - Improved clean-up of LG channel lists. This should solve problems with
   program numbers changing randomly or inability to change them at all.
 - Fixed: Program number and channel name can be edited again by directly 
@@ -109,11 +111,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ================================================================
 
-2013-04-29a (inofficial alpha)
+2013-05-03
 - Added support for LG's 2013 LA-series DVB-S channel lists.
   Due to a lack of test files containing analog or DVB-C/T channels, these
   lists are not supported yet. If you have a TLL file with such channels 
   please send it to horst@beham.biz.
+- Added support for LG's LH3000 Model
 - Improved clean-up of LG channel lists. This should solve problems with
   program numbers changing randomly or inability to change them at all.
 - Fixed: Program number and channel name can be edited again by directly 

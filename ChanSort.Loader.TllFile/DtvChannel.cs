@@ -17,8 +17,13 @@ namespace ChanSort.Loader.LG
       this.InitCommonData(slot, SignalSource.DvbCT, data);
       this.InitDvbData(data);
 
-      this.ChannelOrTransponder = data.GetByte(_ChannelOrTransponder).ToString("d2");
-      this.FreqInMhz = (decimal)data.GetDword(_FrequencyLong) / 1000;
+      int channel = data.GetByte(_ChannelOrTransponder);
+      this.ChannelOrTransponder = channel.ToString("d2");
+// ReSharper disable PossibleLossOfFraction
+      this.FreqInMhz = (data.GetDword(_FrequencyLong)+10) / 1000;
+// ReSharper restore PossibleLossOfFraction
+      if (this.FreqInMhz == 0)
+        this.FreqInMhz = LookupData.Instance.GetDvbtFrequenyForChannel(channel);
     }
   }
 }

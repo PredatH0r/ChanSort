@@ -88,6 +88,15 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string MainForm_Cancel {
+            get {
+                return ResourceManager.GetString("MainForm_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Supported Files|{0}|All Files (*.*)|*.
         /// </summary>
         internal static string MainForm_FileDialog_OpenFileFilter {
@@ -102,6 +111,42 @@ namespace ChanSort.Ui.Properties {
         internal static string MainForm_FileDialog_SaveFileFilter {
             get {
                 return ResourceManager.GetString("MainForm_FileDialog_SaveFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify current list: Start with current list and modify it as needed.
+        /// </summary>
+        internal static string MainForm_InitInitialChannelOrder_CurrentList {
+            get {
+                return ResourceManager.GetString("MainForm_InitInitialChannelOrder_CurrentList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new list: Start with an empty list and add channels in desired order.
+        /// </summary>
+        internal static string MainForm_InitInitialChannelOrder_EmptyList {
+            get {
+                return ResourceManager.GetString("MainForm_InitInitialChannelOrder_EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How would you like to edit your channel list?.
+        /// </summary>
+        internal static string MainForm_InitInitialChannelOrder_Question {
+            get {
+                return ResourceManager.GetString("MainForm_InitInitialChannelOrder_Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy channel list: Order the channels the same way as in a reference list.
+        /// </summary>
+        internal static string MainForm_InitInitialChannelOrder_ReferenceList {
+            get {
+                return ResourceManager.GetString("MainForm_InitInitialChannelOrder_ReferenceList", resourceCulture);
             }
         }
         
@@ -212,20 +257,56 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data modified.
+        ///   Looks up a localized string similar to Append unsorted channels the end of the list.
         /// </summary>
-        internal static string MainForm_PromptSaveAndContinue_Caption {
+        internal static string MainForm_PromptHandlingOfUnsortedChannels_Append {
             get {
-                return ResourceManager.GetString("MainForm_PromptSaveAndContinue_Caption", resourceCulture);
+                return ResourceManager.GetString("MainForm_PromptHandlingOfUnsortedChannels_Append", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to save the changes?.
+        ///   Looks up a localized string similar to Delete unsorted channels from the list.
         /// </summary>
-        internal static string MainForm_PromptSaveAndContinue_Message {
+        internal static string MainForm_PromptHandlingOfUnsortedChannels_Delete {
             get {
-                return ResourceManager.GetString("MainForm_PromptSaveAndContinue_Message", resourceCulture);
+                return ResourceManager.GetString("MainForm_PromptHandlingOfUnsortedChannels_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What should happen to unsorted channels?.
+        /// </summary>
+        internal static string MainForm_PromptHandlingOfUnsortedChannels_Question {
+            get {
+                return ResourceManager.GetString("MainForm_PromptHandlingOfUnsortedChannels_Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard changes.
+        /// </summary>
+        internal static string MainForm_PromptSaveAndContinue_Discard {
+            get {
+                return ResourceManager.GetString("MainForm_PromptSaveAndContinue_Discard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want so save your changes?.
+        /// </summary>
+        internal static string MainForm_PromptSaveAndContinue_Question {
+            get {
+                return ResourceManager.GetString("MainForm_PromptSaveAndContinue_Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes.
+        /// </summary>
+        internal static string MainForm_PromptSaveAndContinue_Save {
+            get {
+                return ResourceManager.GetString("MainForm_PromptSaveAndContinue_Save", resourceCulture);
             }
         }
         

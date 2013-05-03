@@ -142,11 +142,14 @@
   <data name="MainForm_SaveTllFile_Success" xml:space="preserve">
     <value>Sorted TV data file was created successfully.</value>
   </data>
-  <data name="MainForm_PromptSaveAndContinue_Message" xml:space="preserve">
-    <value>Do you want to save the changes?</value>
+  <data name="MainForm_PromptSaveAndContinue_Question" xml:space="preserve">
+    <value>Do you want so save your changes?</value>
   </data>
-  <data name="MainForm_PromptSaveAndContinue_Caption" xml:space="preserve">
-    <value>Data modified</value>
+  <data name="MainForm_PromptSaveAndContinue_Save" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
+    <value>Discard changes</value>
   </data>
   <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
     <value>No plugin found to read/write {0} files.</value>
@@ -232,5 +235,29 @@ Do you want to open the download website?</value>
   </data>
   <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
     <value>New Version</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_Question" xml:space="preserve">
+    <value>How would you like to edit your channel list?</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
+    <value>Create new list: Start with an empty list and add channels in desired order</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
+    <value>Modify current list: Start with current list and modify it as needed</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
+    <value>Copy channel list: Order the channels the same way as in a reference list</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
+    <value>What should happen to unsorted channels?</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Append" xml:space="preserve">
+    <value>Append unsorted channels the end of the list</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
+    <value>Delete unsorted channels from the list</value>
+  </data>
+  <data name="MainForm_Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

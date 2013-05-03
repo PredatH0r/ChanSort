@@ -72,7 +72,6 @@ namespace ChanSort.Ui
       if (this.curEditMode == EditMode.InsertAfter) this.rbInsertAfter.Checked = true;
       else if (this.curEditMode == EditMode.InsertBefore) this.rbInsertBefore.Checked = true;
       else this.rbInsertSwap.Checked = true;
-      this.cbAppendUnsortedChannels.Checked = true;
       this.ActiveControl = this.gridRight;
     }
     #endregion
@@ -208,8 +207,7 @@ namespace ChanSort.Ui
         this.currentTvSerializer.DefaultEncoding = this.defaultEncoding;
         this.miEraseChannelData.Enabled = newSerializer.Features.EraseChannelData;
         if (!this.LoadTvDataFile())
-          return;        
-        this.LoadCsvFile();
+          return;
 
         this.editor = new Editor();
         this.editor.DataRoot = this.dataRoot;
@@ -227,6 +225,8 @@ namespace ChanSort.Ui
 
         if (this.dataRoot.Warnings.Length > 0 && this.miShowWarningsAfterLoad.Checked)
           this.BeginInvoke((Action)this.ShowFileInformation);
+
+        this.BeginInvoke((Action)this.InitInitialChannelOrder);
       }
       catch (Exception ex)
       {
@@ -249,7 +249,9 @@ namespace ChanSort.Ui
         }
       }
     }
+    #endregion
 
+    #region FillChannelListCombo()
     private void FillChannelListCombo()
     {
       this.tabChannelList.TabPages.Clear();
@@ -340,35 +342,45 @@ namespace ChanSort.Ui
       if (this.dataRoot == null || !this.dataRoot.NeedsSaving)
         return true;
 
-      switch (XtraMessageBox.Show(this,
-                                  Resources.MainForm_PromptSaveAndContinue_Message,
-                                  Resources.MainForm_PromptSaveAndContinue_Caption,
-                                  MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-                                  MessageBoxDefaultButton.Button3))
+      using (ActionBoxDialog dlg = new ActionBoxDialog(Resources.MainForm_PromptSaveAndContinue_Question))
       {
-        case DialogResult.Yes: this.SaveFiles(); break;
-        case DialogResult.No: break;
-        case DialogResult.Cancel: return false;
+        dlg.AddAction(Resources.MainForm_PromptSaveAndContinue_Save, DialogResult.Yes, dlg.Save);
+        dlg.AddAction(Resources.MainForm_PromptSaveAndContinue_Discard, DialogResult.No, dlg.Discard);
+        dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
+        switch (dlg.ShowDialog(this))
+        {
+          case DialogResult.Yes: this.SaveFiles(); break;
+          case DialogResult.No: break;
+          case DialogResult.Cancel: return false;
+        }
       }
       return true;
     }
     #endregion
 
-    #region LoadCsvFile()
-    private void LoadCsvFile()
+    #region InitInitialChannelOrder()
+    private void InitInitialChannelOrder()
     {
-      if (File.Exists(this.currentCsvFile) && this.miAutoLoadRefList.Checked)
+      DialogResult res;
+      string msg = Resources.MainForm_InitInitialChannelOrder_Question;
+      using (ActionBoxDialog dlg = new ActionBoxDialog(msg))
       {
-        var csvSerializer = new CsvFileSerializer(this.currentCsvFile, this.dataRoot);
-        csvSerializer.Load();
+        dlg.AddAction(Resources.MainForm_InitInitialChannelOrder_EmptyList, DialogResult.Cancel, dlg.EmptyList);
+        dlg.AddAction(Resources.MainForm_InitInitialChannelOrder_CurrentList, DialogResult.No, dlg.FullList, true);
+        dlg.AddAction(Resources.MainForm_InitInitialChannelOrder_ReferenceList, DialogResult.Yes, dlg.CopyList);
+        res = dlg.ShowDialog(this);
       }
-      else
+
+      if (res == DialogResult.Yes)
+        this.BeginInvoke((Action)this.ShowOpenReferenceFileDialog);
+      else if (res == DialogResult.No)
       {
         foreach (var list in this.dataRoot.ChannelLists)
         {
           foreach (var channel in list.Channels)
             channel.NewProgramNr = channel.OldProgramNr;
         }
+        this.RefreshGrid(this.gviewLeft);
       }
     }
     #endregion
@@ -379,7 +391,17 @@ namespace ChanSort.Ui
       using (OpenFileDialog dlg = new OpenFileDialog())
       {
         dlg.Title = Resources.MainForm_ShowOpenReferenceFileDialog_Title;
-        dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+
+        var refList = this.currentTvFile + ".csv";
+        if (File.Exists(refList))
+        {
+          dlg.InitialDirectory = Path.GetDirectoryName(refList);
+          dlg.FileName = Path.GetFileName(refList);
+        }
+        else
+        {
+          dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);          
+        }
         dlg.AddExtension = true;
         dlg.Filter = Resources.MainForm_ShowOpenReferenceFileDialog_Filter;
         dlg.FilterIndex = 3;
@@ -471,15 +493,16 @@ namespace ChanSort.Ui
     {
       this.gviewRight.PostEditor();
       this.gviewLeft.PostEditor();
+
       try
       {
-        this.gviewRight.BeginDataUpdate();
-        this.gviewLeft.BeginDataUpdate();
-        this.editor.AutoNumberingForUnassignedChannels(
-          this.cbAppendUnsortedChannels.Checked ? UnsortedChannelMode.AppendInOrder : UnsortedChannelMode.MarkDeleted);
+        if (!this.PromptHandlingOfUnsortedChannels())
+          return;
+
         this.SaveReferenceFile();
         this.SaveTvDataFile();
         this.dataRoot.NeedsSaving = false;
+        this.RefreshGrid(this.gviewLeft, this.gviewRight);
       }
       catch (IOException ex)
       {
@@ -489,13 +512,45 @@ namespace ChanSort.Ui
           Resources.MainForm_SaveFiles_ErrorTitle, 
           MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
-      finally
-      {
-        this.gviewRight.EndDataUpdate();
-        this.gviewLeft.EndDataUpdate();
-      }
     }
 
+    #endregion
+
+    #region PromptHandlingOfUnsortedChannels()
+    private bool PromptHandlingOfUnsortedChannels()
+    {
+      bool hasUnsorted = false;
+      foreach (var list in this.dataRoot.ChannelLists)
+      {
+        foreach (var channel in list.Channels)
+        {
+          if (channel.NewProgramNr < 0)
+          {
+            hasUnsorted = true;
+            break;
+          }
+        }
+      }
+      if (!hasUnsorted)
+        return true;
+
+      var msg = Resources.MainForm_PromptHandlingOfUnsortedChannels_Question;
+      DialogResult res;
+      using (var dlg = new ActionBoxDialog(msg))
+      {
+        dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Append, DialogResult.Yes, dlg.FullList);
+        dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Delete, DialogResult.No, dlg.Delete);
+        dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
+        res = dlg.ShowDialog(this);
+      }
+
+      if (res == DialogResult.Cancel)
+        return false;
+
+      this.editor.AutoNumberingForUnassignedChannels(
+          res == DialogResult.Yes ? UnsortedChannelMode.AppendInOrder : UnsortedChannelMode.MarkDeleted);
+      return true;
+    }
     #endregion
 
     #region SaveReferenceFile()
@@ -747,8 +802,6 @@ namespace ChanSort.Ui
 
       this.miEraseDuplicateChannels.Checked = Settings.Default.EraseDuplicateChannels;
       this.miShowWarningsAfterLoad.Checked = Settings.Default.ShowWarningsAfterLoading;
-      this.miAutoLoadRefList.Checked = Settings.Default.AutoLoadRefList;
-      this.cbAppendUnsortedChannels.Checked = Settings.Default.AutoAppendUnsortedChannels;
       this.cbCloseGap.Checked = Settings.Default.CloseGaps;
       this.ClearLeftFilter();
     }
@@ -814,8 +867,6 @@ namespace ChanSort.Ui
         SaveInputGridLayout(this.currentChannelList.SignalSource);
       Settings.Default.EraseDuplicateChannels = this.miEraseDuplicateChannels.Checked;
       Settings.Default.ShowWarningsAfterLoading = this.miShowWarningsAfterLoad.Checked;
-      Settings.Default.AutoLoadRefList = this.miAutoLoadRefList.Checked;
-      Settings.Default.AutoAppendUnsortedChannels = this.cbAppendUnsortedChannels.Checked;
       Settings.Default.CloseGaps = this.cbCloseGap.Checked;
       Settings.Default.Save();
     }

@@ -142,11 +142,14 @@
   <data name="MainForm_SaveTllFile_Success" xml:space="preserve">
     <value>Die sortierte TLL-Datei wurde erfolgreich erstellt.</value>
   </data>
-  <data name="MainForm_PromptSaveAndContinue_Message" xml:space="preserve">
+  <data name="MainForm_PromptSaveAndContinue_Question" xml:space="preserve">
     <value>Möchten Sie die Änderungen Speichern?</value>
   </data>
-  <data name="MainForm_PromptSaveAndContinue_Caption" xml:space="preserve">
-    <value>Daten verändert</value>
+  <data name="MainForm_PromptSaveAndContinue_Save" xml:space="preserve">
+    <value>Änderungen speichern</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
+    <value>Änderungen verwerfen</value>
   </data>
   <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
     <value>Es konnte kein Modul zum Lesen/Schreiben von {0}-Dateien gefunden werden.</value>
@@ -233,5 +236,29 @@ Möchten Sie die Downloadseite öffnen?</value>
   </data>
   <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
     <value>Neue Version</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_Question" xml:space="preserve">
+    <value>Wie möchten Sie die Senderliste bearbeiten?</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
+    <value>Neu zusammenstellen: Mit leerer Liste beginnen und Sender in gewünschter Reihenfolge hinzufügen</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
+    <value>Bestehende Liste bearbeiten: Derzeitige Senderreihenfolge übernehmen und anschließend bearbeiten</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
+    <value>Reihenfolge kopieren: Senderreihenfolge und Favoriten aus einer Referenzdatei übernehmen</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
+    <value>Was soll mit den unsortierten Sendern geschehen?</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Append" xml:space="preserve">
+    <value>Sender am Ende der Liste anhängen</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
+    <value>Sender löschen</value>
+  </data>
+  <data name="MainForm_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
   </data>
 </root>

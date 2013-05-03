@@ -6,7 +6,7 @@ namespace ChanSort.Api
   public class MappingPool<T> where T : DataMapping
   {
     private const string ERR_unknownACTChannelDataLength = "Configuration doesn't contain a {0} data mapping for length {1}";
-    private readonly Dictionary<int, T> mappings = new Dictionary<int, T>();
+    private readonly Dictionary<string, T> mappings = new Dictionary<string, T>();
     private readonly string caption;
 
     public MappingPool(string caption)
@@ -14,19 +14,30 @@ namespace ChanSort.Api
       this.caption = caption;
     }
 
-    public void AddMapping(int dataLength, T mapping) 
+    public void AddMapping(int dataLength, T mapping)
     {
-      mappings[dataLength] = mapping;
+      this.AddMapping(dataLength.ToString(), mapping);
+    }
+
+    public void AddMapping(string id, T mapping)
+    {
+      this.mappings.Add(id, mapping);
     }
 
     public T GetMapping(int dataLength, bool throwException = true)
     {
-      if (dataLength == 0)
+      return this.GetMapping(dataLength.ToString(), throwException);
+    }
+
+    public T GetMapping(string id, bool throwException = true)
+    {
+      if (id == "0" || string.IsNullOrEmpty(id))
         return null;
 
       T mapping;
-      if (!mappings.TryGetValue(dataLength, out mapping) && throwException)
-        throw new FileLoadException(string.Format(ERR_unknownACTChannelDataLength, this.caption, dataLength));
+      if (!mappings.TryGetValue(id, out mapping) && throwException)
+        throw new FileLoadException(string.Format(ERR_unknownACTChannelDataLength, this.caption, id));
+
       return mapping;
     }
   }

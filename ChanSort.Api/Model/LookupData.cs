@@ -206,10 +206,24 @@ namespace ChanSort.Api
     }
     #endregion
 
-    #region GetDvbtChannel()
-    public object GetDvbtChannel(decimal freq)
+    #region GetDvbtTransponder()
+    public int GetDvbtTransponder(decimal freq)
     {
-      return ((int) (freq - 106)/8);
+      return (int)(freq - 106)/8;
+    }
+    #endregion
+
+    #region GetDvbtFrequencyForTransponder()
+    public decimal GetDvbtFrequenyForTransponder(int transponder)
+    {
+      return transponder * 8 + 106;
+    }
+    #endregion
+
+    #region GetDvbtFrequencyForChannel()
+    public decimal GetDvbtFrequenyForChannel(int channel)
+    {
+      return channel * 8 + 306;
     }
     #endregion
   }

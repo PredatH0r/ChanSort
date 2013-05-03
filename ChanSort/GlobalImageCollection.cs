@@ -89,7 +89,6 @@ namespace ChanSort.Ui
 
     #endregion
 
-    public SharedImageCollection ImageCollection { get { return sharedImageCollection1; } }
     public Images Images { get { return sharedImageCollection1.ImageSource.Images; } }
   }
   #endregion
@@ -99,7 +98,6 @@ namespace ChanSort.Ui
   public class GlobalImageCollection : SharedImageCollection
   {
     protected static GlobalImageCollectionHolder holder = new GlobalImageCollectionHolder();
-    public static SharedImageCollection Instance { get { return holder.ImageCollection; } }
     public static Images Images { get { return holder.Images; } }
 
     public GlobalImageCollection() { }

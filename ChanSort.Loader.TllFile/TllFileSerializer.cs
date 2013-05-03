@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using ChanSort.Api;
+using DevExpress.XtraEditors;
 
 namespace ChanSort.Loader.LG
 {
@@ -63,6 +64,7 @@ namespace ChanSort.Loader.LG
     private int deletedChannelsHard;
     private int deletedChannelsSoft;
     private int dvbsChannelsAtPr0;
+    private int presetChannels;
 
     private bool removeDeletedActChannels = false;
 
@@ -101,9 +103,9 @@ namespace ChanSort.Loader.LG
       foreach (var section in ini.Sections)
       {
         int idx = section.Name.IndexOf(":");
-        int recordLength = idx < 0 ? 0 : int.Parse(section.Name.Substring(idx + 1));
+        string recordLength = idx < 0 ? "" : section.Name.Substring(idx + 1);
         if (section.Name.StartsWith("DvbsBlock"))
-          this.satConfigs.Add(recordLength, new DvbsDataLayout(section));
+          this.satConfigs.Add(int.Parse(recordLength), new DvbsDataLayout(section));
         else if (section.Name.StartsWith("ACTChannelDataMapping"))
           actMappings.AddMapping(recordLength, new DataMapping(section));
         else if (section.Name.StartsWith("SatChannelDataMapping"))
@@ -138,9 +140,7 @@ namespace ChanSort.Loader.LG
       this.ReadDvbCtChannels(ref off);
       this.ReadDvbSBlock(ref off);
       this.ReadSettingsBlock(ref off);
-
-      if (this.EraseDuplicateChannels)
-        this.CleanUpChannelData();
+      this.CleanUpChannelData();
 
 #if STORE_DVBS_CHANNELS_IN_DATABASE
       this.StoreToDatabase();
@@ -245,7 +245,10 @@ namespace ChanSort.Loader.LG
       if (channelCount == 0) return;
 
       recordSize = GetActChannelRecordSize(off, blockSize, channelCount);
-      var actMapping = this.actMappings.GetMapping(recordSize);
+      var key = (Path.GetFileNameWithoutExtension(this.FileName) ?? "").ToUpper().StartsWith("XXLH3000")
+                  ? "LH3000"
+                  : recordSize.ToString();
+      var actMapping = this.actMappings.GetMapping(key);
       this.reorderPhysically = actMapping.Settings.GetInt("reorderChannelData") != 0;
 
       for (int i = 0; i < channelCount; i++)
@@ -454,6 +457,9 @@ namespace ChanSort.Loader.LG
             ++this.duplicateChannels;
           }
           this.DataRoot.AddChannel(list, ci);
+
+          if (ci.ProgramNrPreset != 0)
+            ++this.presetChannels;
         }
 
         if (!this.nextChannelIndex.TryGetValue(index, out index) || index == -1)
@@ -560,6 +566,18 @@ namespace ChanSort.Loader.LG
     #region CleanUpChannelData()
     public override string CleanUpChannelData()
     {
+      if (this.satConfig == null)
+        return "";
+
+      if (!this.EraseDuplicateChannels || this.satConfig.dvbsChannelLength >= 92 /* LA series */)
+      {
+        if (this.presetChannels > 0)
+        {
+          new PresetProgramNrDialog().ShowDialog();
+        }
+        return "";
+      }
+
       this.ResetChannelInformationInTransponderData();
 
       byte[] sortedChannels = new byte[this.satConfig.dvbsMaxChannelCount*this.satConfig.dvbsChannelLength];
@@ -755,7 +773,8 @@ namespace ChanSort.Loader.LG
           file.Write(fileContent, this.dvbsBlockOffset, this.dvbsBlockSize + 4);
 
         // rest (including settings)
-        file.Write(fileContent, this.settingsBlockOffset, fileContent.Length - this.settingsBlockOffset);                
+        if (this.settingsBlockOffset != 0)
+          file.Write(fileContent, this.settingsBlockOffset, fileContent.Length - this.settingsBlockOffset);                
       }
     }
     #endregion
@@ -890,6 +909,7 @@ namespace ChanSort.Loader.LG
         sb.Append("Channel records erased (duplicates): ").Append(this.duplicateChannels).AppendLine();
         sb.Append("Channel records with Pr# 0:          ").Append(dvbsChannelsAtPr0).AppendLine();
         sb.Append("Channel records with duplicate Pr#:  ").Append(numberOfDupePrNr).AppendLine();
+        sb.Append("Channel records with preset Pr#:     ").Append(this.presetChannels).AppendLine();
       }
       else
         sb.AppendLine("not present");
