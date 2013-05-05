@@ -1,5 +1,4 @@
-﻿//#define SYMBOL_RATE_ROUNDING
-//#define STORE_DVBS_CHANNELS_IN_DATABASE
+﻿//#define STORE_DVBS_CHANNELS_IN_DATABASE
 //#define TESTING_LM640T_HACK
 
 using System;
@@ -10,7 +9,6 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using ChanSort.Api;
-using DevExpress.XtraEditors;
 
 namespace ChanSort.Loader.LG
 {
@@ -806,7 +804,9 @@ namespace ChanSort.Loader.LG
     {
       this.ReorderChannelData(this.analogBlockOffset + 8, this.actChannelSize, this.analogChannelCount, this.atvChannels.Channels);
 
-      var dvbCt = this.dtvChannels.Channels.Union(this.radioChannels.Channels).ToList();
+      var tv = this.dtvChannels.Channels.OrderBy(c => c.NewProgramNr);
+      var radio = this.radioChannels.Channels.OrderBy(c => c.NewProgramNr);
+      var dvbCt = tv.Union(radio).ToList();
       this.ReorderChannelData(this.dvbctBlockOffset + 8, this.actChannelSize, this.dvbctChannelCount, dvbCt);
     }
     #endregion

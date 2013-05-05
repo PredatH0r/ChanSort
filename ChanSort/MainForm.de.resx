@@ -235,9 +235,6 @@
   <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
     <value>Eventuelle Warnungen nach dem Laden einer TV-Datei automatisch anzeigen</value>
   </data>
-  <data name="miAutoLoadRefList.Caption" xml:space="preserve">
-    <value>Referenzliste automatisch laden</value>
-  </data>
   <data name="miEraseDuplicateChannels.Caption" xml:space="preserve">
     <value>TV-Datei automatisch bereinigen</value>
   </data>
@@ -314,9 +311,6 @@
   </data>
   <data name="cbCloseGap.ToolTip" xml:space="preserve">
     <value>Wenn aktiv, werden folgende Programmnummer automatisch vorgerückt</value>
-  </data>
-  <data name="cbAppendUnsortedChannels.Properties.Caption" xml:space="preserve">
-    <value>Unsortierte Sender beim Speichern automatisch anhängen</value>
   </data>
   <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 13</value>
@@ -422,6 +416,12 @@
   </data>
   <data name="btnRemoveRight.ToolTip" xml:space="preserve">
     <value>Sender aus sortierter Liste entfernen</value>
+  </data>
+  <data name="btnAddAll.Text" xml:space="preserve">
+    <value>&lt;&lt; Alle hinzufügen</value>
+  </data>
+  <data name="btnAddAll.ToolTip" xml:space="preserve">
+    <value>Aller derzeit nicht sortierten Sender ans Ende der Liste anhängen</value>
   </data>
   <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
     <value>Filter entfernen</value>

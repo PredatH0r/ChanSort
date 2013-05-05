@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define ENABLE_TV_FILE_CLEANUP
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -329,7 +330,9 @@ namespace ChanSort.Ui
     #region LoadTvDataFile()
     private bool LoadTvDataFile()
     {
+#if ENABLE_TV_FILE_CLEANUP
       this.currentTvSerializer.EraseDuplicateChannels = this.miEraseDuplicateChannels.Checked;
+#endif
       this.currentTvSerializer.Load();
       this.dataRoot = this.currentTvSerializer.DataRoot;
       return true;
@@ -1106,8 +1109,14 @@ namespace ChanSort.Ui
       this.miMoveUp.Enabled = channel != null && channel.NewProgramNr > 1;
 
       this.miTvSettings.Enabled = this.currentTvSerializer != null;
+#if ENABLE_TV_FILE_CLEANUP
       this.miCleanupChannels.Visibility = this.currentTvSerializer != null &&
         this.currentTvSerializer.Features.CleanUpChannelData ? BarItemVisibility.Always : BarItemVisibility.Never;
+#else
+      this.miCleanupChannels.Visibility = BarItemVisibility.Never;
+      this.miEraseDuplicateChannels.Visibility = BarItemVisibility.Never;
+      this.miEraseDuplicateChannels.Checked = false;
+#endif
     }
     #endregion
 

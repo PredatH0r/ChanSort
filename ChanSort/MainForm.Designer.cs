@@ -1243,6 +1243,7 @@
       this.miEraseDuplicateChannels.Checked = true;
       this.miEraseDuplicateChannels.Id = 53;
       this.miEraseDuplicateChannels.Name = "miEraseDuplicateChannels";
+      this.miEraseDuplicateChannels.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
       // 
       // mnuHelp
       // 
