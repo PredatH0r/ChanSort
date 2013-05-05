@@ -111,9 +111,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ChanSort.Loader.LG.ini">
+    <Content Include="ChanSort.Loader.LG.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="PresetProgramNrDialog.de.resx">

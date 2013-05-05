@@ -106,6 +106,7 @@
       this.miSaveAs = new DevExpress.XtraBars.BarButtonItem();
       this.miOpenReferenceFile = new DevExpress.XtraBars.BarButtonItem();
       this.miQuit = new DevExpress.XtraBars.BarButtonItem();
+      this.miSaveReferenceFile = new DevExpress.XtraBars.BarButtonItem();
       this.miEdit = new DevExpress.XtraBars.BarSubItem();
       this.miAddChannel = new DevExpress.XtraBars.BarButtonItem();
       this.miRemove = new DevExpress.XtraBars.BarButtonItem();
@@ -832,8 +833,9 @@
             this.miWiki,
             this.miEraseDuplicateChannels,
             this.miShowWarningsAfterLoad,
-            this.miCleanupChannels});
-      this.barManager1.MaxItemId = 57;
+            this.miCleanupChannels,
+            this.miSaveReferenceFile});
+      this.barManager1.MaxItemId = 58;
       // 
       // bar1
       // 
@@ -848,6 +850,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSave),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
             new DevExpress.XtraBars.LinkPersistInfo(this.miEdit, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavSet),
             new DevExpress.XtraBars.LinkPersistInfo(this.miLockOn),
@@ -871,9 +874,10 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRestoreOriginal),
             new DevExpress.XtraBars.LinkPersistInfo(this.miFileInformation),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSave),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSave, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
             new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
             new DevExpress.XtraBars.LinkPersistInfo(this.miQuit, true)});
       this.miFile.Name = "miFile";
       // 
@@ -902,6 +906,7 @@
       resources.ApplyResources(this.miRestoreOriginal, "miRestoreOriginal");
       this.miRestoreOriginal.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miRestoreOriginal.Id = 42;
+      this.miRestoreOriginal.ImageIndex = 31;
       this.miRestoreOriginal.Name = "miRestoreOriginal";
       this.miRestoreOriginal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRestoreOriginal_ItemClick);
       // 
@@ -910,6 +915,7 @@
       resources.ApplyResources(this.miFileInformation, "miFileInformation");
       this.miFileInformation.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miFileInformation.Id = 43;
+      this.miFileInformation.ImageIndex = 30;
       this.miFileInformation.Name = "miFileInformation";
       this.miFileInformation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miFileInformation_ItemClick);
       // 
@@ -930,7 +936,6 @@
       this.miSaveAs.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miSaveAs.Enabled = false;
       this.miSaveAs.Id = 8;
-      this.miSaveAs.ImageIndex = 6;
       this.miSaveAs.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.S));
       this.miSaveAs.Name = "miSaveAs";
@@ -953,6 +958,14 @@
       this.miQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4));
       this.miQuit.Name = "miQuit";
       this.miQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miQuit_ItemClick);
+      // 
+      // miSaveReferenceFile
+      // 
+      resources.ApplyResources(this.miSaveReferenceFile, "miSaveReferenceFile");
+      this.miSaveReferenceFile.Id = 57;
+      this.miSaveReferenceFile.ImageIndex = 6;
+      this.miSaveReferenceFile.Name = "miSaveReferenceFile";
+      this.miSaveReferenceFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveReferenceFile_ItemClick);
       // 
       // miEdit
       // 
@@ -1640,6 +1653,7 @@
     private DevExpress.XtraBars.BarCheckItem miEraseDuplicateChannels;
     private DevExpress.XtraBars.BarCheckItem miShowWarningsAfterLoad;
     private DevExpress.XtraBars.BarButtonItem miCleanupChannels;
+    private DevExpress.XtraBars.BarButtonItem miSaveReferenceFile;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

@@ -204,23 +204,29 @@ namespace ChanSort.Api
     {
       using (StreamWriter stream = new StreamWriter(fileName))
       {
-        foreach (var channelList in dataRoot.ChannelLists)
+        Save(stream);
+      }
+    }
+
+    public void Save(StreamWriter stream)
+    {
+      foreach (var channelList in dataRoot.ChannelLists)
+      {
+        foreach (var channel in channelList.Channels.Where(ch => ch.NewProgramNr != -1).OrderBy(ch => ch.NewProgramNr))
         {
-          foreach (var channel in channelList.Channels.Where(ch => ch.NewProgramNr != -1).OrderBy(ch => ch.NewProgramNr))
-          {
-            string line = string.Format("{0},{1},{2},{3},\"{4}\",{5},{6}",
-                                        "", // past: channel.RecordIndex,
-                                        channel.NewProgramNr,
-                                        "", // past: channel.TransportStreamId,
-                                        channel.Uid,
-                                        channel.Name,
-                                        this.EncodeSignalSource(channel.SignalSource),
-                                        this.EncodeFavoritesAndFlags(channel));
-            stream.WriteLine(line);
-          }
+          string line = string.Format("{0},{1},{2},{3},\"{4}\",{5},{6}",
+                                      "", // past: channel.RecordIndex,
+                                      channel.NewProgramNr,
+                                      "", // past: channel.TransportStreamId,
+                                      channel.Uid,
+                                      channel.Name,
+                                      this.EncodeSignalSource(channel.SignalSource),
+                                      this.EncodeFavoritesAndFlags(channel));
+          stream.WriteLine(line);
         }
       }
     }
+
     #endregion
 
     #region EncodeSignalSource()

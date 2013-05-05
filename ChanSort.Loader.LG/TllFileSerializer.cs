@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using ChanSort.Api;
@@ -96,7 +95,7 @@ namespace ChanSort.Loader.LG
 
     private void ReadConfigurationFromIniFile()
     {
-      string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
+      string iniFile = this.GetType().Assembly.Location.ToLower().Replace(".dll", ".ini");
       IniFile ini = new IniFile(iniFile);
       foreach (var section in ini.Sections)
       {
@@ -162,7 +161,7 @@ namespace ChanSort.Loader.LG
     private void ReadAnalogChannelBlock(ref int off)
     {
       this.analogBlockOffset = off;
-      this.ReadActChannelBlock(ref off, out analogChannelCount, out actChannelSize, 
+      this.ReadActChannelBlock(ref off, out analogChannelCount, ref actChannelSize, 
         (slot, data) => new AnalogChannel(slot, data));
     }
     #endregion
@@ -180,7 +179,7 @@ namespace ChanSort.Loader.LG
     private void ReadDvbCtChannels(ref int off)
     {
       this.dvbctBlockOffset = off;
-      this.ReadActChannelBlock(ref off, out dvbctChannelCount, out actChannelSize,
+      this.ReadActChannelBlock(ref off, out dvbctChannelCount, ref actChannelSize,
         (slot, data) => new DtvChannel(slot, data));
     }
     #endregion
@@ -232,10 +231,9 @@ namespace ChanSort.Loader.LG
 
 
     #region ReadActChannelBlock()
-    private void ReadActChannelBlock(ref int off, out int channelCount, out int recordSize,
+    private void ReadActChannelBlock(ref int off, out int channelCount, ref int recordSize,
       Func<int, DataMapping, ChannelInfo> channelFactory)
     {
-      recordSize = 0;
       int blockSize = this.GetBlockSize(off, minSize: 2);
       off += 4;
       channelCount = BitConverter.ToInt32(fileContent, off);
@@ -569,7 +567,7 @@ namespace ChanSort.Loader.LG
 
       if (!this.EraseDuplicateChannels || this.satConfig.dvbsChannelLength >= 92 /* LA series */)
       {
-        if (this.presetChannels > 0)
+        if (this.presetChannels > 0 && !IsTesting)
         {
           new PresetProgramNrDialog().ShowDialog();
         }
@@ -987,6 +985,7 @@ namespace ChanSort.Loader.LG
     }
     #endregion
 
+    internal bool IsTesting { get; set; }
     internal int ACTChannelLength { get { return this.actChannelSize; } }
     internal bool HasDvbs { get { return dvbsBlockOffset != 0; } }
     internal int SatChannelLength { get { return satConfig != null ? satConfig.dvbsChannelLength : 0; } }

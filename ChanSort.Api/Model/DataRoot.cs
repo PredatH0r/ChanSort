@@ -87,5 +87,16 @@ namespace ChanSort.Api
       return null;
     }
     #endregion
+
+    #region ApplyCurrentProgramNumbers()
+    public void ApplyCurrentProgramNumbers()
+    {
+      foreach (var list in this.ChannelLists)
+      {
+        foreach (var channel in list.Channels)
+          channel.NewProgramNr = channel.OldProgramNr;
+      }
+    }
+    #endregion
   }
 }

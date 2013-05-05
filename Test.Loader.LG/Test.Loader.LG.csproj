@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}</ProjectGuid>
+    <ProjectGuid>{F943DBFE-D3C3-4885-A38B-375148012FEC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Test.Loader</RootNamespace>
-    <AssemblyName>Test.Loader</AssemblyName>
+    <RootNamespace>Test.Loader.LG</RootNamespace>
+    <AssemblyName>Test.Loader.LG</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -40,10 +40,8 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -52,10 +50,16 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -67,34 +71,34 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LgTest.cs" />
-    <Compile Include="LoaderTestBase.cs" />
+    <Compile Include="CS\TestCS.cs" />
+    <Compile Include="DM\TestDM.cs" />
+    <Compile Include="LA\TestLA.cs" />
+    <Compile Include="LD\TestLD.cs" />
+    <Compile Include="LE\TestLE.cs" />
+    <Compile Include="LK\TestLK.cs" />
+    <Compile Include="LM\TestLM.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="LH\TestLH.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SamsungTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="LH\xxLH3000-ZA00002.TLL.in">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
       <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
       <Name>ChanSort.Api</Name>
-      <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.DbFile\ChanSort.Loader.Toshiba.csproj">
-      <Project>{F6F02792-07F1-48D5-9AF3-F945CA5E3931}</Project>
-      <Name>ChanSort.Loader.Toshiba</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj">
-      <Project>{68DA8072-3A29-4076-9F64-D66F38349585}</Project>
-      <Name>ChanSort.Loader.Panasonic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.ScmFile\ChanSort.Loader.Samsung.csproj">
-      <Project>{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}</Project>
-      <Name>ChanSort.Loader.Samsung</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.TllFile\ChanSort.Loader.LG.csproj">
+    <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj">
       <Project>{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}</Project>
       <Name>ChanSort.Loader.LG</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

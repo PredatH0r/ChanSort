@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-05-03";
+    public const string AppVersion = "v2013-05-05";
 
     #region enum EditMode
     private enum EditMode
@@ -378,12 +378,8 @@ namespace ChanSort.Ui
         this.BeginInvoke((Action)this.ShowOpenReferenceFileDialog);
       else if (res == DialogResult.No)
       {
-        foreach (var list in this.dataRoot.ChannelLists)
-        {
-          foreach (var channel in list.Channels)
-            channel.NewProgramNr = channel.OldProgramNr;
-        }
-        this.RefreshGrid(this.gviewLeft);
+        this.dataRoot.ApplyCurrentProgramNumbers();
+        this.RefreshGrid(this.gviewLeft, this.gviewRight);
       }
     }
     #endregion
@@ -395,21 +391,29 @@ namespace ChanSort.Ui
       {
         dlg.Title = Resources.MainForm_ShowOpenReferenceFileDialog_Title;
 
-        var refList = this.currentTvFile + ".csv";
-        if (File.Exists(refList))
+        var dir = Path.GetDirectoryName(this.currentTvFile);
+        var file = Path.GetFileNameWithoutExtension(this.currentTvFile) + ".csv";
+        var path = dir + "\\" + file;
+        if (File.Exists(path))
         {
-          dlg.InitialDirectory = Path.GetDirectoryName(refList);
-          dlg.FileName = Path.GetFileName(refList);
+          dlg.InitialDirectory = dir;
+          dlg.FileName = path; // file;
         }
         else
         {
           dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);          
         }
         dlg.AddExtension = true;
+        dlg.AutoUpgradeEnabled = true;
+        dlg.CheckFileExists = true;
+        dlg.DefaultExt = ".csv";
+        dlg.DereferenceLinks = true;
         dlg.Filter = Resources.MainForm_ShowOpenReferenceFileDialog_Filter;
         dlg.FilterIndex = 3;
-        dlg.CheckFileExists = true;
         dlg.RestoreDirectory = true;
+        dlg.SupportMultiDottedExtensions = false;
+        dlg.ValidateNames = true;
+        dlg.Title = this.miOpenReferenceFile.Caption;
         if (dlg.ShowDialog(this) == DialogResult.OK)
         {
           this.gviewRight.BeginDataUpdate();
@@ -1313,6 +1317,11 @@ namespace ChanSort.Ui
       TryExecute(this.ShowSaveFileDialog);
     }
 
+    private void miSaveReferenceFile_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.SaveReferenceFile);
+    }
+
     private void miQuit_ItemClick(object sender, ItemClickEventArgs e)
     {
       this.Close();
@@ -1974,6 +1983,7 @@ namespace ChanSort.Ui
       this.SetActiveGrid(this.gviewRight);
     }
     #endregion
+
 
   }
 }

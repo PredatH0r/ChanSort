@@ -169,6 +169,9 @@
   <data name="miQuit.Caption" xml:space="preserve">
     <value>&amp;Beenden</value>
   </data>
+  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
+    <value>Referenzliste speichern</value>
+  </data>
   <data name="miEdit.Caption" xml:space="preserve">
     <value>&amp;Bearbeiten</value>
   </data>

@@ -19,7 +19,8 @@ namespace ChanSort.Api
       ChannelInfo lastInsertedChannel = null;
       int progNr = this.ChannelList.InsertProgramNumber;
       int relativeChannelNumber = 0;
-      foreach(var channel in this.ChannelList.Channels.Where(c => c.NewProgramNr>=progNr).OrderBy(c=>c.NewProgramNr))
+      int progNrCopy = progNr; // prevent "access to modified closure" warning
+      foreach(var channel in this.ChannelList.Channels.Where(c => c.NewProgramNr>=progNrCopy).OrderBy(c=>c.NewProgramNr))
       {
         int gap = count - (channel.NewProgramNr - progNr - relativeChannelNumber);
         if (gap > 0)
@@ -83,7 +84,7 @@ namespace ChanSort.Api
 
     #region MoveChannels()
 
-    public void MoveChannels(List<ChannelInfo> channels, bool up)
+    public void MoveChannels(IList<ChannelInfo> channels, bool up)
     {
       if (channels.Count == 0)
         return;

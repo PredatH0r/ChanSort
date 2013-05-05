@@ -309,7 +309,10 @@
     <value>Save &amp;as...</value>
   </data>
   <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Import reference list...</value>
+    <value>Load reference list...</value>
+  </data>
+  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
+    <value>Save reference list</value>
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
     <value>&amp;Quit</value>
@@ -1157,6 +1160,12 @@
   <data name="&gt;&gt;miQuit.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miSaveReferenceFile.Name" xml:space="preserve">
+    <value>miSaveReferenceFile</value>
+  </data>
+  <data name="&gt;&gt;miSaveReferenceFile.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;miEdit.Name" xml:space="preserve">
     <value>miEdit</value>
   </data>
@@ -1398,7 +1407,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>05/05/2013 03:22:01</value>
+    <value>05/05/2013 19:31:31</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>

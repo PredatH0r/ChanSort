@@ -1,0 +1,15 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace Test.Loader.LG
+{
+  [TestClass]
+  public class TestCS : TestBase
+  {
+    [TestMethod]
+    public void TestCS460S_Sat68TR()
+    {
+      // "FranzSteinert"
+      this.ExecuteTest("CS/xxCS460S-ZA00001");
+    }
+  }
+}

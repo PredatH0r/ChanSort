@@ -33,7 +33,7 @@ namespace Test.Loader
         {
           var serializer = plugin.CreateSerializer(file) as TllFileSerializer;
           Assert.IsNotNull(serializer, "No Serializer for " + file);
-          
+          serializer.IsTesting = true;
           serializer.Load();
 
           var fileName = Path.GetFileName(file) ?? "";

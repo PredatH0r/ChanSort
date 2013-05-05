@@ -1,4 +1,4 @@
-Version v2013-05-05 =======================================================
+Version v2013-05-05a (preview) ============================================
 
 Changes:
 - Fixed: Saving reordered list for LG xxLH3000.
@@ -101,6 +101,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-05-05
+- Fixed: Saving reordered list for LG xxLH3000.
+- Removed "Cleanup TV data file" option due to a report of a bricked LG TV.
+  (The cleanup no longer works since firmware 4.40.19 when a preset 
+  satellite channel list was used to setup the TV)
 
 2013-05-03
 - Added Assistants for loading and saving files
