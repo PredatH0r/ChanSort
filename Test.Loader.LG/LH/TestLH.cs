@@ -6,7 +6,7 @@ namespace Test.Loader.LG
   public class TestLH : TestBase
   {
     [TestMethod]
-    public void TestLH3000_DvbCT_TvAndRadio()
+    public void TestLH3000_T164TR()
     {
       // different file format than other LH-models
 
@@ -15,18 +15,10 @@ namespace Test.Loader.LG
     }
 
     [TestMethod]
-    public void TestLH5000_AnalogAndDigital_Tv_CyrillicAlphabet()
+    public void TestLH5000_AC164TR_Cyrillic()
     {
       // test file from "JLevi"
       this.ExecuteTest("LH/xxLH5000-ZB00002");
     }
-
-    [TestMethod]
-    public void TestLH7000_AnalogAndDigital_TvAndRadio()
-    {
-      // test file from "JLevi"
-      this.ExecuteTest("LH/xxLH7000-ZA00001");
-    }
-
   }
 }

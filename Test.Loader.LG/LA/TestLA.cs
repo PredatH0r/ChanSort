@@ -6,7 +6,7 @@ namespace Test.Loader.LG
   public class TestLA : TestBase
   {
     [TestMethod]
-    public void TestLA7408_C256TR()
+    public void TestLA7408_C256TR_Sat92()
     {
       // "KaiKlau"
       //this.GenerateTestFiles("LA/xxLA7408-ZB00001");
@@ -14,7 +14,7 @@ namespace Test.Loader.LG
     }
 
     [TestMethod]
-    public void TestLA7408_Sat92()
+    public void TestLA7408_Sat92TR()
     {
       // "martiko"
       //this.GenerateTestFiles("LA/xxLA7408-ZB00002");

@@ -411,6 +411,8 @@ namespace ChanSort.Loader.LG
       {
         int offEntry = off + index*satConfig.sizeOfChannelLinkedListEntry;
         int nextIndex = BitConverter.ToUInt16(fileContent, offEntry + 2);
+        if (this.nextChannelIndex.ContainsKey(index)) // prevent infinite loop (exists in some test files)
+          break;
         this.nextChannelIndex.Add(index, nextIndex);
         index = nextIndex;
       }

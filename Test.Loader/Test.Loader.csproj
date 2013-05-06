@@ -68,7 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LgTest.cs" />
-    <Compile Include="LG\LH.cs" />
     <Compile Include="LoaderTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SamsungTest.cs" />
@@ -95,9 +94,6 @@
       <Project>{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}</Project>
       <Name>ChanSort.Loader.LG</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LG\xxLH3000-ZA00002.TLL" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

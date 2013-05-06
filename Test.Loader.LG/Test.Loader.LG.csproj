@@ -78,6 +78,12 @@
     <Compile Include="LE\TestLE.cs" />
     <Compile Include="LK\TestLK.cs" />
     <Compile Include="LM\TestLM.cs" />
+    <Compile Include="LS\TestLS.cs" />
+    <Compile Include="LV\TestLV.cs" />
+    <Compile Include="LW\TestLW.cs" />
+    <Compile Include="LX\TestLX.cs" />
+    <Compile Include="PM\TestPM.cs" />
+    <Compile Include="PT\TestPT.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="LH\TestLH.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
