@@ -1,11 +1,9 @@
-Version v2013-05-07a (preview) ============================================
+Version v2013-05-07 ======================================================
 
 Changes:
 - Added support for LG's LN-series
 - Fixed: Saving reordered list for LG xxLH3000.
-- Removed "Cleanup TV data file" option due to a report of a bricked LG TV.
-  (The cleanup no longer works since firmware 4.40.19 when a preset 
-  satellite channel list was used to setup the TV)
+- Removed "Cleanup TV data file" function due to having bricked an LG TV.
 
 The complete change log can be found at the end of this document
 
@@ -46,7 +44,7 @@ Samsung
 
 LG
 ------
-    Series: CS, DM, LD, LE, LH, LK, LM*, LS, LV, LW, LX, PM, PT
+    Series: CS, DM, LA, LD, LE, LH, LK, LM*, LN, LS, LV, LW, LX, PM, PT
     Lists:  Analog TV, DTV (DVB-C/T), Radio (DVB-C/T), Sat-DTV (DVB-S2),
             Sat-Radio (DVB-S2)
   
@@ -103,11 +101,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ================================================================
 
-2013-05-05
+2013-05-07
+- Added support for LG's LN-series
 - Fixed: Saving reordered list for LG xxLH3000.
-- Removed "Cleanup TV data file" option due to a report of a bricked LG TV.
-  (The cleanup no longer works since firmware 4.40.19 when a preset 
-  satellite channel list was used to setup the TV)
+- Removed "Cleanup TV data file" function which bricked one LG TV.
 
 2013-05-03
 - Added Assistants for loading and saving files

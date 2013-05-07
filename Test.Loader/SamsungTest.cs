@@ -64,7 +64,7 @@ namespace Test.Loader
           if (expectedData.TryGetValue(key, out exp))
           {
             var analogTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogC | ChanSort.Api.SignalSource.TvAndRadio);
-            var dtvTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbCT | ChanSort.Api.SignalSource.TvAndRadio);
+            var dtvTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC | ChanSort.Api.SignalSource.TvAndRadio);
             var satTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.TvAndRadio);
             expectedData.Remove(key);
             if (exp.AnalogChannels != 0 || analogTv != null)
