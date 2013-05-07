@@ -8,6 +8,7 @@
     public readonly int transponderCount;
     public readonly int transponderLength;
     public readonly int sizeOfChannelLinkedListEntry = 8;
+    public readonly int linkedListExtraDataLength;
     public readonly int dvbsMaxChannelCount;
     public readonly int dvbsChannelLength;
     public readonly int lnbCount;
@@ -24,6 +25,7 @@
       this.transponderCount = iniSection.GetInt("transponderCount");
       this.transponderLength = iniSection.GetInt("transponderLength");
       this.sizeOfTransponderBlockHeader = 14 + transponderCount/8 + transponderCount*6 + 2;
+      this.linkedListExtraDataLength = iniSection.GetInt("linkedListExtraDataLength");
       this.dvbsMaxChannelCount = iniSection.GetInt("dvbsChannelCount");
       this.dvbsChannelLength = iniSection.GetInt("dvbsChannelLength");
       this.lnbCount = iniSection.GetInt("lnbCount");
@@ -34,7 +36,7 @@
                                     12, // header
                                     14 + 2 + this.satCount + this.satCount*this.satLength, // satellites
                                     sizeOfTransponderBlockHeader - 4 + transponderCount * transponderLength, // transponder
-                                    12 + dvbsMaxChannelCount/8 + dvbsMaxChannelCount*sizeOfChannelLinkedListEntry + dvbsMaxChannelCount * dvbsChannelLength, // channels
+                                    12 + dvbsMaxChannelCount/8 + dvbsMaxChannelCount*sizeOfChannelLinkedListEntry + linkedListExtraDataLength + dvbsMaxChannelCount * dvbsChannelLength, // channels
                                     LnbBlockHeaderSize - 4 + lnbCount * lnbLength // sat/LNB-Config
                                   };
       
@@ -73,7 +75,7 @@
     /// </summary>
     public int ChannelListOffset
     {
-      get { return SequenceTableOffset + dvbsMaxChannelCount*sizeOfChannelLinkedListEntry; }
+      get { return SequenceTableOffset + dvbsMaxChannelCount*sizeOfChannelLinkedListEntry + linkedListExtraDataLength; }
     }
 
 

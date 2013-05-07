@@ -1,6 +1,7 @@
-Version v2013-05-05a (preview) ============================================
+Version v2013-05-07a (preview) ============================================
 
 Changes:
+- Added support for LG's LN-series
 - Fixed: Saving reordered list for LG xxLH3000.
 - Removed "Cleanup TV data file" option due to a report of a bricked LG TV.
   (The cleanup no longer works since firmware 4.40.19 when a preset 

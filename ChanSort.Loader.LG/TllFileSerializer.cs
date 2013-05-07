@@ -335,7 +335,7 @@ namespace ChanSort.Loader.LG
       off += header.Size;
       off += satConfig.dvbsMaxChannelCount/8; // skip allocation bitmap
       this.ReadDvbsChannelLinkedList(header, ref off);
-
+      off += satConfig.linkedListExtraDataLength;
       this.ReadDvbsChannels(ref off, header.LinkedListStartIndex);
 
       // subblock 5 (satellite/LNB config)
@@ -707,10 +707,12 @@ namespace ChanSort.Loader.LG
     private void UpdateChannelLinkedList(int counter)
     {
       var header = new SatChannelListHeader(this.fileContent, this.dvbsBlockOffset + satConfig.ChannelListHeaderOffset);
+      header.ChannelCount = counter;
       header.LinkedListStartIndex = 0;
+      if (counter == 0)
+        counter = 1;
       header.LinkedListEndIndex1 = counter - 1;
       header.LinkedListEndIndex2 = counter - 1;
-      header.ChannelCount = counter;
 
       // update linked list
       var off = this.dvbsBlockOffset + satConfig.SequenceTableOffset;

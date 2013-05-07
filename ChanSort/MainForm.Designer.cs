@@ -105,8 +105,8 @@
       this.miSave = new DevExpress.XtraBars.BarButtonItem();
       this.miSaveAs = new DevExpress.XtraBars.BarButtonItem();
       this.miOpenReferenceFile = new DevExpress.XtraBars.BarButtonItem();
-      this.miQuit = new DevExpress.XtraBars.BarButtonItem();
       this.miSaveReferenceFile = new DevExpress.XtraBars.BarButtonItem();
+      this.miQuit = new DevExpress.XtraBars.BarButtonItem();
       this.miEdit = new DevExpress.XtraBars.BarSubItem();
       this.miAddChannel = new DevExpress.XtraBars.BarButtonItem();
       this.miRemove = new DevExpress.XtraBars.BarButtonItem();
@@ -950,6 +950,14 @@
       this.miOpenReferenceFile.Name = "miOpenReferenceFile";
       this.miOpenReferenceFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpenReferenceFile_ItemClick);
       // 
+      // miSaveReferenceFile
+      // 
+      resources.ApplyResources(this.miSaveReferenceFile, "miSaveReferenceFile");
+      this.miSaveReferenceFile.Id = 57;
+      this.miSaveReferenceFile.ImageIndex = 6;
+      this.miSaveReferenceFile.Name = "miSaveReferenceFile";
+      this.miSaveReferenceFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveReferenceFile_ItemClick);
+      // 
       // miQuit
       // 
       resources.ApplyResources(this.miQuit, "miQuit");
@@ -958,14 +966,6 @@
       this.miQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4));
       this.miQuit.Name = "miQuit";
       this.miQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miQuit_ItemClick);
-      // 
-      // miSaveReferenceFile
-      // 
-      resources.ApplyResources(this.miSaveReferenceFile, "miSaveReferenceFile");
-      this.miSaveReferenceFile.Id = 57;
-      this.miSaveReferenceFile.ImageIndex = 6;
-      this.miSaveReferenceFile.Name = "miSaveReferenceFile";
-      this.miSaveReferenceFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveReferenceFile_ItemClick);
       // 
       // miEdit
       // 
@@ -1150,7 +1150,8 @@
       this.barSubItem2.Id = 47;
       this.barSubItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miTvSettings),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miEraseChannelData)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miEraseChannelData),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miCleanupChannels)});
       this.barSubItem2.Name = "barSubItem2";
       // 
       // miTvSettings
@@ -1256,7 +1257,6 @@
       this.miEraseDuplicateChannels.Checked = true;
       this.miEraseDuplicateChannels.Id = 53;
       this.miEraseDuplicateChannels.Name = "miEraseDuplicateChannels";
-      this.miEraseDuplicateChannels.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
       // 
       // mnuHelp
       // 

@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-05-05";
+    public const string AppVersion = "v2013-05-07a";
 
     #region enum EditMode
     private enum EditMode
@@ -332,6 +332,8 @@ namespace ChanSort.Ui
     {
 #if ENABLE_TV_FILE_CLEANUP
       this.currentTvSerializer.EraseDuplicateChannels = this.miEraseDuplicateChannels.Checked;
+#else
+      this.currentTvSerializer.EraseDuplicateChannels = false;
 #endif
       this.currentTvSerializer.Load();
       this.dataRoot = this.currentTvSerializer.DataRoot;
@@ -1116,6 +1118,7 @@ namespace ChanSort.Ui
 #if ENABLE_TV_FILE_CLEANUP
       this.miCleanupChannels.Visibility = this.currentTvSerializer != null &&
         this.currentTvSerializer.Features.CleanUpChannelData ? BarItemVisibility.Always : BarItemVisibility.Never;
+      this.miEraseDuplicateChannels.Visibility = BarItemVisibility.Always;
 #else
       this.miCleanupChannels.Visibility = BarItemVisibility.Never;
       this.miEraseDuplicateChannels.Visibility = BarItemVisibility.Never;
@@ -1248,6 +1251,7 @@ namespace ChanSort.Ui
     {
       if (this.currentTvSerializer != null && this.currentTvSerializer.Features.CleanUpChannelData)
       {
+        this.currentTvSerializer.EraseDuplicateChannels = true;
         var msg = this.currentTvSerializer.CleanUpChannelData();
         this.FillChannelListCombo();
         InfoBox.Show(this, msg, this.miCleanupChannels.Caption);

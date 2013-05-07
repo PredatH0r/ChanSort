@@ -374,6 +374,12 @@
   <data name="miEraseChannelData.Caption" xml:space="preserve">
     <value>Erase all channel data</value>
   </data>
+  <data name="miCleanupChannels.Caption" xml:space="preserve">
+    <value>Cleanup channel data</value>
+  </data>
+  <data name="miCleanupChannels.Hint" xml:space="preserve">
+    <value>Remove duplicate channels and reorganize </value>
+  </data>
   <data name="mnuOptions.Caption" xml:space="preserve">
     <value>&amp;Settings</value>
   </data>
@@ -549,12 +555,6 @@
   </data>
   <data name="miMoveDown.Caption" xml:space="preserve">
     <value>Move down</value>
-  </data>
-  <data name="miCleanupChannels.Caption" xml:space="preserve">
-    <value>Cleanup channel data</value>
-  </data>
-  <data name="miCleanupChannels.Hint" xml:space="preserve">
-    <value>Remove duplicate channels and reorganize </value>
   </data>
   <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
     <value>swap</value>
@@ -1154,16 +1154,16 @@
   <data name="&gt;&gt;miOpenReferenceFile.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miQuit.Name" xml:space="preserve">
-    <value>miQuit</value>
-  </data>
-  <data name="&gt;&gt;miQuit.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;miSaveReferenceFile.Name" xml:space="preserve">
     <value>miSaveReferenceFile</value>
   </data>
   <data name="&gt;&gt;miSaveReferenceFile.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miQuit.Name" xml:space="preserve">
+    <value>miQuit</value>
+  </data>
+  <data name="&gt;&gt;miQuit.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;miEdit.Name" xml:space="preserve">
@@ -1407,7 +1407,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>05/05/2013 19:31:31</value>
+    <value>05/07/2013 01:07:27</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>

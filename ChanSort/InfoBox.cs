@@ -13,6 +13,8 @@ namespace ChanSort.Ui
 
     public static void Show(IWin32Window owner, string message, string caption)
     {
+      if (string.IsNullOrEmpty(message))
+        return;
       var box = new InfoBox();
       box.Text = caption;
       box.txtMessage.Text = message;

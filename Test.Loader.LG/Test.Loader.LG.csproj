@@ -78,6 +78,7 @@
     <Compile Include="LE\TestLE.cs" />
     <Compile Include="LK\TestLK.cs" />
     <Compile Include="LM\TestLM.cs" />
+    <Compile Include="LN\TestLN.cs" />
     <Compile Include="LS\TestLS.cs" />
     <Compile Include="LV\TestLV.cs" />
     <Compile Include="LW\TestLW.cs" />
