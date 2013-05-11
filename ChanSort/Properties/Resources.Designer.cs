@@ -97,6 +97,16 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The channel list has been copied to the clipboard
+        ///and can be pasted into Excel or any text editor..
+        /// </summary>
+        internal static string MainForm_ExportExcelList_Message {
+            get {
+                return ResourceManager.GetString("MainForm_ExportExcelList_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Supported Files|{0}|All Files (*.*)|*.
         /// </summary>
         internal static string MainForm_FileDialog_OpenFileFilter {
@@ -225,6 +235,24 @@ namespace ChanSort.Ui.Properties {
         internal static string MainForm_LoadTll_SourceTllNotFound {
             get {
                 return ResourceManager.GetString("MainForm_LoadTll_SourceTllNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File not found.
+        /// </summary>
+        internal static string MainForm_LoadTvDataFile_FileNotFound_Caption {
+            get {
+                return ResourceManager.GetString("MainForm_LoadTvDataFile_FileNotFound_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file {0} does not exist..
+        /// </summary>
+        internal static string MainForm_LoadTvDataFile_FileNotFound_Message {
+            get {
+                return ResourceManager.GetString("MainForm_LoadTvDataFile_FileNotFound_Message", resourceCulture);
             }
         }
         

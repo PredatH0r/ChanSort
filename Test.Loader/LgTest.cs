@@ -54,6 +54,7 @@ namespace Test.Loader
             "\t" + (analogList == null ? 0 : analogList.Count) +
             "\t" + (digitalList == null ? 0 : digitalList.Count) +
             "\t" + (satChannelList == null ? 0 : satChannelList.Count) +
+            "\t" + serializer.DvbsSymbolRateCorrectionFactor +
             "\t" + relPath;
 
           

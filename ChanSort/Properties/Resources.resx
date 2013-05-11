@@ -260,4 +260,14 @@ Do you want to open the download website?</value>
   <data name="MainForm_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Caption" xml:space="preserve">
+    <value>File not found</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Message" xml:space="preserve">
+    <value>The file {0} does not exist.</value>
+  </data>
+  <data name="MainForm_ExportExcelList_Message" xml:space="preserve">
+    <value>The channel list has been copied to the clipboard
+and can be pasted into Excel or any text editor.</value>
+  </data>
 </root>

@@ -35,7 +35,7 @@ namespace ChanSort.Loader.LG
       this.FrequencyInMhz = mapping.GetWord(_Frequency);
       this.OriginalNetworkId = mapping.GetWord(_OriginalNetworkId);
       this.TransportStreamId = mapping.GetWord(_TransportStreamId);
-      this.symbolRate = mapping.GetWord(_SymbolRate) & 0x7FFF;
+      this.symbolRate = mapping.GetWord(_SymbolRate);
 
 #if SYMBOL_RATE_ROUNDING
       if (this.symbolRate%100 >= 95)
@@ -44,11 +44,8 @@ namespace ChanSort.Loader.LG
         mapping.SetWord(_SymbolRate, (mapping.GetWord(_SymbolRate) & 0x8000) + this.symbolRate);
       }
 #endif
+      // note: a correction factor is applied later after all transponders were loaded (*0.5, *1, *2)
 
-      string strFactor = mapping.Settings.GetString("symbolRateFactor");
-      decimal factor;
-      if (!string.IsNullOrEmpty(strFactor) && decimal.TryParse(strFactor, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out factor))
-        this.symbolRate = (int)(this.symbolRate * factor);
       this.Satellite = dataRoot.Satellites.TryGet(mapping.GetByte(_SatIndex)/2);
     }
 
@@ -88,8 +85,10 @@ namespace ChanSort.Loader.LG
       get { return symbolRate; }
       set
       {
+#if false
         mapping.SetDataPtr(this.data, this.offset);
         mapping.SetWord(_SymbolRate, value);
+#endif
         this.symbolRate = value;
       }
     }

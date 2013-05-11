@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChanSort.Api;
 using ChanSort.Loader.LG;
@@ -86,7 +87,7 @@ namespace Test.Loader.LG
     #endregion
 
     #region AssertBinaryFileContent()
-    private void AssertBinaryFileContent(string actualFile, string expectedFile)
+    protected void AssertBinaryFileContent(string actualFile, string expectedFile)
     {
       var actual = File.ReadAllBytes(actualFile);
       var expected = File.ReadAllBytes(expectedFile);
@@ -94,7 +95,16 @@ namespace Test.Loader.LG
       for (int i = 0; i < actual.Length; i++)
       {
         if (actual[i] != expected[i])
-          Assert.Fail("Files differ at index {0}: expected {1} but found {2}", i, expected[i], actual[i]);
+        {
+          StringBuilder sb1 = new StringBuilder();
+          StringBuilder sb2 = new StringBuilder();
+          for (int j = 0; j < 8 && i + j < expected.Length; j++)
+          {
+            sb1.AppendFormat("{0:X2} ", expected[i + j]);
+            sb2.AppendFormat("{0:X2} ", actual[i + j]);
+          }
+          Assert.Fail("Files differ at index {0}: expected <{1}> but found <{2}>", i, sb1, sb2);
+        }
       }
     }
     #endregion
@@ -119,7 +129,7 @@ namespace Test.Loader.LG
     #endregion
 
     #region GetSolutionBaseDir()
-    private string GetSolutionBaseDir()
+    protected string GetSolutionBaseDir()
     {
       var dir = Path.GetDirectoryName(this.GetType().Assembly.Location);
       do

@@ -1,5 +1,4 @@
-﻿//#define ENABLE_TV_FILE_CLEANUP
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -7,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using System.Linq;
 using System.Windows.Forms;
 using ChanSort.Api;
 using ChanSort.Ui.Properties;
@@ -24,7 +24,9 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-05-07";
+    public const string AppVersion = "v2013-05-11";
+
+    private const int MaxMruEntries = 5;
 
     #region enum EditMode
     private enum EditMode
@@ -50,6 +52,7 @@ namespace ChanSort.Ui
     private GridView lastFocusedGrid;
     private EditMode curEditMode = EditMode.InsertAfter;
     private bool dontOpenEditor;
+    private readonly List<string> mruFiles = new List<string>();
 
     #region ctor()
     public MainForm()
@@ -126,34 +129,47 @@ namespace ChanSort.Ui
     #region ShowOpenFileDialog()
     private void ShowOpenFileDialog()
     {
+      string supportedExtensions;
+      int numberOfFilters;
+      var filter = GetTvDataFileFilter(out supportedExtensions, out numberOfFilters);
+
+      using (OpenFileDialog dlg = new OpenFileDialog())
+      {
+        dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+        dlg.AddExtension = true;
+        dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
+        dlg.FilterIndex = numberOfFilters + 1;
+        dlg.CheckFileExists = true;
+        dlg.RestoreDirectory = true;
+        if (dlg.ShowDialog() == DialogResult.OK)
+        {
+          var plugin = dlg.FilterIndex <= this.plugins.Count ? this.plugins[dlg.FilterIndex - 1] : null;
+          this.LoadFiles(plugin, dlg.FileName);
+        }
+      }
+    }
+    #endregion
+
+    #region GetTvDataFileFilter()
+    private string GetTvDataFileFilter(out string supportedExtensions, out int numberOfFilters)
+    {
+      numberOfFilters = 0;
       StringBuilder filter = new StringBuilder();
-      StringBuilder extension = new StringBuilder();
+      var extension = new StringBuilder();
       foreach (var plugin in this.plugins)
       {
         filter.Append(plugin.PluginName).Append("|").Append(plugin.FileFilter);
         extension.Append(plugin.FileFilter);
         filter.Append("|");
         extension.Append(";");
+        ++numberOfFilters;
       }
       if (extension.Length > 0)
         extension.Remove(extension.Length - 1, 1);
-
-      using (OpenFileDialog dlg = new OpenFileDialog())
-      {
-        dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
-        dlg.AddExtension = true;
-        dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, extension);
-        dlg.FilterIndex = this.plugins.Count + 1;
-        dlg.CheckFileExists = true;
-        dlg.RestoreDirectory = true;
-        if (dlg.ShowDialog() == DialogResult.OK)
-        {
-          this.SetFileName(dlg.FileName);
-          var plugin = dlg.FilterIndex <= this.plugins.Count ? this.plugins[dlg.FilterIndex - 1] : null;
-          this.LoadFiles(plugin);
-        }
-      }
+      supportedExtensions = extension.ToString();
+      return filter.ToString();
     }
+
     #endregion
 
     #region SetFileName()
@@ -173,42 +189,24 @@ namespace ChanSort.Ui
     private void ReLoadFiles(ISerializerPlugin plugin)
     {
       int listIndex = this.tabChannelList.SelectedTabPageIndex;
-      this.LoadFiles(plugin);
+      this.LoadFiles(plugin, this.currentTvFile);
       this.tabChannelList.SelectedTabPageIndex = listIndex;
     }
     #endregion
 
     #region LoadFiles()
 
-    private void LoadFiles(ISerializerPlugin plugin)
+    private void LoadFiles(ISerializerPlugin plugin, string tvDataFile)
     {
-      SerializerBase newSerializer = null;
       bool dataUpdated = false;
       try
       {
-        if (plugin == null)
-          plugin = this.GetPluginForFile(this.currentTvFile);
-        // abort action if there is no currentTvSerializer for the input file
-        newSerializer = plugin == null ? null : plugin.CreateSerializer(this.currentTvFile);
-        if (newSerializer == null)
-        {
-          this.currentTvFile = this.currentTvSerializer == null ? string.Empty : this.currentTvSerializer.FileName;
-          return;
-        }
-
-        if (!this.PromptSaveAndContinue())
+        if (!this.LoadTvDataFile(plugin, tvDataFile))
           return;
 
         dataUpdated = true;
         this.gviewRight.BeginDataUpdate();
         this.gviewLeft.BeginDataUpdate();
-
-        this.currentPlugin = plugin;
-        this.currentTvSerializer = newSerializer;
-        this.currentTvSerializer.DefaultEncoding = this.defaultEncoding;
-        this.miEraseChannelData.Enabled = newSerializer.Features.EraseChannelData;
-        if (!this.LoadTvDataFile())
-          return;
 
         this.editor = new Editor();
         this.editor.DataRoot = this.dataRoot;
@@ -233,7 +231,7 @@ namespace ChanSort.Ui
       {
         if (!(ex is IOException))
           throw;
-        string name = newSerializer != null ? newSerializer.DisplayName : plugin != null ? plugin.PluginName : "Loader";
+        string name = plugin != null ? plugin.PluginName : "Loader";
         XtraMessageBox.Show(this, name + "\n\n" + ex.Message, Resources.MainForm_LoadFiles_IOException,
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
         this.currentPlugin = null;
@@ -328,16 +326,48 @@ namespace ChanSort.Ui
     #endregion
 
     #region LoadTvDataFile()
-    private bool LoadTvDataFile()
+    private bool LoadTvDataFile(ISerializerPlugin plugin, string tvDataFile)
     {
-#if ENABLE_TV_FILE_CLEANUP
-      this.currentTvSerializer.EraseDuplicateChannels = this.miEraseDuplicateChannels.Checked;
-#else
-      this.currentTvSerializer.EraseDuplicateChannels = false;
-#endif
-      this.currentTvSerializer.Load();
+      if (!File.Exists(tvDataFile))
+      {
+        XtraMessageBox.Show(this, Resources.MainForm_LoadTvDataFile_FileNotFound_Caption, 
+          string.Format(Resources.MainForm_LoadTvDataFile_FileNotFound_Message, tvDataFile),
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        return false;
+      }
+
+      if (plugin == null)
+        plugin = this.GetPluginForFile(tvDataFile);
+      // abort action if there is no currentTvSerializer for the input file
+      var serializer = plugin == null ? null : plugin.CreateSerializer(tvDataFile);
+      if (serializer == null)
+        return false;
+
+      if (!this.PromptSaveAndContinue())
+        return false;
+
+      serializer.DefaultEncoding = this.defaultEncoding;
+      serializer.Load();
+      this.SetFileName(tvDataFile);
+      this.currentPlugin = plugin; 
+      this.currentTvSerializer = serializer;
       this.dataRoot = this.currentTvSerializer.DataRoot;
+      this.AddFileToMruList(this.currentTvFile);
+      this.UpdateMruMenu();
+
       return true;
+    }
+    #endregion
+
+    #region AddFileToMruList()
+    private void AddFileToMruList(string file)
+    {
+      if (string.IsNullOrEmpty(file)) 
+        return; 
+      this.mruFiles.Remove(file);
+      if (this.mruFiles.Count >= MaxMruEntries)
+        this.mruFiles.RemoveAt(this.mruFiles.Count-1);
+      this.mruFiles.Insert(0, file);
     }
     #endregion
 
@@ -405,41 +435,69 @@ namespace ChanSort.Ui
         {
           dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);          
         }
+        string supportedExtensions;
+        int numberOfFilters;
+        string filter = this.GetTvDataFileFilter(out supportedExtensions, out numberOfFilters);
+        filter = "ChanSort|*.csv|SamToolBox|*.chl|" + filter;
+        supportedExtensions = "*.csv;*.chl;" + supportedExtensions;
         dlg.AddExtension = true;
         dlg.AutoUpgradeEnabled = true;
         dlg.CheckFileExists = true;
         dlg.DefaultExt = ".csv";
         dlg.DereferenceLinks = true;
-        dlg.Filter = Resources.MainForm_ShowOpenReferenceFileDialog_Filter;
-        dlg.FilterIndex = 3;
+        dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
+        dlg.FilterIndex = numberOfFilters + 3;
         dlg.RestoreDirectory = true;
         dlg.SupportMultiDottedExtensions = false;
         dlg.ValidateNames = true;
         dlg.Title = this.miOpenReferenceFile.Caption;
         if (dlg.ShowDialog(this) == DialogResult.OK)
         {
-          this.gviewRight.BeginDataUpdate();
-          this.gviewLeft.BeginDataUpdate();
-
-          string ext = (Path.GetExtension(dlg.FileName) ?? "").ToLower();
-          if (ext == ".csv")
-          {
-            var csvSerializer = new CsvFileSerializer(dlg.FileName, this.dataRoot);
-            csvSerializer.Load();
-          }
-          else if (ext == ".chl")
-          {
-            ChlFileSerializer loader = new ChlFileSerializer();
-            string warnings = loader.Load(dlg.FileName, this.dataRoot, this.currentChannelList);
-            InfoBox.Show(this, warnings, Path.GetFileName(dlg.FileName));
-          }
-
-          this.gviewRight.EndDataUpdate();
-          this.gviewLeft.EndDataUpdate();
+          this.LoadReferenceFile(dlg.FileName);
         }
       }
     }
     #endregion
+
+    #region LoadReferenceFile()
+    private void LoadReferenceFile(string fileName)
+    {
+      this.gviewRight.BeginDataUpdate();
+      this.gviewLeft.BeginDataUpdate();
+
+      string ext = (Path.GetExtension(fileName) ?? "").ToLower();
+      if (ext == ".csv")
+      {
+        var csvSerializer = new CsvFileSerializer(fileName, this.dataRoot);
+        csvSerializer.Load();
+      }
+      else if (ext == ".chl")
+      {
+        ChlFileSerializer loader = new ChlFileSerializer();
+        string warnings = loader.Load(fileName, this.dataRoot, this.currentChannelList);
+        InfoBox.Show(this, warnings, Path.GetFileName(fileName));
+      }
+      else
+      {
+        var plugin = this.GetPluginForFile(fileName);
+        if (plugin == null)
+        {
+          XtraMessageBox.Show(this, "Unsupported type of file");
+        }
+        else
+        {
+          var refFile = plugin.CreateSerializer(fileName);
+          refFile.Load();
+          editor.ApplyReferenceList(refFile.DataRoot);
+        }
+      }
+
+      this.gviewRight.EndDataUpdate();
+      this.gviewLeft.EndDataUpdate();
+    }
+
+    #endregion
+
 
 
     #region ShowChannelList()
@@ -512,6 +570,7 @@ namespace ChanSort.Ui
         this.SaveTvDataFile();
         this.dataRoot.NeedsSaving = false;
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
+        this.UpdateMenu();
       }
       catch (IOException ex)
       {
@@ -796,12 +855,13 @@ namespace ChanSort.Ui
     #endregion
 
     #region LoadSettings()
+
     private void LoadSettings()
     {
       // note: WindowSize must be restored in ctor in order to make WindowStartPosition.CenterScreen work
       if (!string.IsNullOrEmpty(Settings.Default.Encoding))
         this.defaultEncoding = Encoding.GetEncoding(Settings.Default.Encoding);
-      this.SetFileName(Settings.Default.InputTLL);
+      
       int width = Settings.Default.LeftPanelWidth;
       if (width > 0)
         this.splitContainerControl1.SplitterPosition = width;
@@ -809,10 +869,15 @@ namespace ChanSort.Ui
 
       this.SetGridLayout(this.gviewLeft, Settings.Default.OutputListLayout);
 
-      this.miEraseDuplicateChannels.Checked = Settings.Default.EraseDuplicateChannels;
       this.miShowWarningsAfterLoad.Checked = Settings.Default.ShowWarningsAfterLoading;
       this.cbCloseGap.Checked = Settings.Default.CloseGaps;
       this.ClearLeftFilter();
+
+      for (int i = MaxMruEntries-1; i >= 0; i--)
+      {
+        this.AddFileToMruList((string)Settings.Default.GetType().GetProperty("MruFile" + i).GetValue(Settings.Default, null));
+      }
+      this.UpdateMruMenu();
     }
     #endregion
 
@@ -869,14 +934,15 @@ namespace ChanSort.Ui
       Settings.Default.WindowSize = this.WindowState == FormWindowState.Normal ? this.Size : this.RestoreBounds.Size;
       Settings.Default.Encoding = this.defaultEncoding.WebName;
       Settings.Default.Language = Thread.CurrentThread.CurrentUICulture.Name;
-      Settings.Default.InputTLL = this.currentTvFile;
       Settings.Default.LeftPanelWidth = this.splitContainerControl1.SplitterPosition;
       Settings.Default.OutputListLayout = GetGridLayout(this.gviewLeft);
       if (this.currentChannelList != null)
         SaveInputGridLayout(this.currentChannelList.SignalSource);
-      Settings.Default.EraseDuplicateChannels = this.miEraseDuplicateChannels.Checked;
       Settings.Default.ShowWarningsAfterLoading = this.miShowWarningsAfterLoad.Checked;
       Settings.Default.CloseGaps = this.cbCloseGap.Checked;
+      for (int i = 0; i < this.mruFiles.Count; i++)
+        Settings.Default.GetType().GetProperty("MruFile" + i).SetValue(Settings.Default, this.mruFiles[i], null);
+
       Settings.Default.Save();
     }
 
@@ -1098,7 +1164,18 @@ namespace ChanSort.Ui
     #region UpdateMenu
     private void UpdateMenu()
     {
+      bool fileLoaded = this.dataRoot != null;
       bool isRight = this.lastFocusedGrid == this.gviewRight;
+
+      this.miReload.Enabled = fileLoaded;
+      this.miFileInformation.Enabled = fileLoaded;
+      this.miRestoreOriginal.Enabled = fileLoaded && File.Exists(this.currentTvFile + ".bak");
+      this.miSave.Enabled = fileLoaded;
+      this.miSaveAs.Enabled = fileLoaded;
+      this.miOpenReferenceFile.Enabled = fileLoaded;
+      this.miSaveReferenceFile.Enabled = fileLoaded;
+      this.miExcelExport.Enabled = fileLoaded;
+
       this.miAddChannel.Enabled = isRight;
 
       var visRight = isRight ? BarItemVisibility.Always : BarItemVisibility.Never;
@@ -1115,15 +1192,22 @@ namespace ChanSort.Ui
       this.miMoveUp.Enabled = channel != null && channel.NewProgramNr > 1;
 
       this.miTvSettings.Enabled = this.currentTvSerializer != null;
-#if ENABLE_TV_FILE_CLEANUP
       this.miCleanupChannels.Visibility = this.currentTvSerializer != null &&
         this.currentTvSerializer.Features.CleanUpChannelData ? BarItemVisibility.Always : BarItemVisibility.Never;
-      this.miEraseDuplicateChannels.Visibility = BarItemVisibility.Always;
-#else
-      this.miCleanupChannels.Visibility = BarItemVisibility.Never;
-      this.miEraseDuplicateChannels.Visibility = BarItemVisibility.Never;
-      this.miEraseDuplicateChannels.Checked = false;
-#endif
+    }
+    #endregion
+
+    #region UpdateMruMenu()
+    private void UpdateMruMenu()
+    {
+      this.miRecentFiles.Strings.Clear();
+      foreach (var file in this.mruFiles)
+      {
+        var key = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + Path.GetFileName(file);
+        if (key != file)
+          key = "...\\" + key;
+        this.miRecentFiles.Strings.Add(key);        
+      }
     }
     #endregion
 
@@ -1152,7 +1236,7 @@ namespace ChanSort.Ui
       {
         File.Copy(bakFile, this.currentTvFile, true);
         if (this.currentPlugin != null)
-          this.LoadFiles(this.currentPlugin);
+          this.LoadFiles(this.currentPlugin, this.currentTvFile);
       }
       catch (Exception)
       {
@@ -1251,12 +1335,55 @@ namespace ChanSort.Ui
     {
       if (this.currentTvSerializer != null && this.currentTvSerializer.Features.CleanUpChannelData)
       {
-        this.currentTvSerializer.EraseDuplicateChannels = true;
         var msg = this.currentTvSerializer.CleanUpChannelData();
         this.FillChannelListCombo();
         InfoBox.Show(this, msg, this.miCleanupChannels.Caption);
         this.RefreshGrid(gviewLeft, gviewRight);
       }
+    }
+    #endregion
+
+    #region ExportExcelList()
+    private void ExportExcelList()
+    {
+      const string header = "List;Pr#;Channel Name;Favorites;Lock;Skip;Hide;Encrypted;Satellite;Ch/Tp;Freq;ONID;TSID;SymRate;SID;VPID;APID";
+      const char sep = '\t';
+      var sb = new StringBuilder();
+      sb.AppendLine(header.Replace(';', sep));
+      foreach (var list in this.dataRoot.ChannelLists)
+      {
+        foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr))
+        {
+          if (channel.IsDeleted || channel.OldProgramNr == -1) 
+            continue;
+          sb.Append(list.ShortCaption).Append(sep);
+          sb.Append(channel.NewProgramNr).Append(sep);
+          sb.Append('"').Append(channel.Name).Append('"').Append(sep);
+          sb.Append(channel.Favorites).Append(sep);
+          sb.Append(channel.Lock ? "L" : "").Append(sep);
+          sb.Append(channel.Skip ? "S" : "").Append(sep);
+          sb.Append(channel.Hidden ? "H" : "").Append(sep);
+          sb.Append(channel.Encrypted == null ? "?" : channel.Encrypted.Value ? "C" : "").Append(sep);
+          sb.Append('"').Append(channel.Satellite).Append('"').Append(sep);
+          sb.Append(channel.ChannelOrTransponder).Append(sep);
+          sb.Append(channel.FreqInMhz).Append(sep);
+          sb.Append(channel.OriginalNetworkId).Append(sep);
+          sb.Append(channel.TransportStreamId).Append(sep);
+          sb.Append(channel.SymbolRate).Append(sep);
+          sb.Append(channel.ServiceId).Append(sep);
+          sb.Append(channel.VideoPid).Append(sep);
+          sb.Append(channel.AudioPid);
+          
+          sb.AppendLine();
+        }
+      }
+
+      Clipboard.Clear();
+      Clipboard.SetData(DataFormats.Text, sb.ToString());
+      XtraMessageBox.Show(this, 
+                          Resources.MainForm_ExportExcelList_Message, 
+                          this.miExcelExport.Caption,
+                          MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
     #endregion
 
@@ -1275,8 +1402,8 @@ namespace ChanSort.Ui
     {
       try
       {
-        if (this.currentTvFile != "" && File.Exists(this.currentTvFile))
-          this.LoadFiles(null);
+        if (this.mruFiles.Count > 0 && File.Exists(this.mruFiles[0]))
+          this.LoadFiles(null, this.mruFiles[0]);
       }
       catch (Exception ex) { HandleException(ex); }
     }
@@ -1326,9 +1453,19 @@ namespace ChanSort.Ui
       TryExecute(this.SaveReferenceFile);
     }
 
+    private void miExcelExport_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.ExportExcelList);
+    }
+
     private void miQuit_ItemClick(object sender, ItemClickEventArgs e)
     {
       this.Close();
+    }
+
+    private void miRecentFiles_ListItemClick(object sender, ListItemClickEventArgs e)
+    {
+      TryExecute(()=>this.LoadFiles(null, this.mruFiles[e.Index]));
     }
 
     #endregion
@@ -1433,28 +1570,6 @@ namespace ChanSort.Ui
       this.TryExecute(this.ShowTvCountrySettings);
     }
     
-    private void miEraseChannelData_ItemClick(object sender, ItemClickEventArgs e)
-    {
-      if (this.currentTvSerializer == null)
-        return;
-
-      if (XtraMessageBox.Show(this,
-                              Resources.MainForm_btnResetChannelData_Click_Message,
-                              Resources.MainForm_btnResetChannelData_Click_Caption,
-                              MessageBoxButtons.YesNo,
-                              MessageBoxIcon.Warning,
-                              MessageBoxDefaultButton.Button2) != DialogResult.Yes)
-      {
-        return;
-      }
-
-      TryExecute(() =>
-      {
-        this.currentTvSerializer.EraseChannelData();
-        this.LoadFiles(this.currentPlugin);
-      });
-    }
-
     private void miCleanupChannels_ItemClick(object sender, ItemClickEventArgs e)
     {
       this.TryExecute(this.CleanupChannelData);
@@ -1987,7 +2102,6 @@ namespace ChanSort.Ui
       this.SetActiveGrid(this.gviewRight);
     }
     #endregion
-
 
   }
 }

@@ -1,9 +1,15 @@
-Version v2013-05-07 ======================================================
+Version v2013-05-11 ======================================================
 
 Changes:
-- Added support for LG's LN-series
-- Fixed: Saving reordered list for LG xxLH3000.
-- Removed "Cleanup TV data file" function due to having bricked an LG TV.
+- TV data files can be used as reference lists (without exporting .csv)
+- added "Export Excel list" function
+- added hotkeys to many menu items
+- added most recently used files to menu
+- added support to enable Hotel Mode for LH3000 and LN models
+- fixed: saved incorrect DVB-S transponder symbol rate for LG's LK950S, LV,
+  LW and LN models
+- re-added a fixed version of "TV-Set / Clean channel data" function for
+  LG TV's.
 
 The complete change log can be found at the end of this document
 
@@ -100,6 +106,17 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-05-11
+- TV data files can be used as reference lists (without exporting .csv)
+- added "File / Export Excel list" function
+- added hotkeys to many menu items
+- added most recently used files to menu
+- added support to enable Hotel Mode for LH3000 and LN models
+- fixed: saved incorrect DVB-S transponder symbol rate for LG's LK950S, LV,
+  LW and LN models
+- re-added "TV-Set / Clean channel data" function for LG TV's.
+
 
 2013-05-07
 - Added support for LG's LN-series

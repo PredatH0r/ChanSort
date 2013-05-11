@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace ChanSort.Api
 {
@@ -174,6 +175,49 @@ namespace ChanSort.Api
     }
     #endregion
 
+
+    #region ApplyReferenceList()
+    public void ApplyReferenceList(DataRoot refDataRoot)
+    {
+
+      foreach (var channelList in this.DataRoot.ChannelLists)
+      {
+        foreach (var channel in channelList.Channels)
+          channel.NewProgramNr = -1;
+      }
+
+      StringBuilder log = new StringBuilder();
+      foreach (var refList in refDataRoot.ChannelLists)
+      {
+        var tvList = this.DataRoot.GetChannelList(refList.SignalSource);
+        if (tvList == null)
+        {
+          log.AppendFormat("Skipped reference list {0}\r\n", refList.ShortCaption);
+          continue;
+        }
+        foreach (var refChannel in refList.Channels)
+        {
+          var tvChannels = tvList.GetChannelByUid(refChannel.Uid);
+          ChannelInfo tvChannel = tvChannels.FirstOrDefault(c => c.NewProgramNr == -1);
+          if (tvChannel != null)
+          {
+            tvChannel.NewProgramNr = refChannel.OldProgramNr;
+            tvChannel.Favorites = refChannel.Favorites;
+            tvChannel.Skip = refChannel.Skip;
+            tvChannel.Lock = refChannel.Lock;
+            tvChannel.Hidden = refChannel.Hidden;
+            tvChannel.IsDeleted = refChannel.IsDeleted;
+          }
+          else
+          {
+            tvChannel = new ChannelInfo(refChannel.SignalSource, refChannel.Uid, refChannel.OldProgramNr, refChannel.Name);
+            tvList.AddChannel(tvChannel);
+          }
+        }
+      }
+    }
+
+    #endregion
 
     #region AutoNumberingForUnassignedChannels()
 

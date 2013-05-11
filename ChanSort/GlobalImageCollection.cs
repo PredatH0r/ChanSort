@@ -52,6 +52,40 @@ namespace ChanSort.Ui
       // 
       // 
       this.sharedImageCollection1.ImageSource.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("sharedImageCollection1.ImageSource.ImageStream")));
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(0, "0000.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(1, "0001.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(2, "0002.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(3, "0003.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(4, "0004.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(5, "0005.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(6, "0006.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(7, "0007.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(8, "0008.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(9, "0009.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(10, "0010.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(11, "0011.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(12, "0012.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(13, "0013.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(14, "0014.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(15, "0015.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(16, "0016.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(17, "0017.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(18, "0018.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(19, "0019.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(20, "0020.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(21, "0021.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(22, "0022.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(23, "0023.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(24, "0024.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(25, "0025.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(26, "0026.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(27, "0027.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(28, "0028.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(29, "0029.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(30, "0030.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(31, "0031.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(32, "0032.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(33, "0033.png");
       this.sharedImageCollection1.ParentControl = null;
       ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1)).EndInit();
 

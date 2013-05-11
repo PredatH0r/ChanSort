@@ -261,4 +261,14 @@ Möchten Sie die Downloadseite öffnen?</value>
   <data name="MainForm_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Caption" xml:space="preserve">
+    <value>Datei nicht gefunden</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Message" xml:space="preserve">
+    <value>Die Datei {0} konnte nicht gefunden werden.</value>
+  </data>
+  <data name="MainForm_ExportExcelList_Message" xml:space="preserve">
+    <value>Die Senderliste wurde in die Zwischenablage kopiert
+und kann nun in Excel oder einen Texteditor eingefügt werden.</value>
+  </data>
 </root>

@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="splitContainerControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 109</value>
+    <value>0, 88</value>
   </data>
   <metadata name="dsChannels.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>361, 17</value>
@@ -222,7 +222,7 @@
     <value>35</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>382, 417</value>
+    <value>382, 438</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -243,7 +243,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 471</value>
+    <value>2, 492</value>
   </data>
   <data name="lblHotkeyLeft.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -282,7 +282,7 @@
     <value>1474, 599</value>
   </data>
   <data name="rbInsertSwap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 24</value>
+    <value>218, 6</value>
   </data>
   <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>475, 17</value>
@@ -314,8 +314,14 @@
   <data name="miSaveReferenceFile.Caption" xml:space="preserve">
     <value>Save reference list</value>
   </data>
+  <data name="miExcelExport.Caption" xml:space="preserve">
+    <value>Export Excel list...</value>
+  </data>
   <data name="miQuit.Caption" xml:space="preserve">
     <value>&amp;Quit</value>
+  </data>
+  <data name="miRecentFiles.Caption" xml:space="preserve">
+    <value>miRecentFiles</value>
   </data>
   <data name="miEdit.Caption" xml:space="preserve">
     <value>&amp;Edit</value>
@@ -371,14 +377,11 @@
   <data name="miTvSettings.Caption" xml:space="preserve">
     <value>Device setting...</value>
   </data>
-  <data name="miEraseChannelData.Caption" xml:space="preserve">
-    <value>Erase all channel data</value>
-  </data>
   <data name="miCleanupChannels.Caption" xml:space="preserve">
     <value>Cleanup channel data</value>
   </data>
   <data name="miCleanupChannels.Hint" xml:space="preserve">
-    <value>Remove duplicate channels and reorganize </value>
+    <value>Reorganize channel records and remove duplicates</value>
   </data>
   <data name="mnuOptions.Caption" xml:space="preserve">
     <value>&amp;Settings</value>
@@ -403,12 +406,6 @@
   </data>
   <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
     <value>Show warnings after loading file</value>
-  </data>
-  <data name="miEraseDuplicateChannels.Caption" xml:space="preserve">
-    <value>Cleanup TV data file after loading</value>
-  </data>
-  <data name="miEraseDuplicateChannels.Hint" xml:space="preserve">
-    <value>Automatically clean up TV data file after loading</value>
   </data>
   <data name="mnuHelp.Caption" xml:space="preserve">
     <value>&amp;Help</value>
@@ -561,7 +558,7 @@
   </data>
   <assembly alias="DevExpress.Data.v12.2" name="DevExpress.Data.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="rbInsertSwap.Properties.GlyphAlignment" type="DevExpress.Utils.HorzAlignment, DevExpress.Data.v12.2">
-    <value>Far</value>
+    <value>Default</value>
   </data>
   <data name="rbInsertSwap.Size" type="System.Drawing.Size, System.Drawing">
     <value>77, 19</value>
@@ -585,7 +582,7 @@
     <value>True</value>
   </data>
   <data name="rbInsertAfter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 24</value>
+    <value>153, 6</value>
   </data>
   <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
     <value>after</value>
@@ -609,7 +606,7 @@
     <value>1</value>
   </data>
   <data name="rbInsertBefore.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 5</value>
+    <value>82, 6</value>
   </data>
   <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
     <value>before</value>
@@ -636,7 +633,7 @@
     <value>True</value>
   </data>
   <data name="cbCloseGap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>263, 6</value>
+    <value>496, 6</value>
   </data>
   <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
     <value>Close gap when moving/deleting a channel</value>
@@ -717,7 +714,7 @@
     <value>Bottom, Left</value>
   </data>
   <data name="tabChannelList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 54</value>
+    <value>0, 33</value>
   </data>
   <data name="pageEmpty.Size" type="System.Drawing.Size, System.Drawing">
     <value>632, 0</value>
@@ -759,10 +756,10 @@
     <value>Vertical</value>
   </data>
   <data name="labelControl11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>169, 8</value>
+    <value>320, 8</value>
   </data>
   <data name="labelControl11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 13</value>
+    <value>64, 13</value>
   </data>
   <data name="labelControl11.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -786,7 +783,7 @@
     <value>7</value>
   </data>
   <data name="txtSetSlot.Location" type="System.Drawing.Point, System.Drawing">
-    <value>169, 24</value>
+    <value>390, 5</value>
   </data>
   <data name="txtSetSlot.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v12.2">
     <value>OK</value>
@@ -822,7 +819,7 @@
     <value>0, 31</value>
   </data>
   <data name="grpTopPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 78</value>
+    <value>1474, 57</value>
   </data>
   <data name="grpTopPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1160,11 +1157,23 @@
   <data name="&gt;&gt;miSaveReferenceFile.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miExcelExport.Name" xml:space="preserve">
+    <value>miExcelExport</value>
+  </data>
+  <data name="&gt;&gt;miExcelExport.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;miQuit.Name" xml:space="preserve">
     <value>miQuit</value>
   </data>
   <data name="&gt;&gt;miQuit.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miRecentFiles.Name" xml:space="preserve">
+    <value>miRecentFiles</value>
+  </data>
+  <data name="&gt;&gt;miRecentFiles.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;miEdit.Name" xml:space="preserve">
     <value>miEdit</value>
@@ -1274,10 +1283,10 @@
   <data name="&gt;&gt;miTvSettings.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miEraseChannelData.Name" xml:space="preserve">
-    <value>miEraseChannelData</value>
+  <data name="&gt;&gt;miCleanupChannels.Name" xml:space="preserve">
+    <value>miCleanupChannels</value>
   </data>
-  <data name="&gt;&gt;miEraseChannelData.Type" xml:space="preserve">
+  <data name="&gt;&gt;miCleanupChannels.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;mnuOptions.Name" xml:space="preserve">
@@ -1328,12 +1337,6 @@
   <data name="&gt;&gt;miShowWarningsAfterLoad.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarCheckItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miEraseDuplicateChannels.Name" xml:space="preserve">
-    <value>miEraseDuplicateChannels</value>
-  </data>
-  <data name="&gt;&gt;miEraseDuplicateChannels.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarCheckItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;mnuHelp.Name" xml:space="preserve">
     <value>mnuHelp</value>
   </data>
@@ -1370,12 +1373,6 @@
   <data name="&gt;&gt;miMoveDown.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miCleanupChannels.Name" xml:space="preserve">
-    <value>miCleanupChannels</value>
-  </data>
-  <data name="&gt;&gt;miCleanupChannels.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;defaultLookAndFeel1.Name" xml:space="preserve">
     <value>defaultLookAndFeel1</value>
   </data>
@@ -1407,7 +1404,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>05/07/2013 01:07:27</value>
+    <value>05/11/2013 13:20:06</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1722,7 +1719,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>386, 490</value>
+    <value>386, 511</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2052,7 +2049,7 @@
     <value>Signal source</value>
   </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1079, 417</value>
+    <value>1079, 438</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2073,7 +2070,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 471</value>
+    <value>2, 492</value>
   </data>
   <data name="lblHotkeyRight.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2241,7 +2238,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1083, 490</value>
+    <value>1083, 511</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2265,7 +2262,7 @@
     <value>Panel2</value>
   </data>
   <data name="splitContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 490</value>
+    <value>1474, 511</value>
   </data>
   <data name="splitContainerControl1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>

@@ -6,7 +6,6 @@ namespace ChanSort.Api
   {
     public class SupportedFeatures
     {
-      public bool EraseChannelData { get; set; }
       public bool ChannelNameEdit { get; set; }
       public bool FileInformation { get; set; }
       public bool CleanUpChannelData { get; set; }
@@ -19,7 +18,6 @@ namespace ChanSort.Api
     public string FileName { get; set; }
     public DataRoot DataRoot { get; protected set; }
     public SupportedFeatures Features { get; private set; }
-    public bool EraseDuplicateChannels { get; set; }
 
     protected SerializerBase(string inputFile)
     {

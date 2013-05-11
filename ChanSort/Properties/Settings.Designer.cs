@@ -25,18 +25,6 @@ namespace ChanSort.Ui.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string InputTLL {
-            get {
-                return ((string)(this["InputTLL"]));
-            }
-            set {
-                this["InputTLL"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int InputListRowHandle {
             get {
@@ -320,6 +308,66 @@ namespace ChanSort.Ui.Properties {
             }
             set {
                 this["CloseGaps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile0 {
+            get {
+                return ((string)(this["MruFile0"]));
+            }
+            set {
+                this["MruFile0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile1 {
+            get {
+                return ((string)(this["MruFile1"]));
+            }
+            set {
+                this["MruFile1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile2 {
+            get {
+                return ((string)(this["MruFile2"]));
+            }
+            set {
+                this["MruFile2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile3 {
+            get {
+                return ((string)(this["MruFile3"]));
+            }
+            set {
+                this["MruFile3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile4 {
+            get {
+                return ((string)(this["MruFile4"]));
+            }
+            set {
+                this["MruFile4"] = value;
             }
         }
     }

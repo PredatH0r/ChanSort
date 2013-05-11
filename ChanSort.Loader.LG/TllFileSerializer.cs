@@ -1,6 +1,5 @@
 ﻿//#define STORE_DVBS_CHANNELS_IN_DATABASE
-//#define TESTING_LM640T_HACK
-
+//#define LM640T_EXPERIMENT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -64,12 +63,12 @@ namespace ChanSort.Loader.LG
     private int presetChannels;
 
     private bool removeDeletedActChannels = false;
+    private decimal dvbsSymbolRateFactor;
 
     #region ctor()
     public TllFileSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = true;
-      this.Features.EraseChannelData = true;
       this.Features.FileInformation = true;
       this.Features.DeviceSettings = true;
       this.Features.CleanUpChannelData = true;
@@ -136,8 +135,10 @@ namespace ChanSort.Loader.LG
       this.ReadFirmwareDataBlock(ref off);
       this.ReadDvbCtChannels(ref off);
       this.ReadDvbSBlock(ref off);
-      this.ReadSettingsBlock(ref off);
-      this.CleanUpChannelData();
+      this.ReadSettingsBlock(ref off);    
+
+      if (this.presetChannels > 0 && !IsTesting)
+        new PresetProgramNrDialog().ShowDialog();
 
 #if STORE_DVBS_CHANNELS_IN_DATABASE
       this.StoreToDatabase();
@@ -295,17 +296,18 @@ namespace ChanSort.Loader.LG
       long blockId = BitConverter.ToInt64(fileContent, off + 8);
       if (blockId == DVBS_S2)
         return true;
-
+#if LM640T_EXPERIMENT
       if (blockId == -1)
       {
         this.satConfig = satConfigs.TryGet(blockSize);
         if (this.satConfig != null)
         {
           this.EraseDvbsBlock(off);
-          this.UpdateDvbsChecksums();
+          
           return true;
         }
       }
+#endif
       return false;
     }
     #endregion
@@ -378,6 +380,8 @@ namespace ChanSort.Loader.LG
     #region ReadTransponderData()
     private void ReadTransponderData(ref int off)
     {
+      dvbsSymbolRateFactor = 1;
+      var dvbsSymbolRateMask = 0x7FFFF;
       var mapping = this.dvbsTransponderMappings.GetMapping(this.satConfig.transponderLength);
       for (int i=0; i<satConfig.transponderCount; i++)
       {
@@ -385,17 +389,26 @@ namespace ChanSort.Loader.LG
         SatTransponder transponder = new SatTransponder(i, mapping, this.DataRoot);
         if (transponder.Satellite == null)
           continue;
-        if (transponder.SymbolRate == 11000)
-          this.isDvbsSymbolRateDiv2 = true;
+        
+        if ((transponder.SymbolRate & 0x7FFF) == 11000)
+          dvbsSymbolRateFactor = 2;
+        else if (transponder.SymbolRate == 44000)
+        {
+          dvbsSymbolRateMask = 0xFFFF;
+          dvbsSymbolRateFactor = 0.5m;
+        }
 
         var sat = transponder.Satellite;
         this.DataRoot.AddTransponder(sat, transponder);
       }
 
-      if (this.isDvbsSymbolRateDiv2)
+      if (dvbsSymbolRateFactor != 1)
       {
         foreach (var transponder in this.DataRoot.Transponder.Values)
-          transponder.SymbolRate *= 2;
+        {
+          int symbolRate = transponder.SymbolRate & dvbsSymbolRateMask;
+          transponder.SymbolRate = (int) (symbolRate*dvbsSymbolRateFactor);
+        }
       }
 
       off += this.satConfig.transponderCount * this.satConfig.transponderLength;
@@ -477,7 +490,7 @@ namespace ChanSort.Loader.LG
     // Test code for fixing broken DVB-S block of xxLM640T ==========
 
     #region EraseDvbsBlock()
-
+#if LM640T_EXPERIMENT
     /// <summary>
     /// The model LM640T has the whole DVB-S2 block filled with 0xFF bytes, including the checksums.
     /// When a file (even the originally saved one) is loaded back, the TV crashes and performs a factory reset.
@@ -500,16 +513,10 @@ namespace ChanSort.Loader.LG
         // header
         this.dvbsSubblockCrcOffset[0] = (int)stream.Position;
         stream.Seek(4, SeekOrigin.Current); // skip CRC32
-#if TESTING_LM640T_HACK
-        stream.Write(Encoding.ASCII.GetBytes("DVBS-S2\0"), 0, 8);
-        //stream.Write(new byte[] { 255, 255, 255, 255, 255, 255, 255, 255 }, 0, 8);
-        wrt.Write((ushort)0);
-        wrt.Write((ushort)0);
-#else
         stream.Write(Encoding.ASCII.GetBytes("DVBS-S2\0"), 0, 8);
         wrt.Write((ushort) 7);
         wrt.Write((ushort) 4);
-#endif
+
         // satellite
         this.dvbsSubblockCrcOffset[1] = (int)stream.Position;
         stream.Seek(4, SeekOrigin.Current); // skip CRC32
@@ -545,7 +552,7 @@ namespace ChanSort.Loader.LG
         stream.Seek(12 + satConfig.dvbsMaxChannelCount/8, SeekOrigin.Current);
         wrt.Write((short) -1);
         wrt.Write((short) -1);
-        stream.Seek(4 + (satConfig.dvbsMaxChannelCount - 1)*8, SeekOrigin.Current);
+        stream.Seek(4 + (satConfig.dvbsMaxChannelCount - 1)*8 + satConfig.linkedListExtraDataLength, SeekOrigin.Current);
         for (int i = 0; i < satConfig.dvbsMaxChannelCount*satConfig.dvbsChannelLength; i++)
           wrt.Write((byte) 0xFF);
 
@@ -556,7 +563,10 @@ namespace ChanSort.Loader.LG
         wrt.Write((byte) 1);
         stream.Seek(satConfig.lnbCount/8 - 1, SeekOrigin.Current);
       }
+
+      this.UpdateDvbsChecksums();
     }
+#endif
     #endregion
 
     // Sat channel list cleanup ==================
@@ -567,21 +577,14 @@ namespace ChanSort.Loader.LG
       if (this.satConfig == null)
         return "";
 
-      if (!this.EraseDuplicateChannels || this.satConfig.dvbsChannelLength >= 92 /* LA series */)
-      {
-        if (this.presetChannels > 0 && !IsTesting)
-        {
-          new PresetProgramNrDialog().ShowDialog();
-        }
-        return "";
-      }
-
+      this.DataRoot.NeedsSaving = true;
       this.ResetChannelInformationInTransponderData();
 
       byte[] sortedChannels = new byte[this.satConfig.dvbsMaxChannelCount*this.satConfig.dvbsChannelLength];
 
       var channelsByTransponder =
         this.satTvChannels.Channels.Union(this.satRadioChannels.Channels).OrderBy(PhysicalChannelOrder).ToList();
+      int originalChannelCount = this.dvbsChannelCount;
       int prevChannelOrderId = -1;
       int prevTransponderIndex = -1;
       int channelCounter = 0;
@@ -602,15 +605,19 @@ namespace ChanSort.Loader.LG
       }
 
       // copy temp data back to fileContent and clear remainder
-      Tools.MemCopy(sortedChannels, 0, 
-                    this.fileContent, this.dvbsBlockOffset + satConfig.ChannelListOffset,
-                    channelCounter*satConfig.dvbsChannelLength);
-      Tools.MemSet(this.fileContent,
-                   this.dvbsBlockOffset + satConfig.ChannelListOffset + channelCounter*satConfig.dvbsChannelLength, 0xFF,
-                   (satConfig.dvbsMaxChannelCount - channelCounter)*satConfig.dvbsChannelLength);
-
+      if (originalChannelCount != 0) // even if there's 0 channels, channel[0] must contain valid data
+      {
+        Tools.MemCopy(sortedChannels, 0,
+                      this.fileContent, this.dvbsBlockOffset + satConfig.ChannelListOffset,
+                      channelCounter*satConfig.dvbsChannelLength);
+        Tools.MemSet(this.fileContent,
+                     this.dvbsBlockOffset + satConfig.ChannelListOffset + channelCounter*satConfig.dvbsChannelLength,
+                     0xFF,
+                     (satConfig.dvbsMaxChannelCount - channelCounter)*satConfig.dvbsChannelLength);
+      }
       UpdateChannelAllocationBitmap(channelCounter);
-      UpdateChannelLinkedList(channelCounter);
+      UpdateChannelLinkedList(channelCounter);      
+      UpdateDvbsChecksums();
 
       return string.Format("{0} duplicate channels were detected and removed", removedCounter);
     }
@@ -993,7 +1000,7 @@ namespace ChanSort.Loader.LG
     internal int ACTChannelLength { get { return this.actChannelSize; } }
     internal bool HasDvbs { get { return dvbsBlockOffset != 0; } }
     internal int SatChannelLength { get { return satConfig != null ? satConfig.dvbsChannelLength : 0; } }
-    internal bool SatSymbolRateDiv2 { get { return this.isDvbsSymbolRateDiv2; } }
+    internal decimal DvbsSymbolRateCorrectionFactor { get { return this.dvbsSymbolRateFactor; } }
     internal int FirmwareBlockSize { get { return this.firmwareBlockSize; } }
   }
 }
