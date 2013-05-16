@@ -135,10 +135,19 @@ namespace ChanSort.Loader.LG
       this.ReadFirmwareDataBlock(ref off);
       this.ReadDvbCtChannels(ref off);
       this.ReadDvbSBlock(ref off);
-      this.ReadSettingsBlock(ref off);    
+      this.ReadSettingsBlock(ref off);
 
-      if (this.presetChannels > 0 && !IsTesting)
-        new PresetProgramNrDialog().ShowDialog();
+      if (this.presetChannels > 0)
+      {
+        this.satTvChannels.ReadOnly = true;
+        this.satRadioChannels.ReadOnly = true;
+        foreach (var channel in this.satTvChannels.Channels)
+          channel.NewProgramNr = channel.OldProgramNr;
+        foreach (var channel in this.satRadioChannels.Channels)
+          channel.NewProgramNr = channel.OldProgramNr;
+        if (!IsTesting)
+          new PresetProgramNrDialog().ShowDialog();
+      }
 
 #if STORE_DVBS_CHANNELS_IN_DATABASE
       this.StoreToDatabase();

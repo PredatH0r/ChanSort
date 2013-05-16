@@ -4,6 +4,7 @@ namespace ChanSort.Loader.Samsung
 {
   internal class ModelConstants
   {
+    public readonly string series;
     public readonly int dvbsSatelliteLength;
     public readonly int dvbsTransponderLength;
     public readonly int dvbsChannelLength;
@@ -18,6 +19,7 @@ namespace ChanSort.Loader.Samsung
 
     public ModelConstants(IniFile.Section iniSection)
     {
+      this.series = iniSection.Name.Substring(iniSection.Name.Length - 1);
       this.avbtChannelLength = iniSection.GetInt("map-AirA");
       this.dvbtChannelLength = iniSection.GetInt("map-AirD");
       this.dvbsChannelLength = iniSection.GetInt("map-SateD");

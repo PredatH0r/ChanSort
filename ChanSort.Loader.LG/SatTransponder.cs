@@ -1,7 +1,4 @@
-﻿#define SYMBOL_RATE_ROUNDING
-
-using System.Globalization;
-using ChanSort.Api;
+﻿using ChanSort.Api;
 
 namespace ChanSort.Loader.LG
 {
@@ -37,13 +34,8 @@ namespace ChanSort.Loader.LG
       this.TransportStreamId = mapping.GetWord(_TransportStreamId);
       this.symbolRate = mapping.GetWord(_SymbolRate);
 
-#if SYMBOL_RATE_ROUNDING
       if (this.symbolRate%100 >= 95)
-      {
         this.symbolRate = (this.symbolRate/100 + 1)*100;
-        mapping.SetWord(_SymbolRate, (mapping.GetWord(_SymbolRate) & 0x8000) + this.symbolRate);
-      }
-#endif
       // note: a correction factor is applied later after all transponders were loaded (*0.5, *1, *2)
 
       this.Satellite = dataRoot.Satellites.TryGet(mapping.GetByte(_SatIndex)/2);
@@ -83,14 +75,7 @@ namespace ChanSort.Loader.LG
     public override int SymbolRate
     {
       get { return symbolRate; }
-      set
-      {
-#if false
-        mapping.SetDataPtr(this.data, this.offset);
-        mapping.SetWord(_SymbolRate, value);
-#endif
-        this.symbolRate = value;
-      }
+      set { this.symbolRate = value; }
     }
   }
 }

@@ -19,6 +19,9 @@ namespace ChanSort.Api
     #region Load()
     public string Load(string fileName, DataRoot root, ChannelList list)
     {
+      if (list.ReadOnly)
+        return "The current channel list is read-only";
+
       this.lineNumber = 0;
       this.dataRoot = root;
       this.channelList = list;

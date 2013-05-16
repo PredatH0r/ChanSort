@@ -1,15 +1,9 @@
-Version v2013-05-11 ======================================================
+Version v2013-05-16 ======================================================
 
 Changes:
-- TV data files can be used as reference lists (without exporting .csv)
-- added "Export Excel list" function
-- added hotkeys to many menu items
-- added most recently used files to menu
-- added support to enable Hotel Mode for LH3000 and LN models
-- fixed: saved incorrect DVB-S transponder symbol rate for LG's LK950S, LV,
-  LW and LN models
-- re-added a fixed version of "TV-Set / Clean channel data" function for
-  LG TV's.
+- FIX: on LG's LA and LN models the DVB-S symbol rate got corrupted
+- disabled editing of LG channel lists whith preset program numbers
+- last file is no longer loaded automatically when starting ChanSort
 
 The complete change log can be found at the end of this document
 
@@ -106,6 +100,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-05-16
+- FIX: on LG's LA and LN models the DVB-S symbol rate got corrupted
+- disabled editing of LG channel lists whith preset program numbers
+- last file is no longer loaded automatically when starting ChanSort
 
 2013-05-11
 - TV data files can be used as reference lists (without exporting .csv)

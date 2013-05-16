@@ -560,5 +560,13 @@ namespace ChanSort.Loader.Samsung
                       "Device Settings",
                       MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
+
+    // ------- testing -----------
+
+    internal string Series { get { return c.series; } }
+    internal int AnalogChannelLength { get { return c.avbtChannelLength; } }
+    internal int DigitalChannelLength { get { return c.dvbtChannelLength; } }
+    internal int SatChannelLength { get { return c.dvbsChannelLength; } }
+    internal int HdPlusChannelLength { get { return c.hdplusChannelLength; } }
   }
 }

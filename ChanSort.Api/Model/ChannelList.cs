@@ -28,6 +28,7 @@ namespace ChanSort.Api
     public int Count { get { return channels.Count; } }
     public int DuplicateUidCount { get { return duplicateUidCount; } }
     public int DuplicateProgNrCount { get { return duplicateProgNrCount; } }
+    public bool ReadOnly { get; set; }
 
     #region Caption
     public string Caption

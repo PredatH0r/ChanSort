@@ -133,7 +133,7 @@ namespace ChanSort.Api
     private ChannelList GetInitiallyClearedChannelList(SignalSource signalSource)
     {
       var channelList = dataRoot.GetChannelList(signalSource);
-      if (channelList == null)
+      if (channelList == null || channelList.ReadOnly)
         return null;
       if (!this.clearedLists.Contains(channelList))
       {

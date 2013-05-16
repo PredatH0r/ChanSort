@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-05-11";
+    public const string AppVersion = "v2013-05-16";
 
     private const int MaxMruEntries = 5;
 
@@ -297,7 +297,6 @@ namespace ChanSort.Ui
         }
       }
       regex += "]*";
-      this.btnToggleFavE.Enabled = (favorites & Favorites.E) != 0;
       this.repositoryItemCheckedComboBoxEdit1.Mask.EditMask = regex;
       this.repositoryItemCheckedComboBoxEdit2.Mask.EditMask = regex;
     }
@@ -429,7 +428,7 @@ namespace ChanSort.Ui
         if (File.Exists(path))
         {
           dlg.InitialDirectory = dir;
-          dlg.FileName = path; // file;
+          dlg.FileName = file; // path
         }
         else
         {
@@ -525,7 +524,12 @@ namespace ChanSort.Ui
       if (gviewLeft.IsValidRowHandle(0))
         this.SelectFocusedRow(this.gviewLeft, 0);
 
+      bool allowEdit = channelList != null && !channelList.ReadOnly;
+      this.gviewLeft.OptionsBehavior.Editable = allowEdit;
+      this.gviewRight.OptionsBehavior.Editable = allowEdit;
+
       this.UpdateInsertSlotTextBox();
+      this.UpdateMenu();
     }
     #endregion
 
@@ -536,7 +540,8 @@ namespace ChanSort.Ui
       string extension = Path.GetExtension(this.currentTvSerializer.FileName) ?? ".";
       using (SaveFileDialog dlg = new SaveFileDialog())
       {
-        dlg.FileName = this.currentTvFile;
+        dlg.InitialDirectory = Path.GetDirectoryName(this.currentTvFile);
+        dlg.FileName = Path.GetFileName(this.currentTvFile);
         dlg.AddExtension = true;
         dlg.DefaultExt = extension;
         dlg.Filter = string.Format(Resources.MainForm_FileDialog_SaveFileFilter, extension);
@@ -1061,6 +1066,7 @@ namespace ChanSort.Ui
 
     private bool GetGridColumnVisibility(GridColumn col, SignalSource source)
     {
+      if (col == this.colChannelOrTransponder) return (source & SignalSource.Sat) == 0;
       if (col == this.colShortName) return (source & SignalSource.Digital) != 0;
       if (col == this.colEncrypted) return (source & SignalSource.Digital) != 0;
       if (col == this.colServiceId) return (source & SignalSource.Digital) != 0;
@@ -1166,6 +1172,22 @@ namespace ChanSort.Ui
     {
       bool fileLoaded = this.dataRoot != null;
       bool isRight = this.lastFocusedGrid == this.gviewRight;
+      bool mayEdit = fileLoaded && this.currentChannelList != null && !this.currentChannelList.ReadOnly;
+
+      foreach (BarItemLink link in this.miEdit.ItemLinks)
+        link.Item.Enabled = mayEdit;
+
+      this.btnAdd.Enabled = mayEdit;
+      this.btnAddAll.Enabled = mayEdit;
+      this.btnRemoveLeft.Enabled = mayEdit;
+      this.btnRemoveRight.Enabled = mayEdit;
+      this.btnRenum.Enabled = mayEdit;
+      this.btnToggleFavA.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.A) != 0;
+      this.btnToggleFavB.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.B) != 0;
+      this.btnToggleFavC.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.C) != 0;
+      this.btnToggleFavD.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.D) != 0;
+      this.btnToggleFavE.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.E) != 0;
+      this.btnToggleLock.Enabled = mayEdit;
 
       this.miReload.Enabled = fileLoaded;
       this.miFileInformation.Enabled = fileLoaded;
@@ -1189,7 +1211,8 @@ namespace ChanSort.Ui
 
       var sel = this.gviewLeft.GetSelectedRows();
       var channel = sel.Length == 0 ? null : (ChannelInfo) this.gviewRight.GetRow(sel[0]);
-      this.miMoveUp.Enabled = channel != null && channel.NewProgramNr > 1;
+      this.miMoveUp.Enabled = this.btnUp.Enabled = mayEdit && channel != null && channel.NewProgramNr > this.currentChannelList.FirstProgramNumber;
+      this.miMoveDown.Enabled = this.btnDown.Enabled = mayEdit;
 
       this.miTvSettings.Enabled = this.currentTvSerializer != null;
       this.miCleanupChannels.Visibility = this.currentTvSerializer != null &&
@@ -1394,18 +1417,6 @@ namespace ChanSort.Ui
     {
       this.TryExecute(this.LoadSettings);
       this.TryExecute(this.InitAppAfterMainWindowWasShown);
-    }
-    #endregion
-
-    #region MainForm_Shown
-    private void MainForm_Shown(object sender, EventArgs e)
-    {
-      try
-      {
-        if (this.mruFiles.Count > 0 && File.Exists(this.mruFiles[0]))
-          this.LoadFiles(null, this.mruFiles[0]);
-      }
-      catch (Exception ex) { HandleException(ex); }
     }
     #endregion
 
@@ -1755,7 +1766,7 @@ namespace ChanSort.Ui
     {
       if (this.gviewRight.ActiveEditor != null)
         return;
-      if (e.KeyCode == Keys.Enter)
+      if (e.KeyCode == Keys.Enter && this.currentChannelList !=null && !this.currentChannelList.ReadOnly)
       {
         TryExecute(this.AddChannels);
         e.Handled = true;
@@ -1908,6 +1919,8 @@ namespace ChanSort.Ui
     #region gridLeft_ProcessGridKey
     private void gridLeft_ProcessGridKey(object sender, KeyEventArgs e)
     {
+      if (this.currentChannelList != null && this.currentChannelList.ReadOnly)
+        return;
       if (gviewLeft.ActiveEditor != null)
         return;
       if (e.KeyCode == Keys.Delete)

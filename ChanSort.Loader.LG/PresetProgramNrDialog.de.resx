@@ -117,30 +117,139 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="labelControl1.Text" xml:space="preserve">
-    <value>Diese Datei enthält vordefinierte Programmnummern für Satellitenkanäle.</value>
-  </data>
-  <data name="labelControl3.Text" xml:space="preserve">
-    <value>Aufgrund von Fehlern in der LG Firmware 2009-2013 ist diese Liste instabil!</value>
-  </data>
-  <data name="labelControl4.Text" xml:space="preserve">
-    <value>Um Probleme mit der bearbeiteten Senderliste zu vermeiden, erwägen Sie bitte eine dieser Optionen:</value>
-  </data>
-  <data name="labelControl5.Text" xml:space="preserve">
-    <value>- Sauberen Kanalsuchlauf ausführen (ohne vordefinierte Länder-/Satelliten-/Providerlisten)</value>
-  </data>
-  <data name="labelControl6.Text" xml:space="preserve">
-    <value>- Hotel-Modus aktivieren (muss bereits vor dem Export der Senderliste vom TV auf USB erfolgen)</value>
-  </data>
-  <data name="labelControl7.Text" xml:space="preserve">
-    <value>- ChanSort's "TV-Datei bereinigen" Option aktivieren (nicht unterstützt bei 2013 LA-Serie)</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="labelControl1.Appearance.DisabledImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="labelControl1.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="labelControl1.Appearance.HoverImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl1.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl1.Appearance.PressedImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl1.Text" xml:space="preserve">
+    <value>Diese Datei enthält vordefinierte Programmnummern für Satellitenkanäle. Aufgrund von Eigenheiten der aktuellen LG Firmware können solche Listen nicht zuverlässig verändert werden.</value>
+  </data>
+  <data name="labelControl3.Appearance.DisabledImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl3.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="labelControl3.Appearance.HoverImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl3.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl3.Appearance.PressedImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Die Bearbeitung der Satelliten-Senderliste wurde gesperrt!</value>
+  </data>
+  <data name="labelControl4.Appearance.DisabledImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl4.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="labelControl4.Appearance.HoverImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl4.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl4.Appearance.PressedImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl4.Text" xml:space="preserve">
+    <value>Um die Liste zu bearbeiten, muss ein sauberer Vollsuchlauf ausgeführt werden:</value>
+  </data>
+  <data name="labelControl5.Appearance.DisabledImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl5.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="labelControl5.Appearance.HoverImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl5.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl5.Appearance.PressedImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl5.Text" xml:space="preserve">
+    <value>- Behalten Sie eine Kopie dieser TLL-Datei, um sie eventuell später als Referenzdatei zu verwenden</value>
+  </data>
+  <data name="labelControl6.Appearance.DisabledImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl6.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="labelControl6.Appearance.HoverImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl6.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl6.Appearance.PressedImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl6.Text" xml:space="preserve">
+    <value>- Führen Sie einen automatischen Suchlauf mit den Optionen "Voll", "Keiner", "Blindsuche" aus</value>
+  </data>
+  <data name="labelControl7.Appearance.DisabledImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl7.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="labelControl7.Appearance.HoverImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl7.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl7.Appearance.PressedImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl7.Text" xml:space="preserve">
+    <value>- Führen Sie am TV die Funktion "Werkseinstellung" aus</value>
+  </data>
   <data name="linkDetails.Size" type="System.Drawing.Size, System.Drawing">
     <value>214, 13</value>
   </data>
   <data name="linkDetails.Text" xml:space="preserve">
     <value>Details hierzu gibt es auf der ChanSort Wiki</value>
+  </data>
+  <data name="labelControl2.Appearance.DisabledImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl2.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
+    <value>Horizontal</value>
+  </data>
+  <data name="labelControl2.Appearance.HoverImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl2.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl2.Appearance.PressedImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="labelControl2.Text" xml:space="preserve">
+    <value>- Speichern Sie die neue Liste auf USB und öffnen Sie sie mit ChanSort</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Wichtiger Hinweis</value>

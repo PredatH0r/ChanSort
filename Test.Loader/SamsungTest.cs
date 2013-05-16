@@ -51,11 +51,40 @@ namespace Test.Loader
 
           serializer.Load();
 
-          var fileName = Path.GetFileName(file) ?? "";          
-          string key = fileName.StartsWith("channel_list_") ? fileName.Substring(13, fileName.IndexOf('_',14)-13) : fileName;
-          
+          var fileName = Path.GetFileName(file) ?? "";
+          var model = this.GetSamsungModel(file);
+          var analogAirList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogT | ChanSort.Api.SignalSource.Tv);
+          var analogCableList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogC | ChanSort.Api.SignalSource.Tv);
+          var digitalAirList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbT | ChanSort.Api.SignalSource.Tv);
+          var digitalCableList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC | ChanSort.Api.SignalSource.Tv);
+          var satChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.Tv);
+          var hdChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS|ChanSort.Api.SignalSource.AstraHdPlus | ChanSort.Api.SignalSource.Tv);
+          string key = serializer.Series + 
+            "\t" + model +
+            "\t" + serializer.AnalogChannelLength +
+            "\t" + (analogAirList != null && analogAirList.Count > 0) +
+            "\t" + (analogCableList != null && analogCableList.Count > 0) +
+            "\t" + serializer.DigitalChannelLength +
+            "\t" + (digitalAirList != null && digitalAirList.Count > 0) +
+            "\t" + (digitalCableList != null && digitalCableList.Count > 0) +
+            "\t" + serializer.SatChannelLength +
+            "\t" + (satChannelList != null && satChannelList.Count > 0) +
+            "\t" + serializer.HdPlusChannelLength +
+            "\t" + (hdChannelList != null && hdChannelList.Count > 0);
           string relPath = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + fileName;
-          models[key] = relPath;
+          models[key] = serializer.Series + 
+            "\t" + model +
+            "\t" + serializer.AnalogChannelLength +
+            "\t" + serializer.DigitalChannelLength +
+            "\t" + serializer.SatChannelLength +
+            "\t" + serializer.HdPlusChannelLength +
+            "\t" + (analogAirList == null ? 0 : analogAirList.Count) +
+            "\t" + (analogCableList == null ? 0 : analogCableList.Count) +
+            "\t" + (digitalAirList == null ? 0 : digitalAirList.Count) +
+            "\t" + (digitalCableList == null ? 0 : digitalCableList.Count) +
+            "\t" + (satChannelList == null ? 0 : satChannelList.Count) +
+            "\t" + (hdChannelList == null ? 0 : hdChannelList.Count) +
+            "\t" + relPath;
 
           Assert.IsFalse(serializer.DataRoot.IsEmpty, "No channels loaded from " + file);
 
@@ -85,11 +114,17 @@ namespace Test.Loader
       }
 
       foreach (var model in models.OrderBy(e => e.Key))
-        Debug.WriteLine(model.Key + "\t" + model.Value);
+        Debug.WriteLine(model.Value);
 
       if (expectedData.Count > 0)
         Assert.Fail("Some files were not tested: " + expectedData.Keys.Aggregate((prev, cur) => prev + "," + cur));
       Assert.AreEqual("", errors.ToString());
+    }
+
+    private string GetSamsungModel(string filePath)
+    {
+      string fileName = Path.GetFileNameWithoutExtension(filePath) ?? "";
+      return fileName.StartsWith("channel_list_") ? fileName.Substring(13, fileName.IndexOf('_', 14) - 13) : fileName;
     }
     #endregion
   }
