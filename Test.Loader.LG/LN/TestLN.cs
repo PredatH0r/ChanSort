@@ -6,7 +6,7 @@ namespace Test.Loader.LG
   public class TestLN : TestBase
   {
     [TestMethod]
-    public void TestLX9500_T224T_Sat76TR()
+    public void TestLN5406_T224T_Sat76TR()
     {
       // "ThomasOhmes"
       //this.GenerateTestFiles("LN/xxLN5406-ZA99999");

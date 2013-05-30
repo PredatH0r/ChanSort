@@ -108,8 +108,8 @@ namespace ChanSort.Loader.Samsung
       mapping.SetWord(_ProgramNr, this.NewProgramNr);
       if (this.IsNameModified)
       {
-        mapping.SetString(_Name, this.Name, mapping.Settings.GetInt("lenName"));
-        mapping.SetByte(_NameLength, this.Name.Length * 2);
+        int bytes = mapping.SetString(_Name, this.Name, mapping.Settings.GetInt("lenName"));
+        mapping.SetByte(_NameLength, bytes);
         this.IsNameModified = false;
       }
       this.UpdateRawFavorites();

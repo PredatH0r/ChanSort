@@ -29,6 +29,7 @@ namespace ChanSort.Api
     public int DuplicateUidCount { get { return duplicateUidCount; } }
     public int DuplicateProgNrCount { get { return duplicateProgNrCount; } }
     public bool ReadOnly { get; set; }
+    public int MaxChannelNameLength { get; set; }
 
     #region Caption
     public string Caption

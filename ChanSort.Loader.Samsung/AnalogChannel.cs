@@ -24,7 +24,6 @@ namespace ChanSort.Loader.Samsung
     }
 
     #endregion
-
   }
 
 }

@@ -32,6 +32,9 @@ namespace ChanSort.Api
     TivuSat = 3 << 12,
     CanalDigital = 4 << 12,
 
+    StandardCable = 0 << 12,
+    CablePrime = 1 << 12,
+
     AnalogC=Analog + Cable, 
     AnalogT=Analog + Antenna, 
     AnalogCT=Analog + Cable + Antenna, 
@@ -39,7 +42,8 @@ namespace ChanSort.Api
     DvbT= Digital + Antenna, 
     DvbCT= Digital + Cable + Antenna, 
     DvbS= Digital + Sat,
-    HdPlusD = Digital + Sat + AstraHdPlus
+    HdPlusD = Digital + Sat + AstraHdPlus,
+    CablePrimeD = Digital + Cable + CablePrime
   }
   #endregion
 

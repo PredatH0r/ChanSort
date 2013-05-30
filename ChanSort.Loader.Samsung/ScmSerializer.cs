@@ -19,12 +19,13 @@ namespace ChanSort.Loader.Samsung
     private readonly MappingPool<DataMapping> ptccableMappings = new MappingPool<DataMapping>("PTC");
     private readonly MappingPool<DataMapping> transponderMappings = new MappingPool<DataMapping>("TransponderDataBase");
 
-    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT|SignalSource.TvAndRadio, "analog Air");
-    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC|SignalSource.TvAndRadio, "analog Cable");
-    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv, "digital Air");
-    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.TvAndRadio, "digital Cable");
+    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT|SignalSource.TvAndRadio, "Analog Air");
+    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC|SignalSource.TvAndRadio, "Analog Cable");
+    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv, "Digital Air");
+    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.TvAndRadio, "Digital Cable");
     private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.TvAndRadio, "Satellite");
     private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Astra HD+");
+    private readonly ChannelList primeChannels = new ChannelList(SignalSource.CablePrimeD | SignalSource.TvAndRadio, "Cable Prime");
     
     private readonly Dictionary<int, decimal> avbtFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> avbcFrequency = new Dictionary<int, decimal>();
@@ -37,6 +38,7 @@ namespace ChanSort.Loader.Samsung
     private byte[] dvbcFileContent;
     private byte[] dvbsFileContent;
     private byte[] hdplusFileContent;
+    private byte[] primeFileContent;
     private ModelConstants c;
 
     #region ctor()
@@ -98,6 +100,7 @@ namespace ChanSort.Loader.Samsung
         ReadDvbctChannels(zip, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
         ReadDvbTransponderFrequenciesFromPtc(zip, "PTCCABLE", this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
+        ReadDvbctChannels(zip, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
         ReadSatellites(zip);
         ReadTransponder(zip, "TransponderDataBase.dat");
         ReadTransponder(zip, "UserTransponderDataBase.dat");
@@ -162,7 +165,8 @@ namespace ChanSort.Loader.Samsung
                                 DetectModelFromAirAOrCableA(zip),
                                 DetectModelFromAirDOrCableD(zip),
                                 DetectModelFromSateD(zip),
-                                DetectModelFromTranspoderDatabase(zip)
+                                DetectModelFromTranspoderDatabase(zip),
+                                DetectModelFromAstraHdPlusD(zip)
                               };
 
       // note: E and F series use an identical format, so we only care about E here
@@ -210,7 +214,7 @@ namespace ChanSort.Loader.Samsung
     #region DetectModelFromAirDOrCableD()
     private string DetectModelFromAirDOrCableD(ZipFile zip)
     {
-      var entry = zip.GetEntry("map-AirD") ?? zip.GetEntry("map-CableD");
+      var entry = zip.GetEntry("map-AirD") ?? zip.GetEntry("map-CableD") ?? zip.GetEntry("map-CablePrime_D");
       if (entry == null)
         return null;
 
@@ -260,6 +264,21 @@ namespace ChanSort.Loader.Samsung
     }
     #endregion
 
+    #region DetectModelFromAstraHdPlusD()
+    private string DetectModelFromAstraHdPlusD(ZipFile zip)
+    {
+      var entry = zip.GetEntry("map-AstraHDPlusD");
+      if (entry == null)
+        return null;
+
+      var size = entry.Size;
+      string candidates = null;
+      if (size % 212 == 0)
+        candidates += "DE";
+      return candidates;
+    }
+    #endregion
+
 
     #region ReadAnalogFineTuning()
     private void ReadAnalogFineTuning(ZipFile zip)
@@ -301,6 +320,7 @@ namespace ChanSort.Loader.Samsung
 
       this.DataRoot.AddChannelList(list);
       var rawChannel = analogMappings.GetMapping(entrySize);
+      list.MaxChannelNameLength = rawChannel.Settings.GetInt("lenName")/2;
       rawChannel.SetDataPtr(data, 0);
       int count = data.Length / entrySize;
 
@@ -360,6 +380,7 @@ namespace ChanSort.Loader.Samsung
       bool isCable = (list.SignalSource & SignalSource.Cable) != 0;
       this.DataRoot.AddChannelList(list);
       DataMapping rawChannel = dvbctMappings.GetMapping(entrySize);
+      list.MaxChannelNameLength = rawChannel.Settings.GetInt("lenName") / 2;
       rawChannel.SetDataPtr(data, 0);
       int count = data.Length / entrySize;
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
@@ -447,6 +468,7 @@ namespace ChanSort.Loader.Samsung
       int entrySize = c.dvbsChannelLength;
       int count = this.dvbsFileContent.Length/entrySize;
       DataMapping mapping = dvbsMappings.GetMapping(entrySize);
+      this.dvbsChannels.MaxChannelNameLength = mapping.Settings.GetInt("lenName") / 2;
       mapping.SetDataPtr(dvbsFileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {

@@ -1,9 +1,13 @@
-Version v2013-05-16 ======================================================
+Version v2013-05-29 ======================================================
 
 Changes:
-- FIX: on LG's LA and LN models the DVB-S symbol rate got corrupted
-- disabled editing of LG channel lists whith preset program numbers
-- last file is no longer loaded automatically when starting ChanSort
+- Added support for Samsung "CablePrime" channel lists
+- FIX: error when loading a Samsung files which only contains an 
+  AstraHDPlus channel list.
+- Channel name editor now limits the input to the maximum number of 
+  characters allowed by the file format (e.g. 5 chars for Samsung analog
+  channel names)
+
 
 The complete change log can be found at the end of this document
 
@@ -33,7 +37,7 @@ Samsung
 -------
     Series: B*, C, D, E, F
     Lists:  Air analog, Air digital, Cable analog, Cable digital, 
-            Sat digital, Astra HD+
+            Cable prime, Sat digital, Astra HD+, 
 
     * NOTE: the "Air Analog"-List of the B-Series doesn't support all 
     editing features due to a lack of test files. If you have such a file,
@@ -100,6 +104,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-05-29
+- Added support for Samsung "CablePrime" channel lists
+- FIX: error when loading a Samsung files which only contains an 
+  AstraHDPlus channel list.
+- Channel name editor now limits the input to the maximum number of 
+  characters allowed by the file format (e.g. 5 chars for Samsung analog
+  channel names)
 
 2013-05-16
 - FIX: on LG's LA and LN models the DVB-S symbol rate got corrupted

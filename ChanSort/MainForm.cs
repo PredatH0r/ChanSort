@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-05-16";
+    public const string AppVersion = "v2013-05-29";
 
     private const int MaxMruEntries = 5;
 
@@ -263,12 +263,15 @@ namespace ChanSort.Ui
           firstNonEmpty = tab;
       }
 
-      if (firstNonEmpty == null)
-        firstNonEmpty = tabChannelList.TabPages[0];
-      if (firstNonEmpty == this.tabChannelList.SelectedTabPage)
-        this.ShowChannelList((ChannelList)firstNonEmpty.Tag);
-      else
-        this.tabChannelList.SelectedTabPage = firstNonEmpty;
+      if (tabChannelList.TabPages.Count > 0)
+      {
+        if (firstNonEmpty == null)
+          firstNonEmpty = tabChannelList.TabPages[0];
+        if (firstNonEmpty == this.tabChannelList.SelectedTabPage)
+          this.ShowChannelList((ChannelList)firstNonEmpty.Tag);
+        else
+          this.tabChannelList.SelectedTabPage = firstNonEmpty;
+      }
     }
 
     #endregion
@@ -2115,6 +2118,14 @@ namespace ChanSort.Ui
       this.SetActiveGrid(this.gviewRight);
     }
     #endregion
+
+    private void gview_ShownEditor(object sender, EventArgs e)
+    {
+      GridView view = (GridView) sender;
+      TextEdit edit = view.ActiveEditor as TextEdit;
+      if (edit == null) return;
+      edit.Properties.MaxLength = view.FocusedColumn.FieldName == "Name" ? this.currentChannelList.MaxChannelNameLength : 0;
+    }
 
   }
 }

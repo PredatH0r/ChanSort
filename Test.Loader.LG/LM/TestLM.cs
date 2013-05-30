@@ -17,6 +17,7 @@ namespace Test.Loader.LG
     public void TestLM611S_T188_Sat68TR()
     {
       // "wagnale"
+      //this.GenerateTestFiles("LM/xxLM611S-ZA00001");
       this.ExecuteTest("LM/xxLM611S-ZA00001");
     }
 

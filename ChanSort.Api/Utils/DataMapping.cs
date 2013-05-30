@@ -179,7 +179,7 @@ namespace ChanSort.Api
     #endregion
 
     #region SetString()
-    public void SetString(string key, string text, int maxLen)
+    public int SetString(string key, string text, int maxLen)
     {
       var bytes = this.DefaultEncoding.GetBytes(text);
       int len = Math.Min(bytes.Length, maxLen);
@@ -189,6 +189,7 @@ namespace ChanSort.Api
         for (int i = len; i < maxLen; i++)
           this.data[baseOffset + offset + i] = 0;
       }
+      return len;
     }
     #endregion
   }

@@ -48,7 +48,6 @@ namespace ChanSort.Loader.LG
     private int dvbsChannelCount;
 
     private DvbsDataLayout satConfig;
-    private bool isDvbsSymbolRateDiv2;
 
     private Dictionary<int, int> nextChannelIndex;
     private int firmwareBlockSize;
@@ -152,6 +151,9 @@ namespace ChanSort.Loader.LG
 #if STORE_DVBS_CHANNELS_IN_DATABASE
       this.StoreToDatabase();
 #endif
+
+      foreach (var list in this.DataRoot.ChannelLists)
+        list.MaxChannelNameLength = 40;
     }
 
     #endregion
@@ -305,18 +307,19 @@ namespace ChanSort.Loader.LG
       long blockId = BitConverter.ToInt64(fileContent, off + 8);
       if (blockId == DVBS_S2)
         return true;
-#if LM640T_EXPERIMENT
+
+      // LW4500, LW5400, LMxxxT and maybe other models with bogus DVB-S block
       if (blockId == -1)
       {
         this.satConfig = satConfigs.TryGet(blockSize);
         if (this.satConfig != null)
         {
-          this.EraseDvbsBlock(off);
-          
-          return true;
+          this.dvbsBlockSize = blockSize;
+          this.dvbsBlockOffset = off;
+          off += 4 + blockSize;
         }
       }
-#endif
+
       return false;
     }
     #endregion
@@ -583,7 +586,7 @@ namespace ChanSort.Loader.LG
     #region CleanUpChannelData()
     public override string CleanUpChannelData()
     {
-      if (this.satConfig == null)
+      if (this.satConfig == null || this.dvbsSubblockCrcOffset == null)
         return "";
 
       this.DataRoot.NeedsSaving = true;
@@ -763,7 +766,7 @@ namespace ChanSort.Loader.LG
       if (this.reorderPhysically || removeDeletedActChannels)
         this.ReorderActChannelsPhysically();
 
-      if (satConfig != null)
+      if (this.dvbsSubblockCrcOffset != null)
         this.UpdateDvbsChecksums();
 
       using (var file = new BinaryWriter(new FileStream(tvOutputFile, FileMode.Create, FileAccess.Write)))
@@ -1007,9 +1010,10 @@ namespace ChanSort.Loader.LG
 
     internal bool IsTesting { get; set; }
     internal int ACTChannelLength { get { return this.actChannelSize; } }
-    internal bool HasDvbs { get { return dvbsBlockOffset != 0; } }
+    internal bool HasDvbs { get { return satConfig != null; } }
     internal int SatChannelLength { get { return satConfig != null ? satConfig.dvbsChannelLength : 0; } }
     internal decimal DvbsSymbolRateCorrectionFactor { get { return this.dvbsSymbolRateFactor; } }
     internal int FirmwareBlockSize { get { return this.firmwareBlockSize; } }
+    internal bool HasPresetDvbsChannelNumbers { get { return this.presetChannels > 0; } }
   }
 }

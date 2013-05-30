@@ -41,12 +41,16 @@ namespace Test.Loader
           var analogList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogCT | ChanSort.Api.SignalSource.Tv);
           var digitalList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbCT | ChanSort.Api.SignalSource.Tv);
           var satChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.Tv);
-          string key = model +
+          string key = fileName +
+            model +
             "\t" + serializer.ACTChannelLength+
             "\t" + (analogList != null && analogList.Count > 0) +
             "\t" + (digitalList != null && digitalList.Count > 0) +
             "\t" + serializer.SatChannelLength +
-            "\t" + (satChannelList != null && satChannelList.Count > 0);
+            "\t" + (satChannelList != null && satChannelList.Count > 0) +
+            "\t" + serializer.HasPresetDvbsChannelNumbers +
+            "\t" + serializer.TvCountryCode;
+
           string relPath = Path.GetFileName(Path.GetDirectoryName(file))+"\\"+fileName;          
           models[key] = model + 
             "\t" + serializer.ACTChannelLength + 
@@ -54,6 +58,8 @@ namespace Test.Loader
             "\t" + (analogList == null ? 0 : analogList.Count) +
             "\t" + (digitalList == null ? 0 : digitalList.Count) +
             "\t" + (satChannelList == null ? 0 : satChannelList.Count) +
+            "\t" + serializer.HasPresetDvbsChannelNumbers +
+            "\t" + serializer.TvCountryCode +
             "\t" + serializer.DvbsSymbolRateCorrectionFactor +
             "\t" + relPath;
 
