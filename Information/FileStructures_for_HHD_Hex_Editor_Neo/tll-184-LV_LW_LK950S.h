@@ -1,105 +1,98 @@
-typedef unsigned char byte;
-typedef unsigned short word;
-typedef unsigned int dword;
+#include "tll-common.h"
 
-#define ACT_CHANNEL_PADDING 4
-#define SAT_CHANNEL_PADDING 2
 #define MAX_SAT_COUNT 64
 #define MAX_LNB_COUNT 40
 #define MAX_DVBS_COUNT 7520
 #define MAX_TP_COUNT 2400
 
-public struct LV184_AnalogChannel
+struct LV184_AnalogChannel
 {
-	word t1[5];
-  byte ChannelTransponder1;
+  byte t1[8];
+  TLL_SignalSource SignalSource;
   byte t1b;
-	word ProgramNr;
-	word t2[3];
+  word ChannelTransponder1;
+  word ProgramNr;
+  word t2[3];
   byte Favorites1;
   byte t2b;
   word Frequency1Div50;
-	word APID1;
+  word APID1;
   byte ChannelNumberInBand;
   byte ChannelBand;
-	byte t3[2];
-	char CH_Name1[40];
-	byte CH_NameLength1;
-	byte t4[1];
-	word SID1;
-	byte t5a[16];
-  byte ChannelTransponder2;
-  byte t5b;
-	dword Frequency;
-	byte t6[2];
-	word ONID;
-	word TSID;
-	byte t7[19];
-  byte ChannelTransponder3;
-  byte t8a;
+  byte t3[2];
+  char CH_Name1[40];
+  byte CH_NameLength1;
+  byte t4[1];
+  word SID1;
+  byte t5a[16];
+  word ChannelTransponder2;
+  dword Frequency;
+  byte t6[2];
+  word ONID;
+  word TSID;
+  byte t7[19];
+  word ChannelTransponder3;
   word ProgramNr2;
   byte t8b[3];
-	byte ChannelTransponder4;
-  byte t9;
-	byte Favorites2;
-	byte LockSkipHide;
-	word SID2;
-	byte ServiceType; 
-	byte CH_NameLength2;
-	char CH_Name2[40];
-	word Frequency2Div50;
-	word APID2;
-	byte t11[ACT_CHANNEL_PADDING];
+  word ChannelTransponder4;
+  byte Favorites2;
+  byte LockSkipHide;
+  word SID2;
+  byte ServiceType; 
+  byte CH_NameLength2;
+  char CH_Name2[40];
+  word Frequency2Div50;
+  word APID2;
+  byte t11[4];
 };
 
 
-public struct LV184_DvbCtChannel
+struct LV184_DvbCtChannel
 {
-	word t1[5];
-	byte ChannelTransponder1;
-  byte t1f;
-	word ProgramNr;
-	word t2[3];
-	byte Favorites1;
-	byte t2d;
+  byte t1[8];
+  TLL_SignalSource SignalSource;
+  byte t1b;
+  word ChannelTransponder1;
+  word ProgramNr;
+  word LogicalChannelNumber;
+  word t2[2];
+  byte Favorites1;
+  byte t2d;
   word PcrPid1;
-	word APID1;
+  word APID1;
   word VPID1;
-	byte t3[2];
-	char CH_Name1[40];
-	byte CH_NameLength1;
-	byte t4;
-	word SID1;
-	byte t5a[16];
-  byte ChannelTransponder2;
-  byte t5b;
-	dword Frequency;
-	byte t6[2];
-	word ONID;
-	word TSID;
-	byte t7[19];
-  byte ChannelTransponder3;
-  byte t8a;
+  byte t3[2];
+  char CH_Name1[40];
+  byte CH_NameLength1;
+  byte t4;
+  word SID1;
+  byte t5a[16];
+  word ChannelTransponder2;
+  dword Frequency;
+  byte t6[2];
+  word ONID;
+  word TSID;
+  byte t7[19];
+  word ChannelTransponder3;
   word ProgramNr2;
   byte t8b[3];
-	byte ChannelTransponder4;
-  byte t9;
-	byte Favorites2;
-	byte LockSkipHide;
-	word SID2;
-	byte ServiceType; 
-	byte CH_NameLength2;
-	char CH_Name2[40];
-	word PcrPid2;
-	word APID2;
-	byte t11[ACT_CHANNEL_PADDING];
+  word ChannelTransponder4;
+  byte Favorites2;
+  byte LockSkipHide;
+  word SID2;
+  byte ServiceType; 
+  byte CH_NameLength2;
+  char CH_Name2[40];
+  word PcrPid2;
+  word APID2;
+  byte t11[4];
 };
 
 struct LV184_AnalogBlock
 {
   dword BlockSize; 
-	dword ChannelCount;
-	LV184_AnalogChannel Channels[ChannelCount];
+  dword ChannelCount;
+  LV184_AnalogChannel Channels[ChannelCount];
 };
 
 struct LV184_FirmwareBlock
@@ -111,8 +104,8 @@ struct LV184_FirmwareBlock
 struct LV184_DvbCTBlock
 {
   dword BlockSize;
-	dword ChannelCount;
-	LV184_DvbCtChannel Channels[ChannelCount];
+  dword ChannelCount;
+  LV184_DvbCtChannel Channels[ChannelCount];
 };
 
 struct LV184_DvbsHeaderSubblock
@@ -122,11 +115,11 @@ struct LV184_DvbsHeaderSubblock
   word Temp03[2];
 };
 
-public struct LV184_Satellite
+struct LV184_Satellite
 {
-	char Name[32]; 
-	byte PosDeg; 
-	byte PosCDeg; 
+  char Name[32]; 
+  byte PosDeg; 
+  byte PosCDeg; 
   word Unknown1;
   word Unknown2;
   word Unknown3;
@@ -134,7 +127,7 @@ public struct LV184_Satellite
   word Unknown4;
 };
 
-public struct LV184_DvbsSatelliteSubblock
+struct LV184_DvbsSatelliteSubblock
 {
   dword Crc32;
   word Unknown1;
@@ -146,22 +139,22 @@ public struct LV184_DvbsSatelliteSubblock
   LV184_Satellite Satellites[MAX_SAT_COUNT];
 };
 
-public struct LV184_Transponder
+struct LV184_Transponder
 {
-	byte t1[10];
-	word TP_Number;
-	word TP_Freq;
-	byte t2[4]; 
-	word NID; 
-	word TID; 
-	byte t3[3];
+  byte t1[10];
+  word TP_Number;
+  word TP_Freq;
+  byte t2[4]; 
+  word NID; 
+  word TID; 
+  byte t3[3];
   word SRate;
   byte t4[9]; 
-	byte SatIndexTimes2; 
-	byte t5[3]; 
+  byte SatIndexTimes2; 
+  byte t5[3]; 
 };
 
-public struct LV184_DvbsTransponderSubblock
+struct LV184_DvbsTransponderSubblock
 {
   dword Crc32;
   word Unknown1;
@@ -176,39 +169,40 @@ public struct LV184_DvbsTransponderSubblock
     word Next;
     word Current;
   } TransponderTable1[MAX_TP_COUNT];
-	word Unknown5;
-  LV184_Transponder Transponder[MAX_TP_COUNT];	
+  word Unknown5;
+  LV184_Transponder Transponder[MAX_TP_COUNT];  
 };
 
-public struct LV184_SatChannel
+struct LV184_SatChannel
 {
-	byte t1[2];
-	byte t2[3];
-	word TP_Number; 
+  word LnbIndex;  
+  byte t2[2];
+  TLL_SignalSource SignalSource;
+  word TP_Number; 
   byte t2b;
-	word CH_Number; 
-	word CH_NumberFixed;
+  word CH_Number; 
+  word CH_NumberFixed;
   word TP_Number2;
   byte t3b;
-	byte EditFlag;   
-	word SID;       
-	byte ServiceType;
-	byte CH_NameLength; 
-	char CH_Name[40];
-	word VID; 
-	word AID; 
-	word t4;  
-	byte t5[SAT_CHANNEL_PADDING];
+  byte EditFlag;   
+  word SID;       
+  byte ServiceType;
+  byte CH_NameLength; 
+  char CH_Name[40];
+  word VID; 
+  word AID; 
+  word t4;  
+  byte t5[2];
 };
 
 struct LV184_DvbsChannelSubblock
 {
   dword Crc32; 
-	word Unknown[2];
+  word Unknown[2];
   word LinkedListStartIndex;
-	word LinkedListEndIndex1;
-	word LinkedListEndIndex2;
-	word ChannelCount;
+  word LinkedListEndIndex1;
+  word LinkedListEndIndex2;
+  word ChannelCount;
   byte AllocationBitmap[MAX_DVBS_COUNT/8];
   struct LV184_LinkedChannelList
   {
@@ -220,17 +214,17 @@ struct LV184_DvbsChannelSubblock
   LV184_SatChannel Channels[MAX_DVBS_COUNT];
 };
 
-public struct LV184_Lnb
+struct LV184_Lnb
 {
-	byte SettingsID; 
-	byte t2[3];
-	byte SatelliteID;
-	byte t3[3];
-	char FrequenceName[12]; 
-	word LOF1; 
-	byte t4[2]; 
-	word LOF2; 
-	byte t5[18]; 
+  byte SettingsID; 
+  byte t2[3];
+  byte SatelliteID;
+  byte t3[3];
+  char FrequenceName[12]; 
+  word LOF1; 
+  byte t4[2]; 
+  word LOF2; 
+  byte t5[18]; 
 };
 
 struct LV184_DvbsLnbSubblock
@@ -255,16 +249,15 @@ struct LV184_DvbSBlock
 struct LV184_SettingsBlock
 {
   dword BlockSize;
-	byte Data[BlockSize]; 
+  byte Data[BlockSize]; 
 };
 
 public struct LV184
 {
-	byte Header[4]; 
-	
+  byte Header[4];  
   LV184_AnalogBlock Analog;
   LV184_FirmwareBlock Firmware;
-	LV184_DvbCTBlock DvbCT;
+  LV184_DvbCTBlock DvbCT;
   LV184_DvbSBlock DvbS;
   LV184_SettingsBlock Settings;
 };

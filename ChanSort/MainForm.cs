@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-05-29";
+    public const string AppVersion = "v2013-06-22";
 
     private const int MaxMruEntries = 5;
 
@@ -257,6 +257,8 @@ namespace ChanSort.Ui
       XtraTabPage firstNonEmpty = null;
       foreach (var list in this.dataRoot.ChannelLists)
       {
+        if (list.Channels.Count == 0)
+          continue;
         var tab = this.tabChannelList.TabPages.Add(list.Caption);
         tab.Tag = list;
         if (firstNonEmpty == null && list.Count > 0)

@@ -4,6 +4,7 @@ namespace ChanSort.Loader.LG
 {
   public class DtvChannel : TllChannelBase
   {
+    private const string _SignalSource = "offSignalSource";
     private const string _ChannelOrTransponder = "offChannelTransponder";
     private const string _FrequencyLong = "offFrequencyLong";
 
@@ -14,7 +15,9 @@ namespace ChanSort.Loader.LG
 
     public DtvChannel(int slot, DataMapping data) : base(data)
     {
-      this.InitCommonData(slot, SignalSource.DvbCT, data);
+      var signalSource = SignalSource.Digital;
+      signalSource |= data.GetByte(_SignalSource) == 1 ? SignalSource.Antenna : SignalSource.Cable;
+      this.InitCommonData(slot, signalSource, data);
       this.InitDvbData(data);
 
       int channel = data.GetByte(_ChannelOrTransponder);

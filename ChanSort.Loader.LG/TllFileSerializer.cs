@@ -26,10 +26,12 @@ namespace ChanSort.Loader.LG
     private readonly MappingPool<FirmwareData> firmwareMappings = new MappingPool<FirmwareData>("Firmware");
 
     private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv, "Analog TV");
-    private readonly ChannelList dtvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Tv, "DTV");
-    private readonly ChannelList radioChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Radio, "Radio");
-    private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat-DTV");
-    private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat-Radio");
+    private readonly ChannelList dvbcTvChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv, "DVB-C TV");
+    private readonly ChannelList dvbtTvChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv, "DVB-T TV");
+    private readonly ChannelList dvbcRadioChannels = new ChannelList(SignalSource.DvbC | SignalSource.Radio, "DVB-C Radio");
+    private readonly ChannelList dvbtRadioChannels = new ChannelList(SignalSource.DvbT | SignalSource.Radio, "DVB-T Radio");
+    private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat TV");
+    private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat Radio");
 
     private byte[] fileContent;
 
@@ -82,8 +84,10 @@ namespace ChanSort.Loader.LG
       this.ReadConfigurationFromIniFile();
 
       this.DataRoot.AddChannelList(atvChannels);
-      this.DataRoot.AddChannelList(dtvChannels);
-      this.DataRoot.AddChannelList(radioChannels);
+      this.DataRoot.AddChannelList(dvbcTvChannels);
+      this.DataRoot.AddChannelList(dvbcRadioChannels);
+      this.DataRoot.AddChannelList(dvbtTvChannels);
+      this.DataRoot.AddChannelList(dvbtRadioChannels);
     }
     #endregion
 
@@ -825,10 +829,13 @@ namespace ChanSort.Loader.LG
     {
       this.ReorderChannelData(this.analogBlockOffset + 8, this.actChannelSize, this.analogChannelCount, this.atvChannels.Channels);
 
-      var tv = this.dtvChannels.Channels.OrderBy(c => c.NewProgramNr);
-      var radio = this.radioChannels.Channels.OrderBy(c => c.NewProgramNr);
-      var dvbCt = tv.Union(radio).ToList();
-      this.ReorderChannelData(this.dvbctBlockOffset + 8, this.actChannelSize, this.dvbctChannelCount, dvbCt);
+      var dvbcTv = this.dvbcTvChannels.Channels.OrderBy(c => c.NewProgramNr);
+      var dvbcRadio = this.dvbcRadioChannels.Channels.OrderBy(c => c.NewProgramNr);
+      var dvbtTv = this.dvbtTvChannels.Channels.OrderBy(c => c.NewProgramNr);
+      var dvbtRadio = this.dvbtRadioChannels.Channels.OrderBy(c => c.NewProgramNr);
+
+      var dvb = dvbtTv.Union(dvbtRadio).Union(dvbcTv).Union(dvbcRadio).ToList();
+      this.ReorderChannelData(this.dvbctBlockOffset + 8, this.actChannelSize, this.dvbctChannelCount, dvb);
     }
     #endregion
 

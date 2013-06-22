@@ -1,13 +1,11 @@
-Version v2013-05-29 ======================================================
+Version v2013-06-22 ======================================================
 
 Changes:
-- Added support for Samsung "CablePrime" channel lists
-- FIX: error when loading a Samsung files which only contains an 
-  AstraHDPlus channel list.
-- Channel name editor now limits the input to the maximum number of 
-  characters allowed by the file format (e.g. 5 chars for Samsung analog
-  channel names)
-
+- Showing separate DVB-C and DVB-T lists for LG TVs (LA series can have
+  both lists while prior models only had one)
+- FIX: Lists for LG's LD,LE,LX,PK (except 950), PT, LW4500, LW5400 models
+  are now physically reordered
+- Empty lists are no longer displayed
 
 The complete change log can be found at the end of this document
 
@@ -104,6 +102,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-06-22
+- Showing separate DVB-C and DVB-T lists for LG TVs (LA series can have
+  both lists while prior models only had one)
+- FIX: Lists for LG's LD,LE,LX,PK (except 950), PT, LW4500, LW5400 models
+  are now physically reordered
+- Empty lists are no longer displayed
 
 2013-05-29
 - Added support for Samsung "CablePrime" channel lists
