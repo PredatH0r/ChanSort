@@ -1,11 +1,13 @@
-Version v2013-06-22 ======================================================
+Version v2013-06-23 ======================================================
 
 Changes:
-- Showing separate DVB-C and DVB-T lists for LG TVs (LA series can have
-  both lists while prior models only had one)
-- FIX: Lists for LG's LD,LE,LX,PK (except 950), PT, LW4500, LW5400 models
-  are now physically reordered
-- Empty lists are no longer displayed
+- Drag&Drop inside left list and from right to left list 
+  (only available when the left list is sorted by "New Pr#")
+- Simplified menu/tool bar
+- FIX: Moving multiple channels down now works correctly
+- FIX: +/- keys no longer open the cell-editor after moving a channel
+- Editor for "New Pr#" no longer opens when pressing non-numeric keys
+- Move up/down is now disabled when left list is not sorted by "New Pr#"
 
 The complete change log can be found at the end of this document
 
@@ -102,6 +104,15 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-06-23
+- Drag&Drop inside left list and from right to left list 
+  (only available when the left list is sorted by "New Pr#")
+- Simplified menu/tool bar
+- FIX: Moving multiple channels down now works correctly
+- FIX: +/- keys no longer open the cell-editor after moving a channel
+- Editor for "New Pr#" no longer opens when pressing non-numeric keys
+- Move up/down is now disabled when left list is not sorted by "New Pr#"
 
 2013-06-22
 - Showing separate DVB-C and DVB-T lists for LG TVs (LA series can have

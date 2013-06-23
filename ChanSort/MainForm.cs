@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-06-22";
+    public const string AppVersion = "v2013-06-23";
 
     private const int MaxMruEntries = 5;
 
@@ -34,6 +34,22 @@ namespace ChanSort.Ui
       InsertBefore = 0,
       InsertAfter = 1,
       Swap = 2
+    }
+    #endregion
+
+    #region class DragDropInfo
+    private class DragDropInfo
+    {
+      public readonly GridView SourceView;
+      public readonly int SourceProgramNumber;
+      public EditMode EditMode;
+      public int DropRowHandle = -1;
+
+      public DragDropInfo(GridView source, int sourceProgramNumber)
+      {
+        this.SourceView = source;
+        this.SourceProgramNumber = sourceProgramNumber;
+      }
     }
     #endregion
 
@@ -53,6 +69,8 @@ namespace ChanSort.Ui
     private EditMode curEditMode = EditMode.InsertAfter;
     private bool dontOpenEditor;
     private readonly List<string> mruFiles = new List<string>();
+    private DevExpress.XtraGrid.Views.Grid.ViewInfo.GridHitInfo downHit;
+    private DragDropInfo dragDropInfo;
 
     #region ctor()
     public MainForm()
@@ -502,7 +520,16 @@ namespace ChanSort.Ui
 
     #endregion
 
-
+    #region IsLeftGridSortedByNewProgNr
+    private bool IsLeftGridSortedByNewProgNr
+    {
+      get
+      {
+        return this.gviewLeft.SortedColumns.Count >= 1 &&
+               this.gviewLeft.SortedColumns[0].FieldName == this.colOutSlot.FieldName;
+      }
+    }
+    #endregion
 
     #region ShowChannelList()
     private void ShowChannelList(ChannelList channelList)
@@ -743,6 +770,7 @@ namespace ChanSort.Ui
 
     private void MoveChannels(bool up)
     {
+      if (!this.IsLeftGridSortedByNewProgNr) return;
       var selectedChannels = this.GetSelectedChannels(this.gviewLeft);
       if (selectedChannels.Count == 0) return;
 
@@ -1214,10 +1242,11 @@ namespace ChanSort.Ui
       this.miMoveDown.Visibility = visLeft;
       this.miAddChannel.Visibility = visRight;
 
+      bool isLeftGridSortedByNewProgNr = this.IsLeftGridSortedByNewProgNr;
       var sel = this.gviewLeft.GetSelectedRows();
       var channel = sel.Length == 0 ? null : (ChannelInfo) this.gviewRight.GetRow(sel[0]);
-      this.miMoveUp.Enabled = this.btnUp.Enabled = mayEdit && channel != null && channel.NewProgramNr > this.currentChannelList.FirstProgramNumber;
-      this.miMoveDown.Enabled = this.btnDown.Enabled = mayEdit;
+      this.miMoveUp.Enabled = this.btnUp.Enabled = mayEdit && isLeftGridSortedByNewProgNr && channel != null && channel.NewProgramNr > this.currentChannelList.FirstProgramNumber;
+      this.miMoveDown.Enabled = this.btnDown.Enabled = mayEdit && isLeftGridSortedByNewProgNr;
 
       this.miTvSettings.Enabled = this.currentTvSerializer != null;
       this.miCleanupChannels.Visibility = this.currentTvSerializer != null &&
@@ -1653,27 +1682,27 @@ namespace ChanSort.Ui
     private void gview_MouseDown(object sender, MouseEventArgs e)
     {
       GridView view = (GridView)sender;
-      var hit = view.CalcHitInfo(e.Location);
-      if (!view.IsDataRow(hit.RowHandle))
+      this.downHit = view.CalcHitInfo(e.Location);
+      if (!view.IsDataRow(downHit.RowHandle))
         return;
       if (e.Button == MouseButtons.Left)
       {
         if (ModifierKeys == Keys.None)
         {
-          if (hit.RowHandle != view.FocusedRowHandle)
-            SelectFocusedRow(view, hit.RowHandle);
+          if (downHit.RowHandle != view.FocusedRowHandle)
+            SelectFocusedRow(view, downHit.RowHandle);
           this.timerEditDelay.Start();
         }
         else
         {
-          if (ModifierKeys == Keys.Control && !view.IsRowSelected(hit.RowHandle))
-            this.BeginInvoke((Action) (() => view.SelectRow(hit.RowHandle)));
+          if (ModifierKeys == Keys.Control && !view.IsRowSelected(downHit.RowHandle))
+            this.BeginInvoke((Action) (() => view.SelectRow(downHit.RowHandle)));
         }
       }    
       else if (e.Button == MouseButtons.Right)
       {
-        if (!view.IsRowSelected(hit.RowHandle))
-          SelectFocusedRow(view, hit.RowHandle);
+        if (!view.IsRowSelected(downHit.RowHandle))
+          SelectFocusedRow(view, downHit.RowHandle);
       }
 
       this.dontOpenEditor = true;
@@ -1690,7 +1719,11 @@ namespace ChanSort.Ui
       this.timerEditDelay.Stop();
       this.dontOpenEditor = false;
       if (this.lastFocusedGrid != null)
-        this.lastFocusedGrid.ShowEditor();
+      {
+        var hit = this.lastFocusedGrid.CalcHitInfo(this.lastFocusedGrid.GridControl.PointToClient(MousePosition));
+        if (hit.Column == this.lastFocusedGrid.FocusedColumn && hit.RowHandle == this.lastFocusedGrid.FocusedRowHandle)
+          this.lastFocusedGrid.ShowEditor();
+      }
     }
 
     private void gview_ShowingEditor(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1701,124 +1734,156 @@ namespace ChanSort.Ui
     }
     #endregion
 
-    #region gviewLeft_LayoutUpgrade, gviewRight_LayoutUpgrade
-    private void gviewLeft_LayoutUpgrade(object sender, LayoutUpgadeEventArgs e)
+    #region gview_ShownEditor, gview_KeyPress
+
+    private void gview_ShownEditor(object sender, EventArgs e)
     {
-      this.gviewLeft.ClearGrouping();
-      this.gviewLeft.OptionsCustomization.AllowGroup = false;
+      GridView view = (GridView)sender;
+      TextEdit edit = view.ActiveEditor as TextEdit;
+      if (edit == null) return;
+      edit.Properties.MaxLength = view.FocusedColumn.FieldName == "Name" ? this.currentChannelList.MaxChannelNameLength : 0;
     }
 
-    private void gviewRight_LayoutUpgrade(object sender, LayoutUpgadeEventArgs e)
+    private void gview_KeyPress(object sender, KeyPressEventArgs e)
     {
-      this.gviewRight.ClearGrouping();
-      this.gviewRight.OptionsCustomization.AllowGroup = false;
-    }
-    #endregion
-
-    #region gviewRight_FocusedRowChanged
-    private void gviewRight_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
-    {
-      this.gviewRight.SelectRow(e.FocusedRowHandle);
-    }
-    #endregion
-
-    #region gviewRight_CustomColumnDisplayText
-    private void gviewRight_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
-    {
-      if (e.Column == this.colSlotNew)
-      {
-        if (!(e.Value is int)) return;
-        if ((int) e.Value == -1)
-          e.DisplayText = string.Empty;
-      }
-      else if (e.Column == this.colFavorites)
-      {
-        if (!(e.Value is Favorites)) return;
-        if ((Favorites) e.Value == 0)
-          e.DisplayText = string.Empty;
-      }
-    }
-    #endregion
-
-    #region gviewRight_RowCellStyle
-    private void gviewRight_RowCellStyle(object sender, RowCellStyleEventArgs e)
-    {
-      ChannelInfo channel = (ChannelInfo)this.gviewRight.GetRow(e.RowHandle);
-      if (channel == null) return;
-      if (channel.OldProgramNr == -1)
-      {
-        e.Appearance.ForeColor = Color.Red;
-        e.Appearance.Options.UseForeColor = true;
-      }
-      else if (channel.NewProgramNr != -1)
-      {
-        e.Appearance.ForeColor = Color.Gray;
-        e.Appearance.Options.UseForeColor = true;
-      }
-    }
-    #endregion
-
-    #region gviewRight_RowClick
-    private void gviewRight_RowClick(object sender, RowClickEventArgs e)
-    {
-      if (e.Clicks == 2 && e.Button == MouseButtons.Left && this.gviewRight.IsDataRow(e.RowHandle))
-        TryExecute(this.AddChannels);
-    }
-    #endregion
-
-    #region gridRight_ProcessGridKey
-    private void gridRight_ProcessGridKey(object sender, KeyEventArgs e)
-    {
-      if (this.gviewRight.ActiveEditor != null)
-        return;
-      if (e.KeyCode == Keys.Enter && this.currentChannelList !=null && !this.currentChannelList.ReadOnly)
-      {
-        TryExecute(this.AddChannels);
+      var view = (GridView)sender;
+      if (view.FocusedColumn.DisplayFormat.FormatType == FormatType.Numeric && (e.KeyChar < '0' || e.KeyChar > '9'))
         e.Handled = true;
-      }
     }
-
     #endregion
 
-    #region gviewRight_ValidatingEditor
-    private void gviewRight_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
+    #region gview_MouseMove
+    private void gview_MouseMove(object sender, MouseEventArgs e)
     {
       try
       {
-        if (gviewRight.FocusedRowHandle == GridControl.AutoFilterRowHandle)
+        var view = (GridView)sender;
+        if (this.downHit == null || e.Button != MouseButtons.Left || view.ActiveEditor != null || ModifierKeys != Keys.None)
           return;
-        if (this.gviewRight.FocusedColumn == this.colSlotNew && e.Value is string)
-          e.Valid = this.SetSlotNumber((string)e.Value);
-        else if (this.gviewRight.FocusedColumn == this.colFavorites && e.Value is string)
-          e.Value = ChannelInfo.ParseFavString((string)e.Value);
-        else if (gviewRight.FocusedColumn == this.colName)
+        // drag/drop only allowed when left grid is sorted by NewSlotNr
+        if (!this.IsLeftGridSortedByNewProgNr) 
+          return;
+        if (Math.Abs(e.Y - downHit.HitPoint.Y) < SystemInformation.DragSize.Height &&
+          Math.Abs(e.X - downHit.HitPoint.X) < SystemInformation.DragSize.Width)
+          return;
+
+        // start drag operation
+        var channel = (ChannelInfo)view.GetRow(downHit.RowHandle);
+        this.dragDropInfo = new DragDropInfo(view, channel.NewProgramNr);
+        view.GridControl.DoDragDrop(this.dragDropInfo, DragDropEffects.Move);
+        this.downHit = null;
+      }
+      catch (Exception ex) { HandleException(ex); }
+    }
+    #endregion
+
+    #region grid_GiveFeedback
+    private void grid_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+    {
+      // this event is called on the source of the drag operation
+      e.UseDefaultCursors = false;
+      if (e.Effect == DragDropEffects.Move)
+      {
+        if (this.dragDropInfo.EditMode == EditMode.InsertBefore)
+          Cursor.Current = Cursors.PanNE;
+        else if (this.dragDropInfo.EditMode == EditMode.InsertAfter)
+          Cursor.Current = Cursors.PanSE;
+        else
+          Cursor.Current = Cursors.HSplit;
+      }
+      else if (sender == this.gridRight)
+        Cursor.Current = Cursors.PanWest;
+      else
+        Cursor.Current = Cursors.No;
+    }
+    #endregion
+
+    #region gridLeft_DragOver
+    private void gridLeft_DragOver(object sender, DragEventArgs e)
+    {
+      // this event is called on the current target of the drag operation
+      var point = this.gridLeft.PointToClient(MousePosition);
+      var hit = this.gviewLeft.CalcHitInfo(point);
+      if (hit.RowHandle >= 0)
+      {
+        var vi = (DevExpress.XtraGrid.Views.Grid.ViewInfo.GridViewInfo)this.gviewLeft.GetViewInfo();
+        var rowInfo = vi.GetGridRowInfo(hit.RowHandle);
+        ChannelInfo dropChannel = (ChannelInfo)this.gviewLeft.GetRow(hit.RowHandle);
+        bool moveUp = this.dragDropInfo.SourceProgramNumber < 0 || dropChannel.NewProgramNr <= this.dragDropInfo.SourceProgramNumber;
+        if (moveUp && point.Y < rowInfo.Bounds.Top + rowInfo.Bounds.Height / 2)
+          this.dragDropInfo.EditMode = EditMode.InsertBefore;
+        else if (!moveUp && point.Y > rowInfo.Bounds.Top + rowInfo.Bounds.Height / 2)
+          this.dragDropInfo.EditMode = EditMode.InsertAfter;
+        else if (this.dragDropInfo.SourceView == this.gviewLeft)
+          this.dragDropInfo.EditMode = EditMode.Swap;
+        else if (moveUp)
+          this.dragDropInfo.EditMode = EditMode.InsertAfter;
+        else
+          this.dragDropInfo.EditMode = EditMode.InsertBefore;
+          
+        this.dragDropInfo.DropRowHandle = hit.RowHandle;
+        e.Effect = DragDropEffects.Move;
+        return;
+      }
+
+      e.Effect = DragDropEffects.None;
+      this.dragDropInfo.DropRowHandle = GridControl.InvalidRowHandle;
+    }
+    #endregion
+
+    #region gridLeft_DragDrop
+    private void gridLeft_DragDrop(object sender, DragEventArgs e)
+    {
+      try
+      {
+        if (this.dragDropInfo.DropRowHandle < 0) return;
+        this.curEditMode = this.dragDropInfo.EditMode;
+        var dropChannel = (ChannelInfo)this.gviewLeft.GetRow(this.dragDropInfo.DropRowHandle);
+
+        var selectedChannels = this.GetSelectedChannels(this.dragDropInfo.SourceView);
+        int newProgNr;
+        if (this.dragDropInfo.EditMode != EditMode.InsertAfter || !this.cbCloseGap.Checked)
+          newProgNr = dropChannel.NewProgramNr;
+        else
         {
-          var ci = this.gviewRight.GetFocusedRow() as ChannelInfo;
-          this.VerifyChannelNameModified(ci, e.Value as string);
-          //this.BeginInvoke((Action) (() => RefreshGrid(this.gviewLeft)));
+          int numberOfChannelsToMoveDown = 0;
+          foreach (var channel in selectedChannels)
+          {
+            if (channel.NewProgramNr <= dropChannel.NewProgramNr)
+              ++numberOfChannelsToMoveDown;
+          }
+          newProgNr = dropChannel.NewProgramNr + 1 - numberOfChannelsToMoveDown;
         }
-        dataRoot.NeedsSaving = true;
-      } catch(Exception ex) { HandleException(ex); }
+
+        this.editor.SetSlotNumber(selectedChannels, newProgNr, this.dragDropInfo.EditMode == EditMode.Swap, this.cbCloseGap.Checked);
+        this.RefreshGrid(this.gviewLeft, this.gviewRight);
+      }
+      catch (Exception ex)
+      {
+        HandleException(ex);
+      }
     }
     #endregion
 
-    #region gviewRight_CellValueChanged
-    private void gviewRight_CellValueChanged(object sender, CellValueChangedEventArgs e)
+    #region gridLeft_ProcessGridKey
+    private void gridLeft_ProcessGridKey(object sender, KeyEventArgs e)
     {
-      TryExecute(() => RefreshGrid(this.gviewLeft));
+      if (this.currentChannelList != null && this.currentChannelList.ReadOnly)
+        return;
+      if (gviewLeft.ActiveEditor != null)
+        return;
+      if (e.KeyCode == Keys.Delete)
+        TryExecute(() => this.RemoveChannels(this.gviewLeft, this.cbCloseGap.Checked));
+      else if (e.KeyCode == Keys.Add)
+        TryExecute(() => this.MoveChannels(false));
+      else if (e.KeyCode == Keys.Subtract)
+        TryExecute(() => this.MoveChannels(true));
+      else
+        return;
+      e.Handled = true;
+      e.SuppressKeyPress = true;
     }
     #endregion
-
-    #region gviewRight_PopupMenuShowing
-    private void gviewRight_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
-    {
-      this.lastFocusedGrid = this.gviewRight;
-      this.UpdateMenu();
-      if (e.MenuType == GridMenuType.Row)
-        this.mnuContext.ShowPopup(this.gridRight.PointToScreen(e.Point));
-    }
-    #endregion
-
 
     #region gviewLeft_FocusedRowChanged
 
@@ -1880,11 +1945,11 @@ namespace ChanSort.Ui
         if (this.gviewLeft.FocusedColumn == this.colOutSlot && e.Value is string)
           e.Valid = this.SetSlotNumber((string)e.Value);
         else if (this.gviewLeft.FocusedColumn == this.colOutFav && e.Value is string)
-          e.Value = ChannelInfo.ParseFavString((string) e.Value);
+          e.Value = ChannelInfo.ParseFavString((string)e.Value);
         else if (gviewLeft.FocusedColumn == this.colOutName)
         {
           this.VerifyChannelNameModified(this.gviewLeft.GetFocusedRow() as ChannelInfo, e.Value as string);
-          this.BeginInvoke((Action) (() => RefreshGrid(this.gviewLeft)));
+          this.BeginInvoke((Action)(() => RefreshGrid(this.gviewLeft)));
         }
         dataRoot.NeedsSaving = true;
       }
@@ -1915,30 +1980,137 @@ namespace ChanSort.Ui
     {
       if (e.Clicks == 2 && e.Button == MouseButtons.Left && this.gviewLeft.IsDataRow(e.RowHandle))
       {
-        ChannelInfo channel = (ChannelInfo) this.gviewLeft.GetRow(e.RowHandle);
+        ChannelInfo channel = (ChannelInfo)this.gviewLeft.GetRow(e.RowHandle);
         this.NavigateToChannel(channel, this.gviewRight);
       }
     }
     #endregion
 
-    #region gridLeft_ProcessGridKey
-    private void gridLeft_ProcessGridKey(object sender, KeyEventArgs e)
+    #region gviewLeft_EndSorting
+    private void gviewLeft_EndSorting(object sender, EventArgs e)
     {
-      if (this.currentChannelList != null && this.currentChannelList.ReadOnly)
-        return;
-      if (gviewLeft.ActiveEditor != null)
-        return;
-      if (e.KeyCode == Keys.Delete)
-        TryExecute(() => this.RemoveChannels(this.gviewLeft, this.cbCloseGap.Checked));
-      else if (e.KeyCode == Keys.Add)
-        TryExecute(() => this.MoveChannels(false));
-      else if (e.KeyCode == Keys.Subtract)
-        TryExecute(() => this.MoveChannels(true));
-      else
-        return;
-      e.Handled = true;
+      TryExecute(this.UpdateMenu);
     }
     #endregion
+
+    #region gviewLeft_LayoutUpgrade, gviewRight_LayoutUpgrade
+    private void gviewLeft_LayoutUpgrade(object sender, LayoutUpgadeEventArgs e)
+    {
+      this.gviewLeft.ClearGrouping();
+      this.gviewLeft.OptionsCustomization.AllowGroup = false;
+    }
+
+    private void gviewRight_LayoutUpgrade(object sender, LayoutUpgadeEventArgs e)
+    {
+      this.gviewRight.ClearGrouping();
+      this.gviewRight.OptionsCustomization.AllowGroup = false;
+    }
+    #endregion
+
+    #region gridRight_ProcessGridKey
+    private void gridRight_ProcessGridKey(object sender, KeyEventArgs e)
+    {
+      if (this.gviewRight.ActiveEditor != null)
+        return;
+      if (e.KeyCode == Keys.Enter && this.currentChannelList != null && !this.currentChannelList.ReadOnly)
+      {
+        TryExecute(this.AddChannels);
+        e.Handled = true;
+      }
+    }
+
+    #endregion
+
+    #region gviewRight_FocusedRowChanged
+    private void gviewRight_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+    {
+      this.gviewRight.SelectRow(e.FocusedRowHandle);
+    }
+    #endregion
+
+    #region gviewRight_CustomColumnDisplayText
+    private void gviewRight_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
+    {
+      if (e.Column == this.colSlotNew)
+      {
+        if (!(e.Value is int)) return;
+        if ((int) e.Value == -1)
+          e.DisplayText = string.Empty;
+      }
+      else if (e.Column == this.colFavorites)
+      {
+        if (!(e.Value is Favorites)) return;
+        if ((Favorites) e.Value == 0)
+          e.DisplayText = string.Empty;
+      }
+    }
+    #endregion
+
+    #region gviewRight_RowCellStyle
+    private void gviewRight_RowCellStyle(object sender, RowCellStyleEventArgs e)
+    {
+      ChannelInfo channel = (ChannelInfo)this.gviewRight.GetRow(e.RowHandle);
+      if (channel == null) return;
+      if (channel.OldProgramNr == -1)
+      {
+        e.Appearance.ForeColor = Color.Red;
+        e.Appearance.Options.UseForeColor = true;
+      }
+      else if (channel.NewProgramNr != -1)
+      {
+        e.Appearance.ForeColor = Color.Gray;
+        e.Appearance.Options.UseForeColor = true;
+      }
+    }
+    #endregion
+
+    #region gviewRight_RowClick
+    private void gviewRight_RowClick(object sender, RowClickEventArgs e)
+    {
+      if (e.Clicks == 2 && e.Button == MouseButtons.Left && this.gviewRight.IsDataRow(e.RowHandle))
+        TryExecute(this.AddChannels);
+    }
+    #endregion
+
+    #region gviewRight_ValidatingEditor
+    private void gviewRight_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
+    {
+      try
+      {
+        if (gviewRight.FocusedRowHandle == GridControl.AutoFilterRowHandle)
+          return;
+        if (this.gviewRight.FocusedColumn == this.colSlotNew && e.Value is string)
+          e.Valid = this.SetSlotNumber((string)e.Value);
+        else if (this.gviewRight.FocusedColumn == this.colFavorites && e.Value is string)
+          e.Value = ChannelInfo.ParseFavString((string)e.Value);
+        else if (gviewRight.FocusedColumn == this.colName)
+        {
+          var ci = this.gviewRight.GetFocusedRow() as ChannelInfo;
+          this.VerifyChannelNameModified(ci, e.Value as string);
+          //this.BeginInvoke((Action) (() => RefreshGrid(this.gviewLeft)));
+        }
+        dataRoot.NeedsSaving = true;
+      } catch(Exception ex) { HandleException(ex); }
+    }
+    #endregion
+
+    #region gviewRight_CellValueChanged
+    private void gviewRight_CellValueChanged(object sender, CellValueChangedEventArgs e)
+    {
+      TryExecute(() => RefreshGrid(this.gviewLeft));
+    }
+    #endregion
+
+    #region gviewRight_PopupMenuShowing
+    private void gviewRight_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+    {
+      this.lastFocusedGrid = this.gviewRight;
+      this.UpdateMenu();
+      if (e.MenuType == GridMenuType.Row)
+        this.mnuContext.ShowPopup(this.gridRight.PointToScreen(e.Point));
+    }
+    #endregion
+
 
     #region rbInsertMode_CheckedChanged
     private void rbInsertMode_CheckedChanged(object sender, EventArgs e)
@@ -2120,14 +2292,6 @@ namespace ChanSort.Ui
       this.SetActiveGrid(this.gviewRight);
     }
     #endregion
-
-    private void gview_ShownEditor(object sender, EventArgs e)
-    {
-      GridView view = (GridView) sender;
-      TextEdit edit = view.ActiveEditor as TextEdit;
-      if (edit == null) return;
-      edit.Properties.MaxLength = view.FocusedColumn.FieldName == "Name" ? this.currentChannelList.MaxChannelNameLength : 0;
-    }
 
   }
 }

@@ -117,64 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cbHbbTv.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="cbHbbTv.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cbHbbTv.Properties.AutoHeight" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="cbHbbTv.Properties.Caption" xml:space="preserve">
     <value>HbbTV aktivieren (funktioniert nur mit den Ländereinstellungen DEU, FRA, NED und ESP)</value>
   </data>
-  <data name="cbHbbTv.Properties.DisplayValueChecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbHbbTv.Properties.DisplayValueGrayed" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbHbbTv.Properties.DisplayValueUnchecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbCustomCountry.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="cbCustomCountry.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="cbCustomCountry.Properties.AutoHeight" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="cbCustomCountry.Properties.Caption" xml:space="preserve">
     <value>Eigene Werte erlauben (auf eigene Gefahr!)</value>
-  </data>
-  <data name="cbCustomCountry.Properties.DisplayValueChecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbCustomCountry.Properties.DisplayValueGrayed" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbCustomCountry.Properties.DisplayValueUnchecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="comboBoxEdit1.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="comboBoxEdit1.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="comboBoxEdit1.Properties.AutoHeight" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="comboBoxEdit1.Properties.NullValuePrompt" xml:space="preserve">
-    <value />
-  </data>
-  <data name="comboBoxEdit1.Properties.NullValuePromptShowForEmptyValue" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="labelControl1.Size" type="System.Drawing.Size, System.Drawing">
@@ -183,14 +130,14 @@
   <data name="labelControl1.Text" xml:space="preserve">
     <value>Land:</value>
   </data>
-  <data name="grpSettings.Text" xml:space="preserve">
-    <value>OPTION Menü</value>
-  </data>
   <data name="btnCancel.Text" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="grpHotelMode.Text" xml:space="preserve">
+    <value>Hotel Modus</value>
+  </data>
   <data name="labelControl3.Text" xml:space="preserve">
-    <value>HINWEIS: Bei aktivem Hotel-Modus kann man in der EPG nicht zum gewählten Sender wechseln und die Funktion "Werkseinstellungen" ist gesperrt.</value>
+    <value>HINWEIS: Bei aktivem Hotel-Modus kann man im EPG nicht zum gewählten Sender wechseln und die Funktion "Werkseinstellungen" ist gesperrt.</value>
   </data>
   <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
     <value>341, 13</value>
@@ -198,126 +145,20 @@
   <data name="labelControl2.Text" xml:space="preserve">
     <value>Die folgenden Einstellungen funktionieren nur bei aktivem Hotel-Modus:</value>
   </data>
-  <data name="cbDtvUpdate.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="cbDtvUpdate.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="cbDtvUpdate.Properties.AutoHeight" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="cbDtvUpdate.Properties.Caption" xml:space="preserve">
     <value>D-TV Senderliste automatisch aktualisieren (empfohlen: AUS)</value>
-  </data>
-  <data name="cbDtvUpdate.Properties.DisplayValueChecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbDtvUpdate.Properties.DisplayValueGrayed" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbDtvUpdate.Properties.DisplayValueUnchecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbHotelMode.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="cbHotelMode.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="cbHotelMode.Properties.AutoHeight" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="cbHotelMode.Properties.Caption" xml:space="preserve">
     <value>Hotel Modus aktivieren (empfohlen: EIN)</value>
   </data>
-  <data name="cbHotelMode.Properties.DisplayValueChecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbHotelMode.Properties.DisplayValueGrayed" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbHotelMode.Properties.DisplayValueUnchecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="grpHotelMode.Text" xml:space="preserve">
-    <value>Hotel Modus</value>
-  </data>
-  <data name="cbAutoChannelUpdate.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="cbAutoChannelUpdate.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="cbAutoChannelUpdate.Properties.AutoHeight" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="cbAutoChannelUpdate.Properties.Caption" xml:space="preserve">
     <value>Senderliste automatisch aktualisieren (empfohlen: AUS)</value>
   </data>
-  <data name="cbAutoChannelUpdate.Properties.DisplayValueChecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbAutoChannelUpdate.Properties.DisplayValueGrayed" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbAutoChannelUpdate.Properties.DisplayValueUnchecked" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupControl1.Text" xml:space="preserve">
-    <value>EINST. Menü</value>
+  <data name="grpSetup.Text" xml:space="preserve">
+    <value>EINST. Menu</value>
   </data>
   <data name="labelControl4.Text" xml:space="preserve">
     <value>Das Dateiformat Ihres TV-Modells wird nicht vollständig unterstützt. Deshalb sind viele Einstellungen in diesem Dialog gesperrt.</value>
-  </data>
-  <data name="textEdit1.Properties.AccessibleDescription" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="textEdit1.Properties.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="textEdit1.Properties.AutoHeight" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="DevExpress.XtraEditors.v12.2" name="DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="textEdit1.Properties.Mask.AutoComplete" type="DevExpress.XtraEditors.Mask.AutoCompleteType, DevExpress.XtraEditors.v12.2">
-    <value>Default</value>
-  </data>
-  <data name="textEdit1.Properties.Mask.BeepOnError" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="textEdit1.Properties.Mask.EditMask" xml:space="preserve">
-    <value />
-  </data>
-  <data name="textEdit1.Properties.Mask.IgnoreMaskBlank" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="textEdit1.Properties.Mask.MaskType" type="DevExpress.XtraEditors.Mask.MaskType, DevExpress.XtraEditors.v12.2">
-    <value>None</value>
-  </data>
-  <data name="textEdit1.Properties.Mask.PlaceHolder" type="System.Char, mscorlib" xml:space="preserve">
-    <value>_</value>
-  </data>
-  <data name="textEdit1.Properties.Mask.SaveLiteral" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="textEdit1.Properties.Mask.ShowPlaceHolders" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="textEdit1.Properties.Mask.UseMaskAsDisplayFormat" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="textEdit1.Properties.NullValuePrompt" xml:space="preserve">
-    <value />
-  </data>
-  <data name="textEdit1.Properties.NullValuePromptShowForEmptyValue" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="TvSettingsForm.Appearance.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
-    <value>Horizontal</value>
-  </data>
-  <data name="TvSettingsForm.Appearance.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>TV Einstellungen</value>

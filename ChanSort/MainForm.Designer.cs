@@ -43,6 +43,7 @@
       this.repositoryItemCheckedComboBoxEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit();
       this.colUid1 = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutLock = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
       this.lblHotkeyLeft = new DevExpress.XtraEditors.LabelControl();
       this.pnlEditControls = new DevExpress.XtraEditors.PanelControl();
       this.btnToggleLock = new DevExpress.XtraEditors.SimpleButton();
@@ -169,6 +170,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.dsChannels)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.gviewLeft)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckedComboBoxEdit1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).BeginInit();
       this.pnlEditControls.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).BeginInit();
@@ -213,15 +215,20 @@
       // 
       // gridLeft
       // 
+      this.gridLeft.AllowDrop = true;
       this.gridLeft.DataSource = this.dsChannels;
       resources.ApplyResources(this.gridLeft, "gridLeft");
       this.gridLeft.MainView = this.gviewLeft;
       this.gridLeft.Name = "gridLeft";
       this.gridLeft.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemCheckedComboBoxEdit1});
+            this.repositoryItemCheckedComboBoxEdit1,
+            this.repositoryItemTextEdit1});
       this.gridLeft.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gviewLeft});
       this.gridLeft.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridLeft_ProcessGridKey);
+      this.gridLeft.DragDrop += new System.Windows.Forms.DragEventHandler(this.gridLeft_DragDrop);
+      this.gridLeft.DragOver += new System.Windows.Forms.DragEventHandler(this.gridLeft_DragOver);
+      this.gridLeft.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.grid_GiveFeedback);
       // 
       // dsChannels
       // 
@@ -229,8 +236,12 @@
       // 
       // gviewLeft
       // 
+      this.gviewLeft.Appearance.FocusedRow.Font = ((System.Drawing.Font)(resources.GetObject("gviewLeft.Appearance.FocusedRow.Font")));
+      this.gviewLeft.Appearance.FocusedRow.Options.UseFont = true;
       this.gviewLeft.Appearance.HeaderPanel.Options.UseTextOptions = true;
       this.gviewLeft.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+      this.gviewLeft.Appearance.HideSelectionRow.Font = ((System.Drawing.Font)(resources.GetObject("gviewLeft.Appearance.HideSelectionRow.Font")));
+      this.gviewLeft.Appearance.HideSelectionRow.Options.UseFont = true;
       this.gviewLeft.ColumnPanelRowHeight = 35;
       this.gviewLeft.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIndex1,
@@ -244,6 +255,7 @@
       this.gviewLeft.Name = "gviewLeft";
       this.gviewLeft.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
       this.gviewLeft.OptionsCustomization.AllowGroup = false;
+      this.gviewLeft.OptionsCustomization.AllowQuickHideColumns = false;
       this.gviewLeft.OptionsLayout.LayoutVersion = "2";
       this.gviewLeft.OptionsSelection.MultiSelect = true;
       this.gviewLeft.OptionsView.ColumnAutoWidth = false;
@@ -258,12 +270,15 @@
       this.gviewLeft.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.gviewLeft_SelectionChanged);
       this.gviewLeft.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gview_ShowingEditor);
       this.gviewLeft.ShownEditor += new System.EventHandler(this.gview_ShownEditor);
+      this.gviewLeft.EndSorting += new System.EventHandler(this.gviewLeft_EndSorting);
       this.gviewLeft.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewLeft_FocusedRowChanged);
       this.gviewLeft.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewLeft_CellValueChanged);
       this.gviewLeft.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewLeft_CustomColumnDisplayText);
       this.gviewLeft.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewLeft_LayoutUpgrade);
+      this.gviewLeft.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gview_KeyPress);
       this.gviewLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gview_MouseDown);
       this.gviewLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gview_MouseUp);
+      this.gviewLeft.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gview_MouseMove);
       this.gviewLeft.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gviewLeft_ValidatingEditor);
       // 
       // colIndex1
@@ -282,6 +297,8 @@
       // colOutSlot
       // 
       resources.ApplyResources(this.colOutSlot, "colOutSlot");
+      this.colOutSlot.DisplayFormat.FormatString = "d";
+      this.colOutSlot.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
       this.colOutSlot.FieldName = "NewProgramNr";
       this.colOutSlot.Name = "colOutSlot";
       this.colOutSlot.OptionsFilter.AllowAutoFilter = false;
@@ -330,6 +347,16 @@
       resources.ApplyResources(this.colOutLock, "colOutLock");
       this.colOutLock.FieldName = "Lock";
       this.colOutLock.Name = "colOutLock";
+      // 
+      // repositoryItemTextEdit1
+      // 
+      resources.ApplyResources(this.repositoryItemTextEdit1, "repositoryItemTextEdit1");
+      this.repositoryItemTextEdit1.DisplayFormat.FormatString = "d";
+      this.repositoryItemTextEdit1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+      this.repositoryItemTextEdit1.EditFormat.FormatString = "d";
+      this.repositoryItemTextEdit1.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+      this.repositoryItemTextEdit1.Mask.MaskType = ((DevExpress.XtraEditors.Mask.MaskType)(resources.GetObject("repositoryItemTextEdit1.Mask.MaskType")));
+      this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
       // 
       // lblHotkeyLeft
       // 
@@ -449,6 +476,7 @@
       // 
       // gridRight
       // 
+      this.gridRight.AllowDrop = true;
       this.gridRight.DataSource = this.dsChannels;
       resources.ApplyResources(this.gridRight, "gridRight");
       this.gridRight.MainView = this.gviewRight;
@@ -458,11 +486,16 @@
       this.gridRight.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gviewRight});
       this.gridRight.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridRight_ProcessGridKey);
+      this.gridRight.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.grid_GiveFeedback);
       // 
       // gviewRight
       // 
+      this.gviewRight.Appearance.FocusedRow.Font = ((System.Drawing.Font)(resources.GetObject("gviewRight.Appearance.FocusedRow.Font")));
+      this.gviewRight.Appearance.FocusedRow.Options.UseFont = true;
       this.gviewRight.Appearance.HeaderPanel.Options.UseTextOptions = true;
       this.gviewRight.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+      this.gviewRight.Appearance.HideSelectionRow.Font = ((System.Drawing.Font)(resources.GetObject("gviewRight.Appearance.HideSelectionRow.Font")));
+      this.gviewRight.Appearance.HideSelectionRow.Options.UseFont = true;
       this.gviewRight.ColumnPanelRowHeight = 35;
       this.gviewRight.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIndex,
@@ -514,8 +547,10 @@
       this.gviewRight.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewRight_CellValueChanged);
       this.gviewRight.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewRight_CustomColumnDisplayText);
       this.gviewRight.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewRight_LayoutUpgrade);
+      this.gviewRight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gview_KeyPress);
       this.gviewRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gview_MouseDown);
       this.gviewRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gview_MouseUp);
+      this.gviewRight.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gview_MouseMove);
       this.gviewRight.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gviewRight_ValidatingEditor);
       // 
       // colIndex
@@ -528,6 +563,8 @@
       // colSlotOld
       // 
       resources.ApplyResources(this.colSlotOld, "colSlotOld");
+      this.colSlotOld.DisplayFormat.FormatString = "d";
+      this.colSlotOld.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
       this.colSlotOld.FieldName = "OldProgramNr";
       this.colSlotOld.Name = "colSlotOld";
       this.colSlotOld.OptionsColumn.AllowEdit = false;
@@ -536,6 +573,8 @@
       // colSlotNew
       // 
       resources.ApplyResources(this.colSlotNew, "colSlotNew");
+      this.colSlotNew.DisplayFormat.FormatString = "d";
+      this.colSlotNew.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
       this.colSlotNew.FieldName = "NewProgramNr";
       this.colSlotNew.Name = "colSlotNew";
       // 
@@ -837,11 +876,14 @@
             this.miSaveReferenceFile,
             this.miRecentFiles,
             this.miExcelExport});
+      this.barManager1.MainMenu = this.bar1;
       this.barManager1.MaxItemId = 60;
+      this.barManager1.ShowFullMenus = true;
       // 
       // bar1
       // 
       this.bar1.BarName = "Tools";
+      this.bar1.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Top;
       this.bar1.DockCol = 0;
       this.bar1.DockRow = 0;
       this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
@@ -864,6 +906,12 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem1),
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuHelp, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAbout)});
+      this.bar1.OptionsBar.AllowQuickCustomization = false;
+      this.bar1.OptionsBar.DisableClose = true;
+      this.bar1.OptionsBar.DisableCustomization = true;
+      this.bar1.OptionsBar.DrawDragBorder = false;
+      this.bar1.OptionsBar.MultiLine = true;
+      this.bar1.OptionsBar.UseWholeRow = true;
       resources.ApplyResources(this.bar1, "bar1");
       // 
       // miFile
@@ -1505,6 +1553,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.dsChannels)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.gviewLeft)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckedComboBoxEdit1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).EndInit();
       this.pnlEditControls.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).EndInit();
@@ -1664,6 +1713,7 @@
     private DevExpress.XtraBars.BarButtonItem miSaveReferenceFile;
     private DevExpress.XtraBars.BarListItem miRecentFiles;
     private DevExpress.XtraBars.BarButtonItem miExcelExport;
+    private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

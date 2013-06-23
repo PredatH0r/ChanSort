@@ -1,5 +1,7 @@
 @echo off
-set target=%cd%\..\Program
+c:\cygwin\bin\date "+%%Y-%%m-%%d">%TEMP%\date.txt
+set /p curdate=<%temp%\date.txt
+set target=%cd%\..\ChanSort_%curdate%
 set DXversion=12.2
 mkdir "%target%" 2>nul
 del /s /q "%target%\*"
@@ -17,10 +19,9 @@ for %%f in (Utils Data XtraEditors XtraBars XtraGrid XtraLayout) do call :copyDl
 cd ..
 del Website\ChanSort.zip 2>nul
 copy Source\readme.txt %target%
-cd %target%
-c:\cygwin\bin\date "+%%Y-%%m-%%d">%TEMP%\date.txt
-set /p curdate=<%temp%\date.txt
-"c:\program files (x86)\7-Zip\7z.exe" a -tzip ChanSort_%curdate%.zip *
+cd %target%\..
+"c:\program files\7-Zip\7z.exe" a -tzip ChanSort_%curdate%.zip ChanSort_%curdate%
+rem c:\cygwin\bin\gzip --name -r -9 ChanSort_%curdate%.zip ChanSort%curdate%
 
 
 pause

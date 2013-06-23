@@ -93,7 +93,7 @@ namespace ChanSort.Api
         return;
 
       int delta = (up ? - 1 : +1);
-      foreach (var channel in channels)
+      foreach (var channel in (up ? channels : channels.Reverse()))
       {
         int newProgramNr = channel.NewProgramNr + delta;
         ChannelInfo channelAtNewProgramNr = this.ChannelList.Channels.FirstOrDefault(ch => ch.NewProgramNr == newProgramNr);
