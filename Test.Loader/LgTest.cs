@@ -21,7 +21,7 @@ namespace Test.Loader
       TllFileSerializerPlugin plugin = new TllFileSerializerPlugin();
 
       StringBuilder errors = new StringBuilder();
-      var list = this.FindAllFiles("TestFiles", "*.tll");
+      var list = this.FindAllFiles("TestFiles_LG", "*.tll");
       var models = new Dictionary<string,string>();
       var firmwareSize = new Dictionary<int, string>();
       foreach(var file in list)
@@ -39,13 +39,15 @@ namespace Test.Loader
           var fileName = Path.GetFileName(file) ?? "";
           var model = this.GetLgModel(file);
           var analogList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogCT | ChanSort.Api.SignalSource.Tv);
-          var digitalList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbCT | ChanSort.Api.SignalSource.Tv);
+          var dvbcList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC | ChanSort.Api.SignalSource.Tv);
+          var dvbtList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbT | ChanSort.Api.SignalSource.Tv);
           var satChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.Tv);
-          string key = fileName +
+          string key = 
             model +
             "\t" + serializer.ACTChannelLength+
             "\t" + (analogList != null && analogList.Count > 0) +
-            "\t" + (digitalList != null && digitalList.Count > 0) +
+            "\t" + (dvbtList != null && dvbtList.Count > 0) +
+            "\t" + (dvbcList != null && dvbcList.Count > 0) +
             "\t" + serializer.SatChannelLength +
             "\t" + (satChannelList != null && satChannelList.Count > 0) +
             "\t" + serializer.HasPresetDvbsChannelNumbers +
@@ -56,7 +58,8 @@ namespace Test.Loader
             "\t" + serializer.ACTChannelLength + 
             "\t" + serializer.SatChannelLength +
             "\t" + (analogList == null ? 0 : analogList.Count) +
-            "\t" + (digitalList == null ? 0 : digitalList.Count) +
+            "\t" + (dvbtList == null ? 0 : dvbtList.Count) +
+            "\t" + (dvbcList == null ? 0 : dvbcList.Count) +
             "\t" + (satChannelList == null ? 0 : satChannelList.Count) +
             "\t" + serializer.HasPresetDvbsChannelNumbers +
             "\t" + serializer.TvCountryCode +
@@ -82,7 +85,9 @@ namespace Test.Loader
           if (expectedData.TryGetValue(key, out exp))
           {
             var analogTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogCT|ChanSort.Api.SignalSource.Tv);
-            var dtvTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbCT|ChanSort.Api.SignalSource.Tv);
+            var dvbcTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC|ChanSort.Api.SignalSource.Tv);
+            var dvbtTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbT | ChanSort.Api.SignalSource.Tv);
+            var dtvTv = dvbcTv.Channels.Count > 0 ? dvbcTv : dvbtTv;
             var satTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.Tv);
             expectedData.Remove(key);
             Assert.AreEqual(exp.AnalogChannels, analogTv.Channels.Count, file + ": analog");
@@ -131,7 +136,7 @@ namespace Test.Loader
                          new ExpectedData(@"decklen\xxLW570S-ZD00001.TLL", 0, 30, 1598, 0, 339), // 184/68
                          new ExpectedData(@"NeuerScan\xxLM340S-ZA00001.TLL", 34, 317, 1698, 129, 264), // 188/68
                          new ExpectedData(@"wagnale\xxLM611S-ZA00001.TLL", 0, 13, 1094 + 70, 0, 191), // 188/68
-                         new ExpectedData(@"_Pred\xxLM620S-ZE00021.TLL", 0, 11, 1303, 0, 191) // 192/72
+                         new ExpectedData(@"!Pred\xxLM620S-ZE00021.TLL", 0, 11, 1303, 0, 191) // 192/72
                        };
 
       var dict = new Dictionary<string, ExpectedData>(StringComparer.InvariantCultureIgnoreCase);

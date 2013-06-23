@@ -7,9 +7,9 @@ namespace ChanSort.Loader.Samsung
   {
     private const string _ChannelOrTransponder = "offChannelTransponder";
 
-    public DigitalChannel(int slot, bool isCable, DataMapping data, 
-      IDictionary<int, decimal> transpFreq, int favoriteNotSetValue) : 
-      base(data, favoriteNotSetValue)
+    public DigitalChannel(int slot, bool isCable, DataMapping data,
+      IDictionary<int, decimal> transpFreq, bool sortedFavorites) :
+      base(data, sortedFavorites)
     {
       var signalSource = SignalSource.Digital;
       signalSource |= isCable ? SignalSource.Cable : SignalSource.Antenna;

@@ -1,13 +1,12 @@
-Version v2013-06-23 ======================================================
+Version v2013-06-24 ======================================================
 
 Changes:
-- Drag&Drop inside left list and from right to left list 
-  (only available when the left list is sorted by "New Pr#")
-- Simplified menu/tool bar
-- FIX: Moving multiple channels down now works correctly
-- FIX: +/- keys no longer open the cell-editor after moving a channel
-- Editor for "New Pr#" no longer opens when pressing non-numeric keys
-- Move up/down is now disabled when left list is not sorted by "New Pr#"
+- FIX: Resizing a column caused an exception
+- FIX: Deleting satellite channels from an SCM file did not work correctly
+- Improved SCM file format detection
+- Samsung E/F-Series: channels in the favorite lists now use their prog#
+  instead of all being put at #1 
+  (in a future version the fav lists may be sorted separately)
 
 The complete change log can be found at the end of this document
 
@@ -104,6 +103,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-06-24
+- FIX: Resizing a column caused an exception
+- FIX: Deleting satellite channels from an SCM file did not work correctly
+- Improved SCM file format detection
+- Samsung E/F-Series: channels in the favorite lists now use their prog#
+  instead of all being put at #1 
+  (in a future version the fav lists may be sorted separately)
 
 2013-06-23
 - Drag&Drop inside left list and from right to left list 

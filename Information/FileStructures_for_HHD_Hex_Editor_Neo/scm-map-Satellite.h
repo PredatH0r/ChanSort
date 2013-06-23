@@ -2,7 +2,7 @@
 
 // 144 = C Series
 // 172 = D Series
-// 168 = E Series
+// 168 = E,F Series
 
 struct SCM_mapSate_C_entry
 {
@@ -121,8 +121,8 @@ public struct SCM_mapSate_E
 struct SCM_mapAstraHDPlus_entry
 {
     word ProgramNr;
-    word PcrId;
     word VideoPid;
+    word PcrId;
     byte u6;
     byte InUse;
     byte u8[6];

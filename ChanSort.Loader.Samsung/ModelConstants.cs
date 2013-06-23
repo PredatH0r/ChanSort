@@ -15,7 +15,7 @@ namespace ChanSort.Loader.Samsung
     public readonly int dvbtFineTuneLength;
     public readonly Favorites supportedFavorites;
     public readonly int ptcLength;
-    public readonly int favoriteNotSetValue;
+    public readonly bool SortedFavorites;
 
     public ModelConstants(IniFile.Section iniSection)
     {
@@ -34,7 +34,7 @@ namespace ChanSort.Loader.Samsung
       for (int i = 0; i < numFavorites; i++)
         mask = (mask << 1) | 1;
       this.supportedFavorites = (Favorites)mask;
-      this.favoriteNotSetValue = iniSection.GetInt("FavoriteNotSet");
+      this.SortedFavorites = iniSection.GetInt("SortedFavorites") != 0;
     }
   }
 }

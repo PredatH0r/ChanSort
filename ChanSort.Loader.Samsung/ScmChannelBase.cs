@@ -28,8 +28,7 @@ namespace ChanSort.Loader.Samsung
     private const string _SymbolRate = "offSymbolRate";
 
     private static readonly Encoding Utf16BigEndian = new UnicodeEncoding(true, false);
-    private static readonly byte[] favoriteSetValue = new byte[] { 1, 0, 0, 0 };
-    private readonly byte[] favoriteNotSetValue;
+    private readonly bool sortedFavorites;
 
     protected readonly DataMapping mapping;
     protected readonly byte[] rawData;
@@ -37,13 +36,13 @@ namespace ChanSort.Loader.Samsung
 
     internal bool InUse { get; set; }
 
-    protected ScmChannelBase(DataMapping data, int favoriteNotSetValue)
+    protected ScmChannelBase(DataMapping data, bool sortedFavorites)
     {
       this.mapping = data;
       this.rawData = data.Data;
       this.baseOffset = data.BaseOffset;
       this.mapping.DefaultEncoding = Utf16BigEndian;
-      this.favoriteNotSetValue = BitConverter.GetBytes(favoriteNotSetValue);
+      this.sortedFavorites = sortedFavorites;
     }
 
     #region InitCommonData()
@@ -53,7 +52,7 @@ namespace ChanSort.Loader.Samsung
       this.RecordIndex = slot;
       this.RecordOrder = slot;
       this.SignalSource = signalSource;
-      this.OldProgramNr = data.GetWord(_ProgramNr);
+      this.OldProgramNr = (short)data.GetWord(_ProgramNr);
       this.Name = data.GetString(_Name, data.Settings.GetInt("lenName"));
       this.Favorites = this.ParseRawFavorites();
       this.Lock = data.GetFlag(_Lock);
@@ -69,12 +68,13 @@ namespace ChanSort.Loader.Samsung
       if (offsets.Length == 1) // series B,C
         return (Favorites) mapping.GetByte(_Favorites);
 
-      // series D,E
+      // series D,E,F
       byte fav = 0;
       byte mask = 0x01;
       foreach (int off in offsets)
       {
-        if ((BitConverter.ToInt32(this.rawData, baseOffset + off) + 1) > 1) // unset/set: D=0, E=-1
+        int favValue = BitConverter.ToInt32(this.rawData, baseOffset + off);
+        if (sortedFavorites && favValue != -1 || !sortedFavorites && favValue != 0)
           fav |= mask;
         mask <<= 1;
       }
@@ -105,7 +105,8 @@ namespace ChanSort.Loader.Samsung
     {
       mapping.SetDataPtr(this.rawData, this.baseOffset);
       mapping.SetFlag(_InUse, this.InUse);
-      mapping.SetWord(_ProgramNr, this.NewProgramNr);
+      if (this.NewProgramNr >= 0)
+        mapping.SetWord(_ProgramNr, this.NewProgramNr);
       if (this.IsNameModified)
       {
         int bytes = mapping.SetString(_Name, this.Name, mapping.Settings.GetInt("lenName"));
@@ -131,13 +132,17 @@ namespace ChanSort.Loader.Samsung
         return;
       }
 
-      // series D,E
+      // series D,E,F
       byte fav = (byte)this.Favorites;
       byte mask = 0x01;
       foreach (int off in offsets)
       {
-        // unset/set: D-Series=0/1, E-Series=-1/1
-        Array.Copy((fav & mask) == 0 ? favoriteNotSetValue : favoriteSetValue, 0, this.rawData, baseOffset + off, 4);
+        int favValue;
+        if (this.sortedFavorites)
+          favValue = (fav & mask) != 0 ? this.NewProgramNr : -1;
+        else
+          favValue = (fav & mask) != 0 ? 1 : 0;
+        Array.Copy(BitConverter.GetBytes(favValue), 0, this.rawData, baseOffset + off, 4);
         mask <<= 1;
       }
     }

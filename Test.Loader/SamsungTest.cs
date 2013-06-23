@@ -19,7 +19,7 @@ namespace Test.Loader
                        {
                          new ExpectedData(@"catmater_B\Clone.scm", 31, 272, 0, 0, 0) ,
                          new ExpectedData(@"easy2003_B\easy2003_B.scm", 0, 0, 1225, 0, 0) ,
-                         new ExpectedData(@"_Manu_C\channel_list_LE40C650_1001.scm", 0, 9, 0, 0, 0) 
+                         //new ExpectedData(@"_Manu_C\channel_list_LE40C650_1001.scm", 0, 9, 0, 0, 0) 
                        };
 
       var dict = new Dictionary<string, ExpectedData>(StringComparer.InvariantCultureIgnoreCase);
@@ -70,7 +70,8 @@ namespace Test.Loader
             "\t" + serializer.SatChannelLength +
             "\t" + (satChannelList != null && satChannelList.Count > 0) +
             "\t" + serializer.HdPlusChannelLength +
-            "\t" + (hdChannelList != null && hdChannelList.Count > 0);
+            "\t" + (hdChannelList != null && hdChannelList.Count > 0) +
+            "\t" + serializer.SatDatabaseVersion;
           string relPath = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + fileName;
           models[key] = serializer.Series + 
             "\t" + model +
@@ -78,6 +79,7 @@ namespace Test.Loader
             "\t" + serializer.DigitalChannelLength +
             "\t" + serializer.SatChannelLength +
             "\t" + serializer.HdPlusChannelLength +
+            "\t" + serializer.SatDatabaseVersion +
             "\t" + (analogAirList == null ? 0 : analogAirList.Count) +
             "\t" + (analogCableList == null ? 0 : analogCableList.Count) +
             "\t" + (digitalAirList == null ? 0 : digitalAirList.Count) +

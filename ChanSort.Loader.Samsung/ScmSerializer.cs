@@ -114,8 +114,8 @@ namespace ChanSort.Loader.Samsung
     private void DetectModelConstants(ZipFile zip)
     {
       if (DetectModelFromCloneInfoFile(zip)) return;
-      if (DetectModelFromContentFileLengths(zip)) return;
       if (DetectModelFromFileName()) return;
+      if (DetectModelFromContentFileLengths(zip)) return;
       throw new FileLoadException("Unable to determine TV model from file content or name");
     }
     #endregion
@@ -125,7 +125,7 @@ namespace ChanSort.Loader.Samsung
     {
       string file = Path.GetFileName(this.FileName);
       System.Text.RegularExpressions.Regex regex =
-        new System.Text.RegularExpressions.Regex("channel_list_[A-Z]{2}[0-9]{2}([A-Z])[0-9A-Z]+_[0-9]+\\.scm");
+        new System.Text.RegularExpressions.Regex("channel_list_(?:[A-Z]{2}[0-9]{2}|BD-)([A-Z])[0-9A-Z]+_[0-9]{4}.*\\.scm");
       var match = regex.Match(file);
       if (match.Success)
       {
@@ -336,7 +336,7 @@ namespace ChanSort.Loader.Samsung
     private void MapAnalogChannel(DataMapping rawChannel, int slotIndex, ChannelList list, decimal freq)
     {
       bool isCable = (list.SignalSource & SignalSource.Cable) != 0;
-      AnalogChannel ci = new AnalogChannel(slotIndex, isCable, rawChannel, freq, c.favoriteNotSetValue);
+      AnalogChannel ci = new AnalogChannel(slotIndex, isCable, rawChannel, freq, c.SortedFavorites);
       if (!ci.InUse)
         return;
 
@@ -385,7 +385,7 @@ namespace ChanSort.Loader.Samsung
       int count = data.Length / entrySize;
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        DigitalChannel ci = new DigitalChannel(slotIndex, isCable, rawChannel, frequency, c.favoriteNotSetValue);
+        DigitalChannel ci = new DigitalChannel(slotIndex, isCable, rawChannel, frequency, c.SortedFavorites);
         if (ci.OldProgramNr > 0)
           this.DataRoot.AddChannel(list, ci);
 
@@ -399,9 +399,10 @@ namespace ChanSort.Loader.Samsung
     private void ReadSatellites(ZipFile zip)
     {
       byte[] data = ReadFileContent(zip, "SatDataBase.dat");
-      if (data == null)
+      if (data == null || data.Length < 4)
         return;
 
+      this.SatDatabaseVersion = System.BitConverter.ToInt32(data, 0);
       SatelliteMapping satMapping = new SatelliteMapping(data, 4);
       int count = data.Length/this.c.dvbsSatelliteLength;
       for (int i = 0; i < count; i++)
@@ -472,7 +473,7 @@ namespace ChanSort.Loader.Samsung
       mapping.SetDataPtr(dvbsFileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        SatChannel ci = new SatChannel(slotIndex, SignalSource.StandardSat, mapping, this.DataRoot, c.favoriteNotSetValue);
+        SatChannel ci = new SatChannel(slotIndex, SignalSource.StandardSat, mapping, this.DataRoot, c.SortedFavorites);
         if (ci.InUse)
           this.DataRoot.AddChannel(this.dvbsChannels, ci);
 
@@ -495,7 +496,7 @@ namespace ChanSort.Loader.Samsung
       mapping.SetDataPtr(hdplusFileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        SatChannel ci = new SatChannel(slotIndex, SignalSource.AstraHdPlus, mapping, this.DataRoot, c.favoriteNotSetValue);
+        SatChannel ci = new SatChannel(slotIndex, SignalSource.AstraHdPlus, mapping, this.DataRoot, c.SortedFavorites);
         if (ci.InUse)
           this.DataRoot.AddChannel(this.hdplusChannels, ci);
         mapping.BaseOffset += entrySize;
@@ -590,5 +591,6 @@ namespace ChanSort.Loader.Samsung
     internal int DigitalChannelLength { get { return c.dvbtChannelLength; } }
     internal int SatChannelLength { get { return c.dvbsChannelLength; } }
     internal int HdPlusChannelLength { get { return c.hdplusChannelLength; } }
+    internal int SatDatabaseVersion { get; private set; }
   }
 }

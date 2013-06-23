@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-06-23";
+    public const string AppVersion = "v2013-06-24";
 
     private const int MaxMruEntries = 5;
 
@@ -1683,6 +1683,7 @@ namespace ChanSort.Ui
     {
       GridView view = (GridView)sender;
       this.downHit = view.CalcHitInfo(e.Location);
+      this.dragDropInfo = null;
       if (!view.IsDataRow(downHit.RowHandle))
         return;
       if (e.Button == MouseButtons.Left)
@@ -1758,7 +1759,7 @@ namespace ChanSort.Ui
       try
       {
         var view = (GridView)sender;
-        if (this.downHit == null || e.Button != MouseButtons.Left || view.ActiveEditor != null || ModifierKeys != Keys.None)
+        if (this.downHit == null || downHit.RowHandle < 0 || e.Button != MouseButtons.Left || view.ActiveEditor != null || ModifierKeys != Keys.None)
           return;
         // drag/drop only allowed when left grid is sorted by NewSlotNr
         if (!this.IsLeftGridSortedByNewProgNr) 

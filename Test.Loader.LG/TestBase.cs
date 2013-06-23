@@ -10,6 +10,7 @@ using Assert = NUnit.Framework.Assert;
 
 namespace Test.Loader.LG
 {
+  [TestClass]
   public class TestBase
   {
     protected readonly string tempFile = Path.GetTempFileName();
