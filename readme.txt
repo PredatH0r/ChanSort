@@ -1,12 +1,7 @@
-Version v2013-06-24 ======================================================
+Version v2013-06-25 ======================================================
 
 Changes:
-- FIX: Resizing a column caused an exception
-- FIX: Deleting satellite channels from an SCM file did not work correctly
-- Improved SCM file format detection
-- Samsung E/F-Series: channels in the favorite lists now use their prog#
-  instead of all being put at #1 
-  (in a future version the fav lists may be sorted separately)
+- Added experimental support for Panasonic channel lists (svl.db, svl.bin)
 
 The complete change log can be found at the end of this document
 
@@ -61,7 +56,9 @@ LG
     https://sourceforge.net/p/chansort/wiki/Home/
     http://www.ullrich.es/job/service-menue/lg-tlledit-lg-sendersortierung/
 
-
+Panasonic
+-------
+    Models with svl.bin/svl.db channel lists
 
 Toshiba
 -------
@@ -103,6 +100,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-06-25
+- Added experimental support for Panasonic channel lists (svl.db, svl.bin)
 
 2013-06-24
 - FIX: Resizing a column caused an exception
