@@ -14,6 +14,7 @@ namespace ChanSort.Loader.Panasonic
     {
       this.RecordIndex = r.GetInt32(field["rowid"]);
       this.RecordOrder = r.GetInt32(field["major_channel"]);
+      this.OldProgramNr = r.GetInt32(field["major_channel"]);
       int ntype = r.GetInt32(field["ntype"]);
       if (ntype == 1)
         this.SignalSource |= SignalSource.DvbS;
@@ -22,7 +23,7 @@ namespace ChanSort.Loader.Panasonic
       else if (ntype == 3)
         this.SignalSource |= SignalSource.DvbC;
       else if (ntype == 10)
-        this.SignalSource |= SignalSource.AnalogC | SignalSource.Tv;
+        this.SignalSource |= SignalSource.AnalogCT|SignalSource.Tv;
 
       byte[] buffer = new byte[1000];
       var len = r.GetBytes(field["delivery"], 0, buffer, 0, 1000);
@@ -37,10 +38,6 @@ namespace ChanSort.Loader.Panasonic
         this.ReadAnalogData(r, field);
       else
         this.ReadDvbData(r, field, dataRoot, buffer);
-
-      var list = dataRoot.GetChannelList(this.SignalSource);
-      if (list != null)
-        this.OldProgramNr = ntype == 10 ? list.Count : list.Count + 1;
     }
 
     #endregion

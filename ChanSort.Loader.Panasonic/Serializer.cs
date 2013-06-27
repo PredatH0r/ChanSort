@@ -12,9 +12,10 @@ namespace ChanSort.Loader.Panasonic
   {
     private static readonly string ERR_FileFormatOrEncryption = "File uses an unknown format or encryption";
     private static readonly int[] headerCypherTable;
-    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv, "Analog TV");
-    private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.DvbS | SignalSource.Tv, "Digital TV");
-    private readonly ChannelList dtvRadioChannels = new ChannelList(SignalSource.DvbCT | SignalSource.DvbS | SignalSource.Radio, "Radio");
+    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv | SignalSource.Radio, "Analog");
+    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Radio, "DVB-T");
+    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
+    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
 
     private string workFile;
     private CypherMode cypherMode;
@@ -299,8 +300,9 @@ namespace ChanSort.Loader.Panasonic
     public Serializer(string inputFile) : base(inputFile)
     {
       this.DataRoot.AddChannelList(this.atvChannels);
-      this.DataRoot.AddChannelList(this.dtvTvChannels);
-      this.DataRoot.AddChannelList(this.dtvRadioChannels);
+      this.DataRoot.AddChannelList(this.dvbtChannels);
+      this.DataRoot.AddChannelList(this.dvbcChannels);
+      this.DataRoot.AddChannelList(this.dvbsChannels);
     }
     #endregion
 
@@ -499,10 +501,10 @@ order by s.ntype,major_channel
         {
           using (var trans = conn.BeginTransaction())
           {
-            int[] channelIndex = new int[5];
-            this.WriteChannels(cmd, this.atvChannels, channelIndex);
-            this.WriteChannels(cmd, this.dtvTvChannels, channelIndex);
-            this.WriteChannels(cmd, this.dtvRadioChannels, channelIndex);
+            this.WriteChannels(cmd, this.atvChannels);
+            this.WriteChannels(cmd, this.dvbtChannels);
+            this.WriteChannels(cmd, this.dvbcChannels);
+            this.WriteChannels(cmd, this.dvbsChannels);
             trans.Commit();
           }
         }
@@ -513,8 +515,10 @@ order by s.ntype,major_channel
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SQLiteCommand cmd, ChannelList channelList, int[] channelIndex)
+    private void WriteChannels(SQLiteCommand cmd, ChannelList channelList)
     {
+      int[] favIndex = new int[4];
+
       cmd.CommandText = "update SVL set major_channel=@progNr, sname=@name, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
       cmd.Parameters.Clear();
       cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
@@ -533,9 +537,9 @@ order by s.ntype,major_channel
           continue;
         channel.UpdateRawData();
         cmd.Parameters["@rowid"].Value = channel.RecordIndex;
-        cmd.Parameters["@progNr"].Value = ++channelIndex[0]; // channel.NewProgramNr;
+        cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
         for (int fav = 0; fav < 4; fav++)
-          cmd.Parameters["@fav" + (fav + 1)].Value = ((int) channel.Favorites & (1<<fav)) == 0 ? 0 : ++channelIndex[fav+1];
+          cmd.Parameters["@fav" + (fav + 1)].Value = ((int) channel.Favorites & (1<<fav)) == 0 ? 0 : ++favIndex[fav];
         cmd.Parameters["@name"].Value = channel.Name;
         cmd.Parameters["@lock"].Value = channel.Lock;
         cmd.Parameters["@skip"].Value = channel.Skip;

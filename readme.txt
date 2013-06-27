@@ -1,7 +1,7 @@
-Version v2013-06-25 ======================================================
+Version v2013-06-27 ======================================================
 
 Changes:
-- Added experimental support for Panasonic channel lists (svl.db, svl.bin)
+- Improved experimental support for Panasonic channel lists
 
 The complete change log can be found at the end of this document
 
@@ -100,6 +100,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-06-27
+- Improved experimental support for Panasonic channel lists (svl.db, svl.bin)
 
 2013-06-25
 - Added experimental support for Panasonic channel lists (svl.db, svl.bin)

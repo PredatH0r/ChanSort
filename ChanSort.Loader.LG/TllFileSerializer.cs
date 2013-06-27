@@ -621,15 +621,23 @@ namespace ChanSort.Loader.LG
       }
 
       // copy temp data back to fileContent and clear remainder
-      if (originalChannelCount != 0) // even if there's 0 channels, channel[0] must contain valid data
+      if (originalChannelCount == 0)
+      {
+        // even if there's 0 channels, channel[0] must contain valid data
+        Tools.MemSet(this.fileContent,
+                     this.dvbsBlockOffset + satConfig.ChannelListOffset + 1 * satConfig.dvbsChannelLength,
+                     0xFF,
+                     (satConfig.dvbsMaxChannelCount - 1) * satConfig.dvbsChannelLength);
+      }
+      else
       {
         Tools.MemCopy(sortedChannels, 0,
-                      this.fileContent, this.dvbsBlockOffset + satConfig.ChannelListOffset,
-                      channelCounter*satConfig.dvbsChannelLength);
+                              this.fileContent, this.dvbsBlockOffset + satConfig.ChannelListOffset,
+                              channelCounter * satConfig.dvbsChannelLength);
         Tools.MemSet(this.fileContent,
-                     this.dvbsBlockOffset + satConfig.ChannelListOffset + channelCounter*satConfig.dvbsChannelLength,
+                     this.dvbsBlockOffset + satConfig.ChannelListOffset + channelCounter * satConfig.dvbsChannelLength,
                      0xFF,
-                     (satConfig.dvbsMaxChannelCount - channelCounter)*satConfig.dvbsChannelLength);
+                     (satConfig.dvbsMaxChannelCount - channelCounter) * satConfig.dvbsChannelLength);
       }
       UpdateChannelAllocationBitmap(channelCounter);
       UpdateChannelLinkedList(channelCounter);      
