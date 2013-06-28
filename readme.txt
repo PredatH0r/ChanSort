@@ -1,6 +1,7 @@
-Version v2013-06-28 ======================================================
+Version v2013-06-28.2 ====================================================
 
 Changes:
+- FIX: Error saving Panasonic svl.db file (incorrect encryption)
 - FIX: Error saving a Panasonic file after applying a reference list
 - Improved experimental support for Panasonic channel lists
 
@@ -102,8 +103,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ================================================================
 
-2013-06-27
-- Improved experimental support for Panasonic channel lists (svl.db, svl.bin)
+2013-06-28.2
+- FIX: Error saving Panasonic svl.db file (incorrect encryption)
+- FIX: Error saving a Panasonic file after applying a reference list
+- Improved experimental support for Panasonic channel lists
 
 2013-06-25
 - Added experimental support for Panasonic channel lists (svl.db, svl.bin)

@@ -340,7 +340,7 @@ namespace ChanSort.Loader.Panasonic
       File.Delete(tempFile);
       Application.ApplicationExit += CleanTempFile;
       if (cypherMode == CypherMode.Encryption)
-        this.CypherFile(this.FileName, tempFile);
+        this.CypherFile(this.FileName, tempFile, false);
       else
         this.RemoveHeader(this.FileName, tempFile);
       return tempFile;
@@ -366,17 +366,18 @@ namespace ChanSort.Loader.Panasonic
     /// <summary>
     /// XOR-based cypher which can be used to alternately crypt/decrypt data
     /// </summary>
-    private void CypherFile(string input, string output)
+    private void CypherFile(string input, string output, bool encrypt)
     {
       byte[] fileContent = File.ReadAllBytes(input);
       int chiffre = 0x0388;
       int step = 0;
-      for (int i = 0; i < fileContent.Length /*- 41*/; i++)
+      for (int i = 0; i < fileContent.Length; i++)
       {
         byte b = fileContent[i];
-        fileContent[i] = (byte)(b ^ (chiffre >> 8));
+        byte n = (byte) (b ^ (chiffre >> 8));
+        fileContent[i] = n;
         if (++step < 256)
-          chiffre += b + 0x96A3;
+          chiffre += (encrypt ? n : b) + 0x96A3;
         else
         {
           chiffre = 0x0388;
@@ -568,7 +569,7 @@ order by s.ntype,major_channel
         case CypherMode.None:
           break;
         case CypherMode.Encryption:
-          this.CypherFile(this.workFile, this.FileName);
+          this.CypherFile(this.workFile, this.FileName, true);
           break;
         case CypherMode.HeaderAndChecksum:
           this.WriteFileWithHeaderAndChecksum();
