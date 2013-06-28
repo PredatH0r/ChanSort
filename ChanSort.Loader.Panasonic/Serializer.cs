@@ -531,7 +531,7 @@ order by s.ntype,major_channel
       cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@skip", DbType.Int32));
       cmd.Prepare();
-      foreach (DbChannel channel in channelList.Channels)
+      foreach (ChannelInfo channel in channelList.Channels)
       {
         if (channel.NewProgramNr < 0)
           continue;
@@ -550,7 +550,7 @@ order by s.ntype,major_channel
       cmd.CommandText = "delete from SVL where rowid=@rowid";
       cmd.Parameters.Clear();
       cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
-      foreach (DbChannel channel in channelList.Channels)
+      foreach (ChannelInfo channel in channelList.Channels)
       {
         if (channel.NewProgramNr >= 0)
           continue;

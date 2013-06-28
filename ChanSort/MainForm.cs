@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-06-27";
+    public const string AppVersion = "v2013-06-28";
 
     private const int MaxMruEntries = 5;
 
@@ -1760,6 +1760,8 @@ namespace ChanSort.Ui
       {
         var view = (GridView)sender;
         if (this.downHit == null || downHit.RowHandle < 0 || e.Button != MouseButtons.Left || view.ActiveEditor != null || ModifierKeys != Keys.None)
+          return;
+        if (this.currentChannelList == null || this.currentChannelList.ReadOnly)
           return;
         // drag/drop only allowed when left grid is sorted by NewSlotNr
         if (!this.IsLeftGridSortedByNewProgNr) 

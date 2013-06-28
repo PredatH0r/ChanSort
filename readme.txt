@@ -1,6 +1,7 @@
-Version v2013-06-27 ======================================================
+Version v2013-06-28 ======================================================
 
 Changes:
+- FIX: Error saving a Panasonic file after applying a reference list
 - Improved experimental support for Panasonic channel lists
 
 The complete change log can be found at the end of this document
