@@ -1,9 +1,7 @@
-Version v2013-06-28.2 ====================================================
+Version v2013-06-29.2 ======================================================
 
 Changes:
-- FIX: Error saving Panasonic svl.db file (incorrect encryption)
-- FIX: Error saving a Panasonic file after applying a reference list
-- Improved experimental support for Panasonic channel lists
+- FIX: Saving Pansonic svl.db now updates checksum correctly
 
 The complete change log can be found at the end of this document
 
@@ -60,7 +58,7 @@ LG
 
 Panasonic
 -------
-    Models with svl.bin/svl.db channel lists
+    Viera models with svl.bin or svl.db channel lists
 
 Toshiba
 -------
@@ -102,6 +100,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-06-29.2
+- FIX: Saving Pansonic svl.db now updates checksum correctly
+
+2013-06-29
+- Added Portuguese translation (thanks to Vitor Martins Augusto)
+- FIX: saving Panasonic files after loading reference list with missing
+  channels
 
 2013-06-28.2
 - FIX: Error saving Panasonic svl.db file (incorrect encryption)

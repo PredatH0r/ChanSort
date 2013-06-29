@@ -315,25 +315,22 @@
   <data name="cbCloseGap.ToolTip" xml:space="preserve">
     <value>Wenn aktiv, werden folgende Programmnummer automatisch vorgerückt</value>
   </data>
-  <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 13</value>
-  </data>
-  <data name="labelControl2.Text" xml:space="preserve">
+  <data name="lblInsertMode.Text" xml:space="preserve">
     <value>Einfügemodus:</value>
   </data>
   <data name="pageEmpty.Text" xml:space="preserve">
-    <value>Keine Datei geladen</value>
+    <value>Keine Senderlisten vorhanden</value>
   </data>
-  <data name="labelControl11.Text" xml:space="preserve">
+  <data name="lblSetProgramNr.Text" xml:space="preserve">
     <value>Setze Pr#:</value>
   </data>
-  <data name="labelControl11.ToolTip" xml:space="preserve">
+  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Programplatz für Einfügen und Festlegen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>ChanSort {0} - Senderlisten-Editor für Samsung, LG und Toshiba TVs</value>
   </data>
-  <data name="btnToggleLock.Text" xml:space="preserve">
+  <data name="btnToggleLock.ToolTip" xml:space="preserve">
     <value>Kindersicherung</value>
   </data>
   <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">

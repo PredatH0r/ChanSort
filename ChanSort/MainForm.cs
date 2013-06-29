@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-06-29";
+    public const string AppVersion = "v2013-06-29.2";
 
     private const int MaxMruEntries = 5;
 
@@ -79,7 +79,7 @@ namespace ChanSort.Ui
         Thread.CurrentThread.CurrentUICulture = new CultureInfo(Settings.Default.Language);
       this.LookAndFeel.SetSkinStyle("Office 2010 Blue");
       InitializeComponent();
-      this.SetControlsEnabled(false);
+      //this.SetControlsEnabled(false);
       if (!Settings.Default.WindowSize.IsEmpty)
         this.Size = Settings.Default.WindowSize;
       this.title = string.Format(this.Text, AppVersion);
@@ -235,7 +235,7 @@ namespace ChanSort.Ui
         this.gridLeft.DataSource = null;
         this.FillChannelListCombo();
 
-        this.SetControlsEnabled(!this.dataRoot.IsEmpty);
+        //this.SetControlsEnabled(!this.dataRoot.IsEmpty);
         this.UpdateFavoritesEditor(this.dataRoot.SupportedFavorites);
         this.colName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
         this.colOutName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
@@ -291,6 +291,11 @@ namespace ChanSort.Ui
           this.ShowChannelList((ChannelList)firstNonEmpty.Tag);
         else
           this.tabChannelList.SelectedTabPage = firstNonEmpty;
+      }
+      else
+      {
+        this.tabChannelList.TabPages.Add(this.pageEmpty);
+        this.currentChannelList = null;
       }
     }
 

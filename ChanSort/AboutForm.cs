@@ -11,7 +11,11 @@ namespace ChanSort.Ui
       InitializeComponent();
       this.gcPlugins.DataSource = plugins;
       
-      this.txtCredits.Text = @"PDA-User:
+      this.txtCredits.Text = 
+@"Vitor Martins Augusto:
+Portuguese translation
+
+PDA-User:
 Analysis of TLL file structure and extensive testing of ChanSort
 
 HellG:
@@ -21,7 +25,8 @@ edank, JLevi, Oleg:
 For writing TLLview, TLLedit and edankTLL and making the source available
 
 Many more on lg-forum.com:
-For providing example TLL files, error feedback and other helpful information";
+For providing example TLL files, error feedback and other helpful information
+";
     }
 
     private void lnkLicense_OpenLink(object sender, DevExpress.XtraEditors.Controls.OpenLinkEventArgs e)

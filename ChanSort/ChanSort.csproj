@@ -145,6 +145,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AboutForm.pt.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>

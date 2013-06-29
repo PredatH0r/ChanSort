@@ -63,6 +63,7 @@
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "ActionBoxDialog";
+      this.ShowInTaskbar = false;
       ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
       this.ResumeLayout(false);
 

@@ -148,9 +148,9 @@
       this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
       this.miMoveUp = new DevExpress.XtraBars.BarButtonItem();
       this.miMoveDown = new DevExpress.XtraBars.BarButtonItem();
-      this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+      this.lblInsertMode = new DevExpress.XtraEditors.LabelControl();
       this.txtSetSlot = new DevExpress.XtraEditors.ButtonEdit();
-      this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+      this.lblSetProgramNr = new DevExpress.XtraEditors.LabelControl();
       this.picDonate = new DevExpress.XtraEditors.PictureEdit();
       this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
       this.splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::ChanSort.Ui.WaitForm1), true, true);
@@ -1410,10 +1410,10 @@
       this.miMoveDown.Name = "miMoveDown";
       this.miMoveDown.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miMoveDown_ItemClick);
       // 
-      // labelControl2
+      // lblInsertMode
       // 
-      resources.ApplyResources(this.labelControl2, "labelControl2");
-      this.labelControl2.Name = "labelControl2";
+      resources.ApplyResources(this.lblInsertMode, "lblInsertMode");
+      this.lblInsertMode.Name = "lblInsertMode";
       // 
       // txtSetSlot
       // 
@@ -1427,11 +1427,11 @@
       this.txtSetSlot.EditValueChanged += new System.EventHandler(this.txtSetSlot_EditValueChanged);
       this.txtSetSlot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSetSlot_KeyDown);
       // 
-      // labelControl11
+      // lblSetProgramNr
       // 
-      this.labelControl11.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-      resources.ApplyResources(this.labelControl11, "labelControl11");
-      this.labelControl11.Name = "labelControl11";
+      this.lblSetProgramNr.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+      resources.ApplyResources(this.lblSetProgramNr, "lblSetProgramNr");
+      this.lblSetProgramNr.Name = "lblSetProgramNr";
       // 
       // picDonate
       // 
@@ -1455,10 +1455,10 @@
       this.grpTopPanel.Controls.Add(this.rbInsertAfter);
       this.grpTopPanel.Controls.Add(this.rbInsertBefore);
       this.grpTopPanel.Controls.Add(this.cbCloseGap);
-      this.grpTopPanel.Controls.Add(this.labelControl2);
+      this.grpTopPanel.Controls.Add(this.lblInsertMode);
       this.grpTopPanel.Controls.Add(this.picDonate);
       this.grpTopPanel.Controls.Add(this.tabChannelList);
-      this.grpTopPanel.Controls.Add(this.labelControl11);
+      this.grpTopPanel.Controls.Add(this.lblSetProgramNr);
       this.grpTopPanel.Controls.Add(this.txtSetSlot);
       resources.ApplyResources(this.grpTopPanel, "grpTopPanel");
       this.grpTopPanel.Name = "grpTopPanel";
@@ -1469,6 +1469,7 @@
       resources.ApplyResources(this.rbInsertSwap, "rbInsertSwap");
       this.rbInsertSwap.MenuManager = this.barManager1;
       this.rbInsertSwap.Name = "rbInsertSwap";
+      this.rbInsertSwap.Properties.AutoWidth = true;
       this.rbInsertSwap.Properties.Caption = resources.GetString("rbInsertSwap.Properties.Caption");
       this.rbInsertSwap.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
       this.rbInsertSwap.Properties.GlyphAlignment = ((DevExpress.Utils.HorzAlignment)(resources.GetObject("rbInsertSwap.Properties.GlyphAlignment")));
@@ -1481,6 +1482,7 @@
       resources.ApplyResources(this.rbInsertAfter, "rbInsertAfter");
       this.rbInsertAfter.MenuManager = this.barManager1;
       this.rbInsertAfter.Name = "rbInsertAfter";
+      this.rbInsertAfter.Properties.AutoWidth = true;
       this.rbInsertAfter.Properties.Caption = resources.GetString("rbInsertAfter.Properties.Caption");
       this.rbInsertAfter.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
       this.rbInsertAfter.Properties.RadioGroupIndex = 1;
@@ -1491,6 +1493,7 @@
       resources.ApplyResources(this.rbInsertBefore, "rbInsertBefore");
       this.rbInsertBefore.MenuManager = this.barManager1;
       this.rbInsertBefore.Name = "rbInsertBefore";
+      this.rbInsertBefore.Properties.AutoWidth = true;
       this.rbInsertBefore.Properties.Caption = resources.GetString("rbInsertBefore.Properties.Caption");
       this.rbInsertBefore.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
       this.rbInsertBefore.Properties.RadioGroupIndex = 1;
@@ -1618,7 +1621,7 @@
     private DevExpress.XtraEditors.LabelControl lblHotkeyLeft;
     private DevExpress.XtraEditors.LabelControl lblHotkeyRight;
     private DevExpress.XtraEditors.ButtonEdit txtSetSlot;
-    private DevExpress.XtraEditors.LabelControl labelControl11;
+    private DevExpress.XtraEditors.LabelControl lblSetProgramNr;
     private DevExpress.XtraGrid.Columns.GridColumn colEncrypted;
     private DevExpress.XtraBars.BarManager barManager1;
     private DevExpress.XtraBars.Bar bar1;
@@ -1662,7 +1665,7 @@
     private DevExpress.XtraEditors.PanelControl pnlEditControls;
     private DevExpress.XtraEditors.GroupControl grpTopPanel;
     private DevExpress.XtraEditors.PanelControl panelControl3;
-    private DevExpress.XtraEditors.LabelControl labelControl2;
+    private DevExpress.XtraEditors.LabelControl lblInsertMode;
     private DevExpress.XtraGrid.Columns.GridColumn colOutFav;
     private DevExpress.XtraEditors.SimpleButton btnRenum;
     private DevExpress.XtraGrid.Columns.GridColumn colIndex1;

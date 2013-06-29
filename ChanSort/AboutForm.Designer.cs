@@ -29,7 +29,7 @@
     private void InitializeComponent()
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
-      this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+      this.lblWebsite = new DevExpress.XtraEditors.LabelControl();
       this.lnkDownload = new DevExpress.XtraEditors.HyperLinkEdit();
       this.gcPlugins = new DevExpress.XtraGrid.GridControl();
       this.gvPlugins = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -37,13 +37,13 @@
       this.colDisplayText = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colFileTypes = new DevExpress.XtraGrid.Columns.GridColumn();
       this.lnkEmail = new DevExpress.XtraEditors.HyperLinkEdit();
-      this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-      this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+      this.lblAuthor = new DevExpress.XtraEditors.LabelControl();
+      this.lblLicense = new DevExpress.XtraEditors.LabelControl();
       this.lnkLicense = new DevExpress.XtraEditors.HyperLinkEdit();
-      this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
+      this.lblCredits = new DevExpress.XtraEditors.LabelControl();
       this.txtCredits = new DevExpress.XtraEditors.MemoEdit();
-      this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-      this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+      this.btnClose = new DevExpress.XtraEditors.SimpleButton();
+      this.txtAuthor = new DevExpress.XtraEditors.LabelControl();
       ((System.ComponentModel.ISupportInitialize)(this.lnkDownload.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.gcPlugins)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.gvPlugins)).BeginInit();
@@ -52,10 +52,10 @@
       ((System.ComponentModel.ISupportInitialize)(this.txtCredits.Properties)).BeginInit();
       this.SuspendLayout();
       // 
-      // labelControl1
+      // lblWebsite
       // 
-      resources.ApplyResources(this.labelControl1, "labelControl1");
-      this.labelControl1.Name = "labelControl1";
+      resources.ApplyResources(this.lblWebsite, "lblWebsite");
+      this.lblWebsite.Name = "lblWebsite";
       // 
       // lnkDownload
       // 
@@ -88,20 +88,17 @@
       // 
       // colPlugin
       // 
-      resources.ApplyResources(this.colPlugin, "colPlugin");
       this.colPlugin.FieldName = "PluginDll";
       this.colPlugin.Name = "colPlugin";
       this.colPlugin.UnboundType = DevExpress.Data.UnboundColumnType.String;
       // 
       // colDisplayText
       // 
-      resources.ApplyResources(this.colDisplayText, "colDisplayText");
       this.colDisplayText.FieldName = "PluginName";
       this.colDisplayText.Name = "colDisplayText";
       // 
       // colFileTypes
       // 
-      resources.ApplyResources(this.colFileTypes, "colFileTypes");
       this.colFileTypes.FieldName = "FileFilter";
       this.colFileTypes.Name = "colFileTypes";
       // 
@@ -114,15 +111,15 @@
       this.lnkEmail.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
       this.lnkEmail.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.lnkEmail_OpenLink);
       // 
-      // labelControl2
+      // lblAuthor
       // 
-      resources.ApplyResources(this.labelControl2, "labelControl2");
-      this.labelControl2.Name = "labelControl2";
+      resources.ApplyResources(this.lblAuthor, "lblAuthor");
+      this.lblAuthor.Name = "lblAuthor";
       // 
-      // labelControl4
+      // lblLicense
       // 
-      resources.ApplyResources(this.labelControl4, "labelControl4");
-      this.labelControl4.Name = "labelControl4";
+      resources.ApplyResources(this.lblLicense, "lblLicense");
+      this.lblLicense.Name = "lblLicense";
       // 
       // lnkLicense
       // 
@@ -133,42 +130,43 @@
       this.lnkLicense.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
       this.lnkLicense.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.lnkLicense_OpenLink);
       // 
-      // labelControl5
+      // lblCredits
       // 
-      resources.ApplyResources(this.labelControl5, "labelControl5");
-      this.labelControl5.Name = "labelControl5";
+      resources.ApplyResources(this.lblCredits, "lblCredits");
+      this.lblCredits.Name = "lblCredits";
       // 
       // txtCredits
       // 
       resources.ApplyResources(this.txtCredits, "txtCredits");
       this.txtCredits.Name = "txtCredits";
       // 
-      // simpleButton1
+      // btnClose
       // 
-      resources.ApplyResources(this.simpleButton1, "simpleButton1");
-      this.simpleButton1.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.simpleButton1.Name = "simpleButton1";
+      resources.ApplyResources(this.btnClose, "btnClose");
+      this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
+      this.btnClose.Name = "btnClose";
       // 
-      // labelControl3
+      // txtAuthor
       // 
-      resources.ApplyResources(this.labelControl3, "labelControl3");
-      this.labelControl3.Name = "labelControl3";
+      resources.ApplyResources(this.txtAuthor, "txtAuthor");
+      this.txtAuthor.Name = "txtAuthor";
       // 
       // AboutForm
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.labelControl3);
-      this.Controls.Add(this.simpleButton1);
+      this.Controls.Add(this.txtAuthor);
+      this.Controls.Add(this.btnClose);
       this.Controls.Add(this.txtCredits);
-      this.Controls.Add(this.labelControl5);
+      this.Controls.Add(this.lblCredits);
       this.Controls.Add(this.lnkLicense);
-      this.Controls.Add(this.labelControl4);
-      this.Controls.Add(this.labelControl2);
+      this.Controls.Add(this.lblLicense);
+      this.Controls.Add(this.lblAuthor);
       this.Controls.Add(this.lnkEmail);
       this.Controls.Add(this.lnkDownload);
-      this.Controls.Add(this.labelControl1);
+      this.Controls.Add(this.lblWebsite);
       this.Name = "AboutForm";
+      this.ShowInTaskbar = false;
       ((System.ComponentModel.ISupportInitialize)(this.lnkDownload.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.gcPlugins)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.gvPlugins)).EndInit();
@@ -182,7 +180,7 @@
 
     #endregion
 
-    private DevExpress.XtraEditors.LabelControl labelControl1;
+    private DevExpress.XtraEditors.LabelControl lblWebsite;
     private DevExpress.XtraEditors.HyperLinkEdit lnkDownload;
     private DevExpress.XtraGrid.GridControl gcPlugins;
     private DevExpress.XtraGrid.Views.Grid.GridView gvPlugins;
@@ -190,12 +188,12 @@
     private DevExpress.XtraGrid.Columns.GridColumn colDisplayText;
     private DevExpress.XtraGrid.Columns.GridColumn colFileTypes;
     private DevExpress.XtraEditors.HyperLinkEdit lnkEmail;
-    private DevExpress.XtraEditors.LabelControl labelControl2;
-    private DevExpress.XtraEditors.LabelControl labelControl4;
+    private DevExpress.XtraEditors.LabelControl lblAuthor;
+    private DevExpress.XtraEditors.LabelControl lblLicense;
     private DevExpress.XtraEditors.HyperLinkEdit lnkLicense;
-    private DevExpress.XtraEditors.LabelControl labelControl5;
+    private DevExpress.XtraEditors.LabelControl lblCredits;
     private DevExpress.XtraEditors.MemoEdit txtCredits;
-    private DevExpress.XtraEditors.SimpleButton simpleButton1;
-    private DevExpress.XtraEditors.LabelControl labelControl3;
+    private DevExpress.XtraEditors.SimpleButton btnClose;
+    private DevExpress.XtraEditors.LabelControl txtAuthor;
   }
 }

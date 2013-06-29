@@ -86,11 +86,14 @@
   <data name="lblHotkeyLeft.Text" xml:space="preserve">
     <value>F3: Filtro | F4: Lista | -: para cima | +: para baixo | DEL: remover</value>
   </data>
+  <data name="lblInsertMode.Text" xml:space="preserve">
+    <value>Modo acrescentar:</value>
+  </data>
   <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
-    <value>Acrescentar antes</value>
+    <value>Antes</value>
   </data>
   <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
-    <value>Acrescentar depois</value>
+    <value>Depois</value>
   </data>
   <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
     <value>Comutar</value>
@@ -241,9 +244,6 @@
   <data name="miMoveDown.Caption" xml:space="preserve">
     <value>Para baixo</value>
   </data>
-  <data name="labelControl2.Text" xml:space="preserve">
-    <value>Modo:</value>
-  </data>
   <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
     <value>Repor filtro</value>
   </data>
@@ -262,10 +262,10 @@
   <data name="btnRemoveRight.ToolTip" xml:space="preserve">
     <value>Remover canais seleccionados</value>
   </data>
-  <data name="labelControl11.Text" xml:space="preserve">
+  <data name="lblSetProgramNr.Text" xml:space="preserve">
     <value>Aplicar Pr#:</value>
   </data>
-  <data name="labelControl11.ToolTip" xml:space="preserve">
+  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Acrescentar e definar posição de canal</value>
   </data>
   <data name="grpOutputList.Text" xml:space="preserve">
@@ -331,6 +331,9 @@
   <data name="colServiceType.Caption" xml:space="preserve">
     <value>Tipo serviço</value>
   </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>Sserviço ID</value>
+  </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
     <value>Operador</value>
   </data>
@@ -338,7 +341,7 @@
     <value>F5: Filtro | F6: Lista | Entrada: aceitar</value>
   </data>
   <data name="btnAddAll.Text" xml:space="preserve">
-    <value>&lt;&lt; Acrescentar todos (copiar lista de canais atual)</value>
+    <value>&lt;&lt; Acrescentar todos</value>
   </data>
   <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
     <value>Repor filtro</value>
@@ -348,5 +351,14 @@
   </data>
   <data name="grpInputList.Text" xml:space="preserve">
     <value>Todos os canais</value>
+  </data>
+  <data name="pageEmpty.Text" xml:space="preserve">
+    <value>No lista de canais</value>
+  </data>
+  <data name="colOutLock.ToolTip" xml:space="preserve">
+    <value>Parental lock</value>
+  </data>
+  <data name="btnToggleLock.ToolTip" xml:space="preserve">
+    <value>Parental lock</value>
   </data>
 </root>

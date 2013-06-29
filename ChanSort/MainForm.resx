@@ -294,7 +294,7 @@
     <value>1474, 599</value>
   </data>
   <data name="rbInsertSwap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>218, 6</value>
+    <value>256, 6</value>
   </data>
   <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>475, 17</value>
@@ -576,7 +576,7 @@
     <value>Default</value>
   </data>
   <data name="rbInsertSwap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 19</value>
+    <value>48, 19</value>
   </data>
   <data name="rbInsertSwap.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -597,13 +597,13 @@
     <value>True</value>
   </data>
   <data name="rbInsertAfter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>153, 6</value>
+    <value>185, 6</value>
   </data>
   <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
     <value>after</value>
   </data>
   <data name="rbInsertAfter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 19</value>
+    <value>47, 19</value>
   </data>
   <data name="rbInsertAfter.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -621,13 +621,13 @@
     <value>1</value>
   </data>
   <data name="rbInsertBefore.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 6</value>
+    <value>107, 6</value>
   </data>
   <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
     <value>before</value>
   </data>
   <data name="rbInsertBefore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 19</value>
+    <value>55, 19</value>
   </data>
   <data name="rbInsertBefore.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -648,7 +648,7 @@
     <value>True</value>
   </data>
   <data name="cbCloseGap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>496, 6</value>
+    <value>543, 6</value>
   </data>
   <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
     <value>Close gap when moving/deleting a channel</value>
@@ -674,28 +674,28 @@
   <data name="&gt;&gt;cbCloseGap.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="labelControl2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblInsertMode.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 8</value>
   </data>
-  <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblInsertMode.Size" type="System.Drawing.Size, System.Drawing">
     <value>62, 13</value>
   </data>
-  <data name="labelControl2.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblInsertMode.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="labelControl2.Text" xml:space="preserve">
+  <data name="lblInsertMode.Text" xml:space="preserve">
     <value>Insert mode:</value>
   </data>
-  <data name="&gt;&gt;labelControl2.Name" xml:space="preserve">
-    <value>labelControl2</value>
+  <data name="&gt;&gt;lblInsertMode.Name" xml:space="preserve">
+    <value>lblInsertMode</value>
   </data>
-  <data name="&gt;&gt;labelControl2.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblInsertMode.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;labelControl2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblInsertMode.Parent" xml:space="preserve">
     <value>grpTopPanel</value>
   </data>
-  <data name="&gt;&gt;labelControl2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblInsertMode.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="picDonate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -735,7 +735,7 @@
     <value>632, 0</value>
   </data>
   <data name="pageEmpty.Text" xml:space="preserve">
-    <value>No file loaded</value>
+    <value>No channel lists</value>
   </data>
   <data name="&gt;&gt;pageEmpty.Name" xml:space="preserve">
     <value>pageEmpty</value>
@@ -767,38 +767,38 @@
   <data name="&gt;&gt;tabChannelList.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="labelControl11.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v12.2">
+  <data name="lblSetProgramNr.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v12.2">
     <value>Vertical</value>
   </data>
-  <data name="labelControl11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>320, 8</value>
+  <data name="lblSetProgramNr.Location" type="System.Drawing.Point, System.Drawing">
+    <value>367, 8</value>
   </data>
-  <data name="labelControl11.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblSetProgramNr.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 13</value>
   </data>
-  <data name="labelControl11.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblSetProgramNr.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="labelControl11.Text" xml:space="preserve">
+  <data name="lblSetProgramNr.Text" xml:space="preserve">
     <value>Set Pr#:</value>
   </data>
-  <data name="labelControl11.ToolTip" xml:space="preserve">
+  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Program number for insert and set operations</value>
   </data>
-  <data name="&gt;&gt;labelControl11.Name" xml:space="preserve">
-    <value>labelControl11</value>
+  <data name="&gt;&gt;lblSetProgramNr.Name" xml:space="preserve">
+    <value>lblSetProgramNr</value>
   </data>
-  <data name="&gt;&gt;labelControl11.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblSetProgramNr.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;labelControl11.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblSetProgramNr.Parent" xml:space="preserve">
     <value>grpTopPanel</value>
   </data>
-  <data name="&gt;&gt;labelControl11.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblSetProgramNr.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
   <data name="txtSetSlot.Location" type="System.Drawing.Point, System.Drawing">
-    <value>390, 5</value>
+    <value>437, 5</value>
   </data>
   <data name="txtSetSlot.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v12.2">
     <value>OK</value>
@@ -1431,7 +1431,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>06/29/2013 11:11:06</value>
+    <value>06/29/2013 12:47:45</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1444,6 +1444,9 @@
   </data>
   <data name="btnToggleLock.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
+  </data>
+  <data name="btnToggleLock.ToolTip" xml:space="preserve">
+    <value>Parental lock</value>
   </data>
   <data name="&gt;&gt;btnToggleLock.Name" xml:space="preserve">
     <value>btnToggleLock</value>

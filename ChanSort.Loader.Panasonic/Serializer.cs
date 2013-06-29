@@ -369,9 +369,13 @@ namespace ChanSort.Loader.Panasonic
     private void CypherFile(string input, string output, bool encrypt)
     {
       byte[] fileContent = File.ReadAllBytes(input);
+
+      if (!encrypt && this.CalcChecksum(fileContent, fileContent.Length) != 0)
+        throw new FileLoadException("Checksum validation failed");
+
       int chiffre = 0x0388;
       int step = 0;
-      for (int i = 0; i < fileContent.Length; i++)
+      for (int i = 0; i < fileContent.Length - 4; i++)
       {
         byte b = fileContent[i];
         byte n = (byte) (b ^ (chiffre >> 8));
@@ -384,6 +388,10 @@ namespace ChanSort.Loader.Panasonic
           step = 0;
         }
       }
+
+      if (encrypt)
+        this.UpdateChecksum(fileContent);
+
       File.WriteAllBytes(output, fileContent);
     }
     #endregion
@@ -392,7 +400,7 @@ namespace ChanSort.Loader.Panasonic
     private void RemoveHeader(string inputFile, string outputFile)
     {
       var data = File.ReadAllBytes(inputFile);
-      if (this.CalcPsdbChecksum(data, data.Length) != 0)
+      if (this.CalcChecksum(data, data.Length) != 0)
         throw new FileLoadException("Checksum validation failed");
 
       int offset = 30 + (data[28] << 8) + data[29];
@@ -410,8 +418,8 @@ namespace ChanSort.Loader.Panasonic
     }
     #endregion
 
-    #region CalcPsdbChecksum()
-    private uint CalcPsdbChecksum(byte[] data, int length)
+    #region CalcChecksum()
+    private uint CalcChecksum(byte[] data, int length)
     {
       uint v = 0xffffffff;
       for (int i = 0; i < length; i++)
@@ -426,7 +434,11 @@ namespace ChanSort.Loader.Panasonic
     #region CleanTempFile()
     private void CleanTempFile(object sender, EventArgs e)
     {
-      try { File.Delete(this.workFile);}
+      try
+      {
+        if (this.workFile != null) 
+          File.Delete(this.workFile);
+      }
       catch { }
     }
     #endregion
@@ -593,16 +605,22 @@ order by s.ntype,major_channel
       data[this.dbSizeOffset + 2] = (byte)(workFileSize >> 8);
       data[this.dbSizeOffset + 3] = (byte)(workFileSize);
 
-      uint checksum = this.CalcPsdbChecksum(data, data.Length - 4);
-      data[data.Length - 1] = (byte)(checksum & 0xFF);
-      data[data.Length - 2] = (byte)((checksum >> 8) & 0xFF);
-      data[data.Length - 3] = (byte)((checksum >> 16) & 0xFF);
-      data[data.Length - 4] = (byte)((checksum >> 24) & 0xFF);
+      this.UpdateChecksum(data);
 
       using (var stream = new FileStream(this.FileName, FileMode.Create, FileAccess.Write))
         stream.Write(data, 0, data.Length);
     }
+    #endregion
 
+    #region UpdateChecksum()
+    private void UpdateChecksum(byte[] data)
+    {
+      uint checksum = this.CalcChecksum(data, data.Length - 4);
+      data[data.Length - 1] = (byte)(checksum & 0xFF);
+      data[data.Length - 2] = (byte)((checksum >> 8) & 0xFF);
+      data[data.Length - 3] = (byte)((checksum >> 16) & 0xFF);
+      data[data.Length - 4] = (byte)((checksum >> 24) & 0xFF);
+    }
     #endregion
   }
 }

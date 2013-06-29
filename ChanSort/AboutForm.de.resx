@@ -118,37 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="labelControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 13</value>
-  </data>
-  <data name="labelControl1.Text" xml:space="preserve">
-    <value>Projektwebseite:</value>
-  </data>
-  <data name="colDisplayText.Caption" xml:space="preserve">
-    <value>Beschreibung</value>
-  </data>
-  <data name="colFileTypes.Caption" xml:space="preserve">
-    <value>Dateitypen</value>
-  </data>
-  <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 13</value>
-  </data>
-  <data name="labelControl2.Text" xml:space="preserve">
+  <data name="lblAuthor.Text" xml:space="preserve">
     <value>Programmautor:</value>
   </data>
-  <data name="labelControl4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>33, 13</value>
-  </data>
-  <data name="labelControl4.Text" xml:space="preserve">
+  <data name="lblLicense.Text" xml:space="preserve">
     <value>Lizenz:</value>
   </data>
-  <data name="labelControl5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
+  <data name="lblWebsite.Text" xml:space="preserve">
+    <value>Projektwebseite:</value>
   </data>
-  <data name="labelControl5.Text" xml:space="preserve">
+  <data name="lblCredits.Text" xml:space="preserve">
     <value>Referenzen:</value>
   </data>
-  <data name="simpleButton1.Text" xml:space="preserve">
+  <data name="btnClose.Text" xml:space="preserve">
     <value>Schließen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
