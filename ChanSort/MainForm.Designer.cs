@@ -133,6 +133,7 @@
       this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
       this.miEnglish = new DevExpress.XtraBars.BarButtonItem();
       this.miGerman = new DevExpress.XtraBars.BarButtonItem();
+      this.miPortuguese = new DevExpress.XtraBars.BarButtonItem();
       this.mnuCharset = new DevExpress.XtraBars.BarSubItem();
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
@@ -875,9 +876,10 @@
             this.miCleanupChannels,
             this.miSaveReferenceFile,
             this.miRecentFiles,
-            this.miExcelExport});
+            this.miExcelExport,
+            this.miPortuguese});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 60;
+      this.barManager1.MaxItemId = 61;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1263,7 +1265,8 @@
       this.barSubItem1.ImageIndex = 14;
       this.barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miEnglish),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miGerman)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miGerman),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese)});
       this.barSubItem1.Name = "barSubItem1";
       this.barSubItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
       // 
@@ -1288,6 +1291,16 @@
       this.miGerman.Name = "miGerman";
       this.miGerman.Tag = "de-DE";
       this.miGerman.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
+      // miPortuguese
+      // 
+      this.miPortuguese.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miPortuguese, "miPortuguese");
+      this.miPortuguese.Id = 60;
+      this.miPortuguese.ImageIndex = 2;
+      this.miPortuguese.Name = "miPortuguese";
+      this.miPortuguese.Tag = "pt-PT";
+      this.miPortuguese.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // mnuCharset
       // 
@@ -1714,6 +1727,7 @@
     private DevExpress.XtraBars.BarListItem miRecentFiles;
     private DevExpress.XtraBars.BarButtonItem miExcelExport;
     private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
+    private DevExpress.XtraBars.BarButtonItem miPortuguese;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

@@ -333,7 +333,7 @@
     <value>&amp;Quit</value>
   </data>
   <data name="miRecentFiles.Caption" xml:space="preserve">
-    <value>miRecentFiles</value>
+    <value>Recent files</value>
   </data>
   <data name="miEdit.Caption" xml:space="preserve">
     <value>&amp;Edit</value>
@@ -357,7 +357,7 @@
     <value>Add to &amp;Favorites</value>
   </data>
   <data name="miFavSet.Caption" xml:space="preserve">
-    <value>Favoriten setzen</value>
+    <value>Add to favorites</value>
   </data>
   <data name="mnuFavUnset.Caption" xml:space="preserve">
     <value>Remove from Favorites</value>
@@ -406,6 +406,9 @@
   </data>
   <data name="miGerman.Caption" xml:space="preserve">
     <value>&amp;Deutsch</value>
+  </data>
+  <data name="miPortuguese.Caption" xml:space="preserve">
+    <value>Português</value>
   </data>
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Character set</value>
@@ -855,7 +858,7 @@
     <value>CenterScreen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - Channel List Editor for Samsung, LG and Toshiba TVs</value>
+    <value>ChanSort {0} - Channel List Editor for Samsung, LG, Pansonic and Toshiba TVs</value>
   </data>
   <data name="&gt;&gt;dsChannels.Name" xml:space="preserve">
     <value>dsChannels</value>
@@ -1331,6 +1334,12 @@
   <data name="&gt;&gt;miGerman.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miPortuguese.Name" xml:space="preserve">
+    <value>miPortuguese</value>
+  </data>
+  <data name="&gt;&gt;miPortuguese.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;mnuCharset.Name" xml:space="preserve">
     <value>mnuCharset</value>
   </data>
@@ -1422,7 +1431,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>06/23/2013 14:48:34</value>
+    <value>06/29/2013 11:11:06</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1965,7 +1974,7 @@
     <value>40</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>Service Typ</value>
+    <value>Service Type</value>
   </data>
   <data name="colServiceType.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1998,7 +2007,7 @@
     <value>100</value>
   </data>
   <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>Netzwerk (ONID)</value>
+    <value>Network (ONID)</value>
   </data>
   <data name="colNetworkId.Visible" type="System.Boolean, mscorlib">
     <value>True</value>

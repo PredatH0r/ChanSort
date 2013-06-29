@@ -45,6 +45,7 @@ namespace ChanSort.Ui
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlobalImageCollectionHolder));
       this.sharedImageCollection1 = new DevExpress.Utils.SharedImageCollection(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1.ImageSource)).BeginInit();
       // 
       // sharedImageCollection1
       // 
@@ -87,6 +88,7 @@ namespace ChanSort.Ui
       this.sharedImageCollection1.ImageSource.Images.SetKeyName(32, "0032.png");
       this.sharedImageCollection1.ImageSource.Images.SetKeyName(33, "0033.png");
       this.sharedImageCollection1.ParentControl = null;
+      ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1.ImageSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1)).EndInit();
 
     }

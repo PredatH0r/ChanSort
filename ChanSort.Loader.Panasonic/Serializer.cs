@@ -534,7 +534,7 @@ order by s.ntype,major_channel
       cmd.Prepare();
       foreach (ChannelInfo channel in channelList.Channels)
       {
-        if (channel.NewProgramNr < 0)
+        if (channel.NewProgramNr < 0 || channel.OldProgramNr < 0)
           continue;
         channel.UpdateRawData();
         cmd.Parameters["@rowid"].Value = channel.RecordIndex;
@@ -553,10 +553,11 @@ order by s.ntype,major_channel
       cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
       foreach (ChannelInfo channel in channelList.Channels)
       {
-        if (channel.NewProgramNr >= 0)
-          continue;
-        cmd.Parameters["@rowid"].Value = channel.RecordIndex;
-        cmd.ExecuteNonQuery();
+        if (channel.NewProgramNr == -1 && channel.OldProgramNr >= 0)
+        {
+          cmd.Parameters["@rowid"].Value = channel.RecordIndex;
+          cmd.ExecuteNonQuery();
+        }
       }
     }
     #endregion
