@@ -1,4 +1,4 @@
-Version v2013-xx-xx ======================================================
+Version v2013-06-29.3 ====================================================
 
 Changes:
 - Added support for Panasonic channel list "Freesat" and "Analog Cable"
@@ -99,6 +99,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-06-29.3
+- Added support for Panasonic channel list "Freesat" and "Analog Cable"
 
 2013-06-29.2
 - FIX: Saving Pansonic svl.db now updates checksum correctly
