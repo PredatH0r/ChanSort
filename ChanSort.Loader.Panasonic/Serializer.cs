@@ -12,10 +12,12 @@ namespace ChanSort.Loader.Panasonic
   {
     private static readonly string ERR_FileFormatOrEncryption = "File uses an unknown format or encryption";
     private static readonly int[] headerCypherTable;
-    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv | SignalSource.Radio, "Analog");
+    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT | SignalSource.Tv | SignalSource.Radio, "Analog Antenna");
+    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC | SignalSource.Tv | SignalSource.Radio, "Analog Cable");
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Radio, "DVB-T");
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
     private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
+    private readonly ChannelList freesatChannels = new ChannelList(SignalSource.DvbS | SignalSource.Freesat | SignalSource.Tv | SignalSource.Radio, "Freesat");
 
     private string workFile;
     private CypherMode cypherMode;
@@ -299,10 +301,14 @@ namespace ChanSort.Loader.Panasonic
     #region ctor()
     public Serializer(string inputFile) : base(inputFile)
     {
-      this.DataRoot.AddChannelList(this.atvChannels);
+      this.Features.ChannelNameEdit = true;
+      
+      this.DataRoot.AddChannelList(this.avbtChannels);
+      this.DataRoot.AddChannelList(this.avbcChannels);
       this.DataRoot.AddChannelList(this.dvbtChannels);
       this.DataRoot.AddChannelList(this.dvbcChannels);
       this.DataRoot.AddChannelList(this.dvbsChannels);
+      this.DataRoot.AddChannelList(this.freesatChannels);
     }
     #endregion
 
@@ -460,11 +466,11 @@ namespace ChanSort.Loader.Panasonic
     private void ReadChannels(SQLiteCommand cmd)
     {
       string[] fieldNames = { "rowid", "major_channel", "physical_ch","sname", "freq", "skip", "running_status","free_CA_mode","child_lock",
-                            "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "delivery" };
+                            "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "ya_svcid", "delivery" };
       
       const string sql = @"
 select s.rowid,s.major_channel,s.physical_ch,s.sname,t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
-  profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,delivery
+  profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery
 from SVL s 
 left outer join TSL t on s.ntype=t.ntype and s.physical_ch=t.physical_ch and s.tsid=t.tsid
 order by s.ntype,major_channel
@@ -514,10 +520,12 @@ order by s.ntype,major_channel
         {
           using (var trans = conn.BeginTransaction())
           {
-            this.WriteChannels(cmd, this.atvChannels);
+            this.WriteChannels(cmd, this.avbtChannels);
+            this.WriteChannels(cmd, this.avbcChannels);
             this.WriteChannels(cmd, this.dvbtChannels);
             this.WriteChannels(cmd, this.dvbcChannels);
             this.WriteChannels(cmd, this.dvbsChannels);
+            this.WriteChannels(cmd, this.freesatChannels);
             trans.Commit();
           }
         }

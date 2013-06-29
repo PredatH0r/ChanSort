@@ -17,13 +17,19 @@ namespace ChanSort.Loader.Panasonic
       this.OldProgramNr = r.GetInt32(field["major_channel"]);
       int ntype = r.GetInt32(field["ntype"]);
       if (ntype == 1)
+      {
         this.SignalSource |= SignalSource.DvbS;
+        if (r.GetInt32(field["ya_svcid"]) >= 0)
+          this.SignalSource |= SignalSource.Freesat;
+      }
       else if (ntype == 2)
         this.SignalSource |= SignalSource.DvbT;
       else if (ntype == 3)
         this.SignalSource |= SignalSource.DvbC;
       else if (ntype == 10)
-        this.SignalSource |= SignalSource.AnalogCT|SignalSource.Tv;
+        this.SignalSource |= SignalSource.AnalogT | SignalSource.Tv;
+      else if (ntype == 14)
+        this.SignalSource |= SignalSource.AnalogC | SignalSource.Tv;
 
       byte[] buffer = new byte[1000];
       var len = r.GetBytes(field["delivery"], 0, buffer, 0, 1000);
@@ -34,7 +40,7 @@ namespace ChanSort.Loader.Panasonic
       this.Lock = r.GetInt32(field["child_lock"]) != 0;
       this.ParseFavorites(r, field);
 
-      if (ntype == 10)
+      if (ntype == 10 || ntype == 14)
         this.ReadAnalogData(r, field);
       else
         this.ReadDvbData(r, field, dataRoot, buffer);
@@ -70,10 +76,7 @@ namespace ChanSort.Loader.Panasonic
       this.ShortName = shortName;
 
       int stype = r.GetInt32(field["stype"]);
-      if (stype == 1 || stype == 22 || stype == 25)
-        this.SignalSource |= SignalSource.Tv;
-      else if (stype == 2)
-        this.SignalSource |= SignalSource.Radio;
+      this.SignalSource |= LookupData.Instance.IsRadioOrTv(stype);
       this.ServiceType = stype;
 
       int freq = r.GetInt32(field["freq"]);

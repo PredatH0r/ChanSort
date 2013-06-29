@@ -1,7 +1,7 @@
-Version v2013-06-29.2 ======================================================
+Version v2013-xx-xx ======================================================
 
 Changes:
-- FIX: Saving Pansonic svl.db now updates checksum correctly
+- Added support for Panasonic channel list "Freesat" and "Analog Cable"
 
 The complete change log can be found at the end of this document
 
@@ -43,7 +43,7 @@ Samsung
 LG
 ------
     Series: CS, DM, LA, LD, LE, LH, LK, LM*, LN, LS, LV, LW, LX, PM, PT
-    Lists:  Analog TV, DTV (DVB-C/T), Radio (DVB-C/T), Sat-DTV (DVB-S2),
+    Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2),
             Sat-Radio (DVB-S2)
   
     * NOTE: See system requirements for LM-Series.
@@ -54,11 +54,10 @@ LG
     Instructions on how to access the hidden service-menu for transferring
     the channel list from/to USB can be found here:
     https://sourceforge.net/p/chansort/wiki/Home/
-    http://www.ullrich.es/job/service-menue/lg-tlledit-lg-sendersortierung/
 
 Panasonic
 -------
-    Viera models with svl.bin or svl.db channel lists
+    Viera models with an svl.bin or svl.db channel list
 
 Toshiba
 -------
