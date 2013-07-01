@@ -1,7 +1,9 @@
-Version v2013-06-29.3 ====================================================
+Version v2013-07-01 ======================================================
 
-Changes:
-- Added support for Panasonic channel list "Freesat" and "Analog Cable"
+This version is identical to Beta v2013-06-29.3
+Changes since last official version v2013-06-24:
+- Added support for Panasonic channel list (svl.db and svl.bin format)
+- Translated UI to Portuguese (Thanks to Vitor Martins Augusto)
 
 The complete change log can be found at the end of this document
 
@@ -58,6 +60,7 @@ LG
 Panasonic
 -------
     Viera models with an svl.bin or svl.db channel list
+    (most/all? models since 2011)
 
 Toshiba
 -------
@@ -100,24 +103,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ================================================================
 
-2013-06-29.3
-- Added support for Panasonic channel list "Freesat" and "Analog Cable"
-
-2013-06-29.2
-- FIX: Saving Pansonic svl.db now updates checksum correctly
-
-2013-06-29
-- Added Portuguese translation (thanks to Vitor Martins Augusto)
-- FIX: saving Panasonic files after loading reference list with missing
-  channels
-
-2013-06-28.2
-- FIX: Error saving Panasonic svl.db file (incorrect encryption)
-- FIX: Error saving a Panasonic file after applying a reference list
-- Improved experimental support for Panasonic channel lists
-
-2013-06-25
-- Added experimental support for Panasonic channel lists (svl.db, svl.bin)
+2013-07-01
+- Added support for Panasonic channel list (svl.db and svl.bin format)
+- Translated UI to Portuguese (Thanks to Vitor Martins Augusto)
 
 2013-06-24
 - FIX: Resizing a column caused an exception
