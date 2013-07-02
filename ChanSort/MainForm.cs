@@ -24,7 +24,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-06-29.3";
+    public const string AppVersion = "v2013-07-03";
 
     private const int MaxMruEntries = 5;
 
@@ -41,14 +41,14 @@ namespace ChanSort.Ui
     private class DragDropInfo
     {
       public readonly GridView SourceView;
-      public readonly int SourceProgramNumber;
+      public readonly int SourcePosition;
       public EditMode EditMode;
       public int DropRowHandle = -1;
 
-      public DragDropInfo(GridView source, int sourceProgramNumber)
+      public DragDropInfo(GridView source, int sourcePosition)
       {
         this.SourceView = source;
-        this.SourceProgramNumber = sourceProgramNumber;
+        this.SourcePosition = sourcePosition;
       }
     }
     #endregion
@@ -65,6 +65,7 @@ namespace ChanSort.Ui
     private Encoding defaultEncoding = Encoding.Default;
     private readonly List<string> isoEncodings = new List<string>();
     private ChannelList currentChannelList;
+    private int subListIndex;
     private GridView lastFocusedGrid;
     private EditMode curEditMode = EditMode.InsertAfter;
     private bool dontOpenEditor;
@@ -310,6 +311,7 @@ namespace ChanSort.Ui
       this.repositoryItemCheckedComboBoxEdit2.Items.Clear();
       byte mask = 0x01;
       string regex = "[";
+      int favCount = 0;
       for (int bit=0; bit<8; bit++, mask<<=1)
       {
         if (((int) favorites & mask) != 0)
@@ -322,11 +324,28 @@ namespace ChanSort.Ui
           string str = c.ToString();
           this.miFavSet.Strings.Add(str);
           this.miFavUnset.Strings.Add(str);
+          ++favCount;
         }
       }
       regex += "]*";
       this.repositoryItemCheckedComboBoxEdit1.Mask.EditMask = regex;
       this.repositoryItemCheckedComboBoxEdit2.Mask.EditMask = regex;
+
+      while (this.tabSubList.TabPages.Count > favCount + 1)
+        this.tabSubList.TabPages.RemoveAt(this.tabSubList.TabPages.Count-1);
+      while (this.tabSubList.TabPages.Count < favCount + 1)
+      {
+        var page = this.tabSubList.TabPages.Add();
+        page.Text = "Fav " + (char)('A' + this.tabSubList.TabPages.Count - 2);
+      }
+      if (!this.dataRoot.SortedFavorites || this.subListIndex >= favCount)
+      {
+        this.tabSubList.SelectedTabPageIndex = 0;
+        this.subListIndex = 0;
+      }
+      this.grpSubList.Visible = this.dataRoot.SortedFavorites;
+      this.colOutFav.OptionsColumn.AllowEdit = !this.dataRoot.SortedFavorites;
+      this.colFavorites.OptionsColumn.AllowEdit = !this.dataRoot.SortedFavorites;
     }
 
     #endregion
@@ -788,7 +807,7 @@ namespace ChanSort.Ui
       {
         this.gviewLeft.EndDataUpdate();
       }
-      this.UpdateInsertSlotTextBox();
+      this.UpdateInsertSlotNumber();
     }
 
     #endregion
@@ -843,11 +862,11 @@ namespace ChanSort.Ui
       this.gviewLeft.BeginDataUpdate();
       int maxNr = this.currentChannelList.InsertProgramNumber;
       foreach (var channel in this.currentChannelList.Channels)
-        maxNr = Math.Max(maxNr, channel.NewProgramNr);
+        maxNr = Math.Max(maxNr, channel.GetPosition(this.subListIndex));
       foreach (var channel in this.currentChannelList.Channels)
       {
-        if (channel.NewProgramNr == -1 && !channel.IsDeleted)
-          channel.NewProgramNr = maxNr++;
+        if (channel.GetPosition(this.subListIndex) == -1 && !channel.IsDeleted)
+          channel.SetPosition(this.subListIndex, maxNr++);
       }
       this.gviewRight.EndDataUpdate();
       this.gviewLeft.EndDataUpdate();
@@ -915,6 +934,7 @@ namespace ChanSort.Ui
       this.miShowWarningsAfterLoad.Checked = Settings.Default.ShowWarningsAfterLoading;
       this.cbCloseGap.Checked = Settings.Default.CloseGaps;
       this.ClearLeftFilter();
+      this.ClearRightFilter();
 
       for (int i = MaxMruEntries-1; i >= 0; i--)
       {
@@ -1000,6 +1020,26 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region UpdateInsertSlotNumber()
+    private void UpdateInsertSlotNumber()
+    {
+      var channel = (ChannelInfo)this.gviewLeft.GetFocusedRow();
+      int programNr;
+      if (channel == null)
+        programNr = this.currentChannelList == null ? 1 : this.currentChannelList.FirstProgramNumber;
+      else
+      {
+        programNr = channel.GetPosition(this.subListIndex);
+        if (this.rbInsertAfter.Checked)
+          ++programNr;
+      }
+      if (this.currentChannelList != null)
+        this.currentChannelList.InsertProgramNumber = programNr;
+      this.UpdateInsertSlotTextBox();
+      this.gviewLeft.SelectRow(this.gviewLeft.FocusedRowHandle);
+    }
+    #endregion
+
     #region UpdateInsertSlotTextBox()
     private void UpdateInsertSlotTextBox()
     {
@@ -1054,7 +1094,7 @@ namespace ChanSort.Ui
     {
       this.gviewLeft.BeginSort();
       this.gviewLeft.ClearColumnsFilter();
-      this.colOutSlot.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>-1");
+      this.colOutSlot.FilterInfo = new ColumnFilterInfo("[Position]<>-1");
       this.gviewLeft.EndSort();
     }
 
@@ -1136,20 +1176,13 @@ namespace ChanSort.Ui
     {
       if (string.IsNullOrEmpty(fav)) return;
       char ch = Char.ToUpper(fav[0]);
-      if (ch<'A' || ch>'D') return;
+      if (ch<'A' || ch>'E' || this.subListIndex == ch-'A'+1) return;
       var list = this.GetSelectedChannels(this.lastFocusedGrid);
       if (list.Count == 0) return;
 
       this.gviewRight.BeginDataUpdate();
       this.gviewLeft.BeginDataUpdate();
-      Favorites mask = (Favorites)(1 << (ch - 'A'));
-      foreach(var channel in list)
-      {
-        if (set)
-          channel.Favorites |= mask;
-        else
-          channel.Favorites &= ~mask;
-      }
+      this.editor.SetFavorites(list, (Favorites) (1 << (ch - 'A')), set);
       this.gviewRight.EndDataUpdate();
       this.gviewLeft.EndDataUpdate();
     }
@@ -1220,11 +1253,11 @@ namespace ChanSort.Ui
       this.btnRemoveLeft.Enabled = mayEdit;
       this.btnRemoveRight.Enabled = mayEdit;
       this.btnRenum.Enabled = mayEdit;
-      this.btnToggleFavA.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.A) != 0;
-      this.btnToggleFavB.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.B) != 0;
-      this.btnToggleFavC.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.C) != 0;
-      this.btnToggleFavD.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.D) != 0;
-      this.btnToggleFavE.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.E) != 0;
+      this.btnToggleFavA.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.A) != 0 && this.subListIndex != 1;
+      this.btnToggleFavB.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.B) != 0 && this.subListIndex != 2;
+      this.btnToggleFavC.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.C) != 0 && this.subListIndex != 3;
+      this.btnToggleFavD.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.D) != 0 && this.subListIndex != 4;
+      this.btnToggleFavE.Enabled = mayEdit && (this.dataRoot.SupportedFavorites & Favorites.E) != 0 && this.subListIndex != 5;
       this.btnToggleLock.Enabled = mayEdit;
 
       this.miReload.Enabled = fileLoaded;
@@ -1250,7 +1283,8 @@ namespace ChanSort.Ui
       bool isLeftGridSortedByNewProgNr = this.IsLeftGridSortedByNewProgNr;
       var sel = this.gviewLeft.GetSelectedRows();
       var channel = sel.Length == 0 ? null : (ChannelInfo) this.gviewRight.GetRow(sel[0]);
-      this.miMoveUp.Enabled = this.btnUp.Enabled = mayEdit && isLeftGridSortedByNewProgNr && channel != null && channel.NewProgramNr > this.currentChannelList.FirstProgramNumber;
+      this.miMoveUp.Enabled = this.btnUp.Enabled = mayEdit && isLeftGridSortedByNewProgNr && channel != null
+        && channel.GetPosition(this.subListIndex) > this.currentChannelList.FirstProgramNumber;
       this.miMoveDown.Enabled = this.btnDown.Enabled = mayEdit && isLeftGridSortedByNewProgNr;
 
       this.miTvSettings.Enabled = this.currentTvSerializer != null;
@@ -1679,6 +1713,29 @@ namespace ChanSort.Ui
     }
     #endregion
 
+    #region tabSubList_SelectedPageChanged
+    private void tabSubList_SelectedPageChanged(object sender, TabPageChangedEventArgs e)
+    {
+      this.subListIndex = this.tabSubList.SelectedTabPageIndex;
+      this.editor.SubListIndex = this.subListIndex;
+      this.gviewLeft.BeginSort();
+      this.gviewLeft.EndSort();
+      this.gviewRight.BeginSort();
+      if (this.subListIndex > 0)
+        this.colSlotNew.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>-1");
+      else
+        this.colSlotNew.ClearFilter();     
+      this.gviewRight.EndSort();
+    }
+    #endregion
+
+    private void gview_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
+    {
+      var channel = (ChannelInfo) e.Row;
+      if (e.Column.FieldName == "Position")
+        e.Value = channel.GetPosition(this.subListIndex);
+    }
+
     #region gview_MouseDown, gview_MouseUp, timerEditDelay_Tick, gview_ShowingEditor
 
     // these 4 event handler in combination override the default row-selection and editor-opening 
@@ -1777,7 +1834,7 @@ namespace ChanSort.Ui
 
         // start drag operation
         var channel = (ChannelInfo)view.GetRow(downHit.RowHandle);
-        this.dragDropInfo = new DragDropInfo(view, channel.NewProgramNr);
+        this.dragDropInfo = new DragDropInfo(view, channel.GetPosition(this.subListIndex));
         view.GridControl.DoDragDrop(this.dragDropInfo, DragDropEffects.Move);
         this.downHit = null;
       }
@@ -1817,7 +1874,7 @@ namespace ChanSort.Ui
         var vi = (DevExpress.XtraGrid.Views.Grid.ViewInfo.GridViewInfo)this.gviewLeft.GetViewInfo();
         var rowInfo = vi.GetGridRowInfo(hit.RowHandle);
         ChannelInfo dropChannel = (ChannelInfo)this.gviewLeft.GetRow(hit.RowHandle);
-        bool moveUp = this.dragDropInfo.SourceProgramNumber < 0 || dropChannel.NewProgramNr <= this.dragDropInfo.SourceProgramNumber;
+        bool moveUp = this.dragDropInfo.SourcePosition < 0 || dropChannel.GetPosition(this.subListIndex) <= this.dragDropInfo.SourcePosition;
         if (moveUp && point.Y < rowInfo.Bounds.Top + rowInfo.Bounds.Height / 2)
           this.dragDropInfo.EditMode = EditMode.InsertBefore;
         else if (!moveUp && point.Y > rowInfo.Bounds.Top + rowInfo.Bounds.Height / 2)
@@ -1850,17 +1907,19 @@ namespace ChanSort.Ui
 
         var selectedChannels = this.GetSelectedChannels(this.dragDropInfo.SourceView);
         int newProgNr;
+        int dropPos = dropChannel.GetPosition(this.subListIndex);
         if (this.dragDropInfo.EditMode != EditMode.InsertAfter || !this.cbCloseGap.Checked)
-          newProgNr = dropChannel.NewProgramNr;
+          newProgNr = dropPos;
         else
         {
           int numberOfChannelsToMoveDown = 0;
           foreach (var channel in selectedChannels)
           {
-            if (channel.NewProgramNr <= dropChannel.NewProgramNr)
+            int curPos = channel.GetPosition(this.subListIndex);
+            if (curPos != -1 && curPos <= dropPos)
               ++numberOfChannelsToMoveDown;
           }
-          newProgNr = dropChannel.NewProgramNr + 1 - numberOfChannelsToMoveDown;
+          newProgNr = dropPos + 1 - numberOfChannelsToMoveDown;
         }
 
         this.editor.SetSlotNumber(selectedChannels, newProgNr, this.dragDropInfo.EditMode == EditMode.Swap, this.cbCloseGap.Checked);
@@ -1897,16 +1956,7 @@ namespace ChanSort.Ui
 
     private void gviewLeft_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
     {
-      var channel = (ChannelInfo)this.gviewLeft.GetRow(e.FocusedRowHandle);
-      if (channel == null)
-        return;
-      int programNr = channel.NewProgramNr;
-      if (this.rbInsertAfter.Checked)
-        ++programNr;
-      if (this.currentChannelList != null)
-        this.currentChannelList.InsertProgramNumber = programNr;
-      this.UpdateInsertSlotTextBox();
-      this.gviewLeft.SelectRow(e.FocusedRowHandle);
+      TryExecute(UpdateInsertSlotNumber);
     }
 
     #endregion
@@ -2064,7 +2114,7 @@ namespace ChanSort.Ui
         e.Appearance.ForeColor = Color.Red;
         e.Appearance.Options.UseForeColor = true;
       }
-      else if (channel.NewProgramNr != -1)
+      else if (channel.GetPosition(this.subListIndex) != -1)
       {
         e.Appearance.ForeColor = Color.Gray;
         e.Appearance.Options.UseForeColor = true;
@@ -2300,5 +2350,6 @@ namespace ChanSort.Ui
       this.SetActiveGrid(this.gviewRight);
     }
     #endregion
+
   }
 }

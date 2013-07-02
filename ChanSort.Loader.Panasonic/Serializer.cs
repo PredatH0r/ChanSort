@@ -302,6 +302,7 @@ namespace ChanSort.Loader.Panasonic
     public Serializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = true;
+      this.DataRoot.SortedFavorites = true;
       
       this.DataRoot.AddChannelList(this.avbtChannels);
       this.DataRoot.AddChannelList(this.avbcChannels);
@@ -538,8 +539,6 @@ order by s.ntype,major_channel
     #region WriteChannels()
     private void WriteChannels(SQLiteCommand cmd, ChannelList channelList)
     {
-      int[] favIndex = new int[4];
-
       cmd.CommandText = "update SVL set major_channel=@progNr, sname=@name, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
       cmd.Parameters.Clear();
       cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
@@ -560,7 +559,7 @@ order by s.ntype,major_channel
         cmd.Parameters["@rowid"].Value = channel.RecordIndex;
         cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
         for (int fav = 0; fav < 4; fav++)
-          cmd.Parameters["@fav" + (fav + 1)].Value = ((int) channel.Favorites & (1<<fav)) == 0 ? 0 : ++favIndex[fav];
+          cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.FavIndex[fav]);
         cmd.Parameters["@name"].Value = channel.Name;
         cmd.Parameters["@lock"].Value = channel.Lock;
         cmd.Parameters["@skip"].Value = channel.Skip;

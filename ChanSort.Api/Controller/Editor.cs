@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -8,38 +9,43 @@ namespace ChanSort.Api
   {
     public DataRoot DataRoot;
     public ChannelList ChannelList;
+    public int SubListIndex;
     private UnsortedChannelMode unsortedChannelMode;
 
     #region AddChannels()
 
     public ChannelInfo AddChannels(IList<ChannelInfo> channels)
     {
-      int count = channels.Count(channel => channel.NewProgramNr == -1);
+      int count = channels.Count(channel => channel.GetPosition(this.SubListIndex) == -1);
       if (count == 0) return null;
 
       ChannelInfo lastInsertedChannel = null;
       int progNr = this.ChannelList.InsertProgramNumber;
       int relativeChannelNumber = 0;
       int progNrCopy = progNr; // prevent "access to modified closure" warning
-      foreach(var channel in this.ChannelList.Channels.Where(c => c.NewProgramNr>=progNrCopy).OrderBy(c=>c.NewProgramNr))
+      foreach (
+        var channel in
+          this.ChannelList.Channels.Where(c => c.GetPosition(this.SubListIndex) >= progNrCopy)
+              .OrderBy(c => c.GetPosition(this.SubListIndex)))
       {
-        int gap = count - (channel.NewProgramNr - progNr - relativeChannelNumber);
+        var curPos = channel.GetPosition(this.SubListIndex);
+        int gap = count - (curPos - progNr - relativeChannelNumber);
         if (gap > 0)
         {
-          channel.NewProgramNr += gap;
+          channel.SetPosition(this.SubListIndex, curPos + gap);
           ++relativeChannelNumber;
         }
       }
 
       foreach (var channel in channels)
       {
-        if (channel.NewProgramNr != -1)
+        if (channel.GetPosition(this.SubListIndex) != -1)
         {
           // TODO notify user
           continue;
         }
 
-        channel.NewProgramNr = progNr++;
+        channel.SetPosition(this.SubListIndex, progNr++);
         lastInsertedChannel = channel;
       }
       this.ChannelList.InsertProgramNumber += count;
@@ -47,6 +53,7 @@ namespace ChanSort.Api
       this.DataRoot.NeedsSaving |= lastInsertedChannel != null;
       return lastInsertedChannel;
     }
+
     #endregion
 
     #region RemoveChannels()
@@ -55,27 +62,30 @@ namespace ChanSort.Api
     {
       if (channels.Count == 0) return;
 
-      this.ChannelList.InsertProgramNumber = channels[0].NewProgramNr;
-      var orderedChannelList = this.ChannelList.Channels.Where(c => c.NewProgramNr != -1).OrderBy(c => c.NewProgramNr);
+      this.ChannelList.InsertProgramNumber = channels[0].GetPosition(this.SubListIndex);
+      var orderedChannelList =
+        this.ChannelList.Channels.Where(c => c.GetPosition(this.SubListIndex) != -1)
+            .OrderBy(c => c.GetPosition(this.SubListIndex));
       foreach (var channel in channels)
       {
-        if (channel.NewProgramNr == -1)
+        if (channel.GetPosition(this.SubListIndex) == -1)
           continue;
         if (closeGap)
         {
-          int prevNr = channel.NewProgramNr;
+          int prevNr = channel.GetPosition(this.SubListIndex);
           foreach (var channel2 in orderedChannelList)
           {
-            if (channel2.NewProgramNr > channel.NewProgramNr)
+            if (channel2.GetPosition(this.SubListIndex) > channel.GetPosition(this.SubListIndex))
             {
-              if (prevNr != -1 && channel2.NewProgramNr != prevNr + 1) // don't pull down numbers after a gap
+              if (prevNr != -1 && channel2.GetPosition(this.SubListIndex) != prevNr + 1)
+                // don't pull down numbers after a gap
                 break;
-              prevNr = channel2.NewProgramNr;
-              --channel2.NewProgramNr;
+              prevNr = channel2.GetPosition(this.SubListIndex);
+              channel2.ChangePosition(this.SubListIndex, -1);
             }
           }
         }
-        channel.NewProgramNr = -1;
+        channel.SetPosition(this.SubListIndex, -1);
       }
 
       this.DataRoot.NeedsSaving = true;
@@ -89,17 +99,18 @@ namespace ChanSort.Api
     {
       if (channels.Count == 0)
         return;
-      if (up && channels[0].NewProgramNr <= this.ChannelList.FirstProgramNumber)
+      if (up && channels[0].GetPosition(this.SubListIndex) <= this.ChannelList.FirstProgramNumber)
         return;
 
-      int delta = (up ? - 1 : +1);
+      int delta = (up ? -1 : +1);
       foreach (var channel in (up ? channels : channels.Reverse()))
       {
-        int newProgramNr = channel.NewProgramNr + delta;
-        ChannelInfo channelAtNewProgramNr = this.ChannelList.Channels.FirstOrDefault(ch => ch.NewProgramNr == newProgramNr);
-        if (channelAtNewProgramNr != null)
-          channelAtNewProgramNr.NewProgramNr -= delta;
-        channel.NewProgramNr += delta;
+        int newProgramNr = channel.GetPosition(this.SubListIndex) + delta;
+        ChannelInfo channelAtNewPos =
+          this.ChannelList.Channels.FirstOrDefault(ch => ch.GetPosition(this.SubListIndex) == newProgramNr);
+        if (channelAtNewPos != null)
+          channelAtNewPos.ChangePosition(this.SubListIndex, -delta);
+        channel.ChangePosition(this.SubListIndex, delta);
       }
       this.DataRoot.NeedsSaving = true;
     }
@@ -107,15 +118,16 @@ namespace ChanSort.Api
     #endregion
 
     #region SortSelectedChannels(), ChannelComparerForSortingByName()
+
     public void SortSelectedChannels(List<ChannelInfo> selectedChannels)
     {
       if (selectedChannels.Count == 0) return;
       var sortedChannels = new List<ChannelInfo>(selectedChannels);
       sortedChannels.Sort(this.ChannelComparerForSortingByName);
-      var programNumbers = selectedChannels.Select(ch => ch.NewProgramNr).ToList();
+      var programNumbers = selectedChannels.Select(ch => ch.GetPosition(this.SubListIndex)).ToList();
       for (int i = 0; i < sortedChannels.Count; i++)
-        sortedChannels[i].NewProgramNr = programNumbers[i];
-      
+        sortedChannels[i].SetPosition(this.SubListIndex, programNumbers[i]);
+
       this.DataRoot.NeedsSaving = true;
     }
 
@@ -123,9 +135,11 @@ namespace ChanSort.Api
     {
       return channel1.Name.CompareTo(channel2.Name);
     }
+
     #endregion
 
     #region SetSlotNumber()
+
     public void SetSlotNumber(IList<ChannelInfo> channels, int slot, bool swap, bool closeGap)
     {
       if (channels.Count == 0) return;
@@ -137,9 +151,9 @@ namespace ChanSort.Api
           {
             var others = this.ChannelList.GetChannelByNewProgNr(slot);
             foreach (var other in others)
-              other.NewProgramNr = channel.NewProgramNr;
+              other.SetPosition(this.SubListIndex, channel.GetPosition(this.SubListIndex));
           }
-          channel.NewProgramNr = slot++;
+          channel.SetPosition(this.SubListIndex, slot++);
         }
       }
       else
@@ -150,16 +164,18 @@ namespace ChanSort.Api
       }
       this.DataRoot.NeedsSaving = true;
     }
+
     #endregion
 
     #region RenumberChannels()
+
     public void RenumberChannels(List<ChannelInfo> channels)
     {
       if (channels.Count == 0) return;
-      int progNr = channels.Min(ch => ch.NewProgramNr);
-      foreach(var channel in channels)
+      int progNr = channels.Min(ch => ch.GetPosition(this.SubListIndex));
+      foreach (var channel in channels)
       {
-        if (channel.NewProgramNr == progNr)
+        if (channel.GetPosition(this.SubListIndex) == progNr)
         {
           ++progNr;
           continue;
@@ -173,17 +189,18 @@ namespace ChanSort.Api
         this.DataRoot.NeedsSaving = true;
       }
     }
+
     #endregion
 
 
     #region ApplyReferenceList()
+
     public void ApplyReferenceList(DataRoot refDataRoot)
     {
-
       foreach (var channelList in this.DataRoot.ChannelLists)
       {
         foreach (var channel in channelList.Channels)
-          channel.NewProgramNr = -1;
+          channel.SetPosition(this.SubListIndex, -1);
       }
 
       StringBuilder log = new StringBuilder();
@@ -198,10 +215,10 @@ namespace ChanSort.Api
         foreach (var refChannel in refList.Channels)
         {
           var tvChannels = tvList.GetChannelByUid(refChannel.Uid);
-          ChannelInfo tvChannel = tvChannels.FirstOrDefault(c => c.NewProgramNr == -1);
+          ChannelInfo tvChannel = tvChannels.FirstOrDefault(c => c.GetPosition(this.SubListIndex) == -1);
           if (tvChannel != null)
           {
-            tvChannel.NewProgramNr = refChannel.OldProgramNr;
+            tvChannel.SetPosition(this.SubListIndex, refChannel.OldProgramNr);
             tvChannel.Favorites = refChannel.Favorites;
             tvChannel.Skip = refChannel.Skip;
             tvChannel.Lock = refChannel.Lock;
@@ -210,7 +227,8 @@ namespace ChanSort.Api
           }
           else
           {
-            tvChannel = new ChannelInfo(refChannel.SignalSource, refChannel.Uid, refChannel.OldProgramNr, refChannel.Name);
+            tvChannel = new ChannelInfo(refChannel.SignalSource, refChannel.Uid, refChannel.OldProgramNr,
+                                        refChannel.Name);
             tvList.AddChannel(tvChannel);
           }
         }
@@ -237,18 +255,19 @@ namespace ChanSort.Api
           if (appChannel.NewProgramNr == -1 && mode == UnsortedChannelMode.MarkDeleted)
             continue;
 
-          int progNr = GetNewProgramNr(appChannel, ref maxProgNr);
+          int progNr = GetNewPogramNr(appChannel, ref maxProgNr);
           appChannel.NewProgramNr = progNr;
         }
       }
     }
 
     #region ChanSortCriteria()
+
     private string ChanSortCriteria(ChannelInfo channel)
     {
       // explicitly sorted
-      if (channel.NewProgramNr != -1)
-        return channel.NewProgramNr.ToString("d4");
+      if (channel.GetPosition(this.SubListIndex) != -1)
+        return channel.GetPosition(this.SubListIndex).ToString("d4");
 
       // eventually hide unsorted channels
       if (this.unsortedChannelMode == UnsortedChannelMode.MarkDeleted)
@@ -265,10 +284,12 @@ namespace ChanSort.Api
         return "C";
       return "A" + channel.Name;
     }
+
     #endregion
 
-    #region GetNewProgramNr()
-    private int GetNewProgramNr(ChannelInfo appChannel, ref int maxPrNr)
+    #region GetNewPogramNr()
+
+    private int GetNewPogramNr(ChannelInfo appChannel, ref int maxPrNr)
     {
       int prNr = appChannel.NewProgramNr;
       if (prNr > maxPrNr)
@@ -280,8 +301,51 @@ namespace ChanSort.Api
       }
       return prNr;
     }
+
     #endregion
 
+    #endregion
+
+    #region SetFavorites()
+    public void SetFavorites(List<ChannelInfo> list, Favorites favorites, bool set)
+    {
+      bool sortedFav = this.DataRoot.SortedFavorites;
+      int favIndex = 0;
+      if (sortedFav)
+      {
+        for (int mask = (int) favorites; (mask & 1) == 0; mask >>= 1)
+          ++favIndex;
+      }
+
+      if (set)
+      {
+        int maxPosition = 0;
+        if (sortedFav)
+        {
+          foreach (var channel in this.ChannelList.Channels)
+            maxPosition = Math.Max(maxPosition, channel.FavIndex[favIndex]);
+        }
+
+        foreach (var channel in list)
+        {
+          if (sortedFav && channel.FavIndex[favIndex] == -1)
+            channel.FavIndex[favIndex] = ++maxPosition;
+          channel.Favorites |= favorites;
+        }
+      }
+      else
+      {
+        foreach (var channel in list)
+        {
+          if (sortedFav && channel.FavIndex[favIndex] != -1)
+          {
+            channel.FavIndex[favIndex] = -1;
+            // TODO close gap by pulling down higher numbers
+          }
+          channel.Favorites &= ~favorites;
+        }
+      }
+    }
     #endregion
   }
 }

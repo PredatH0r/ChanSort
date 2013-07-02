@@ -328,7 +328,7 @@
     <value>Programplatz für Einfügen und Festlegen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - Senderlisten-Editor für Samsung, LG und Toshiba TVs</value>
+    <value>ChanSort {0} - Senderlisten-Editor für Samsung, LG, Panasonic und Toshiba TVs</value>
   </data>
   <data name="btnToggleLock.ToolTip" xml:space="preserve">
     <value>Kindersicherung</value>

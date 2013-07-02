@@ -1,17 +1,18 @@
-Version v2013-07-01 ======================================================
+Version v2013-07-03 ======================================================
 
-This version is identical to Beta v2013-06-29.3
-Changes since last official version v2013-06-24:
-- Added support for Panasonic channel list (svl.db and svl.bin format)
-- Translated UI to Portuguese (Thanks to Vitor Martins Augusto)
+Changes:
+- Support for individually sorted favorite lists, if supported by TV
+  (e.g. Samsung E and F series, Panasonic Viera)
+- FIX: "insert after" using drag and drop from right to left list 
+  inserted before instead of after the drop position
 
 The complete change log can be found at the end of this document
 
 
 About ChanSort ============================================================
 
-ChanSort is a program to manage your Samsung, LG or Toshiba TV's channel 
-list on your PC.
+ChanSort is a program to manage your Samsung, LG, Toshiba or Panasonic TV's
+channel list on your PC.
 
 It allows you to change program numbers and channel names, select your 
 favorites, set a parental lock and much more. With its multi-selection 
@@ -102,6 +103,15 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-07-03
+- Support for individually sorted favorite lists, if supported by TV
+  (e.g. Samsung E and F series, Panasonic Viera)
+- FIX: "insert after" using drag and drop from right to left list 
+  inserted before instead of after the drop position
+
+2013-07-02
+- FIX: wrong version number (caused a popup about a newer version online)
 
 2013-07-01
 - Added support for Panasonic channel list (svl.db and svl.bin format)

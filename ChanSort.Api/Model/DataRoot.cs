@@ -17,6 +17,7 @@ namespace ChanSort.Api
     public bool IsEmpty { get { return this.channelLists.Count == 0; } }
     public bool NeedsSaving { get; set; }
     public Favorites SupportedFavorites { get; set; }
+    public bool SortedFavorites { get; set; }
 
     public DataRoot()
     {

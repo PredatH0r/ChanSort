@@ -55,7 +55,10 @@ namespace ChanSort.Loader.Panasonic
       {
         int favIndex = r.GetInt32(field["profile" + (i + 1) + "index"]);
         if (favIndex > 0)
-          this.Favorites |= (Favorites)(1 << i);
+        {
+          this.Favorites |= (Favorites) (1 << i);
+          this.FavIndex[i] = favIndex;
+        }
       }
     }
     #endregion

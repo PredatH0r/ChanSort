@@ -163,6 +163,9 @@
       this.pageEmpty = new DevExpress.XtraTab.XtraTabPage();
       this.mnuContext = new DevExpress.XtraBars.PopupMenu(this.components);
       this.timerEditDelay = new System.Windows.Forms.Timer(this.components);
+      this.grpSubList = new DevExpress.XtraEditors.GroupControl();
+      this.tabSubList = new DevExpress.XtraTab.XtraTabControl();
+      this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -193,6 +196,10 @@
       ((System.ComponentModel.ISupportInitialize)(this.tabChannelList)).BeginInit();
       this.tabChannelList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.mnuContext)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.grpSubList)).BeginInit();
+      this.grpSubList.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.tabSubList)).BeginInit();
+      this.tabSubList.SuspendLayout();
       this.SuspendLayout();
       // 
       // splitContainerControl1
@@ -274,6 +281,7 @@
       this.gviewLeft.EndSorting += new System.EventHandler(this.gviewLeft_EndSorting);
       this.gviewLeft.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewLeft_FocusedRowChanged);
       this.gviewLeft.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewLeft_CellValueChanged);
+      this.gviewLeft.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gview_CustomUnboundColumnData);
       this.gviewLeft.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewLeft_CustomColumnDisplayText);
       this.gviewLeft.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewLeft_LayoutUpgrade);
       this.gviewLeft.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gview_KeyPress);
@@ -300,10 +308,11 @@
       resources.ApplyResources(this.colOutSlot, "colOutSlot");
       this.colOutSlot.DisplayFormat.FormatString = "d";
       this.colOutSlot.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-      this.colOutSlot.FieldName = "NewProgramNr";
+      this.colOutSlot.FieldName = "Position";
       this.colOutSlot.Name = "colOutSlot";
       this.colOutSlot.OptionsFilter.AllowAutoFilter = false;
       this.colOutSlot.OptionsFilter.AllowFilterModeChanging = DevExpress.Utils.DefaultBoolean.False;
+      this.colOutSlot.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
       // 
       // colOutName
       // 
@@ -546,6 +555,7 @@
       this.gviewRight.ShownEditor += new System.EventHandler(this.gview_ShownEditor);
       this.gviewRight.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewRight_FocusedRowChanged);
       this.gviewRight.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewRight_CellValueChanged);
+      this.gviewRight.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gview_CustomUnboundColumnData);
       this.gviewRight.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewRight_CustomColumnDisplayText);
       this.gviewRight.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewRight_LayoutUpgrade);
       this.gviewRight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gview_KeyPress);
@@ -576,8 +586,9 @@
       resources.ApplyResources(this.colSlotNew, "colSlotNew");
       this.colSlotNew.DisplayFormat.FormatString = "d";
       this.colSlotNew.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-      this.colSlotNew.FieldName = "NewProgramNr";
+      this.colSlotNew.FieldName = "Position";
       this.colSlotNew.Name = "colSlotNew";
+      this.colSlotNew.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
       // 
       // colName
       // 
@@ -1547,11 +1558,33 @@
       this.timerEditDelay.Interval = 500;
       this.timerEditDelay.Tick += new System.EventHandler(this.timerEditDelay_Tick);
       // 
+      // grpSubList
+      // 
+      this.grpSubList.Controls.Add(this.tabSubList);
+      resources.ApplyResources(this.grpSubList, "grpSubList");
+      this.grpSubList.Name = "grpSubList";
+      this.grpSubList.ShowCaption = false;
+      // 
+      // tabSubList
+      // 
+      resources.ApplyResources(this.tabSubList, "tabSubList");
+      this.tabSubList.Name = "tabSubList";
+      this.tabSubList.SelectedTabPage = this.pageProgNr;
+      this.tabSubList.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.pageProgNr});
+      this.tabSubList.SelectedPageChanged += new DevExpress.XtraTab.TabPageChangedEventHandler(this.tabSubList_SelectedPageChanged);
+      // 
+      // pageProgNr
+      // 
+      this.pageProgNr.Name = "pageProgNr";
+      resources.ApplyResources(this.pageProgNr, "pageProgNr");
+      // 
       // MainForm
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.splitContainerControl1);
+      this.Controls.Add(this.grpSubList);
       this.Controls.Add(this.grpTopPanel);
       this.Controls.Add(this.barDockControlLeft);
       this.Controls.Add(this.barDockControlRight);
@@ -1593,6 +1626,10 @@
       ((System.ComponentModel.ISupportInitialize)(this.tabChannelList)).EndInit();
       this.tabChannelList.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.mnuContext)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.grpSubList)).EndInit();
+      this.grpSubList.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.tabSubList)).EndInit();
+      this.tabSubList.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -1731,6 +1768,9 @@
     private DevExpress.XtraBars.BarButtonItem miExcelExport;
     private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
     private DevExpress.XtraBars.BarButtonItem miPortuguese;
+    private DevExpress.XtraEditors.GroupControl grpSubList;
+    private DevExpress.XtraTab.XtraTabControl tabSubList;
+    private DevExpress.XtraTab.XtraTabPage pageProgNr;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

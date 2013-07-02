@@ -5,6 +5,8 @@ namespace ChanSort.Api
 {
   public class ChannelInfo
   {
+    private const int MAX_FAV_LISTS = 5;
+
     private string uid;
     /// <summary>
     /// List of channels that have the same UID as this channel and were not added to the channel list directly
@@ -38,6 +40,7 @@ namespace ChanSort.Api
     public string Debug { get; private set; }
     public string SatPosition { get; set; }
     public Transponder Transponder { get; set; }
+    public IList<int> FavIndex { get; private set; }
 
     public bool IsNameModified { get; set; }
 
@@ -45,12 +48,15 @@ namespace ChanSort.Api
     protected ChannelInfo()
     {
       this.NewProgramNr = -1;
+      this.FavIndex = new List<int>(MAX_FAV_LISTS);
+      for (int i = 0; i < MAX_FAV_LISTS; i++)
+        this.FavIndex.Add(-1);
     }
 
     /// <summary>
     /// Constructor for exiting TV channel
     /// </summary>
-    public ChannelInfo(SignalSource source, int index, int oldProgNr, string name)
+    public ChannelInfo(SignalSource source, int index, int oldProgNr, string name) : this()
     {
       this.SignalSource = source;
       this.RecordIndex = index;
@@ -64,7 +70,7 @@ namespace ChanSort.Api
     /// <summary>
     /// Constructor for reference list channels which no longer exist in TV list
     /// </summary>
-    public ChannelInfo(SignalSource source, string uid, int newProgNr, string name)
+    public ChannelInfo(SignalSource source, string uid, int newProgNr, string name) : this()
     {
       this.SignalSource = source;
       this.Uid = uid;
@@ -203,12 +209,47 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region UpdateRawData()
     public virtual void UpdateRawData()
     {
     }
+    #endregion
 
+    #region ChangeEncoding()
     public virtual void ChangeEncoding(System.Text.Encoding encoding)
-    {     
+    {
     }
+    #endregion
+
+    #region GetPosition(), SetPosition(), ChangePosition()
+
+    public int GetPosition(int subListIndex)
+    {
+      return subListIndex == 0 ? this.NewProgramNr : this.FavIndex[subListIndex - 1];
+    }
+
+    public void SetPosition(int subListIndex, int newPos)
+    {
+      if (subListIndex == 0)
+        this.NewProgramNr = newPos;
+      else
+      {
+        this.FavIndex[subListIndex - 1] = newPos;
+        int mask = 1 << (subListIndex - 1);
+        if (newPos == -1)
+          this.Favorites &= (Favorites)~mask;
+        else
+          this.Favorites |= (Favorites)mask;
+      }
+    }
+
+    internal void ChangePosition(int subListIndex, int delta)
+    {
+      if (subListIndex == 0)
+        this.NewProgramNr += delta;
+      else
+        this.FavIndex[subListIndex - 1] += delta;      
+    }
+    #endregion
   }
 }

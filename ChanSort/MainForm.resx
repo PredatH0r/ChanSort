@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="splitContainerControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 81</value>
+    <value>0, 108</value>
   </data>
   <metadata name="dsChannels.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>361, 17</value>
@@ -234,7 +234,7 @@
     <value>Numeric</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>382, 445</value>
+    <value>382, 418</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -255,7 +255,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 499</value>
+    <value>2, 472</value>
   </data>
   <data name="lblHotkeyLeft.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -292,6 +292,78 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>1474, 599</value>
+  </data>
+  <data name="tabSubList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="tabSubList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 5</value>
+  </data>
+  <data name="pageProgNr.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1463, 0</value>
+  </data>
+  <data name="pageProgNr.Text" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="&gt;&gt;pageProgNr.Name" xml:space="preserve">
+    <value>pageProgNr</value>
+  </data>
+  <data name="&gt;&gt;pageProgNr.Type" xml:space="preserve">
+    <value>DevExpress.XtraTab.XtraTabPage, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;pageProgNr.Parent" xml:space="preserve">
+    <value>tabSubList</value>
+  </data>
+  <data name="&gt;&gt;pageProgNr.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabSubList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1469, 22</value>
+  </data>
+  <data name="tabSubList.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;tabSubList.Name" xml:space="preserve">
+    <value>tabSubList</value>
+  </data>
+  <data name="&gt;&gt;tabSubList.Type" xml:space="preserve">
+    <value>DevExpress.XtraTab.XtraTabControl, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;tabSubList.Parent" xml:space="preserve">
+    <value>grpSubList</value>
+  </data>
+  <data name="&gt;&gt;tabSubList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="grpSubList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="grpSubList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 81</value>
+  </data>
+  <data name="grpSubList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1474, 27</value>
+  </data>
+  <data name="grpSubList.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="grpSubList.Text" xml:space="preserve">
+    <value>Sub List</value>
+  </data>
+  <data name="grpSubList.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;grpSubList.Name" xml:space="preserve">
+    <value>grpSubList</value>
+  </data>
+  <data name="&gt;&gt;grpSubList.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;grpSubList.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;grpSubList.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="rbInsertSwap.Location" type="System.Drawing.Point, System.Drawing">
     <value>256, 6</value>
@@ -497,7 +569,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;barDockControlTop.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="barDockControlBottom.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
@@ -518,7 +590,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;barDockControlBottom.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="barDockControlLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Left</value>
@@ -539,7 +611,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;barDockControlLeft.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="barDockControlRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
@@ -560,7 +632,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;barDockControlRight.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="miMoveUp.Caption" xml:space="preserve">
     <value>Move up</value>
@@ -726,13 +798,13 @@
     <value>5</value>
   </data>
   <data name="tabChannelList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
+    <value>Bottom, Left, Right</value>
   </data>
   <data name="tabChannelList.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 33</value>
   </data>
   <data name="pageEmpty.Size" type="System.Drawing.Size, System.Drawing">
-    <value>632, 0</value>
+    <value>1284, 0</value>
   </data>
   <data name="pageEmpty.Text" xml:space="preserve">
     <value>No channel lists</value>
@@ -750,7 +822,7 @@
     <value>0</value>
   </data>
   <data name="tabChannelList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>638, 22</value>
+    <value>1290, 22</value>
   </data>
   <data name="tabChannelList.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -852,7 +924,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;grpTopPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
@@ -1431,7 +1503,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>06/29/2013 12:47:45</value>
+    <value>07/02/2013 20:57:05</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1749,7 +1821,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>386, 518</value>
+    <value>386, 491</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2085,7 +2157,7 @@
     <value>Signal source</value>
   </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1079, 445</value>
+    <value>1079, 418</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2106,7 +2178,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 499</value>
+    <value>2, 472</value>
   </data>
   <data name="lblHotkeyRight.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2274,7 +2346,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1083, 518</value>
+    <value>1083, 491</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2298,7 +2370,7 @@
     <value>Panel2</value>
   </data>
   <data name="splitContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 518</value>
+    <value>1474, 491</value>
   </data>
   <data name="splitContainerControl1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>

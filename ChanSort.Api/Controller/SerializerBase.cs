@@ -9,7 +9,6 @@ namespace ChanSort.Api
       public bool ChannelNameEdit { get; set; }
       public bool FileInformation { get; set; }
       public bool CleanUpChannelData { get; set; }
-
       public bool DeviceSettings { get; set; }
     }
 

@@ -71,12 +71,16 @@ namespace ChanSort.Loader.Samsung
       // series D,E,F
       byte fav = 0;
       byte mask = 0x01;
+      int favIndex = 0;
       foreach (int off in offsets)
       {
         int favValue = BitConverter.ToInt32(this.rawData, baseOffset + off);
         if (sortedFavorites && favValue != -1 || !sortedFavorites && favValue != 0)
           fav |= mask;
+        if (sortedFavorites)
+          this.FavIndex[favIndex] = favValue;
         mask <<= 1;
+        ++favIndex;
       }
       return (Favorites) fav;      
     }
@@ -135,15 +139,17 @@ namespace ChanSort.Loader.Samsung
       // series D,E,F
       byte fav = (byte)this.Favorites;
       byte mask = 0x01;
+      int favIndex = 0;
       foreach (int off in offsets)
       {
         int favValue;
         if (this.sortedFavorites)
-          favValue = (fav & mask) != 0 ? this.NewProgramNr : -1;
+          favValue = (fav & mask) != 0 ? this.FavIndex[favIndex] : -1;
         else
           favValue = (fav & mask) != 0 ? 1 : 0;
         Array.Copy(BitConverter.GetBytes(favValue), 0, this.rawData, baseOffset + off, 4);
         mask <<= 1;
+        ++favIndex;
       }
     }
     #endregion

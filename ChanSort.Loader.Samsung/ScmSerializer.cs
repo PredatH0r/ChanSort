@@ -92,6 +92,7 @@ namespace ChanSort.Loader.Samsung
       {
         DetectModelConstants(zip);
         DataRoot.SupportedFavorites = c.supportedFavorites;
+        DataRoot.SortedFavorites = c.SortedFavorites;
 
         ReadAnalogFineTuning(zip);
         ReadAnalogChannels(zip, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
