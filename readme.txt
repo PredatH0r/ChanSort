@@ -1,6 +1,8 @@
-Version v2013-07-19.2 ====================================================
+Version v2013-07-19.3 ====================================================
 
 Changes:
+- FIX: .NET Framework 4.0 exceptions about loading DLLs downloaded from
+  the web (since the whole .zip was downloaded from the web)
 - FIX: Samsung "CablePrime" channel list was not updated/saved
 - FIX: Deleted Samsung analog, DVB-T and DVB-C channels re-appeared in the
   channel list after loading the file again.
@@ -112,6 +114,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-07-19.3
+- FIX: .NET Framework 4.0 exceptions about loading DLLs downloaded from
+  the web (since the whole .zip was downloaded from the web)
 
 2013-07-19.2
 - FIX: Samsung "CablePrime" channel list was not updated/saved

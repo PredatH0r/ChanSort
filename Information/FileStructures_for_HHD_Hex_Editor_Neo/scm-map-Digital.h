@@ -118,8 +118,7 @@ struct SCM_mapDigital_DEF_entry
    uc16be ShortName[9];
    byte VideoFormat;
    byte Unknown283[7];
-   byte FavFlags;
-   byte Checksum1;
+   word Zero;
    dword Fav1;
    dword Fav2;
    dword Fav3;

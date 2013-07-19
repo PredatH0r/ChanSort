@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-07-19.2";
+    public const string AppVersion = "v2013-07-19.3";
 
     private const int MaxMruEntries = 5;
 
@@ -125,7 +125,7 @@ namespace ChanSort.Ui
       {
         try
         {
-          var assembly = Assembly.LoadFrom(file);
+          var assembly = Assembly.UnsafeLoadFrom(file);
           foreach(var type in assembly.GetTypes())
           {
             if (typeof(ISerializerPlugin).IsAssignableFrom(type) && !type.IsAbstract)
