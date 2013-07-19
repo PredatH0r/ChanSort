@@ -78,7 +78,7 @@ public struct SCM_mapSate_D
   SCM_mapSate_D_entry Entries[*];
 };
 
-struct SCM_mapSate_E_entry
+struct SCM_mapSate_EF_entry
 {
     word ProgramNr;
     word VideoPid;
@@ -112,7 +112,7 @@ struct SCM_mapSate_E_entry
     byte Checksum;
 };
 
-public struct SCM_mapSate_E
+public struct SCM_mapSate_EF
 {
   SCM_mapSate_E_entry Entries[*];
 };

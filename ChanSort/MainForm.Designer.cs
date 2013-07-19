@@ -106,6 +106,7 @@
       this.miSave = new DevExpress.XtraBars.BarButtonItem();
       this.miSaveAs = new DevExpress.XtraBars.BarButtonItem();
       this.miOpenReferenceFile = new DevExpress.XtraBars.BarButtonItem();
+      this.miAddFromRefList = new DevExpress.XtraBars.BarButtonItem();
       this.miSaveReferenceFile = new DevExpress.XtraBars.BarButtonItem();
       this.miExcelExport = new DevExpress.XtraBars.BarButtonItem();
       this.miQuit = new DevExpress.XtraBars.BarButtonItem();
@@ -888,9 +889,10 @@
             this.miSaveReferenceFile,
             this.miRecentFiles,
             this.miExcelExport,
-            this.miPortuguese});
+            this.miPortuguese,
+            this.miAddFromRefList});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 61;
+      this.barManager1.MaxItemId = 62;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -940,6 +942,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miSave, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
             new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miAddFromRefList),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
             new DevExpress.XtraBars.LinkPersistInfo(this.miExcelExport),
             new DevExpress.XtraBars.LinkPersistInfo(this.miQuit, true),
@@ -1021,6 +1024,13 @@
                 | System.Windows.Forms.Keys.O));
       this.miOpenReferenceFile.Name = "miOpenReferenceFile";
       this.miOpenReferenceFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpenReferenceFile_ItemClick);
+      // 
+      // miAddFromRefList
+      // 
+      resources.ApplyResources(this.miAddFromRefList, "miAddFromRefList");
+      this.miAddFromRefList.Id = 61;
+      this.miAddFromRefList.Name = "miAddFromRefList";
+      this.miAddFromRefList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miAddFromRefList_ItemClick);
       // 
       // miSaveReferenceFile
       // 
@@ -1771,6 +1781,7 @@
     private DevExpress.XtraEditors.GroupControl grpSubList;
     private DevExpress.XtraTab.XtraTabControl tabSubList;
     private DevExpress.XtraTab.XtraTabPage pageProgNr;
+    private DevExpress.XtraBars.BarButtonItem miAddFromRefList;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

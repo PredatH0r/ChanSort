@@ -75,7 +75,7 @@ namespace Test.Loader.LG
     #region AssertRefListContent()
     private void AssertRefListContent(DataRoot dataRoot, string refListFile)
     {
-      CsvFileSerializer csv = new CsvFileSerializer(null, dataRoot);
+      CsvFileSerializer csv = new CsvFileSerializer(null, dataRoot, false);
       MemoryStream mem = new MemoryStream();
       var writer = new StreamWriter(mem);
       csv.Save(writer);
@@ -175,7 +175,7 @@ namespace Test.Loader.LG
       tll.IsTesting = true;
       tll.Load();
       tll.DataRoot.ApplyCurrentProgramNumbers();
-      CsvFileSerializer csv = new CsvFileSerializer(testDataDir + "\\" + basename + ".csv.in", tll.DataRoot);
+      CsvFileSerializer csv = new CsvFileSerializer(testDataDir + "\\" + basename + ".csv.in", tll.DataRoot, false);
       csv.Save();
 
       // save modified list as .TLL.out

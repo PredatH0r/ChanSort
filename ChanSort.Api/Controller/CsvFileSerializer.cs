@@ -15,12 +15,14 @@ namespace ChanSort.Api
     private readonly HashSet<ChannelList> clearedLists = new HashSet<ChannelList>();
     private readonly DataRoot dataRoot;
     private readonly string fileName;
+    private readonly bool addChannels;
 
     #region ctor()
-    public CsvFileSerializer(string fileName, DataRoot dataRoot)
+    public CsvFileSerializer(string fileName, DataRoot dataRoot, bool addChannels)
     {
       this.fileName = fileName;
       this.dataRoot = dataRoot;
+      this.addChannels = addChannels;
     }
     #endregion
 
@@ -77,13 +79,21 @@ namespace ChanSort.Api
       var channel = channels == null ? null : channels.FirstOrDefault(c => c.NewProgramNr == -1);
       if (channel != null)
       {
-        channel.NewProgramNr = programNr;
-        if (parts.Count >= 7)
-        ApplyFlags(channel, parts[6]);
+        if (!this.addChannels)
+        {
+          channel.NewProgramNr = programNr;
+          if (parts.Count >= 7)
+            ApplyFlags(channel, parts[6]);
+        }
       }
       else if (parts.Count >= 6) // create proxy channel when using the new ref-list format
       {        
         channel = new ChannelInfo(signalSource, uid, programNr, name);
+        if (addChannels)
+        {
+          channel.NewProgramNr = -1;
+          channel.OldProgramNr = programNr;
+        }
         channelList.AddChannel(channel);
       }
     }
@@ -135,7 +145,7 @@ namespace ChanSort.Api
       var channelList = dataRoot.GetChannelList(signalSource);
       if (channelList == null || channelList.ReadOnly)
         return null;
-      if (!this.clearedLists.Contains(channelList))
+      if (!this.addChannels && !this.clearedLists.Contains(channelList))
       {
         foreach (var channel in channelList.Channels)
           channel.NewProgramNr = -1;

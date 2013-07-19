@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define ADD_CHANNELS_FROM_REF_LIST
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -24,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-07-03";
+    public const string AppVersion = "v2013-07-19";
 
     private const int MaxMruEntries = 5;
 
@@ -80,15 +81,19 @@ namespace ChanSort.Ui
         Thread.CurrentThread.CurrentUICulture = new CultureInfo(Settings.Default.Language);
       this.LookAndFeel.SetSkinStyle("Office 2010 Blue");
       InitializeComponent();
-      //this.SetControlsEnabled(false);
+
       if (!Settings.Default.WindowSize.IsEmpty)
         this.Size = Settings.Default.WindowSize;
-      this.title = string.Format(this.Text, AppVersion);
-      this.Text = title;
+      this.title = string.Format(base.Text, AppVersion);
+      base.Text = title;
       this.plugins = this.LoadSerializerPlugins();
       this.FillMenuWithIsoEncodings();
 
-      this.Icon = new Icon(Assembly.GetExecutingAssembly().GetManifestResourceStream("ChanSort.Ui.app.ico"));
+      using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ChanSort.Ui.app.ico"))
+      {
+        if (stream != null)
+          this.Icon = new Icon(stream);
+      }
       var bcLeft = new BindingContext();
       this.grpOutputList.BindingContext = bcLeft;
       this.lastFocusedGrid = this.gviewRight;
@@ -96,6 +101,11 @@ namespace ChanSort.Ui
       else if (this.curEditMode == EditMode.InsertBefore) this.rbInsertBefore.Checked = true;
       else this.rbInsertSwap.Checked = true;
       this.ActiveControl = this.gridRight;
+
+#if !ADD_CHANNELS_FROM_REF_LIST
+      this.miAddFromRefList.Visibility = BarItemVisibility.Never;
+      this.miAddFromRefList.Enabled = false;
+#endif
     }
     #endregion
 
@@ -106,28 +116,11 @@ namespace ChanSort.Ui
     }
     #endregion
 
-    #region SetControlsEnabled()
-    private void SetControlsEnabled(bool enabled)
-    {
-      foreach (Control control in this.grpTopPanel.Controls)
-        control.Enabled = enabled;
-      foreach (Control control in this.pnlEditControls.Controls)
-      {
-        if (control != this.btnClearLeftFilter)
-          control.Enabled = enabled;
-      }
-
-      this.miReload.Enabled = enabled;
-      this.miSave.Enabled = enabled;
-      this.miSaveAs.Enabled = enabled;
-    }
-    #endregion
-
     #region LoadSerializerPlugins()
     private IList<ISerializerPlugin> LoadSerializerPlugins()
     {
       var list = new List<ISerializerPlugin>();
-      string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+      string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
       foreach (var file in Directory.GetFiles(exeDir, "ChanSort.Loader.*.dll"))
       {
         try
@@ -197,7 +190,7 @@ namespace ChanSort.Ui
       this.currentTvFile = tvDataFile;
       if (!string.IsNullOrEmpty(tvDataFile))
       {
-        this.currentCsvFile = Path.Combine(Path.GetDirectoryName(this.currentTvFile),
+        this.currentCsvFile = Path.Combine(Path.GetDirectoryName(this.currentTvFile) ?? "",
           Path.GetFileNameWithoutExtension(this.currentTvFile) + ".csv");
       }
       this.Text = this.title + "  -  " + this.currentTvFile;
@@ -453,7 +446,7 @@ namespace ChanSort.Ui
       }
 
       if (res == DialogResult.Yes)
-        this.BeginInvoke((Action)this.ShowOpenReferenceFileDialog);
+        this.BeginInvoke((Action)(()=>this.ShowOpenReferenceFileDialog(false)));
       else if (res == DialogResult.No)
       {
         this.dataRoot.ApplyCurrentProgramNumbers();
@@ -463,7 +456,7 @@ namespace ChanSort.Ui
     #endregion
 
     #region ShowOpenReferenceFileDialog()
-    private void ShowOpenReferenceFileDialog()
+    private void ShowOpenReferenceFileDialog(bool addChannels)
     {
       using (OpenFileDialog dlg = new OpenFileDialog())
       {
@@ -499,14 +492,14 @@ namespace ChanSort.Ui
         dlg.Title = this.miOpenReferenceFile.Caption;
         if (dlg.ShowDialog(this) == DialogResult.OK)
         {
-          this.LoadReferenceFile(dlg.FileName);
+          this.LoadReferenceFile(dlg.FileName, addChannels);
         }
       }
     }
     #endregion
 
     #region LoadReferenceFile()
-    private void LoadReferenceFile(string fileName)
+    private void LoadReferenceFile(string fileName, bool addChannels)
     {
       this.gviewRight.BeginDataUpdate();
       this.gviewLeft.BeginDataUpdate();
@@ -514,7 +507,7 @@ namespace ChanSort.Ui
       string ext = (Path.GetExtension(fileName) ?? "").ToLower();
       if (ext == ".csv")
       {
-        var csvSerializer = new CsvFileSerializer(fileName, this.dataRoot);
+        var csvSerializer = new CsvFileSerializer(fileName, this.dataRoot, addChannels);
         csvSerializer.Load();
       }
       else if (ext == ".chl")
@@ -627,7 +620,6 @@ namespace ChanSort.Ui
         if (!this.PromptHandlingOfUnsortedChannels())
           return;
 
-        this.SaveReferenceFile();
         this.SaveTvDataFile();
         this.dataRoot.NeedsSaving = false;
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
@@ -686,8 +678,28 @@ namespace ChanSort.Ui
 
     private void SaveReferenceFile()
     {
-      var csvSerializer = new CsvFileSerializer(this.currentCsvFile, this.dataRoot);
-      csvSerializer.Save();
+      string fileName;
+      using (var dlg = new SaveFileDialog())
+      {
+        dlg.RestoreDirectory = true;
+        dlg.InitialDirectory = Path.GetDirectoryName(this.currentCsvFile);
+        dlg.FileName = Path.GetFileName(this.currentCsvFile);
+        dlg.DefaultExt = ".csv";
+        dlg.Filter = "ChanSort|*.csv|SamToolBox|*.chl|All files|*";
+        dlg.FilterIndex = 1;
+        dlg.CheckPathExists = true;
+        dlg.CheckFileExists = false;
+        dlg.AddExtension = true;
+        if (dlg.ShowDialog(this) != DialogResult.OK)
+          return;
+        fileName = dlg.FileName;
+      }
+
+      string ext = (Path.GetExtension(fileName)??"").ToLower();
+      if (ext == ".csv")
+        new CsvFileSerializer(this.currentCsvFile, this.dataRoot, false).Save();
+      else if (ext == ".chl")
+        new ChlFileSerializer().Save(fileName, this.currentChannelList);
     }
 
     #endregion
@@ -1504,7 +1516,12 @@ namespace ChanSort.Ui
 
     private void miOpenReferenceFile_ItemClick(object sender, ItemClickEventArgs e)
     {
-      this.TryExecute(this.ShowOpenReferenceFileDialog);
+      this.TryExecute(() => this.ShowOpenReferenceFileDialog(false));
+    }
+
+    private void miAddFromRefList_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      this.TryExecute(() => this.ShowOpenReferenceFileDialog(true));
     }
 
     private void miReload_ItemClick(object sender, ItemClickEventArgs e)
@@ -2350,6 +2367,7 @@ namespace ChanSort.Ui
       this.SetActiveGrid(this.gviewRight);
     }
     #endregion
+
 
   }
 }

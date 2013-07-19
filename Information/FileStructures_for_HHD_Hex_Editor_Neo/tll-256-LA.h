@@ -1,9 +1,22 @@
 #include "tll-common.h"
 
 #define MAX_SAT_COUNT 64
-#define MAX_LNB_COUNT 40
-#define MAX_DVBS_COUNT 7520
+struct TLL48_Satellite;
+typedef TLL48_Satellite TLL_Satellite;
+
 #define MAX_TP_COUNT 2400
+struct TLL56_Transponder;
+typedef TLL56_Transponder TLL_Transponder;
+
+#define MAX_DVBS_COUNT 7520
+struct TLL92_SatChannel;
+typedef TLL92_SatChannel TLL_SatChannel;
+
+#define MAX_LNB_COUNT 40
+struct TLL52_Lnb;
+typedef TLL52_Lnb TLL_Lnb;
+
+#include "tll-satellite.h"
 
 struct LA256_AnalogChannel
 {
@@ -147,41 +160,22 @@ struct LA256_DvbCTBlock
   LA256_DvbCtChannel Channels[ChannelCount];
 };
 
-struct LA256_DvbsHeaderSubblock
-{
-  dword Crc32;
-  byte DVBS_S2_Tag[8];
-  word Temp03[2];
-};
-
-struct LA256_Satellite
+struct TLL48_Satellite
 {
   char Name[32]; 
   byte PosDeg; 
   byte PosCDeg; 
   byte LnbIndex;
   byte FactoryDefault;
-  word TransponderStartIndex;
-  word TransponderEndIndex;
+  word TransponderHead;
+  word TransponderTail;
   word TransponderCount;
   word Unknown4;
   word Unknown5;
   word Unknown6;
 };
 
-struct LA256_DvbsSatelliteSubblock
-{
-  dword Crc32;
-  word MagicNo;
-  byte SatAllocationBitmap[MAX_SAT_COUNT/8];
-  word Reserved;
-  word SatCount;
-  byte SatOrder[MAX_SAT_COUNT];
-  word Unknown3;
-  LA256_Satellite Satellites[MAX_SAT_COUNT];
-};
-
-struct LA256_Transponder
+struct TLL56_Transponder
 {
   byte t1[10];
   word TP_Number;
@@ -197,26 +191,7 @@ struct LA256_Transponder
   byte u40[12];
 };
 
-struct LA256_DvbsTransponderSubblock
-{
-  dword Crc32;
-  word Unknown1;
-  word Unknown2;
-  word Unknown3;
-  word Unknown4;
-  word TransponderCount;
-  byte AllocationBitmap[MAX_TP_COUNT/8];
-  struct LA256_DvbsTransponderTable1
-  {
-    word Prev;
-    word Next;
-    word Current;
-  } TransponderTable1[MAX_TP_COUNT];
-  word Unknown5;
-  LA256_Transponder Transponder[MAX_TP_COUNT];  
-};
-
-struct LA256_SatChannel
+struct TLL92_SatChannel
 {
   word LnbIndex;
   word t1;
@@ -239,26 +214,7 @@ struct LA256_SatChannel
   byte t5[12];
 };
 
-struct LA256_DvbsChannelSubblock
-{
-  dword Crc32; 
-  word Unknown[2];
-  word LinkedListStartIndex;
-  word LinkedListEndIndex1;
-  word LinkedListEndIndex2;
-  word ChannelCount;
-  byte AllocationBitmap[MAX_DVBS_COUNT/8];
-  struct LA256_LinkedChannelList
-  {
-    word Prev;
-    word Next;
-    word Current;
-    word Zero;
-  } LinkedList[MAX_DVBS_COUNT];
-  LA256_SatChannel Channels[MAX_DVBS_COUNT];
-};
-
-struct LA256_Lnb
+struct TLL52_Lnb
 {
   byte SettingsID; 
   byte t2[3];
@@ -274,30 +230,6 @@ struct LA256_Lnb
   byte t5[22]; 
 };
 
-struct LA256_DvbsLnbSubblock
-{
-  dword Crc32;
-  word Unknown1;
-  byte AllocationBitmap[5];
-  byte Unknown2;
-  LA256_Lnb Lnb[MAX_LNB_COUNT];
-};
-
-struct LA256_DvbSBlock
-{
-  dword BlockSize;
-  LA256_DvbsHeaderSubblock HeaderBlock;
-  LA256_DvbsSatelliteSubblock SatelliteBlock;
-  LA256_DvbsTransponderSubblock TransponderBlock;
-  LA256_DvbsChannelSubblock ChannelBlock;
-  LA256_DvbsLnbSubblock LnbBlock;
-};
-
-struct LA256_SettingsBlock
-{
-  dword BlockSize;
-  byte Data[BlockSize]; 
-};
 
 public struct LA256
 {
@@ -306,6 +238,6 @@ public struct LA256
   LA256_AnalogBlock Analog;
   LA256_FirmwareBlock Firmware;
   LA256_DvbCTBlock DvbCT;
-  LA256_DvbSBlock DvbS;
-  LA256_SettingsBlock Settings;
+  TLL_DvbSBlock DvbS;
+  TLL_SettingsBlock Settings;
 };

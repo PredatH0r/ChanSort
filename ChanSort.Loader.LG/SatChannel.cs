@@ -36,14 +36,22 @@ namespace ChanSort.Loader.LG
       this.FreqInMhz = transponder.FrequencyInMhz;
     }
 
-    public override void UpdateRawData()
+    internal static SatChannel CreateFromProxy(ChannelInfo proxy, DataRoot dataRoot, DataMapping mapping, int rawSize)
     {
-      base.UpdateRawData();
-#if false
-      bool deleted = this.NewProgramNr == -1;
-      if (deleted)
-        mapping.SetWord(_SatConfigIndex, 0xFFFF);
-#endif
-    }
+      if (proxy.Transponder == null || proxy.Transponder.Satellite == null || proxy.Transponder.Satellite.LnbConfig == null)
+        return null;
+
+      byte[] rawData = mapping.Settings.GetBytes("newRecordTemplate");
+      if (rawData == null)
+        return null;
+
+      mapping.SetDataPtr(rawData, 0);
+      mapping.SetWord(_SatConfigIndex, proxy.Transponder.Satellite.LnbConfig.Id);
+      mapping.SetWord(_TransponderIndex, proxy.Transponder.Id);
+      mapping.SetWord(_ServiceId, proxy.ServiceId);
+      var channel = new SatChannel(0, proxy.NewProgramNr, mapping, dataRoot);
+      channel.Name = proxy.Name;
+      return channel;
+    }   
   }
 }

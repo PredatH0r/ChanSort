@@ -7,12 +7,14 @@ namespace ChanSort.Api
   {
     private readonly IDictionary<int, Satellite> satellites = new Dictionary<int, Satellite>();
     private readonly IDictionary<int, Transponder> transponder = new Dictionary<int, Transponder>();
+    private readonly IDictionary<int, LnbConfig> lnbConfig = new Dictionary<int, LnbConfig>();
     private readonly IList<ChannelList> channelLists = new List<ChannelList>();
     private readonly StringBuilder warnings = new StringBuilder();
 
     public StringBuilder Warnings { get { return this.warnings; } }
     public IDictionary<int, Satellite> Satellites { get { return this.satellites; } }
     public IDictionary<int, Transponder> Transponder { get { return this.transponder; } }
+    public IDictionary<int, LnbConfig> LnbConfig { get { return this.lnbConfig; } }
     public ICollection<ChannelList> ChannelLists { get { return this.channelLists; } }
     public bool IsEmpty { get { return this.channelLists.Count == 0; } }
     public bool NeedsSaving { get; set; }
@@ -42,6 +44,13 @@ namespace ChanSort.Api
       }
       sat.Transponder.Add(trans.Id, trans);
       this.transponder.Add(trans.Id, trans);
+    }
+    #endregion
+
+    #region AddLnbConfig()
+    public void AddLnbConfig(LnbConfig lnb)
+    {
+      this.lnbConfig.Add(lnb.Id, lnb);
     }
     #endregion
 

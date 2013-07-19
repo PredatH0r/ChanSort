@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ChanSort.Api
 {
@@ -11,6 +12,7 @@ namespace ChanSort.Api
       return val;
     }
 
+    #region GetAnalogChannelNumber()
     public static string GetAnalogChannelNumber(int freq)
     {
       if (freq < 41) return "";
@@ -23,20 +25,58 @@ namespace ChanSort.Api
       if (freq <= 1000) return ((freq - 471)/8 + 21).ToString("d2"); // Band IV, V
       return "";
     }
+    #endregion
 
-    public static void SetInt16(byte[] data, int offset, int value)
+    #region GetInt16/32()
+
+    public static int GetInt16(byte[] data, int offset, bool littleEndian)
     {
-      data[offset+0] = (byte)value;
-      data[offset + 1] = (byte) (value >> 8);
+      return littleEndian ? BitConverter.ToInt16(data, offset) : (data[offset] << 8) + data[offset + 1];
     }
 
-    public static void SetInt32(byte[] data, int offset, int value)
+    public static int GetInt32(byte[] data, int offset, bool littleEndian)
     {
-      data[offset + 0] = (byte)value;
-      data[offset + 1] = (byte)(value >> 8);
-      data[offset + 2] = (byte)(value >> 16);
-      data[offset + 3] = (byte)(value >> 24);
+      return littleEndian ? BitConverter.ToInt32(data, offset) :
+        (data[offset] << 24) + (data[offset + 1] << 16) + (data[offset + 2] << 8) + data[offset + 3];
     }
+    #endregion
+
+    #region SetInt16/32()
+
+    public static void SetInt16(byte[] data, int offset, int value, bool littleEndian = true)
+    {
+      if (littleEndian)
+      {
+        data[offset + 0] = (byte) value;
+        data[offset + 1] = (byte) (value >> 8);
+      }
+      else
+      {
+        data[offset + 0] = (byte)(value >> 8);
+        data[offset + 1] = (byte) value;
+      }
+    }
+
+    public static void SetInt32(byte[] data, int offset, int value, bool littleEndian = true)
+    {
+      if (littleEndian)
+      {
+        data[offset + 0] = (byte) value;
+        data[offset + 1] = (byte) (value >> 8);
+        data[offset + 2] = (byte) (value >> 16);
+        data[offset + 3] = (byte) (value >> 24);
+      }
+      else
+      {
+        data[offset + 0] = (byte)(value >> 24);
+        data[offset + 1] = (byte)(value >> 16);
+        data[offset + 2] = (byte)(value >> 8);
+        data[offset + 3] = (byte)value;        
+      }
+    }
+    #endregion
+
+    #region MemCopy(), MemSet()
 
     public static void MemCopy(byte[] source, int sourceIndex, byte[] dest, int destIndex, int count)
     {
@@ -49,5 +89,6 @@ namespace ChanSort.Api
       for (int i = 0; i < count; i++)
         data[offset++] = value;
     }
+    #endregion
   }
 }

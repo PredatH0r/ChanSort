@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace ChanSort.Api
 {
@@ -11,7 +12,7 @@ namespace ChanSort.Api
   public class ChlFileSerializer
   {
     private static readonly char[] Separators = new[] { ';' };
-    private readonly System.Text.StringBuilder warnings = new System.Text.StringBuilder();
+    private readonly StringBuilder warnings = new StringBuilder();
     private int lineNumber;
     private DataRoot dataRoot;
     private ChannelList channelList;
@@ -30,7 +31,7 @@ namespace ChanSort.Api
       foreach (var channel in this.channelList.Channels)
         channel.NewProgramNr = -1;
 
-      using (var stream = new StreamReader(fileName, System.Text.Encoding.Default))
+      using (var stream = new StreamReader(fileName, Encoding.Default))
       {
         ReadChannelsFromStream(stream);
       }
@@ -95,6 +96,24 @@ namespace ChanSort.Api
         this.warnings.AppendFormat("Line {0,4}: Pr# {1,4}, channel '{2}' could not be found\r\n", this.lineNumber, progNr, name);
       if (found > 1)
         this.warnings.AppendFormat("Line {0,4}: Pr# {1,4}, channel '{2}' found multiple times\r\n", this.lineNumber, progNr, name);
+    }
+    #endregion
+
+    #region Save()
+    public void Save(string fileName, ChannelList list)
+    {
+      using (var writer = new StreamWriter(fileName, false, Encoding.UTF8))
+      {
+        foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr))
+        {
+          if (channel.NewProgramNr == -1) continue;
+          
+          writer.Write(channel.NewProgramNr);
+          writer.Write(';');
+          writer.Write(channel.Name);
+          writer.WriteLine();
+        }
+      }
     }
     #endregion
   }

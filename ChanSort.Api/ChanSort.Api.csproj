@@ -10,9 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChanSort.Api</RootNamespace>
     <AssemblyName>ChanSort.Api</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,6 +69,7 @@
     <Compile Include="Controller\ISerializerPlugin.cs" />
     <Compile Include="Model\ChannelList.cs" />
     <Compile Include="Model\Enums.cs" />
+    <Compile Include="Model\LnbConfig.cs" />
     <Compile Include="Model\LookupData.cs" />
     <Compile Include="Model\NetworkInfo.cs" />
     <Compile Include="Model\Satellite.cs" />

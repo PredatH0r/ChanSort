@@ -1,10 +1,16 @@
-Version v2013-07-03 ======================================================
+Version v2013-07-19 ======================================================
 
 Changes:
-- Support for individually sorted favorite lists, if supported by TV
-  (e.g. Samsung E and F series, Panasonic Viera)
-- FIX: "insert after" using drag and drop from right to left list 
-  inserted before instead of after the drop position
+- Supports Panasonic "svl.bin" channel lists for different TV CPUs
+  (auto-detecting big-endian or little-endian byte order).
+- *.csv reference list is no longer created automatically. (You can always
+  use your TV data file as a reference list anyway)
+- File / Save reference list... now opens a dialog which allows to save in
+  either ChanSort *.csv or SamToolBox *.chl format.
+  (The *.chl format only contains the currently selected list, so it can be
+  used to duplicate the order from e.g. the "Astra HD+" to the "Satellite"
+  list within the same *.scm file)
+- Upgraded to .NET Framework 4.0  and DevExpress 13.1 libraries
 
 The complete change log can be found at the end of this document
 
@@ -103,6 +109,18 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-07-19
+- Supports Panasonic "svl.bin" channel lists for different TV CPUs
+  (auto-detecting big-endian or little-endian byte order).
+- *.csv reference list is no longer created automatically. (You can always
+  use your TV data file as a reference list anyway)
+- File / Save reference list... now opens a dialog which allows to save in
+  either ChanSort *.csv or SamToolBox *.chl format.
+  (The *.chl format only contains the currently selected list, so it can be
+  used to duplicate the order from e.g. the "Astra HD+" to the "Satellite"
+  list within the same *.scm file)
+- Upgraded to .NET Framework 4.0  and DevExpress 13.1 libraries
 
 2013-07-03
 - Support for individually sorted favorite lists, if supported by TV

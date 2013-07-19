@@ -133,6 +133,8 @@ namespace ChanSort.Api
       {
         Section currentSection = null;
         string line;
+        string key = null;
+        string val = null;
         while ((line = rdr.ReadLine()) != null)
         {
           string trimmedLine = line.Trim();
@@ -150,12 +152,23 @@ namespace ChanSort.Api
           }
           if (currentSection == null)
             continue;
-          int idx = trimmedLine.IndexOf("=");
-          if (idx < 0)
-            continue;
-          string key = trimmedLine.Substring(0, idx).Trim();
-          string val = trimmedLine.Substring(idx + 1).Trim();
-          currentSection.Set(key, val);
+          if (val == null)
+          {
+            int idx = trimmedLine.IndexOf("=");
+            if (idx < 0)
+              continue;
+            key = trimmedLine.Substring(0, idx).Trim();
+            val = trimmedLine.Substring(idx + 1).Trim();
+          }
+          else
+            val += line;
+          if (val.EndsWith("\\"))
+            val = val.Substring(val.Length - 1).Trim();
+          else
+          {
+            currentSection.Set(key, val);
+            val = null;
+          }
         }
       }
     }

@@ -23,6 +23,7 @@ namespace ChanSort.Loader.Panasonic
     private CypherMode cypherMode;
     private byte[] fileHeader = new byte[0];
     private int dbSizeOffset;
+    private bool littleEndianByteOrder = false;
 
     enum CypherMode
     {
@@ -410,11 +411,9 @@ namespace ChanSort.Loader.Panasonic
       if (this.CalcChecksum(data, data.Length) != 0)
         throw new FileLoadException("Checksum validation failed");
 
-      int offset = 30 + (data[28] << 8) + data[29];
-      this.dbSizeOffset = offset;
-      int dbSize = (data[offset] << 24) + (data[offset + 1] << 16) + (data[offset + 2] << 8) + data[offset + 3];
-      offset += 4;
-      if (data.Length != offset + dbSize + 4)
+      int offset;
+      if (!this.ValidateFileSize(data, false, out offset) 
+        && !this.ValidateFileSize(data, true, out offset))
         throw new FileLoadException("File size validation failed");
 
       using (var stream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
@@ -422,6 +421,19 @@ namespace ChanSort.Loader.Panasonic
 
       this.fileHeader = new byte[offset];
       Array.Copy(data, 0, this.fileHeader, 0, offset);
+    }
+    #endregion
+
+    #region ValidateFileSize()
+    private bool ValidateFileSize(byte[] data, bool littleEndian, out int offset)
+    {
+      this.littleEndianByteOrder = littleEndian;
+      offset = 30 + Tools.GetInt16(data, 28, littleEndian);
+      if (offset >= data.Length) return false;
+      this.dbSizeOffset = offset;
+      int dbSize = Tools.GetInt32(data, offset, littleEndian);
+      offset += 4;
+      return data.Length == offset + dbSize + 4;
     }
     #endregion
 
@@ -607,11 +619,7 @@ order by s.ntype,major_channel
       using (var stream = new FileStream(this.workFile, FileMode.Open, FileAccess.Read))
         stream.Read(data, fileHeader.Length, (int)workFileSize);
 
-      data[this.dbSizeOffset + 0] = (byte)(workFileSize >> 24);
-      data[this.dbSizeOffset + 1] = (byte)(workFileSize >> 16);
-      data[this.dbSizeOffset + 2] = (byte)(workFileSize >> 8);
-      data[this.dbSizeOffset + 3] = (byte)(workFileSize);
-
+      Tools.SetInt32(data, this.dbSizeOffset, (int)workFileSize, this.littleEndianByteOrder);
       this.UpdateChecksum(data);
 
       using (var stream = new FileStream(this.FileName, FileMode.Create, FileAccess.Write))

@@ -1,11 +1,25 @@
-#include "tll-common.h"
-
 // all LM models except 340S and 611S
 
+#include "tll-common.h"
+
 #define MAX_SAT_COUNT 64
-#define MAX_LNB_COUNT 40
-#define MAX_DVBS_COUNT 7520
+struct TLL44_Satellite;
+typedef TLL44_Satellite TLL_Satellite;
+
 #define MAX_TP_COUNT 2400
+struct TLL40_Transponder;
+typedef TLL40_Transponder TLL_Transponder;
+
+#define MAX_DVBS_COUNT 7520
+struct TLL72_SatChannel;
+typedef TLL72_SatChannel TLL_SatChannel;
+
+#define MAX_LNB_COUNT 40
+struct TLL44_Lnb;
+typedef TLL44_Lnb TLL_Lnb;
+
+#include "tll-satellite.h"
+
 
 struct LM192_AnalogChannel
 {
@@ -121,143 +135,7 @@ struct LM192_DvbCTBlock
   LM192_DvbCtChannel Channels[ChannelCount];
 };
 
-struct LM192_DvbsHeaderSubblock
-{
-  dword Crc32;
-  byte DVBS_S2_Tag[8];
-  word Temp03[2];
-};
 
-struct LM192_Satellite
-{
-  char Name[32]; 
-  byte PosDeg; 
-  byte PosCDeg; 
-  word Unknown1;
-  word Unknown2;
-  word Unknown3;
-  word TransponderCount;
-  word Unknown4;
-};
-
-struct LM192_DvbsSatelliteSubblock
-{
-  dword Crc32;
-  word Unknown1;
-  byte SatAllocationBitmap[MAX_SAT_COUNT/8];
-  word Unknown2;
-  word SatCount;
-  byte SatOrder[MAX_SAT_COUNT];
-  word Unknown3;
-  LM192_Satellite Satellites[MAX_SAT_COUNT];
-};
-
-struct LM192_Transponder
-{
-  byte t1[10];
-  word TP_Number;
-  word TP_Freq;
-  byte t2[4]; 
-  word NID; 
-  word TID; 
-  byte t3[3];
-  word SRate;
-  byte t4[9]; 
-  byte SatIndexTimes2; 
-  byte t5[3]; 
-};
-
-struct LM192_DvbsTransponderSubblock
-{
-  dword Crc32;
-  word Unknown1;
-  word Unknown2;
-  word Unknown3;
-  word Unknown4;
-  word TransponderCount;
-  byte AllocationBitmap[MAX_TP_COUNT/8];
-  struct LM192_DvbsTransponderTable1
-  {
-    word Prev;
-    word Next;
-    word Current;
-  } TransponderTable1[MAX_TP_COUNT];
-  word Unknown5;
-  LM192_Transponder Transponder[MAX_TP_COUNT];  
-};
-
-struct LM192_SatChannel
-{
-  word LnbIndex;
-  word t1;
-  TLL_SignalSource SignalSource;
-  byte t2;
-  word TP_Number; 
-  word ChannelNumber; 
-  word LogicalChannelNumber;
-  word TP_Number2;
-  byte FavCrypt;
-  byte LockSkipHide;   
-  word SID;       
-  byte ServiceType;
-  byte CH_NameLength; 
-  char CH_Name[40];
-  word VID; 
-  word AID; 
-  word AID_Times8;  
-  byte t6[6];
-};
-
-struct LM192_DvbsChannelSubblock
-{
-  dword Crc32; 
-  word Unknown[2];
-  word LinkedListStartIndex;
-  word LinkedListEndIndex1;
-  word LinkedListEndIndex2;
-  word ChannelCount;
-  byte AllocationBitmap[MAX_DVBS_COUNT/8];
-  struct LM192_LinkedChannelList
-  {
-    word Prev;
-    word Next;
-    word Current;
-    word Zero;
-  } LinkedList[MAX_DVBS_COUNT];
-  LM192_SatChannel Channels[MAX_DVBS_COUNT];
-};
-
-struct LM192_Lnb
-{
-  byte SettingsID; 
-  byte t2[3];
-  byte SatelliteID;
-  byte t3[3];
-  char FrequenceName[12]; 
-  word LOF1; 
-  byte t4[2]; 
-  word LOF2; 
-  byte t5[18]; 
-};
-
-struct LM192_DvbsLnbSubblock
-{
-  dword Crc32;
-  word Unknown1;
-  byte AllocationBitmap[5];
-  byte Unknown2;
-  LM192_Lnb Lnb[MAX_LNB_COUNT];
-};
-
-struct LM192_DvbSBlock
-{
-  dword BlockSize;
-  LM192_DvbsHeaderSubblock HeaderBlock;
-  LM192_DvbsSatelliteSubblock SatelliteBlock;
-  LM192_DvbsTransponderSubblock TransponderBlock;
-  LM192_DvbsChannelSubblock ChannelBlock;
-  LM192_DvbsLnbSubblock LnbBlock;
-};
 
 struct LM192_SettingsBlock
 {
@@ -272,6 +150,6 @@ public struct LM192
   LM192_AnalogBlock Analog;
   LM192_FirmwareBlock Firmware;
   LM192_DvbCTBlock DvbCT;
-  LM192_DvbSBlock DvbS;
-  LM192_SettingsBlock Settings;
+  TLL_DvbSBlock DvbS;
+  TLL_SettingsBlock Settings;
 };

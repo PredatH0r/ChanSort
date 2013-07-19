@@ -81,7 +81,7 @@ public struct SCM_mapDigital_C
 
 
 
-struct SCM_mapDigital_DE_entry
+struct SCM_mapDigital_DEF_entry
 {
    word ProgramNr;
    word VideoPid;
@@ -124,7 +124,7 @@ struct SCM_mapDigital_DE_entry
    byte Checksum;
 };
 
-public struct SCM_mapDigital_DE
+public struct SCM_mapDigital_DEF
 {
   SCM_mapDigital_DE_entry Entries[*];
 };

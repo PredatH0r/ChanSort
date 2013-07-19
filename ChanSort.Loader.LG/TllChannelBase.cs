@@ -5,28 +5,28 @@ namespace ChanSort.Loader.LG
   public class TllChannelBase : ChannelInfo
   {
     // common
-    private const string _ProgramNr = "offProgramNr";
-    private const string _ProgramNr2 = "offProgramNr2"; // not for DVB-S
-    private const string _Name = "offName";
-    private const string _NameLength = "offNameLength";
-    private const string _Favorites = "offFavorites";   // not for DVB-S (which only uses Favorite2)
+    protected const string _ProgramNr = "offProgramNr";
+    protected const string _ProgramNr2 = "offProgramNr2"; // not for DVB-S
+    protected const string _Name = "offName";
+    protected const string _NameLength = "offNameLength";
+    protected const string _Favorites = "offFavorites";   // not for DVB-S (which only uses Favorite2)
    
-    private const string _Deleted = "Deleted";
-    private const string _Favorites2 = "offFavorites2";
-    private const string _Encrypted = "Encrypted";
+    protected const string _Deleted = "Deleted";
+    protected const string _Favorites2 = "offFavorites2";
+    protected const string _Encrypted = "Encrypted";
 
-    private const string _Lock = "Lock";
-    private const string _Skip = "Skip";
-    private const string _Hide = "Hide";
-    private const string _Moved = "ProgNrCustomized";
+    protected const string _Lock = "Lock";
+    protected const string _Skip = "Skip";
+    protected const string _Hide = "Hide";
+    protected const string _Moved = "ProgNrCustomized";
 
     // DVB
-    private const string _ServiceId = "offServiceId";
-    private const string _VideoPid = "offVideoPid";
-    private const string _AudioPid = "offAudioPid";
-    private const string _OriginalNetworkId = "offOriginalNetworkId";
-    private const string _TransportStreamId = "offTransportStreamId";
-    private const string _ServiceType = "offServiceType";
+    protected const string _ServiceId = "offServiceId";
+    protected const string _VideoPid = "offVideoPid";
+    protected const string _AudioPid = "offAudioPid";
+    protected const string _OriginalNetworkId = "offOriginalNetworkId";
+    protected const string _TransportStreamId = "offTransportStreamId";
+    protected const string _ServiceType = "offServiceType";
 
     protected readonly DataMapping mapping;
     protected readonly byte[] rawData;
@@ -121,5 +121,8 @@ namespace ChanSort.Loader.LG
       this.ParseNames();
     }
     #endregion
+
+    internal byte[] RawDataBuffer { get { return this.rawData; } }
+    internal int RawDataOffset { get { return this.baseOffset; } }
   }
 }

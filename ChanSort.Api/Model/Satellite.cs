@@ -17,9 +17,12 @@ namespace ChanSort.Api
       this.id = id;
     }
 
+    public LnbConfig LnbConfig { get; set; }
+
     public override string ToString()
     {
       return Name;
     }
+
   }
 }

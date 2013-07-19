@@ -2,7 +2,7 @@
 c:\cygwin\bin\date "+%%Y-%%m-%%d">%TEMP%\date.txt
 set /p curdate=<%temp%\date.txt
 set target=%cd%\..\ChanSort_%curdate%
-set DXversion=12.2
+set DXversion=13.1
 mkdir "%target%" 2>nul
 del /s /q "%target%\*"
 copy debug\ChanSort.exe* "%target%"
@@ -21,7 +21,6 @@ del Website\ChanSort.zip 2>nul
 copy Source\readme.txt %target%
 cd %target%\..
 "c:\program files\7-Zip\7z.exe" a -tzip ChanSort_%curdate%.zip ChanSort_%curdate%
-rem c:\cygwin\bin\gzip --name -r -9 ChanSort_%curdate%.zip ChanSort%curdate%
 
 
 pause

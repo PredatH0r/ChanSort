@@ -24,6 +24,7 @@ namespace ChanSort.Loader.LG
     private readonly MappingPool<DataMapping> dvbsMappings = new MappingPool<DataMapping>("DVB-S Channel");
     private readonly MappingPool<DataMapping> dvbsTransponderMappings = new MappingPool<DataMapping>("DVB-S Transponder");
     private readonly MappingPool<FirmwareData> firmwareMappings = new MappingPool<FirmwareData>("Firmware");
+    private readonly MappingPool<DataMapping> lnbMappings = new MappingPool<DataMapping>("LNB Config"); 
 
     private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv, "Analog TV");
     private readonly ChannelList dvbcTvChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv, "DVB-C TV");
@@ -64,6 +65,7 @@ namespace ChanSort.Loader.LG
     private int presetChannels;
 
     private bool removeDeletedActChannels = false;
+    private bool mustReorganizeDvbs = false;
     private decimal dvbsSymbolRateFactor;
 
     #region ctor()
@@ -111,6 +113,8 @@ namespace ChanSort.Loader.LG
           dvbsMappings.AddMapping(recordLength, new DataMapping(section));
         else if (section.Name.StartsWith("TransponderDataMapping"))
           dvbsTransponderMappings.AddMapping(recordLength, new DataMapping(section));
+        else if (section.Name.StartsWith("LnbMapping"))
+          lnbMappings.AddMapping(recordLength, new DataMapping(section));
         else if (section.Name.StartsWith("FirmwareData"))
           firmwareMappings.AddMapping(recordLength, new FirmwareData(section));
       }
@@ -357,7 +361,7 @@ namespace ChanSort.Loader.LG
       this.ReadDvbsChannels(ref off, header.LinkedListStartIndex);
 
       // subblock 5 (satellite/LNB config)
-      off += satConfig.LnbBlockHeaderSize + satConfig.lnbCount*satConfig.lnbLength;
+      this.ReadLnbConfig(ref off);
     }
     #endregion
 
@@ -503,6 +507,25 @@ namespace ChanSort.Loader.LG
     }
     #endregion
 
+    #region ReadLnbConfig()
+    private void ReadLnbConfig(ref int off)
+    {
+      off += satConfig.LnbBlockHeaderSize;
+      var mapping = this.lnbMappings.GetMapping(satConfig.lnbLength);
+      for (int i = 0; i < satConfig.lnbCount; i++)
+      {
+        mapping.SetDataPtr(this.fileContent, off);
+        var lnb = new LnbConfig(mapping, this.DataRoot);
+        if (lnb.Id != 0)
+        {
+          lnb.Satellite.LnbConfig = lnb;
+          this.DataRoot.AddLnbConfig(lnb);
+        }
+        off += satConfig.lnbLength;
+      }
+    }
+    #endregion
+
     // Test code for fixing broken DVB-S block of xxLM640T ==========
 
     #region EraseDvbsBlock()
@@ -625,20 +648,21 @@ namespace ChanSort.Loader.LG
       {
         // even if there's 0 channels, channel[0] must contain valid data
         Tools.MemSet(this.fileContent,
-                     this.dvbsBlockOffset + satConfig.ChannelListOffset + 1 * satConfig.dvbsChannelLength,
+                     this.dvbsBlockOffset + satConfig.ChannelListOffset + 1*satConfig.dvbsChannelLength,
                      0xFF,
-                     (satConfig.dvbsMaxChannelCount - 1) * satConfig.dvbsChannelLength);
+                     (satConfig.dvbsMaxChannelCount - 1)*satConfig.dvbsChannelLength);
       }
       else
       {
         Tools.MemCopy(sortedChannels, 0,
-                              this.fileContent, this.dvbsBlockOffset + satConfig.ChannelListOffset,
-                              channelCounter * satConfig.dvbsChannelLength);
+                      this.fileContent, this.dvbsBlockOffset + satConfig.ChannelListOffset,
+                      channelCounter*satConfig.dvbsChannelLength);
         Tools.MemSet(this.fileContent,
-                     this.dvbsBlockOffset + satConfig.ChannelListOffset + channelCounter * satConfig.dvbsChannelLength,
+                     this.dvbsBlockOffset + satConfig.ChannelListOffset + channelCounter*satConfig.dvbsChannelLength,
                      0xFF,
-                     (satConfig.dvbsMaxChannelCount - channelCounter) * satConfig.dvbsChannelLength);
+                     (satConfig.dvbsMaxChannelCount - channelCounter)*satConfig.dvbsChannelLength);
       }
+
       UpdateChannelAllocationBitmap(channelCounter);
       UpdateChannelLinkedList(channelCounter);      
       UpdateDvbsChecksums();
@@ -676,11 +700,12 @@ namespace ChanSort.Loader.LG
 
       UpdateChannelIndexInTransponderData(channel, ref prevTransponderIndex, counter, ref currentTransponder);
 
-      Tools.MemCopy(this.fileContent,
-                    this.dvbsBlockOffset + satConfig.ChannelListOffset + channel.RecordIndex*satConfig.dvbsChannelLength,
-                    sortedChannels,
-                    counter*satConfig.dvbsChannelLength,
-                    satConfig.dvbsChannelLength);
+      Tools.MemCopy(
+        channel.RawDataBuffer,
+        channel.RawDataOffset,
+        sortedChannels,
+        counter*satConfig.dvbsChannelLength,
+        satConfig.dvbsChannelLength);
 
       channel.RecordIndex = counter++;
       channel.baseOffset = this.dvbsBlockOffset + satConfig.ChannelListOffset + channel.RecordIndex*satConfig.dvbsChannelLength;
@@ -778,6 +803,12 @@ namespace ChanSort.Loader.LG
       if (this.reorderPhysically || removeDeletedActChannels)
         this.ReorderActChannelsPhysically();
 
+      if (this.mustReorganizeDvbs)
+      {
+        this.CleanUpChannelData();
+        this.mustReorganizeDvbs = false;
+      }
+
       if (this.dvbsSubblockCrcOffset != null)
         this.UpdateDvbsChecksums();
 
@@ -817,20 +848,43 @@ namespace ChanSort.Loader.LG
       newDvbctChannelCount = 0;
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        foreach (ChannelInfo channel in list.Channels)
+        int count = list.Channels.Count;
+        for (int i=0; i<count; i++)
         {
+          ChannelInfo channel = list.Channels[i];
           if (channel.NewProgramNr != -1)
           {
             if ((channel.SignalSource & SignalSource.Analog) != 0)
               ++newAnalogChannelCount;
             else if ((channel.SignalSource & SignalSource.DvbCT) != 0)
               ++newDvbctChannelCount;
-          }          
+          }
+
+          if (!(channel is TllChannelBase))
+          {
+            var newChannel = this.CreateChannelFromProxy(channel);
+            if (newChannel != null)
+              list.Channels[i] = newChannel;
+          }
           channel.UpdateRawData();
         }
       }
     }
+
     #endregion
+
+    private ChannelInfo CreateChannelFromProxy(ChannelInfo proxy)
+    {
+      if ((proxy.SignalSource & SignalSource.Sat) != 0)
+      {
+        var mapping = this.dvbsMappings.GetMapping(this.satConfig.dvbsChannelLength);
+        var channel = SatChannel.CreateFromProxy(proxy, this.DataRoot, mapping, this.satConfig.dvbsChannelLength);
+        if (channel != null)
+          this.mustReorganizeDvbs = true;
+        return channel;
+      }
+      return null;
+    }
 
     #region ReorderActChannelsPhysically()
     private void ReorderActChannelsPhysically()

@@ -43,3 +43,9 @@ enum LH_SignalSource : byte
   Antenna = 2,
   Cable = 3
 };
+
+struct TLL_SettingsBlock
+{
+  dword BlockSize;
+  byte Data[BlockSize]; 
+};
