@@ -87,10 +87,13 @@ struct SCM_mapDigital_DEF_entry
    word VideoPid;
    word PcrPid;
    word ServiceId;
-   byte Unknown8[4];
+   byte Skip_Deleted;
+   byte InUse;
+   byte SignalSource;
+   byte SignalType;
    byte Qam;
    byte Unknown13;
-   byte Bandwidth;
+   byte BandwidthIs8MHz;
    byte ServiceType;
    byte Codec;
    byte Unknown16[3];
@@ -114,18 +117,20 @@ struct SCM_mapDigital_DEF_entry
    uc16be Name[100];
    uc16be ShortName[9];
    byte VideoFormat;
-   byte Unknown283[9];
+   byte Unknown283[7];
+   byte FavFlags;
+   byte Checksum1;
    dword Fav1;
    dword Fav2;
    dword Fav3;
    dword Fav4;
    dword Fav5;
    byte Unknown312[7];
-   byte Checksum;
+   byte Checksum2;
 };
 
 public struct SCM_mapDigital_DEF
 {
-  SCM_mapDigital_DE_entry Entries[*];
+  SCM_mapDigital_DEF_entry Entries[*];
 };
 

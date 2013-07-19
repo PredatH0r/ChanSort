@@ -1,6 +1,9 @@
-Version v2013-07-19 ======================================================
+Version v2013-07-19.2 ====================================================
 
 Changes:
+- FIX: Samsung "CablePrime" channel list was not updated/saved
+- FIX: Deleted Samsung analog, DVB-T and DVB-C channels re-appeared in the
+  channel list after loading the file again.
 - Supports Panasonic "svl.bin" channel lists for different TV CPUs
   (auto-detecting big-endian or little-endian byte order).
 - *.csv reference list is no longer created automatically. (You can always
@@ -109,6 +112,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-07-19.2
+- FIX: Samsung "CablePrime" channel list was not updated/saved
+- FIX: Deleted Samsung analog, DVB-T and DVB-C channels re-appeared in the
+  channel list after loading the file again.
 
 2013-07-19
 - Supports Panasonic "svl.bin" channel lists for different TV CPUs

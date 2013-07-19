@@ -526,7 +526,7 @@ namespace ChanSort.Loader.Samsung
     {
       if (tvOutputFile != this.FileName)
       {
-        File.Copy(this.FileName, tvOutputFile);
+        File.Copy(this.FileName, tvOutputFile, true);
         this.FileName = tvOutputFile;
       }
       using (ZipFile zip = new ZipFile(tvOutputFile))
@@ -538,6 +538,7 @@ namespace ChanSort.Loader.Samsung
         this.SaveChannels(zip, "map-CableD", this.dvbcChannels, ref this.dvbcFileContent);
         this.SaveChannels(zip, "map-SateD", this.dvbsChannels, ref this.dvbsFileContent);
         this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, ref this.hdplusFileContent);
+        this.SaveChannels(zip, "map-CablePrime_D", this.primeChannels, ref this.primeFileContent);
         zip.CommitUpdate();
       }
     }
