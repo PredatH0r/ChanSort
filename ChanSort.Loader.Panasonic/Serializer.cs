@@ -302,6 +302,8 @@ namespace ChanSort.Loader.Panasonic
     #region ctor()
     public Serializer(string inputFile) : base(inputFile)
     {
+      DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
+
       this.Features.ChannelNameEdit = true;
       this.DataRoot.SortedFavorites = true;
       

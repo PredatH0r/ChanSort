@@ -13,6 +13,7 @@ copy DLL\* "%target%"
 del "%target%\*nunit*.dll"
 mkdir "%target%\de" 2>nul
 xcopy /siy debug\de "%target%\de"
+xcopy /siy debug\pt "%target%\pt"
 copy readme.txt "%target%"
 for %%f in (Utils Data XtraEditors XtraBars XtraGrid XtraLayout) do call :copyDll %%f
 

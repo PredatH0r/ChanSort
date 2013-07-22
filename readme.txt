@@ -1,21 +1,9 @@
-Version v2013-07-19.3 ====================================================
+Version v2013-07-22 ======================================================
 
 Changes:
-- FIX: .NET Framework 4.0 exceptions about loading DLLs downloaded from
-  the web (since the whole .zip was downloaded from the web)
-- FIX: Samsung "CablePrime" channel list was not updated/saved
-- FIX: Deleted Samsung analog, DVB-T and DVB-C channels re-appeared in the
-  channel list after loading the file again.
-- Supports Panasonic "svl.bin" channel lists for different TV CPUs
-  (auto-detecting big-endian or little-endian byte order).
-- *.csv reference list is no longer created automatically. (You can always
-  use your TV data file as a reference list anyway)
-- File / Save reference list... now opens a dialog which allows to save in
-  either ChanSort *.csv or SamToolBox *.chl format.
-  (The *.chl format only contains the currently selected list, so it can be
-  used to duplicate the order from e.g. the "Astra HD+" to the "Satellite"
-  list within the same *.scm file)
-- Upgraded to .NET Framework 4.0  and DevExpress 13.1 libraries
+- Display message box to install VC++ 2010 Redist Package (x86) when it is
+  missing (required by SQLite to load Panasonic and Toshiba lists)
+- FIX: added missing files for Portuguese translation
 
 The complete change log can be found at the end of this document
 
@@ -67,7 +55,7 @@ LG
     
     Instructions on how to access the hidden service-menu for transferring
     the channel list from/to USB can be found here:
-    https://sourceforge.net/p/chansort/wiki/Home/
+    http://sourceforge.net/p/chansort/wiki/Home/
 
 Panasonic
 -------
@@ -90,13 +78,19 @@ format there is a chance of unwanted side-effects or damage to your TV.
 
 System requirements =======================================================
 
-- USB-Stick to transfer the channel list between your TV and PC
+- Microsoft .NET Framework 4.0 (included in Win8, can be installed manually
+  on Windows 7, Windows Vista, Windows XP SP3):
+  http://www.microsoft.com/en-us/download/details.aspx?id=17851
+- Microsoft Visual C++ 2010 Redistributable Package (x86)
+  Required to edit Panasonic and Toshiba channel lists (through SQLite)
+  http://www.microsoft.com/en-us/download/details.aspx?id=8328
+- USB-stick to transfer the channel list between your TV and PC
+  (for Panasonic an SD-Card is needed instead of a USB-stick)
 - For LG's LM-series you need a programmable remote control to access the 
   service menu for transferring the list to/from USB. 
   (e.g. Logitech Harmony 300, One-For-All URC3920,...)
   Details can be found on the ChanSort wiki and on 
   http://openlgtv.org.ru/wiki/index.php/Access_hidden_service_menus_/_modes
-- Microsoft .NET Framework 3.5 (included in WinXP SP3, Vista, Win7, Win8)
 
 
 License ===============================================================
@@ -114,6 +108,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-07-22
+- Display message box to install VC++ 2010 Redist Package (x86) when it is
+  missing (required by SQLite to load Panasonic and Toshiba lists)
+- FIX: added missing files for Portuguese translation
 
 2013-07-19.3
 - FIX: .NET Framework 4.0 exceptions about loading DLLs downloaded from

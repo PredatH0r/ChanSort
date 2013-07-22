@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-07-19.3";
+    public const string AppVersion = "v2013-07-22";
 
     private const int MaxMruEntries = 5;
 
@@ -153,11 +153,11 @@ namespace ChanSort.Ui
         dlg.FilterIndex = numberOfFilters + 1;
         dlg.CheckFileExists = true;
         dlg.RestoreDirectory = true;
-        if (dlg.ShowDialog() == DialogResult.OK)
-        {
-          var plugin = dlg.FilterIndex <= this.plugins.Count ? this.plugins[dlg.FilterIndex - 1] : null;
-          this.LoadFiles(plugin, dlg.FileName);
-        }
+        if (dlg.ShowDialog() != DialogResult.OK)
+          return;
+
+        var plugin = dlg.FilterIndex <= this.plugins.Count ? this.plugins[dlg.FilterIndex - 1] : null;
+        this.LoadFiles(plugin, dlg.FileName);        
       }
     }
     #endregion
