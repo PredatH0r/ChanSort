@@ -80,6 +80,7 @@
     <Compile Include="LM\TestLM.cs" />
     <Compile Include="LN\TestLN.cs" />
     <Compile Include="LS\TestLS.cs" />
+    <Compile Include="LT\TestLT.cs" />
     <Compile Include="LV\TestLV.cs" />
     <Compile Include="LW\TestLW.cs" />
     <Compile Include="LX\TestLX.cs" />

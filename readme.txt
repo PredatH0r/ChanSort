@@ -1,9 +1,7 @@
-Version v2013-07-22 ======================================================
+Version v2013-07-23 ======================================================
 
 Changes:
-- Display message box to install VC++ 2010 Redist Package (x86) when it is
-  missing (required by SQLite to load Panasonic and Toshiba lists)
-- FIX: added missing files for Portuguese translation
+- Added support for LG LT-series (tested with xxLT380H)
 
 The complete change log can be found at the end of this document
 
@@ -108,6 +106,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-07-23
+- Added support for LG LT-series (tested with xxLT380H)
 
 2013-07-22
 - Display message box to install VC++ 2010 Redist Package (x86) when it is

@@ -38,6 +38,7 @@ namespace ChanSort.Loader.LG
 
     private int analogBlockOffset;
     private int firmwareBlockOffset;
+    private int extraBlockOffset;
     private int dvbctBlockOffset;
     private int dvbsBlockOffset;
     private int[] dvbsSubblockCrcOffset;
@@ -54,6 +55,7 @@ namespace ChanSort.Loader.LG
 
     private Dictionary<int, int> nextChannelIndex;
     private int firmwareBlockSize;
+    private int extraBlockSize;
     private int dvbsBlockSize;
     private int settingsBlockSize;
     private string countryCode;
@@ -140,6 +142,7 @@ namespace ChanSort.Loader.LG
       this.ReadFileHeader(ref off);
       this.ReadAnalogChannelBlock(ref off);
       this.ReadFirmwareDataBlock(ref off);
+      this.ReadLtSeriesExtraBlock(ref off);
       this.ReadDvbCtChannels(ref off);
       this.ReadDvbSBlock(ref off);
       this.ReadSettingsBlock(ref off);
@@ -192,6 +195,20 @@ namespace ChanSort.Loader.LG
       this.firmwareBlockOffset = off;
       this.firmwareBlockSize = this.GetBlockSize(off);
       off += 4 + this.firmwareBlockSize;
+    }
+    #endregion
+
+    #region ReadLtSeriesExtraBlock()
+    private void ReadLtSeriesExtraBlock(ref int off)
+    {
+      int size = BitConverter.ToInt32(this.fileContent, off);
+      int count = BitConverter.ToInt32(this.fileContent, off + 4);
+      if (size == 4 + count*72 && this.actChannelSize == 212)
+      {
+        this.extraBlockOffset = off;
+        this.extraBlockSize = size;
+        off += 4 + size;
+      }
     }
     #endregion
 
@@ -824,6 +841,10 @@ namespace ChanSort.Loader.LG
 
         // firmware
         file.Write(fileContent, this.firmwareBlockOffset, this.firmwareBlockSize + 4);
+
+        // LT-series extra block
+        if (extraBlockOffset != 0)
+          file.Write(fileContent, this.extraBlockOffset, this.extraBlockSize + 4);
 
         // DVB-CT
         file.Write(newDvbctChannelCount*this.actChannelSize + 4);

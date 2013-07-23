@@ -139,6 +139,15 @@ namespace Test.Loader.LG
           return dir;
         dir = Path.GetDirectoryName(dir);
       } while (!string.IsNullOrEmpty(dir));
+
+      dir = Environment.CurrentDirectory;
+      do
+      {
+        if (File.Exists(dir + "\\ChanSort.sln"))
+          return dir;
+        dir = Path.GetDirectoryName(dir);
+      } while (!string.IsNullOrEmpty(dir));
+
       throw new InvalidOperationException("Cannot determine base directory of ChanSort solution");
     }
     #endregion
