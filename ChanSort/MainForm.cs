@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-07-22";
+    public const string AppVersion = "v2013-??-??";
 
     private const int MaxMruEntries = 5;
 
@@ -1302,6 +1302,8 @@ namespace ChanSort.Ui
       this.miTvSettings.Enabled = this.currentTvSerializer != null;
       this.miCleanupChannels.Visibility = this.currentTvSerializer != null &&
         this.currentTvSerializer.Features.CleanUpChannelData ? BarItemVisibility.Always : BarItemVisibility.Never;
+
+      this.txtSetSlot.Enabled = mayEdit;
     }
     #endregion
 

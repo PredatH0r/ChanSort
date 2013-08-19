@@ -14,6 +14,10 @@ namespace ChanSort.Loader.Samsung
       var signalSource = SignalSource.Digital;
       signalSource |= isCable ? SignalSource.Cable : SignalSource.Antenna;
       this.InitCommonData(slot, signalSource, data);
+      
+      if (this.OldProgramNr == 0)
+        return;
+
       this.InitDvbData(data);
 
       int transp = data.GetByte(_ChannelOrTransponder);

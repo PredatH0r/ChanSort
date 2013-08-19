@@ -1,7 +1,11 @@
-Version v2013-07-23 ======================================================
+Version v2013-08-19 ======================================================
 
 Changes:
-- Added support for LG LT-series (tested with xxLT380H)
+- Fixed loading Samsung B-series channel lists
+- Changed file filter for LG to "xx*.TLL" to exclude the GlobalClone*.TLL
+  files of LA and LN series.
+- Fixed "New version available" info screen
+- Improved error handling
 
 The complete change log can be found at the end of this document
 
@@ -42,7 +46,7 @@ Samsung
 
 LG
 ------
-    Series: CS, DM, LA, LD, LE, LH, LK, LM*, LN, LS, LV, LW, LX, PM, PT
+    Series: CS, DM, LA, LD, LE, LH, LK, LM*, LN, LS, LT, LV, LW, LX, PM, PT
     Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2),
             Sat-Radio (DVB-S2)
   
@@ -106,6 +110,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-08-19
+- Fixed loading Samsung B-series channel lists
+- Changed file filter for LG to "xx*.TLL" to exclude the GlobalClone*.TLL
+  files of LA and LN series.
+- Fixed "New version available" info screen
+- Improved error handling
 
 2013-07-23
 - Added support for LG LT-series (tested with xxLT380H)
