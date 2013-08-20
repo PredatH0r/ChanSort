@@ -278,9 +278,12 @@ namespace ChanSort.Loader.LG
       if (channelCount == 0) return;
 
       recordSize = GetActChannelRecordSize(off, blockSize, channelCount);
-      var key = (Path.GetFileNameWithoutExtension(this.FileName) ?? "").ToUpper().StartsWith("XXLH3000")
-                  ? "LH3000"
-                  : recordSize.ToString();
+      var key = recordSize.ToString();
+      string basename = (Path.GetFileNameWithoutExtension(this.FileName) ?? "").ToUpper();
+      if (basename.StartsWith("XXLH3000"))
+        key += "LH3000";
+      else if (basename.StartsWith("XXPN"))
+        key += "PN";
       var actMapping = this.actMappings.GetMapping(key);
       this.reorderPhysically = actMapping.Settings.GetInt("reorderChannelData") != 0;
 

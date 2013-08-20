@@ -85,6 +85,7 @@
     <Compile Include="LW\TestLW.cs" />
     <Compile Include="LX\TestLX.cs" />
     <Compile Include="PM\TestPM.cs" />
+    <Compile Include="PN\TestPN.cs" />
     <Compile Include="PT\TestPT.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="LH\TestLH.cs" />

@@ -1,11 +1,7 @@
-Version v2013-08-19 ======================================================
+Version v2013-08-21 ======================================================
 
 Changes:
-- Fixed loading Samsung B-series channel lists
-- Changed file filter for LG to "xx*.TLL" to exclude the GlobalClone*.TLL
-  files of LA and LN series.
-- Fixed "New version available" info screen
-- Improved error handling
+- Added support for LG PN Series (tested with PN6500)
 
 The complete change log can be found at the end of this document
 
@@ -110,6 +106,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-08-21
+- Added support for LG PN Series (tested with PN6500)
 
 2013-08-19
 - Fixed loading Samsung B-series channel lists
