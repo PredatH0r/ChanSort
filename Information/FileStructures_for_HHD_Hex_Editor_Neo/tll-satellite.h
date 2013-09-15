@@ -125,6 +125,7 @@ struct TLL_DvbsChannelSubblock
     word Current;
     word Zero;
   } LinkedList[MAX_DVBS_COUNT];
+  byte Unknown2[DVBS_CHANNELLIST_PREFIXSIZE];
   TLL_SatChannel Channels[MAX_DVBS_COUNT];
 };
 

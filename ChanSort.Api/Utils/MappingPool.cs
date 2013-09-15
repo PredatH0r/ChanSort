@@ -8,6 +8,7 @@ namespace ChanSort.Api
     private const string ERR_unknownACTChannelDataLength = "Configuration doesn't contain a {0} data mapping for length {1}";
     private readonly Dictionary<string, T> mappings = new Dictionary<string, T>();
     private readonly string caption;
+    public System.Text.Encoding DefaultEncoding { get; set; }
 
     public MappingPool(string caption)
     {
@@ -38,6 +39,8 @@ namespace ChanSort.Api
       if (!mappings.TryGetValue(id, out mapping) && throwException)
         throw new FileLoadException(string.Format(ERR_unknownACTChannelDataLength, this.caption, id));
 
+      if (mapping != null && this.DefaultEncoding != null)
+        mapping.DefaultEncoding = this.DefaultEncoding;
       return mapping;
     }
   }

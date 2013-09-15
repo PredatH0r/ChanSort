@@ -396,7 +396,7 @@ namespace ChanSort.Loader.LG
         uint fileCrc = BitConverter.ToUInt32(fileContent, off);
         uint calcCrc = Crc32.CalcCrc32(fileContent, off + 4, subblockLength);
         if (fileCrc != calcCrc)
-          throw new FileLoadException(string.Format(ERR_wrongChecksum, calcCrc, fileCrc));
+          throw new FileLoadException(string.Format(ERR_wrongChecksum, fileCrc, calcCrc));
         off += 4 + subblockLength;
       }
     }
@@ -973,6 +973,11 @@ namespace ChanSort.Loader.LG
         if (Equals(value, this.DefaultEncoding))
           return;
         base.DefaultEncoding = value;
+        this.actMappings.DefaultEncoding = value;
+        this.firmwareMappings.DefaultEncoding = value;
+        this.dvbsMappings.DefaultEncoding = value;
+        this.dvbsTransponderMappings.DefaultEncoding = value;
+        this.lnbMappings.DefaultEncoding = value;
         if (this.DataRoot.IsEmpty)
           return;
         ChangeEncoding();

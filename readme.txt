@@ -1,7 +1,9 @@
-Version v2013-08-21 ======================================================
+Version v2013-09-15 ======================================================
 
 Changes:
-- Added support for LG PN Series (tested with PN6500)
+- Added support for LG PN-series satellite channel lists
+- Fixed: use last selected character set when loading LG channel lists
+- Fixed missing translations
 
 The complete change log can be found at the end of this document
 
@@ -33,7 +35,7 @@ Samsung
     Lists:  Air analog, Air digital, Cable analog, Cable digital, 
             Cable prime, Sat digital, Astra HD+, 
 
-    * NOTE: the "Air Analog"-List of the B-Series doesn't support all 
+    * NOTE: the "Air Analog"-list of the B-Series doesn't support all 
     editing features due to a lack of test files. If you have such a file,
     please send it to me.
 
@@ -106,6 +108,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-09-15
+- Added support for LG PN-series satellite channel lists
+- Fixed: use last selected character set when loading LG channel lists
+- Fixed missing translations
 
 2013-08-21
 - Added support for LG PN Series (tested with PN6500)

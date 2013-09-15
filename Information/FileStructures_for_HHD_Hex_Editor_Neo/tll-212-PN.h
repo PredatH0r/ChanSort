@@ -1,5 +1,25 @@
 #include "tll-common.h"
 
+#define MAX_SAT_COUNT 64
+struct TLL44_Satellite;
+typedef TLL44_Satellite TLL_Satellite;
+
+#define MAX_TP_COUNT 2400
+struct TLL40_Transponder;
+typedef TLL40_Transponder TLL_Transponder;
+
+#define DVBS_CHANNELLIST_PREFIXSIZE 2
+
+#define MAX_DVBS_COUNT 6000
+struct TLL76_SatChannel;
+typedef TLL76_SatChannel TLL_SatChannel;
+
+#define MAX_LNB_COUNT 40
+struct TLL48_Lnb;
+typedef TLL48_Lnb TLL_Lnb;
+
+#include "tll-satellite.h"
+
 struct PN212_AnalogChannel
 {
   byte t1[8];
@@ -147,6 +167,42 @@ struct PN212_DvbCTBlock
   PN212_DvbCtChannel Channels[ChannelCount];
 };
 
+struct TLL76_SatChannel
+{
+  word LnbConfigIndex;
+  word u2;
+  byte SourceType;
+  byte u3;
+  word TP_Number; 
+  word CH_Number; 
+  word CH_NumberFixed;
+  word TP_Number2;
+  byte FavCrypt;
+  byte LockSkipHide;   
+  word SID;       
+  byte ServiceType;
+  byte CH_NameLength; 
+  char CH_Name[40];
+  word VPID; 
+  word APID; 
+  word APID2;  
+  word XPID;
+  byte t6[8];
+};
+
+struct TLL48_Lnb
+{
+  byte SettingsID; 
+  byte t2[3];
+  byte SatelliteID;
+  byte t3[3];
+  char FrequenceName[12]; 
+  word LOF1; 
+  byte t4[2]; 
+  word LOF2; 
+  byte t5[22]; 
+};
+
 struct PN212_SettingsBlock
 {
   dword BlockSize;
@@ -160,5 +216,6 @@ public struct PN212
   PN212_AnalogBlock Analog;
   PN212_FirmwareBlock Firmware;
   PN212_DvbCTBlock DvbCT;
-  PN212_SettingsBlock Settings;
+  TLL_DvbSBlock DvbS;
+  TLL_SettingsBlock Settings;
 };

@@ -253,7 +253,7 @@
   <data name="miAbout.Caption" xml:space="preserve">
     <value>&amp;Über ChanSort...</value>
   </data>
-  <assembly alias="DevExpress.XtraBars.v13.1" name="DevExpress.XtraBars.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.XtraBars.v13.1" name="DevExpress.XtraBars.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v13.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
