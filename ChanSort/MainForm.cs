@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-09-15";
+    public const string AppVersion = "v2013-10-07";
 
     private const int MaxMruEntries = 5;
 
@@ -2007,6 +2007,16 @@ namespace ChanSort.Ui
       if (channel.OldProgramNr == -1)
       {
         e.Appearance.ForeColor = Color.Red;
+        e.Appearance.Options.UseForeColor = true;
+      }
+      else if (channel.Hidden)
+      {
+        e.Appearance.ForeColor = Color.LightGray;
+        e.Appearance.Options.UseForeColor = true;        
+      }
+      else if (channel.Skip)
+      {
+        e.Appearance.ForeColor = Color.Blue;
         e.Appearance.Options.UseForeColor = true;
       }
     }

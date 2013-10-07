@@ -432,4 +432,10 @@
   <data name="grpInputList.Text" xml:space="preserve">
     <value>Alle Sender</value>
   </data>
+  <data name="colOutSkip.Caption" xml:space="preserve">
+    <value>Über- springen</value>
+  </data>
+  <data name="colOutHide.Caption" xml:space="preserve">
+    <value>Ver- steckt</value>
+  </data>
 </root>

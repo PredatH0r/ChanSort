@@ -69,9 +69,7 @@ struct LT212_HotelSettings
   byte Volume;
   byte AvSettings;
   byte RadioVideoBlank;
-//  byte unknown1;
   byte StartProgNr;
-//  byte unknown2;
   byte NumberOfPrograms;
   byte RadioNameDisplay;
   byte unknown3[2];
@@ -81,9 +79,9 @@ struct LT212_HotelSettings
 struct LT212_FirmwareBlock
 {
   dword BlockSize;
-  byte u1[13623];
+  byte u1[12635];
   LT212_HotelSettings HotelSettings;  
-  byte Data[BlockSize - sizeof(HotelSettings) - 13623];
+  byte Data[BlockSize - sizeof(HotelSettings) - 12635];
 };
 
 struct LT212_UnknownBlock

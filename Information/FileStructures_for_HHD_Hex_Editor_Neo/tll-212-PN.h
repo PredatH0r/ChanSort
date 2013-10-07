@@ -101,9 +101,9 @@ struct PN212_HotelSettings
 struct PN212_FirmwareBlock
 {
   dword BlockSize;
-  byte u1[13623];
+  byte u1[13869];
   PN212_HotelSettings HotelSettings;  
-  byte Data[BlockSize - sizeof(HotelSettings) - 13623];
+  byte Data[BlockSize - sizeof(HotelSettings) - 13869];
 };
 
 struct PN212_UnknownBlock
@@ -201,12 +201,6 @@ struct TLL48_Lnb
   byte t4[2]; 
   word LOF2; 
   byte t5[22]; 
-};
-
-struct PN212_SettingsBlock
-{
-  dword BlockSize;
-  byte Data[BlockSize]; 
 };
 
 public struct PN212

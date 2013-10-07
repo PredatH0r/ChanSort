@@ -1,9 +1,11 @@
-Version v2013-09-15 ======================================================
+Version v2013-10-07 ======================================================
 
 Changes:
-- Added support for LG PN-series satellite channel lists
-- Fixed: use last selected character set when loading LG channel lists
-- Fixed missing translations
+- Added support for Samsung "FreesatD" channel lists
+- Added support for LG LP-series sat channel lists (DVB-C/T not supported)
+- Added columns for "skip" and "hide" channel flags to left list
+- skipped/hidden channels are now display with blue/light grey color
+- LG hotel-mode/DTV-update settings editable for all supported LG models
 
 The complete change log can be found at the end of this document
 
@@ -33,9 +35,9 @@ Samsung
 -------
     Series: B*, C, D, E, F
     Lists:  Air analog, Air digital, Cable analog, Cable digital, 
-            Cable prime, Sat digital, Astra HD+, 
+            Cable prime, Sat digital, Astra HD+, Freesat digital
 
-    * NOTE: the "Air Analog"-list of the B-Series doesn't support all 
+    * NOTE: the "Air Analog"-list of the B-series doesn't support all 
     editing features due to a lack of test files. If you have such a file,
     please send it to me.
 
@@ -44,12 +46,14 @@ Samsung
 
 LG
 ------
-    Series: CS, DM, LA, LD, LE, LH, LK, LM*, LN, LS, LT, LV, LW, LX, PM, PT
-    Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2),
-            Sat-Radio (DVB-S2)
+    Series: CS, DM, LA, LD, LE, LH, LK, LM*, LN, LP**, LS, LT, LV, LW, LX, 
+            PM, PN, PT
+    Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), 
+            Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
   
-    * NOTE: See system requirements for LM-Series.
+    * NOTE: See system requirements for LM-series.
             Model xxLM640T is not supported due to its broken firmware.
+    **:     Only satellite channels supported
     Other models might also work, but have not been tested. If you have a
     .TLL file of a series not listed here, please send it to me.
     
@@ -109,13 +113,20 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ================================================================
 
+2013-10-07
+- Added support for Samsung "FreesatD" channel lists
+- Added support for LG LP-series sat channel lists (DVB-C/T not supported)
+- Added columns for "skip" and "hide" channel flags to left list
+- skipped/hidden channels are now display with blue/light grey color
+- LG hotel-mode/DTV-update settings editable for all supported LG models
+
 2013-09-15
 - Added support for LG PN-series satellite channel lists
 - Fixed: use last selected character set when loading LG channel lists
 - Fixed missing translations
 
 2013-08-21
-- Added support for LG PN Series (tested with PN6500)
+- Added support for LG PN-series (tested with PN6500)
 
 2013-08-19
 - Fixed loading Samsung B-series channel lists
@@ -170,7 +181,7 @@ Change log ================================================================
 - FIX: Resizing a column caused an exception
 - FIX: Deleting satellite channels from an SCM file did not work correctly
 - Improved SCM file format detection
-- Samsung E/F-Series: channels in the favorite lists now use their prog#
+- Samsung E/F-series: channels in the favorite lists now use their prog#
   instead of all being put at #1 
   (in a future version the fav lists may be sorted separately)
 
@@ -257,7 +268,7 @@ Change log ================================================================
 - FIX: first channel list only got populated after switching between tabs
 
 2013-04-08
-- Added support for Samsung F-Series.
+- Added support for Samsung F-series.
 - Added online check for updated program version
 
 2013-04-07

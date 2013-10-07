@@ -25,6 +25,7 @@ namespace ChanSort.Loader.Samsung
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.TvAndRadio, "Digital Cable");
     private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.TvAndRadio, "Satellite");
     private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Astra HD+");
+    private readonly ChannelList freesatChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Freesat");
     private readonly ChannelList primeChannels = new ChannelList(SignalSource.CablePrimeD | SignalSource.TvAndRadio, "Cable Prime");
     
     private readonly Dictionary<int, decimal> avbtFrequency = new Dictionary<int, decimal>();
@@ -39,6 +40,7 @@ namespace ChanSort.Loader.Samsung
     private byte[] dvbsFileContent;
     private byte[] hdplusFileContent;
     private byte[] primeFileContent;
+    private byte[] freesatFileContent;
     private ModelConstants c;
 
     #region ctor()
@@ -102,11 +104,12 @@ namespace ChanSort.Loader.Samsung
         ReadDvbTransponderFrequenciesFromPtc(zip, "PTCCABLE", this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
+        ReadDvbctChannels(zip, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
         ReadSatellites(zip);
         ReadTransponder(zip, "TransponderDataBase.dat");
         ReadTransponder(zip, "UserTransponderDataBase.dat");
         ReadDvbsChannels(zip);
-        ReadAstraHdPlusChannels(zip);
+        ReadAstraHdPlusChannels(zip);        
       }
     }
     #endregion
@@ -124,7 +127,7 @@ namespace ChanSort.Loader.Samsung
     #region DetectModelFromFileName()
     private bool DetectModelFromFileName()
     {
-      string file = Path.GetFileName(this.FileName);
+      string file = Path.GetFileName(this.FileName)??"";
       System.Text.RegularExpressions.Regex regex =
         new System.Text.RegularExpressions.Regex("channel_list_(?:[A-Z]{2}[0-9]{2}|BD-)([A-Z])[0-9A-Z]+_[0-9]{4}.*\\.scm");
       var match = regex.Match(file);
@@ -539,6 +542,7 @@ namespace ChanSort.Loader.Samsung
         this.SaveChannels(zip, "map-SateD", this.dvbsChannels, ref this.dvbsFileContent);
         this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, ref this.hdplusFileContent);
         this.SaveChannels(zip, "map-CablePrime_D", this.primeChannels, ref this.primeFileContent);
+        this.SaveChannels(zip, "map-FreesatD", this.freesatChannels, ref this.freesatFileContent);
         zip.CommitUpdate();
       }
     }

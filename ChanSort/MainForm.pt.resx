@@ -361,4 +361,10 @@
   <data name="btnToggleLock.ToolTip" xml:space="preserve">
     <value>Parental lock</value>
   </data>
+  <data name="colOutSkip.Caption" xml:space="preserve">
+    <value>Sal- tar</value>
+  </data>
+  <data name="colOutHide.Caption" xml:space="preserve">
+    <value>Esc- onder</value>
+  </data>
 </root>

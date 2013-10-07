@@ -15,6 +15,7 @@
     public readonly int lnbLength;
     public readonly int[] dvbsSubblockLength;
     public readonly int dvbsBlockTotalLength;
+    public readonly int satIndexFactor;
 
     public int LnbBlockHeaderSize = 12;
 
@@ -30,6 +31,9 @@
       this.dvbsChannelLength = iniSection.GetInt("dvbsChannelLength");
       this.lnbCount = iniSection.GetInt("lnbCount");
       this.lnbLength = iniSection.GetInt("lnbLength");
+      this.satIndexFactor = iniSection.GetInt("satIndexFactor");
+      if (satIndexFactor == 0)
+        satIndexFactor = 2;
 
       this.dvbsSubblockLength = new[]
                                   {

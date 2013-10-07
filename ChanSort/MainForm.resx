@@ -227,6 +227,30 @@
   <data name="colOutLock.Width" type="System.Int32, mscorlib">
     <value>35</value>
   </data>
+  <data name="colOutSkip.Caption" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="colOutSkip.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colOutSkip.VisibleIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="colOutSkip.Width" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="colOutHide.Caption" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="colOutHide.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colOutHide.VisibleIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="colOutHide.Width" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
   <data name="repositoryItemTextEdit1.AutoHeight" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -234,7 +258,7 @@
     <value>Numeric</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>382, 418</value>
+    <value>449, 418</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -516,7 +540,7 @@
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v13.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMy4xLCBWZXJzaW9uPTEz
-        LjEuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
@@ -526,7 +550,7 @@
   <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v13.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMy4xLCBWZXJzaW9uPTEz
-        LjEuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
@@ -536,7 +560,7 @@
   <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v13.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMy4xLCBWZXJzaW9uPTEz
-        LjEuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
@@ -546,7 +570,7 @@
   <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v13.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMy4xLCBWZXJzaW9uPTEz
-        LjEuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
         X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
@@ -651,7 +675,7 @@
     <value>Default</value>
   </data>
   <data name="rbInsertSwap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 19</value>
+    <value>47, 19</value>
   </data>
   <data name="rbInsertSwap.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -678,7 +702,7 @@
     <value>after</value>
   </data>
   <data name="rbInsertAfter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 19</value>
+    <value>46, 19</value>
   </data>
   <data name="rbInsertAfter.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -702,7 +726,7 @@
     <value>before</value>
   </data>
   <data name="rbInsertBefore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 19</value>
+    <value>54, 19</value>
   </data>
   <data name="rbInsertBefore.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1505,6 +1529,18 @@
   <data name="&gt;&gt;timerEditDelay.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;colOutSkip.Name" xml:space="preserve">
+    <value>colOutSkip</value>
+  </data>
+  <data name="&gt;&gt;colOutSkip.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colOutHide.Name" xml:space="preserve">
+    <value>colOutHide</value>
+  </data>
+  <data name="&gt;&gt;colOutHide.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
@@ -1512,7 +1548,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>07/19/2013 17:03:01</value>
+    <value>10/07/2013 15:04:39</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1806,7 +1842,7 @@
     <value>2, 21</value>
   </data>
   <data name="pnlEditControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>382, 33</value>
+    <value>449, 33</value>
   </data>
   <data name="pnlEditControls.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1830,7 +1866,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>386, 491</value>
+    <value>453, 491</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2166,7 +2202,7 @@
     <value>Signal source</value>
   </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1079, 418</value>
+    <value>1012, 418</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2331,7 +2367,7 @@
     <value>2, 21</value>
   </data>
   <data name="panelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1079, 33</value>
+    <value>1012, 33</value>
   </data>
   <data name="panelControl3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2355,7 +2391,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1083, 491</value>
+    <value>1016, 491</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

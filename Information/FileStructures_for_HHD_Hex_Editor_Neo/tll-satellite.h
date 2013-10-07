@@ -97,7 +97,7 @@ struct TLL72_SatChannel
   word ChannelNumber; 
   word LogicalChannelNumber;
   word TP_Number2;
-  byte FavCrypt;
+  byte FavDelCrypt;
   byte LockSkipHide;   
   word SID;       
   byte ServiceType;
@@ -105,7 +105,7 @@ struct TLL72_SatChannel
   char CH_Name[40];
   word VID; 
   word AID; 
-  word AID_Times8;  
+  word AID_Times16;  
   byte t6[6];
 };
 

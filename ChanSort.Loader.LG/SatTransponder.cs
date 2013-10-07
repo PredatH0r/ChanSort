@@ -20,7 +20,7 @@ namespace ChanSort.Loader.LG
     private int firstChannelIndex;
     private int lastChannelIndex;
 
-    public SatTransponder(int index, DataMapping mapping, DataRoot dataRoot) : base(index)
+    public SatTransponder(int index, DataMapping mapping, DataRoot dataRoot, int satIndexFactor) : base(index)
     {
       this.mapping = mapping;
       this.data = mapping.Data;
@@ -38,7 +38,7 @@ namespace ChanSort.Loader.LG
         this.symbolRate = (this.symbolRate/100 + 1)*100;
       // note: a correction factor is applied later after all transponders were loaded (*0.5, *1, *2)
 
-      this.Satellite = dataRoot.Satellites.TryGet(mapping.GetByte(_SatIndex)/2);
+      this.Satellite = dataRoot.Satellites.TryGet(mapping.GetByte(_SatIndex)/satIndexFactor);
     }
 
     public int FirstChannelIndex

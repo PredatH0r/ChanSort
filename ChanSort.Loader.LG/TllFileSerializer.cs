@@ -12,6 +12,8 @@ namespace ChanSort.Loader.LG
 {
   public partial class TllFileSerializer : SerializerBase
   {
+    enum SpecialHandlingModels { Standard, LH3000, PN, LP, LT };
+
     private const long DVBS_S2 = 0x0032532D53425644; // reverse of "DVBS-S2\0"
     private const long MaxFileSize = 2000000;
     private readonly string ERR_fileTooBig = Resource.TllFileSerializerPlugin_ERR_fileTooBig;
@@ -35,6 +37,7 @@ namespace ChanSort.Loader.LG
     private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat Radio");
 
     private byte[] fileContent;
+    private SpecialHandlingModels specialModel = SpecialHandlingModels.Standard;
 
     private int analogBlockOffset;
     private int firmwareBlockOffset;
@@ -132,6 +135,18 @@ namespace ChanSort.Loader.LG
 
     public override void Load()
     {
+      string basename = (Path.GetFileNameWithoutExtension(this.FileName) ?? "").ToUpper();
+      if (basename.StartsWith("XXLH3000"))
+        this.specialModel = SpecialHandlingModels.LH3000;
+      else if (basename.StartsWith("XXPN"))
+        this.specialModel = SpecialHandlingModels.PN;
+      else if (basename.StartsWith("XXLP"))
+        this.specialModel = SpecialHandlingModels.LP;
+      else if (basename.StartsWith("XXLT"))
+        this.specialModel = SpecialHandlingModels.LT;
+      else
+        this.specialModel = SpecialHandlingModels.Standard;
+
       long fileSize = new FileInfo(this.FileName).Length;
       if (fileSize > MaxFileSize)
         throw new FileLoadException(string.Format(ERR_fileTooBig, fileSize, MaxFileSize));
@@ -142,7 +157,7 @@ namespace ChanSort.Loader.LG
       this.ReadFileHeader(ref off);
       this.ReadAnalogChannelBlock(ref off);
       this.ReadFirmwareDataBlock(ref off);
-      this.ReadLtSeriesExtraBlock(ref off);
+      this.ReadHotelModelExtraBlock(ref off);
       this.ReadDvbCtChannels(ref off);
       this.ReadDvbSBlock(ref off);
       this.ReadSettingsBlock(ref off);
@@ -198,17 +213,16 @@ namespace ChanSort.Loader.LG
     }
     #endregion
 
-    #region ReadLtSeriesExtraBlock()
-    private void ReadLtSeriesExtraBlock(ref int off)
+    #region ReadHotelModelExtraBlock()
+    private void ReadHotelModelExtraBlock(ref int off)
     {
+      if (!(this.specialModel == SpecialHandlingModels.LT || this.specialModel == SpecialHandlingModels.LP))
+        return;
+
       int size = BitConverter.ToInt32(this.fileContent, off);
-      int count = BitConverter.ToInt32(this.fileContent, off + 4);
-      if (size == 4 + count*72 && this.actChannelSize == 212)
-      {
-        this.extraBlockOffset = off;
-        this.extraBlockSize = size;
-        off += 4 + size;
-      }
+      this.extraBlockOffset = off;
+      this.extraBlockSize = size;
+      off += 4 + size;
     }
     #endregion
 
@@ -273,18 +287,13 @@ namespace ChanSort.Loader.LG
     {
       int blockSize = this.GetBlockSize(off, minSize: 2);
       off += 4;
+
       channelCount = BitConverter.ToInt32(fileContent, off);
       off += 4;
       if (channelCount == 0) return;
 
       recordSize = GetActChannelRecordSize(off, blockSize, channelCount);
-      var key = recordSize.ToString();
-      string basename = (Path.GetFileNameWithoutExtension(this.FileName) ?? "").ToUpper();
-      if (basename.StartsWith("XXLH3000"))
-        key += "LH3000";
-      else if (basename.StartsWith("XXPN"))
-        key += "PN";
-      var actMapping = this.actMappings.GetMapping(key);
+      var actMapping = GetActChannelMapping(recordSize);
       this.reorderPhysically = actMapping.Settings.GetInt("reorderChannelData") != 0;
 
       for (int i = 0; i < channelCount; i++)
@@ -297,6 +306,20 @@ namespace ChanSort.Loader.LG
 
         off += recordSize;
       }
+    }
+
+    #endregion
+
+    #region GetActChannelMapping()
+    private DataMapping GetActChannelMapping(int recordSize)
+    {
+      var key = recordSize.ToString();
+      if (this.specialModel == SpecialHandlingModels.LH3000)
+        key += "LH3000";
+      else if (this.specialModel == SpecialHandlingModels.PN)
+        key += "PN";
+      var actMapping = this.actMappings.GetMapping(key);
+      return actMapping;
     }
     #endregion
 
@@ -422,11 +445,11 @@ namespace ChanSort.Loader.LG
     {
       dvbsSymbolRateFactor = 1;
       var dvbsSymbolRateMask = 0x7FFFF;
-      var mapping = this.dvbsTransponderMappings.GetMapping(this.satConfig.transponderLength);
+      var mapping = GetTransponderMapping();
       for (int i=0; i<satConfig.transponderCount; i++)
       {
         mapping.SetDataPtr(this.fileContent, off + i*satConfig.transponderLength);
-        SatTransponder transponder = new SatTransponder(i, mapping, this.DataRoot);
+        SatTransponder transponder = new SatTransponder(i, mapping, this.DataRoot, this.satConfig.satIndexFactor);
         if (transponder.Satellite == null)
           continue;
         
@@ -453,6 +476,16 @@ namespace ChanSort.Loader.LG
 
       off += this.satConfig.transponderCount * this.satConfig.transponderLength;
     }
+
+    private DataMapping GetTransponderMapping()
+    {
+      string key = this.satConfig.transponderLength.ToString();
+      if (this.specialModel == SpecialHandlingModels.LP)
+        key += "LP";
+      var mapping = this.dvbsTransponderMappings.GetMapping(key);
+      return mapping;
+    }
+
     #endregion
 
     #region ReadDvbsChannelLinkedList()
@@ -476,7 +509,7 @@ namespace ChanSort.Loader.LG
     #region ReadDvbsChannels()
     private void ReadDvbsChannels(ref int off, int startIndex)
     {
-      var mapping = this.dvbsMappings.GetMapping(satConfig.dvbsChannelLength);
+      var mapping = GetDvbsChannelMapping();
       int index = startIndex;
       for (int i = 0; i < this.dvbsChannelCount; i++)
       {
@@ -517,6 +550,18 @@ namespace ChanSort.Loader.LG
           break;
       }
       off += satConfig.dvbsMaxChannelCount * satConfig.dvbsChannelLength;
+    }
+
+    #endregion
+
+    #region GetDvbsChannelMapping()
+    private DataMapping GetDvbsChannelMapping()
+    {
+      var key = satConfig.dvbsChannelLength.ToString();
+      if (this.specialModel == SpecialHandlingModels.LP)
+        key += "LP";
+      var mapping = this.dvbsMappings.GetMapping(key);
+      return mapping;
     }
     #endregion
 
@@ -901,7 +946,7 @@ namespace ChanSort.Loader.LG
     {
       if ((proxy.SignalSource & SignalSource.Sat) != 0)
       {
-        var mapping = this.dvbsMappings.GetMapping(this.satConfig.dvbsChannelLength);
+        var mapping = this.GetDvbsChannelMapping();
         var channel = SatChannel.CreateFromProxy(proxy, this.DataRoot, mapping, this.satConfig.dvbsChannelLength);
         if (channel != null)
           this.mustReorganizeDvbs = true;

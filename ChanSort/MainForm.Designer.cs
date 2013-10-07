@@ -167,6 +167,8 @@
       this.grpSubList = new DevExpress.XtraEditors.GroupControl();
       this.tabSubList = new DevExpress.XtraTab.XtraTabControl();
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
+      this.colOutSkip = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colOutHide = new DevExpress.XtraGrid.Columns.GridColumn();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -211,7 +213,7 @@
       resources.ApplyResources(this.splitContainerControl1.Panel1, "splitContainerControl1.Panel1");
       this.splitContainerControl1.Panel2.Controls.Add(this.grpInputList);
       resources.ApplyResources(this.splitContainerControl1.Panel2, "splitContainerControl1.Panel2");
-      this.splitContainerControl1.SplitterPosition = 386;
+      this.splitContainerControl1.SplitterPosition = 453;
       // 
       // grpOutputList
       // 
@@ -259,7 +261,9 @@
             this.colOutName,
             this.colOutFav,
             this.colUid1,
-            this.colOutLock});
+            this.colOutLock,
+            this.colOutSkip,
+            this.colOutHide});
       this.gviewLeft.GridControl = this.gridLeft;
       this.gviewLeft.Name = "gviewLeft";
       this.gviewLeft.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
@@ -1589,6 +1593,18 @@
       this.pageProgNr.Name = "pageProgNr";
       resources.ApplyResources(this.pageProgNr, "pageProgNr");
       // 
+      // colOutSkip
+      // 
+      resources.ApplyResources(this.colOutSkip, "colOutSkip");
+      this.colOutSkip.FieldName = "Skip";
+      this.colOutSkip.Name = "colOutSkip";
+      // 
+      // colOutHide
+      // 
+      resources.ApplyResources(this.colOutHide, "colOutHide");
+      this.colOutHide.FieldName = "Hidden";
+      this.colOutHide.Name = "colOutHide";
+      // 
       // MainForm
       // 
       resources.ApplyResources(this, "$this");
@@ -1782,6 +1798,8 @@
     private DevExpress.XtraTab.XtraTabControl tabSubList;
     private DevExpress.XtraTab.XtraTabPage pageProgNr;
     private DevExpress.XtraBars.BarButtonItem miAddFromRefList;
+    private DevExpress.XtraGrid.Columns.GridColumn colOutSkip;
+    private DevExpress.XtraGrid.Columns.GridColumn colOutHide;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }
