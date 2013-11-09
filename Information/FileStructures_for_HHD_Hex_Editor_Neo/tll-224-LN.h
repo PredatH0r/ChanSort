@@ -214,8 +214,8 @@ struct LN224_SatChannel
   word LnbConfigIndex;
   word u2;
   byte SourceType;
-  byte u3;
   word TP_Number; 
+  byte u3;
   word CH_Number; 
   word CH_NumberFixed;
   word TP_Number2;

@@ -77,7 +77,6 @@ namespace ChanSort.Loader.LG
     public TllFileSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = true;
-      this.Features.FileInformation = true;
       this.Features.DeviceSettings = true;
       this.Features.CleanUpChannelData = true;
       this.SupportedTvCountryCodes = new List<string>
@@ -982,7 +981,7 @@ namespace ChanSort.Loader.LG
       int slot = 0;
       foreach (ChannelInfo appChannel in sortedList)
       {
-        if (appChannel.NewProgramNr <= 0 && removeDeletedActChannels)
+        if (appChannel.RecordIndex < 0 || appChannel.NewProgramNr <= 0 && removeDeletedActChannels)
           continue;
         if (appChannel.RecordIndex != slot)
         {

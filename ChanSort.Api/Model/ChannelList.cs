@@ -63,8 +63,8 @@ namespace ChanSort.Api
       {
         others = new List<ChannelInfo>();
         this.channelByUid.Add(ci.Uid, others);
-        others.Add(ci);
       }
+      others.Add(ci);
 
       string warning2 = null;
       bool isDupeProgNr = false;

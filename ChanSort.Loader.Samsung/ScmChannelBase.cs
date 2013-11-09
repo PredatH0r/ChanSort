@@ -48,7 +48,7 @@ namespace ChanSort.Loader.Samsung
     #region InitCommonData()
     protected void InitCommonData(int slot, SignalSource signalSource, DataMapping data)
     {
-      this.InUse = data.GetFlag(_InUse);
+      this.InUse = data.GetFlag(_InUse, true);
       this.RecordIndex = slot;
       this.RecordOrder = slot;
       this.SignalSource = signalSource;
@@ -58,8 +58,6 @@ namespace ChanSort.Loader.Samsung
       this.Lock = data.GetFlag(_Lock);
       this.Encrypted = data.GetFlag(_Encrypted);
       this.IsDeleted = data.GetFlag(_Deleted);
-      if (this.IsDeleted)
-        this.OldProgramNr = -1;
     }
     #endregion
 

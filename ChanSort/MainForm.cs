@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-10-07";
+    public const string AppVersion = "v2013-11-09";
 
     private const int MaxMruEntries = 5;
 
@@ -1299,9 +1299,8 @@ namespace ChanSort.Ui
         && channel.GetPosition(this.subListIndex) > this.currentChannelList.FirstProgramNumber;
       this.miMoveDown.Enabled = this.btnDown.Enabled = mayEdit && isLeftGridSortedByNewProgNr;
 
-      this.miTvSettings.Enabled = this.currentTvSerializer != null;
-      this.miCleanupChannels.Visibility = this.currentTvSerializer != null &&
-        this.currentTvSerializer.Features.CleanUpChannelData ? BarItemVisibility.Always : BarItemVisibility.Never;
+      this.miTvSettings.Enabled = this.currentTvSerializer != null && this.currentTvSerializer.Features.DeviceSettings;     
+      this.miCleanupChannels.Enabled = this.currentTvSerializer != null && this.currentTvSerializer.Features.CleanUpChannelData;
 
       this.txtSetSlot.Enabled = mayEdit;
     }

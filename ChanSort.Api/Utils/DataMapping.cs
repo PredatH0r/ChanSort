@@ -118,22 +118,22 @@ namespace ChanSort.Api
 
     #region GetFlag
 
-    public bool GetFlag(string key)
+    public bool GetFlag(string key, bool defaultValue = false)
     {
-      return GetFlag("off" + key, "mask" + key);
+      return GetFlag("off" + key, "mask" + key, defaultValue);
     }
 
-    public bool GetFlag(string valueKey, string maskKey)
+    public bool GetFlag(string valueKey, string maskKey, bool defaultValue = false)
     {
       int mask = settings.GetInt(maskKey);
-      return GetFlag(valueKey, mask);
+      return GetFlag(valueKey, mask, defaultValue);
     }
 
-    public bool GetFlag(string valueKey, int mask)
+    public bool GetFlag(string valueKey, int mask, bool defaultValue = false)
     {
-      if (mask == 0) return false;
+      if (mask == 0) return defaultValue;
       var offsets = settings.GetIntList(valueKey);
-      if (offsets.Length == 0) return false;
+      if (offsets.Length == 0) return defaultValue;
       return (this.data[baseOffset + offsets[0]] & mask) == mask;
     }
     #endregion

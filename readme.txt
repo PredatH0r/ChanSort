@@ -1,11 +1,14 @@
-Version v2013-10-07 ======================================================
+Version v2013-11-09 =======================================================
 
 Changes:
-- Added support for Samsung "FreesatD" channel lists
-- Added support for LG LP-series sat channel lists (DVB-C/T not supported)
-- Added columns for "skip" and "hide" channel flags to left list
-- skipped/hidden channels are now display with blue/light grey color
-- LG hotel-mode/DTV-update settings editable for all supported LG models
+- File / "File information" now shows information for all TV models
+- Disabled "TV-Set" menu items which are not applicable
+- Fixed DVB-S transponder/frequency information for LG LN and LA61xx series
+- Fixed deleting channels in Samsung B-series Digital Air/Cable lists
+- Fixed encryption information in Samsung B-series Digital Air/Cable lists
+- Fixed loading of reference lists with non-unique channel identifiers
+- Fixed error when saving LG files for models LD-LK after applying a
+  reference list which contains channels not present in the TLL file
 
 The complete change log can be found at the end of this document
 
@@ -29,15 +32,22 @@ http://sourceforge.net/p/chansort/discussion/ or by contacting me by email:
 mailto:horst@beham.biz
 
 
+! USE AT YOUR OWN RISK !
+------------------------
+This software was written without access to official documentation about 
+the file formats involved. Without full knowledge about the specifics of a
+format there is a chance of unwanted side-effects or damage to your TV.
+
+
 Supported TV models =======================================================
 
 Samsung 
 -------
-    Series: B*, C, D, E, F
+    Series: B (2009)*, B (2013), C, D, E, F
     Lists:  Air analog, Air digital, Cable analog, Cable digital, 
             Cable prime, Sat digital, Astra HD+, Freesat digital
 
-    * NOTE: the "Air Analog"-list of the B-series doesn't support all 
+    * NOTE: the "Air Analog"-list of the 2009 B-series doesn't support all 
     editing features due to a lack of test files. If you have such a file,
     please send it to me.
 
@@ -73,17 +83,10 @@ Toshiba
     (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
 
 
-! USE AT YOUR OWN RISK !
-------------------------
-This software was written without access to official documentation about 
-the file formats involved. Without full knowledge about the specifics of a
-format there is a chance of unwanted side-effects or damage to your TV.
-
-
 System requirements =======================================================
 
-- Microsoft .NET Framework 4.0 (included in Win8, can be installed manually
-  on Windows 7, Windows Vista, Windows XP SP3):
+- Microsoft .NET Framework 4.0 (Full): included in Win8, can be installed
+  manually on Windows 7, Windows Vista and Windows XP SP3
   http://www.microsoft.com/en-us/download/details.aspx?id=17851
 - Microsoft Visual C++ 2010 Redistributable Package (x86)
   Required to edit Panasonic and Toshiba channel lists (through SQLite)
@@ -105,6 +108,7 @@ Source code available on http://sourceforge.net/projects/chansort/
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
 IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
@@ -112,6 +116,22 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-11-09
+- File / "File information" now shows information for all TV models
+- Disabled "TV-Set" menu items which are not applicable
+- Fixed DVB-S transponder/frequency information for LG LN and LA61xx series
+- Fixed deleting channels in Samsung B-series Digital Air/Cable lists
+- Fixed encryption information in Samsung B-series Digital Air/Cable lists
+- Fixed loading of reference lists with non-unique channel identifiers
+- Fixed error when saving LG files for models LD-LK after applying a
+  reference list which contains channels not present in the TLL file
+
+2013-10-23
+- Support for Samsung's Monitor/TV 3-series (LTxxy3)
+
+2013-10-22
+- Support for Samsung's 2013 B-Series
 
 2013-10-07
 - Added support for Samsung "FreesatD" channel lists

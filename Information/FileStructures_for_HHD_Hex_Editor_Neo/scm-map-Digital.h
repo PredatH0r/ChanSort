@@ -5,7 +5,7 @@ struct SCM_mapDigital_B_entry
    word ProgramNr;
    word VideoPid;
    word PcrPid;
-   byte u6;
+   byte Fav1;
    byte Qam;
    byte Status;
    byte ServiceType;
@@ -24,7 +24,8 @@ struct SCM_mapDigital_B_entry
    word TransportStreamId;
    byte u38[6];
    uc16be Name[50];
-   byte u144[102];
+   byte u144[101];
+   byte Lock;
    byte Favorites;
    byte Checksum;
 };

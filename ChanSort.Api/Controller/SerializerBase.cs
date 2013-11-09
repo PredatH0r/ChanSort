@@ -7,7 +7,6 @@ namespace ChanSort.Api
     public class SupportedFeatures
     {
       public bool ChannelNameEdit { get; set; }
-      public bool FileInformation { get; set; }
       public bool CleanUpChannelData { get; set; }
       public bool DeviceSettings { get; set; }
     }
@@ -38,7 +37,36 @@ namespace ChanSort.Api
 
     public virtual void EraseChannelData() { }
 
-    public virtual string GetFileInformation() { return ""; }
+    public virtual string GetFileInformation() 
+    { 
+      StringBuilder sb = new StringBuilder();
+      sb.Append("File name: ").AppendLine(this.FileName);
+      sb.AppendLine();
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        sb.Append(list.ShortCaption).AppendLine("-----");
+        sb.Append("number of channels: ").AppendLine(list.Count.ToString());
+        sb.Append("number of duplicate program numbers: ").AppendLine(list.DuplicateProgNrCount.ToString());
+        sb.Append("number of duplicate channel identifiers: ").AppendLine(list.DuplicateUidCount.ToString());
+        int deleted = 0;
+        int hidden = 0;
+        int skipped = 0;
+        foreach (var channel in list.Channels)
+        {
+          if (channel.IsDeleted)
+            ++deleted;
+          if (channel.Hidden)
+            ++hidden;
+          if (channel.Skip)
+            ++skipped;
+        }
+        sb.Append("number of deleted channels: ").AppendLine(deleted.ToString());
+        sb.Append("number of hidden channels: ").AppendLine(hidden.ToString());
+        sb.Append("number of skipped channels: ").AppendLine(skipped.ToString());
+        sb.AppendLine();
+      }
+      return sb.ToString(); 
+    }
 
     public virtual void ShowDeviceSettingsForm(object parentWindow) { }
 

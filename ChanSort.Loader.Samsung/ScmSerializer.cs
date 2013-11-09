@@ -117,8 +117,8 @@ namespace ChanSort.Loader.Samsung
     #region DetectModelConstants()
     private void DetectModelConstants(ZipFile zip)
     {
-      if (DetectModelFromCloneInfoFile(zip)) return;
       if (DetectModelFromFileName()) return;
+      if (DetectModelFromCloneInfoFile(zip)) return;
       if (DetectModelFromContentFileLengths(zip)) return;
       throw new FileLoadException("Unable to determine TV model from file content or name");
     }
@@ -129,11 +129,20 @@ namespace ChanSort.Loader.Samsung
     {
       string file = Path.GetFileName(this.FileName)??"";
       System.Text.RegularExpressions.Regex regex =
-        new System.Text.RegularExpressions.Regex("channel_list_(?:[A-Z]{2}[0-9]{2}|BD-)([A-Z])[0-9A-Z]+_[0-9]{4}.*\\.scm");
+        new System.Text.RegularExpressions.Regex("channel_list_([A-Z]{2}[0-9]{2}|BD-)([A-Z])[0-9A-Z]+_([0-9]{4}).*\\.scm");
       var match = regex.Match(file);
       if (match.Success)
       {
-        string series = match.Groups[1].Value;
+        string series;
+        switch (match.Groups[3].Value)
+        {
+          case "1001": series = "C"; break;
+          case "1101": series = "D"; break;
+          case "1201": series = "E"; break;
+          default:
+            series = match.Groups[1].Value.StartsWith("LT") ? "F" : match.Groups[2].Value;
+            break;
+        }
         if (this.modelConstants.TryGetValue("Series:" + series, out this.c))
           return true;
       }
@@ -154,6 +163,8 @@ namespace ChanSort.Loader.Samsung
       if (cloneInfo.Length >= 9)
       {
         char series = (char) cloneInfo[8];
+        if (series == 'B') // 2013 B-series uses E/F-series format
+          series = 'F';
         if (this.modelConstants.TryGetValue("Series:" + series, out this.c))
           return true;
       }
@@ -173,7 +184,7 @@ namespace ChanSort.Loader.Samsung
                                 DetectModelFromAstraHdPlusD(zip)
                               };
 
-      // note: E and F series use an identical format, so we only care about E here
+      // note: E, F and B(2013) series use an identical format, so we only care about E here
       string validCandidates = "BCDE";
       foreach (var candidateList in candidates)
       {
@@ -390,7 +401,7 @@ namespace ChanSort.Loader.Samsung
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
         DigitalChannel ci = new DigitalChannel(slotIndex, isCable, rawChannel, frequency, c.SortedFavorites);
-        if (ci.OldProgramNr > 0)
+        if (ci.InUse && !ci.IsDeleted)
           this.DataRoot.AddChannel(list, ci);
 
         rawChannel.BaseOffset += entrySize;
@@ -582,13 +593,6 @@ namespace ChanSort.Loader.Samsung
       stream.Write(fileContent, 0, fileContent.Length);
     }
     #endregion
-
-    public override void ShowDeviceSettingsForm(object parentWindow)
-    {
-      MessageBox.Show((Form) parentWindow, "Sorry, ChanSort currently doesn't support any settings for your TV model.",
-                      "Device Settings",
-                      MessageBoxButtons.OK, MessageBoxIcon.Information);
-    }
 
     // ------- testing -----------
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using ChanSort.Api;
 
@@ -24,6 +25,7 @@ namespace ChanSort.Loader.Panasonic
     private byte[] fileHeader = new byte[0];
     private int dbSizeOffset;
     private bool littleEndianByteOrder = false;
+    private string charEncoding;
 
     enum CypherMode
     {
@@ -329,6 +331,7 @@ namespace ChanSort.Loader.Panasonic
       using (var conn = new SQLiteConnection(channelConnString))
       {
         conn.Open();
+        InitCharacterEncoding(conn);
         using (var cmd = conn.CreateCommand())
         {
           this.ReadChannels(cmd);
@@ -473,6 +476,17 @@ namespace ChanSort.Loader.Panasonic
         sat.Name = "LNB "+i;
         sat.OrbitalPosition = i.ToString();
         this.DataRoot.Satellites.Add(i, sat);
+      }
+    }
+    #endregion
+
+    #region InitCharacterEncoding()
+    private void InitCharacterEncoding(SQLiteConnection conn)
+    {
+      using (var cmd = conn.CreateCommand())
+      {
+        cmd.CommandText = "PRAGMA encoding";
+        this.charEncoding = cmd.ExecuteScalar() as string;
       }
     }
     #endregion
@@ -639,5 +653,25 @@ order by s.ntype,major_channel
       data[data.Length - 4] = (byte)((checksum >> 24) & 0xFF);
     }
     #endregion
+
+    public override string GetFileInformation()
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.Append(base.GetFileInformation());
+
+      sb.Append("Content type: ");
+      switch (this.GetCypherMode(this.FileName))
+      {
+        case CypherMode.None: sb.AppendLine("unencrypted SQLite database"); break;
+        case CypherMode.Encryption: sb.AppendLine("encrypted SQLite database"); break;
+        case CypherMode.HeaderAndChecksum: 
+          sb.AppendLine("embedded SQLite database");
+          sb.Append("Byte order: ").AppendLine(this.littleEndianByteOrder ? 
+            "little-endian (least significant byte first)" : "big-endian (most significant byte first)");
+          break;
+      }
+      sb.Append("Character encoding: ").AppendLine(this.charEncoding);
+      return sb.ToString();
+    }
   }
 }
