@@ -7,7 +7,8 @@ struct LD176_AnalogChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word t2[3];
+  word LogicalProgramNr1;
+  word t2[2];
   byte Favorites1;
   byte t2d;
   word Freqency1Div50;
@@ -26,9 +27,9 @@ struct LD176_AnalogChannel
   byte t6[2];
   word ONID;
   word TSID;
-  byte t7[19];
-  word ProgramNr2;
-  byte t8;
+  byte t7[18];
+  word ProgramNrTimes4;
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte Favorites2;
   byte LockSkipHide;
@@ -48,7 +49,8 @@ struct LD176_DvbCtChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word t2[3];
+  word LogicalProgramNr1;
+  word t2[2];
   byte Favorites1;
   byte t2d;
   word PcrPid;
@@ -66,8 +68,8 @@ struct LD176_DvbCtChannel
   word ONID;
   word TSID;
   byte t7[18];
-  word ProgramNr2;
-  byte t8[2];
+  word ProgramNrTimes4;
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte Favorites2;
   byte LockSkipHide;

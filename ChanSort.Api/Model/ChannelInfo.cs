@@ -41,6 +41,7 @@ namespace ChanSort.Api
     public string SatPosition { get; set; }
     public Transponder Transponder { get; set; }
     public IList<int> FavIndex { get; private set; }
+    public int ProgramNrPreset { get; set; }
 
     public bool IsNameModified { get; set; }
 

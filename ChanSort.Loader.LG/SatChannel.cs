@@ -6,10 +6,8 @@ namespace ChanSort.Loader.LG
   {
     private const string _SatConfigIndex = "offSatelliteNr";
     private const string _TransponderIndex = "offTransponderIndex";
-    private const string _ProgramNrPreset = "offProgramNrPreset";
 
     public bool InUse { get; private set; }
-    public int ProgramNrPreset { get; private set; }
 
     public SatChannel(int order, int slot, DataMapping data, DataRoot dataRoot) : base(data)
     {
@@ -20,7 +18,6 @@ namespace ChanSort.Loader.LG
       this.InitCommonData(slot, SignalSource.DvbS, data);
       this.InitDvbData(data);
 
-      this.ProgramNrPreset = data.GetWord(_ProgramNrPreset);
       int transponderIndex = data.GetWord(_TransponderIndex);
       Transponder transponder = dataRoot.Transponder.TryGet(transponderIndex);
       Satellite sat = transponder.Satellite;

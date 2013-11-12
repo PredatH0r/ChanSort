@@ -50,7 +50,9 @@ namespace Test.Loader
             "\t" + (dvbcList != null && dvbcList.Count > 0) +
             "\t" + serializer.SatChannelLength +
             "\t" + (satChannelList != null && satChannelList.Count > 0) +
-            "\t" + serializer.HasPresetDvbsChannelNumbers +
+            "\t" + (dvbtList != null && dvbtList.PresetProgramNrCount > 0) +
+            "\t" + (dvbcList != null && dvbcList.PresetProgramNrCount > 0) +
+            "\t" + (satChannelList != null && satChannelList.PresetProgramNrCount > 0) +
             "\t" + serializer.TvCountryCode;
 
           string relPath = Path.GetFileName(Path.GetDirectoryName(file))+"\\"+fileName;          
@@ -61,7 +63,9 @@ namespace Test.Loader
             "\t" + (dvbtList == null ? 0 : dvbtList.Count) +
             "\t" + (dvbcList == null ? 0 : dvbcList.Count) +
             "\t" + (satChannelList == null ? 0 : satChannelList.Count) +
-            "\t" + serializer.HasPresetDvbsChannelNumbers +
+            "\t" + (dvbtList == null ? 0 : dvbtList.PresetProgramNrCount) +
+            "\t" + (dvbcList == null ? 0 : dvbcList.PresetProgramNrCount) +
+            "\t" + (satChannelList == null ? 0 : satChannelList.PresetProgramNrCount) +
             "\t" + serializer.TvCountryCode +
             "\t" + serializer.DvbsSymbolRateCorrectionFactor +
             "\t" + relPath;

@@ -30,6 +30,7 @@ namespace ChanSort.Api
     public int DuplicateProgNrCount { get { return duplicateProgNrCount; } }
     public bool ReadOnly { get; set; }
     public int MaxChannelNameLength { get; set; }
+    public int PresetProgramNrCount { get; private set; }
 
     #region Caption
     public string Caption
@@ -92,6 +93,9 @@ namespace ChanSort.Api
         this.channelByName[lowerName] = byNameList;
       }
       byNameList.Add(ci);
+
+      if (ci.ProgramNrPreset != 0)
+        ++this.PresetProgramNrCount;
 
       this.channels.Add(ci);
       

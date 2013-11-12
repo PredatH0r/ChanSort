@@ -7,7 +7,8 @@ struct PT180_AnalogChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word t2[3];
+  word LogicalProgramNr1;
+  word t2[2];
   byte Favorites1;
   byte t2b;
   word Frequency1Div50;
@@ -26,8 +27,8 @@ struct PT180_AnalogChannel
   word ONID;
   word TSID;
   byte t7[18];
-  word ProgramNr2;
-  byte t8[2];
+  word ProgramNrTimes4;
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte Favorites2;
   byte LockSkipHide;
@@ -48,7 +49,7 @@ struct PT180_DvbCtChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word LogicalChannelNumber;
+  word LogicalProgramNr2;
   word t2[2];
   byte Favorites1;
   byte t2d;
@@ -67,8 +68,8 @@ struct PT180_DvbCtChannel
   word ONID;
   word TSID;
   byte t7[18];
-  word ProgramNr2;
-  byte t8[2];
+  word ProgramNrTimes4;
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte Favorites2;
   byte LockSkipHide;

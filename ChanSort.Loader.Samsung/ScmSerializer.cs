@@ -401,7 +401,7 @@ namespace ChanSort.Loader.Samsung
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
         DigitalChannel ci = new DigitalChannel(slotIndex, isCable, rawChannel, frequency, c.SortedFavorites);
-        if (ci.InUse && !ci.IsDeleted)
+        if (ci.InUse && !ci.IsDeleted && ci.OldProgramNr > 0)
           this.DataRoot.AddChannel(list, ci);
 
         rawChannel.BaseOffset += entrySize;

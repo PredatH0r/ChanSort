@@ -7,7 +7,8 @@ struct LT212_AnalogChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word t2[3];
+  word LogicalProgramNr1;
+  word t2[2];
   byte Favorites1;
   byte t2d;
   word Frequency1Div50;
@@ -29,7 +30,7 @@ struct LT212_AnalogChannel
   word ChannelTransponder3;
   byte t7b;
   word ProgramNr2;
-  byte t8[2];
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte t8b[4];
   byte Favorites2;
@@ -97,7 +98,7 @@ struct LT212_DvbCtChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word LogicalChannelNr;
+  word LogicalChannelNr1;
   word t2[2];
   byte Favorites1;
   byte t2d;
@@ -120,7 +121,7 @@ struct LT212_DvbCtChannel
   word ChannelTransponder3;
   byte t7b;
   word ProgramNr2;
-  byte t8[2];
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte t8b[4];
   byte Favorites2;

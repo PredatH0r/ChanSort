@@ -25,7 +25,7 @@ struct LA256_AnalogChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word LogicalProgramNr;
+  word LogicalProgramNr1;
   byte t2[4];
   byte Favorites1;
   byte t2b[3];
@@ -115,7 +115,7 @@ struct LA256_DvbCtChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word LogicalChannelNumber;
+  word LogicalProgramNr1;
   byte t2a[4];
   byte Fav1;
   byte t2b[3];

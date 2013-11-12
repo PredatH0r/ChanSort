@@ -7,6 +7,7 @@ namespace ChanSort.Loader.LG
     // common
     protected const string _ProgramNr = "offProgramNr";
     protected const string _ProgramNr2 = "offProgramNr2"; // not for DVB-S
+    protected const string _ProgramNrPreset = "offProgramNrPreset";
     protected const string _Name = "offName";
     protected const string _NameLength = "offNameLength";
     protected const string _Favorites = "offFavorites";   // not for DVB-S (which only uses Favorite2)
@@ -68,6 +69,7 @@ namespace ChanSort.Loader.LG
       this.OriginalNetworkId = data.GetWord(_OriginalNetworkId);
       this.TransportStreamId = data.GetWord(_TransportStreamId);
       this.ServiceType = data.GetByte(_ServiceType);
+      this.ProgramNrPreset = data.GetWord(_ProgramNrPreset);
     }
     #endregion
 
@@ -91,6 +93,7 @@ namespace ChanSort.Loader.LG
       int progNr = this.NewProgramNr == -1 ? 0 : this.NewProgramNr;
       mapping.SetWord(_ProgramNr, progNr | ((this.SignalSource & SignalSource.Radio) != 0 ? 0x4000 : 0));
       mapping.SetWord(_ProgramNr2, (mapping.GetWord(_ProgramNr2) & 0x0003) | (progNr << 2));
+      mapping.SetWord(_ProgramNrPreset, 0);
       if (this.IsNameModified)
       {
         mapping.SetString(_Name, this.Name, 40);
@@ -105,10 +108,12 @@ namespace ChanSort.Loader.LG
       if (this.NewProgramNr == -1)
       {
         mapping.SetFlag(_Deleted, true);
-        mapping.SetByte("off"+_Moved, 0); //skip,lock,hide,moved
+        mapping.SetByte("off" + _Moved, 0); //skip,lock,hide,moved
       }
       else
+      {
         mapping.SetFlag(_Moved, true);
+      }
 
       this.OldProgramNr = this.NewProgramNr;
     }

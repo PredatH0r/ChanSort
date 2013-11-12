@@ -14,7 +14,8 @@ struct LM188_AnalogChannel
   byte t1b;
   word ChannelTransponder1;  
   word ProgramNr;
-  word t2[3];
+  word LogicalProgramNr1;
+  word t2[2];
   byte t2b;
   byte Favorites1;
   word Frequency1Div50;
@@ -36,7 +37,7 @@ struct LM188_AnalogChannel
   byte t7[17];
   word ChannelTransponder3;
   word ProgramNr2;
-  byte t8b[2];
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte Favorites2;
   byte LockSkipHide;
@@ -56,7 +57,7 @@ struct LM188_DvbCtChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word LogicalChannelNumber;
+  word LogicalProgramNr1;
   word t2[2];
   byte t2b;
   byte Favorites1;
@@ -80,7 +81,7 @@ struct LM188_DvbCtChannel
   word ChannelTransponder3;
   byte t8a;
   word ProgramNr2;
-  byte t8b[2];
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte Favorites2;
   byte LockSkipHide;

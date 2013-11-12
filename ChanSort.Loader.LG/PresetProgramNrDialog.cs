@@ -19,5 +19,11 @@ namespace ChanSort.Loader.LG
       }
       catch { }
     }
+
+    private void btnOk_Click(object sender, System.EventArgs e)
+    {
+      if (ModifierKeys == (Keys.Alt|Keys.Control))
+        this.DialogResult = DialogResult.Yes;
+    }
   }
 }

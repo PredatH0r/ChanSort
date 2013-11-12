@@ -8,7 +8,8 @@ struct LH3000_AnalogChannel
   byte t1b[6];
   byte ChannelTransponder1;
   word ProgramNr;
-  word t2[3];
+  word LogicalProgramNr1;
+  word t2[2];
   byte Favorites1;
   byte t2d;
   word Freqency1Div50;
@@ -20,23 +21,23 @@ struct LH3000_AnalogChannel
   byte CH_NameLength1;
   byte t4;
   word SID1;
-  byte t5a[14]; // !
+  byte t5a[14];
   word ONID;
   word TSID;
-  byte t5b[6];
-  dword Frequency;
-  byte t6[8];
-  word ProgramNr2;
-  byte t7[2];
+  byte t5b[14];
+  word ProgramNrTimes4;
+  word LogicalProgramNr2;
   byte ChannelTransponder4;
   byte _Favorites2;
   byte LockSkipHide;
-  byte ServiceType;
+  byte CH_NameLength2;
   char CH_Name2[40];
   word Frequency2Div50;
   word APID2;
   word t11;
   word t12;
+  ServiceType ServiceType;
+  byte t13[3];
 };
 
 
@@ -47,7 +48,7 @@ struct LH3000_DvbCtChannel
   byte t1b[6];
   byte ChannelTransponder1;
   word ProgramNr;
-  word LogicalChannelNumber;
+  word LogicalProgramNr1;
   word t2[2];
   byte Favorites1;
   byte t2d;
@@ -62,7 +63,9 @@ struct LH3000_DvbCtChannel
   byte t5a[14];
   word ONID;
   word TSID;
-  byte t5b[18];
+  byte t5b[14];
+  word ProgramNrTimes4;
+  word LocicalProgramNr2;
   byte ChannelTransponder4;
   byte _Favorites2;
   byte LockSkipHide;
@@ -72,7 +75,8 @@ struct LH3000_DvbCtChannel
   word APID2;
   word t11;
   word SID2;
-  byte t13[4];
+  ServiceType ServiceType;
+  byte t13[3];
 };
 
 

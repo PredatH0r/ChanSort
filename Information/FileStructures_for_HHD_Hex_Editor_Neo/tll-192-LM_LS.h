@@ -18,6 +18,8 @@ typedef TLL72_SatChannel TLL_SatChannel;
 struct TLL44_Lnb;
 typedef TLL44_Lnb TLL_Lnb;
 
+#define DVBS_CHANNELLIST_PREFIXSIZE 0
+
 #include "tll-satellite.h"
 
 
@@ -115,7 +117,7 @@ struct LM192_DvbCtChannel
   byte t7[20];
   word ChannelTransponder3;
   word ProgramNr2;
-  byte t8b[2];
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte Favorites2;
   byte LockSkipHide;

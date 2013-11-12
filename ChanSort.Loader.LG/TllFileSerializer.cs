@@ -67,7 +67,6 @@ namespace ChanSort.Loader.LG
     private int deletedChannelsHard;
     private int deletedChannelsSoft;
     private int dvbsChannelsAtPr0;
-    private int presetChannels;
 
     private bool removeDeletedActChannels = false;
     private bool mustReorganizeDvbs = false;
@@ -161,16 +160,17 @@ namespace ChanSort.Loader.LG
       this.ReadDvbSBlock(ref off);
       this.ReadSettingsBlock(ref off);
 
-      if (this.presetChannels > 0)
+      if (this.satTvChannels.PresetProgramNrCount > 0 || this.satRadioChannels.PresetProgramNrCount > 0)
       {
-        this.satTvChannels.ReadOnly = true;
-        this.satRadioChannels.ReadOnly = true;
         foreach (var channel in this.satTvChannels.Channels)
           channel.NewProgramNr = channel.OldProgramNr;
         foreach (var channel in this.satRadioChannels.Channels)
           channel.NewProgramNr = channel.OldProgramNr;
-        if (!IsTesting)
-          new PresetProgramNrDialog().ShowDialog();
+        if (IsTesting || new PresetProgramNrDialog().ShowDialog() != DialogResult.Yes)
+        {
+          this.satTvChannels.ReadOnly = true;
+          this.satRadioChannels.ReadOnly = true;          
+        }
       }
 
 #if STORE_DVBS_CHANNELS_IN_DATABASE
@@ -540,9 +540,6 @@ namespace ChanSort.Loader.LG
             ++this.duplicateChannels;
           }
           this.DataRoot.AddChannel(list, ci);
-
-          if (ci.ProgramNrPreset != 0)
-            ++this.presetChannels;
         }
 
         if (!this.nextChannelIndex.TryGetValue(index, out index) || index == -1)
@@ -941,6 +938,7 @@ namespace ChanSort.Loader.LG
 
     #endregion
 
+    #region CreateChannelFromProxy()
     private ChannelInfo CreateChannelFromProxy(ChannelInfo proxy)
     {
       if ((proxy.SignalSource & SignalSource.Sat) != 0)
@@ -953,6 +951,7 @@ namespace ChanSort.Loader.LG
       }
       return null;
     }
+    #endregion
 
     #region ReorderActChannelsPhysically()
     private void ReorderActChannelsPhysically()
@@ -1047,6 +1046,8 @@ namespace ChanSort.Loader.LG
     public override string GetFileInformation()
     {
       StringBuilder sb = new StringBuilder();
+      sb.AppendLine(base.GetFileInformation());
+
       sb.AppendLine("ANALOG");
       sb.Append("Number of data records: ").Append(this.analogChannelCount).AppendLine();
       sb.Append("Length of data record:  ").Append(this.actChannelSize).AppendLine();
@@ -1072,7 +1073,6 @@ namespace ChanSort.Loader.LG
         sb.Append("Channel records erased (duplicates): ").Append(this.duplicateChannels).AppendLine();
         sb.Append("Channel records with Pr# 0:          ").Append(dvbsChannelsAtPr0).AppendLine();
         sb.Append("Channel records with duplicate Pr#:  ").Append(numberOfDupePrNr).AppendLine();
-        sb.Append("Channel records with preset Pr#:     ").Append(this.presetChannels).AppendLine();
       }
       else
         sb.AppendLine("not present");
@@ -1156,6 +1156,5 @@ namespace ChanSort.Loader.LG
     internal int SatChannelLength { get { return satConfig != null ? satConfig.dvbsChannelLength : 0; } }
     internal decimal DvbsSymbolRateCorrectionFactor { get { return this.dvbsSymbolRateFactor; } }
     internal int FirmwareBlockSize { get { return this.firmwareBlockSize; } }
-    internal bool HasPresetDvbsChannelNumbers { get { return this.presetChannels > 0; } }
   }
 }

@@ -46,6 +46,7 @@ namespace ChanSort.Api
       {
         sb.Append(list.ShortCaption).AppendLine("-----");
         sb.Append("number of channels: ").AppendLine(list.Count.ToString());
+        sb.Append("number of predefined channel numbers: ").AppendLine(list.PresetProgramNrCount.ToString());
         sb.Append("number of duplicate program numbers: ").AppendLine(list.DuplicateProgNrCount.ToString());
         sb.Append("number of duplicate channel identifiers: ").AppendLine(list.DuplicateUidCount.ToString());
         int deleted = 0;

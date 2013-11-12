@@ -12,7 +12,8 @@ struct LN224_AnalogChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word t2[3];
+  word LogicalProgramNr1;
+  word t2[2];
   byte Favorites1;
   byte t2d;
   word Frequency1Div50;
@@ -33,7 +34,7 @@ struct LN224_AnalogChannel
   byte t7[20];
   word ChannelTransponder3;
   word ProgramNr2;
-  byte t8b[2];
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte Favorites2;
   byte LockSkipHide;
@@ -96,7 +97,7 @@ struct LN224_DvbCtChannel
   byte t1b;
   word ChannelTransponder1;
   word ProgramNr;
-  word LogicalChannelNumber;
+  word LogicalProgramNr1;
   word t2[2];
   byte Favorites1;
   byte t2b[3];
@@ -119,7 +120,7 @@ struct LN224_DvbCtChannel
   word ChannelTransponder3;
   byte t7b;
   word ProgramNr2;
-  byte t8b[2];
+  word LogicalProgramNr2;
   word ChannelTransponder4;
   byte Favorites2;
   byte LockSkipHide;

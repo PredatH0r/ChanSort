@@ -90,7 +90,6 @@
     <Compile Include="Utils\DataMapping.cs" />
     <Compile Include="Utils\Crc32.cs" />
     <Compile Include="Utils\CsvFile.cs" />
-    <None Include="Utils\DvbChannelMappingBase.cs" />
     <Compile Include="Utils\DvbStringDecoder.cs" />
     <Compile Include="Utils\IniFile.cs" />
     <Compile Include="Model\ChannelInfo.cs" />
