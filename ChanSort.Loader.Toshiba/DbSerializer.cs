@@ -295,7 +295,7 @@ namespace ChanSort.Loader.Toshiba
         {
           using (var trans = conn.BeginTransaction())
           {
-            this.WriteChannels(cmd, "EuroATVChanList", this.atvChannels);
+            this.WriteChannels(cmd, "EuroATVChanList", this.atvChannels, true);
             this.WriteChannels(cmd, "EuroDTVChanList", this.dtvTvChannels);
             this.WriteChannels(cmd, "EuroDTVChanList", this.dtvRadioChannels);
             this.WriteChannels(cmd, "EuroSATChanList", this.satTvChannels);
@@ -310,9 +310,13 @@ namespace ChanSort.Loader.Toshiba
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SQLiteCommand cmd, string table, ChannelList channelList)
+    private void WriteChannels(SQLiteCommand cmd, string table, ChannelList channelList, bool analog=false)
     {
-      cmd.CommandText = "update " + table + " set channel_number=@nr, list_bits=@Bits where channel_handle=@id";
+      string sql = "update " + table + " set channel_number=@nr ";
+      if (!analog)
+        sql += ", channel_order=@nr";
+      sql += ", list_bits=@Bits where channel_handle=@id";
+      cmd.CommandText = sql;
       cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@Bits", DbType.Int32));
