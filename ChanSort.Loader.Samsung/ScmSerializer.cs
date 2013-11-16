@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Linq;
-using System.Windows.Forms;
+using System.Text;
 using ChanSort.Api;
 using ICSharpCode.SharpZipLib.Zip;
 
@@ -48,6 +48,7 @@ namespace ChanSort.Loader.Samsung
     {
       this.ReadConfigurationFromIniFile();
       this.Features.ChannelNameEdit = true;
+      this.Features.CleanUpChannelData = true;
     }
     #endregion
 
@@ -546,21 +547,21 @@ namespace ChanSort.Loader.Samsung
       using (ZipFile zip = new ZipFile(tvOutputFile))
       {
         zip.BeginUpdate();
-        this.SaveChannels(zip, "map-AirA", this.avbtChannels, ref this.avbtFileContent);
-        this.SaveChannels(zip, "map-CableA", this.avbcChannels, ref this.avbcFileContent);
-        this.SaveChannels(zip, "map-AirD", this.dvbtChannels, ref this.dvbtFileContent);
-        this.SaveChannels(zip, "map-CableD", this.dvbcChannels, ref this.dvbcFileContent);
-        this.SaveChannels(zip, "map-SateD", this.dvbsChannels, ref this.dvbsFileContent);
-        this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, ref this.hdplusFileContent);
-        this.SaveChannels(zip, "map-CablePrime_D", this.primeChannels, ref this.primeFileContent);
-        this.SaveChannels(zip, "map-FreesatD", this.freesatChannels, ref this.freesatFileContent);
+        this.SaveChannels(zip, "map-AirA", this.avbtChannels, this.avbtFileContent);
+        this.SaveChannels(zip, "map-CableA", this.avbcChannels, this.avbcFileContent);
+        this.SaveChannels(zip, "map-AirD", this.dvbtChannels, this.dvbtFileContent);
+        this.SaveChannels(zip, "map-CableD", this.dvbcChannels, this.dvbcFileContent);
+        this.SaveChannels(zip, "map-SateD", this.dvbsChannels, this.dvbsFileContent);
+        this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, this.hdplusFileContent);
+        this.SaveChannels(zip, "map-CablePrime_D", this.primeChannels, this.primeFileContent);
+        this.SaveChannels(zip, "map-FreesatD", this.freesatChannels, this.freesatFileContent);
         zip.CommitUpdate();
       }
     }
     #endregion
 
     #region SaveChannels()
-    private void SaveChannels(ZipFile zip, string fileName, ChannelList channels, ref byte[] fileContent)
+    private void SaveChannels(ZipFile zip, string fileName, ChannelList channels, byte[] fileContent)
     {
       if (fileContent == null)
         return;
@@ -570,11 +571,6 @@ namespace ChanSort.Loader.Samsung
       using (var stream = new FileStream(tempFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
       {
         this.WriteChannels(channels, fileContent, stream);
-        stream.Flush();
-        stream.Seek(0, SeekOrigin.Begin);
-        int size = (int)new FileInfo(tempFilePath).Length;
-        fileContent = new byte[size];
-        stream.Read(fileContent, 0, size);
       }
 
       zip.Add(tempFilePath, fileName);
@@ -592,6 +588,46 @@ namespace ChanSort.Loader.Samsung
 
       stream.Write(fileContent, 0, fileContent.Length);
     }
+    #endregion
+
+    // -------- cleanup --------
+
+    #region CleanUpChannelData()
+    public override string CleanUpChannelData()
+    {
+      StringBuilder log = new StringBuilder();
+      RemoveChannelsWithServiceType0(log);
+      RemoveDuplicateAnalogList(log);
+      return log.ToString();
+    }
+
+    private void RemoveChannelsWithServiceType0(StringBuilder log)
+    {
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        if ((list.SignalSource & SignalSource.Digital) == 0)
+          continue;
+        var listOfChannels = new List<ChannelInfo>(list.Channels);
+        foreach (ScmChannelBase channel in listOfChannels)
+        {
+          if (channel.ServiceType == 0)
+          {
+            channel.EraseRawData();
+            list.Channels.Remove(channel);
+            log.AppendFormat("{0} channel at index {1} (Pr# {2} \"{3}\") was erased due to invalid service type 0\r\n",
+                             list.ShortCaption, channel.RecordIndex, channel.OldProgramNr, channel.Name);
+          }
+        }
+      }
+    }
+
+    private void RemoveDuplicateAnalogList(StringBuilder log)
+    {
+      if (this.avbtChannels.Count == 0 || this.avbcChannels.Count == 0)
+        return;
+      // TODO
+    }
+
     #endregion
 
     // ------- testing -----------

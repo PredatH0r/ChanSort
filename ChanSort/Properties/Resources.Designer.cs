@@ -199,12 +199,7 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The verification of the file content showed some anomalies. Possible causes are:
-        ///- The TV itself created a mess in the channel lists (which happens frequently).
-        ///- The file format is partially unknown (e.g. unknown TV model or firmware).
-        ///- The file has been edited with a broken program version.
-        ///- ChanSort&apos;s validation rules are based on wrong assumptions.
-        ///You can continue editing, but it is possibile that your TV will reject the changes..
+        ///   Looks up a localized string similar to The file content shows some anomalies and is possibly corrupt..
         /// </summary>
         internal static string MainForm_LoadFiles_ValidationWarningMsg {
             get {

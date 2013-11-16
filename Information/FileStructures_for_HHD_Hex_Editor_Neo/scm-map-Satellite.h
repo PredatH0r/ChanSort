@@ -114,7 +114,7 @@ struct SCM_mapSate_EF_entry
 
 public struct SCM_mapSate_EF
 {
-  SCM_mapSate_E_entry Entries[*];
+  SCM_mapSate_EF_entry Entries[*];
 };
 
 

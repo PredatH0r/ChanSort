@@ -1,14 +1,20 @@
-Version v2013-11-09 =======================================================
+Version v2013-11-16 =======================================================
 
 Changes:
-- File / "File information" now shows information for all TV models
-- Disabled "TV-Set" menu items which are not applicable
-- Fixed DVB-S transponder/frequency information for LG LN and LA61xx series
-- Fixed deleting channels in Samsung B-series Digital Air/Cable lists
-- Fixed encryption information in Samsung B-series Digital Air/Cable lists
-- Fixed loading of reference lists with non-unique channel identifiers
-- Fixed error when saving LG files for models LD-LK after applying a
-  reference list which contains channels not present in the TLL file
+- Loading a .csv reference list now also changes the channel names. This
+  way analog channel names can be restored after a new channel scan
+- FIX: changes to Samsung channel lists after the first "save file" 
+  operation were lost. Only the first save operation worked as expected.
+- FIX: dragging something (e.g. a file) from outside ChanSort over one of
+  its tables causes an error
+- FIX: channels in Samsung B-series DVB-C/T channel lists were incorrectly
+  identified and marked as deleted/active, resulting in duplicate program
+  numbers on the TV.
+- FIX: channel names in Samsung lists sometimes showed "..." after the end
+- Experimental support for modifying LG channel lists with predefined
+  channel numbers (LCN)
+- Backed-out some changes from 2013-11-09 which may have caused incorrect
+  handling of deleted channels in Samsung channel lists
 
 The complete change log can be found at the end of this document
 
@@ -116,6 +122,22 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-11-16
+- FIX: changes to Samsung channel lists after the first "save file" 
+  operation were lost. Only the first save operation worked as expected.
+- FIX: channels in Samsung B-series DVB-C/T channel lists were incorrectly
+  identified and marked as deleted/active, resulting in duplicate program
+  numbers on the TV.
+- FIX: channel names in Samsung lists sometimes showed "..." after the end
+- FIX: dragging something (e.g. a file) from outside ChanSort over one of
+  its tables causes an error
+
+2013-11-12 (beta)
+- Experimental support for modifying LG channel lists with predefined
+  channel numbers (LCN)
+- Backed-out some changes from 2013-11-09 which may have caused incorrect
+  handling of deleted channels in Samsung channel lists
 
 2013-11-09
 - File / "File information" now shows information for all TV models

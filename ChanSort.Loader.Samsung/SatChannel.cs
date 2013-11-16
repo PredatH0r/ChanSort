@@ -19,7 +19,9 @@ namespace ChanSort.Loader.Samsung
       Transponder transponder = dataRoot.Transponder.TryGet(transponderIndex);
       if (transponder == null)
       {
-        dataRoot.Warnings.AppendLine("Invalid transponder index: " + transponderIndex);
+        var list = dataRoot.GetChannelList(this.SignalSource|SignalSource.Tv);
+        dataRoot.Warnings.AppendFormat("{0} channel record #{1} (Pr# {2} \"{3}\") contains invalid transponder index {4}\r\n",
+          list.ShortCaption, slot, this.OldProgramNr, this.Name, transponderIndex);
         return;
       }
 

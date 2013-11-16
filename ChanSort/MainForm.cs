@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-11-09";
+    public const string AppVersion = "v2013-11-16";
 
     private const int MaxMruEntries = 5;
 
@@ -1884,6 +1884,9 @@ namespace ChanSort.Ui
     #region gridLeft_DragOver
     private void gridLeft_DragOver(object sender, DragEventArgs e)
     {
+      if (this.dragDropInfo == null) // drag operation from outside ChanSort
+        return;
+
       // this event is called on the current target of the drag operation
       var point = this.gridLeft.PointToClient(MousePosition);
       var hit = this.gviewLeft.CalcHitInfo(point);

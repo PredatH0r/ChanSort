@@ -161,12 +161,7 @@
     <value>Datenüberprüfung</value>
   </data>
   <data name="MainForm_LoadFiles_ValidationWarningMsg" xml:space="preserve">
-    <value>Die Überprüfung des Dateiinhalts fand einige Auffälligkeiten. Mögliche Ursachen sind:
-- Der Fernseher hat seine Senderlisten versaut (was häufig vorkommt).
-- Das Dateiformat ist teilweise unbekannt (unbekanntes Modell oder Firmware).
-- Die Datei wurde mit einer defekten Programmversion bearbeitet.
-- Eine von ChanSort's Prüfungen geht von einer falschen Annahme aus.
-Sie können mit der Bearbeitung fortfahren, es ist aber möglich, dass Ihr Fernsehgerät die Änderungen nicht annimmt.</value>
+    <value>Die Überprüfung des Dateiinhalts fand einige Auffälligkeiten, die Senderliste ist womöglich defekt.</value>
   </data>
   <data name="MainForm_RestoreScanOrder_Message" xml:space="preserve">
     <value>Die händische Sortierung wird überschrieben.

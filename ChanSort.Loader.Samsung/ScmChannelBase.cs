@@ -13,6 +13,7 @@ namespace ChanSort.Loader.Samsung
     private const string _NameLength = "offNameLength";
     private const string _ShortName = "offShortName";
     private const string _Favorites = "offFavorites";
+    private const string _IsActive = "IsActive";
     private const string _Deleted = "Deleted";
     private const string _Encrypted = "Encrypted";
     private const string _Lock = "Lock";
@@ -57,7 +58,7 @@ namespace ChanSort.Loader.Samsung
       this.Favorites = this.ParseRawFavorites();
       this.Lock = data.GetFlag(_Lock);
       this.Encrypted = data.GetFlag(_Encrypted);
-      this.IsDeleted = data.GetFlag(_Deleted);
+      this.IsDeleted = data.GetFlag(_Deleted, false) || !data.GetFlag(_IsActive, true);
       if (this.IsDeleted)
         this.OldProgramNr = -1;
     }
@@ -123,8 +124,16 @@ namespace ChanSort.Loader.Samsung
       this.UpdateRawFavorites();
       mapping.SetFlag(_Lock, this.Lock);
       mapping.SetFlag(_Deleted, this.NewProgramNr < 0);
-
+      mapping.SetFlag(_IsActive, this.NewProgramNr >= 0);
       this.UpdateChecksum();
+    }
+    #endregion
+
+    #region EraseRawData()
+    internal virtual void EraseRawData()
+    {
+      int len = this.mapping.Settings.GetInt("offChecksum") + 1;
+      Tools.MemSet(this.rawData, this.baseOffset, 0, len);      
     }
     #endregion
 
@@ -146,9 +155,9 @@ namespace ChanSort.Loader.Samsung
       {
         int favValue;
         if (this.sortedFavorites)
-          favValue = (fav & mask) != 0 ? this.FavIndex[favIndex] : -1;
+          favValue = (fav & mask) != 0 ? this.FavIndex[favIndex] : -1; // E,F series
         else
-          favValue = (fav & mask) != 0 ? 1 : 0;
+          favValue = (fav & mask) != 0 ? 1 : 0; // D series
         Array.Copy(BitConverter.GetBytes(favValue), 0, this.rawData, baseOffset + off, 4);
         mask <<= 1;
         ++favIndex;
