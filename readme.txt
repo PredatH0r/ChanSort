@@ -1,6 +1,8 @@
-Version v2013-11-20 =======================================================
+Version v2013-11-20.2 =====================================================
 
 Changes:
+- Fix for v2013-11-20: Errormessage at program start
+- Fix for v2013-11-20: Panasonic channel names were set incorrectly
 - Panasonic: Handling of special characters in channel names
 - Toshiba: channels didn't change their order for zapping in .zip/chmgt.db 
   channel lists (thanks to Kurt W. for the hint)

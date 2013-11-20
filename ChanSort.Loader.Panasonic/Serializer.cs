@@ -11,7 +11,7 @@ namespace ChanSort.Loader.Panasonic
 {
   class Serializer : SerializerBase
   {
-    private static readonly string ERR_FileFormatOrEncryption = "File uses an unknown format or encryption";
+    private const string ERR_FileFormatOrEncryption = "File uses an unknown format or encryption";
     private static readonly int[] headerCypherTable;
     private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT | SignalSource.Tv | SignalSource.Radio, "Analog Antenna");
     private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC | SignalSource.Tv | SignalSource.Radio, "Analog Cable");
@@ -590,7 +590,7 @@ order by s.ntype,major_channel
       cmd.Parameters.Add(new SQLiteParameter("@fav2", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@fav3", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@fav4", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@name", DbType.String));
+      cmd.Parameters.Add(new SQLiteParameter("@name", DbType.Binary));
       cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@skip", DbType.Int32));
       cmd.Prepare();

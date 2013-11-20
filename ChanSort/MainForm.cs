@@ -25,9 +25,9 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-11-20";
+    public const string AppVersion = "v2013-11-20.2";
 
-    private const int MaxMruEntries = 8;
+    private const int MaxMruEntries = 10;
 
     #region enum EditMode
     private enum EditMode
@@ -950,7 +950,9 @@ namespace ChanSort.Ui
 
       for (int i = MaxMruEntries-1; i >= 0; i--)
       {
-        this.AddFileToMruList((string)Settings.Default.GetType().GetProperty("MruFile" + i).GetValue(Settings.Default, null));
+        var prop = Settings.Default.GetType().GetProperty("MruFile" + i);
+        if (prop != null)
+          this.AddFileToMruList((string)prop.GetValue(Settings.Default, null));
       }
       this.UpdateMruMenu();
     }

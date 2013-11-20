@@ -370,5 +370,65 @@ namespace ChanSort.Ui.Properties {
                 this["MruFile4"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile5 {
+            get {
+                return ((string)(this["MruFile5"]));
+            }
+            set {
+                this["MruFile5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile6 {
+            get {
+                return ((string)(this["MruFile6"]));
+            }
+            set {
+                this["MruFile6"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile7 {
+            get {
+                return ((string)(this["MruFile7"]));
+            }
+            set {
+                this["MruFile7"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile8 {
+            get {
+                return ((string)(this["MruFile8"]));
+            }
+            set {
+                this["MruFile8"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MruFile9 {
+            get {
+                return ((string)(this["MruFile9"]));
+            }
+            set {
+                this["MruFile9"] = value;
+            }
+        }
     }
 }
