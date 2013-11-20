@@ -1,20 +1,9 @@
-Version v2013-11-16 =======================================================
+Version v2013-11-20 =======================================================
 
 Changes:
-- Loading a .csv reference list now also changes the channel names. This
-  way analog channel names can be restored after a new channel scan
-- FIX: changes to Samsung channel lists after the first "save file" 
-  operation were lost. Only the first save operation worked as expected.
-- FIX: dragging something (e.g. a file) from outside ChanSort over one of
-  its tables causes an error
-- FIX: channels in Samsung B-series DVB-C/T channel lists were incorrectly
-  identified and marked as deleted/active, resulting in duplicate program
-  numbers on the TV.
-- FIX: channel names in Samsung lists sometimes showed "..." after the end
-- Experimental support for modifying LG channel lists with predefined
-  channel numbers (LCN)
-- Backed-out some changes from 2013-11-09 which may have caused incorrect
-  handling of deleted channels in Samsung channel lists
+- Panasonic: Handling of special characters in channel names
+- Toshiba: channels didn't change their order for zapping in .zip/chmgt.db 
+  channel lists (thanks to Kurt W. for the hint)
 
 The complete change log can be found at the end of this document
 
@@ -122,6 +111,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-11-20
+- Panasonic: Handling of special characters in channel names
+- Toshiba: channels didn't change their order for zapping in .zip/chmgt.db 
+  channel lists (thanks to Kurt W. for the hint)
 
 2013-11-16
 - FIX: changes to Samsung channel lists after the first "save file" 

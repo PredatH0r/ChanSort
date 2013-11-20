@@ -52,6 +52,8 @@ namespace ChanSort.Api
       this.FavIndex = new List<int>(MAX_FAV_LISTS);
       for (int i = 0; i < MAX_FAV_LISTS; i++)
         this.FavIndex.Add(-1);
+      this.Name = "";
+      this.ShortName = "";
     }
 
     /// <summary>

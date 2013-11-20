@@ -498,7 +498,7 @@ namespace ChanSort.Loader.Panasonic
                             "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "ya_svcid", "delivery" };
       
       const string sql = @"
-select s.rowid,s.major_channel,s.physical_ch,s.sname,t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
+select s.rowid,s.major_channel,s.physical_ch,cast(s.sname as blob),t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
   profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery
 from SVL s 
 left outer join TSL t on s.ntype=t.ntype and s.physical_ch=t.physical_ch and s.tsid=t.tsid
@@ -512,7 +512,7 @@ order by s.ntype,major_channel
       {
         while (r.Read())
         {
-          ChannelInfo channel = new DbChannel(r, fields, this.DataRoot);
+          ChannelInfo channel = new DbChannel(r, fields, this.DataRoot, this.DefaultEncoding);
           if (!channel.IsDeleted)
           {
             var channelList = this.DataRoot.GetChannelList(channel.SignalSource);
@@ -534,6 +534,21 @@ order by s.ntype,major_channel
     }
     #endregion
 
+    #region DefaultEncoding
+    public override Encoding DefaultEncoding
+    {
+      get { return base.DefaultEncoding; }
+      set
+      {
+        base.DefaultEncoding = value;
+        foreach (var list in this.DataRoot.ChannelLists)
+        {
+          foreach(var channel in list.Channels)
+            channel.ChangeEncoding(value);
+        }
+      }
+    }
+    #endregion
 
 
     #region Save()
@@ -579,7 +594,7 @@ order by s.ntype,major_channel
       cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@skip", DbType.Int32));
       cmd.Prepare();
-      foreach (ChannelInfo channel in channelList.Channels)
+      foreach (DbChannel channel in channelList.Channels)
       {
         if (channel.NewProgramNr < 0 || channel.OldProgramNr < 0)
           continue;
@@ -588,7 +603,7 @@ order by s.ntype,major_channel
         cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
         for (int fav = 0; fav < 4; fav++)
           cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.FavIndex[fav]);
-        cmd.Parameters["@name"].Value = channel.Name;
+        cmd.Parameters["@name"].Value = channel.RawName;
         cmd.Parameters["@lock"].Value = channel.Lock;
         cmd.Parameters["@skip"].Value = channel.Skip;
         cmd.ExecuteNonQuery();
@@ -654,6 +669,7 @@ order by s.ntype,major_channel
     }
     #endregion
 
+    #region GetFileInformation()
     public override string GetFileInformation()
     {
       StringBuilder sb = new StringBuilder();
@@ -673,5 +689,6 @@ order by s.ntype,major_channel
       sb.Append("Character encoding: ").AppendLine(this.charEncoding);
       return sb.ToString();
     }
+    #endregion
   }
 }

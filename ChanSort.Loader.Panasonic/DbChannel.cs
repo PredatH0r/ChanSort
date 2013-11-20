@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Text;
 using ChanSort.Api;
@@ -8,9 +9,10 @@ namespace ChanSort.Loader.Panasonic
   internal class DbChannel : ChannelInfo
   {
     internal int Bits;
+    internal byte[] RawName;
 
     #region ctor()
-    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot)
+    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Encoding encoding)
     {
       this.RecordIndex = r.GetInt32(field["rowid"]);
       this.RecordOrder = r.GetInt32(field["major_channel"]);
@@ -39,6 +41,7 @@ namespace ChanSort.Loader.Panasonic
       this.Encrypted = r.GetInt32(field["free_CA_mode"]) != 0;
       this.Lock = r.GetInt32(field["child_lock"]) != 0;
       this.ParseFavorites(r, field);
+      this.ReadNamesWithEncodingDetection(r, field, encoding);
 
       if (ntype == 10 || ntype == 14)
         this.ReadAnalogData(r, field);
@@ -63,21 +66,17 @@ namespace ChanSort.Loader.Panasonic
     }
     #endregion
 
+    #region ReadAnalogData()
     private void ReadAnalogData(SQLiteDataReader r, IDictionary<string, int> field)
     {
-      this.Name = r.GetString(field["sname"]);
       this.FreqInMhz = r.IsDBNull(field["freq"]) ? 0 : (decimal)r.GetInt32(field["freq"]) / 1000;
       this.ChannelOrTransponder = Tools.GetAnalogChannelNumber((int)this.FreqInMhz);
     }
+    #endregion
 
     #region ReadDvbData()
     protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, byte[] delivery)
     {
-      string longName, shortName;
-      this.GetChannelNames(r.GetString(field["sname"]), out longName, out shortName);
-      this.Name = longName;
-      this.ShortName = shortName;
-
       int stype = r.GetInt32(field["stype"]);
       this.SignalSource |= LookupData.Instance.IsRadioOrTv(stype);
       this.ServiceType = stype;
@@ -115,30 +114,113 @@ namespace ChanSort.Loader.Panasonic
     }
     #endregion
 
+    #region ReadNamesWithEncodingDetection()
+    /// <summary>
+    /// Character encoding is a mess here. Code pages mixed with UTF-8 and raw data
+    /// </summary>
+    private void ReadNamesWithEncodingDetection(SQLiteDataReader r, IDictionary<string, int> field, Encoding encoding)
+    {
+      byte[] buffer = new byte[100];
+      int len = (int)r.GetBytes(field["sname"], 0, buffer, 0, buffer.Length);
+      int end = Array.IndexOf<byte>(buffer, 0, 0, len);
+      if (end >= 0)
+        len = end;
+      this.RawName = new byte[len];
+      Array.Copy(buffer, 0, this.RawName, 0, len);
+      this.ChangeEncoding(encoding);      
+    }
+    #endregion
+
+    #region ChangeEncoding()
+    public override void ChangeEncoding(Encoding encoding)
+    {
+      // the encoding of channel names is a complete mess:
+      // it can be UTF-8
+      // it can be as specified by the DVB-encoding with a valid code page selector byte
+      // it can have a DVB-encoded code page selector, but ignores the CP and use UTF-8 regardless
+      // it can be code page encoded without any clue to what the code page is
+      // it can have DVB-control characters inside an UTF-8 stream
+
+      if (RawName.Length == 0)
+        return;
+
+      int startOffset;
+      int bytesPerChar;
+      if (!GetRecommendedEncoding(ref encoding, out startOffset, out bytesPerChar)) 
+        return;
+
+      // single byte code pages might have UTF-8 code mixed in, so we have to parse it manually
+      StringBuilder sb = new StringBuilder();
+      for (int i = startOffset; i < this.RawName.Length; i+=bytesPerChar)
+      {
+        byte c = this.RawName[i];
+        byte c2 = i + 1 < this.RawName.Length ? this.RawName[i + 1] : (byte)0;
+        if (c < 0xA0)
+          sb.Append((char)c);
+        else if (bytesPerChar == 1 && c >= 0xC0 && c <= 0xDF && c2 >= 0x80 && c2 <= 0xBF) // 2 byte UTF-8
+        {
+          sb.Append((char)(((c & 0x1F) << 6) | (c2 & 0x3F)));
+          ++i;
+        }
+        else
+          sb.Append(encoding.GetString(this.RawName, i, bytesPerChar));
+      }
+
+      string longName, shortName;
+      this.GetChannelNames(sb.ToString(), out longName, out shortName);
+      this.Name = longName;
+      this.ShortName = shortName;
+    }
+    #endregion
+
+    #region GetRecommendedEncoding()
+    private bool GetRecommendedEncoding(ref Encoding encoding, out int startOffset, out int bytesPerChar)
+    {
+      startOffset = 0;
+      bytesPerChar = 1;
+      if (RawName[0] < 0x10) // single byte character sets
+      {
+        encoding = DvbStringDecoder.GetEncoding(RawName[0]);
+        startOffset = 1;
+      }
+      else if (RawName[0] == 0x10) // prefix for 16 bit code page ID with single byte character sets
+      {
+        if (RawName.Length < 3) return false;
+        encoding = DvbStringDecoder.GetEncoding(0x100000 + RawName[1]*256 + RawName[2]);
+        startOffset = 3;
+      }
+      else if (RawName[0] == 0x15) // UTF-8
+      {
+        encoding = Encoding.UTF8;
+        startOffset = 1;
+      }
+      else if (RawName[0] < 0x20) // various 2-byte character sets
+      {
+        encoding = DvbStringDecoder.GetEncoding(RawName[0]);
+        startOffset = 1;
+        bytesPerChar = 2;
+      }
+      return true;
+    }
+
+    #endregion
+
     #region GetChannelNames()
     private void GetChannelNames(string name, out string longName, out string shortName)
     {
       StringBuilder sbLong = new StringBuilder();
       StringBuilder sbShort = new StringBuilder();
 
-#if false
-      //Encoding encoding = Encoding.Default;
-      if (name.Length > 0 && name[0] < 0x20)
-      {
-        if (name.Length >= 3 && name[0] == 0x10)
-          encoding = DvbStringDecoder.GetEncoding(name[0]);
-      }
-#endif
       bool inShort = false;
       foreach (char c in name)
       {
         if (c < 0x20)
           continue;
-        if (c == 0x86)
+        if (c == 0x86 || c == '\uE086')
           inShort = true;
-        else if (c == 0x87)
+        else if (c == 0x87 || c == '\uE087')
           inShort = false;
-        if (c >= 0x80 && c <= 0x9F)
+        if (c >= 0x80 && c <= 0x9F || c>='\uE080' && c<='\uE09F')
           continue;
 
         if (inShort)
@@ -151,11 +233,13 @@ namespace ChanSort.Loader.Panasonic
     }
     #endregion
 
+
     #region UpdateRawData()
     public override void UpdateRawData()
     {
-      
+
     }
     #endregion
+
   }
 }
