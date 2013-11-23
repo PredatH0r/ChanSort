@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="splitContainerControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 108</value>
+    <value>0, 110</value>
   </data>
   <metadata name="dsChannels.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>361, 17</value>
@@ -258,7 +258,7 @@
     <value>Numeric</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 418</value>
+    <value>449, 416</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -279,7 +279,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 472</value>
+    <value>2, 470</value>
   </data>
   <data name="lblHotkeyLeft.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -324,7 +324,7 @@
     <value>0, 5</value>
   </data>
   <data name="pageProgNr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1463, 0</value>
+    <value>1464, 0</value>
   </data>
   <data name="pageProgNr.Text" xml:space="preserve">
     <value>Pr#</value>
@@ -363,7 +363,7 @@
     <value>Top</value>
   </data>
   <data name="grpSubList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 81</value>
+    <value>0, 83</value>
   </data>
   <data name="grpSubList.Size" type="System.Drawing.Size, System.Drawing">
     <value>1474, 27</value>
@@ -427,6 +427,9 @@
   </data>
   <data name="miExcelExport.Caption" xml:space="preserve">
     <value>Export Excel list...</value>
+  </data>
+  <data name="miPrint.Caption" xml:space="preserve">
+    <value>&amp;Print...</value>
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
     <value>&amp;Quit</value>
@@ -584,7 +587,7 @@
     <value>0, 0</value>
   </data>
   <data name="barDockControlTop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 24</value>
+    <value>1474, 26</value>
   </data>
   <data name="&gt;&gt;barDockControlTop.Name" xml:space="preserve">
     <value>barDockControlTop</value>
@@ -623,10 +626,10 @@
     <value>Left</value>
   </data>
   <data name="barDockControlLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 24</value>
+    <value>0, 26</value>
   </data>
   <data name="barDockControlLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 575</value>
+    <value>0, 573</value>
   </data>
   <data name="&gt;&gt;barDockControlLeft.Name" xml:space="preserve">
     <value>barDockControlLeft</value>
@@ -644,10 +647,10 @@
     <value>Right</value>
   </data>
   <data name="barDockControlRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1474, 24</value>
+    <value>1474, 26</value>
   </data>
   <data name="barDockControlRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 575</value>
+    <value>0, 573</value>
   </data>
   <data name="&gt;&gt;barDockControlRight.Name" xml:space="preserve">
     <value>barDockControlRight</value>
@@ -675,7 +678,7 @@
     <value>Default</value>
   </data>
   <data name="rbInsertSwap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 19</value>
+    <value>46, 19</value>
   </data>
   <data name="rbInsertSwap.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -702,7 +705,7 @@
     <value>after</value>
   </data>
   <data name="rbInsertAfter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 19</value>
+    <value>45, 19</value>
   </data>
   <data name="rbInsertAfter.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -726,7 +729,7 @@
     <value>before</value>
   </data>
   <data name="rbInsertBefore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 19</value>
+    <value>53, 19</value>
   </data>
   <data name="rbInsertBefore.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -831,7 +834,7 @@
     <value>0, 33</value>
   </data>
   <data name="pageEmpty.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1284, 0</value>
+    <value>1285, 0</value>
   </data>
   <data name="pageEmpty.Text" xml:space="preserve">
     <value>No channel lists</value>
@@ -930,7 +933,7 @@
     <value>Top</value>
   </data>
   <data name="grpTopPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 24</value>
+    <value>0, 26</value>
   </data>
   <data name="grpTopPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>1474, 57</value>
@@ -1017,6 +1020,18 @@
     <value>colOutLock</value>
   </data>
   <data name="&gt;&gt;colOutLock.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colOutSkip.Name" xml:space="preserve">
+    <value>colOutSkip</value>
+  </data>
+  <data name="&gt;&gt;colOutSkip.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colOutHide.Name" xml:space="preserve">
+    <value>colOutHide</value>
+  </data>
+  <data name="&gt;&gt;colOutHide.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;repositoryItemTextEdit1.Name" xml:space="preserve">
@@ -1289,6 +1304,12 @@
   <data name="&gt;&gt;miExcelExport.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miPrint.Name" xml:space="preserve">
+    <value>miPrint</value>
+  </data>
+  <data name="&gt;&gt;miPrint.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;miQuit.Name" xml:space="preserve">
     <value>miQuit</value>
   </data>
@@ -1529,18 +1550,6 @@
   <data name="&gt;&gt;timerEditDelay.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;colOutSkip.Name" xml:space="preserve">
-    <value>colOutSkip</value>
-  </data>
-  <data name="&gt;&gt;colOutSkip.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colOutHide.Name" xml:space="preserve">
-    <value>colOutHide</value>
-  </data>
-  <data name="&gt;&gt;colOutHide.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
@@ -1548,7 +1557,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v13.1, Version=13.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>10/07/2013 15:04:39</value>
+    <value>11/23/2013 14:39:54</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1866,7 +1875,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>453, 491</value>
+    <value>453, 489</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2202,7 +2211,7 @@
     <value>Signal source</value>
   </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1012, 418</value>
+    <value>1013, 416</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2223,7 +2232,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 472</value>
+    <value>2, 470</value>
   </data>
   <data name="lblHotkeyRight.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2367,7 +2376,7 @@
     <value>2, 21</value>
   </data>
   <data name="panelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1012, 33</value>
+    <value>1013, 33</value>
   </data>
   <data name="panelControl3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2391,7 +2400,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1016, 491</value>
+    <value>1017, 489</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2415,7 +2424,7 @@
     <value>Panel2</value>
   </data>
   <data name="splitContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1474, 491</value>
+    <value>1474, 489</value>
   </data>
   <data name="splitContainerControl1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>

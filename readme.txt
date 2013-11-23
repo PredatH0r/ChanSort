@@ -1,11 +1,10 @@
-Version v2013-11-20.2 =====================================================
+Version v2013-11-23 =======================================================
 
 Changes:
-- Fix for v2013-11-20: Errormessage at program start
-- Fix for v2013-11-20: Panasonic channel names were set incorrectly
-- Panasonic: Handling of special characters in channel names
-- Toshiba: channels didn't change their order for zapping in .zip/chmgt.db 
-  channel lists (thanks to Kurt W. for the hint)
+- Channel lists can now be printed
+- Fix: Error when saving Toshiba and Panasonic channel list which contained
+  red proxy entries for missing channels after applying a reference list
+- Fix: Modified Panasonic channel names were not written to the file
 
 The complete change log can be found at the end of this document
 

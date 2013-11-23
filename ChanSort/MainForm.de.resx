@@ -438,4 +438,7 @@
   <data name="colOutHide.Caption" xml:space="preserve">
     <value>Ver- steckt</value>
   </data>
+  <data name="miPrint.Caption" xml:space="preserve">
+    <value>&amp;Drucken...</value>
+  </data>
 </root>

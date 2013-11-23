@@ -594,8 +594,11 @@ order by s.ntype,major_channel
       cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@skip", DbType.Int32));
       cmd.Prepare();
-      foreach (DbChannel channel in channelList.Channels)
+      foreach (ChannelInfo channelInfo in channelList.Channels)
       {
+        var channel = channelInfo as DbChannel;
+        if (channel == null) // skip reference list proxy channels
+          continue;
         if (channel.NewProgramNr < 0 || channel.OldProgramNr < 0)
           continue;
         channel.UpdateRawData();

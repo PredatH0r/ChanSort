@@ -237,7 +237,8 @@ namespace ChanSort.Loader.Panasonic
     #region UpdateRawData()
     public override void UpdateRawData()
     {
-
+      if (this.IsNameModified)
+        this.RawName = Encoding.UTF8.GetBytes(this.Name);
     }
     #endregion
 

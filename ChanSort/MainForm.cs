@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-11-20.2";
+    public const string AppVersion = "v2013-11-23";
 
     private const int MaxMruEntries = 10;
 
@@ -1282,6 +1282,7 @@ namespace ChanSort.Ui
       this.miOpenReferenceFile.Enabled = fileLoaded;
       this.miSaveReferenceFile.Enabled = fileLoaded;
       this.miExcelExport.Enabled = fileLoaded;
+      this.miPrint.Enabled = fileLoaded;
 
       this.miAddChannel.Enabled = isRight;
 
@@ -1498,6 +1499,14 @@ namespace ChanSort.Ui
     }
     #endregion
 
+    #region Print()
+    private void Print()
+    {
+      using (var dlg = new Printing.ReportOptionsDialog(this.currentChannelList, this.subListIndex))
+        dlg.ShowDialog(this);
+    }
+    #endregion
+
     // UI events
 
     #region MainForm_Load
@@ -1560,6 +1569,11 @@ namespace ChanSort.Ui
     private void miExcelExport_ItemClick(object sender, ItemClickEventArgs e)
     {
       TryExecute(this.ExportExcelList);
+    }
+
+    private void miPrint_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      this.TryExecute(this.Print);
     }
 
     private void miQuit_ItemClick(object sender, ItemClickEventArgs e)
@@ -1749,12 +1763,14 @@ namespace ChanSort.Ui
     }
     #endregion
 
+    #region gview_CustomUnboundColumnData
     private void gview_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
     {
       var channel = (ChannelInfo) e.Row;
       if (e.Column.FieldName == "Position")
         e.Value = channel.GetPosition(this.subListIndex);
     }
+    #endregion
 
     #region gview_MouseDown, gview_MouseUp, timerEditDelay_Tick, gview_ShowingEditor
 
@@ -2383,6 +2399,7 @@ namespace ChanSort.Ui
       this.SetActiveGrid(this.gviewRight);
     }
     #endregion
+
 
 
   }

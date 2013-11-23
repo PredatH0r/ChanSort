@@ -321,8 +321,11 @@ namespace ChanSort.Loader.Toshiba
       cmd.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@Bits", DbType.Int32));
       cmd.Prepare();
-      foreach (DbChannel channel in channelList.Channels)
+      foreach (ChannelInfo channelInfo in channelList.Channels)
       {
+        var channel = channelInfo as DbChannel;
+        if (channel == null) // ignore reference list proxy channels
+          continue;
         channel.UpdateRawData();
         cmd.Parameters["@id"].Value = channel.RecordIndex;
         cmd.Parameters["@nr"].Value = channel.NewProgramNr;

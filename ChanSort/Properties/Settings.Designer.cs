@@ -430,5 +430,41 @@ namespace ChanSort.Ui.Properties {
                 this["MruFile9"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Tahoma")]
+        public string PrintFontName {
+            get {
+                return ((string)(this["PrintFontName"]));
+            }
+            set {
+                this["PrintFontName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("12")]
+        public decimal PrintFontSize {
+            get {
+                return ((decimal)(this["PrintFontSize"]));
+            }
+            set {
+                this["PrintFontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PrintSortByName {
+            get {
+                return ((bool)(this["PrintSortByName"]));
+            }
+            set {
+                this["PrintSortByName"] = value;
+            }
+        }
     }
 }

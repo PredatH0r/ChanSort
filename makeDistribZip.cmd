@@ -15,7 +15,7 @@ mkdir "%target%\de" 2>nul
 xcopy /siy debug\de "%target%\de"
 xcopy /siy debug\pt "%target%\pt"
 copy readme.txt "%target%"
-for %%f in (Utils Data XtraEditors XtraBars XtraGrid XtraLayout) do call :copyDll %%f
+for %%f in (Utils Data Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
 
 cd ..
 del Website\ChanSort.zip 2>nul

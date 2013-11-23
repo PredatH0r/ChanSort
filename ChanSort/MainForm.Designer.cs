@@ -43,6 +43,8 @@
       this.repositoryItemCheckedComboBoxEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit();
       this.colUid1 = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutLock = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colOutSkip = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colOutHide = new DevExpress.XtraGrid.Columns.GridColumn();
       this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
       this.lblHotkeyLeft = new DevExpress.XtraEditors.LabelControl();
       this.pnlEditControls = new DevExpress.XtraEditors.PanelControl();
@@ -109,6 +111,7 @@
       this.miAddFromRefList = new DevExpress.XtraBars.BarButtonItem();
       this.miSaveReferenceFile = new DevExpress.XtraBars.BarButtonItem();
       this.miExcelExport = new DevExpress.XtraBars.BarButtonItem();
+      this.miPrint = new DevExpress.XtraBars.BarButtonItem();
       this.miQuit = new DevExpress.XtraBars.BarButtonItem();
       this.miRecentFiles = new DevExpress.XtraBars.BarListItem();
       this.miEdit = new DevExpress.XtraBars.BarSubItem();
@@ -167,8 +170,6 @@
       this.grpSubList = new DevExpress.XtraEditors.GroupControl();
       this.tabSubList = new DevExpress.XtraTab.XtraTabControl();
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
-      this.colOutSkip = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colOutHide = new DevExpress.XtraGrid.Columns.GridColumn();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -362,6 +363,18 @@
       resources.ApplyResources(this.colOutLock, "colOutLock");
       this.colOutLock.FieldName = "Lock";
       this.colOutLock.Name = "colOutLock";
+      // 
+      // colOutSkip
+      // 
+      resources.ApplyResources(this.colOutSkip, "colOutSkip");
+      this.colOutSkip.FieldName = "Skip";
+      this.colOutSkip.Name = "colOutSkip";
+      // 
+      // colOutHide
+      // 
+      resources.ApplyResources(this.colOutHide, "colOutHide");
+      this.colOutHide.FieldName = "Hidden";
+      this.colOutHide.Name = "colOutHide";
       // 
       // repositoryItemTextEdit1
       // 
@@ -894,9 +907,10 @@
             this.miRecentFiles,
             this.miExcelExport,
             this.miPortuguese,
-            this.miAddFromRefList});
+            this.miAddFromRefList,
+            this.miPrint});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 62;
+      this.barManager1.MaxItemId = 63;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -914,6 +928,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miSave, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miPrint, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miEdit, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavSet),
             new DevExpress.XtraBars.LinkPersistInfo(this.miLockOn),
@@ -949,6 +964,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miAddFromRefList),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
             new DevExpress.XtraBars.LinkPersistInfo(this.miExcelExport),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miPrint),
             new DevExpress.XtraBars.LinkPersistInfo(this.miQuit, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRecentFiles, true)});
       this.miFile.Name = "miFile";
@@ -1053,6 +1069,15 @@
                 | System.Windows.Forms.Keys.C));
       this.miExcelExport.Name = "miExcelExport";
       this.miExcelExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miExcelExport_ItemClick);
+      // 
+      // miPrint
+      // 
+      resources.ApplyResources(this.miPrint, "miPrint");
+      this.miPrint.Id = 62;
+      this.miPrint.ImageIndex = 34;
+      this.miPrint.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P));
+      this.miPrint.Name = "miPrint";
+      this.miPrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miPrint_ItemClick);
       // 
       // miQuit
       // 
@@ -1593,18 +1618,6 @@
       this.pageProgNr.Name = "pageProgNr";
       resources.ApplyResources(this.pageProgNr, "pageProgNr");
       // 
-      // colOutSkip
-      // 
-      resources.ApplyResources(this.colOutSkip, "colOutSkip");
-      this.colOutSkip.FieldName = "Skip";
-      this.colOutSkip.Name = "colOutSkip";
-      // 
-      // colOutHide
-      // 
-      resources.ApplyResources(this.colOutHide, "colOutHide");
-      this.colOutHide.FieldName = "Hidden";
-      this.colOutHide.Name = "colOutHide";
-      // 
       // MainForm
       // 
       resources.ApplyResources(this, "$this");
@@ -1800,6 +1813,7 @@
     private DevExpress.XtraBars.BarButtonItem miAddFromRefList;
     private DevExpress.XtraGrid.Columns.GridColumn colOutSkip;
     private DevExpress.XtraGrid.Columns.GridColumn colOutHide;
+    private DevExpress.XtraBars.BarButtonItem miPrint;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

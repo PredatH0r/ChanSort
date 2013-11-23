@@ -87,6 +87,7 @@ namespace ChanSort.Ui
       this.sharedImageCollection1.ImageSource.Images.SetKeyName(31, "0031.png");
       this.sharedImageCollection1.ImageSource.Images.SetKeyName(32, "0032.png");
       this.sharedImageCollection1.ImageSource.Images.SetKeyName(33, "0033.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(34, "0034.png");
       this.sharedImageCollection1.ParentControl = null;
       ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1.ImageSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1)).EndInit();
