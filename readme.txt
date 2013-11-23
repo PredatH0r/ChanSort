@@ -113,6 +113,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ================================================================
 
+2013-11-23
+- Channel lists can now be printed
+- Fix: Error when saving Toshiba and Panasonic channel list which contained
+  red proxy entries for missing channels after applying a reference list
+- Fix: Modified Panasonic channel names were not written to the file
+
 2013-11-20
 - Panasonic: Handling of special characters in channel names
 - Toshiba: channels didn't change their order for zapping in .zip/chmgt.db 
