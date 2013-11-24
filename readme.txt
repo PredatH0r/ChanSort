@@ -1,10 +1,7 @@
-Version v2013-11-23 =======================================================
+Version v2013-11-24 =======================================================
 
 Changes:
-- Channel lists can now be printed
-- Fix: Error when saving Toshiba and Panasonic channel list which contained
-  red proxy entries for missing channels after applying a reference list
-- Fix: Modified Panasonic channel names were not written to the file
+- Load and repair corrupted Panasonic and Toshiba SQLite channel lists
 
 The complete change log can be found at the end of this document
 
@@ -112,6 +109,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-11-24
+- Load and repair corrupted Panasonic and Toshiba SQLite channel lists
 
 2013-11-23
 - Channel lists can now be printed

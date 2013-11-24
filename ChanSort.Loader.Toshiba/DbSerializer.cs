@@ -55,6 +55,7 @@ namespace ChanSort.Loader.Toshiba
         conn.Open();
         using (var cmd = conn.CreateCommand())
         {
+          this.RepairCorruptedDatabaseImage(cmd);
           this.ReadSatellites(cmd);
           this.ReadTransponders(cmd);
         }
@@ -128,6 +129,14 @@ namespace ChanSort.Loader.Toshiba
         while ((len = input.Read(buffer, 0, buffer.Length)) != 0)
           output.Write(buffer, 0, len);
       }
+    }
+    #endregion
+
+    #region RepairCorruptedDatabaseImage()
+    private void RepairCorruptedDatabaseImage(SQLiteCommand cmd)
+    {
+      cmd.CommandText = "REINDEX";
+      cmd.ExecuteNonQuery();
     }
     #endregion
 
@@ -302,6 +311,7 @@ namespace ChanSort.Loader.Toshiba
             this.WriteChannels(cmd, "EuroSATChanList", this.satRadioChannels);
             trans.Commit();
           }
+          this.RepairCorruptedDatabaseImage(cmd);
         }        
       }
 

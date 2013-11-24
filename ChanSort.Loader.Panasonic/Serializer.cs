@@ -24,7 +24,7 @@ namespace ChanSort.Loader.Panasonic
     private CypherMode cypherMode;
     private byte[] fileHeader = new byte[0];
     private int dbSizeOffset;
-    private bool littleEndianByteOrder = false;
+    private bool littleEndianByteOrder;
     private string charEncoding;
 
     enum CypherMode
@@ -331,9 +331,10 @@ namespace ChanSort.Loader.Panasonic
       using (var conn = new SQLiteConnection(channelConnString))
       {
         conn.Open();
-        InitCharacterEncoding(conn);
         using (var cmd = conn.CreateCommand())
         {
+          RepairCorruptedDatabaseImage(cmd);
+          InitCharacterEncoding(cmd);
           this.ReadChannels(cmd);
         }
       }
@@ -481,13 +482,18 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region InitCharacterEncoding()
-    private void InitCharacterEncoding(SQLiteConnection conn)
+    private void InitCharacterEncoding(SQLiteCommand cmd)
     {
-      using (var cmd = conn.CreateCommand())
-      {
-        cmd.CommandText = "PRAGMA encoding";
-        this.charEncoding = cmd.ExecuteScalar() as string;
-      }
+      cmd.CommandText = "PRAGMA encoding";
+      this.charEncoding = cmd.ExecuteScalar() as string;
+    }
+    #endregion
+
+    #region RepairCorruptedDatabaseImage()
+    private void RepairCorruptedDatabaseImage(SQLiteCommand cmd)
+    {
+      cmd.CommandText = "REINDEX";
+      cmd.ExecuteNonQuery();
     }
     #endregion
 
@@ -572,6 +578,7 @@ order by s.ntype,major_channel
             this.WriteChannels(cmd, this.freesatChannels);
             trans.Commit();
           }
+          this.RepairCorruptedDatabaseImage(cmd);
         }
       }
 
