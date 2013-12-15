@@ -162,7 +162,7 @@ namespace Test.Loader.LG
     #endregion
 
     #region GenerateTestFiles()
-    protected void GenerateTestFiles(string modelAndBaseName)
+    protected void GenerateTestFiles(string modelAndBaseName, bool moveChannels = true)
     {
       DeploymentItem("ChanSort.Loader.LG\\ChanSort.Loader.LG.ini");
       string solutionDir = this.GetSolutionBaseDir();
@@ -184,24 +184,31 @@ namespace Test.Loader.LG
       tll.IsTesting = true;
       tll.Load();
       tll.DataRoot.ApplyCurrentProgramNumbers();
-      CsvFileSerializer csv = new CsvFileSerializer(testDataDir + "\\" + basename + ".csv.in", tll.DataRoot, false);
-      csv.Save();
-
-      // save modified list as .TLL.out
-      Console.WriteLine();
-      Console.WriteLine(basename);
-      Console.WriteLine("   a/c/t={0}, sat={1}", tll.ACTChannelLength, tll.SatChannelLength);
-      Editor editor = new Editor();
-      editor.DataRoot = tll.DataRoot;
-      foreach (var list in tll.DataRoot.ChannelLists)
+      if (moveChannels)
       {
-        editor.ChannelList = list;
-        var channels = this.Get2ndProgramNumber(list);
-        if (channels != null)
+        CsvFileSerializer csv = new CsvFileSerializer(testDataDir + "\\" + basename + ".csv.in", tll.DataRoot, false);
+        csv.Save();
+
+        // save modified list as .TLL.out
+        Console.WriteLine();
+        Console.WriteLine(basename);
+        Console.WriteLine("   a/c/t={0}, sat={1}", tll.ACTChannelLength, tll.SatChannelLength);
+        Editor editor = new Editor();
+        editor.DataRoot = tll.DataRoot;
+        foreach (var list in tll.DataRoot.ChannelLists)
         {
-          editor.MoveChannels(channels, true);
-          Console.WriteLine("   {0}={1}", list.ShortCaption, list.Count);
+          editor.ChannelList = list;
+          var channels = this.Get2ndProgramNumber(list);
+          if (channels != null)
+          {
+            editor.MoveChannels(channels, true);
+            Console.WriteLine("   {0}={1}", list.ShortCaption, list.Count);
+          }
         }
+      }
+      else
+      {
+        tll.CleanUpChannelData();
       }
       tll.Save(testDataDir + "\\" + basename + ".TLL.out");
     }

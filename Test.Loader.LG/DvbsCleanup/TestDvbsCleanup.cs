@@ -11,6 +11,7 @@ namespace Test.Loader.LG
     public void TestLM620S_WithSatChannels()
     {
       // "VitorMartinsAugusto"
+      this.GenerateTestFiles("DvbsCleanup/xxLM620S-ZE00001", false);
       this.ExecuteTest("DvbsCleanup/xxLM620S-ZE00001");
     }
 
@@ -18,6 +19,7 @@ namespace Test.Loader.LG
     public void TestLM860V_WithoutSatChannels()
     {
       // "PDA-User"
+      this.GenerateTestFiles("DvbsCleanup/xxLM860V-ZB99998", false);
       this.ExecuteTest("DvbsCleanup/xxLM860V-ZB99998");
     }
 
@@ -25,6 +27,7 @@ namespace Test.Loader.LG
     public void TestLM640T_WithBogusDvbsBlock()
     {
       // "OmarGadzhiev"
+      this.GenerateTestFiles("DvbsCleanup/xxLM640T-ZA00000", false);
       this.ExecuteTest("DvbsCleanup/xxLM640T-ZA00000");
     }
 

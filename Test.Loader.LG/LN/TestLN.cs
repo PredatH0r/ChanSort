@@ -12,5 +12,14 @@ namespace Test.Loader.LG
       //this.GenerateTestFiles("LN/xxLN5406-ZA99999");
       this.ExecuteTest("LN/xxLN5406-ZA99999");
     }
+
+    [TestMethod]
+    public void TestLN5758_FW04_20_29__C260TR_Sat92TR()
+    {
+      // "MarkusLenz"
+      //this.GenerateTestFiles("LN/xxLN5758-ZE99999");
+      this.ExecuteTest("LN/xxLN5758-ZE99999");
+    }
+
   }
 }

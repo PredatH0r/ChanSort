@@ -1,7 +1,10 @@
-Version v2013-11-24 =======================================================
+Version v2013-12-15 =======================================================
 
 Changes:
-- Load and repair corrupted Panasonic and Toshiba SQLite channel lists
+- Support for new channel list file format introduced by LG's firmware
+  04.20.29 for LA- and LN-series
+- LG DVB-C/T channel numbers are now marked as "moved" so that the TV
+  does not change them automatically
 
 The complete change log can be found at the end of this document
 
@@ -109,6 +112,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-12-15
+- Support for new channel list file format introduced by LG's firmware
+  04.20.29 for LA- and LN-series
+- LG DVB-C/T channel numbers are now marked as "moved" so that the TV
+  does not change them automatically
 
 2013-11-24
 - Load and repair corrupted Panasonic and Toshiba SQLite channel lists

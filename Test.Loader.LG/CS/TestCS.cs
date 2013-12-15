@@ -9,6 +9,7 @@ namespace Test.Loader.LG
     public void TestCS460S_Sat68TR()
     {
       // "FranzSteinert"
+      //this.GenerateTestFiles("CS/xxCS460S-ZA00001");
       this.ExecuteTest("CS/xxCS460S-ZA00001");
     }
   }

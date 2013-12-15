@@ -77,8 +77,8 @@ namespace ChanSort.Api
           {
             if (channel2.GetPosition(this.SubListIndex) > channel.GetPosition(this.SubListIndex))
             {
-              if (prevNr != -1 && channel2.GetPosition(this.SubListIndex) != prevNr + 1)
-                // don't pull down numbers after a gap
+              // ignore deleted and proxy channels (prevNr<0), broken channels (==0) and channels after a gap
+              if (prevNr <= 0 || channel2.GetPosition(this.SubListIndex) != prevNr + 1)
                 break;
               prevNr = channel2.GetPosition(this.SubListIndex);
               channel2.ChangePosition(this.SubListIndex, -1);

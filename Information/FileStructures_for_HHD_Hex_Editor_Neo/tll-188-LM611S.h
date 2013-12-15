@@ -36,6 +36,7 @@ struct LM188_AnalogChannel
   word NID;
   byte t7[17];
   word ChannelTransponder3;
+  byte t8;
   word ProgramNr2;
   word LogicalProgramNr2;
   word ChannelTransponder4;
@@ -79,7 +80,7 @@ struct LM188_DvbCtChannel
   dword SpecialData;
   byte t7[13];
   word ChannelTransponder3;
-  byte t8a;
+  byte t8;
   word ProgramNr2;
   word LogicalProgramNr2;
   word ChannelTransponder4;

@@ -20,7 +20,7 @@ typedef TLL52_Lnb TLL_Lnb;
 
 #include "tll-satellite.h"
 
-struct LA256_AnalogChannel
+struct LA260_AnalogChannel
 {
   byte t1[8];
   TLL_SignalSource SignalSource;
@@ -40,7 +40,7 @@ struct LA256_AnalogChannel
   byte CH_NameLength1;
   byte t4;
   word SID1;
-  byte t5a[38];
+  byte t5a[42];
   word ChannelTransponder2;
   dword FrequencyDiv50;
   byte t6[6];
@@ -65,14 +65,14 @@ struct LA256_AnalogChannel
   byte t11[12];
 };
 
-struct LA256_AnalogBlock
+struct LA260_AnalogBlock
 {
   dword BlockSize; 
   dword ChannelCount;
-  LA256_AnalogChannel Channels[ChannelCount];
+  LA260_AnalogChannel Channels[ChannelCount];
 };
 
-struct LA256_HotelSettings
+struct LA260_HotelSettings
 {
   byte HotelModeActive;
   byte PowerOnStatus;
@@ -102,15 +102,15 @@ struct LA256_HotelSettings
   byte AccessCode[4];
 };
 
-struct LA256_FirmwareBlock
+struct LA260_FirmwareBlock
 {
   dword BlockSize;
   byte u[38251];
-  LA256_HotelSettings HotelSettings;  
-  byte Data[BlockSize - 38251 - sizeof(LA256_HotelSettings)];
+  LA260_HotelSettings HotelSettings;  
+  byte Data[BlockSize - 38251 - sizeof(LA260_HotelSettings)];
 };
 
-struct LA256_DvbCtChannel
+struct LA260_DvbCtChannel
 {
   byte t1[8];
   TLL_SignalSource SignalSource;
@@ -130,7 +130,7 @@ struct LA256_DvbCtChannel
   byte CH_NameLength1;
   byte t4;
   word SID1;
-  byte t5a[38];
+  byte t5a[42];
   word ChannelTransponder2;
   dword Frequency;
   byte t6[6];
@@ -155,11 +155,11 @@ struct LA256_DvbCtChannel
   byte t11[12];
 };
 
-struct LA256_DvbCTBlock
+struct LA260_DvbCTBlock
 {
   dword BlockSize;
   dword ChannelCount;
-  LA256_DvbCtChannel Channels[ChannelCount];
+  LA260_DvbCtChannel Channels[ChannelCount];
 };
 
 struct TLL48_Satellite
@@ -233,13 +233,13 @@ struct TLL52_Lnb
 };
 
 
-public struct LA256
+public struct LA260
 {
   byte Header[4]; 
   
-  LA256_AnalogBlock Analog;
-  LA256_FirmwareBlock Firmware;
-  LA256_DvbCTBlock DvbCT;
+  LA260_AnalogBlock Analog;
+  LA260_FirmwareBlock Firmware;
+  LA260_DvbCTBlock DvbCT;
   TLL_DvbSBlock DvbS;
   TLL_SettingsBlock Settings;
 };

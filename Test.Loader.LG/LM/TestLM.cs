@@ -33,6 +33,7 @@ namespace Test.Loader.LG
     public void TestLM860V_C192TR_Sat72()
     {
       // "PDA-User"
+      //this.GenerateTestFiles("LM/xxLM860V-ZB99998");
       this.ExecuteTest("LM/xxLM860V-ZB99998");
     }
 
