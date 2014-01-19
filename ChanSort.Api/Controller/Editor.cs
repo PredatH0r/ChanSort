@@ -224,6 +224,11 @@ namespace ChanSort.Api
             tvChannel.Lock = refChannel.Lock;
             tvChannel.Hidden = refChannel.Hidden;
             tvChannel.IsDeleted = refChannel.IsDeleted;
+            if ((tvChannel.SignalSource & SignalSource.Analog) != 0)
+            {
+              tvChannel.Name = refChannel.Name;
+              tvChannel.IsNameModified = true;
+            }
           }
           else
           {

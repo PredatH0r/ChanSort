@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2013-12-15";
+    public const string AppVersion = "v2014-01-19";
 
     private const int MaxMruEntries = 10;
 
@@ -1170,6 +1170,7 @@ namespace ChanSort.Ui
       if (col == this.colTransportStreamId) return (source & SignalSource.Digital) != 0;
       if (col == this.colNetworkName) return (source & SignalSource.Digital) != 0;
       if (col == this.colNetworkOperator) return (source & SignalSource.Digital) != 0;
+      if (col == this.colProvider) return (source & SignalSource.Digital) != 0;
       if (col == this.colSatellite) return (source & SignalSource.Sat) != 0;
       if (col == this.colNetworkId) return (source & SignalSource.Digital) != 0;
       if (col == this.colSymbolRate) return (source & SignalSource.Sat) != 0;
@@ -1297,7 +1298,7 @@ namespace ChanSort.Ui
 
       bool isLeftGridSortedByNewProgNr = this.IsLeftGridSortedByNewProgNr;
       var sel = this.gviewLeft.GetSelectedRows();
-      var channel = sel.Length == 0 ? null : (ChannelInfo) this.gviewRight.GetRow(sel[0]);
+      var channel = sel.Length == 0 ? null : (ChannelInfo) this.gviewLeft.GetRow(sel[0]);
       this.miMoveUp.Enabled = this.btnUp.Enabled = mayEdit && isLeftGridSortedByNewProgNr && channel != null
         && channel.GetPosition(this.subListIndex) > this.currentChannelList.FirstProgramNumber;
       this.miMoveDown.Enabled = this.btnDown.Enabled = mayEdit && isLeftGridSortedByNewProgNr;
@@ -2101,13 +2102,13 @@ namespace ChanSort.Ui
     #endregion
 
     #region gviewLeft_LayoutUpgrade, gviewRight_LayoutUpgrade
-    private void gviewLeft_LayoutUpgrade(object sender, LayoutUpgadeEventArgs e)
+    private void gviewLeft_LayoutUpgrade(object sender, LayoutUpgradeEventArgs e)
     {
       this.gviewLeft.ClearGrouping();
       this.gviewLeft.OptionsCustomization.AllowGroup = false;
     }
 
-    private void gviewRight_LayoutUpgrade(object sender, LayoutUpgadeEventArgs e)
+    private void gviewRight_LayoutUpgrade(object sender, LayoutUpgradeEventArgs e)
     {
       this.gviewRight.ClearGrouping();
       this.gviewRight.OptionsCustomization.AllowGroup = false;

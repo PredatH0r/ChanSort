@@ -82,7 +82,11 @@ namespace ChanSort.Api
         if (!this.addChannels)
         {
           channel.NewProgramNr = programNr;
-          channel.Name = name;
+          if ((channel.SignalSource & SignalSource.Analog) != 0)
+          {
+            channel.Name = name;
+            channel.IsNameModified = true;
+          }
           if (parts.Count >= 7)
             ApplyFlags(channel, parts[6]);
         }

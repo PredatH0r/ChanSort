@@ -1,10 +1,8 @@
-Version v2013-12-15 =======================================================
+Version v2014-01-19 =======================================================
 
 Changes:
-- Support for new channel list file format introduced by LG's firmware
-  04.20.29 for LA- and LN-series
-- LG DVB-C/T channel numbers are now marked as "moved" so that the TV
-  does not change them automatically
+- show channel "Provider" information for Samsung C,D and E series DVB-C/T 
+  and Satellite channel lists (no data available for Astra HD+)
 
 The complete change log can be found at the end of this document
 
@@ -41,7 +39,8 @@ Samsung
 -------
     Series: B (2009)*, B (2013), C, D, E, F
     Lists:  Air analog, Air digital, Cable analog, Cable digital, 
-            Cable prime, Sat digital, Astra HD+, Freesat digital
+            Cable prime, Sat digital, Astra HD+, Freesat digital,
+            TivuSat digital
 
     * NOTE: the "Air Analog"-list of the 2009 B-series doesn't support all 
     editing features due to a lack of test files. If you have such a file,
@@ -112,6 +111,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2013-12-22
+- Analog channel names loaded from a reference file (.csv, .csm, .tll, ...)
+  are now copied into and saved with the current TV data file .
+
+2013-12-20
+- fixed incorrect disabling of "move channel up" button/menu item
+
+2013-12-19
+- Support for Samsung Tivusat channel list
 
 2013-12-15
 - Support for new channel list file format introduced by LG's firmware

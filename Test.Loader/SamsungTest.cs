@@ -58,7 +58,11 @@ namespace Test.Loader
           var digitalAirList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbT | ChanSort.Api.SignalSource.Tv);
           var digitalCableList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC | ChanSort.Api.SignalSource.Tv);
           var satChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.Tv);
-          var hdChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS|ChanSort.Api.SignalSource.AstraHdPlus | ChanSort.Api.SignalSource.Tv);
+          var primeChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.CablePrimeD | ChanSort.Api.SignalSource.Tv);
+          var hdplusChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.HdPlusD | ChanSort.Api.SignalSource.Tv);
+          var freesatChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.FreesatD | ChanSort.Api.SignalSource.Tv);
+          var tivusatChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.TivuSatD | ChanSort.Api.SignalSource.Tv);
+
           string key = serializer.Series + 
             "\t" + model +
             "\t" + serializer.AnalogChannelLength +
@@ -67,10 +71,13 @@ namespace Test.Loader
             "\t" + serializer.DigitalChannelLength +
             "\t" + (digitalAirList != null && digitalAirList.Count > 0) +
             "\t" + (digitalCableList != null && digitalCableList.Count > 0) +
+            "\t" + (primeChannelList != null && primeChannelList.Count > 0) +
             "\t" + serializer.SatChannelLength +
             "\t" + (satChannelList != null && satChannelList.Count > 0) +
             "\t" + serializer.HdPlusChannelLength +
-            "\t" + (hdChannelList != null && hdChannelList.Count > 0) +
+            "\t" + (hdplusChannelList != null && hdplusChannelList.Count > 0) +
+            "\t" + (freesatChannelList != null && freesatChannelList.Count > 0) +
+            "\t" + (tivusatChannelList != null && tivusatChannelList.Count > 0) +
             "\t" + serializer.SatDatabaseVersion;
           string relPath = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + fileName;
           models[key] = serializer.Series + 
@@ -84,8 +91,11 @@ namespace Test.Loader
             "\t" + (analogCableList == null ? 0 : analogCableList.Count) +
             "\t" + (digitalAirList == null ? 0 : digitalAirList.Count) +
             "\t" + (digitalCableList == null ? 0 : digitalCableList.Count) +
+            "\t" + (primeChannelList == null ? 0 : primeChannelList.Count) +
             "\t" + (satChannelList == null ? 0 : satChannelList.Count) +
-            "\t" + (hdChannelList == null ? 0 : hdChannelList.Count) +
+            "\t" + (hdplusChannelList == null ? 0 : hdplusChannelList.Count) +
+            "\t" + (freesatChannelList == null ? 0 : freesatChannelList.Count) +
+            "\t" + (tivusatChannelList == null ? 0 : tivusatChannelList.Count) +
             "\t" + relPath;
 
           Assert.IsFalse(serializer.DataRoot.IsEmpty, "No channels loaded from " + file);

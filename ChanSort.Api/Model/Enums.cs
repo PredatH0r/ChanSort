@@ -12,20 +12,24 @@ namespace ChanSort.Api
   public enum SignalSource
   {
     // bit 1+2: analog/digital
+    MaskAnalogDigital = 0x0003,
     Analog = 0x0001,
     Digital = 0x0002,
 
     // bit 5+6+7: Antenna/Cable/Sat
+    MaskAntennaCableSat = 0x00F0,
     Antenna = 0x0010,
     Cable = 0x0020,
     Sat = 0x0040,
 
     // bit 9+10: TV/Radio
+    MaskTvRadio = 0x0300,
     Tv = 0x0100,
     Radio = 0x0200,
     TvAndRadio= Tv|Radio,
     
     // bit 13-16: Preset list selector (AstraHD+, Freesat, TivuSat, CanalDigitalSat, ... for Samsung)
+    MaskProvider = 0xFC00,
     StandardSat = 0 << 12,
     AstraHdPlus = 1 << 12,
     Freesat = 2 << 12,
@@ -42,8 +46,11 @@ namespace ChanSort.Api
     DvbT= Digital + Antenna, 
     DvbCT= Digital + Cable + Antenna, 
     DvbS= Digital + Sat,
+
+    CablePrimeD = Digital + Cable + CablePrime,
     HdPlusD = Digital + Sat + AstraHdPlus,
-    CablePrimeD = Digital + Cable + CablePrime
+    FreesatD = Digital + Sat + Freesat,
+    TivuSatD = Digital + Sat + TivuSat
   }
   #endregion
 

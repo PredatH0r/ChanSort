@@ -56,7 +56,7 @@ namespace ChanSort.Loader.LG
 
     private DvbsDataLayout satConfig;
 
-    private Dictionary<int, int> nextChannelIndex;
+    private Dictionary<int, ushort> nextChannelIndex;
     private int firmwareBlockSize;
     private int extraBlockSize;
     private int dvbsBlockSize;
@@ -490,12 +490,12 @@ namespace ChanSort.Loader.LG
     #region ReadDvbsChannelLinkedList()
     private void ReadDvbsChannelLinkedList(SatChannelListHeader header, ref int off)
     {
-      this.nextChannelIndex = new Dictionary<int, int>();
+      this.nextChannelIndex = new Dictionary<int, ushort>();
       int index = header.LinkedListStartIndex;
       while (index != 0xFFFF)
       {
         int offEntry = off + index*satConfig.sizeOfChannelLinkedListEntry;
-        int nextIndex = BitConverter.ToUInt16(fileContent, offEntry + 2);
+        ushort nextIndex = BitConverter.ToUInt16(fileContent, offEntry + 2);
         if (this.nextChannelIndex.ContainsKey(index)) // prevent infinite loop (exists in some test files)
           break;
         this.nextChannelIndex.Add(index, nextIndex);
@@ -506,10 +506,10 @@ namespace ChanSort.Loader.LG
     #endregion
 
     #region ReadDvbsChannels()
-    private void ReadDvbsChannels(ref int off, int startIndex)
+    private void ReadDvbsChannels(ref int off, ushort startIndex)
     {
       var mapping = GetDvbsChannelMapping();
-      int index = startIndex;
+      ushort index = startIndex;
       for (int i = 0; i < this.dvbsChannelCount; i++)
       {
         int recordOffset = off + index*satConfig.dvbsChannelLength;
@@ -542,7 +542,7 @@ namespace ChanSort.Loader.LG
           this.DataRoot.AddChannel(list, ci);
         }
 
-        if (!this.nextChannelIndex.TryGetValue(index, out index) || index == -1)
+        if (!this.nextChannelIndex.TryGetValue(index, out index) || index == 0xFFFF)
           break;
       }
       off += satConfig.dvbsMaxChannelCount * satConfig.dvbsChannelLength;

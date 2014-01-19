@@ -35,6 +35,8 @@ namespace ChanSort.Api
     public int AudioPid { get; set; }
     public int OriginalNetworkId { get; set; }
     public int TransportStreamId { get; set; }
+    public int Bouquet { get; set; }
+    public string Provider { get; set; }
     public int SymbolRate { get; set; }
     public int ServiceType { get; set; }
     public string Debug { get; private set; }

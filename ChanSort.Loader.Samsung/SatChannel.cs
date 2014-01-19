@@ -1,4 +1,5 @@
-﻿using ChanSort.Api;
+﻿using System.Collections.Generic;
+using ChanSort.Api;
 
 namespace ChanSort.Loader.Samsung
 {
@@ -6,14 +7,14 @@ namespace ChanSort.Loader.Samsung
   {
     private const string _TransponderIndex = "offTransponderIndex";
 
-    public SatChannel(int slot, SignalSource presetList, DataMapping data, DataRoot dataRoot, bool sortedFavorites) :
+    public SatChannel(int slot, SignalSource presetList, DataMapping data, DataRoot dataRoot, bool sortedFavorites, IDictionary<int,string> providerNames) :
       base(data, sortedFavorites)
     {
       this.InitCommonData(slot, SignalSource.DvbS | presetList, data);
       if (!this.InUse)
         return;
 
-      this.InitDvbData(data);
+      this.InitDvbData(data, providerNames);
 
       int transponderIndex = data.GetWord(_TransponderIndex);
       Transponder transponder = dataRoot.Transponder.TryGet(transponderIndex);

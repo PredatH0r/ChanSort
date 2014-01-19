@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using ChanSort.Api;
 
@@ -27,6 +28,7 @@ namespace ChanSort.Loader.Samsung
     private const string _TransportStreamId = "offTransportStreamId";
     private const string _ServiceType = "offServiceType";
     private const string _SymbolRate = "offSymbolRate";
+    private const string _ServiceProviderId = "offServiceProviderId";
 
     private static readonly Encoding Utf16BigEndian = new UnicodeEncoding(true, false);
     private readonly bool sortedFavorites;
@@ -91,7 +93,7 @@ namespace ChanSort.Loader.Samsung
 
 
     #region InitDvbData()
-    protected void InitDvbData(DataMapping data)
+    protected void InitDvbData(DataMapping data, IDictionary<int, string> providerNames)
     {
       this.ShortName = data.GetString(_ShortName, data.Settings.GetInt("lenShortName"));
       this.ServiceId = data.GetWord(_ServiceId);
@@ -102,7 +104,22 @@ namespace ChanSort.Loader.Samsung
       this.TransportStreamId = data.GetWord(_TransportStreamId);
       this.ServiceType = data.GetByte(_ServiceType);
       this.SymbolRate = data.GetWord(_SymbolRate);
-
+      if (data.Settings.GetInt(_ServiceProviderId, -1) != -1)
+      {
+        int source = -1;
+        if ((this.SignalSource & SignalSource.MaskProvider) == SignalSource.Freesat)
+          source = 4;
+        else if ((this.SignalSource & SignalSource.MaskProvider) == SignalSource.TivuSat)
+          source = 6;
+        else if ((this.SignalSource & SignalSource.Antenna) != 0)
+          source = 0;
+        else if ((this.SignalSource & SignalSource.Cable) != 0)
+          source = 1;
+        else if ((this.SignalSource & SignalSource.Sat) != 0)
+          source = 3;
+        int providerId = data.GetWord(_ServiceProviderId);
+        this.Provider = providerNames.TryGet((source << 16) + providerId);
+      }
       this.SignalSource |= LookupData.Instance.IsRadioOrTv(this.ServiceType);
     }
     #endregion

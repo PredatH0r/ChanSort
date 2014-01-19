@@ -90,5 +90,17 @@ namespace ChanSort.Api
         data[offset++] = value;
     }
     #endregion
+
+    #region ReverseByteOrder()
+    public static ushort ReverseByteOrder(ushort input)
+    {
+      return (ushort)(((input & 0x00FF) << 8) | (input >> 8));
+    }
+
+    public static uint ReverseByteOrder(uint input)
+    {
+      return ((input & 0x000000FF) << 24) | ((input & 0x0000FF00) << 8) | ((input & 0x00FF0000) >> 8) | ((input & 0xFF000000) >> 24);
+    }
+    #endregion
   }
 }

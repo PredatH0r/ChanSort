@@ -18,15 +18,17 @@ namespace ChanSort.Loader.Samsung
     private readonly MappingPool<DataMapping> analogFineTuneMappings = new MappingPool<DataMapping>("FineTune");
     private readonly MappingPool<DataMapping> ptccableMappings = new MappingPool<DataMapping>("PTC");
     private readonly MappingPool<DataMapping> transponderMappings = new MappingPool<DataMapping>("TransponderDataBase");
+    private readonly MappingPool<DataMapping> serviceProviderMappings = new MappingPool<DataMapping>("ServiceProvider");
 
     private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT|SignalSource.TvAndRadio, "Analog Air");
     private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC|SignalSource.TvAndRadio, "Analog Cable");
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv, "Digital Air");
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.TvAndRadio, "Digital Cable");
     private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.TvAndRadio, "Satellite");
-    private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Astra HD+");
-    private readonly ChannelList freesatChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Freesat");
     private readonly ChannelList primeChannels = new ChannelList(SignalSource.CablePrimeD | SignalSource.TvAndRadio, "Cable Prime");
+    private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Astra HD+");
+    private readonly ChannelList freesatChannels = new ChannelList(SignalSource.FreesatD | SignalSource.TvAndRadio, "Freesat");
+    private readonly ChannelList tivusatChannels = new ChannelList(SignalSource.TivuSatD | SignalSource.TvAndRadio, "TivuSat");
     
     private readonly Dictionary<int, decimal> avbtFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> avbcFrequency = new Dictionary<int, decimal>();
@@ -41,7 +43,9 @@ namespace ChanSort.Loader.Samsung
     private byte[] hdplusFileContent;
     private byte[] primeFileContent;
     private byte[] freesatFileContent;
+    private byte[] tivusatFileContent;
     private ModelConstants c;
+    private Dictionary<int, string> serviceProviderNames;
 
     #region ctor()
     public ScmSerializer(string inputFile) : base(inputFile)
@@ -84,6 +88,8 @@ namespace ChanSort.Loader.Samsung
           transponderMappings.AddMapping(len, new DataMapping(section));
         else if (section.Name.StartsWith("PTC:"))
           ptccableMappings.AddMapping(len, new DataMapping(section));
+        else if (section.Name.StartsWith("ServiceProvider"))
+          serviceProviderMappings.AddMapping(len, new DataMapping(section));
       }
     }
     #endregion
@@ -101,11 +107,13 @@ namespace ChanSort.Loader.Samsung
         ReadAnalogChannels(zip, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
         ReadAnalogChannels(zip, "map-CableA", this.avbcChannels, out this.avbcFileContent, this.avbcFrequency);
         ReadDvbTransponderFrequenciesFromPtc(zip, "PTCAIR", this.dvbtFrequency);
+        ReadDvbServiceProviders(zip);
         ReadDvbctChannels(zip, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
         ReadDvbTransponderFrequenciesFromPtc(zip, "PTCCABLE", this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
+        ReadDvbctChannels(zip, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
         ReadSatellites(zip);
         ReadTransponder(zip, "TransponderDataBase.dat");
         ReadTransponder(zip, "UserTransponderDataBase.dat");
@@ -139,7 +147,9 @@ namespace ChanSort.Loader.Samsung
         {
           case "1001": series = "C"; break;
           case "1101": series = "D"; break;
-          case "1201": series = "E"; break;
+          case "1201":
+            series = match.Groups[2].Value == "F" ? "F" : "E"; 
+            break;
           default:
             series = match.Groups[1].Value.StartsWith("LT") ? "F" : match.Groups[2].Value;
             break;
@@ -381,6 +391,31 @@ namespace ChanSort.Loader.Samsung
     }
     #endregion
 
+    #region ReadDvbServiceProviders()
+    private void ReadDvbServiceProviders(ZipFile zip)
+    {
+      this.serviceProviderNames = new Dictionary<int, string>();
+      var data = ReadFileContent(zip, "ServiceProviders");
+      if (data == null) return;
+
+      if (data.Length % c.serviceProviderLength != 0) return;
+      var mapping = serviceProviderMappings.GetMapping(c.serviceProviderLength, false);
+      if (mapping == null) return;
+      int count = data.Length/c.serviceProviderLength;
+      var enc = new UnicodeEncoding(true, false);
+      var offName = mapping.Settings.GetInt("offName");
+      for (int i = 0; i < count; i++)
+      {
+        mapping.SetDataPtr(data, i*c.serviceProviderLength);
+        int source = mapping.GetWord("offSignalSource");
+        int index = mapping.GetWord("offIndex");
+        int len = System.Math.Min(mapping.GetWord("offLenName"), c.serviceProviderLength - offName);
+        var name = len < 2 ? "" : enc.GetString(data, mapping.BaseOffset + offName, len);
+        this.serviceProviderNames[(source << 16) + index] = name;
+      }
+    }
+    #endregion
+
     #region ReadDvbctChannels()
     private void ReadDvbctChannels(ZipFile zip, string fileName, ChannelList list, out byte[] data, Dictionary<int, decimal> frequency)
     {
@@ -393,15 +428,15 @@ namespace ChanSort.Loader.Samsung
       if (data == null)
         return;
 
-      bool isCable = (list.SignalSource & SignalSource.Cable) != 0;
       this.DataRoot.AddChannelList(list);
+      var source = list.SignalSource;
       DataMapping rawChannel = dvbctMappings.GetMapping(entrySize);
       list.MaxChannelNameLength = rawChannel.Settings.GetInt("lenName") / 2;
       rawChannel.SetDataPtr(data, 0);
       int count = data.Length / entrySize;
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        DigitalChannel ci = new DigitalChannel(slotIndex, isCable, rawChannel, frequency, c.SortedFavorites);
+        DigitalChannel ci = new DigitalChannel(slotIndex, source, rawChannel, frequency, c.SortedFavorites, this.serviceProviderNames);
         if (ci.InUse && !ci.IsDeleted && ci.OldProgramNr > 0)
           this.DataRoot.AddChannel(list, ci);
 
@@ -489,7 +524,7 @@ namespace ChanSort.Loader.Samsung
       mapping.SetDataPtr(dvbsFileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        SatChannel ci = new SatChannel(slotIndex, SignalSource.StandardSat, mapping, this.DataRoot, c.SortedFavorites);
+        SatChannel ci = new SatChannel(slotIndex, SignalSource.StandardSat, mapping, this.DataRoot, c.SortedFavorites, this.serviceProviderNames);
         if (ci.InUse)
           this.DataRoot.AddChannel(this.dvbsChannels, ci);
 
@@ -512,7 +547,7 @@ namespace ChanSort.Loader.Samsung
       mapping.SetDataPtr(hdplusFileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        SatChannel ci = new SatChannel(slotIndex, SignalSource.AstraHdPlus, mapping, this.DataRoot, c.SortedFavorites);
+        SatChannel ci = new SatChannel(slotIndex, SignalSource.AstraHdPlus, mapping, this.DataRoot, c.SortedFavorites, this.serviceProviderNames);
         if (ci.InUse)
           this.DataRoot.AddChannel(this.hdplusChannels, ci);
         mapping.BaseOffset += entrySize;
@@ -555,6 +590,7 @@ namespace ChanSort.Loader.Samsung
         this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, this.hdplusFileContent);
         this.SaveChannels(zip, "map-CablePrime_D", this.primeChannels, this.primeFileContent);
         this.SaveChannels(zip, "map-FreesatD", this.freesatChannels, this.freesatFileContent);
+        this.SaveChannels(zip, "map-TivusatD", this.tivusatChannels, this.tivusatFileContent);
         zip.CommitUpdate();
       }
     }

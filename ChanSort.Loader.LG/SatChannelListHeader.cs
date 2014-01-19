@@ -15,9 +15,9 @@ namespace ChanSort.Loader.LG
 
     public uint Checksum { get { return BitConverter.ToUInt32(data, baseOffset + 0); } }
 
-    public int LinkedListStartIndex
+    public ushort LinkedListStartIndex
     {
-      get { return BitConverter.ToInt16(data, baseOffset + 8); }
+      get { return BitConverter.ToUInt16(data, baseOffset + 8); }
       set { Tools.SetInt16(data, baseOffset + 8, value); }
     }
     public int LinkedListEndIndex1

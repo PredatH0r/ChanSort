@@ -7,18 +7,16 @@ namespace ChanSort.Loader.Samsung
   {
     private const string _ChannelOrTransponder = "offChannelTransponder";
 
-    public DigitalChannel(int slot, bool isCable, DataMapping data,
-      IDictionary<int, decimal> transpFreq, bool sortedFavorites) :
+    public DigitalChannel(int slot, SignalSource signalSource, DataMapping data,
+      IDictionary<int, decimal> transpFreq, bool sortedFavorites, IDictionary<int, string> providerNames) :
       base(data, sortedFavorites)
     {
-      var signalSource = SignalSource.Digital;
-      signalSource |= isCable ? SignalSource.Cable : SignalSource.Antenna;
-      this.InitCommonData(slot, signalSource, data);
+      this.InitCommonData(slot, (SignalSource)((int)signalSource & ~(int)(SignalSource.TvAndRadio)), data);
       
       if (this.OldProgramNr == 0)
         return;
 
-      this.InitDvbData(data);
+      this.InitDvbData(data, providerNames);
 
       int transp = data.GetByte(_ChannelOrTransponder);
       decimal freq = transpFreq.TryGet(transp);

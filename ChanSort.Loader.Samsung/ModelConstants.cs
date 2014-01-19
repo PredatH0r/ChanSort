@@ -15,6 +15,7 @@ namespace ChanSort.Loader.Samsung
     public readonly int dvbtFineTuneLength;
     public readonly Favorites supportedFavorites;
     public readonly int ptcLength;
+    public readonly int serviceProviderLength;
     public readonly bool SortedFavorites;
 
     public ModelConstants(IniFile.Section iniSection)
@@ -29,6 +30,7 @@ namespace ChanSort.Loader.Samsung
       this.dvbsTransponderLength = iniSection.GetInt("TransponderDataBase.dat");
       this.avbtFineTuneLength = iniSection.GetInt("FineTune");
       this.dvbtFineTuneLength = iniSection.GetInt("FineTune_Digital");
+      this.serviceProviderLength = iniSection.GetInt("ServiceProvider", 108);
       int numFavorites = iniSection.GetInt("Favorites");
       int mask = 0;
       for (int i = 0; i < numFavorites; i++)

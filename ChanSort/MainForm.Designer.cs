@@ -89,6 +89,7 @@
       this.colUid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colNetworkName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colNetworkOperator = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colProvider = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colDebug = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colLogicalIndex = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSignalSource = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -289,7 +290,7 @@
       this.gviewLeft.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewLeft_CellValueChanged);
       this.gviewLeft.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gview_CustomUnboundColumnData);
       this.gviewLeft.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewLeft_CustomColumnDisplayText);
-      this.gviewLeft.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewLeft_LayoutUpgrade);
+      this.gviewLeft.LayoutUpgrade += new DevExpress.Utils.LayoutUpgradeEventHandler(this.gviewLeft_LayoutUpgrade);
       this.gviewLeft.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gview_KeyPress);
       this.gviewLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gview_MouseDown);
       this.gviewLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gview_MouseUp);
@@ -551,6 +552,7 @@
             this.colUid,
             this.colNetworkName,
             this.colNetworkOperator,
+            this.colProvider,
             this.colDebug,
             this.colLogicalIndex,
             this.colSignalSource});
@@ -575,7 +577,7 @@
       this.gviewRight.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewRight_CellValueChanged);
       this.gviewRight.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gview_CustomUnboundColumnData);
       this.gviewRight.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewRight_CustomColumnDisplayText);
-      this.gviewRight.LayoutUpgrade += new DevExpress.Utils.LayoutUpgadeEventHandler(this.gviewRight_LayoutUpgrade);
+      this.gviewRight.LayoutUpgrade += new DevExpress.Utils.LayoutUpgradeEventHandler(this.gviewRight_LayoutUpgrade);
       this.gviewRight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gview_KeyPress);
       this.gviewRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gview_MouseDown);
       this.gviewRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gview_MouseUp);
@@ -777,6 +779,13 @@
       this.colNetworkOperator.FieldName = "NetworkOperator";
       this.colNetworkOperator.Name = "colNetworkOperator";
       this.colNetworkOperator.OptionsColumn.AllowEdit = false;
+      // 
+      // colProvider
+      // 
+      resources.ApplyResources(this.colProvider, "colProvider");
+      this.colProvider.FieldName = "Provider";
+      this.colProvider.Name = "colProvider";
+      this.colProvider.OptionsColumn.AllowEdit = false;
       // 
       // colDebug
       // 
@@ -1814,6 +1823,7 @@
     private DevExpress.XtraGrid.Columns.GridColumn colOutSkip;
     private DevExpress.XtraGrid.Columns.GridColumn colOutHide;
     private DevExpress.XtraBars.BarButtonItem miPrint;
+    private DevExpress.XtraGrid.Columns.GridColumn colProvider;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }
