@@ -110,7 +110,7 @@ namespace ChanSort.Loader.LG
         mapping.SetFlag(_Deleted, true);
         mapping.SetByte("off" + _Moved, 0); //skip,lock,hide,moved
       }
-      else
+      else if ((this.SignalSource&SignalSource.Digital) != 0)
       {
         mapping.SetFlag(_Moved, true);
       }

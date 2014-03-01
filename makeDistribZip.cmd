@@ -2,7 +2,7 @@
 c:\cygwin\bin\date "+%%Y-%%m-%%d">%TEMP%\date.txt
 set /p curdate=<%temp%\date.txt
 set target=%cd%\..\ChanSort_%curdate%
-set DXversion=13.1
+set DXversion=13.2
 mkdir "%target%" 2>nul
 del /s /q "%target%\*"
 copy debug\ChanSort.exe* "%target%"
@@ -28,13 +28,17 @@ pause
 goto:eof
 
 :copyDll
-echo Copying DevExpress %*
-set source="C:\Program Files (x86)\DevExpress\DXperience %DXversion%\Bin\Framework\DevExpress.%*.v%DXversion%.dll"
+echo Copying DevExpress %1
+set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\DevExpress.%1.v%DXversion%.dll"
 if exist %source% copy %source% "%target%"
-set source="C:\Program Files (x86)\DevExpress\DXperience %DXversion%\Bin\Framework\DevExpress.%*.v%DXversion%.Core.dll"
+set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\DevExpress.%1.v%DXversion%.Core.dll"
 if exist %source% copy %source% "%target%"
-set source="C:\Program Files (x86)\DevExpress\DXperience %DXversion%\Bin\Framework\de\DevExpress.%*.v%DXversion%.resources.dll"
-if exist %source% copy %source% "%target%\de"
-set source="C:\Program Files (x86)\DevExpress\DXperience %DXversion%\Bin\Framework\de\DevExpress.%*.v%DXversion%.Core.resources.dll"
-if exist %source% copy %source% "%target%\de"
+for %%l in (de pt) do call :copyLangDll %1 %%l
+goto:eof
+
+:copyLangDll
+set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.resources.dll"
+if exist %source% copy %source% "%target%\%2"
+set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
+if exist %source% copy %source% "%target%\%2"
 goto:eof

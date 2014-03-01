@@ -42,6 +42,14 @@ enum LH_SignalSource : byte
   Cable = 3
 };
 
+enum TLL_EditFlags : byte
+{
+  Lock = 1,
+  Skip = 2,
+  Hide = 3,
+  CustChNr = 64
+};
+
 struct TLL_SettingsBlock
 {
   dword BlockSize;

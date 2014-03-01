@@ -1,8 +1,7 @@
-Version v2014-01-19 =======================================================
+Version v2014-01-27 =======================================================
 
 Changes:
-- show channel "Provider" information for Samsung C,D and E series DVB-C/T 
-  and Satellite channel lists (no data available for Astra HD+)
+- Added support for Samsung "Channel Digital Sat" channel lists
 
 The complete change log can be found at the end of this document
 
@@ -111,6 +110,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-01-27
+- Added support for Samsung "Channel Digital Sat" channel lists
+
+2014-01-21
+- show channel "Provider" information for Samsung C,D and E series DVB-C/T 
+  and Satellite channel lists (no data available for Astra HD+)
 
 2013-12-22
 - Analog channel names loaded from a reference file (.csv, .csm, .tll, ...)

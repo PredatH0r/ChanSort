@@ -26,8 +26,8 @@ namespace ChanSort.Api
     MaskTvRadio = 0x0300,
     Tv = 0x0100,
     Radio = 0x0200,
-    TvAndRadio= Tv|Radio,
-    
+    TvAndRadio = Tv | Radio,
+
     // bit 13-16: Preset list selector (AstraHD+, Freesat, TivuSat, CanalDigitalSat, ... for Samsung)
     MaskProvider = 0xFC00,
     StandardSat = 0 << 12,
@@ -39,18 +39,19 @@ namespace ChanSort.Api
     StandardCable = 0 << 12,
     CablePrime = 1 << 12,
 
-    AnalogC=Analog + Cable, 
-    AnalogT=Analog + Antenna, 
-    AnalogCT=Analog + Cable + Antenna, 
-    DvbC = Digital + Cable, 
-    DvbT= Digital + Antenna, 
-    DvbCT= Digital + Cable + Antenna, 
-    DvbS= Digital + Sat,
+    AnalogC = Analog + Cable,
+    AnalogT = Analog + Antenna,
+    AnalogCT = Analog + Cable + Antenna,
+    DvbC = Digital + Cable,
+    DvbT = Digital + Antenna,
+    DvbCT = Digital + Cable + Antenna,
+    DvbS = Digital + Sat,
 
     CablePrimeD = Digital + Cable + CablePrime,
     HdPlusD = Digital + Sat + AstraHdPlus,
     FreesatD = Digital + Sat + Freesat,
-    TivuSatD = Digital + Sat + TivuSat
+    TivuSatD = Digital + Sat + TivuSat,
+    CanalDigitalSatD = Digital + Sat + CanalDigital
   }
   #endregion
 

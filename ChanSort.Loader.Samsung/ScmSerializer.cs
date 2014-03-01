@@ -29,6 +29,7 @@ namespace ChanSort.Loader.Samsung
     private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Astra HD+");
     private readonly ChannelList freesatChannels = new ChannelList(SignalSource.FreesatD | SignalSource.TvAndRadio, "Freesat");
     private readonly ChannelList tivusatChannels = new ChannelList(SignalSource.TivuSatD | SignalSource.TvAndRadio, "TivuSat");
+    private readonly ChannelList canalDigitalChannels = new ChannelList(SignalSource.CanalDigitalSatD | SignalSource.TvAndRadio, "Canal Digital Sat");
     
     private readonly Dictionary<int, decimal> avbtFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> avbcFrequency = new Dictionary<int, decimal>();
@@ -44,6 +45,7 @@ namespace ChanSort.Loader.Samsung
     private byte[] primeFileContent;
     private byte[] freesatFileContent;
     private byte[] tivusatFileContent;
+    private byte[] canalDigitalFileContent;
     private ModelConstants c;
     private Dictionary<int, string> serviceProviderNames;
 
@@ -114,6 +116,7 @@ namespace ChanSort.Loader.Samsung
         ReadDvbctChannels(zip, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
+        ReadDvbctChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, out this.canalDigitalFileContent, this.dvbcFrequency);
         ReadSatellites(zip);
         ReadTransponder(zip, "TransponderDataBase.dat");
         ReadTransponder(zip, "UserTransponderDataBase.dat");
@@ -591,6 +594,7 @@ namespace ChanSort.Loader.Samsung
         this.SaveChannels(zip, "map-CablePrime_D", this.primeChannels, this.primeFileContent);
         this.SaveChannels(zip, "map-FreesatD", this.freesatChannels, this.freesatFileContent);
         this.SaveChannels(zip, "map-TivusatD", this.tivusatChannels, this.tivusatFileContent);
+        this.SaveChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, this.canalDigitalFileContent);
         zip.CommitUpdate();
       }
     }
