@@ -12,7 +12,10 @@ namespace ChanSort.Ui
       this.gcPlugins.DataSource = plugins;
       
       this.txtCredits.Text = 
-@"Vitor Martins Augusto:
+@"TCr82:
+Support for VDR's channels.conf file format
+
+Vitor Martins Augusto:
 Portuguese translation
 
 PDA-User:

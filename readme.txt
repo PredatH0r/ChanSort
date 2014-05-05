@@ -1,7 +1,8 @@
-Version v2014-01-27 =======================================================
+Version v2014-05-05 =======================================================
 
 Changes:
-- Added support for Samsung "Channel Digital Sat" channel lists
+- Added support for VDR *.conf channel list format 
+  (Thanks to TCr82 for providing this code patch!) 
 
 The complete change log can be found at the end of this document
 
@@ -76,6 +77,10 @@ Toshiba
     dvbMainData.db files.
     (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
 
+VDR (Linux Video Disk Recorder)
+-------
+    Supports the channels.conf file format.
+    Implementation for this was provided by TCr82 from the VDR project.
 
 System requirements =======================================================
 
@@ -110,6 +115,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-05-05
+- Added support for VDR *.conf channel list format 
+  (Thanks to TCr82 for providing this code patch!) 
 
 2014-01-27
 - Added support for Samsung "Channel Digital Sat" channel lists

@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{68DA8072-3A29-4076-9F64-D66F38349585} = {68DA8072-3A29-4076-9F64-D66F38349585}
@@ -27,6 +29,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Panasonic", "ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj", "{68DA8072-3A29-4076-9F64-D66F38349585}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.LG", "Test.Loader.LG\Test.Loader.LG.csproj", "{F943DBFE-D3C3-4885-A38B-375148012FEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.VDR", "ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj", "{74A18C6F-09FF-413E-90D9-827066FA5B36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +97,14 @@ Global
 		{F943DBFE-D3C3-4885-A38B-375148012FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F943DBFE-D3C3-4885-A38B-375148012FEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F943DBFE-D3C3-4885-A38B-375148012FEC}.Release|x86.ActiveCfg = Release|Any CPU
+		{74A18C6F-09FF-413E-90D9-827066FA5B36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74A18C6F-09FF-413E-90D9-827066FA5B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74A18C6F-09FF-413E-90D9-827066FA5B36}.Debug|x86.ActiveCfg = Debug|x86
+		{74A18C6F-09FF-413E-90D9-827066FA5B36}.Debug|x86.Build.0 = Debug|x86
+		{74A18C6F-09FF-413E-90D9-827066FA5B36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74A18C6F-09FF-413E-90D9-827066FA5B36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74A18C6F-09FF-413E-90D9-827066FA5B36}.Release|x86.ActiveCfg = Release|x86
+		{74A18C6F-09FF-413E-90D9-827066FA5B36}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
