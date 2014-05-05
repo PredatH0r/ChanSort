@@ -1,6 +1,5 @@
 @echo off
-c:\cygwin\bin\date "+%%Y-%%m-%%d">%TEMP%\date.txt
-set /p curdate=<%temp%\date.txt
+set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\ChanSort_%curdate%
 set DXversion=13.2
 mkdir "%target%" 2>nul

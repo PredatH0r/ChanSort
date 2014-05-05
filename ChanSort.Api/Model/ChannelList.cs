@@ -134,6 +134,13 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region GetChannelsByNewOrder()
+    public IList<ChannelInfo> GetChannelsByNewOrder()
+    {
+        return this.channels.OrderBy(c => c.NewProgramNr).ToList();
+    }
+    #endregion
+
     #region RemoveChannel()
     public void RemoveChannel(ChannelInfo channel)
     {
