@@ -30,6 +30,7 @@ namespace ChanSort.Loader.Samsung
     private readonly ChannelList freesatChannels = new ChannelList(SignalSource.FreesatD | SignalSource.TvAndRadio, "Freesat");
     private readonly ChannelList tivusatChannels = new ChannelList(SignalSource.TivuSatD | SignalSource.TvAndRadio, "TivuSat");
     private readonly ChannelList canalDigitalChannels = new ChannelList(SignalSource.CanalDigitalSatD | SignalSource.TvAndRadio, "Canal Digital Sat");
+    private readonly ChannelList digitalPlusChannels = new ChannelList(SignalSource.DigitalPlusD | SignalSource.TvAndRadio, "Canal+ Digital");
     
     private readonly Dictionary<int, decimal> avbtFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> avbcFrequency = new Dictionary<int, decimal>();
@@ -46,6 +47,7 @@ namespace ChanSort.Loader.Samsung
     private byte[] freesatFileContent;
     private byte[] tivusatFileContent;
     private byte[] canalDigitalFileContent;
+    private byte[] digitalPlusFileContent;
     private ModelConstants c;
     private Dictionary<int, string> serviceProviderNames;
 
@@ -117,6 +119,7 @@ namespace ChanSort.Loader.Samsung
         ReadDvbctChannels(zip, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, out this.canalDigitalFileContent, this.dvbcFrequency);
+        ReadDvbctChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, out this.digitalPlusFileContent, this.dvbcFrequency);
         ReadSatellites(zip);
         ReadTransponder(zip, "TransponderDataBase.dat");
         ReadTransponder(zip, "UserTransponderDataBase.dat");
@@ -189,14 +192,13 @@ namespace ChanSort.Loader.Samsung
     #region DetectModelFromContentFileLengths()
     private bool DetectModelFromContentFileLengths(ZipFile zip)
     {
-      string[] candidates = new[]
-                              {
-                                DetectModelFromAirAOrCableA(zip),
-                                DetectModelFromAirDOrCableD(zip),
-                                DetectModelFromSateD(zip),
-                                DetectModelFromTranspoderDatabase(zip),
-                                DetectModelFromAstraHdPlusD(zip)
-                              };
+      string[] candidates = {
+                              DetectModelFromAirAOrCableA(zip),
+                              DetectModelFromAirDOrCableD(zip),
+                              DetectModelFromSateD(zip),
+                              DetectModelFromTranspoderDatabase(zip),
+                              DetectModelFromAstraHdPlusD(zip)
+                            };
 
       // note: E, F and B(2013) series use an identical format, so we only care about E here
       string validCandidates = "BCDE";
@@ -243,7 +245,8 @@ namespace ChanSort.Loader.Samsung
     #region DetectModelFromAirDOrCableD()
     private string DetectModelFromAirDOrCableD(ZipFile zip)
     {
-      var entry = zip.GetEntry("map-AirD") ?? zip.GetEntry("map-CableD") ?? zip.GetEntry("map-CablePrime_D");
+      var entry = zip.GetEntry("map-AirD") ?? zip.GetEntry("map-CableD") ?? zip.GetEntry("map-CablePrime_D") ?? zip.GetEntry("map-FreesatD")
+        ?? zip.GetEntry("map-TivusatD") ?? zip.GetEntry("map-CanalDigitalSatD") ?? zip.GetEntry("map-DigitalPlusD");
       if (entry == null)
         return null;
 
@@ -595,6 +598,7 @@ namespace ChanSort.Loader.Samsung
         this.SaveChannels(zip, "map-FreesatD", this.freesatChannels, this.freesatFileContent);
         this.SaveChannels(zip, "map-TivusatD", this.tivusatChannels, this.tivusatFileContent);
         this.SaveChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, this.canalDigitalFileContent);
+        this.SaveChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, this.digitalPlusFileContent);
         zip.CommitUpdate();
       }
     }
@@ -648,8 +652,11 @@ namespace ChanSort.Loader.Samsung
         if ((list.SignalSource & SignalSource.Digital) == 0)
           continue;
         var listOfChannels = new List<ChannelInfo>(list.Channels);
-        foreach (ScmChannelBase channel in listOfChannels)
+        foreach (var chan in listOfChannels)
         {
+          ScmChannelBase channel = chan as ScmChannelBase;
+          if (channel == null) // ignore proxy channels (which only exist in loaded reference list)
+            continue;
           if (channel.ServiceType == 0)
           {
             channel.EraseRawData();

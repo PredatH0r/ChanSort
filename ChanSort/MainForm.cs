@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2014-05-05";
+    public const string AppVersion = "v2014-05-06";
 
     private const int MaxMruEntries = 10;
 
@@ -697,7 +697,7 @@ namespace ChanSort.Ui
 
       string ext = (Path.GetExtension(fileName)??"").ToLower();
       if (ext == ".csv")
-        new CsvFileSerializer(this.currentCsvFile, this.dataRoot, false).Save();
+        new CsvFileSerializer(fileName, this.dataRoot, false).Save();
       else if (ext == ".chl")
         new ChlFileSerializer().Save(fileName, this.currentChannelList);
     }

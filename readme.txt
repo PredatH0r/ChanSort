@@ -1,8 +1,9 @@
-Version v2014-05-05 =======================================================
+Version v2014-05-06 =======================================================
 
 Changes:
-- Added support for VDR *.conf channel list format 
-  (Thanks to TCr82 for providing this code patch!) 
+- Added support for Canal+ Digital channel list (map-DigitalPlusD)
+- Fixed: "Save reference file" ignored the entered filename for .csv lists
+- Improved file format detection for Freesat, Tivusat, Canal Digital Sat
 
 The complete change log can be found at the end of this document
 
@@ -115,6 +116,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-05-06
+- Added support for Canal+ Digital channel list (map-DigitalPlusD)
+- Fixed: "Save reference file" ignored the entered filename for .csv lists
+- Improved file format detection for Freesat, Tivusat, Canal Digital Sat
 
 2014-05-05
 - Added support for VDR *.conf channel list format 
