@@ -112,7 +112,9 @@ namespace ChanSort.Loader.GlobalClone
           ch.OldProgramNr = int.Parse(info.InnerText) & 0x3FFF;
           break;
         case "vchName":
-          ch.Name = ParseName(info.InnerText);
+          var name = ParseName(info.InnerText);
+          if (string.IsNullOrWhiteSpace(ch.Name) || !string.IsNullOrWhiteSpace(name)) // avoid overwriting valid name from <hexVchName> with empty <vchName>
+            ch.Name = name;
           break;
         case "sourceIndex":
           var source = int.Parse(info.InnerText);
