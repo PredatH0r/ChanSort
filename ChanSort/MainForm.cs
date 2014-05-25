@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2014-05-06";
+    public const string AppVersion = "v2014-05-25";
 
     private const int MaxMruEntries = 10;
 
@@ -351,12 +351,15 @@ namespace ChanSort.Ui
         XtraMessageBox.Show(this, String.Format(Resources.MainForm_LoadTll_SourceTllNotFound, inputFileName));
         return null;
       }
-      string extension = (Path.GetExtension(inputFileName) ?? "").ToUpper();
       string upperFileName = (Path.GetFileName(inputFileName) ??"").ToUpper();
       foreach (var plugin in this.plugins)
       {
-        if ((plugin.FileFilter.ToUpper()+"|").Contains("*"+extension) || plugin.FileFilter.ToUpper() == upperFileName)
-          return plugin;
+        foreach (var filter in plugin.FileFilter.ToUpper().Split('|'))
+        {
+          var regex = filter.Replace(".", "\\.").Replace("*", ".*").Replace("?", ".");
+          if (System.Text.RegularExpressions.Regex.IsMatch(upperFileName, regex))
+            return plugin;
+        }
       }
 
       XtraMessageBox.Show(this, String.Format(Resources.MainForm_LoadTll_SerializerNotFound, inputFileName));

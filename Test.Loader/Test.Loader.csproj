@@ -78,6 +78,10 @@
       <Name>ChanSort.Api</Name>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.GlobalClone\ChanSort.Loader.GlobalClone.csproj">
+      <Project>{5361c8cb-f737-4709-af8c-e1f0456f3c5b}</Project>
+      <Name>ChanSort.Loader.GlobalClone</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Toshiba\ChanSort.Loader.Toshiba.csproj">
       <Project>{F6F02792-07F1-48D5-9AF3-F945CA5E3931}</Project>
       <Name>ChanSort.Loader.Toshiba</Name>

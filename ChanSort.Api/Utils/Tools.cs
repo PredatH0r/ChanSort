@@ -102,5 +102,19 @@ namespace ChanSort.Api
       return ((input & 0x000000FF) << 24) | ((input & 0x0000FF00) << 8) | ((input & 0x00FF0000) >> 8) | ((input & 0xFF000000) >> 24);
     }
     #endregion
+
+    public static byte[] HexDecode(string input)
+    {
+      var bytes = new byte[input.Length/2];
+      for (int i = 0, c = input.Length/2; i < c; i++)
+      {
+        char ch = Char.ToUpper(input[i*2]);
+        var high = Char.IsDigit(ch) ? ch - '0' : ch - 'A' + 10;
+        ch = input[i*2 + 1];
+        var low = Char.IsDigit(ch) ? ch - '0' : ch - 'A' + 10;
+        bytes[i] = (byte)((high << 4) | low);
+      }
+      return bytes;
+    }
   }
 }
