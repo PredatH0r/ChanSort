@@ -1,9 +1,11 @@
-Version v2014-05-06 =======================================================
+Version v2014-05-26 (beta) ================================================
 
 Changes:
-- Added support for Canal+ Digital channel list (map-DigitalPlusD)
-- Fixed: "Save reference file" ignored the entered filename for .csv lists
-- Improved file format detection for Freesat, Tivusat, Canal Digital Sat
+- supports LG's 2014 LB5xx models' xxLB5*.TLL satellite channel lists
+  (works for satellite channels. DVB-C/T are not implemented due to lack of
+  test files)
+- supports LG's 2014 LB6xx and higher models' GlobalClone.TLL channel lists
+  (deleting channels is not yet implemented)
 
 The complete change log can be found at the end of this document
 
@@ -116,6 +118,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-05-26 (beta)
+- supports LG's 2014 LB5xx models' xxLB5*.TLL satellite channel lists
+  (works for satellite channels. DVB-C/T are not implemented due to lack of
+  test files)
+- supports LG's 2014 LB6xx and higher models' GlobalClone.TLL channel lists
+  (deleting channels is not yet implemented)
 
 2014-05-06
 - Added support for Canal+ Digital channel list (map-DigitalPlusD)
