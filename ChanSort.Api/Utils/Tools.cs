@@ -103,6 +103,7 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region HexDecode()
     public static byte[] HexDecode(string input)
     {
       var bytes = new byte[input.Length/2];
@@ -110,11 +111,12 @@ namespace ChanSort.Api
       {
         char ch = Char.ToUpper(input[i*2]);
         var high = Char.IsDigit(ch) ? ch - '0' : ch - 'A' + 10;
-        ch = input[i*2 + 1];
+        ch = Char.ToUpper(input[i*2 + 1]);
         var low = Char.IsDigit(ch) ? ch - '0' : ch - 'A' + 10;
         bytes[i] = (byte)((high << 4) | low);
       }
       return bytes;
     }
+    #endregion
   }
 }

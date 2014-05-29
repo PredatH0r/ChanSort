@@ -1,10 +1,10 @@
-Version v2014-05-26 (beta) ================================================
+Version v2014-05-29 =======================================================
 
 Changes:
-- supports LG's 2014 LB5xx models' xxLB5*.TLL satellite channel lists
-  (works for satellite channels. DVB-C/T are not implemented due to lack of
-  test files)
-- supports LG's 2014 LB6xx and higher models' GlobalClone.TLL channel lists
+- supports LG LB55xx and LB56xx xxLB*.TLL channel lists 
+- supports LG LB58xx*.TLL channel lists
+  (satellite channels ONLY due to lack of DVB-C/T test files)
+- supports LG *Clone*.TLL channel lists (e.g. LA8xxx, LB6xxx, LB7xxx models)
   (deleting channels is not yet implemented)
 
 The complete change log can be found at the end of this document
@@ -54,8 +54,8 @@ Samsung
 
 LG
 ------
-    Series: CS, DM, LA, LD, LE, LH, LK, LM*, LN, LP**, LS, LT, LV, LW, LX, 
-            PM, PN, PT
+    Series: CS, DM, LA, LB, LD, LE, LH, LK, LM*, LN, LP**, LS, LT, LV, LW,
+            LX, PM, PN, PT
     Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), 
             Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
   
@@ -119,11 +119,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ================================================================
 
-2014-05-26 (beta)
-- supports LG's 2014 LB5xx models' xxLB5*.TLL satellite channel lists
-  (works for satellite channels. DVB-C/T are not implemented due to lack of
-  test files)
-- supports LG's 2014 LB6xx and higher models' GlobalClone.TLL channel lists
+2014-05-29
+- supports LG LB55xx and LB56xx xxLB*.TLL channel lists 
+- supports LG LB58xx*.TLL channel lists
+  (satellite channels ONLY due to lack of DVB-C/T test files)
+- supports LG *Clone*.TLL channel lists (e.g. LA8xxx, LB6xxx, LB7xxx models)
   (deleting channels is not yet implemented)
 
 2014-05-06
