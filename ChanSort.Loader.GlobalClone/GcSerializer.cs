@@ -297,8 +297,22 @@ namespace ChanSort.Loader.GlobalClone
           }
         }
       }
-      
-      doc.Save(tvOutputFile);
+
+      // by default .NET reformats the whole XML. These settings produce the same format as the TV xml files use
+      var settings = new XmlWriterSettings();
+      settings.Encoding = new UTF8Encoding(false);
+      settings.Indent = true;
+      settings.NewLineChars = "\r\n";
+      settings.NewLineHandling = NewLineHandling.Replace;
+      settings.OmitXmlDeclaration = true;
+      settings.IndentChars = "";
+      using (StringWriter sw = new StringWriter())
+      using (XmlWriter xw = XmlWriter.Create(sw, settings))
+      {
+        doc.Save(xw);
+        var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n" + sw;
+        File.WriteAllText(tvOutputFile, xml, settings.Encoding);
+      }
     }
     #endregion
 

@@ -1,6 +1,7 @@
-Version v2014-05-29 =======================================================
+Version v2014-05-30 =======================================================
 
 Changes:
+- fixed issues with LG "GlobalClone" XML file format
 - supports LG LB55xx and LB56xx xxLB*.TLL channel lists 
 - supports LG LB58xx*.TLL channel lists
   (satellite channels ONLY due to lack of DVB-C/T test files)
@@ -118,6 +119,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-05-30
+- fixed issues with LG "GlobalClone" XML file format
 
 2014-05-29
 - supports LG LB55xx and LB56xx xxLB*.TLL channel lists 
