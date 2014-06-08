@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2014-05-30";
+    public const string AppVersion = "v2014-06-08.2";
 
     private const int MaxMruEntries = 10;
 
@@ -354,7 +354,7 @@ namespace ChanSort.Ui
       string upperFileName = (Path.GetFileName(inputFileName) ??"").ToUpper();
       foreach (var plugin in this.plugins)
       {
-        foreach (var filter in plugin.FileFilter.ToUpper().Split('|'))
+        foreach (var filter in plugin.FileFilter.ToUpper().Split(';'))
         {
           var regex = filter.Replace(".", "\\.").Replace("*", ".*").Replace("?", ".");
           if (System.Text.RegularExpressions.Regex.IsMatch(upperFileName, regex))

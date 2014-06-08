@@ -1,12 +1,7 @@
-Version v2014-05-30 =======================================================
+Version v2014-06-08.2 =====================================================
 
 Changes:
-- fixed issues with LG "GlobalClone" XML file format
-- supports LG LB55xx and LB56xx xxLB*.TLL channel lists 
-- supports LG LB58xx*.TLL channel lists
-  (satellite channels ONLY due to lack of DVB-C/T test files)
-- supports LG *Clone*.TLL channel lists (e.g. LA8xxx, LB6xxx, LB7xxx models)
-  (deleting channels is not yet implemented)
+- added support for LG xxLB580V analog and DVB-C/T channel lists
 
 The complete change log can be found at the end of this document
 
@@ -119,6 +114,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-06-08.2
+- added support for LG xxLB580V analog and DVB-C/T channel lists
+
+2014-06-08
+- fixed loading of Panasonic svl.db / svl.bin files
 
 2014-05-30
 - fixed issues with LG "GlobalClone" XML file format

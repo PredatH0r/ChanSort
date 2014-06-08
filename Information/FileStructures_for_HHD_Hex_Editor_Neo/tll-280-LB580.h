@@ -20,7 +20,7 @@ typedef TLL52_Lnb TLL_Lnb;
 
 #include "tll-satellite.h"
 
-struct LB244_AnalogChannel
+struct LB280_AnalogChannel
 {
   byte t1[8];
   TLL_SignalSource SignalSource;
@@ -35,7 +35,7 @@ struct LB244_AnalogChannel
   word APID1;
   byte ChannelNumberInBand;
   byte ChannelBand;
-  byte t3[18];
+  byte t3[14];
   char CH_Name1[40];
   byte CH_NameLength1;
   byte t4;
@@ -49,9 +49,8 @@ struct LB244_AnalogChannel
   byte t6[6];
   word ONID;
   word TSID;
-  byte t7[19];
+  byte t7[32];
   word ChannelTransponder3;
-  byte t7b;
   word ProgramNr2;
   word LogicalProgramNr2;
   word ChannelTransponder4;
@@ -61,22 +60,22 @@ struct LB244_AnalogChannel
   byte ServiceType; 
   byte CH_NameLength2;
   char CH_Name2[40];
-  byte t10[0];
+  byte t10[12];
   word Frequency2Div50;
   word APID2;
   word u1;
   word u2;
-  byte t11[8];
+  byte t11[20];
 };
 
-struct LB244_AnalogBlock
+struct LB280_AnalogBlock
 {
   dword BlockSize; 
   dword ChannelCount;
-  LB244_AnalogChannel Channels[ChannelCount];
+  LB280_AnalogChannel Channels[ChannelCount];
 };
 
-struct LB244_HotelSettings
+struct LB280_HotelSettings
 {
   byte HotelModeActive;
   byte PowerOnStatus;
@@ -106,15 +105,15 @@ struct LB244_HotelSettings
   byte AccessCode[4];
 };
 
-struct LB244_FirmwareBlock
+struct LB280_FirmwareBlock
 {
   dword BlockSize;
-  byte u[17808];
-  // LB244_HotelSettings HotelSettings;  
-  // byte Data[BlockSize - 38251 - sizeof(LB244_HotelSettings)];
+  byte u[0x9B00];
+  // LB280_HotelSettings HotelSettings;  
+  // byte Data[BlockSize - 38251 - sizeof(LB280_HotelSettings)];
 };
 
-struct LB244_DvbCtChannel
+struct LB280_DvbCtChannel
 {
   byte t1[8];
   TLL_SignalSource SignalSource;
@@ -129,7 +128,7 @@ struct LB244_DvbCtChannel
   word APID1;
   byte t2c[8];
   word VPID1;
-  byte t3[6];
+  byte t3[2];
   char CH_Name1[40];
   byte CH_NameLength1;
   byte t4;
@@ -145,9 +144,8 @@ struct LB244_DvbCtChannel
   word TSID;
   word NID;
   dword SpecialData;
-  byte t7[13];
+  byte t7[26];
   word ChannelTransponder3;
-  byte t7b;
   word ProgramNr2;
   word LogicalProgramNr2;
   word ChannelTransponder4;
@@ -157,19 +155,19 @@ struct LB244_DvbCtChannel
   byte ServiceType; 
   byte CH_NameLength2;
   char CH_Name2[40];
-  byte t10[0];
+  byte t10[12];
   word PcrPid2;
   word APID2;
   word u1;
   word u2;
-  byte t11[8];
+  byte t11[20];
 };
 
-struct LB244_DvbCTBlock
+struct LB280_DvbCTBlock
 {
   dword BlockSize;
   dword ChannelCount;
-  LB244_DvbCtChannel Channels[ChannelCount];
+  LB280_DvbCtChannel Channels[ChannelCount];
 };
 
 struct TLL48_Satellite // ok
@@ -243,13 +241,13 @@ struct TLL52_Lnb
 };
 
 
-public struct LB244
+public struct LB280
 {
   byte Header[4]; 
   
-  LB244_AnalogBlock Analog;
-  LB244_FirmwareBlock Firmware;
-  LB244_DvbCTBlock DvbCT;
+  LB280_AnalogBlock Analog;
+  LB280_FirmwareBlock Firmware;
+  LB280_DvbCTBlock DvbCT;
   TLL_DvbSBlock DvbS;
   TLL_SettingsBlock Settings;
 };
