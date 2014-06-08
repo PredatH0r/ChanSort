@@ -1,7 +1,7 @@
-Version v2014-06-08.2 =====================================================
+Version v2014-06-08.3 =====================================================
 
 Changes:
-- added support for LG xxLB580V analog and DVB-C/T channel lists
+- fixed problem with Toshiba lists that refer to invalid satellites
 
 The complete change log can be found at the end of this document
 
@@ -114,6 +114,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-06-08.3
+- fixed problem with Toshiba lists that refer to invalid satellites
 
 2014-06-08.2
 - added support for LG xxLB580V analog and DVB-C/T channel lists

@@ -193,9 +193,10 @@ namespace ChanSort.Loader.Toshiba
         while (r.Read())
         {
           int satId = r.IsDBNull(0) ? 0 : r.GetInt32(0);
-          string format = satId != 0 ? "S{0}-{1}-{2}-{3}" : "C-{1}-{2}-{3}";
-          string uid = string.Format(format, this.DataRoot.Satellites.TryGet(satId).OrbitalPosition,
-                                r.GetInt32(1), r.GetInt32(2), r.GetInt32(3));
+          var sat = this.DataRoot.Satellites.TryGet(satId);
+          var satPos = sat != null ? sat.OrbitalPosition : "0.0";
+          string format = sat != null ? "S{0}-{1}-{2}-{3}" : "C-{1}-{2}-{3}";
+          string uid = string.Format(format, satPos, r.GetInt32(1), r.GetInt32(2), r.GetInt32(3));
           this.channelInfoByUid[uid] = r.GetInt32(4) != 0;
         }
       }
