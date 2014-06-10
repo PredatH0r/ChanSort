@@ -1,7 +1,9 @@
-Version v2014-06-08.3 =====================================================
+Version v2014-06-10 =======================================================
 
 Changes:
-- fixed problem with Toshiba lists that refer to invalid satellites
+- fixed problem with incorrect favorites when applying a reference list
+- added function "Edit / Renumber Favorites by Pr#" to use the same numbers
+  in all lists
 
 The complete change log can be found at the end of this document
 
@@ -114,6 +116,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2015-06-10
+- fixed problem with incorrect favorites when applying a reference list
+- added function "Edit / Renumber Favorites by Pr#" to use the same numbers
+  in all lists
 
 2014-06-08.3
 - fixed problem with Toshiba lists that refer to invalid satellites

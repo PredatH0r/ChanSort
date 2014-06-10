@@ -121,6 +121,7 @@
       this.miRenameChannel = new DevExpress.XtraBars.BarButtonItem();
       this.miSort = new DevExpress.XtraBars.BarButtonItem();
       this.miRenum = new DevExpress.XtraBars.BarButtonItem();
+      this.miRenumFavByPrNr = new DevExpress.XtraBars.BarButtonItem();
       this.mnuFavSet = new DevExpress.XtraBars.BarSubItem();
       this.miFavSet = new DevExpress.XtraBars.BarListItem();
       this.mnuFavUnset = new DevExpress.XtraBars.BarSubItem();
@@ -917,9 +918,10 @@
             this.miExcelExport,
             this.miPortuguese,
             this.miAddFromRefList,
-            this.miPrint});
+            this.miPrint,
+            this.miRenumFavByPrNr});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 63;
+      this.barManager1.MaxItemId = 64;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1115,6 +1117,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miRenameChannel),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSort),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRenum),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRenumFavByPrNr),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuFavSet, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavUnset),
             new DevExpress.XtraBars.LinkPersistInfo(this.miLockOn, true),
@@ -1171,6 +1174,13 @@
       this.miRenum.ImageIndex = 22;
       this.miRenum.Name = "miRenum";
       this.miRenum.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenum_ItemClick);
+      // 
+      // miRenumFavByPrNr
+      // 
+      resources.ApplyResources(this.miRenumFavByPrNr, "miRenumFavByPrNr");
+      this.miRenumFavByPrNr.Id = 63;
+      this.miRenumFavByPrNr.Name = "miRenumFavByPrNr";
+      this.miRenumFavByPrNr.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenumFavByPrNr_ItemClick);
       // 
       // mnuFavSet
       // 
@@ -1824,6 +1834,7 @@
     private DevExpress.XtraGrid.Columns.GridColumn colOutHide;
     private DevExpress.XtraBars.BarButtonItem miPrint;
     private DevExpress.XtraGrid.Columns.GridColumn colProvider;
+    private DevExpress.XtraBars.BarButtonItem miRenumFavByPrNr;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2014-06-08.3";
+    public const string AppVersion = "v2014-06-10";
 
     private const int MaxMruEntries = 10;
 
@@ -2404,7 +2404,12 @@ namespace ChanSort.Ui
     }
     #endregion
 
-
-
+    #region miRenumFavByPrNr_ItemClick
+    private void miRenumFavByPrNr_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.editor.ApplyPrNrToFavLists);
+      this.RefreshGrid(this.gviewLeft, this.gviewRight);
+    }
+    #endregion
   }
 }

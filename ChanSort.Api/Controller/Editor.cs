@@ -219,7 +219,7 @@ namespace ChanSort.Api
           if (tvChannel != null)
           {
             tvChannel.SetPosition(this.SubListIndex, refChannel.OldProgramNr);
-            tvChannel.Favorites = refChannel.Favorites;
+            tvChannel.Favorites = refChannel.Favorites & DataRoot.SupportedFavorites;
             tvChannel.Skip = refChannel.Skip;
             tvChannel.Lock = refChannel.Lock;
             tvChannel.Hidden = refChannel.Hidden;
@@ -228,6 +228,19 @@ namespace ChanSort.Api
             {
               tvChannel.Name = refChannel.Name;
               tvChannel.IsNameModified = true;
+            }
+            if (this.DataRoot.SortedFavorites)
+            {
+              if (refDataRoot.SortedFavorites)
+              {
+                var c = Math.Min(refChannel.FavIndex.Count, tvChannel.FavIndex.Count);
+                for (int i = 0; i < c; i++)
+                  tvChannel.FavIndex[i] = refChannel.FavIndex[i];
+              }
+              else
+              {
+                this.ApplyPrNrToFavLists(tvChannel);
+              }               
             }
           }
           else
@@ -239,6 +252,7 @@ namespace ChanSort.Api
         }
       }
     }
+
 
     #endregion
 
@@ -351,6 +365,37 @@ namespace ChanSort.Api
         }
       }
     }
+    #endregion
+
+    #region ApplyPrNrToFavLists()
+    public void ApplyPrNrToFavLists()
+    {
+      if (!this.DataRoot.SortedFavorites)
+        return;
+
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        foreach(var channel in list.Channels)
+          this.ApplyPrNrToFavLists(channel);
+      }
+    }
+
+    /// <summary>
+    /// Set the number inside the favorites list to the same number as Pr#
+    /// </summary>
+    /// <param name="tvChannel"></param>
+    private void ApplyPrNrToFavLists(ChannelInfo tvChannel)
+    {
+      var supMask = (int)this.DataRoot.SupportedFavorites;
+      var refMask = (int)tvChannel.Favorites;
+      for (int i = 0; supMask != 0; i++)
+      {
+        tvChannel.FavIndex[i] = (refMask & 0x01) == 0 ? -1 : tvChannel.OldProgramNr;
+        supMask >>= 1;
+        refMask >>= 1;
+      }
+    }
+
     #endregion
   }
 }
