@@ -464,14 +464,38 @@
   <data name="mnuFavSet.Caption" xml:space="preserve">
     <value>Add to &amp;Favorites</value>
   </data>
-  <data name="miFavSet.Caption" xml:space="preserve">
-    <value>Add to favorites</value>
+  <data name="miFavASet.Caption" xml:space="preserve">
+    <value>Set &amp;A</value>
+  </data>
+  <data name="miFavBSet.Caption" xml:space="preserve">
+    <value>Set &amp;B</value>
+  </data>
+  <data name="miFavCSet.Caption" xml:space="preserve">
+    <value>Set &amp;C</value>
+  </data>
+  <data name="miFavDSet.Caption" xml:space="preserve">
+    <value>Set &amp;D</value>
+  </data>
+  <data name="miFavESet.Caption" xml:space="preserve">
+    <value>Set &amp;E</value>
   </data>
   <data name="mnuFavUnset.Caption" xml:space="preserve">
     <value>Remove from Favorites</value>
   </data>
-  <data name="miFavUnset.Caption" xml:space="preserve">
-    <value>Favoriten entfernen</value>
+  <data name="miFavAUnset.Caption" xml:space="preserve">
+    <value>Unset &amp;A</value>
+  </data>
+  <data name="miFavBUnset.Caption" xml:space="preserve">
+    <value>Unset &amp;B</value>
+  </data>
+  <data name="miFavCUnset.Caption" xml:space="preserve">
+    <value>Unset &amp;C</value>
+  </data>
+  <data name="miFavDUnset.Caption" xml:space="preserve">
+    <value>Unset &amp;D</value>
+  </data>
+  <data name="miFavEUnset.Caption" xml:space="preserve">
+    <value>Unset &amp;E</value>
   </data>
   <data name="miLockOn.Caption" xml:space="preserve">
     <value>&amp;Lock channel: on</value>
@@ -530,6 +554,33 @@
   <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
     <value>Show warnings after loading file</value>
   </data>
+  <data name="barSubItem3.Caption" xml:space="preserve">
+    <value>&amp;Accessibility</value>
+  </data>
+  <data name="miGotoInputSource.Caption" xml:space="preserve">
+    <value>&amp;Input source selection</value>
+  </data>
+  <data name="miGotoInputSource.Hint" xml:space="preserve">
+    <value>Press Alt+1 to Alt+9 to select a specific input source</value>
+  </data>
+  <data name="miGotoFavList.Caption" xml:space="preserve">
+    <value>&amp;Favorite list selection</value>
+  </data>
+  <data name="miGotoFavList.Hint" xml:space="preserve">
+    <value>Press Ctrl+Alt+0 to Ctrl+Alt+5 to switch between program and favorite lists</value>
+  </data>
+  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+    <value>&amp;Left list filter</value>
+  </data>
+  <data name="miGotoLeftList.Caption" xml:space="preserve">
+    <value>Left list</value>
+  </data>
+  <data name="miRightListFilter.Caption" xml:space="preserve">
+    <value>&amp;Right list filter</value>
+  </data>
+  <data name="miGotoRightList.Caption" xml:space="preserve">
+    <value>Right list</value>
+  </data>
   <data name="mnuHelp.Caption" xml:space="preserve">
     <value>&amp;Help</value>
   </data>
@@ -584,6 +635,16 @@
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
         X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
         WIeWYGkVXQEL
+</value>
+  </data>
+  <data name="barManager1.Categories4" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v13.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMy4yLCBWZXJzaW9uPTEz
+        LjIuOS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAADUFjY2Vzc2liaWxpdHkE/P///wtTeXN0ZW0uR3VpZAsA
+        AAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICeIvz
+        nH8WlU24SIo8kTIJxAEL
 </value>
   </data>
   <data name="barDockControlTop.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1382,11 +1443,35 @@
   <data name="&gt;&gt;mnuFavSet.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miFavSet.Name" xml:space="preserve">
-    <value>miFavSet</value>
+  <data name="&gt;&gt;miFavASet.Name" xml:space="preserve">
+    <value>miFavASet</value>
   </data>
-  <data name="&gt;&gt;miFavSet.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  <data name="&gt;&gt;miFavASet.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavBSet.Name" xml:space="preserve">
+    <value>miFavBSet</value>
+  </data>
+  <data name="&gt;&gt;miFavBSet.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavCSet.Name" xml:space="preserve">
+    <value>miFavCSet</value>
+  </data>
+  <data name="&gt;&gt;miFavCSet.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavDSet.Name" xml:space="preserve">
+    <value>miFavDSet</value>
+  </data>
+  <data name="&gt;&gt;miFavDSet.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavESet.Name" xml:space="preserve">
+    <value>miFavESet</value>
+  </data>
+  <data name="&gt;&gt;miFavESet.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;mnuFavUnset.Name" xml:space="preserve">
     <value>mnuFavUnset</value>
@@ -1394,11 +1479,35 @@
   <data name="&gt;&gt;mnuFavUnset.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miFavUnset.Name" xml:space="preserve">
-    <value>miFavUnset</value>
+  <data name="&gt;&gt;miFavAUnset.Name" xml:space="preserve">
+    <value>miFavAUnset</value>
   </data>
-  <data name="&gt;&gt;miFavUnset.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  <data name="&gt;&gt;miFavAUnset.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavBUnset.Name" xml:space="preserve">
+    <value>miFavBUnset</value>
+  </data>
+  <data name="&gt;&gt;miFavBUnset.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavCUnset.Name" xml:space="preserve">
+    <value>miFavCUnset</value>
+  </data>
+  <data name="&gt;&gt;miFavCUnset.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavDUnset.Name" xml:space="preserve">
+    <value>miFavDUnset</value>
+  </data>
+  <data name="&gt;&gt;miFavDUnset.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miFavEUnset.Name" xml:space="preserve">
+    <value>miFavEUnset</value>
+  </data>
+  <data name="&gt;&gt;miFavEUnset.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;miLockOn.Name" xml:space="preserve">
     <value>miLockOn</value>
@@ -1508,6 +1617,48 @@
   <data name="&gt;&gt;miShowWarningsAfterLoad.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarCheckItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;barSubItem3.Name" xml:space="preserve">
+    <value>barSubItem3</value>
+  </data>
+  <data name="&gt;&gt;barSubItem3.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miGotoInputSource.Name" xml:space="preserve">
+    <value>miGotoInputSource</value>
+  </data>
+  <data name="&gt;&gt;miGotoInputSource.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miGotoFavList.Name" xml:space="preserve">
+    <value>miGotoFavList</value>
+  </data>
+  <data name="&gt;&gt;miGotoFavList.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miGotoLeftFilter.Name" xml:space="preserve">
+    <value>miGotoLeftFilter</value>
+  </data>
+  <data name="&gt;&gt;miGotoLeftFilter.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miGotoLeftList.Name" xml:space="preserve">
+    <value>miGotoLeftList</value>
+  </data>
+  <data name="&gt;&gt;miGotoLeftList.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miRightListFilter.Name" xml:space="preserve">
+    <value>miRightListFilter</value>
+  </data>
+  <data name="&gt;&gt;miRightListFilter.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miGotoRightList.Name" xml:space="preserve">
+    <value>miGotoRightList</value>
+  </data>
+  <data name="&gt;&gt;miGotoRightList.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;mnuHelp.Name" xml:space="preserve">
     <value>mnuHelp</value>
   </data>
@@ -1575,7 +1726,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v13.2, Version=13.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>06/10/2014 17:55:01</value>
+    <value>07/08/2014 22:14:23</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>

@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2014-06-10";
+    public const string AppVersion = "v2014-07-08";
 
     private const int MaxMruEntries = 10;
 
@@ -298,14 +298,12 @@ namespace ChanSort.Ui
     #region UpdateFavoritesEditor()
     private void UpdateFavoritesEditor(Favorites favorites)
     {
-      this.miFavSet.Strings.Clear();
-      this.miFavUnset.Strings.Clear();
       this.repositoryItemCheckedComboBoxEdit1.Items.Clear();
       this.repositoryItemCheckedComboBoxEdit2.Items.Clear();
       byte mask = 0x01;
       string regex = "[";
       int favCount = 0;
-      for (int bit=0; bit<8; bit++, mask<<=1)
+      for (int bit=0; bit<5; bit++, mask<<=1)
       {
         if (((int) favorites & mask) != 0)
         {
@@ -313,10 +311,6 @@ namespace ChanSort.Ui
           this.repositoryItemCheckedComboBoxEdit1.Items.Add(c);
           this.repositoryItemCheckedComboBoxEdit2.Items.Add(c);
           regex += c;
-
-          string str = c.ToString();
-          this.miFavSet.Strings.Add(str);
-          this.miFavUnset.Strings.Add(str);
           ++favCount;
         }
       }
@@ -337,6 +331,7 @@ namespace ChanSort.Ui
         this.subListIndex = 0;
       }
       this.grpSubList.Visible = this.dataRoot.SortedFavorites;
+      this.miGotoFavList.Enabled = this.dataRoot.SortedFavorites;
       this.colOutFav.OptionsColumn.AllowEdit = !this.dataRoot.SortedFavorites;
       this.colFavorites.OptionsColumn.AllowEdit = !this.dataRoot.SortedFavorites;
     }
@@ -1511,6 +1506,42 @@ namespace ChanSort.Ui
     }
     #endregion
 
+    #region Accessibility
+
+    private void FocusRightList()
+    {
+      if (this.gviewRight.SelectedRowsCount > 0)
+      {
+        this.gviewRight.FocusedRowHandle = this.gviewRight.GetSelectedRows()[0];
+        this.gridRight.Focus();
+      }
+    }
+
+    private void FocusRightListFilter()
+    {
+      this.gviewRight.FocusedRowHandle = GridControl.AutoFilterRowHandle;
+      this.gviewRight.FocusedColumn = this.colName;
+      this.gridRight.Focus();
+    }
+
+    private void FocusLeftList()
+    {
+      if (this.gviewLeft.SelectedRowsCount > 0)
+      {
+        this.gviewLeft.FocusedRowHandle = this.gviewLeft.GetSelectedRows()[0];
+        this.gridLeft.Focus();
+      }
+    }
+
+    private void FocusLeftListFilter()
+    {
+      this.gviewLeft.FocusedRowHandle = GridControl.AutoFilterRowHandle;
+      this.gviewLeft.FocusedColumn = this.colOutName;
+      this.gridLeft.Focus();
+    }
+
+    #endregion
+
     // UI events
 
     #region MainForm_Load
@@ -1518,6 +1549,31 @@ namespace ChanSort.Ui
     {
       this.TryExecute(this.LoadSettings);
       this.TryExecute(this.InitAppAfterMainWindowWasShown);
+    }
+    #endregion
+
+    #region ProcessCmdKey()
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+      // select input source
+      if (keyData >= (Keys.Alt | Keys.D1) && keyData <= (Keys.Alt | Keys.D9))
+      {
+        int index = (int) keyData - (int) (Keys.Alt | Keys.D1);
+        if (index < this.tabChannelList.TabPages.Count)
+          this.tabChannelList.SelectedTabPageIndex = index;
+        return true;
+      }
+
+      // select program or fav list
+      if (keyData >= (Keys.Alt | Keys.Control | Keys.D0) && keyData <= (Keys.Alt | Keys.Control | Keys.D5))
+      {
+        int index = (int)keyData - (int)(Keys.Alt | Keys.Control | Keys.D0);
+        if (index < this.tabSubList.TabPages.Count)
+          this.tabSubList.SelectedTabPageIndex = index;
+        return true;
+      }
+
+      return base.ProcessCmdKey(ref msg, keyData);
     }
     #endregion
 
@@ -1624,14 +1680,16 @@ namespace ChanSort.Ui
       this.TryExecute(this.RenumberSelectedChannels);
     }
 
-    private void miFavSet_ListItemClick(object sender, ListItemClickEventArgs e)
+    private void miFavSet_ItemClick(object sender, ItemClickEventArgs e)
     {
-      this.TryExecute(() => this.SetFavorite(this.miFavSet.Strings[e.Index], true));
+      string fav = e.Item.Tag as string;
+      this.SetFavorite(fav, true);
     }
 
-    private void miFavUnset_ListItemClick(object sender, ListItemClickEventArgs e)
+    private void miFavUnset_ItemClick(object sender, ItemClickEventArgs e)
     {
-      this.TryExecute(() => this.SetFavorite(this.miFavSet.Strings[e.Index], false));
+      string fav = e.Item.Tag as string;
+      this.SetFavorite(fav, false);
     }
 
     private void miLockOn_ItemClick(object sender, ItemClickEventArgs e)
@@ -1733,6 +1791,40 @@ namespace ChanSort.Ui
     {
       TryExecute(() => new AboutForm(this.plugins).ShowDialog());
     }
+    #endregion
+
+    #region Accessibility menu
+
+    private void miGotoInputSource_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.tabChannelList.Select);
+    }
+
+    private void miGotoFavList_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.tabSubList.Select);
+    }
+
+    private void miGotoLeftFilter_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.FocusLeftListFilter);
+    }
+
+    private void miGotoLeftList_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.FocusLeftList);
+    }
+
+    private void miRightListFilter_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.FocusRightListFilter);
+    }
+
+    private void miGotoRightList_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.FocusRightList);
+    }
+
     #endregion
 
     // -- controls
@@ -2326,42 +2418,6 @@ namespace ChanSort.Ui
     }
     #endregion
 
-    #region ProcessCmdKey
-
-    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-    {
-      switch (keyData)
-      {
-        case Keys.F3:
-          this.gviewLeft.FocusedRowHandle = GridControl.AutoFilterRowHandle;
-          this.gviewLeft.FocusedColumn = this.colOutName;
-          this.gridLeft.Focus();
-          return true;
-        case Keys.F4:
-          if (this.gviewLeft.SelectedRowsCount > 0)
-          {
-            this.gviewLeft.FocusedRowHandle = this.gviewLeft.GetSelectedRows()[0];
-            this.gridLeft.Focus();
-          }
-          return true;
-        case Keys.F5:
-          this.gviewRight.FocusedRowHandle = GridControl.AutoFilterRowHandle;
-          this.gviewRight.FocusedColumn = this.colName;
-          this.gridRight.Focus();
-          return true;
-        case Keys.F6:
-          if (this.gviewRight.SelectedRowsCount > 0)
-          {
-            this.gviewRight.FocusedRowHandle = this.gviewRight.GetSelectedRows()[0];
-            this.gridRight.Focus();
-          }
-          return true;
-      }
-      return base.ProcessCmdKey(ref msg, keyData);
-    }
-
-    #endregion
-
     #region MainForm_FormClosing
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
@@ -2411,5 +2467,6 @@ namespace ChanSort.Ui
       this.RefreshGrid(this.gviewLeft, this.gviewRight);
     }
     #endregion
+
   }
 }

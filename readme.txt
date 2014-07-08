@@ -1,9 +1,9 @@
-Version v2014-06-10 =======================================================
+Version v2014-07-08 =======================================================
 
 Changes:
-- fixed problem with incorrect favorites when applying a reference list
-- added function "Edit / Renumber Favorites by Pr#" to use the same numbers
-  in all lists
+- added Accessibility menu and hotkeys to directly select the input source
+  (Alt+1 to Alt+9) and the program/favorite lists (Ctrl+Alt+0, ...)
+- addes support for LG LH250C
 
 The complete change log can be found at the end of this document
 
@@ -117,7 +117,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Change log ================================================================
 
-2015-06-10
+2014-07-08
+- added Accessibility menu and hotkeys to directly select the input source
+  (Alt+1 to Alt+9) and the program/favorite lists (Ctrl+Alt+0, ...)
+- addes support for LG LH250C
+
+2014-06-10
 - fixed problem with incorrect favorites when applying a reference list
 - added function "Edit / Renumber Favorites by Pr#" to use the same numbers
   in all lists

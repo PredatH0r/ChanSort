@@ -259,6 +259,33 @@
   <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
     <value>Eventuelle Warnungen nach dem Laden einer TV-Datei automatisch anzeigen</value>
   </data>
+  <data name="barSubItem3.Caption" xml:space="preserve">
+    <value>Einga&amp;behilfe</value>
+  </data>
+  <data name="miGotoInputSource.Caption" xml:space="preserve">
+    <value>&amp;Eingangsquelle auswählen</value>
+  </data>
+  <data name="miGotoInputSource.Hint" xml:space="preserve">
+    <value>Mit Alt+1 bis Alt+9 kann direkt eine Eingangsquelle ausgewählt werden</value>
+  </data>
+  <data name="miGotoFavList.Caption" xml:space="preserve">
+    <value>&amp;Favoritenliste auswählen</value>
+  </data>
+  <data name="miGotoFavList.Hint" xml:space="preserve">
+    <value>Mit Ctrl+Alt+0 bis Ctrl+Alt+5 kann zwischen der Programmliste und den Favoritenlisten gewechselt werden</value>
+  </data>
+  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+    <value>Filterzeile in der &amp;linken Liste</value>
+  </data>
+  <data name="miGotoLeftList.Caption" xml:space="preserve">
+    <value>Linke Liste</value>
+  </data>
+  <data name="miRightListFilter.Caption" xml:space="preserve">
+    <value>Filterzeile in der &amp;rechten Liste</value>
+  </data>
+  <data name="miGotoRightList.Caption" xml:space="preserve">
+    <value>Rechte Liste</value>
+  </data>
   <data name="mnuHelp.Caption" xml:space="preserve">
     <value>&amp;Hilfe</value>
   </data>
@@ -307,6 +334,16 @@
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
         X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
         WIeWYGkVXQEL
+</value>
+  </data>
+  <data name="barManager1.Categories4" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v13.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMy4yLCBWZXJzaW9uPTEz
+        LjIuOS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAADUFjY2Vzc2liaWxpdHkE/P///wtTeXN0ZW0uR3VpZAsA
+        AAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICeIvz
+        nH8WlU24SIo8kTIJxAEL
 </value>
   </data>
   <data name="miMoveUp.Caption" xml:space="preserve">

@@ -12,7 +12,7 @@ namespace ChanSort.Loader.LG
 {
   public partial class TllFileSerializer : SerializerBase
   {
-    enum SpecialHandlingModels { Standard, LH3000, PN, LP, LT };
+    enum SpecialHandlingModels { Standard, LH3000, LH250, PN, LP, LT };
 
     private const long DVBS_S2 = 0x0032532D53425644; // reverse of "DVBS-S2\0"
     private const long MaxFileSize = 2000000;
@@ -134,7 +134,9 @@ namespace ChanSort.Loader.LG
     public override void Load()
     {
       string basename = (Path.GetFileNameWithoutExtension(this.FileName) ?? "").ToUpper();
-      if (basename.StartsWith("XXLH3000"))
+      if (basename.StartsWith("XXLH250"))
+        this.specialModel = SpecialHandlingModels.LH250;
+      else if (basename.StartsWith("XXLH3000"))
         this.specialModel = SpecialHandlingModels.LH3000;
       else if (basename.StartsWith("XXPN"))
         this.specialModel = SpecialHandlingModels.PN;
@@ -313,7 +315,9 @@ namespace ChanSort.Loader.LG
     private DataMapping GetActChannelMapping(int recordSize)
     {
       var key = recordSize.ToString();
-      if (this.specialModel == SpecialHandlingModels.LH3000)
+      if (this.specialModel == SpecialHandlingModels.LH250)
+        key += "LH250"; 
+      else if (this.specialModel == SpecialHandlingModels.LH3000)
         key += "LH3000";
       else if (this.specialModel == SpecialHandlingModels.PN)
         key += "PN";
