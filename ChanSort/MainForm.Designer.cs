@@ -152,9 +152,17 @@
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
       this.miShowWarningsAfterLoad = new DevExpress.XtraBars.BarCheckItem();
-      this.barSubItem3 = new DevExpress.XtraBars.BarSubItem();
-      this.miGotoInputSource = new DevExpress.XtraBars.BarButtonItem();
-      this.miGotoFavList = new DevExpress.XtraBars.BarButtonItem();
+      this.mnuAccessibility = new DevExpress.XtraBars.BarSubItem();
+      this.mnuGotoChannelList = new DevExpress.XtraBars.BarSubItem();
+      this.mnuInputSource = new DevExpress.XtraBars.BarLinkContainerItem();
+      this.mnuGotoFavList = new DevExpress.XtraBars.BarSubItem();
+      this.mnuFavList = new DevExpress.XtraBars.BarLinkContainerItem();
+      this.miSelectFavList0 = new DevExpress.XtraBars.BarButtonItem();
+      this.miSelectFavListA = new DevExpress.XtraBars.BarButtonItem();
+      this.miSelectFavListB = new DevExpress.XtraBars.BarButtonItem();
+      this.miSelectFavListC = new DevExpress.XtraBars.BarButtonItem();
+      this.miSelectFavListD = new DevExpress.XtraBars.BarButtonItem();
+      this.miSelectFavListE = new DevExpress.XtraBars.BarButtonItem();
       this.miGotoLeftFilter = new DevExpress.XtraBars.BarButtonItem();
       this.miGotoLeftList = new DevExpress.XtraBars.BarButtonItem();
       this.miRightListFilter = new DevExpress.XtraBars.BarButtonItem();
@@ -182,11 +190,13 @@
       this.cbCloseGap = new DevExpress.XtraEditors.CheckEdit();
       this.tabChannelList = new DevExpress.XtraTab.XtraTabControl();
       this.pageEmpty = new DevExpress.XtraTab.XtraTabPage();
-      this.mnuContext = new DevExpress.XtraBars.PopupMenu(this.components);
+      this.popupContext = new DevExpress.XtraBars.PopupMenu(this.components);
       this.timerEditDelay = new System.Windows.Forms.Timer(this.components);
       this.grpSubList = new DevExpress.XtraEditors.GroupControl();
       this.tabSubList = new DevExpress.XtraTab.XtraTabControl();
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
+      this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
+      this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -216,11 +226,13 @@
       ((System.ComponentModel.ISupportInitialize)(this.cbCloseGap.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.tabChannelList)).BeginInit();
       this.tabChannelList.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.mnuContext)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.popupContext)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpSubList)).BeginInit();
       this.grpSubList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.tabSubList)).BeginInit();
       this.tabSubList.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.popupInputSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.popupFavList)).BeginInit();
       this.SuspendLayout();
       // 
       // splitContainerControl1
@@ -434,47 +446,47 @@
       // 
       // btnToggleFavE
       // 
-      this.btnToggleFavE.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnToggleFavE, "btnToggleFavE");
+      this.btnToggleFavE.ImageList = this.globalImageCollection1;
       this.btnToggleFavE.Name = "btnToggleFavE";
       this.btnToggleFavE.Tag = "";
       this.btnToggleFavE.Click += new System.EventHandler(this.btnToggleFav_Click);
       // 
       // btnToggleFavD
       // 
-      this.btnToggleFavD.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnToggleFavD, "btnToggleFavD");
+      this.btnToggleFavD.ImageList = this.globalImageCollection1;
       this.btnToggleFavD.Name = "btnToggleFavD";
       this.btnToggleFavD.Click += new System.EventHandler(this.btnToggleFav_Click);
       // 
       // btnToggleFavC
       // 
-      this.btnToggleFavC.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnToggleFavC, "btnToggleFavC");
+      this.btnToggleFavC.ImageList = this.globalImageCollection1;
       this.btnToggleFavC.Name = "btnToggleFavC";
       this.btnToggleFavC.Click += new System.EventHandler(this.btnToggleFav_Click);
       // 
       // btnToggleFavB
       // 
-      this.btnToggleFavB.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnToggleFavB, "btnToggleFavB");
+      this.btnToggleFavB.ImageList = this.globalImageCollection1;
       this.btnToggleFavB.Name = "btnToggleFavB";
       this.btnToggleFavB.Click += new System.EventHandler(this.btnToggleFav_Click);
       // 
       // btnToggleFavA
       // 
-      this.btnToggleFavA.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnToggleFavA, "btnToggleFavA");
+      this.btnToggleFavA.ImageList = this.globalImageCollection1;
       this.btnToggleFavA.Name = "btnToggleFavA";
       this.btnToggleFavA.Click += new System.EventHandler(this.btnToggleFav_Click);
       // 
       // btnClearLeftFilter
       // 
+      resources.ApplyResources(this.btnClearLeftFilter, "btnClearLeftFilter");
       this.btnClearLeftFilter.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("btnClearLeftFilter.Appearance.Font")));
       this.btnClearLeftFilter.Appearance.Options.UseFont = true;
       this.btnClearLeftFilter.ImageIndex = 28;
       this.btnClearLeftFilter.ImageList = this.globalImageCollection1;
-      resources.ApplyResources(this.btnClearLeftFilter, "btnClearLeftFilter");
       this.btnClearLeftFilter.Name = "btnClearLeftFilter";
       this.btnClearLeftFilter.Click += new System.EventHandler(this.btnClearLeftFilter_Click);
       // 
@@ -854,11 +866,11 @@
       // 
       // btnClearRightFilter
       // 
+      resources.ApplyResources(this.btnClearRightFilter, "btnClearRightFilter");
       this.btnClearRightFilter.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("btnClearRightFilter.Appearance.Font")));
       this.btnClearRightFilter.Appearance.Options.UseFont = true;
       this.btnClearRightFilter.ImageIndex = 28;
       this.btnClearRightFilter.ImageList = this.globalImageCollection1;
-      resources.ApplyResources(this.btnClearRightFilter, "btnClearRightFilter");
       this.btnClearRightFilter.Name = "btnClearRightFilter";
       this.btnClearRightFilter.Click += new System.EventHandler(this.btnClearRightFilter_Click);
       // 
@@ -934,9 +946,7 @@
             this.miAddFromRefList,
             this.miPrint,
             this.miRenumFavByPrNr,
-            this.barSubItem3,
-            this.miGotoInputSource,
-            this.miGotoFavList,
+            this.mnuAccessibility,
             this.miGotoLeftFilter,
             this.miGotoLeftList,
             this.miRightListFilter,
@@ -950,9 +960,19 @@
             this.miFavBUnset,
             this.miFavCUnset,
             this.miFavDUnset,
-            this.miFavEUnset});
+            this.miFavEUnset,
+            this.miSelectFavList0,
+            this.miSelectFavListA,
+            this.miSelectFavListB,
+            this.miSelectFavListC,
+            this.miSelectFavListD,
+            this.miSelectFavListE,
+            this.mnuGotoChannelList,
+            this.mnuInputSource,
+            this.mnuGotoFavList,
+            this.mnuFavList});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 83;
+      this.barManager1.MaxItemId = 93;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -980,7 +1000,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miTvSettings),
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuOptions, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem3, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuAccessibility, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuHelp),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAbout)});
       this.bar1.OptionsBar.AllowQuickCustomization = false;
@@ -1523,36 +1543,117 @@
       this.miShowWarningsAfterLoad.Id = 54;
       this.miShowWarningsAfterLoad.Name = "miShowWarningsAfterLoad";
       // 
-      // barSubItem3
+      // mnuAccessibility
       // 
-      resources.ApplyResources(this.barSubItem3, "barSubItem3");
-      this.barSubItem3.Id = 64;
-      this.barSubItem3.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miGotoInputSource),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miGotoFavList),
+      resources.ApplyResources(this.mnuAccessibility, "mnuAccessibility");
+      this.mnuAccessibility.Id = 64;
+      this.mnuAccessibility.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuGotoChannelList),
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuGotoFavList),
             new DevExpress.XtraBars.LinkPersistInfo(this.miGotoLeftFilter),
             new DevExpress.XtraBars.LinkPersistInfo(this.miGotoLeftList),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRightListFilter),
             new DevExpress.XtraBars.LinkPersistInfo(this.miGotoRightList)});
-      this.barSubItem3.Name = "barSubItem3";
+      this.mnuAccessibility.Name = "mnuAccessibility";
       // 
-      // miGotoInputSource
+      // mnuGotoChannelList
       // 
-      resources.ApplyResources(this.miGotoInputSource, "miGotoInputSource");
-      this.miGotoInputSource.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
-      this.miGotoInputSource.Id = 65;
-      this.miGotoInputSource.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F1);
-      this.miGotoInputSource.Name = "miGotoInputSource";
-      this.miGotoInputSource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miGotoInputSource_ItemClick);
+      resources.ApplyResources(this.mnuGotoChannelList, "mnuGotoChannelList");
+      this.mnuGotoChannelList.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
+      this.mnuGotoChannelList.Id = 89;
+      this.mnuGotoChannelList.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuInputSource)});
+      this.mnuGotoChannelList.Name = "mnuGotoChannelList";
       // 
-      // miGotoFavList
+      // mnuInputSource
       // 
-      resources.ApplyResources(this.miGotoFavList, "miGotoFavList");
-      this.miGotoFavList.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
-      this.miGotoFavList.Id = 66;
-      this.miGotoFavList.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F1));
-      this.miGotoFavList.Name = "miGotoFavList";
-      this.miGotoFavList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miGotoFavList_ItemClick);
+      resources.ApplyResources(this.mnuInputSource, "mnuInputSource");
+      this.mnuInputSource.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
+      this.mnuInputSource.Id = 90;
+      this.mnuInputSource.Name = "mnuInputSource";
+      // 
+      // mnuGotoFavList
+      // 
+      resources.ApplyResources(this.mnuGotoFavList, "mnuGotoFavList");
+      this.mnuGotoFavList.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
+      this.mnuGotoFavList.Id = 91;
+      this.mnuGotoFavList.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavList)});
+      this.mnuGotoFavList.Name = "mnuGotoFavList";
+      // 
+      // mnuFavList
+      // 
+      resources.ApplyResources(this.mnuFavList, "mnuFavList");
+      this.mnuFavList.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
+      this.mnuFavList.Id = 92;
+      this.mnuFavList.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSelectFavList0),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSelectFavListA),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSelectFavListB),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSelectFavListC),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSelectFavListD),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSelectFavListE)});
+      this.mnuFavList.Name = "mnuFavList";
+      // 
+      // miSelectFavList0
+      // 
+      resources.ApplyResources(this.miSelectFavList0, "miSelectFavList0");
+      this.miSelectFavList0.Id = 83;
+      this.miSelectFavList0.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+                | System.Windows.Forms.Keys.D0));
+      this.miSelectFavList0.Name = "miSelectFavList0";
+      this.miSelectFavList0.Tag = "0";
+      this.miSelectFavList0.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSelectFavList_ItemClick);
+      // 
+      // miSelectFavListA
+      // 
+      resources.ApplyResources(this.miSelectFavListA, "miSelectFavListA");
+      this.miSelectFavListA.Id = 84;
+      this.miSelectFavListA.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+                | System.Windows.Forms.Keys.D1));
+      this.miSelectFavListA.Name = "miSelectFavListA";
+      this.miSelectFavListA.Tag = "1";
+      this.miSelectFavListA.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSelectFavList_ItemClick);
+      // 
+      // miSelectFavListB
+      // 
+      resources.ApplyResources(this.miSelectFavListB, "miSelectFavListB");
+      this.miSelectFavListB.Id = 85;
+      this.miSelectFavListB.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+                | System.Windows.Forms.Keys.D2));
+      this.miSelectFavListB.Name = "miSelectFavListB";
+      this.miSelectFavListB.Tag = "2";
+      this.miSelectFavListB.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSelectFavList_ItemClick);
+      // 
+      // miSelectFavListC
+      // 
+      resources.ApplyResources(this.miSelectFavListC, "miSelectFavListC");
+      this.miSelectFavListC.Id = 86;
+      this.miSelectFavListC.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+                | System.Windows.Forms.Keys.D3));
+      this.miSelectFavListC.Name = "miSelectFavListC";
+      this.miSelectFavListC.Tag = "3";
+      this.miSelectFavListC.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSelectFavList_ItemClick);
+      // 
+      // miSelectFavListD
+      // 
+      resources.ApplyResources(this.miSelectFavListD, "miSelectFavListD");
+      this.miSelectFavListD.Id = 87;
+      this.miSelectFavListD.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+                | System.Windows.Forms.Keys.D4));
+      this.miSelectFavListD.Name = "miSelectFavListD";
+      this.miSelectFavListD.Tag = "4";
+      this.miSelectFavListD.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSelectFavList_ItemClick);
+      // 
+      // miSelectFavListE
+      // 
+      resources.ApplyResources(this.miSelectFavListE, "miSelectFavListE");
+      this.miSelectFavListE.Id = 88;
+      this.miSelectFavListE.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+                | System.Windows.Forms.Keys.D5));
+      this.miSelectFavListE.Name = "miSelectFavListE";
+      this.miSelectFavListE.Tag = "5";
+      this.miSelectFavListE.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSelectFavList_ItemClick);
       // 
       // miGotoLeftFilter
       // 
@@ -1773,9 +1874,9 @@
       this.pageEmpty.Name = "pageEmpty";
       resources.ApplyResources(this.pageEmpty, "pageEmpty");
       // 
-      // mnuContext
+      // popupContext
       // 
-      this.mnuContext.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+      this.popupContext.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miMoveUp),
             new DevExpress.XtraBars.LinkPersistInfo(this.miMoveDown),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAddChannel),
@@ -1791,8 +1892,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miSkipOff),
             new DevExpress.XtraBars.LinkPersistInfo(this.miHideOn, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miHideOff)});
-      this.mnuContext.Manager = this.barManager1;
-      this.mnuContext.Name = "mnuContext";
+      this.popupContext.Manager = this.barManager1;
+      this.popupContext.Name = "popupContext";
       // 
       // timerEditDelay
       // 
@@ -1819,6 +1920,24 @@
       // 
       this.pageProgNr.Name = "pageProgNr";
       resources.ApplyResources(this.pageProgNr, "pageProgNr");
+      // 
+      // popupInputSource
+      // 
+      this.popupInputSource.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuInputSource)});
+      this.popupInputSource.Manager = this.barManager1;
+      this.popupInputSource.MenuCaption = "Select input source";
+      this.popupInputSource.Name = "popupInputSource";
+      this.popupInputSource.ShowCaption = true;
+      // 
+      // popupFavList
+      // 
+      this.popupFavList.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavList)});
+      this.popupFavList.Manager = this.barManager1;
+      this.popupFavList.MenuCaption = "Select program or favorite list";
+      this.popupFavList.Name = "popupFavList";
+      this.popupFavList.ShowCaption = true;
       // 
       // MainForm
       // 
@@ -1866,11 +1985,13 @@
       ((System.ComponentModel.ISupportInitialize)(this.cbCloseGap.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.tabChannelList)).EndInit();
       this.tabChannelList.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.mnuContext)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.popupContext)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpSubList)).EndInit();
       this.grpSubList.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.tabSubList)).EndInit();
       this.tabSubList.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.popupInputSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.popupFavList)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -1949,7 +2070,7 @@
     private DevExpress.XtraGrid.Columns.GridColumn colIndex1;
     private DevExpress.XtraGrid.Columns.GridColumn colUid1;
     private DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit repositoryItemCheckedComboBoxEdit1;
-    private DevExpress.XtraBars.PopupMenu mnuContext;
+    private DevExpress.XtraBars.PopupMenu popupContext;
     private DevExpress.XtraBars.BarSubItem miEdit;
     private DevExpress.XtraBars.BarButtonItem miRemove;
     private DevExpress.XtraBars.BarButtonItem miLockOn;
@@ -2016,9 +2137,7 @@
     private DevExpress.XtraBars.BarButtonItem miPrint;
     private DevExpress.XtraGrid.Columns.GridColumn colProvider;
     private DevExpress.XtraBars.BarButtonItem miRenumFavByPrNr;
-    private DevExpress.XtraBars.BarSubItem barSubItem3;
-    private DevExpress.XtraBars.BarButtonItem miGotoInputSource;
-    private DevExpress.XtraBars.BarButtonItem miGotoFavList;
+    private DevExpress.XtraBars.BarSubItem mnuAccessibility;
     private DevExpress.XtraBars.BarButtonItem miGotoLeftFilter;
     private DevExpress.XtraBars.BarButtonItem miGotoLeftList;
     private DevExpress.XtraBars.BarButtonItem miRightListFilter;
@@ -2033,6 +2152,18 @@
     private DevExpress.XtraBars.BarButtonItem miFavCUnset;
     private DevExpress.XtraBars.BarButtonItem miFavDUnset;
     private DevExpress.XtraBars.BarButtonItem miFavEUnset;
+    private DevExpress.XtraBars.PopupMenu popupInputSource;
+    private DevExpress.XtraBars.PopupMenu popupFavList;
+    private DevExpress.XtraBars.BarButtonItem miSelectFavList0;
+    private DevExpress.XtraBars.BarButtonItem miSelectFavListA;
+    private DevExpress.XtraBars.BarButtonItem miSelectFavListB;
+    private DevExpress.XtraBars.BarButtonItem miSelectFavListC;
+    private DevExpress.XtraBars.BarButtonItem miSelectFavListD;
+    private DevExpress.XtraBars.BarButtonItem miSelectFavListE;
+    private DevExpress.XtraBars.BarSubItem mnuGotoChannelList;
+    private DevExpress.XtraBars.BarLinkContainerItem mnuInputSource;
+    private DevExpress.XtraBars.BarSubItem mnuGotoFavList;
+    private DevExpress.XtraBars.BarLinkContainerItem mnuFavList;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

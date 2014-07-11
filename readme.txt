@@ -1,9 +1,7 @@
-Version v2014-07-08 =======================================================
+Version v2014-07-11 =======================================================
 
 Changes:
-- added Accessibility menu and hotkeys to directly select the input source
-  (Alt+1 to Alt+9) and the program/favorite lists (Ctrl+Alt+0, ...)
-- addes support for LG LH250C
+- improved accessibility support (channel list and prog/fav list selection)
 
 The complete change log can be found at the end of this document
 
@@ -116,6 +114,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-07-11
+- improved accessibility support (channel list and prog/fav list selection)
 
 2014-07-08
 - added Accessibility menu and hotkeys to directly select the input source

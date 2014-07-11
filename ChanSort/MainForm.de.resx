@@ -259,20 +259,38 @@
   <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
     <value>Eventuelle Warnungen nach dem Laden einer TV-Datei automatisch anzeigen</value>
   </data>
-  <data name="barSubItem3.Caption" xml:space="preserve">
+  <data name="mnuAccessibility.Caption" xml:space="preserve">
     <value>Einga&amp;behilfe</value>
   </data>
-  <data name="miGotoInputSource.Caption" xml:space="preserve">
+  <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
+    <value>Öffnet ein Menü zur Auswahl der Eingangsquelle. Dieses kann auch direkt mit der F1-Taste aufgerufen werden.</value>
+  </data>
+  <data name="mnuGotoChannelList.Caption" xml:space="preserve">
     <value>&amp;Eingangsquelle auswählen</value>
   </data>
-  <data name="miGotoInputSource.Hint" xml:space="preserve">
-    <value>Mit Alt+1 bis Alt+9 kann direkt eine Eingangsquelle ausgewählt werden</value>
+  <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
+    <value>Öffnet ein Menü zur Auswahl der Programm- oder Favoritenliste. Dieses Menü kann auch direkt über die Umschalt+F1 Tastenkombination geöffnet werden.</value>
   </data>
-  <data name="miGotoFavList.Caption" xml:space="preserve">
-    <value>&amp;Favoritenliste auswählen</value>
+  <data name="mnuGotoFavList.Caption" xml:space="preserve">
+    <value>Program-/&amp;Favoritenliste auswählen</value>
   </data>
-  <data name="miGotoFavList.Hint" xml:space="preserve">
-    <value>Mit Ctrl+Alt+0 bis Ctrl+Alt+5 kann zwischen der Programmliste und den Favoritenlisten gewechselt werden</value>
+  <data name="miSelectFavList0.Caption" xml:space="preserve">
+    <value>Programmliste</value>
+  </data>
+  <data name="miSelectFavListA.Caption" xml:space="preserve">
+    <value>Favoriten A</value>
+  </data>
+  <data name="miSelectFavListB.Caption" xml:space="preserve">
+    <value>Favoriten B</value>
+  </data>
+  <data name="miSelectFavListC.Caption" xml:space="preserve">
+    <value>Favoriten C</value>
+  </data>
+  <data name="miSelectFavListD.Caption" xml:space="preserve">
+    <value>Favoriten D</value>
+  </data>
+  <data name="miSelectFavListE.Caption" xml:space="preserve">
+    <value>Favoriten E</value>
   </data>
   <data name="miGotoLeftFilter.Caption" xml:space="preserve">
     <value>Filterzeile in der &amp;linken Liste</value>
@@ -394,20 +412,56 @@
   <data name="$this.Text" xml:space="preserve">
     <value>ChanSort {0} - Senderlisten-Editor für Samsung, LG, Panasonic und Toshiba TVs</value>
   </data>
+  <data name="btnToggleLock.Text" xml:space="preserve">
+    <value>Kindersicherung bei markierten Sendern ein/ausschalten</value>
+  </data>
   <data name="btnToggleLock.ToolTip" xml:space="preserve">
     <value>Kindersicherung</value>
+  </data>
+  <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
+    <value>Favorit E umschalten</value>
+  </data>
+  <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
+    <value>Favorit D umschalten</value>
+  </data>
+  <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
+    <value>Favorit C umschalten</value>
+  </data>
+  <data name="btnToggleFavB.AccessibleDescription" xml:space="preserve">
+    <value>Favorit B umschalten</value>
+  </data>
+  <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
+    <value>Favorit A umschalten</value>
+  </data>
+  <data name="btnClearLeftFilter.AccessibleDescription" xml:space="preserve">
+    <value>Entfernt den Suchfilter von der sortierten Senderliste</value>
   </data>
   <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
     <value>Filter entfernen</value>
   </data>
+  <data name="btnRenum.Text" xml:space="preserve">
+    <value>Markierte Sender fortlaufend nummerieren</value>
+  </data>
   <data name="btnRenum.ToolTip" xml:space="preserve">
-    <value>Markierte Sender neu nummerieren</value>
+    <value>Markierte Sender fortlaufend nummerieren</value>
+  </data>
+  <data name="btnDown.Text" xml:space="preserve">
+    <value>Markierte Sender nach unten verschieben</value>
   </data>
   <data name="btnDown.ToolTip" xml:space="preserve">
     <value>Markierte Sender nach unten verschieben</value>
   </data>
+  <data name="btnUp.Text" xml:space="preserve">
+    <value>Markierte Sender nach oben verschieben</value>
+  </data>
   <data name="btnUp.ToolTip" xml:space="preserve">
     <value>Markierte Sender nach oben verschieben</value>
+  </data>
+  <data name="btnRemoveLeft.Text" xml:space="preserve">
+    <value>Markierte Sender aus sortierter Liste entfernen</value>
+  </data>
+  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
+    <value>Markierte Sender aus sortierter Liste entfernen</value>
   </data>
   <data name="grpOutputList.Text" xml:space="preserve">
     <value>Sortierte Sender (.csv)</value>
@@ -478,8 +532,14 @@
   <data name="lblHotkeyRight.Text" xml:space="preserve">
     <value>F5: Filter | F6: Liste | Eingabe: übernehmen</value>
   </data>
+  <data name="btnRemoveRight.Text" xml:space="preserve">
+    <value>Sender aus sortierter Liste entfernen</value>
+  </data>
   <data name="btnRemoveRight.ToolTip" xml:space="preserve">
     <value>Sender aus sortierter Liste entfernen</value>
+  </data>
+  <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
+    <value>Aller derzeit nicht sortierten Sender ans Ende der Liste anhängen</value>
   </data>
   <data name="btnAddAll.Text" xml:space="preserve">
     <value>&lt;&lt; Alle hinzufügen</value>
@@ -487,11 +547,17 @@
   <data name="btnAddAll.ToolTip" xml:space="preserve">
     <value>Aller derzeit nicht sortierten Sender ans Ende der Liste anhängen</value>
   </data>
+  <data name="btnClearRightFilter.AccessibleDescription" xml:space="preserve">
+    <value>Entfernt den Suchfilter von der vollständigen Senderliste</value>
+  </data>
   <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
     <value>Filter entfernen</value>
   </data>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>Markierte Sender in die sortierte liste übernehmen</value>
+  </data>
   <data name="btnAdd.ToolTip" xml:space="preserve">
-    <value>Markierte Sender übernehmen</value>
+    <value>Markierte Sender in die sortierte liste übernehmen</value>
   </data>
   <data name="grpInputList.Text" xml:space="preserve">
     <value>Alle Sender</value>

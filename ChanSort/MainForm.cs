@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2014-07-08";
+    public const string AppVersion = "v2014-07-11";
 
     private const int MaxMruEntries = 10;
 
@@ -266,7 +266,19 @@ namespace ChanSort.Ui
     private void FillChannelListCombo()
     {
       this.tabChannelList.TabPages.Clear();
+      
+      var itemList = new List<BarItem>();
+      foreach(BarItemLink link in this.mnuInputSource.ItemLinks)
+        itemList.Add(link.Item);
+      foreach (BarItem item in itemList)
+      {
+        this.barManager1.Items.Remove(item);
+        item.Dispose();
+      }
+      this.mnuInputSource.ClearLinks();
+
       XtraTabPage firstNonEmpty = null;
+      int i = 0;
       foreach (var list in this.dataRoot.ChannelLists)
       {
         if (list.Channels.Count == 0)
@@ -275,6 +287,12 @@ namespace ChanSort.Ui
         tab.Tag = list;
         if (firstNonEmpty == null && list.Count > 0)
           firstNonEmpty = tab;
+        var item = new BarButtonItem(this.barManager1, list.Caption);
+        item.ItemShortcut = new BarShortcut((Keys) ((int)(Keys.Alt | Keys.D1) + i));
+        item.Tag = i;
+        item.ItemClick += this.miInputSource_ItemClick;
+        this.mnuInputSource.AddItem(item);
+        ++i;
       }
 
       if (tabChannelList.TabPages.Count > 0)
@@ -331,7 +349,7 @@ namespace ChanSort.Ui
         this.subListIndex = 0;
       }
       this.grpSubList.Visible = this.dataRoot.SortedFavorites;
-      this.miGotoFavList.Enabled = this.dataRoot.SortedFavorites;
+      this.mnuFavList.Enabled = this.dataRoot.SortedFavorites;
       this.colOutFav.OptionsColumn.AllowEdit = !this.dataRoot.SortedFavorites;
       this.colFavorites.OptionsColumn.AllowEdit = !this.dataRoot.SortedFavorites;
     }
@@ -1304,6 +1322,8 @@ namespace ChanSort.Ui
       this.miTvSettings.Enabled = this.currentTvSerializer != null && this.currentTvSerializer.Features.DeviceSettings;     
       this.miCleanupChannels.Enabled = this.currentTvSerializer != null && this.currentTvSerializer.Features.CleanUpChannelData;
 
+      this.mnuFavList.Enabled = this.grpSubList.Visible;
+
       this.txtSetSlot.Enabled = mayEdit;
     }
     #endregion
@@ -1555,24 +1575,17 @@ namespace ChanSort.Ui
     #region ProcessCmdKey()
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
-      // select input source
-      if (keyData >= (Keys.Alt | Keys.D1) && keyData <= (Keys.Alt | Keys.D9))
+      if (keyData == Keys.F1)
       {
-        int index = (int) keyData - (int) (Keys.Alt | Keys.D1);
-        if (index < this.tabChannelList.TabPages.Count)
-          this.tabChannelList.SelectedTabPageIndex = index;
+        this.popupInputSource.ShowPopup(this.tabChannelList.PointToScreen(new Point(0, this.tabChannelList.Height)));
         return true;
       }
 
-      // select program or fav list
-      if (keyData >= (Keys.Alt | Keys.Control | Keys.D0) && keyData <= (Keys.Alt | Keys.Control | Keys.D5))
+      if (keyData == (Keys.F1 | Keys.Shift))
       {
-        int index = (int)keyData - (int)(Keys.Alt | Keys.Control | Keys.D0);
-        if (index < this.tabSubList.TabPages.Count)
-          this.tabSubList.SelectedTabPageIndex = index;
+        this.popupFavList.ShowPopup(this.tabSubList.PointToScreen(new Point(0, this.tabSubList.Height)));
         return true;
       }
-
       return base.ProcessCmdKey(ref msg, keyData);
     }
     #endregion
@@ -1795,14 +1808,20 @@ namespace ChanSort.Ui
 
     #region Accessibility menu
 
-    private void miGotoInputSource_ItemClick(object sender, ItemClickEventArgs e)
+    private void miInputSource_ItemClick(object sender, ItemClickEventArgs e)
     {
-      TryExecute(this.tabChannelList.Select);
+      this.tabChannelList.SelectedTabPageIndex = (int) e.Item.Tag;
     }
 
-    private void miGotoFavList_ItemClick(object sender, ItemClickEventArgs e)
+    private void miSelectFavList_ItemClick(object sender, ItemClickEventArgs e)
     {
-      TryExecute(this.tabSubList.Select);
+      try
+      {
+        int idx = Convert.ToInt32(e.Item.Tag);
+        if (this.grpSubList.Visible && idx < this.tabSubList.TabPages.Count)
+          this.tabSubList.SelectedTabPageIndex = idx;
+      }
+      catch (Exception ex) { HandleException(ex); }
     }
 
     private void miGotoLeftFilter_ItemClick(object sender, ItemClickEventArgs e)
@@ -2174,7 +2193,7 @@ namespace ChanSort.Ui
       this.lastFocusedGrid = this.gviewLeft;
       this.UpdateMenu();
       if (e.MenuType == GridMenuType.Row && e.HitInfo.InRow && this.gviewLeft.IsDataRow(e.HitInfo.RowHandle))
-        this.mnuContext.ShowPopup(this.gridLeft.PointToScreen(e.Point));
+        this.popupContext.ShowPopup(this.gridLeft.PointToScreen(e.Point));
     }
     #endregion
 
@@ -2310,7 +2329,7 @@ namespace ChanSort.Ui
       this.lastFocusedGrid = this.gviewRight;
       this.UpdateMenu();
       if (e.MenuType == GridMenuType.Row)
-        this.mnuContext.ShowPopup(this.gridRight.PointToScreen(e.Point));
+        this.popupContext.ShowPopup(this.gridRight.PointToScreen(e.Point));
     }
     #endregion
 
@@ -2467,6 +2486,7 @@ namespace ChanSort.Ui
       this.RefreshGrid(this.gviewLeft, this.gviewRight);
     }
     #endregion
+
 
   }
 }
