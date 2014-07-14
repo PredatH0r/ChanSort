@@ -12,7 +12,7 @@ namespace ChanSort.Loader.LG
 {
   public partial class TllFileSerializer : SerializerBase
   {
-    enum SpecialHandlingModels { Standard, LH3000, LH250, PN, LP, LT };
+    enum SpecialHandlingModels { Standard, LH3000, LH250, PN, LP, LT, LY };
 
     private const long DVBS_S2 = 0x0032532D53425644; // reverse of "DVBS-S2\0"
     private const long MaxFileSize = 2000000;
@@ -41,7 +41,7 @@ namespace ChanSort.Loader.LG
 
     private int analogBlockOffset;
     private int firmwareBlockOffset;
-    private int extraBlockOffset;
+    private int hospitalityBlockOffset;
     private int dvbctBlockOffset;
     private int dvbsBlockOffset;
     private int[] dvbsSubblockCrcOffset;
@@ -58,7 +58,7 @@ namespace ChanSort.Loader.LG
 
     private Dictionary<int, ushort> nextChannelIndex;
     private int firmwareBlockSize;
-    private int extraBlockSize;
+    private int hospitalityBlockSize;
     private int dvbsBlockSize;
     private int settingsBlockSize;
     private string countryCode;
@@ -144,6 +144,8 @@ namespace ChanSort.Loader.LG
         this.specialModel = SpecialHandlingModels.LP;
       else if (basename.StartsWith("XXLT"))
         this.specialModel = SpecialHandlingModels.LT;
+      else if (basename.StartsWith("XXLY"))
+        this.specialModel = SpecialHandlingModels.LY;
       else
         this.specialModel = SpecialHandlingModels.Standard;
 
@@ -217,12 +219,12 @@ namespace ChanSort.Loader.LG
     #region ReadHotelModelExtraBlock()
     private void ReadHotelModelExtraBlock(ref int off)
     {
-      if (!(this.specialModel == SpecialHandlingModels.LT || this.specialModel == SpecialHandlingModels.LP))
+      if (!(this.specialModel == SpecialHandlingModels.LT || this.specialModel == SpecialHandlingModels.LP || this.specialModel == SpecialHandlingModels.LY))
         return;
 
       int size = BitConverter.ToInt32(this.fileContent, off);
-      this.extraBlockOffset = off;
-      this.extraBlockSize = size;
+      this.hospitalityBlockOffset = off;
+      this.hospitalityBlockSize = size;
       off += 4 + size;
     }
     #endregion
@@ -321,6 +323,8 @@ namespace ChanSort.Loader.LG
         key += "LH3000";
       else if (this.specialModel == SpecialHandlingModels.PN)
         key += "PN";
+      else if (this.specialModel == SpecialHandlingModels.LY)
+        key += "LY";
       var actMapping = this.actMappings.GetMapping(key);
       return actMapping;
     }
@@ -890,9 +894,9 @@ namespace ChanSort.Loader.LG
         // firmware
         file.Write(fileContent, this.firmwareBlockOffset, this.firmwareBlockSize + 4);
 
-        // LT-series extra block
-        if (extraBlockOffset != 0)
-          file.Write(fileContent, this.extraBlockOffset, this.extraBlockSize + 4);
+        // hospitality models extra block
+        if (hospitalityBlockOffset != 0)
+          file.Write(fileContent, this.hospitalityBlockOffset, this.hospitalityBlockSize + 4);
 
         // DVB-CT
         file.Write(newDvbctChannelCount*this.actChannelSize + 4);

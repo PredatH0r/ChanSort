@@ -1,7 +1,9 @@
-Version v2014-07-11 =======================================================
+Version v2014-07-14 =======================================================
 
 Changes:
-- improved accessibility support (channel list and prog/fav list selection)
+- fixed issue with broken channel lists for LG models LV, 
+  LW (except LW4500, LW5400), LK950S and PM670S
+- added support for LG's LY series binary TLL file format
 
 The complete change log can be found at the end of this document
 
@@ -114,6 +116,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-07-14
+- fixed issue with broken channel lists for LG models LV, 
+  LW (except LW4500, LW5400), LK950S and PM670S
+- added support for LG's LY series binary TLL file format
 
 2014-07-11
 - improved accessibility support (channel list and prog/fav list selection)
