@@ -1,9 +1,9 @@
-Version v2014-07-14 =======================================================
+Version v2014-09-11 =======================================================
 
 Changes:
-- fixed issue with broken channel lists for LG models LV, 
-  LW (except LW4500, LW5400), LK950S and PM670S
-- added support for LG's LY series binary TLL file format
+- fixed support for LG LV/LW DVB-C/T channel lists
+- added support for Samsung map-CyfraPlusD channel list
+- added Russian translation (thanks to some anonymous developer!)
 
 The complete change log can be found at the end of this document
 
@@ -116,6 +116,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-09-11
+- fixed support for LG LV/LW DVB-C/T channel lists
+- added support for Samsung map-CyfraPlusD channel list
+- added Russian translation (thanks to some anonymous developer!)
 
 2014-07-14
 - fixed issue with broken channel lists for LG models LV, 

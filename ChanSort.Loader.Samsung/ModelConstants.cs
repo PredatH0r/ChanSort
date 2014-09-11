@@ -17,6 +17,7 @@ namespace ChanSort.Loader.Samsung
     public readonly int ptcLength;
     public readonly int serviceProviderLength;
     public readonly bool SortedFavorites;
+    public readonly int cyfraPlusChannelSize;
 
     public ModelConstants(IniFile.Section iniSection)
     {
@@ -24,8 +25,9 @@ namespace ChanSort.Loader.Samsung
       this.avbtChannelLength = iniSection.GetInt("map-AirA");
       this.dvbtChannelLength = iniSection.GetInt("map-AirD");
       this.dvbsChannelLength = iniSection.GetInt("map-SateD");
-      this.ptcLength = iniSection.GetInt("PTC");
       this.hdplusChannelLength = iniSection.GetInt("map-AstraHDPlusD");
+      this.cyfraPlusChannelSize = iniSection.GetInt("map-CyfraPlusD");
+      this.ptcLength = iniSection.GetInt("PTC");
       this.dvbsSatelliteLength = iniSection.GetInt("SatDataBase.dat");
       this.dvbsTransponderLength = iniSection.GetInt("TransponderDataBase.dat");
       this.avbtFineTuneLength = iniSection.GetInt("FineTune");

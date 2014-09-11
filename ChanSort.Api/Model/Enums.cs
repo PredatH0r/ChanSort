@@ -36,6 +36,7 @@ namespace ChanSort.Api
     TivuSat = 3 << 12,
     CanalDigital = 4 << 12,
     DigitalPlus = 5 << 12,
+    CyfraPlus = 6 << 12,
 
     StandardCable = 0 << 12,
     CablePrime = 1 << 12,
@@ -53,7 +54,8 @@ namespace ChanSort.Api
     FreesatD = Digital + Sat + Freesat,
     TivuSatD = Digital + Sat + TivuSat,
     CanalDigitalSatD = Digital + Sat + CanalDigital,
-    DigitalPlusD = Digital + Sat + DigitalPlus
+    DigitalPlusD = Digital + Sat + DigitalPlus,
+    CyfraPlusD = Digital + Sat + CyfraPlus
   }
   #endregion
 

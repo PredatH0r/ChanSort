@@ -148,6 +148,7 @@
       this.miEnglish = new DevExpress.XtraBars.BarButtonItem();
       this.miGerman = new DevExpress.XtraBars.BarButtonItem();
       this.miPortuguese = new DevExpress.XtraBars.BarButtonItem();
+      this.miRussian = new DevExpress.XtraBars.BarButtonItem();
       this.mnuCharset = new DevExpress.XtraBars.BarSubItem();
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
@@ -970,9 +971,10 @@
             this.mnuGotoChannelList,
             this.mnuInputSource,
             this.mnuGotoFavList,
-            this.mnuFavList});
+            this.mnuFavList,
+            this.miRussian});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 93;
+      this.barManager1.MaxItemId = 94;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1471,7 +1473,8 @@
       this.barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miEnglish),
             new DevExpress.XtraBars.LinkPersistInfo(this.miGerman),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRussian)});
       this.barSubItem1.Name = "barSubItem1";
       this.barSubItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
       // 
@@ -1506,6 +1509,16 @@
       this.miPortuguese.Name = "miPortuguese";
       this.miPortuguese.Tag = "pt-PT";
       this.miPortuguese.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
+      // miRussian
+      // 
+      this.miRussian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miRussian, "miRussian");
+      this.miRussian.Id = 93;
+      this.miRussian.ImageIndex = 35;
+      this.miRussian.Name = "miRussian";
+      this.miRussian.Tag = "ru-RU";
+      this.miRussian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // mnuCharset
       // 
@@ -2164,6 +2177,7 @@
     private DevExpress.XtraBars.BarLinkContainerItem mnuInputSource;
     private DevExpress.XtraBars.BarSubItem mnuGotoFavList;
     private DevExpress.XtraBars.BarLinkContainerItem mnuFavList;
+    private DevExpress.XtraBars.BarButtonItem miRussian;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
   }
 }

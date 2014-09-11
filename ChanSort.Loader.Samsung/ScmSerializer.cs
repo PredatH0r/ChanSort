@@ -31,6 +31,7 @@ namespace ChanSort.Loader.Samsung
     private readonly ChannelList tivusatChannels = new ChannelList(SignalSource.TivuSatD | SignalSource.TvAndRadio, "TivuSat");
     private readonly ChannelList canalDigitalChannels = new ChannelList(SignalSource.CanalDigitalSatD | SignalSource.TvAndRadio, "Canal Digital Sat");
     private readonly ChannelList digitalPlusChannels = new ChannelList(SignalSource.DigitalPlusD | SignalSource.TvAndRadio, "Canal+ Digital");
+    private readonly ChannelList cyfraPlusChannels = new ChannelList(SignalSource.CyfraPlusD | SignalSource.TvAndRadio, "Cyfra+ Digital");
     
     private readonly Dictionary<int, decimal> avbtFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> avbcFrequency = new Dictionary<int, decimal>();
@@ -48,6 +49,7 @@ namespace ChanSort.Loader.Samsung
     private byte[] tivusatFileContent;
     private byte[] canalDigitalFileContent;
     private byte[] digitalPlusFileContent;
+    private byte[] cyfraPlusFileContent;
     private ModelConstants c;
     private Dictionary<int, string> serviceProviderNames;
 
@@ -123,7 +125,8 @@ namespace ChanSort.Loader.Samsung
         ReadSatellites(zip);
         ReadTransponder(zip, "TransponderDataBase.dat");
         ReadTransponder(zip, "UserTransponderDataBase.dat");
-        ReadDvbsChannels(zip);
+        ReadDvbsChannels(zip, "map-SateD", this.dvbsChannels, out this.dvbsFileContent, c.dvbsChannelLength);
+        ReadDvbsChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
         ReadAstraHdPlusChannels(zip);        
       }
     }
@@ -516,23 +519,22 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region ReadDvbsChannels()
-    private void ReadDvbsChannels(ZipFile zip)
+    private void ReadDvbsChannels(ZipFile zip, string filename, ChannelList channels, out byte[] fileContent, int entrySize)
     {
-      this.dvbsFileContent = ReadFileContent(zip, "map-SateD");
-      if (this.dvbsFileContent == null)
+      fileContent = ReadFileContent(zip, filename);
+      if (fileContent == null)
         return;
 
-      this.DataRoot.AddChannelList(this.dvbsChannels);
-      int entrySize = c.dvbsChannelLength;
-      int count = this.dvbsFileContent.Length/entrySize;
+      this.DataRoot.AddChannelList(channels);
+      int count = fileContent.Length/entrySize;
       DataMapping mapping = dvbsMappings.GetMapping(entrySize);
-      this.dvbsChannels.MaxChannelNameLength = mapping.Settings.GetInt("lenName") / 2;
-      mapping.SetDataPtr(dvbsFileContent, 0);
+      channels.MaxChannelNameLength = mapping.Settings.GetInt("lenName") / 2;
+      mapping.SetDataPtr(fileContent, 0);
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        SatChannel ci = new SatChannel(slotIndex, SignalSource.StandardSat, mapping, this.DataRoot, c.SortedFavorites, this.serviceProviderNames);
+        SatChannel ci = new SatChannel(slotIndex, channels.SignalSource, mapping, this.DataRoot, c.SortedFavorites, this.serviceProviderNames);
         if (ci.InUse)
-          this.DataRoot.AddChannel(this.dvbsChannels, ci);
+          this.DataRoot.AddChannel(channels, ci);
 
         mapping.BaseOffset += entrySize;
       }
@@ -599,6 +601,7 @@ namespace ChanSort.Loader.Samsung
         this.SaveChannels(zip, "map-TivusatD", this.tivusatChannels, this.tivusatFileContent);
         this.SaveChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, this.canalDigitalFileContent);
         this.SaveChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, this.digitalPlusFileContent);
+        this.SaveChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, this.cyfraPlusFileContent);
         zip.CommitUpdate();
       }
     }

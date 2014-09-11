@@ -1,7 +1,7 @@
 @echo off
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\ChanSort_%curdate%
-set DXversion=13.2
+set DXversion=14.1
 mkdir "%target%" 2>nul
 del /s /q "%target%\*"
 copy debug\ChanSort.exe* "%target%"
@@ -11,8 +11,11 @@ copy debug\Lookup.csv "%target%"
 copy DLL\* "%target%"
 del "%target%\*nunit*.dll"
 mkdir "%target%\de" 2>nul
+mkdir "%target%\pt" 2>nul
+mkdir "%target%\ru" 2>nul
 xcopy /siy debug\de "%target%\de"
 xcopy /siy debug\pt "%target%\pt"
+copy DLL\ChanSort.resources.dll "%target%\ru"
 copy readme.txt "%target%"
 for %%f in (Utils Data Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
 
