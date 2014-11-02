@@ -12,8 +12,8 @@ namespace ChanSort.Loader.Samsung
       base(data, sortedFavorites)
     {
       this.InitCommonData(slot, (SignalSource)((int)signalSource & ~(int)(SignalSource.TvAndRadio)), data);
-      
-      if (this.OldProgramNr == 0)
+
+      if (!this.InUse || this.OldProgramNr == 0)
         return;
 
       this.InitDvbData(data, providerNames);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Linq;
@@ -22,8 +23,10 @@ namespace ChanSort.Loader.Samsung
 
     private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT|SignalSource.TvAndRadio, "Analog Air");
     private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC|SignalSource.TvAndRadio, "Analog Cable");
+    private readonly ChannelList avbxChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.TvAndRadio, "Analog Air/Cable");
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv, "Digital Air");
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.TvAndRadio, "Digital Cable");
+    private readonly ChannelList dvbxChannels = new ChannelList(SignalSource.DvbCT | SignalSource.TvAndRadio, "Digital Air/Cable");
     private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.TvAndRadio, "Satellite");
     private readonly ChannelList primeChannels = new ChannelList(SignalSource.CablePrimeD | SignalSource.TvAndRadio, "Cable Prime");
     private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Astra HD+");
@@ -40,8 +43,10 @@ namespace ChanSort.Loader.Samsung
     
     private byte[] avbtFileContent;
     private byte[] avbcFileContent;
+    private byte[] avbxFileContent;
     private byte[] dvbtFileContent;
     private byte[] dvbcFileContent;
+    private byte[] dvbxFileContent;
     private byte[] dvbsFileContent;
     private byte[] hdplusFileContent;
     private byte[] primeFileContent;
@@ -112,11 +117,13 @@ namespace ChanSort.Loader.Samsung
         ReadAnalogFineTuning(zip);
         ReadAnalogChannels(zip, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
         ReadAnalogChannels(zip, "map-CableA", this.avbcChannels, out this.avbcFileContent, this.avbcFrequency);
+        ReadAnalogChannels(zip, "map-AirCableMixedA", this.avbxChannels, out this.avbxFileContent, this.avbcFrequency);
         ReadDvbTransponderFrequenciesFromPtc(zip, "PTCAIR", this.dvbtFrequency);
         ReadDvbServiceProviders(zip);
         ReadDvbctChannels(zip, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
         ReadDvbTransponderFrequenciesFromPtc(zip, "PTCCABLE", this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
+        ReadDvbctChannels(zip, "map-AirCableMixedD", this.dvbxChannels, out this.dvbxFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
@@ -157,11 +164,13 @@ namespace ChanSort.Loader.Samsung
           case "1001": series = "C"; break;
           case "1101": series = "D"; break;
           case "1201":
-            series = match.Groups[2].Value == "F" ? "F" : "E"; 
+            var letter = match.Groups[2].Value;
+            series = match.Groups[1].Value.StartsWith("LT") ? "F" : // LTxxCxxx is actually an F-series model
+              StringComparer.OrdinalIgnoreCase.Compare(letter, "E") < 0 ? "E" : // at least E sereis
+              letter; // E, F, H
             break;
           default:
-            series = match.Groups[1].Value.StartsWith("LT") ? "F" : match.Groups[2].Value;
-            break;
+            return false;
         }
         if (this.modelConstants.TryGetValue("Series:" + series, out this.c))
           return true;
@@ -467,15 +476,18 @@ namespace ChanSort.Loader.Samsung
       int count = data.Length/this.c.dvbsSatelliteLength;
       for (int i = 0; i < count; i++)
       {
-        if (satMapping.MagicMarker != 0x55)
-          throw new FileLoadException("Unknown SatDataBase.dat format");        
-        string location = string.Format("{0}.{1}{2}", 
-          satMapping.Longitude/10, satMapping.Longitude%10, satMapping.IsEast ? "E" : "W");
+        if (satMapping.MagicMarker == 'U')
+        {
+          string location = string.Format("{0}.{1}{2}",
+            satMapping.Longitude / 10, satMapping.Longitude % 10, satMapping.IsEast ? "E" : "W");
 
-        Satellite satellite = new Satellite(satMapping.SatelliteNr);
-        satellite.Name = satMapping.Name;
-        satellite.OrbitalPosition = location;
-        this.DataRoot.Satellites.Add(satMapping.SatelliteNr, satellite);
+          Satellite satellite = new Satellite(satMapping.SatelliteNr);
+          satellite.Name = satMapping.Name;
+          satellite.OrbitalPosition = location;
+          this.DataRoot.Satellites.Add(satMapping.SatelliteNr, satellite);
+        }
+        else if (satMapping.MagicMarker != 'E')
+          throw new FileLoadException("Unknown SatDataBase.dat format");
 
         satMapping.BaseOffset += this.c.dvbsSatelliteLength;
       }
@@ -592,8 +604,10 @@ namespace ChanSort.Loader.Samsung
         zip.BeginUpdate();
         this.SaveChannels(zip, "map-AirA", this.avbtChannels, this.avbtFileContent);
         this.SaveChannels(zip, "map-CableA", this.avbcChannels, this.avbcFileContent);
+        this.SaveChannels(zip, "map-AirCableMixedA", this.avbxChannels, this.avbxFileContent);
         this.SaveChannels(zip, "map-AirD", this.dvbtChannels, this.dvbtFileContent);
         this.SaveChannels(zip, "map-CableD", this.dvbcChannels, this.dvbcFileContent);
+        this.SaveChannels(zip, "map-AirCableMixedD", this.dvbxChannels, this.dvbxFileContent);
         this.SaveChannels(zip, "map-SateD", this.dvbsChannels, this.dvbsFileContent);
         this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, this.hdplusFileContent);
         this.SaveChannels(zip, "map-CablePrime_D", this.primeChannels, this.primeFileContent);

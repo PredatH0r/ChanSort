@@ -21,6 +21,7 @@ namespace ChanSort.Loader.GlobalClone
     public GcSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = false;
+      this.Features.CanDeleteChannels = false;
 
       this.DataRoot.AddChannelList(this.atvChannels);
       this.DataRoot.AddChannelList(this.dtvTvChannels);

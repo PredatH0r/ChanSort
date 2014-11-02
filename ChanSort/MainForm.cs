@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2014-09-11";
+    public const string AppVersion = "v2014-11-02";
 
     private const int MaxMruEntries = 10;
 
@@ -676,7 +676,8 @@ namespace ChanSort.Ui
       using (var dlg = new ActionBoxDialog(msg))
       {
         dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Append, DialogResult.Yes, dlg.FullList);
-        dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Delete, DialogResult.No, dlg.Delete);
+        if (this.currentTvSerializer.Features.CanDeleteChannels)
+          dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Delete, DialogResult.No, dlg.Delete);
         dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
         res = dlg.ShowDialog(this);
       }

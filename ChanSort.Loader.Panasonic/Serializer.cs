@@ -306,7 +306,7 @@ namespace ChanSort.Loader.Panasonic
     {
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
-      this.Features.ChannelNameEdit = true;
+      this.Features.ChannelNameEdit = false; // due to the chaos with binary data inside the "sname" string column, writing back a name has undesired side effects
       this.DataRoot.SortedFavorites = true;
       
       this.DataRoot.AddChannelList(this.avbtChannels);
@@ -589,7 +589,7 @@ order by s.ntype,major_channel
     #region WriteChannels()
     private void WriteChannels(SQLiteCommand cmd, ChannelList channelList)
     {
-      cmd.CommandText = "update SVL set major_channel=@progNr, sname=@name, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
+      cmd.CommandText = "update SVL set major_channel=@progNr, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
       cmd.Parameters.Clear();
       cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@progNr", DbType.Int32));
@@ -597,7 +597,6 @@ order by s.ntype,major_channel
       cmd.Parameters.Add(new SQLiteParameter("@fav2", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@fav3", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@fav4", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@name", DbType.Binary));
       cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@skip", DbType.Int32));
       cmd.Prepare();
@@ -608,12 +607,10 @@ order by s.ntype,major_channel
           continue;
         if (channel.NewProgramNr < 0 || channel.OldProgramNr < 0)
           continue;
-        channel.UpdateRawData();
         cmd.Parameters["@rowid"].Value = channel.RecordIndex;
         cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
         for (int fav = 0; fav < 4; fav++)
           cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.FavIndex[fav]);
-        cmd.Parameters["@name"].Value = channel.RawName;
         cmd.Parameters["@lock"].Value = channel.Lock;
         cmd.Parameters["@skip"].Value = channel.Skip;
         cmd.ExecuteNonQuery();

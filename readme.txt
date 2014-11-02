@@ -1,9 +1,16 @@
-Version v2014-09-11 =======================================================
+Version v2014-11-02 =======================================================
 
 Changes:
-- fixed support for LG LV/LW DVB-C/T channel lists
-- added support for Samsung map-CyfraPlusD channel list
-- added Russian translation (thanks to some anonymous developer!)
+- fixed reading Samsung channel lists containing empty satellite records
+- disabled individual sorting of favorite lists for Samsung F and H series.
+  It appears that only the E series firmware supports this feature.
+- disabled deleting of channels from LG's GlobalClone channel lists because
+  the TV does not support this. Instead they are appended at the end of the
+  list.
+- added support for Samsung "map-AirCableMixedA" and "map-AirCableMixedD"
+  channel lists (used by some hospitality TVs)
+- disabled editing of channel names for Panasonic lists to prevent side
+  effects after saving (e.g. incorrect alphabetical sorting shown on TV)
 
 The complete change log can be found at the end of this document
 
@@ -38,12 +45,13 @@ Supported TV models =======================================================
 
 Samsung 
 -------
-    Series: B (2009)*, B (2013), C, D, E, F
+    Series: B (2009)*, B (2013), C, D, E, F, H
     Lists:  Air analog, Air digital, Cable analog, Cable digital, 
-            Cable prime, Sat digital, Astra HD+, Freesat digital,
-            TivuSat digital
+            Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
+            Canal Digital Sat, Digital+, Cyfra+
 
-    * NOTE: the "Air Analog"-list of the 2009 B-series doesn't support all 
+    * NOTE: The "clone.bin" format is not supported. In the "*.scm" format
+    the "Air Analog"-list of the 2009 B-series doesn't support all 
     editing features due to a lack of test files. If you have such a file,
     please send it to me.
 
@@ -93,8 +101,9 @@ System requirements =======================================================
   http://www.microsoft.com/en-us/download/details.aspx?id=8328
 - USB-stick to transfer the channel list between your TV and PC
   (for Panasonic an SD-Card is needed instead of a USB-stick)
-- For LG's LM-series you need a programmable remote control to access the 
-  service menu for transferring the list to/from USB. 
+- For some LG series/models the included remote control is not able to open
+  the service menus for transferring the lists to/from USB.
+  In that case you either need a different LG or a programmable remote. 
   (e.g. Logitech Harmony 300, One-For-All URC3920,...)
   Details can be found on the ChanSort wiki and on 
   http://openlgtv.org.ru/wiki/index.php/Access_hidden_service_menus_/_modes
@@ -116,6 +125,18 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-11-02
+- fixed reading Samsung channel lists containing empty satellite records
+- disabled individual sorting of favorite lists for Samsung F and H series.
+  It appears that only the E series firmware supports this feature.
+- disabled deleting of channels from LG's GlobalClone channel lists because
+  the TV does not support this. Instead they are appended at the end of the
+  list.
+- added support for Samsung "map-AirCableMixedA" and "map-AirCableMixedD"
+  channel lists (used by some hospitality TVs)
+- disabled editing of channel names for Panasonic lists to prevent side
+  effects after saving (e.g. incorrect alphabetical sorting shown on TV)
 
 2014-09-11
 - fixed support for LG LV/LW DVB-C/T channel lists

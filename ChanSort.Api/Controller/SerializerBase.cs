@@ -9,6 +9,12 @@ namespace ChanSort.Api
       public bool ChannelNameEdit { get; set; }
       public bool CleanUpChannelData { get; set; }
       public bool DeviceSettings { get; set; }
+      public bool CanDeleteChannels { get; set; }
+
+      public SupportedFeatures()
+      {
+        this.CanDeleteChannels = true;
+      }
     }
 
     private Encoding defaultEncoding;
