@@ -68,8 +68,8 @@ namespace ChanSort.Loader.LG
     private int deletedChannelsSoft;
     private int dvbsChannelsAtPr0;
 
-    private bool removeDeletedActChannels = false;
-    private bool mustReorganizeDvbs = false;
+    private bool removeDeletedActChannels;
+    private bool mustReorganizeDvbs;
     private decimal dvbsSymbolRateFactor;
 
     #region ctor()
@@ -288,7 +288,7 @@ namespace ChanSort.Loader.LG
     private void ReadActChannelBlock(ref int off, out int channelCount, ref int recordSize,
       Func<int, DataMapping, ChannelInfo> channelFactory)
     {
-      int blockSize = this.GetBlockSize(off, minSize: 2);
+      int blockSize = this.GetBlockSize(off, 2);
       off += 4;
 
       channelCount = BitConverter.ToInt32(fileContent, off);
@@ -298,6 +298,7 @@ namespace ChanSort.Loader.LG
       recordSize = GetActChannelRecordSize(off, blockSize, channelCount);
       var actMapping = GetActChannelMapping(recordSize);
       this.reorderPhysically = actMapping.Settings.GetInt("reorderChannelData") != 0;
+      this.removeDeletedActChannels |= this.reorderPhysically;
 
       for (int i = 0; i < channelCount; i++)
       {

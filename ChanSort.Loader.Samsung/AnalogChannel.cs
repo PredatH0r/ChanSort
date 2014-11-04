@@ -8,7 +8,7 @@ namespace ChanSort.Loader.Samsung
 
     #region ctor()
 
-    public AnalogChannel(int slot, bool isCable, DataMapping mapping, decimal freq, bool sortedFavorites) :
+    public AnalogChannel(int slot, bool isCable, DataMapping mapping, decimal freq, FavoritesIndexMode sortedFavorites) :
       base(mapping, sortedFavorites)
     {
       var signalSource = SignalSource.Analog | SignalSource.Tv;

@@ -8,7 +8,7 @@ namespace ChanSort.Loader.Samsung
     private const string _ChannelOrTransponder = "offChannelTransponder";
 
     public DigitalChannel(int slot, SignalSource signalSource, DataMapping data,
-      IDictionary<int, decimal> transpFreq, bool sortedFavorites, IDictionary<int, string> providerNames) :
+      IDictionary<int, decimal> transpFreq, FavoritesIndexMode sortedFavorites, IDictionary<int, string> providerNames) :
       base(data, sortedFavorites)
     {
       this.InitCommonData(slot, (SignalSource)((int)signalSource & ~(int)(SignalSource.TvAndRadio)), data);

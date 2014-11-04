@@ -1,16 +1,8 @@
-Version v2014-11-02 =======================================================
+Version v2014-11-04 =======================================================
 
 Changes:
-- fixed reading Samsung channel lists containing empty satellite records
-- disabled individual sorting of favorite lists for Samsung F and H series.
-  It appears that only the E series firmware supports this feature.
-- disabled deleting of channels from LG's GlobalClone channel lists because
-  the TV does not support this. Instead they are appended at the end of the
-  list.
-- added support for Samsung "map-AirCableMixedA" and "map-AirCableMixedD"
-  channel lists (used by some hospitality TVs)
-- disabled editing of channel names for Panasonic lists to prevent side
-  effects after saving (e.g. incorrect alphabetical sorting shown on TV)
+- fixed handling of favorites for Samsung F and H series
+- fixed deleting of channels for older LG models (LD,LE,LH)
 
 The complete change log can be found at the end of this document
 
@@ -125,6 +117,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2014-11-04
+- fixed handling of favorites for Samsung F and H series
+- fixed deleting of channels for older LG models (LD,LE,LH)
 
 2014-11-02
 - fixed reading Samsung channel lists containing empty satellite records

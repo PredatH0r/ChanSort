@@ -2,6 +2,22 @@
 
 namespace ChanSort.Loader.Samsung
 {
+  public enum FavoritesIndexMode
+  {
+    /// <summary>
+    /// D model uses values 0 and 1
+    /// </summary>
+    Flag = 0,
+    /// <summary>
+    /// E model uses -1 for not-a-fav and 1-x for a fav program number
+    /// </summary>
+    IndividuallySorted = 1,
+    /// <summary>
+    /// some F models and H series uses -1 for not-a-fav, but expects 1-x to match the main program number
+    /// </summary>
+    MainProgramnrIndex = 2
+  }
+
   internal class ModelConstants
   {
     public readonly string series;
@@ -16,7 +32,7 @@ namespace ChanSort.Loader.Samsung
     public readonly Favorites supportedFavorites;
     public readonly int ptcLength;
     public readonly int serviceProviderLength;
-    public readonly bool SortedFavorites;
+    public readonly FavoritesIndexMode SortedFavorites;
     public readonly int cyfraPlusChannelSize;
 
     public ModelConstants(IniFile.Section iniSection)
@@ -38,7 +54,7 @@ namespace ChanSort.Loader.Samsung
       for (int i = 0; i < numFavorites; i++)
         mask = (mask << 1) | 1;
       this.supportedFavorites = (Favorites)mask;
-      this.SortedFavorites = iniSection.GetInt("SortedFavorites") != 0;
+      this.SortedFavorites = (FavoritesIndexMode)iniSection.GetInt("SortedFavorites");
     }
   }
 }

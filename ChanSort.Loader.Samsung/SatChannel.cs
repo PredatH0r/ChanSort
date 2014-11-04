@@ -7,7 +7,7 @@ namespace ChanSort.Loader.Samsung
   {
     private const string _TransponderIndex = "offTransponderIndex";
 
-    public SatChannel(int slot, SignalSource presetList, DataMapping data, DataRoot dataRoot, bool sortedFavorites, IDictionary<int,string> providerNames) :
+    public SatChannel(int slot, SignalSource presetList, DataMapping data, DataRoot dataRoot, FavoritesIndexMode sortedFavorites, IDictionary<int,string> providerNames) :
       base(data, sortedFavorites)
     {
       this.InitCommonData(slot, SignalSource.DvbS | presetList, data);

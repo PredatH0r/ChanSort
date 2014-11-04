@@ -31,7 +31,7 @@ namespace ChanSort.Loader.Samsung
     private const string _ServiceProviderId = "offServiceProviderId";
 
     private static readonly Encoding Utf16BigEndian = new UnicodeEncoding(true, false);
-    private readonly bool sortedFavorites;
+    private readonly FavoritesIndexMode sortedFavorites;
 
     protected readonly DataMapping mapping;
     protected readonly byte[] rawData;
@@ -39,7 +39,7 @@ namespace ChanSort.Loader.Samsung
 
     internal bool InUse { get; set; }
 
-    protected ScmChannelBase(DataMapping data, bool sortedFavorites)
+    protected ScmChannelBase(DataMapping data, FavoritesIndexMode sortedFavorites)
     {
       this.mapping = data;
       this.rawData = data.Data;
@@ -80,9 +80,11 @@ namespace ChanSort.Loader.Samsung
       foreach (int off in offsets)
       {
         int favValue = BitConverter.ToInt32(this.rawData, baseOffset + off);
-        if (sortedFavorites && favValue != -1 || !sortedFavorites && favValue != 0)
+        if (sortedFavorites == FavoritesIndexMode.Flag && favValue != 0)
           fav |= mask;
-        if (sortedFavorites)
+        else if (sortedFavorites != FavoritesIndexMode.Flag && favValue != -1)
+          fav |= mask;
+        if (sortedFavorites == FavoritesIndexMode.IndividuallySorted)
           this.FavIndex[favIndex] = favValue;
         mask <<= 1;
         ++favIndex;
@@ -171,10 +173,13 @@ namespace ChanSort.Loader.Samsung
       foreach (int off in offsets)
       {
         int favValue;
-        if (this.sortedFavorites)
-          favValue = (fav & mask) != 0 ? this.FavIndex[favIndex] : -1; // E,F series
-        else
+        if (this.sortedFavorites == FavoritesIndexMode.Flag) // D series
           favValue = (fav & mask) != 0 ? 1 : 0; // D series
+        else if (this.sortedFavorites == FavoritesIndexMode.IndividuallySorted) // E series (and some F models with early firmware)
+          favValue = (fav & mask) != 0 ? this.FavIndex[favIndex] : -1;
+        else
+          favValue = (fav & mask) != 0 ? this.NewProgramNr : -1; // F series (newer models/firmware), H series
+          
         Array.Copy(BitConverter.GetBytes(favValue), 0, this.rawData, baseOffset + off, 4);
         mask <<= 1;
         ++favIndex;
