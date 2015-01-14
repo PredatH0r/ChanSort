@@ -1,8 +1,11 @@
-Version v2014-11-04 =======================================================
+Version v2015-01-14 =======================================================
 
 Changes:
-- fixed handling of favorites for Samsung F and H series
-- fixed deleting of channels for older LG models (LD,LE,LH)
+- added support for LG xx*.xml file names used by some hospitality TVs
+- fixed handling of multiple satellites with LG's GlobalClone format
+- setting the locked/skipped/hidden/deleted flags in LG GlobalClone files
+- updated information text about required firmware update for LG webOS TVs
+- show help text when a Samsung SCM file contains only bytes with value 0
 
 The complete change log can be found at the end of this document
 
@@ -117,6 +120,20 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2015-01-14
+- added support for LG xx*.xml file names used by some hospitality TVs
+- fixed handling of multiple satellites with LG's GlobalClone format
+- setting the locked/skipped/hidden/deleted flags in LG GlobalClone files
+- updated information text about required firmware update for LG webOS TVs
+- show help text when a Samsung SCM file contains only bytes with value 0
+
+2014-12-21
+- added support for Panasonic SAT>IP channel lists
+- enforce sequential program numbers for Pansonic lists 
+  (TV does not work properly with gaps between the numbers)
+- show warning for LG LB webOS TV channel lists, that due to firmware 
+  issues any imported list (modified or not) may be unstable
 
 2014-11-04
 - fixed handling of favorites for Samsung F and H series

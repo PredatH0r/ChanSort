@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using ChanSort.Api;
 using ICSharpCode.SharpZipLib.Zip;
 
@@ -108,6 +109,8 @@ namespace ChanSort.Loader.Samsung
     #region Load()
     public override void Load()
     {
+      if (AllBytesInFileAreZero())
+        return;
       using (ZipFile zip = new ZipFile(this.FileName))
       {
         DetectModelConstants(zip);
@@ -136,6 +139,20 @@ namespace ChanSort.Loader.Samsung
         ReadDvbsChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
         ReadAstraHdPlusChannels(zip);        
       }
+    }
+    #endregion
+
+    #region AllBytesInFileAreZero()
+    private bool AllBytesInFileAreZero()
+    {
+      byte[] content = File.ReadAllBytes(this.FileName);
+      foreach (var b in content)
+      {
+        if (b != 0)
+          return false;
+      }
+
+      throw new FileLoadException(Resource.ScmSerializer_AllBytesInFileAreZero);
     }
     #endregion
 

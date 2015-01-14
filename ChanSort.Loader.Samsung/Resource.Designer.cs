@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ChanSort.Loader.GlobalClone {
+namespace ChanSort.Loader.Samsung {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace ChanSort.Loader.GlobalClone {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Resource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace ChanSort.Loader.GlobalClone {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChanSort.Loader.GlobalClone.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChanSort.Loader.Samsung.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,30 +61,15 @@ namespace ChanSort.Loader.GlobalClone {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Before you waste your time...
-        ///
-        ///...make sure that your LG TV can load this file (without modifications).
-        ///Some LG TVs export 2 files, a GlobalClone00001.TLL and file like xxLB550U-ZA00001.TLL.
-        ///
-        ///If you have both file types, it&apos;s likely that the TV can only load the xxLB550U-ZA00001.TLL and you should edit that file instead.
-        ///
-        ///If your TV only exports a single &quot;Clone&quot; TLL, you&apos;re good to continue!.
+        ///   Looks up a localized string similar to This file contains no data, all bytes in it are set to 0.
+        ///    
+        ///Please make sure your USB stick is formatted as FAT32 and preferrably not larger than 4GB.
+        ///If that still does not work, try to reset your TV to factory defaults and run a new channel search.
+        ///(This might be necessary after a firmware update.).
         /// </summary>
-        internal static string GcSerializer_ReadModelInfo_ModelWarning {
+        internal static string ScmSerializer_AllBytesInFileAreZero {
             get {
-                return ResourceManager.GetString("GcSerializer_ReadModelInfo_ModelWarning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ATTENTION:
-        ///Please make sure that your webOS based TV is using a recent firmware version (LB600 and higher: 4.41.32, UB: 4.51.44).
-        ///Older LG firmware for webOS based TV models does not handle the import of channel lists properly and randomly reorders channels.
-        ///.
-        /// </summary>
-        internal static string GcSerializer_webOsFirmwareWarning {
-            get {
-                return ResourceManager.GetString("GcSerializer_webOsFirmwareWarning", resourceCulture);
+                return ResourceManager.GetString("ScmSerializer_AllBytesInFileAreZero", resourceCulture);
             }
         }
     }

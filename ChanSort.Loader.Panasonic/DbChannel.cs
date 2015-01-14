@@ -32,6 +32,8 @@ namespace ChanSort.Loader.Panasonic
         this.SignalSource |= SignalSource.AnalogT | SignalSource.Tv;
       else if (ntype == 14)
         this.SignalSource |= SignalSource.AnalogC | SignalSource.Tv;
+      else if (ntype == 15)
+        this.SignalSource |= SignalSource.SatIP;
 
       byte[] buffer = new byte[1000];
       var len = r.GetBytes(field["delivery"], 0, buffer, 0, 1000);

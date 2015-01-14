@@ -16,11 +16,12 @@ namespace ChanSort.Api
     Analog = 0x0001,
     Digital = 0x0002,
 
-    // bit 5+6+7: Antenna/Cable/Sat
+    // bit 5+6+7+8: Antenna/Cable/Sat/IP
     MaskAntennaCableSat = 0x00F0,
     Antenna = 0x0010,
     Cable = 0x0020,
     Sat = 0x0040,
+    IP = 0x0080,
 
     // bit 9+10: TV/Radio
     MaskTvRadio = 0x0300,
@@ -48,6 +49,7 @@ namespace ChanSort.Api
     DvbT = Digital + Antenna,
     DvbCT = Digital + Cable + Antenna,
     DvbS = Digital + Sat,
+    SatIP = Digital + Sat + IP,
 
     CablePrimeD = Digital + Cable + CablePrime,
     HdPlusD = Digital + Sat + AstraHdPlus,

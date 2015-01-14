@@ -98,20 +98,11 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-  <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
-    <value>Before you waste your time...
-
-...make sure that your LG TV can load this file (without modifications).
-Some LG TVs export 2 files, a GlobalClone00001.TLL and file like xxLB550U-ZA00001.TLL.
-
-If you have both file types, it's likely that the TV can only load the xxLB550U-ZA00001.TLL and you should edit that file instead.
-
-If your TV only exports a single "Clone" TLL, you're good to continue!</value>
-  </data>
-  <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
-    <value>ATTENTION:
-Please make sure that your webOS based TV is using a recent firmware version (LB600 and higher: 4.41.32, UB: 4.51.44).
-Older LG firmware for webOS based TV models does not handle the import of channel lists properly and randomly reorders channels.
-</value>
+  <data name="ScmSerializer_AllBytesInFileAreZero" xml:space="preserve">
+    <value>Diese Datei enthält keine Daten, alle Bytes darin haben den Wert 0.
+    
+Bitte stellen Sie sicher, dass der USB Stick mit FAT32 formatiert ist und wenn möglich nicht größer als 4GB ist.
+Sollte es danach weiterhin nicht funktionieren, versuchen Sie bitte das Gerät auf Werkseinstellungen zurückzusetzen und einen Suchlauf durchzuführen. 
+(Dies kann nach machen Firmwareupdates nötig sein, damit Export/Import wieder funktionieren.)</value>
   </data>
 </root>

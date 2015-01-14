@@ -5,7 +5,7 @@ namespace ChanSort.Loader.GlobalClone
   public class GcSerializerPlugin : ISerializerPlugin
   {
     public string PluginName { get { return "LG GlobalClone"; } }
-    public string FileFilter { get { return "*Clone*.tll"; } }
+    public string FileFilter { get { return "*Clone*.tll;xx*.xml"; } }
     
     public SerializerBase CreateSerializer(string inputFile)
     {

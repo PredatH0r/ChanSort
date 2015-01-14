@@ -197,6 +197,7 @@ namespace ChanSort.Api
         case 0x11: // MPEG2-HD
         case 0x16: // H264/AVC-SD
         case 0x19: // H264/AVC-HD
+        case 0x1F: // UHD
           return SignalSource.Tv;
         case 0x02:
         case 0x0A:

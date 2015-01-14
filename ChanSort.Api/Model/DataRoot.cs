@@ -84,11 +84,11 @@ namespace ChanSort.Api
         uint searchMask = (uint)criteriaMask;
         uint listMask = (uint) list.SignalSource;
 
-        if ((listMask & 0x000F & searchMask) == 0) // digital/analog
+        if ((listMask & 0x000F & searchMask) != (searchMask & 0x000F)) // digital/analog
           continue;
-        if ((listMask & 0x00F0 & searchMask) == 0) // air/cable/sat
+        if ((listMask & 0x00F0 & searchMask) != (searchMask & 0x00F0)) // air/cable/sat/ip
           continue;
-        if ((listMask & 0x0F00 & searchMask) == 0) // tv/radio
+        if ((listMask & 0x0F00 & searchMask) != (searchMask & 0x0F00)) // tv/radio
           continue;
         if ((listMask & 0xF000) != (searchMask & 0xF000)) // preset list
           continue;

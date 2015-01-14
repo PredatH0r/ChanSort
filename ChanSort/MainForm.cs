@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2014-11-04";
+    public const string AppVersion = "v2015-01-14";
 
     private const int MaxMruEntries = 10;
 
@@ -635,7 +635,7 @@ namespace ChanSort.Ui
       {
         if (!this.PromptHandlingOfUnsortedChannels())
           return;
-
+        this.HandleChannelNumberGaps();
         this.SaveTvDataFile();
         this.dataRoot.NeedsSaving = false;
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
@@ -688,6 +688,40 @@ namespace ChanSort.Ui
       this.editor.AutoNumberingForUnassignedChannels(
           res == DialogResult.Yes ? UnsortedChannelMode.AppendInOrder : UnsortedChannelMode.MarkDeleted);
       return true;
+    }
+    #endregion
+
+    #region HandleChannelNumberGaps()
+    private void HandleChannelNumberGaps()
+    {
+      if (this.currentTvSerializer.Features.CanHaveGaps)
+        return;
+
+      bool wasRenumbered = false;
+      foreach(var list in this.dataRoot.ChannelLists)
+      {
+        int chNr = 1;
+        foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr))
+        {
+          if (channel.IsDeleted || channel.NewProgramNr < 0)
+            continue;
+          if (channel.NewProgramNr == 0 && chNr == 1)
+            chNr = 0;
+          if (channel.NewProgramNr != chNr)
+          {
+            wasRenumbered = true;
+            channel.NewProgramNr = chNr;
+          }
+          ++chNr;
+        }
+      }
+
+      if (wasRenumbered)
+      {
+        XtraMessageBox.Show(this,
+          Resources.MainForm_HandleChannelNumberGaps, 
+          "ChanSort", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      }
     }
     #endregion
 

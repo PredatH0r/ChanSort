@@ -18,6 +18,7 @@ namespace ChanSort.Loader.Panasonic
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Radio, "DVB-T");
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
     private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
+    private readonly ChannelList satipChannels = new ChannelList(SignalSource.SatIP | SignalSource.Tv | SignalSource.Radio, "SAT>IP");
     private readonly ChannelList freesatChannels = new ChannelList(SignalSource.DvbS | SignalSource.Freesat | SignalSource.Tv | SignalSource.Radio, "Freesat");
 
     private string workFile;
@@ -307,6 +308,7 @@ namespace ChanSort.Loader.Panasonic
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
       this.Features.ChannelNameEdit = false; // due to the chaos with binary data inside the "sname" string column, writing back a name has undesired side effects
+      this.Features.CanHaveGaps = false;
       this.DataRoot.SortedFavorites = true;
       
       this.DataRoot.AddChannelList(this.avbtChannels);
@@ -314,6 +316,7 @@ namespace ChanSort.Loader.Panasonic
       this.DataRoot.AddChannelList(this.dvbtChannels);
       this.DataRoot.AddChannelList(this.dvbcChannels);
       this.DataRoot.AddChannelList(this.dvbsChannels);
+      this.DataRoot.AddChannelList(this.satipChannels);
       this.DataRoot.AddChannelList(this.freesatChannels);
     }
     #endregion
@@ -575,6 +578,7 @@ order by s.ntype,major_channel
             this.WriteChannels(cmd, this.dvbtChannels);
             this.WriteChannels(cmd, this.dvbcChannels);
             this.WriteChannels(cmd, this.dvbsChannels);
+            this.WriteChannels(cmd, this.satipChannels);
             this.WriteChannels(cmd, this.freesatChannels);
             trans.Commit();
           }

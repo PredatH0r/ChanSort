@@ -265,4 +265,8 @@ Do you want to open the download website?</value>
     <value>The channel list has been copied to the clipboard
 and can be pasted into Excel or any text editor.</value>
   </data>
+  <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
+    <value>Your TV does not allow gaps in the program numbers,
+so the list had to be renumbered.</value>
+  </data>
 </root>

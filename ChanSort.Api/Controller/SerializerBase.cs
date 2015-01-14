@@ -10,10 +10,12 @@ namespace ChanSort.Api
       public bool CleanUpChannelData { get; set; }
       public bool DeviceSettings { get; set; }
       public bool CanDeleteChannels { get; set; }
+      public bool CanHaveGaps { get; set; }
 
       public SupportedFeatures()
       {
         this.CanDeleteChannels = true;
+        this.CanHaveGaps = true;
       }
     }
 

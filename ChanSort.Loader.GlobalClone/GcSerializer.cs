@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -16,12 +17,14 @@ namespace ChanSort.Loader.GlobalClone
     private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat-Radio");
     private XmlDocument doc;
     private readonly DvbStringDecoder dvbStringDecoder = new DvbStringDecoder(Encoding.Default);
+    private string modelName;
+    private readonly Dictionary<int, string> satPositionByIndex = new Dictionary<int, string>();
 
     #region ctor()
     public GcSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = false;
-      this.Features.CanDeleteChannels = false;
+      //this.Features.CanDeleteChannels = false;
 
       this.DataRoot.AddChannelList(this.atvChannels);
       this.DataRoot.AddChannelList(this.dtvTvChannels);
@@ -65,6 +68,9 @@ namespace ChanSort.Loader.GlobalClone
           case "ModelInfo":
             this.ReadModelInfo(child);
             break;
+          case "SatelliteDB":
+            this.ReadSatelliteDB(child);
+            break;
           case "CHANNEL":
             this.ReadChannelLists(child);
             break;
@@ -76,24 +82,78 @@ namespace ChanSort.Loader.GlobalClone
     #region ReadModelInfo()
     private void ReadModelInfo(XmlNode modelInfoNode)
     {
+      var txt = Resources.GcSerializer_ReadModelInfo_ModelWarning;
+
       var regex = new System.Text.RegularExpressions.Regex(@"\d{2}([A-Z]{2})(\d{2})\d[0-9A-Z].*");
       foreach (XmlNode child in modelInfoNode.ChildNodes)
       {
         switch (child.LocalName)
         {
           case "ModelName":
-            var match = regex.Match(child.InnerText);
+            this.modelName = child.InnerText;
+            var match = regex.Match(this.modelName);
             if (match.Success)
             {
-              if (match.Groups[1].Value == "LB" && StringComparer.InvariantCulture.Compare(match.Groups[2].Value, "60") >= 0)
-                return;
+              var series = match.Groups[1].Value;
+              if ((series == "LB" || series == "UB") && StringComparer.InvariantCulture.Compare(match.Groups[2].Value, "60") >= 0)
+                txt = Resources.GcSerializer_webOsFirmwareWarning;
             }
             break;
         }
       }
 
-      var txt = Resources.GcSerializer_ReadModelInfo_ModelWarning;
       MessageBox.Show(txt, "LG GlobalClone editor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+    #endregion
+
+    #region ReadSatelliteDB()
+    private void ReadSatelliteDB(XmlNode node)
+    {
+      foreach (XmlNode child in node.ChildNodes)
+      {
+        switch (child.LocalName)
+        {
+          case "SATDBInfo":
+            this.ReadSatDbInfo(child);
+            break;
+        }
+      }      
+    }
+
+    private void ReadSatDbInfo(XmlNode node)
+    {
+      foreach (XmlNode child in node.ChildNodes)
+      {
+        switch (child.LocalName)
+        {
+          case "SatRecordInfo":
+            int i = 0;
+            foreach (XmlNode satNode in child.ChildNodes)
+              this.ReadSatRecordInfo(i++, satNode);
+            break;
+        }
+      }
+    }
+
+    private void ReadSatRecordInfo(int i, XmlNode satRecordInfoNode)
+    {
+      string orbitalPos = "";
+      foreach (XmlNode child in satRecordInfoNode.ChildNodes)
+      {
+        switch (child.LocalName)
+        {
+          case "Angle":
+            orbitalPos += child.InnerText;
+            break;
+          case "AnglePrec":
+            orbitalPos += "." + child.InnerText;
+            break;
+          case "DirEastWest":
+            orbitalPos += child.InnerText == "0" ? "W" : "E";
+            break;
+        }
+      }
+      this.satPositionByIndex[i] = orbitalPos;
     }
     #endregion
 
@@ -109,6 +169,9 @@ namespace ChanSort.Loader.GlobalClone
             break;
           case "DTV":
             this.ReadChannelList(chanListNode, false);
+            break;
+          case "DTVATV":
+            // TODO: US DTV_ATSC files contain such lists
             break;
         }
       }
@@ -205,9 +268,18 @@ namespace ChanSort.Loader.GlobalClone
           case "isInvisable": // that spelling error is part of the XML
             ch.Hidden = int.Parse(info.InnerText) == 1;
             break;
+          case "isNumUnSel":
+            // ?
+            break;
           case "isDisabled":
             ch.IsDeleted = int.Parse(info.InnerText) != 0;
             break;
+          case "usSatelliteHandle":
+            int satIndex = int.Parse(info.InnerText);
+            string satPos = this.satPositionByIndex.TryGet(satIndex);
+            ch.SatPosition = satPos ?? satIndex.ToString(); // fallback to ensure unique UIDs
+            ch.Satellite = satPos;
+            break;           
 
             // not present in all XML files. if present, the <vchName> might be empty or corrupted
           case "hexVchName":
@@ -288,7 +360,20 @@ namespace ChanSort.Loader.GlobalClone
                   nr |= 0x4000;
                 node.InnerText = nr.ToString();
                 break;
+              case "isInvisable":
+                node.InnerText = ch.Hidden ? "1" : "0";
+                break;
+              case "isBlocked":
+                node.InnerText = ch.Lock ? "1" : "0";
+                break;
+              case "isSkipped":
+                node.InnerText = ch.Skip ? "1" : "0";
+                break;
+              case "isNumUnSel":
+                // ?
+                break;
               case "isDisabled":
+              case "isDeleted":
                 node.InnerText = ch.IsDeleted ? "1" : "0";
                 break;
               case "isUserSelCHNo":
