@@ -15,7 +15,7 @@ namespace ChanSort.Api
 
     public virtual bool IsDeleted { get; set; }
     public SignalSource SignalSource { get; set; }
-    public int RecordIndex { get; set; }
+    public long RecordIndex { get; set; }
     public int RecordOrder { get; set; }
     public int OldProgramNr { get; set; }
     public int NewProgramNr { get; set; }

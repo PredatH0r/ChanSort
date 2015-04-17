@@ -1,11 +1,8 @@
-Version v2015-01-14 =======================================================
+Version v2015-04-17 =======================================================
 
 Changes:
-- added support for LG xx*.xml file names used by some hospitality TVs
-- fixed handling of multiple satellites with LG's GlobalClone format
-- setting the locked/skipped/hidden/deleted flags in LG GlobalClone files
-- updated information text about required firmware update for LG webOS TVs
-- show help text when a Samsung SCM file contains only bytes with value 0
+- added experimental support for Samsung J-Series DVB-C channel lists
+  (analog channels, DVB-T and DVB-S are not supported yet)
 
 The complete change log can be found at the end of this document
 
@@ -120,6 +117,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2015-04-17
+- added experimental support for Samsung J-Series DVB-C channel lists
+  (analog channels, DVB-T and DVB-S are not supported yet)
 
 2015-01-14
 - added support for LG xx*.xml file names used by some hospitality TVs

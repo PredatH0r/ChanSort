@@ -778,7 +778,7 @@ namespace ChanSort.Loader.LG
         satConfig.dvbsChannelLength);
 
       channel.RecordIndex = counter++;
-      channel.baseOffset = this.dvbsBlockOffset + satConfig.ChannelListOffset + channel.RecordIndex*satConfig.dvbsChannelLength;
+      channel.baseOffset = this.dvbsBlockOffset + satConfig.ChannelListOffset + (int)channel.RecordIndex*satConfig.dvbsChannelLength;
     }
     #endregion
 

@@ -1,10 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
 	ProjectSection(ProjectDependencies) = postProject
+		{33897002-0537-49A4-B963-A18D17311B3D} = {33897002-0537-49A4-B963-A18D17311B3D}
 		{74A18C6F-09FF-413E-90D9-827066FA5B36} = {74A18C6F-09FF-413E-90D9-827066FA5B36}
 		{68DA8072-3A29-4076-9F64-D66F38349585} = {68DA8072-3A29-4076-9F64-D66F38349585}
 		{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5} = {A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}
@@ -35,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.VDR", "ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj", "{74A18C6F-09FF-413E-90D9-827066FA5B36}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.GlobalClone", "ChanSort.Loader.GlobalClone\ChanSort.Loader.GlobalClone.csproj", "{5361C8CB-F737-4709-AF8C-E1F0456F3C5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.SamsungJ", "ChanSort.Loader.SamsungJ\ChanSort.Loader.SamsungJ.csproj", "{33897002-0537-49A4-B963-A18D17311B3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -158,6 +161,18 @@ Global
 		{5361C8CB-F737-4709-AF8C-E1F0456F3C5B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5361C8CB-F737-4709-AF8C-E1F0456F3C5B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5361C8CB-F737-4709-AF8C-E1F0456F3C5B}.Release|x86.ActiveCfg = Release|Any CPU
+		{33897002-0537-49A4-B963-A18D17311B3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33897002-0537-49A4-B963-A18D17311B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33897002-0537-49A4-B963-A18D17311B3D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{33897002-0537-49A4-B963-A18D17311B3D}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{33897002-0537-49A4-B963-A18D17311B3D}.Debug|x86.ActiveCfg = Debug|x86
+		{33897002-0537-49A4-B963-A18D17311B3D}.Debug|x86.Build.0 = Debug|x86
+		{33897002-0537-49A4-B963-A18D17311B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33897002-0537-49A4-B963-A18D17311B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33897002-0537-49A4-B963-A18D17311B3D}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{33897002-0537-49A4-B963-A18D17311B3D}.Release|Mixed Platforms.Build.0 = Release|x86
+		{33897002-0537-49A4-B963-A18D17311B3D}.Release|x86.ActiveCfg = Release|x86
+		{33897002-0537-49A4-B963-A18D17311B3D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
