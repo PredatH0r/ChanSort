@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Text;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Toshiba
@@ -10,23 +9,31 @@ namespace ChanSort.Loader.Toshiba
     internal Dictionary<int,int> OriginalFavIndex = new Dictionary<int, int>();
 
     #region ctor()
-    internal DbChannel(SignalSource source, SQLiteDataReader r, IDictionary<string, int> field, 
-      DataRoot dataRoot)
+    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers)
     {
-      this.SignalSource = source;
+      var chType = r.GetInt32(field["chType"]);
+      if (chType == 7)       
+        this.SignalSource = SignalSource.DvbS;
+      else if (chType == 4)
+        this.SignalSource = SignalSource.DvbC;
+
       this.RecordIndex = r.GetInt64(field["SRV.srvId"]);
       this.OldProgramNr = r.GetInt32(field["major"]);
-      this.Name = this.GetChannelName(r, 2);
+      this.FreqInMhz = (decimal)r.GetInt32(field["freq"]) / 1000;
+      this.ChannelOrTransponder = 
+        (this.SignalSource & SignalSource.Cable) != 0 ? LookupData.Instance.GetDvbtTransponder(this.FreqInMhz).ToString() :
+        (this.SignalSource & SignalSource.Sat) != 0 ? LookupData.Instance.GetTransponderNumber((int)this.FreqInMhz).ToString() :
+        "";
+      this.Name = DbSerializer.ReadUtf16(r, 2);
       this.Hidden = r.GetBoolean(field["hidden"]);
       this.Encrypted = r.GetBoolean(field["scrambled"]);
       this.Lock = r.GetBoolean(field["lockMode"]);
       this.Skip = !r.GetBoolean(field["numSel"]);
-      //this.Favorites = this.ParseFavorites(Bits);
       
       //if (isAnalog)
       //  this.ReadAnalogData(r, field);
       //else
-        this.ReadDvbData(r, field, dataRoot);
+        this.ReadDvbData(r, field, dataRoot, providers);
     }
     #endregion
 
@@ -39,18 +46,19 @@ namespace ChanSort.Loader.Toshiba
     #endregion
 
     #region ReadDvbData()
-    protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot)
+    protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers)
     {
-      this.ShortName = this.GetChannelName(r, 3);
+      this.ShortName = DbSerializer.ReadUtf16(r, 3);
       this.RecordOrder = r.GetInt32(field["major"]);
-      this.FreqInMhz = (decimal)r.GetInt32(field["freq"]) / 1000;
       int serviceType = r.GetInt32(field["srvType"]);
       this.ServiceType = serviceType;
-      this.SignalSource = LookupData.Instance.IsRadioOrTv(serviceType);
+      this.SignalSource |= LookupData.Instance.IsRadioOrTv(serviceType);
       this.OriginalNetworkId = r.GetInt32(field["onid"]);
       this.TransportStreamId = r.GetInt32(field["tsid"]);
       this.ServiceId = r.GetInt32(field["progNum"]);
       this.VideoPid = r.GetInt32(field["vidPid"]);
+      if (!r.IsDBNull(field["provId"]))
+        this.Provider = providers.TryGet(r.GetInt64(field["provId"]));
       if ((this.SignalSource & SignalSource.Sat) != 0)
       {
         //int satId = r.GetInt32(field["sat_id"]);
@@ -71,16 +79,6 @@ namespace ChanSort.Loader.Toshiba
     }
     #endregion
 
-    #region GetChannelNames()
-    private string GetChannelName(SQLiteDataReader r, int fieldIndex)
-    {
-      if (r.IsDBNull(fieldIndex))
-        return null;
-      byte[] nameBytes = new byte[200];
-      int nameLen = (int)r.GetBytes(fieldIndex, 0, nameBytes, 0, nameBytes.Length);
-      return Encoding.BigEndianUnicode.GetString(nameBytes, 0, nameLen);
-    }
-    #endregion
 
     #region UpdateRawData()
     public override void UpdateRawData()

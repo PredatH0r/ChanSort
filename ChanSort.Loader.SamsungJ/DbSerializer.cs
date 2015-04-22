@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using ChanSort.Api;
 using ICSharpCode.SharpZipLib.Zip;
@@ -11,16 +12,11 @@ namespace ChanSort.Loader.Toshiba
 {
   class DbSerializer : SerializerBase
   {
-    private const string FILE_sat = "sat";
-    private const string FILE_dvbc = "dvbc";
-    //private const string FILE_dvbMainData_db = "dvbMainData.db";
-
-    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.TvAndRadio, "Analog");
-    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbCT | SignalSource.TvAndRadio, "Cable");
-    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Satellite");
     private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
-
+    private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
     private string tempDir;
+
+    private enum FileType { Unknown, SatDb, ChannelDb }
 
     #region ctor()
     public DbSerializer(string inputFile) : base(inputFile)
@@ -29,10 +25,6 @@ namespace ChanSort.Loader.Toshiba
 
       this.Features.ChannelNameEdit = false;
       this.DataRoot.SortedFavorites = true;
-
-      this.DataRoot.AddChannelList(this.atvChannels);
-      this.DataRoot.AddChannelList(this.dvbcChannels);
-      this.DataRoot.AddChannelList(this.dvbsChannels);
     }
     #endregion
 
@@ -45,44 +37,35 @@ namespace ChanSort.Loader.Toshiba
     public override void Load()
     {
       this.UnzipDataFile();
-
-      string channelConnString = "Data Source=" + tempDir + FILE_sat;
-      using (var conn = new SQLiteConnection(channelConnString))
+      foreach (var filePath in Directory.GetFiles(tempDir, "*."))
       {
-        conn.Open();
-        using (var cmd = conn.CreateCommand())
+        try
         {
-          this.RepairCorruptedDatabaseImage(cmd);
-          this.ReadSatellites(cmd);
-          this.ReadTransponders(cmd);
+          using (var conn = new SQLiteConnection("Data Source=" + filePath))
+          {
+            FileType type;
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+              this.RepairCorruptedDatabaseImage(cmd);
+              type = this.DetectFileType(cmd);
+            }
+
+            switch (type)
+            {
+              case FileType.SatDb:
+                //ReadSatDatabase(conn);
+                break;
+              case FileType.ChannelDb:
+                ReadChannelDatabase(conn, filePath);
+                break;
+            }
+          }
+        }
+        catch
+        {
         }
       }
-
-      string sysDataConnString = "Data Source=" + tempDir + FILE_dvbc;
-      using (var conn = new SQLiteConnection(sysDataConnString))
-      {
-        conn.Open();
-        using (var cmd = conn.CreateCommand())
-        {
-          this.RepairCorruptedDatabaseImage(cmd);
-          //this.ReadAnalogChannels(cmd);
-          this.ReadDtvChannels(cmd);
-          //this.ReadSatChannels(cmd);
-          this.ReadFavorites(cmd);
-        }
-      }
-
-#if false
-      string mainDataConnString = "Data Source=" + tempDir + FILE_dvbMainData_db;
-      using (var conn = new SQLiteConnection(mainDataConnString))
-      {
-        conn.Open();
-        using (var cmd = conn.CreateCommand())
-        {
-          this.ReadCryptInfo(cmd);
-        }
-      }
-#endif
     }
     #endregion
 
@@ -140,6 +123,33 @@ namespace ChanSort.Loader.Toshiba
     }
     #endregion
 
+    #region DetectFileType()
+    private FileType DetectFileType(SQLiteCommand cmd)
+    {
+      cmd.CommandText = "select count(1) from sqlite_master where type='table' and name in ('SAT','SAT_TP')";
+      if ((long)cmd.ExecuteScalar() == 2)
+        return FileType.SatDb;
+
+      cmd.CommandText = "select count(1) from sqlite_master where type='table' and name in ('CHNL','SRV','SRV_DVB')";
+      if ((long) cmd.ExecuteScalar() == 3)
+        return FileType.ChannelDb;
+
+      return FileType.Unknown;
+    }
+    #endregion
+
+    #region ReadSatDatabase()
+    private void ReadSatDatabase(SQLiteConnection conn)
+    {
+      using (var cmd = conn.CreateCommand())
+      {
+        this.RepairCorruptedDatabaseImage(cmd);
+        this.ReadSatellites(cmd);
+        this.ReadTransponders(cmd);
+      }
+    }
+    #endregion
+
     #region ReadSatellites()
     private void ReadSatellites(SQLiteCommand cmd)
     {
@@ -183,65 +193,79 @@ namespace ChanSort.Loader.Toshiba
     }
     #endregion
 
-    #region ReadCryptInfo()
-    private void ReadCryptInfo(SQLiteCommand cmd)
+
+    #region ReadChannelDatabase()
+    private void ReadChannelDatabase(SQLiteConnection conn, string dbPath)
     {
-      cmd.CommandText =
-        "select satellite_id, original_network_id, transport_stream_id, service_id, free_CA_mode from services";
-      using (var r = cmd.ExecuteReader())
+      this.channelById.Clear();
+      using (var cmd = conn.CreateCommand())
       {
-        while (r.Read())
-        {
-          int satId = r.IsDBNull(0) ? 0 : r.GetInt32(0);
-          var sat = this.DataRoot.Satellites.TryGet(satId);
-          var satPos = sat != null ? sat.OrbitalPosition : "0.0";
-          string format = sat != null ? "S{0}-{1}-{2}-{3}" : "C-{1}-{2}-{3}";
-          string uid = string.Format(format, satPos, r.GetInt32(1), r.GetInt32(2), r.GetInt32(3));
-        }
+        this.RepairCorruptedDatabaseImage(cmd);
+        var providers = this.ReadProviders(cmd);
+        //this.ReadAnalogChannels(cmd);
+        var channelList = this.ReadDtvChannels(cmd, dbPath, providers);
+        this.ReadFavorites(cmd);
+        this.dbPathByChannelList.Add(channelList, dbPath);
       }
     }
     #endregion
 
+    #region ReadProviders()
+    private Dictionary<long, string> ReadProviders(SQLiteCommand cmd)
+    {
+      var dict = new Dictionary<long, string>();
+      try
+      {
+        cmd.CommandText = "select provId, cast(provName as blob) from PROV";
+        using (var r = cmd.ExecuteReader())
+        {
+          while (r.Read())
+            dict.Add(r.GetInt64(0), ReadUtf16(r, 1));
+        }
+      }
+      catch
+      {
+      }
+      return dict;
+    }
+    #endregion
 
     #region ReadAnalogChannels()
     private void ReadAnalogChannels(SQLiteCommand cmd)
     {
-      string[] fieldNames = {"channel_handle", "channel_number", "list_bits", "channel_label", "frequency"};
-      var sql = this.GetQuery("EuroATVChanList", fieldNames);
-      var fields = this.GetFieldMap(fieldNames);
+      //string[] fieldNames = {"channel_handle", "channel_number", "list_bits", "channel_label", "frequency"};
+      //var sql = this.GetQuery("EuroATVChanList", fieldNames);
+      //var fields = this.GetFieldMap(fieldNames);
       
-      cmd.CommandText = sql;
-      using (var r = cmd.ExecuteReader())
-      {
-        while (r.Read())
-        {
-          ChannelInfo channel = new DbChannel(SignalSource.Analog, r, fields, this.DataRoot);
-          if (!channel.IsDeleted)
-            this.DataRoot.AddChannel(this.atvChannels, channel);
-        }
-      }
+      //cmd.CommandText = sql;
+      //using (var r = cmd.ExecuteReader())
+      //{
+      //  while (r.Read())
+      //  {
+      //    ChannelInfo channel = new DbChannel(SignalSource.Analog, r, fields, this.DataRoot);
+      //    if (!channel.IsDeleted)
+      //      this.DataRoot.AddChannel(this.atvChannels, channel);
+      //  }
+      //}
     }
     #endregion
 
     #region ReadDtvChannels()
-    private void ReadDtvChannels(SQLiteCommand cmd)
+    private ChannelList ReadDtvChannels(SQLiteCommand cmd, string dbPath, Dictionary<long, string> providers)
     {
-      this.ReadDigitalChannels(cmd, "SRV_DVB", SignalSource.DvbCT, this.dvbcChannels);
-    }
-    #endregion
-
-    #region ReadSatChannels()
-    private void ReadSatChannels(SQLiteCommand cmd)
-    {
-      this.ReadDigitalChannels(cmd, "EuroSATChanList", SignalSource.DvbS, this.dvbsChannels);
+      string name = Path.GetFileName(dbPath);
+      ChannelList channelList = new ChannelList(SignalSource.Digital, name);
+      this.ReadDigitalChannels(cmd, "SRV_DVB", channelList, providers);
+      this.DataRoot.AddChannelList(channelList);
+      return channelList;
     }
     #endregion
 
     #region ReadDigitalChannels()
-    private void ReadDigitalChannels(SQLiteCommand cmd, string table, SignalSource signalSource, ChannelList channelList)
+    private void ReadDigitalChannels(SQLiteCommand cmd, string table, ChannelList channelList, Dictionary<long, string> providers)
     {
-      string[] fieldNames = { "SRV.srvId", "major", "cast(srvName as blob)", "cast(shrtSrvName as blob)", "CHNL.chId", 
-                            "srvType", "onid", "tsid", "vidPid", "progNum", "freq", "hidden", "scrambled", "lockMode", "numSel" };
+      string[] fieldNames = { "SRV.srvId", "major", "cast(srvName as blob)", "cast(shrtSrvName as blob)", "chType", "chNum", 
+                            "srvType", "onid", "tsid", "vidPid", "progNum", "freq", "hidden", "scrambled", "lockMode", "numSel", "provId" };
       var sql = this.GetQuery(table, fieldNames);
       var fields = this.GetFieldMap(fieldNames);
 
@@ -250,7 +274,7 @@ namespace ChanSort.Loader.Toshiba
       {
         while (r.Read())
         {
-          var channel = new DbChannel(signalSource, r, fields, this.DataRoot);
+          var channel = new DbChannel(r, fields, this.DataRoot, providers);
           if (!channel.IsDeleted)
           {
             this.DataRoot.AddChannel(channelList, channel);
@@ -296,12 +320,23 @@ namespace ChanSort.Loader.Toshiba
         var channel = this.channelById.TryGet(r.GetInt64(0));
         if (channel == null) 
           continue;
-        int fav = r.GetInt32(1);
+        int fav = r.GetInt32(1) - 1;
         int pos = r.GetInt32(2);
         channel.FavIndex[fav] = channel.OriginalFavIndex[fav] = pos;
-        if (pos > 0)
+        if (pos >= 0)
           channel.Favorites |= (Favorites) (1 << fav);
       }
+    }
+    #endregion
+
+    #region ReadUtf16()
+    internal static string ReadUtf16(SQLiteDataReader r, int fieldIndex)
+    {
+      if (r.IsDBNull(fieldIndex))
+        return null;
+      byte[] nameBytes = new byte[200];
+      int nameLen = (int)r.GetBytes(fieldIndex, 0, nameBytes, 0, nameBytes.Length);
+      return Encoding.BigEndianUnicode.GetString(nameBytes, 0, nameLen);
     }
     #endregion
 
@@ -315,8 +350,29 @@ namespace ChanSort.Loader.Toshiba
         this.FileName = tvOutputFile;
       }
 
-      string channelConnString = "Data Source=" + this.tempDir + FILE_dvbc;
-      using (var conn = new SQLiteConnection(channelConnString))
+      using (var zip = new ZipFile(this.FileName))
+      {
+        zip.BeginUpdate();
+
+        foreach (var channelList in this.DataRoot.ChannelLists)
+        {
+          var dbPath = this.dbPathByChannelList[channelList];
+          SaveChannelList(channelList, dbPath);
+
+          var entryName = Path.GetFileName(dbPath);
+          zip.Delete(entryName);
+          zip.Add(dbPath, entryName);
+        }
+
+        zip.CommitUpdate();
+      }
+    }
+    #endregion
+
+    #region SaveChannelList()
+    private void SaveChannelList(ChannelList channelList, string dbPath)
+    {
+      using (var conn = new SQLiteConnection("Data Source=" + dbPath))
       {
         conn.Open();
         using (var cmd = conn.CreateCommand())
@@ -327,15 +383,14 @@ namespace ChanSort.Loader.Toshiba
           using (var trans = conn.BeginTransaction())
           {
             this.PrepareCommands(cmd, cmd2, cmd3, cmd4);
-            this.WriteChannels(cmd, cmd2, cmd3, cmd4, this.dvbcChannels);
+            this.WriteChannels(cmd, cmd2, cmd3, cmd4, channelList);
             trans.Commit();
           }
           this.RepairCorruptedDatabaseImage(cmd);
         }
       }
-
-      this.ZipFiles();
     }
+
     #endregion
 
     #region PrepareCommands()
@@ -396,31 +451,17 @@ namespace ChanSort.Loader.Toshiba
           {
             var c = oldPos < 0 ? cmd2 : cmd3;
             c.Parameters["@id"].Value = channel.RecordIndex;
-            c.Parameters["@fav"].Value = i;
+            c.Parameters["@fav"].Value = i + 1;
             c.Parameters["@pos"].Value = newPos;
             c.ExecuteNonQuery();
           }      
           else
           {
             cmd4.Parameters["@id"].Value = channel.RecordIndex;
-            cmd4.Parameters["@fav"].Value = i;
+            cmd4.Parameters["@fav"].Value = i + 1;
             cmd4.ExecuteNonQuery();
           }
         }
-      }
-    }
-    #endregion
-
-    #region ZipFiles()
-    private void ZipFiles()
-    {
-      const string entryName = FILE_dvbc;
-      using (var zip = new ZipFile(this.FileName))
-      {
-        zip.BeginUpdate();
-        zip.Delete(entryName);
-        zip.Add(this.tempDir + FILE_dvbc, entryName);
-        zip.CommitUpdate();
       }
     }
     #endregion

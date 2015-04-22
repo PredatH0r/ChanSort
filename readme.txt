@@ -1,8 +1,8 @@
-Version v2015-04-17 =======================================================
+Version v2015-04-18 =======================================================
 
 Changes:
-- added experimental support for Samsung J-Series DVB-C channel lists
-  (analog channels, DVB-T and DVB-S are not supported yet)
+- added support for Samsung J-Series DVB-C and DVB-S channel lists
+  (analog channels and DVB-T are not supported yet)
 
 The complete change log can be found at the end of this document
 
@@ -117,6 +117,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 Change log ================================================================
+
+2015-04-18
+- added support for Samsung J-Series DVB-C and DVB-S channel lists
+  (analog channels and DVB-T are not supported yet)
 
 2015-04-17
 - added experimental support for Samsung J-Series DVB-C channel lists

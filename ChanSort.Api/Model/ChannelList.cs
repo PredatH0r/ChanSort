@@ -85,7 +85,7 @@ namespace ChanSort.Api
       if (!isDupeProgNr)
         this.channelByProgNr[ci.OldProgramNr] = ci;
 
-      var lowerName = ci.Name.ToLower().Trim();
+      var lowerName = (ci.Name ?? "").ToLower().Trim();
       var byNameList = this.channelByName.TryGet(lowerName);
       if (byNameList == null)
       {
