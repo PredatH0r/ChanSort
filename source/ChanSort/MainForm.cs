@@ -193,7 +193,7 @@ namespace ChanSort.Ui
         this.currentCsvFile = Path.Combine(Path.GetDirectoryName(this.currentTvFile) ?? "",
           Path.GetFileNameWithoutExtension(this.currentTvFile) + ".csv");
       }
-      this.Text = this.title + "  -  " + this.currentTvFile;
+      this.Text = this.title + "  -  " + Path.GetFileName(this.currentTvFile);
     }
     #endregion
 

@@ -10,24 +10,26 @@ About ChanSort
 
 ChanSort is a PC/Windows application that allows you to reorder your TV's channel list.  
 Most modern TVs have functions to export/import a channel list to/from USB stick or SD-card, 
-which you can plug into your PC and manipulate.  
+which you can plug into your PC.  
 ChanSort currently supports various models from Samsung, LG, Panasonic, Toshiba and the Linux VDR project.
+
+![screenshot](http://i.imgur.com/QEvqcbl.png)
 
 ! USE AT YOUR OWN RISK !
 ------------------------
 This software was written without support from any TV manufacturer nor access to any official 
 documentation about the file formats. It is solely based on analysing existing data files, trial and error.
-There is a chance of unwanted side-effects or even damage to your TV (2 cases reported).
+There is a chance of unwanted side-effects or even damage to your TV, as reported in 2 cases.
 
 Features
 --------
 
-- Reorder channels (change numbers directly, move up/own, drag&drop, double-click)
+- Reorder channels (change numbers directly, move up/down, drag&drop, double-click)
 - Use another channel list as a reference to apply the same ordering
 - Multi-selection for editing multiple channels at once
-- Side-by-side view of new/sorted list and original/complete list
-- Rename or Delete channels (support depends on TV model and type of channel)
-- Manage favorites, parental lock and other flags
+- Side-by-side view of new/sorted list and original/complete list (similar to playlist and library)
+- Rename or delete channels
+- Manage favorites, parental lock, channel skipping (when zapping), channel hiding
 - User interface in English, German and partially in Turkish and Portuguese
 - Unicode character support for channel names (Latin, Cyrillic, Greek, ...)
 
@@ -37,9 +39,9 @@ System requirements
 -------------------
 
 - [Microsoft .NET Framework 4.0 (Full)](http://www.microsoft.com/en-us/download/details.aspx?id=17851): 
-  included in Win8, can be installed on Win7, Vista and XP SP3
+  included in Win8, required for Win7, Vista and XP SP3
 - [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328):
-  required to edit Panasonic, Toshiba and Samsung J-series channel lists (through SQLite)
+  required to edit SQLite lists (Panasonic, Toshiba and Samsung J-series)
 - USB stick/SD-card to transfer the channel list between your TV and PC
 - Some LG models require a special service remote control to access the import/export functions (see Wiki for details)
 
@@ -69,28 +71,28 @@ LG
 Series: CS, DM, LA, LB*, LD, LE, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB*
 Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
 
-\*: Some devices behave erroneously due to firmware issues.
-+: See system requirements for LM-series. Model xxLM640T is not supported due to its broken firmware.
-#: Only satellite channels supported
+\*: Some devices behave erroneously due to firmware issues.  
++: See system requirements for LM-series. Model xxLM640T is not supported due to its broken firmware.  
+\#: Only satellite channels supported.
 
 Other models might also work, but have not been tested. If you have a .TLL file of a series not listed here, please send it to me.
 
 Instructions on how to access the hidden service-menu for transferring
-the channel list from/to USB can be found here:
-http://sourceforge.net/p/chansort/wiki/Home/
+the channel list from/to USB can be found in the Wiki.
 
 Panasonic
 -------
-Viera models with an svl.bin or svl.db channel list (most/all? models since 2011)
+Viera models with an svl.bin or svl.db channel list (most models since 2011)
 
 Toshiba
 -------
-Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.
+Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.  
 (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
 
 VDR (Linux Video Disk Recorder)
 -------
-Supports the channels.conf file format. Implementation for this was provided by TCr82 from the VDR project.
+Supports the channels.conf file format.  
+Implementation for this was provided by TCr82 from the VDR project.
 
 License (GPLv3)
 ---------------
