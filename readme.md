@@ -15,12 +15,6 @@ ChanSort currently supports various models from Samsung, LG, Panasonic, Toshiba 
 
 ![screenshot](http://i.imgur.com/QEvqcbl.png)
 
-! USE AT YOUR OWN RISK !
-------------------------
-This software was written without support from any TV manufacturer nor access to any official 
-documentation about the file formats. It is solely based on analysing existing data files, trial and error.
-There is a chance of unwanted side-effects or even damage to your TV, as reported in 2 cases.
-
 Features
 --------
 
@@ -34,6 +28,12 @@ Features
 - Unicode character support for channel names (Latin, Cyrillic, Greek, ...)
 
 Some features may not be available on all TV models and channel types (analog, digital, sat, cable, ...)
+
+! USE AT YOUR OWN RISK !
+------------------------
+This software was written without support from any TV manufacturer nor access to any official 
+documentation about the file formats. It is solely based on analysing existing data files, trial and error.
+There is a chance of unwanted side-effects or even damage to your TV, as reported in 2 cases.
 
 System requirements
 -------------------
@@ -50,17 +50,17 @@ Supported TV models
 
 Samsung 
 -------
-Series: B (2009)*, B (2013), C, D, E, F, H, J+
+Series: B (2009)*, B (2013), C, D, E, F, H, J+  
 Lists:  Air analog, Air digital, Cable analog, Cable digital, 
 		Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
 		Canal Digital Sat, Digital+, Cyfra+
 
-* NOTE: The "clone.bin" format is not supported. In the "*.scm" format
+\*: The "clone.bin" format is not supported. In the "*.scm" format
 the "Air Analog"-list of the 2009 B-series doesn't support all 
 editing features due to a lack of test files. If you have such a file,
 please send it to me.
 
-+ NOTE: currently only DVB-C and DVB-S are supported (not DVB-T and analog channels)
++: currently only DVB-C and DVB-S are supported (not DVB-T and analog channels)
 
 Instructions for transferring the channel list can be found on:
 http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-importieren/
@@ -68,11 +68,11 @@ http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-i
 LG
 ---
 
-Series: CS, DM, LA, LB*, LD, LE, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB*
+Series: CS, DM, LA, LB\*, LD, LE, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
 Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
 
 \*: Some devices behave erroneously due to firmware issues.  
-+: See system requirements for LM-series. Model xxLM640T is not supported due to its broken firmware.  
++: See system requirements for LM-series. xxLM640T is not supported due to firmware limitations.  
 \#: Only satellite channels supported.
 
 Other models might also work, but have not been tested. If you have a .TLL file of a series not listed here, please send it to me.
@@ -108,5 +108,3 @@ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-
-
