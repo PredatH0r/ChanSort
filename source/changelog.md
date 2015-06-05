@@ -1,7 +1,7 @@
 ChanSort Change Log 
 ===================
 
-2015-05-06
+2015-06-05
 - added support for Samsung J-Series DVB-T and analog channel lists
 - fixed reference lists with Samsung J-Series
 - web site and source code moved to http://github.com/PredatH0r/ChanSort
