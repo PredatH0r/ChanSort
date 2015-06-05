@@ -106,7 +106,9 @@ namespace ChanSort.Loader.Panasonic
       {
         freq /= 1000;
         this.FreqInMhz = freq;
-        this.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(freq).ToString();
+        this.ChannelOrTransponder = (this.SignalSource & SignalSource.Antenna) != 0 ? 
+          LookupData.Instance.GetDvbtTransponder(freq).ToString() : 
+          LookupData.Instance.GetDvbcTransponder(freq).ToString();
         this.Satellite = (this.SignalSource & SignalSource.Antenna) != 0 ? "DVB-T" : "DVB-C";
       }
 

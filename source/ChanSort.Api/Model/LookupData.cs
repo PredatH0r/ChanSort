@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -8,9 +9,8 @@ namespace ChanSort.Api
   {
     private readonly IDictionary<int, NetworkInfo> networks = new Dictionary<int, NetworkInfo>();
     private readonly IDictionary<int, int> transponderNrByFreqInMhz = new Dictionary<int, int>();
-    private readonly IDictionary<int, int> transponderFreqInMhzByNr = new Dictionary<int, int>();
     private readonly IDictionary<int, string> serviceTypeDescriptions = new Dictionary<int, string>();
-    private readonly IDictionary<int, int> dvbtFreqInMhzByTransponder = new Dictionary<int, int>();
+    private readonly IDictionary<int, string> dvbcChannels = new ConcurrentDictionary<int, string>();
 
     public static readonly LookupData Instance = new LookupData();
 
@@ -28,8 +28,8 @@ namespace ChanSort.Api
     }
     #endregion
 
-    #region GetTransponderNumber(), GetTransponderFrequency()
-    public int GetTransponderNumber(int frequencyInMhz)
+    #region GetAstraTransponder(), GetAstraFrequency()
+    public int GetAstraTransponder(int frequencyInMhz)
     {
       int number;
       bool found = this.transponderNrByFreqInMhz.TryGetValue(frequencyInMhz, out number) ||
@@ -40,7 +40,7 @@ namespace ChanSort.Api
       return found ? number : 0;
     }
 
-    public int GetTransponderFrequency(int transponderNr)
+    public int GetAstraFrequency(int transponderNr)
     {
       return this.transponderNrByFreqInMhz.TryGet(transponderNr);
     }
@@ -59,12 +59,10 @@ namespace ChanSort.Api
     public void LoadDataFromCsvFile()
     {
       this.networks.Clear();
-      this.transponderFreqInMhzByNr.Clear();
       this.transponderNrByFreqInMhz.Clear();
       this.serviceTypeDescriptions.Clear();
-      this.dvbtFreqInMhzByTransponder.Clear();
 
-      string file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "lookup.csv");
+      string file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "lookup.csv");
       if (!File.Exists(file))
         return;
       using (var reader = new StreamReader(file, System.Text.Encoding.UTF8))
@@ -78,8 +76,8 @@ namespace ChanSort.Api
           switch (fields[0].ToLower())
           {
             case "onid": this.ParseNetwork(fields); break;
-            case "dvbt": this.ParseDvbtTransponder(fields); break;
             case "transp": this.ParseTransponder(fields); break;
+            case "dvbc": this.ParseDvbcChannel(fields); break;
             case "servicetype": this.ParseServiceType(fields); break;
           }
         }
@@ -98,14 +96,6 @@ namespace ChanSort.Api
     private void AddTransponderMapping(int transponderNr, int frequencyInMhz)
     {
       this.transponderNrByFreqInMhz[frequencyInMhz] = transponderNr;
-      this.transponderFreqInMhzByNr[transponderNr] = frequencyInMhz;
-    }
-    #endregion
-
-    #region AddDvbtTransponderMapping()
-    private void AddDvbtTransponderMapping(int transponderNr, int frequencyInMhz)
-    {
-      this.dvbtFreqInMhzByTransponder[transponderNr] = frequencyInMhz;
     }
     #endregion
 
@@ -164,17 +154,16 @@ namespace ChanSort.Api
     }
     #endregion
 
-    #region ParseTransponder()
-    private void ParseDvbtTransponder(IList<string> fields)
+    #region ParseDvbcChannel()
+    private void ParseDvbcChannel(IList<string> fields)
     {
       if (fields.Count < 3)
         return;
-      int nr, freq;
-      int.TryParse(fields[1], out nr);
-      int.TryParse(fields[2], out freq);
-      if (nr == 0 || freq == 0)
+      int freq;
+      int.TryParse(fields[1], out freq);
+      if (freq == 0)
         return;
-      this.AddDvbtTransponderMapping(nr, freq);
+      this.dvbcChannels[freq] = fields[2];
     }
     #endregion
 
@@ -208,24 +197,27 @@ namespace ChanSort.Api
     #endregion
 
     #region GetDvbtTransponder()
-    public int GetDvbtTransponder(decimal freq)
+    public int GetDvbtTransponder(decimal freqInMhz)
     {
-      return (int)(freq - 106)/8;
+      return (int)(freqInMhz - 306)/8;
+    }
+    #endregion   
+
+    #region GetDvbtFrequency()
+    public decimal GetDvbtFrequeny(int channelTransponder)
+    {
+      return channelTransponder * 8 + 306;
     }
     #endregion
 
-    #region GetDvbtFrequencyForTransponder()
-    public decimal GetDvbtFrequenyForTransponder(int transponder)
+    public int GetDvbcTransponder(decimal freqInMhz)
     {
-      return transponder * 8 + 106;
+      return GetDvbtTransponder(freqInMhz) + 25; // Samsung handles it like this
     }
-    #endregion
 
-    #region GetDvbtFrequencyForChannel()
-    public decimal GetDvbtFrequenyForChannel(int channel)
+    public string GetDvbcChannelName(decimal freqInMhz)
     {
-      return channel * 8 + 306;
+      return dvbcChannels.TryGet((int)(freqInMhz * 1000)) ?? "";      
     }
-    #endregion
   }
 }

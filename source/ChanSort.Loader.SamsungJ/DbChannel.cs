@@ -2,53 +2,61 @@
 using System.Data.SQLite;
 using ChanSort.Api;
 
-namespace ChanSort.Loader.Toshiba
+namespace ChanSort.Loader.SamsungJ
 {
   internal class DbChannel : ChannelInfo
   {
     internal Dictionary<int,int> OriginalFavIndex = new Dictionary<int, int>();
 
     #region ctor()
-    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers)
+    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers, Satellite sat, Transponder tp)
     {
       var chType = r.GetInt32(field["chType"]);
-      if (chType == 7)       
-        this.SignalSource = SignalSource.DvbS;
-      else if (chType == 4)
-        this.SignalSource = SignalSource.DvbC;
+      this.SignalSource = DbSerializer.ChTypeToSignalSource(chType);
 
       this.RecordIndex = r.GetInt64(field["SRV.srvId"]);
       this.OldProgramNr = r.GetInt32(field["major"]);
       this.FreqInMhz = (decimal)r.GetInt32(field["freq"]) / 1000;
       this.ChannelOrTransponder = 
-        (this.SignalSource & SignalSource.Cable) != 0 ? LookupData.Instance.GetDvbtTransponder(this.FreqInMhz).ToString() :
-        (this.SignalSource & SignalSource.Sat) != 0 ? LookupData.Instance.GetTransponderNumber((int)this.FreqInMhz).ToString() :
+        (this.SignalSource & SignalSource.DvbT) == SignalSource.DvbT ? LookupData.Instance.GetDvbtTransponder(this.FreqInMhz).ToString() :
+        (this.SignalSource & SignalSource.DvbC) == SignalSource.DvbC ? LookupData.Instance.GetDvbcTransponder(this.FreqInMhz).ToString() :
+        (this.SignalSource & SignalSource.Sat) == SignalSource.DvbS ? LookupData.Instance.GetAstraTransponder((int)this.FreqInMhz).ToString() :
         "";
-      this.Name = DbSerializer.ReadUtf16(r, 2);
+      this.Name = DbSerializer.ReadUtf16(r, 6);
       this.Hidden = r.GetBoolean(field["hidden"]);
       this.Encrypted = r.GetBoolean(field["scrambled"]);
       this.Lock = r.GetBoolean(field["lockMode"]);
       this.Skip = !r.GetBoolean(field["numSel"]);
-      
-      //if (isAnalog)
-      //  this.ReadAnalogData(r, field);
-      //else
+
+      if (sat != null)
+      {
+        this.Satellite = sat.Name;
+        this.SatPosition = sat.OrbitalPosition;
+      }
+      if (tp != null)
+      {
+        this.Transponder = tp;
+        this.SymbolRate = tp.SymbolRate;
+      }
+
+      if ((this.SignalSource & SignalSource.Digital) != 0)
         this.ReadDvbData(r, field, dataRoot, providers);
+      else
+        this.ReadAnalogData(r, field);
     }
     #endregion
 
     #region ReadAnalogData()
     private void ReadAnalogData(SQLiteDataReader r, IDictionary<string, int> field)
     {
-      this.Name = r.GetString(field["channel_label"]);
-      this.FreqInMhz = (decimal)r.GetInt32(field["frequency"]) / 1000000;
+      
     }
     #endregion
 
     #region ReadDvbData()
     protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers)
     {
-      this.ShortName = DbSerializer.ReadUtf16(r, 3);
+      this.ShortName = DbSerializer.ReadUtf16(r, 16);
       this.RecordOrder = r.GetInt32(field["major"]);
       int serviceType = r.GetInt32(field["srvType"]);
       this.ServiceType = serviceType;
@@ -61,6 +69,7 @@ namespace ChanSort.Loader.Toshiba
         this.Provider = providers.TryGet(r.GetInt64(field["provId"]));
       if ((this.SignalSource & SignalSource.Sat) != 0)
       {
+
         //int satId = r.GetInt32(field["sat_id"]);
         //var sat = dataRoot.Satellites.TryGet(satId);
         //if (sat != null)

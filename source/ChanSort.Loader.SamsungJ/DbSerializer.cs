@@ -8,15 +8,16 @@ using System.Windows.Forms;
 using ChanSort.Api;
 using ICSharpCode.SharpZipLib.Zip;
 
-namespace ChanSort.Loader.Toshiba
+namespace ChanSort.Loader.SamsungJ
 {
   class DbSerializer : SerializerBase
   {
     private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
     private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
     private string tempDir;
+    private Dictionary<int, Transponder> transponderByFreq;
 
-    private enum FileType { Unknown, SatDb, ChannelDb }
+    private enum FileType { Unknown, SatDb, ChannelDbDvb, ChannelDbAnalog }
 
     #region ctor()
     public DbSerializer(string inputFile) : base(inputFile)
@@ -37,6 +38,19 @@ namespace ChanSort.Loader.Toshiba
     public override void Load()
     {
       this.UnzipDataFile();
+      if (File.Exists(tempDir + "\\sat"))
+      {
+        try
+        {
+          using (var conn = new SQLiteConnection("Data Source=" + tempDir + "\\sat"))
+          {
+            conn.Open();
+            this.ReadSatDatabase(conn);
+          }
+        }
+        catch { }
+      }
+
       foreach (var filePath in Directory.GetFiles(tempDir, "*."))
       {
         try
@@ -53,11 +67,12 @@ namespace ChanSort.Loader.Toshiba
 
             switch (type)
             {
-              case FileType.SatDb:
-                //ReadSatDatabase(conn);
+              case FileType.SatDb: break;
+              case FileType.ChannelDbAnalog:
+                ReadChannelDatabase(conn, filePath, false);
                 break;
-              case FileType.ChannelDb:
-                ReadChannelDatabase(conn, filePath);
+              case FileType.ChannelDbDvb:
+                ReadChannelDatabase(conn, filePath, true);
                 break;
             }
           }
@@ -131,8 +146,12 @@ namespace ChanSort.Loader.Toshiba
         return FileType.SatDb;
 
       cmd.CommandText = "select count(1) from sqlite_master where type='table' and name in ('CHNL','SRV','SRV_DVB')";
-      if ((long) cmd.ExecuteScalar() == 3)
-        return FileType.ChannelDb;
+      if ((long)cmd.ExecuteScalar() == 3)
+        return FileType.ChannelDbDvb;
+
+      cmd.CommandText = "select count(1) from sqlite_master where type='table' and name in ('CHNL','SRV','SRV_ANL')";
+      if ((long)cmd.ExecuteScalar() == 3)
+        return FileType.ChannelDbAnalog;
 
       return FileType.Unknown;
     }
@@ -153,7 +172,7 @@ namespace ChanSort.Loader.Toshiba
     #region ReadSatellites()
     private void ReadSatellites(SQLiteCommand cmd)
     {
-      cmd.CommandText = "select distinct satId, satName, satPos, satDir from SAT";
+      cmd.CommandText = "select distinct satId, cast(satName as blob), satPos, satDir from SAT";
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
@@ -161,7 +180,7 @@ namespace ChanSort.Loader.Toshiba
           Satellite sat = new Satellite(r.GetInt32(0));
           int pos = Math.Abs(r.GetInt32(2));
           sat.OrbitalPosition = string.Format("{0}.{1}{2}", pos / 10, pos % 10, r.GetInt32(3) == 1 ? "E" : "W");
-          sat.Name = r.GetString(1) + " " + sat.OrbitalPosition;
+          sat.Name = ReadUtf16(r, 1);
           this.DataRoot.AddSatellite(sat);
         }
       }
@@ -186,7 +205,7 @@ namespace ChanSort.Loader.Toshiba
           tp.Number = r.GetInt32(4);
           tp.Polarity = r.GetInt32(2) == 0 ? 'H' : 'V';
           tp.Satellite = this.DataRoot.Satellites.TryGet(satId);
-          tp.SymbolRate = r.GetInt32(3) / 1000;
+          tp.SymbolRate = r.GetInt32(3);
           this.DataRoot.AddTransponder(tp.Satellite, tp);
         }
       }
@@ -195,15 +214,14 @@ namespace ChanSort.Loader.Toshiba
 
 
     #region ReadChannelDatabase()
-    private void ReadChannelDatabase(SQLiteConnection conn, string dbPath)
+    private void ReadChannelDatabase(SQLiteConnection conn, string dbPath, bool digital)
     {
       this.channelById.Clear();
       using (var cmd = conn.CreateCommand())
       {
         this.RepairCorruptedDatabaseImage(cmd);
-        var providers = this.ReadProviders(cmd);
-        //this.ReadAnalogChannels(cmd);
-        var channelList = this.ReadDtvChannels(cmd, dbPath, providers);
+        var providers = digital ? this.ReadProviders(cmd) : null;
+        var channelList = this.ReadChannels(cmd, dbPath, providers, digital);
         this.ReadFavorites(cmd);
         this.dbPathByChannelList.Add(channelList, dbPath);
       }
@@ -230,43 +248,23 @@ namespace ChanSort.Loader.Toshiba
     }
     #endregion
 
-    #region ReadAnalogChannels()
-    private void ReadAnalogChannels(SQLiteCommand cmd)
+    #region ReadChannels()
+    private ChannelList ReadChannels(SQLiteCommand cmd, string dbPath, Dictionary<long, string> providers, bool digital)
     {
-      //string[] fieldNames = {"channel_handle", "channel_number", "list_bits", "channel_label", "frequency"};
-      //var sql = this.GetQuery("EuroATVChanList", fieldNames);
-      //var fields = this.GetFieldMap(fieldNames);
-      
-      //cmd.CommandText = sql;
-      //using (var r = cmd.ExecuteReader())
-      //{
-      //  while (r.Read())
-      //  {
-      //    ChannelInfo channel = new DbChannel(SignalSource.Analog, r, fields, this.DataRoot);
-      //    if (!channel.IsDeleted)
-      //      this.DataRoot.AddChannel(this.atvChannels, channel);
-      //  }
-      //}
-    }
-    #endregion
+      var signalSource = DetectSignalSource(cmd, digital);
+      var sat = (signalSource & SignalSource.Sat) == 0 ? null : this.DetectSatellite(cmd);
 
-    #region ReadDtvChannels()
-    private ChannelList ReadDtvChannels(SQLiteCommand cmd, string dbPath, Dictionary<long, string> providers)
-    {
       string name = Path.GetFileName(dbPath);
-      ChannelList channelList = new ChannelList(SignalSource.Digital, name);
-      this.ReadDigitalChannels(cmd, "SRV_DVB", channelList, providers);
-      this.DataRoot.AddChannelList(channelList);
-      return channelList;
-    }
-    #endregion
+      ChannelList channelList = new ChannelList(signalSource, name);
+      string table = digital ? "SRV_DVB" : "SRV_ANL";
+      List<string> fieldNames = new List<string> { 
+                            "chType", "chNum", "freq", // CHNL
+                            "SRV.srvId", "major", "progNum", "cast(srvName as blob)", "srvType", "hidden", "scrambled", "lockMode", "numSel", // SRV
+                            };
+      if (digital)
+        fieldNames.AddRange(new[] { "onid", "tsid", "vidPid", "provId", "cast(shrtSrvName as blob)" }); // SRV_DVB
 
-    #region ReadDigitalChannels()
-    private void ReadDigitalChannels(SQLiteCommand cmd, string table, ChannelList channelList, Dictionary<long, string> providers)
-    {
-      string[] fieldNames = { "SRV.srvId", "major", "cast(srvName as blob)", "cast(shrtSrvName as blob)", "chType", "chNum", 
-                            "srvType", "onid", "tsid", "vidPid", "progNum", "freq", "hidden", "scrambled", "lockMode", "numSel", "provId" };
-      var sql = this.GetQuery(table, fieldNames);
+      var sql = this.BuildQuery(table, fieldNames);
       var fields = this.GetFieldMap(fieldNames);
 
       cmd.CommandText = sql;
@@ -274,7 +272,8 @@ namespace ChanSort.Loader.Toshiba
       {
         while (r.Read())
         {
-          var channel = new DbChannel(r, fields, this.DataRoot, providers);
+          var tp = this.transponderByFreq != null ? this.transponderByFreq.TryGet(r.GetInt32(2)) : null;
+          var channel = new DbChannel(r, fields, this.DataRoot, providers, sat, tp);
           if (!channel.IsDeleted)
           {
             this.DataRoot.AddChannel(channelList, channel);
@@ -282,14 +281,93 @@ namespace ChanSort.Loader.Toshiba
           }
         }
       }
+
+      this.DataRoot.AddChannelList(channelList);
+      return channelList;
     }
     #endregion
 
-    #region GetQuery()
-    private string GetQuery(string table, string[] fieldNames)
+    #region DetectSignalSource()
+    private static SignalSource DetectSignalSource(SQLiteCommand cmd, bool digital)
+    {
+      var signalSource = digital ? SignalSource.Digital : SignalSource.Analog;
+      cmd.CommandText = "select distinct chType from CHNL";
+      using (var r = cmd.ExecuteReader())
+      {
+        if (r.Read())
+        {
+          var ss = ChTypeToSignalSource(r.GetInt32(0));
+          if (ss != 0)
+            signalSource = ss;
+        }
+      }
+      return signalSource | SignalSource.TvAndRadio;
+    }
+
+    #endregion
+
+    #region ChTypeToSignalSource()
+    internal static SignalSource ChTypeToSignalSource(int chType)
+    {
+      switch (chType)
+      {
+        case 1: return SignalSource.AnalogT;
+        case 2: return SignalSource.DvbT;
+        case 3: return SignalSource.AnalogC;
+        case 4: return SignalSource.DvbC;
+        case 7: return SignalSource.DvbS;
+        default: return 0;
+      }      
+    }
+    #endregion
+
+    #region DetectSatellite()
+
+    /// <summary>
+    /// I haven't found a direct way to link a dvbs database file or its channels to a satId.
+    /// This workaround compares the transponder frequencies in the channel list with the transponder frequencies of each satellite to find a match.
+    /// </summary>
+    private Satellite DetectSatellite(SQLiteCommand cmd)
+    {
+      List<int> tpFreq = new List<int>();
+      cmd.CommandText = "select freq from CHNL where chType=7";
+      using (var r = cmd.ExecuteReader())
+      {
+        while (r.Read())
+          tpFreq.Add(r.GetInt32(0));
+      }
+
+      this.transponderByFreq = null;
+      foreach (var sat in DataRoot.Satellites.Values)
+      {
+        Dictionary<int, Transponder> satFreq = new Dictionary<int, Transponder>();
+        foreach (var tp in sat.Transponder.Values)
+          satFreq.Add((int) (tp.FrequencyInMhz*1000), tp);
+
+        int mismatch = 0;
+        foreach (int freq in tpFreq)
+        {
+          if (satFreq.ContainsKey(freq) || satFreq.ContainsKey(freq - 1000) || satFreq.ContainsKey(freq + 1000))
+            continue;
+
+          ++mismatch;
+        }
+
+        if (mismatch < 10)
+        {
+          this.transponderByFreq = satFreq;
+          return sat;
+        }
+      }
+      return null;
+    }
+    #endregion
+
+    #region BuildQuery()
+    private string BuildQuery(string table, IList<string> fieldNames)
     {
       string sql = "select ";
-      for (int i = 0; i < fieldNames.Length; i++)
+      for (int i = 0; i < fieldNames.Count; i++)
       {
         if (i > 0)
           sql += ",";
@@ -301,10 +379,10 @@ namespace ChanSort.Loader.Toshiba
     #endregion
 
     #region GetFieldMap()
-    private IDictionary<string, int> GetFieldMap(string[] fieldNames)
+    private IDictionary<string, int> GetFieldMap(IList<string> fieldNames)
     {
       Dictionary<string, int> field = new Dictionary<string, int>();
-      for (int i = 0; i < fieldNames.Length; i++)
+      for (int i = 0; i < fieldNames.Count; i++)
         field[fieldNames[i]] = i;
       return field;
     }

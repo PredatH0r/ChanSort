@@ -26,7 +26,7 @@ namespace ChanSort.Loader.LG
       this.FreqInMhz = (data.GetDword(_FrequencyLong)+10) / 1000;
 // ReSharper restore PossibleLossOfFraction
       if (this.FreqInMhz == 0)
-        this.FreqInMhz = LookupData.Instance.GetDvbtFrequenyForChannel(channel);
+        this.FreqInMhz = LookupData.Instance.GetDvbtFrequeny(channel);
     }
   }
 }
