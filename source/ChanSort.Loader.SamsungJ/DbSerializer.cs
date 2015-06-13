@@ -24,8 +24,10 @@ namespace ChanSort.Loader.SamsungJ
     {
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
-      this.Features.ChannelNameEdit = false;
-      this.DataRoot.SortedFavorites = true;
+      this.Features.ChannelNameEdit = ChannelNameEditMode.All;
+      this.Features.CanDeleteChannels = true;
+      this.DataRoot.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
+      this.DataRoot.SortedFavorites = false;
     }
     #endregion
 
@@ -400,9 +402,13 @@ namespace ChanSort.Loader.SamsungJ
           continue;
         int fav = r.GetInt32(1) - 1;
         int pos = r.GetInt32(2);
-        channel.FavIndex[fav] = channel.OriginalFavIndex[fav] = pos;
         if (pos >= 0)
           channel.Favorites |= (Favorites) (1 << fav);
+#if INDIVIDUALLY_SORTED_FAVS
+        channel.FavIndex[fav] = channel.OriginalFavIndex[fav] = pos;
+#else
+        channel.OriginalFavs = channel.Favorites;
+#endif
       }
     }
     #endregion
@@ -453,18 +459,19 @@ namespace ChanSort.Loader.SamsungJ
       using (var conn = new SQLiteConnection("Data Source=" + dbPath))
       {
         conn.Open();
-        using (var cmd = conn.CreateCommand())
-        using (var cmd2 = conn.CreateCommand())
-        using (var cmd3 = conn.CreateCommand())
-        using (var cmd4 = conn.CreateCommand())
+        using (var cmdUpdateSrv = conn.CreateCommand())
+        using (var cmdDeleteSrv = conn.CreateCommand())
+        using (var cmdInsertFav = conn.CreateCommand())
+        using (var cmdUpdateFav = conn.CreateCommand())
+        using (var cmdDeleteFav = conn.CreateCommand())
         {
           using (var trans = conn.BeginTransaction())
           {
-            this.PrepareCommands(cmd, cmd2, cmd3, cmd4);
-            this.WriteChannels(cmd, cmd2, cmd3, cmd4, channelList);
+            this.PrepareCommands(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav);
+            this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
             trans.Commit();
           }
-          this.RepairCorruptedDatabaseImage(cmd);
+          this.RepairCorruptedDatabaseImage(cmdUpdateSrv);
         }
       }
     }
@@ -472,37 +479,43 @@ namespace ChanSort.Loader.SamsungJ
     #endregion
 
     #region PrepareCommands()
-    private void PrepareCommands(SQLiteCommand cmd, SQLiteCommand cmd2, SQLiteCommand cmd3, SQLiteCommand cmd4)
+    private void PrepareCommands(SQLiteCommand cmdUpdateSrv, SQLiteCommand cmdDeleteSrv, SQLiteCommand cmdInsertFav, SQLiteCommand cmdUpdateFav, SQLiteCommand cmdDeleteFav)
     {
-      cmd.CommandText = "update SRV set major=@nr, lockMode=@lock, hidden=@hidden, numSel=@numsel where srvId=@id";
-      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmd.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Boolean));
-      cmd.Parameters.Add(new SQLiteParameter("@hidden", DbType.Boolean));
-      cmd.Parameters.Add(new SQLiteParameter("@numsel", DbType.Boolean));
-      cmd.Prepare();
+      cmdUpdateSrv.CommandText = "update SRV set major=@nr, lockMode=@lock, hideGuide=@hidden, hidden=@hidden, numSel=@numsel, srvName=@srvname where srvId=@id";
+      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
+      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@lock", DbType.Boolean));
+      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@hidden", DbType.Boolean));
+      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@numsel", DbType.Boolean));
+      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@srvname", DbType.Binary));
+      cmdUpdateSrv.Prepare();
 
-      cmd2.CommandText = "insert into SRV_FAV (srvId, fav, pos) values (@id, @fav, @pos)";
-      cmd2.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmd2.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
-      cmd2.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
-      cmd2.Prepare();
+      cmdDeleteSrv.CommandText = "delete from SRV where srvId=@id";
+      cmdDeleteSrv.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmdDeleteSrv.Prepare();
 
-      cmd3.CommandText = "update SRV_FAV set pos=@pos where srvId=@id and fav=@fav";
-      cmd3.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmd3.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
-      cmd3.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
-      cmd3.Prepare();
+      cmdInsertFav.CommandText = "insert into SRV_FAV (srvId, fav, pos) values (@id, @fav, @pos)";
+      cmdInsertFav.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmdInsertFav.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
+      cmdInsertFav.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
+      cmdInsertFav.Prepare();
 
-      cmd4.CommandText = "delete from SRV_FAV where srvId=@id and fav=@fav";
-      cmd4.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmd4.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
-      cmd4.Prepare();      
+      cmdUpdateFav.CommandText = "update SRV_FAV set pos=@pos where srvId=@id and fav=@fav";
+      cmdUpdateFav.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmdUpdateFav.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
+      cmdUpdateFav.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
+      cmdUpdateFav.Prepare();
+
+      cmdDeleteFav.CommandText = "delete from SRV_FAV where srvId=@id and fav=@fav";
+      cmdDeleteFav.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmdDeleteFav.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
+      cmdDeleteFav.Prepare();      
     }
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SQLiteCommand cmd, SQLiteCommand cmd2, SQLiteCommand cmd3, SQLiteCommand cmd4, ChannelList channelList, bool analog = false)
+    private void WriteChannels(SQLiteCommand cmdUpdateSrv, SQLiteCommand cmdDeleteSrv, SQLiteCommand cmdInsertFav, SQLiteCommand cmdUpdateFav, SQLiteCommand cmdDeleteFav, 
+      ChannelList channelList, bool analog = false)
     {      
       foreach (ChannelInfo channelInfo in channelList.Channels)
       {
@@ -510,24 +523,38 @@ namespace ChanSort.Loader.SamsungJ
         if (channel == null) // ignore reference list proxy channels
           continue;
         channel.UpdateRawData();
-        cmd.Parameters["@id"].Value = channel.RecordIndex;
-        cmd.Parameters["@nr"].Value = channel.NewProgramNr;
-        cmd.Parameters["@lock"].Value = channel.Lock;
-        cmd.Parameters["@hidden"].Value = channel.Hidden;
-        cmd.Parameters["@numsel"].Value = !channel.Skip;
-        cmd.ExecuteNonQuery();
-
-        for (int i=0; i<channel.FavIndex.Count; i++)
+        if (channel.NewProgramNr < 0)
         {
+          cmdDeleteSrv.Parameters["@id"].Value = channel.RecordIndex;
+          cmdDeleteSrv.ExecuteNonQuery();
+        }
+        else
+        {
+          cmdUpdateSrv.Parameters["@id"].Value = channel.RecordIndex;
+          cmdUpdateSrv.Parameters["@nr"].Value = channel.NewProgramNr;
+          cmdUpdateSrv.Parameters["@lock"].Value = channel.Lock;
+          cmdUpdateSrv.Parameters["@hidden"].Value = channel.Hidden;
+          cmdUpdateSrv.Parameters["@numsel"].Value = !channel.Skip;
+          cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? null : Encoding.BigEndianUnicode.GetBytes(channel.Name);
+          cmdUpdateSrv.ExecuteNonQuery();
+        }
+
+        for (int i=0, mask=1; i<5; i++, mask <<= 1)
+        {
+#if INDIVIDUALLY_SORTED_FAVS
           int oldPos;
           if (!channel.OriginalFavIndex.TryGetValue(i, out oldPos))
             oldPos = -1;
           int newPos = channel.FavIndex[i];
           if (newPos == oldPos)
             continue;
+#else
+          int oldPos = ((int)channel.OriginalFavs & mask) != 0 ? channel.OldProgramNr : -1;
+          int newPos = ((int)channel.Favorites & mask) != 0 ? channel.NewProgramNr : -1;
+#endif
           if (newPos > 0)
           {
-            var c = oldPos < 0 ? cmd2 : cmd3;
+            var c = oldPos < 0 ? cmdInsertFav : cmdUpdateFav;
             c.Parameters["@id"].Value = channel.RecordIndex;
             c.Parameters["@fav"].Value = i + 1;
             c.Parameters["@pos"].Value = newPos;
@@ -535,11 +562,12 @@ namespace ChanSort.Loader.SamsungJ
           }      
           else
           {
-            cmd4.Parameters["@id"].Value = channel.RecordIndex;
-            cmd4.Parameters["@fav"].Value = i + 1;
-            cmd4.ExecuteNonQuery();
+            cmdDeleteFav.Parameters["@id"].Value = channel.RecordIndex;
+            cmdDeleteFav.Parameters["@fav"].Value = i + 1;
+            cmdDeleteFav.ExecuteNonQuery();
           }
         }
+        channel.OriginalFavs = channel.Favorites;
       }
     }
     #endregion

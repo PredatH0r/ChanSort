@@ -75,7 +75,7 @@ namespace ChanSort.Loader.LG
     #region ctor()
     public TllFileSerializer(string inputFile) : base(inputFile)
     {
-      this.Features.ChannelNameEdit = true;
+      this.Features.ChannelNameEdit = ChannelNameEditMode.Analog;
       this.Features.DeviceSettings = true;
       this.Features.CleanUpChannelData = true;
       this.SupportedTvCountryCodes = new List<string>

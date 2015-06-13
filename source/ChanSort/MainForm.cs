@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2015-06-05";
+    public const string AppVersion = "v2015-06-13";
 
     private const int MaxMruEntries = 10;
 
@@ -231,8 +231,6 @@ namespace ChanSort.Ui
 
         //this.SetControlsEnabled(!this.dataRoot.IsEmpty);
         this.UpdateFavoritesEditor(this.dataRoot.SupportedFavorites);
-        this.colName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
-        this.colOutName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.ChannelNameEdit;
 
         if (this.dataRoot.Warnings.Length > 0 && this.miShowWarningsAfterLoad.Checked)
           this.BeginInvoke((Action)this.ShowFileInformation);
@@ -574,6 +572,13 @@ namespace ChanSort.Ui
         this.LoadInputGridLayout(channelList.SignalSource);
         this.gridRight.DataSource = channelList.Channels;
         this.gridLeft.DataSource = channelList.Channels;
+
+        SignalSource src = 0;
+        if ((this.currentTvSerializer.Features.ChannelNameEdit & ChannelNameEditMode.Analog) != 0)
+          src |= SignalSource.Analog;
+        if ((this.currentTvSerializer.Features.ChannelNameEdit & ChannelNameEditMode.Digital) != 0)
+          src |= SignalSource.Digital;
+        this.colName.OptionsColumn.AllowEdit = this.colOutName.OptionsColumn.AllowEdit = (channelList.SignalSource & src) != 0;
       }
       else
       {
@@ -592,6 +597,7 @@ namespace ChanSort.Ui
       bool allowEdit = channelList != null && !channelList.ReadOnly;
       this.gviewLeft.OptionsBehavior.Editable = allowEdit;
       this.gviewRight.OptionsBehavior.Editable = allowEdit;
+
 
       this.UpdateInsertSlotTextBox();
       this.UpdateMenu();
@@ -1401,6 +1407,7 @@ namespace ChanSort.Ui
       try
       {
         File.Copy(bakFile, this.currentTvFile, true);
+        this.currentTvSerializer.DataRoot.NeedsSaving = false;
         if (this.currentPlugin != null)
           this.LoadFiles(this.currentPlugin, this.currentTvFile);
       }

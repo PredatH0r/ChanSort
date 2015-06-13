@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
+﻿using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.VDR
 {
   class Serializer : SerializerBase
   {
-    private const string ERR_FileFormat = "File uses an unknown format";
-
     private readonly ChannelList allChannels = new ChannelList(SignalSource.DvbT | SignalSource.DvbC | SignalSource.DvbS | SignalSource.AnalogC | SignalSource.AnalogT | SignalSource.Tv | SignalSource.Radio, "All");
 
     #region ctor()
@@ -19,7 +13,7 @@ namespace ChanSort.Loader.VDR
     {
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
-      this.Features.ChannelNameEdit = false;
+      this.Features.ChannelNameEdit = ChannelNameEditMode.None;
       this.DataRoot.SortedFavorites = false;
       //this.DataRoot.SupportedFavorites = new Favorites();
 

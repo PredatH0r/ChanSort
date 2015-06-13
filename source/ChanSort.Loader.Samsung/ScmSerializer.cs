@@ -63,7 +63,7 @@ namespace ChanSort.Loader.Samsung
     public ScmSerializer(string inputFile) : base(inputFile)
     {
       this.ReadConfigurationFromIniFile();
-      this.Features.ChannelNameEdit = true;
+      this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CleanUpChannelData = true;
     }
     #endregion

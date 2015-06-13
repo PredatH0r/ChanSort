@@ -6,7 +6,11 @@ namespace ChanSort.Loader.SamsungJ
 {
   internal class DbChannel : ChannelInfo
   {
+#if INDIVIDUALLY_SORTED_FAVS
     internal Dictionary<int,int> OriginalFavIndex = new Dictionary<int, int>();
+#else
+    internal Favorites OriginalFavs;
+#endif
 
     #region ctor()
     internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers, Satellite sat, Transponder tp)
@@ -43,6 +47,8 @@ namespace ChanSort.Loader.SamsungJ
         this.ReadDvbData(r, field, dataRoot, providers);
       else
         this.ReadAnalogData(r, field);
+
+      base.IsDeleted = this.OldProgramNr == -1;
     }
     #endregion
 
@@ -67,24 +73,6 @@ namespace ChanSort.Loader.SamsungJ
       this.VideoPid = r.GetInt32(field["vidPid"]);
       if (!r.IsDBNull(field["provId"]))
         this.Provider = providers.TryGet(r.GetInt64(field["provId"]));
-      if ((this.SignalSource & SignalSource.Sat) != 0)
-      {
-
-        //int satId = r.GetInt32(field["sat_id"]);
-        //var sat = dataRoot.Satellites.TryGet(satId);
-        //if (sat != null)
-        //{
-        //  this.Satellite = sat.Name;
-        //  this.SatPosition = sat.OrbitalPosition;
-        //  int tpId = satId * 1000000 + (int)this.FreqInMhz;
-        //  var tp = dataRoot.Transponder.TryGet(tpId);
-        //  if (tp != null)
-        //  {
-        //    this.SymbolRate = tp.SymbolRate;
-        //  }
-        //}
-      }
-      //this.Encrypted = encryptionInfo.TryGet(this.Uid);      
     }
     #endregion
 

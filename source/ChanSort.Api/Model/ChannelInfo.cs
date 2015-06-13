@@ -98,7 +98,7 @@ namespace ChanSort.Api
           if ((this.SignalSource & SignalSource.Digital) == 0)
             this.uid = "A-0-" + (int)(this.FreqInMhz*20) + "-0";
           else if ((this.SignalSource & SignalSource.Sat) != 0)
-            this.uid = "S" + this.SatPosition + "-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
+            this.uid = "S" + /*this.SatPosition + */ "-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
           else
             this.uid = "C-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId + "-" + this.ChannelOrTransponder;
         }

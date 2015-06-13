@@ -16,7 +16,8 @@ mkdir "%target%\ru" 2>nul
 xcopy /siy debug\de "%target%\de"
 xcopy /siy debug\pt "%target%\pt"
 copy DLL\ChanSort.resources.dll "%target%\ru"
-copy readme.txt "%target%"
+copy ..\readme.md "%target%\readme.txt"
+copy changelog.md "%target%\changelog.txt"
 for %%f in (Utils Data Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
 
 cd ..

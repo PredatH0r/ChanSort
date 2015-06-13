@@ -70,4 +70,13 @@ namespace ChanSort.Api
     AppendAlphabetically=1,
     MarkDeleted=2
   }
+
+  [Flags]
+  public enum ChannelNameEditMode
+  {
+    None = 0x00,
+    Analog = 0x01,
+    Digital = 0x02,
+    All = Analog|Digital
+  }
 }

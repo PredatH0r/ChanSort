@@ -23,7 +23,7 @@ namespace ChanSort.Loader.GlobalClone
     #region ctor()
     public GcSerializer(string inputFile) : base(inputFile)
     {
-      this.Features.ChannelNameEdit = false;
+      this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       //this.Features.CanDeleteChannels = false;
 
       this.DataRoot.AddChannelList(this.atvChannels);

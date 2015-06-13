@@ -6,7 +6,7 @@ namespace ChanSort.Api
   {
     public class SupportedFeatures
     {
-      public bool ChannelNameEdit { get; set; }
+      public ChannelNameEditMode ChannelNameEdit { get; set; }
       public bool CleanUpChannelData { get; set; }
       public bool DeviceSettings { get; set; }
       public bool CanDeleteChannels { get; set; }

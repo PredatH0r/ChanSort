@@ -271,8 +271,13 @@ namespace ChanSort.Api
           if (appChannel.RecordIndex < 0)
             continue;
 
-          if (appChannel.NewProgramNr == -1 && mode == UnsortedChannelMode.MarkDeleted)
-            continue;
+          if (appChannel.NewProgramNr == -1)
+          {
+            if (mode == UnsortedChannelMode.MarkDeleted)
+              continue;
+            appChannel.Hidden = true;
+            appChannel.Skip = true;
+          }
 
           int progNr = GetNewPogramNr(appChannel, ref maxProgNr);
           appChannel.NewProgramNr = progNr;

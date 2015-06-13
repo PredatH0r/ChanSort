@@ -29,7 +29,7 @@ namespace ChanSort.Loader.Toshiba
     {
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
-      this.Features.ChannelNameEdit = true;
+      this.Features.ChannelNameEdit = ChannelNameEditMode.All;
 
       this.DataRoot.AddChannelList(this.atvChannels);
       this.DataRoot.AddChannelList(this.dtvTvChannels);

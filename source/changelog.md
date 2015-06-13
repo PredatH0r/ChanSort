@@ -1,6 +1,19 @@
 ChanSort Change Log 
 ===================
 
+2015-06-13
+- when appending unsorted channels during save, they are now set to
+  "hidden" and "skipped/unselectable"
+- reference lists: the satellite orbital position is no longer used
+  to match channels. (Samsung J series does not provide that info).
+- Samsung J series: favorite lists are no longer individually sortable.
+  (The same Pr# is used for all favorite lists).
+- Samsung J series: deleting channels now physically removes them from
+  the file. (The TV might automatically append them again when it finds
+  them in the DVB data stream).
+- Samsung J series: editing of channel names is now enabled.
+- Samsung J series: favorite E is now also available 
+
 2015-06-05
 - added support for Samsung J-Series DVB-T and analog channel lists
 - fixed reference lists with Samsung J-Series

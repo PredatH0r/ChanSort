@@ -66,6 +66,8 @@ namespace ChanSort.Api
       int programNr;
       if (!int.TryParse(parts[1], out programNr)) return;
       string uid = parts[3];
+      if (uid.StartsWith("S")) // remove satellite orbital position from UID ... not all TV models provide this information
+        uid = "S" + uid.Substring(uid.IndexOf('-'));
       SignalSource signalSource = GetSignalSource(ref programNr, uid, parts);
       if (signalSource == 0)
         return;

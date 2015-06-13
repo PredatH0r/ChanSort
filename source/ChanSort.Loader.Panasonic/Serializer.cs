@@ -307,7 +307,7 @@ namespace ChanSort.Loader.Panasonic
     {
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
-      this.Features.ChannelNameEdit = false; // due to the chaos with binary data inside the "sname" string column, writing back a name has undesired side effects
+      this.Features.ChannelNameEdit = ChannelNameEditMode.None; // due to the chaos with binary data inside the "sname" string column, writing back a name has undesired side effects
       this.Features.CanHaveGaps = false;
       this.DataRoot.SortedFavorites = true;
       
