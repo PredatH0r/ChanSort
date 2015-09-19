@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2015-06-13";
+    public const string AppVersion = "v2015-09-16";
 
     private const int MaxMruEntries = 10;
 
@@ -213,6 +213,9 @@ namespace ChanSort.Ui
       bool dataUpdated = false;
       try
       {
+        if (DetectCommonFileCorruptions(tvDataFile))
+          return;
+
         if (!this.LoadTvDataFile(plugin, tvDataFile))
           return;
 
@@ -258,6 +261,32 @@ namespace ChanSort.Ui
         }
       }
     }
+    #endregion
+
+    #region DetectCommonFileCorruptions()
+    private bool DetectCommonFileCorruptions(string tvDataFile)
+    {
+      var content = File.ReadAllBytes(tvDataFile);
+      bool isAllZero = true;
+      for (int i = 0, c = content.Length; i < c; i++)
+      {
+        if (content[i] != 0)
+        {
+          isAllZero = false;
+          break;
+        }
+      }
+
+      if (isAllZero)
+      {
+        XtraMessageBox.Show(this,
+          Resources.MainForm_LoadFiles_AllZero,
+          "ChanSort", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return true;
+      }
+      return false;
+    }
+
     #endregion
 
     #region FillChannelListCombo()
@@ -641,7 +670,8 @@ namespace ChanSort.Ui
       {
         if (!this.PromptHandlingOfUnsortedChannels())
           return;
-        this.HandleChannelNumberGaps();
+        if (!this.HandleChannelNumberGaps())
+          return;
         this.SaveTvDataFile();
         this.dataRoot.NeedsSaving = false;
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
@@ -698,13 +728,31 @@ namespace ChanSort.Ui
     #endregion
 
     #region HandleChannelNumberGaps()
-    private void HandleChannelNumberGaps()
+    private bool HandleChannelNumberGaps()
     {
       if (this.currentTvSerializer.Features.CanHaveGaps)
-        return;
+        return true;
 
+      bool hasGaps = this.ProcessChannelNumberGaps(true);
+      if (hasGaps)
+      {
+        var action = XtraMessageBox.Show(this,
+          Resources.MainForm_HandleChannelNumberGaps, 
+          "ChanSort", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+        if (action == DialogResult.Cancel)
+          return false;
+        if (action == DialogResult.Yes)
+          this.ProcessChannelNumberGaps(false);
+      }
+      return true;
+    }
+    #endregion
+
+    #region ProcessChannelNumberGaps()
+    private bool ProcessChannelNumberGaps(bool testOnly)
+    {
       bool wasRenumbered = false;
-      foreach(var list in this.dataRoot.ChannelLists)
+      foreach (var list in this.dataRoot.ChannelLists)
       {
         int chNr = 1;
         foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr))
@@ -715,19 +763,15 @@ namespace ChanSort.Ui
             chNr = 0;
           if (channel.NewProgramNr != chNr)
           {
+            if (testOnly)
+              return true;
             wasRenumbered = true;
             channel.NewProgramNr = chNr;
           }
           ++chNr;
         }
       }
-
-      if (wasRenumbered)
-      {
-        XtraMessageBox.Show(this,
-          Resources.MainForm_HandleChannelNumberGaps, 
-          "ChanSort", MessageBoxButtons.OK, MessageBoxIcon.Information);
-      }
+      return wasRenumbered;
     }
     #endregion
 
@@ -828,9 +872,10 @@ namespace ChanSort.Ui
       var selectedChannels = this.GetSelectedChannels(grid);
       if (selectedChannels.Count == 0) return;
 
-      int focusedRow = Math.Max(0, this.gviewLeft.FocusedRowHandle - selectedChannels.Count);
+      int focusedRow = this.gviewLeft.FocusedRowHandle - selectedChannels.Count;
       if (!gviewLeft.IsLastRow)
         ++focusedRow;
+      if (focusedRow < 0) focusedRow = 0;
       this.gviewRight.BeginDataUpdate();
       this.gviewLeft.BeginDataUpdate();
       try

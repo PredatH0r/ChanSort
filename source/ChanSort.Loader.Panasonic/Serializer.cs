@@ -321,7 +321,7 @@ namespace ChanSort.Loader.Panasonic
     }
     #endregion
 
-    public override string DisplayName { get { return "Panasonic .db/.bin Loader"; } }
+    public override string DisplayName => "Panasonic .db/.bin Loader";
 
     #region Load()
     public override void Load()

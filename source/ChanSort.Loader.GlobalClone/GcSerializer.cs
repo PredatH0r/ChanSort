@@ -19,6 +19,7 @@ namespace ChanSort.Loader.GlobalClone
     private readonly DvbStringDecoder dvbStringDecoder = new DvbStringDecoder(Encoding.Default);
     private string modelName;
     private readonly Dictionary<int, string> satPositionByIndex = new Dictionary<int, string>();
+    private bool usesBinaryDataInUtf8Envelope = false;
 
     #region ctor()
     public GcSerializer(string inputFile) : base(inputFile)
@@ -35,7 +36,8 @@ namespace ChanSort.Loader.GlobalClone
     #endregion
 
     #region DisplayName
-    public override string DisplayName { get { return "LG GlobalClone loader"; } }
+    public override string DisplayName => "LG GlobalClone loader";
+
     #endregion
 
 
@@ -47,8 +49,13 @@ namespace ChanSort.Loader.GlobalClone
       try
       {
         this.doc = new XmlDocument();
-        using (var reader = new StreamReader(new FileStream(this.FileName, FileMode.Open), Encoding.UTF8))
+        string textContent = File.ReadAllText(this.FileName, Encoding.UTF8);
+        textContent = ReplaceInvalidXmlCharacters(textContent);
+        var settings = new XmlReaderSettings { CheckCharacters = false };
+        using (var reader = XmlReader.Create(new StringReader(textContent), settings))
+        {
           doc.Load(reader);
+        }
       }
       catch
       {
@@ -76,15 +83,17 @@ namespace ChanSort.Loader.GlobalClone
             break;
         }
       }
+
+      this.Features.ChannelNameEdit = usesBinaryDataInUtf8Envelope ? ChannelNameEditMode.Analog : ChannelNameEditMode.All;
     }
     #endregion
 
     #region ReadModelInfo()
     private void ReadModelInfo(XmlNode modelInfoNode)
     {
-      var txt = Resources.GcSerializer_ReadModelInfo_ModelWarning;
-
+      // show warning about broken import function in early webOS firmware
       var regex = new System.Text.RegularExpressions.Regex(@"\d{2}([A-Z]{2})(\d{2})\d[0-9A-Z].*");
+      var series = "";
       foreach (XmlNode child in modelInfoNode.ChildNodes)
       {
         switch (child.LocalName)
@@ -94,15 +103,26 @@ namespace ChanSort.Loader.GlobalClone
             var match = regex.Match(this.modelName);
             if (match.Success)
             {
-              var series = match.Groups[1].Value;
+              series = match.Groups[1].Value;
               if ((series == "LB" || series == "UB") && StringComparer.InvariantCulture.Compare(match.Groups[2].Value, "60") >= 0)
-                txt = Resources.GcSerializer_webOsFirmwareWarning;
+                MessageBox.Show(Resources.GcSerializer_webOsFirmwareWarning, "LG GlobalClone", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             break;
         }
       }
 
-      MessageBox.Show(txt, "LG GlobalClone editor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      // ask whether binary TLL file should be deleted
+      var dir = Path.GetDirectoryName(this.FileName) ?? ".";
+      var binTlls = Directory.GetFiles(dir, "xx" + series + "*.tll");
+      if (binTlls.Length > 0)
+      {
+        var txt = Resources.GcSerializer_ReadModelInfo_ModelWarning;
+        if (MessageBox.Show(txt, "LG GlobalClone", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        {
+          foreach (var file in binTlls)
+            File.Move(file, file + "_bak");
+        }
+      }
     }
     #endregion
 
@@ -303,10 +323,12 @@ namespace ChanSort.Loader.GlobalClone
       if (bytes.Length == 0 || bytes[0] < 0xC0)
         return input;
 
+      this.usesBinaryDataInUtf8Envelope = true;
+
       // older GlobalClone files look like as if the <vchName> is Chinese, but it's a weired "binary inside UTF8 envelope" encoding:
       // A 3 byte UTF-8 envelope is used to encode 2 input bytes: 1110aaaa 10bbbbcc 10ccdddd represents the 16bit little endian integer aaaabbbbccccdddd, which represents bytes ccccdddd, aaaabbbb
       // If a remaining byte is >= 0x80, it is encoded in a 2 byte UTF-8 envelope: 110000aa 10aabbbb represents the byte aaaabbbb
-      // If a remaining byte is < 0x80, it is encoded directly into a 1 byte UTF-8 char
+      // If a remaining byte is < 0x80, it is encoded directly into a 1 byte UTF-8 char. (This can cause invalid XML files for values < 0x20.)
       using (MemoryStream ms = new MemoryStream(40))
       {
         for (int i = 0, c = bytes.Length; i < c; i++)
@@ -349,7 +371,9 @@ namespace ChanSort.Loader.GlobalClone
         {
           var ch = channel as GcChannel;
           if (ch == null) continue; // ignore proxy channels from reference lists
-
+          var nameBytes = Encoding.UTF8.GetBytes(ch.Name);
+          bool nameNeedsEncoding = nameBytes.Length != ch.Name.Length;
+          
           foreach (XmlNode node in ch.XmlNode.ChildNodes)
           {
             switch (node.LocalName)
@@ -359,6 +383,18 @@ namespace ChanSort.Loader.GlobalClone
                 if ((ch.SignalSource & SignalSource.Radio) != 0)
                   nr |= 0x4000;
                 node.InnerText = nr.ToString();
+                break;
+              case "hexVchName":
+                if (channel.IsNameModified)
+                  node.InnerText = (nameNeedsEncoding ? "15" : "") + Tools.HexEncode(nameBytes); // 0x15 = DVB encoding indicator for UTF-8
+                break;
+              case "notConvertedLengthOfVchName":
+                if (channel.IsNameModified)
+                  node.InnerText = ((nameNeedsEncoding ? 1 : 0) + ch.Name.Length).ToString();
+                break;
+              case "vchName":
+                if (channel.IsNameModified)
+                  node.InnerText = nameNeedsEncoding ? "" : ch.Name;
                 break;
               case "isInvisable":
                 node.InnerText = ch.Hidden ? "1" : "0";
@@ -392,11 +428,13 @@ namespace ChanSort.Loader.GlobalClone
       settings.NewLineHandling = NewLineHandling.Replace;
       settings.OmitXmlDeclaration = true;
       settings.IndentChars = "";
+      settings.CheckCharacters = false;
       using (StringWriter sw = new StringWriter())
       using (XmlWriter xw = XmlWriter.Create(sw, settings))
       {
         doc.Save(xw);
-        var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n" + sw;
+        string xml = RestoreInvalidXmlCharacters(sw.ToString());
+        xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n" + xml;
         File.WriteAllText(tvOutputFile, xml, settings.Encoding);
       }
     }
@@ -432,5 +470,56 @@ namespace ChanSort.Loader.GlobalClone
     }
     #endregion
 
+
+    #region ReplaceInvalidXmlCharacters()
+    private string ReplaceInvalidXmlCharacters(string input)
+    {
+      StringBuilder output = new StringBuilder();
+      foreach (var c in input)
+      {
+        if (c >= ' ' || c == '\r' || c == '\n' || c == '\t')
+          output.Append(c);
+        else
+          output.AppendFormat("&#x{0:d}{1:d};", c >> 4, c & 0x0F);
+      }
+      return output.ToString();
+    }
+    #endregion
+
+    #region RestoreInvalidXmlCharacters()
+    private string RestoreInvalidXmlCharacters(string input)
+    {
+      StringBuilder output = new StringBuilder();
+      int prevIdx = 0;
+      while(true)
+      {
+        int nextIdx = input.IndexOf("&#", prevIdx);
+        if (nextIdx < 0)
+          break;
+        output.Append(input, prevIdx, nextIdx - prevIdx);
+
+        int numBase = 10;
+        char inChar;
+        int outChar = 0;
+        for (nextIdx += 2; (inChar=input[nextIdx]) != ';'; nextIdx++)
+        {
+          if (inChar == 'x' || inChar == 'X')
+            numBase = 16;
+          else
+            outChar = outChar*numBase + HexNibble(inChar);
+        }
+        var binChar = (char)outChar;
+        output.Append(binChar);
+        prevIdx = nextIdx + 1;
+      }
+      output.Append(input, prevIdx, input.Length - prevIdx);
+      return output.ToString();
+    }
+
+    private int HexNibble(char hexDigit)
+    {
+      return hexDigit >= '0' && hexDigit <= '9' ? hexDigit - '0' : (Char.ToUpper(hexDigit) - 'A') + 10;
+    }
+    #endregion
   }
 }

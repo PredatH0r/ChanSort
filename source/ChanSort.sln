@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -12,6 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort\ChanSo
 		{F6F02792-07F1-48D5-9AF3-F945CA5E3931} = {F6F02792-07F1-48D5-9AF3-F945CA5E3931}
 		{E972D8A1-2F5F-421C-AC91-CFF45E5191BE} = {E972D8A1-2F5F-421C-AC91-CFF45E5191BE}
 		{5361C8CB-F737-4709-AF8C-E1F0456F3C5B} = {5361C8CB-F737-4709-AF8C-E1F0456F3C5B}
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB} = {D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Api", "ChanSort.Api\ChanSort.Api.csproj", "{DCCFFA08-472B-4D17-BB90-8F513FC01392}"
@@ -39,6 +40,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.GlobalClone", "ChanSort.Loader.GlobalClone\ChanSort.Loader.GlobalClone.csproj", "{5361C8CB-F737-4709-AF8C-E1F0456F3C5B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.SamsungJ", "ChanSort.Loader.SamsungJ\ChanSort.Loader.SamsungJ.csproj", "{33897002-0537-49A4-B963-A18D17311B3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Hisense", "ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj", "{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -174,6 +177,18 @@ Global
 		{33897002-0537-49A4-B963-A18D17311B3D}.Release|Mixed Platforms.Build.0 = Release|x86
 		{33897002-0537-49A4-B963-A18D17311B3D}.Release|x86.ActiveCfg = Release|x86
 		{33897002-0537-49A4-B963-A18D17311B3D}.Release|x86.Build.0 = Release|x86
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Debug|x86.Build.0 = Debug|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Release|x86.ActiveCfg = Release|Any CPU
+		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

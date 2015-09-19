@@ -118,14 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
-    <value>Bevor Sie Ihre Zeit verschwenden...
-
-...überprüfen Sie, ob Ihr LG Gerät diese Datei (unmodifiziert) einlesen kann.
-Einige LG Geräte exportieren 2 Dateien: eine "Clone" TLL und eine Datei ähnlich wie xxLB550U-ZA00001.TLL.
-
-Wenn Ihr Gerät 2 Dateien erzeugt, kann es vermutlich nur die xxLB550U-ZA00001.TLL einlesen und Sie sollten deshalb jene Datei bearbeiten.
-
-Wenn Ihr Gerät nur diese "Clone" Datei erstellt, können Sie mit der Bearbeitung fortfahren.</value>
+    <value>Ihr TV Gerät importiert die GlobalClone Datei nur dann, wenn keine Dateien mit Namen xx*.TLL auf dem USB-Stick sind.
+Soll ChanSort die störenden Dateien jetzt umbenennen?</value>
   </data>
   <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
     <value>HINWEIS:

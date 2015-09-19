@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ChanSort.Api
 {
@@ -116,6 +117,19 @@ namespace ChanSort.Api
         bytes[i] = (byte)((high << 4) | low);
       }
       return bytes;
+    }
+    #endregion
+
+    #region HexEncode()
+    public static string HexEncode(byte[] bytes, bool uppercase = false)
+    {
+      const string HexDigitsLower = "0123456789abcdef";
+      const string HexDigitsUpper = "0123456789ABCDEF";
+      var hexDigits = uppercase ? HexDigitsUpper : HexDigitsLower;
+      var sb = new StringBuilder(bytes.Length * 2);
+      foreach (byte b in bytes)
+        sb.Append(hexDigits[b >> 4]).Append(hexDigits[b & 0x0F]);
+      return sb.ToString();
     }
     #endregion
   }

@@ -267,7 +267,11 @@ Möchten Sie die Downloadseite öffnen?</value>
 und kann nun in Excel oder einen Texteditor eingefügt werden.</value>
   </data>
   <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
-    <value>Ihr TV Gerät erlaubt keine Lücken in den Programmnummer,
-deshalb wurde die Liste automatisch umnummeriert.</value>
+    <value>Ihr TV Gerät funktioniert eventuell nicht mehr korrekt, wenn Lücken in den Programmnummer vorhanden sind.
+Sollen die Programmnummern in fortlaufende Zahlen umgeändert werden?</value>
+  </data>
+  <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
+    <value>Der Inhalt der Datei ist ungültig, da sie entweder 0 Byte groß is oder ausschließlich Nullwerte enthält.
+Mögliche Ursachen sind USB-Sticks, die mit NTFS formatiert sind (FAT32 sollte immer funktionieren) oder ein am TV durchgeführtes Firmwareupdate, ohne einen anschließenden neuen Suchlauf. Dabei kann dann unter Umständen die neue Firmware die alten Daten nicht korrekt exportieren.</value>
   </data>
 </root>

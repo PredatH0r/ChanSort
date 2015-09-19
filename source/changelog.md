@@ -1,6 +1,17 @@
 ChanSort Change Log 
 ===================
 
+2015-09-19
+- Samsung J series: fixed deleting of channels
+- LG GlobalClone: modified channel names were not written to the file
+- LG GlobalClone: ask whether the conflicting xx*.TLL files should be
+  renamed so that the TV can import the GlobalClone file.
+- LG GlobalClone: improved support for old file format with may 
+  have caused errors due to invalid XML characters inside the file.
+- Panasonic: re-enabled channel lists with gaps in the numbers
+- Update-Check: looking for latest version at github.com
+- Detecting corrupted files with 0 size or all bytes with value 0
+
 2015-06-13
 - when appending unsorted channels during save, they are now set to
   "hidden" and "skipped/unselectable"

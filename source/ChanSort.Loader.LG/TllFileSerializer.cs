@@ -192,7 +192,8 @@ namespace ChanSort.Loader.LG
     {
       if (fileContent.Length < 4)
         throw new FileLoadException(ERR_modelUnknown);
-      if (BitConverter.ToUInt32(fileContent, off) == 0x5A5A5A5A)
+      var magic = BitConverter.ToUInt32(fileContent, off);
+      if (magic == 0x5A5A5A5A || magic == 0xA5A5A5A5)
         off += 4;
     }
     #endregion

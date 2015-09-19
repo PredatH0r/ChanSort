@@ -1,5 +1,4 @@
-﻿using System.Net.Sockets;
-using System.Text;
+﻿using System.Net;
 using System.Threading;
 using ChanSort.Ui.Properties;
 using DevExpress.XtraEditors;
@@ -8,6 +7,7 @@ namespace ChanSort.Ui
 {
   class UpdateCheck
   {
+    private const string UpdateUrl = "http://github.com/PredatH0r/ChanSort/releases";
     private const string SearchString = "ChanSort_";
 
     public static void CheckForNewVersion()
@@ -30,19 +30,12 @@ namespace ChanSort.Ui
 
     private string GetLatestVersion()
     {
-      // NOTE: tried using WebRequest class, but that causes massive timeout problems after program start (DLL loading/init?)
-      byte[] buffer = new byte[100000];
-      int len;
-      using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+      string response;
+      using (WebClient client = new WebClient())
       {
-        sock.ReceiveTimeout = 5000;
-        sock.Connect("sourceforge.net", 80);
-        var request = Encoding.UTF8.GetBytes("GET /projects/chansort/ HTTP/1.1\r\nHost: sourceforge.net\r\n\r\n");
-        sock.Send(request);
-        len = sock.Receive(buffer);
+        client.Proxy = null; // prevent a 1min wait/timeout by a .NET bug
+        response = client.DownloadString(UpdateUrl);
       }
-
-      var response = Encoding.ASCII.GetString(buffer, 0, len);
       int start = response.IndexOf(SearchString);
       if (start >= 0)
       {
@@ -62,7 +55,7 @@ namespace ChanSort.Ui
         System.Windows.Forms.MessageBoxIcon.Question,
         System.Windows.Forms.MessageBoxDefaultButton.Button1) != System.Windows.Forms.DialogResult.Yes)
         return;
-      BrowserHelper.OpenUrl("http://sourceforge.net/p/chansort/files/");
+      BrowserHelper.OpenUrl(UpdateUrl);
     }
   }
 }

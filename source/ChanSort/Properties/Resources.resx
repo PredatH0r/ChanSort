@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainForm_LoadTll_SourceTllNotFound" xml:space="preserve">
     <value>Quell-TLL konnte nicht gefunden werden:
@@ -205,11 +205,10 @@ Do you want to continue?</value>
   <data name="MainForm_ShowOpenReferenceFileDialog_Filter" xml:space="preserve">
     <value>ChanSort Reference List|*.csv|SamToolBox Reference List|*.chl|All Reference Lists|*.csv;*.chl</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Donate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn_donateCC_LG.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="paypal_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\paypal-button.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -266,7 +265,13 @@ Do you want to open the download website?</value>
 and can be pasted into Excel or any text editor.</value>
   </data>
   <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
-    <value>Your TV does not allow gaps in the program numbers,
-so the list had to be renumbered.</value>
+    <value>Your TV might not be able to work correctly when there are gaps in the channel numbers.
+Do you want the channel numbers to be rearranged consecutively?</value>
+  </data>
+  <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
+    <value>The content of the file is invalid. It has either size 0 or all its bytes have the the value 0.
+Typical causes are USB sticks with an NTFS file system (try using FAT32 instead)
+or firmware upgrades without running a new channel scan. 
+(The new software in the TV might be unable to process the old channel data during the export.)</value>
   </data>
 </root>

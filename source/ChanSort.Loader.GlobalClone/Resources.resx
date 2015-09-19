@@ -99,14 +99,8 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
   <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
-    <value>Before you waste your time...
-
-...make sure that your LG TV can load this file (without modifications).
-Some LG TVs export 2 files, a GlobalClone00001.TLL and file like xxLB550U-ZA00001.TLL.
-
-If you have both file types, it's likely that the TV can only load the xxLB550U-ZA00001.TLL and you should edit that file instead.
-
-If your TV only exports a single "Clone" TLL, you're good to continue!</value>
+    <value>Your TV will only import the GlobalClone file when there are no files named xx*.TLL in the same directory.
+Do you want ChanSort to rename the conflicting files?</value>
   </data>
   <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
     <value>ATTENTION:

@@ -459,15 +459,14 @@ namespace ChanSort.Loader.SamsungJ
       using (var conn = new SQLiteConnection("Data Source=" + dbPath))
       {
         conn.Open();
-        using (var cmdUpdateSrv = conn.CreateCommand())
-        using (var cmdDeleteSrv = conn.CreateCommand())
-        using (var cmdInsertFav = conn.CreateCommand())
-        using (var cmdUpdateFav = conn.CreateCommand())
-        using (var cmdDeleteFav = conn.CreateCommand())
+        using (var cmdUpdateSrv = PrepareUpdateCommand(conn))
+        using (var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0))
+        using (var cmdInsertFav = PrepareInsertFavCommand(conn))
+        using (var cmdUpdateFav = PrepareUpdateFavCommand(conn))
+        using (var cmdDeleteFav = PrepareDeleteFavCommand(conn))
         {
           using (var trans = conn.BeginTransaction())
           {
-            this.PrepareCommands(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav);
             this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
             trans.Commit();
           }
@@ -478,39 +477,67 @@ namespace ChanSort.Loader.SamsungJ
 
     #endregion
 
-    #region PrepareCommands()
-    private void PrepareCommands(SQLiteCommand cmdUpdateSrv, SQLiteCommand cmdDeleteSrv, SQLiteCommand cmdInsertFav, SQLiteCommand cmdUpdateFav, SQLiteCommand cmdDeleteFav)
+    #region Prepare*Command()
+
+    private static SQLiteCommand PrepareUpdateCommand(SQLiteConnection conn)
     {
-      cmdUpdateSrv.CommandText = "update SRV set major=@nr, lockMode=@lock, hideGuide=@hidden, hidden=@hidden, numSel=@numsel, srvName=@srvname where srvId=@id";
-      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
-      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@lock", DbType.Boolean));
-      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@hidden", DbType.Boolean));
-      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@numsel", DbType.Boolean));
-      cmdUpdateSrv.Parameters.Add(new SQLiteParameter("@srvname", DbType.Binary));
-      cmdUpdateSrv.Prepare();
-
-      cmdDeleteSrv.CommandText = "delete from SRV where srvId=@id";
-      cmdDeleteSrv.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmdDeleteSrv.Prepare();
-
-      cmdInsertFav.CommandText = "insert into SRV_FAV (srvId, fav, pos) values (@id, @fav, @pos)";
-      cmdInsertFav.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmdInsertFav.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
-      cmdInsertFav.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
-      cmdInsertFav.Prepare();
-
-      cmdUpdateFav.CommandText = "update SRV_FAV set pos=@pos where srvId=@id and fav=@fav";
-      cmdUpdateFav.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmdUpdateFav.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
-      cmdUpdateFav.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
-      cmdUpdateFav.Prepare();
-
-      cmdDeleteFav.CommandText = "delete from SRV_FAV where srvId=@id and fav=@fav";
-      cmdDeleteFav.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmdDeleteFav.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
-      cmdDeleteFav.Prepare();      
+      var cmd = conn.CreateCommand();
+      cmd.CommandText = "update SRV set major=@nr, lockMode=@lock, hideGuide=@hidden, hidden=@hidden, numSel=@numsel, srvName=@srvname where srvId=@id";
+      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmd.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Boolean));
+      cmd.Parameters.Add(new SQLiteParameter("@hidden", DbType.Boolean));
+      cmd.Parameters.Add(new SQLiteParameter("@numsel", DbType.Boolean));
+      cmd.Parameters.Add(new SQLiteParameter("@srvname", DbType.Binary));
+      cmd.Prepare();
+      return cmd;
     }
+
+    private static SQLiteCommand PrepareDeleteCommand(SQLiteConnection conn, bool digital)
+    {
+      var cmd = conn.CreateCommand();
+      cmd.CommandText = "delete from SRV where srvId=@id";
+      if (digital)
+        cmd.CommandText += "; delete from SRV_DVB where srvId=@id; delete from SRV_DVB_EXT where srvId=@id";
+      else
+        cmd.CommandText += "; delete from SRV_ANL where srvId=@id";
+      cmd.CommandText += "; delete from SRV_FAV where srvId=@id";
+
+      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmd.Prepare();
+      return cmd;
+    }
+
+    private static SQLiteCommand PrepareInsertFavCommand(SQLiteConnection conn)
+    {
+      var cmd = conn.CreateCommand();
+      cmd.CommandText = "insert into SRV_FAV (srvId, fav, pos) values (@id, @fav, @pos)";
+      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmd.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
+      cmd.Prepare();
+      return cmd;
+    }
+    private static SQLiteCommand PrepareUpdateFavCommand(SQLiteConnection conn)
+    {
+      var cmd = conn.CreateCommand();
+      cmd.CommandText = "update SRV_FAV set pos=@pos where srvId=@id and fav=@fav";
+      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmd.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
+      cmd.Prepare();
+      return cmd;
+    }
+    private static SQLiteCommand PrepareDeleteFavCommand(SQLiteConnection conn)
+    {
+      var cmd = conn.CreateCommand();
+      cmd.CommandText = "delete from SRV_FAV where srvId=@id and fav=@fav";
+      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmd.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
+      cmd.Prepare();
+      return cmd;
+    }
+
     #endregion
 
     #region WriteChannels()
