@@ -50,7 +50,7 @@ Supported TV models
 
 Samsung 
 -------
-Series: B (2009)*, B (2013), C, D, E, F, H, J+  
+Series: B (2009)*, B (2013), C, D, E, F, H, J  
 Lists:  Air analog, Air digital, Cable analog, Cable digital, 
 		Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
 		Canal Digital Sat, Digital+, Cyfra+
@@ -60,15 +60,13 @@ the "Air Analog"-list of the 2009 B-series doesn't support all
 editing features due to a lack of test files. If you have such a file,
 please send it to me.
 
-+: currently only DVB-C and DVB-S are supported (not DVB-T and analog channels)
-
 Instructions for transferring the channel list can be found on:
 http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-importieren/
 
 LG
 ---
 
-Series: CS, DM, LA, LB\*, LD, LE, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
+Series: CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
 Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
 
 \*: Some devices behave erroneously due to firmware issues.  
