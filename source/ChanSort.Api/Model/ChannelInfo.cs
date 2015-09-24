@@ -8,6 +8,8 @@ namespace ChanSort.Api
     private const int MAX_FAV_LISTS = 5;
 
     private string uid;
+    private string serviceTypeName;
+
     /// <summary>
     /// List of channels that have the same UID as this channel and were not added to the channel list directly
     /// </summary>
@@ -151,7 +153,12 @@ namespace ChanSort.Api
     #endregion
 
     #region ServiceTypeName
-    public string ServiceTypeName { get { return LookupData.Instance.GetServiceTypeDescription(this.ServiceType); } }
+
+    public string ServiceTypeName
+    {
+      get { return this.serviceTypeName ?? (this.serviceTypeName = LookupData.Instance.GetServiceTypeDescription(this.ServiceType)); }
+      set { this.serviceTypeName = value; }
+    }
     #endregion
 
     #region GetFavString()
@@ -211,6 +218,14 @@ namespace ChanSort.Api
     {
       for (int i = 0; i < len; i++)
         this.AddDebug(data[offset + i]);
+    }
+
+    public void AddDebug(string val)
+    {
+      if (this.Debug == null)
+        this.Debug = val;
+      else
+        this.Debug += " " + val;
     }
     #endregion
 

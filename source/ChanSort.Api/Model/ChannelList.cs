@@ -6,8 +6,6 @@ namespace ChanSort.Api
 {
   public class ChannelList
   {
-    private readonly SignalSource source;
-    private readonly IList<ChannelInfo> channels = new List<ChannelInfo>();
     private readonly Dictionary<string, IList<ChannelInfo>> channelByUid = new Dictionary<string, IList<ChannelInfo>>();
     private readonly Dictionary<int, ChannelInfo> channelByProgNr = new Dictionary<int, ChannelInfo>();
     private readonly Dictionary<string, IList<ChannelInfo>> channelByName = new Dictionary<string, IList<ChannelInfo>>();
@@ -17,20 +15,21 @@ namespace ChanSort.Api
 
     public ChannelList(SignalSource source, string caption)
     {
-      this.source = source;
+      this.SignalSource = source;
       this.ShortCaption = caption;
       this.FirstProgramNumber = (source & SignalSource.Digital) != 0 ? 1 : 0;
     }
 
-    public string ShortCaption { get; private set; }
-    public SignalSource SignalSource { get { return this.source; } }
-    public IList<ChannelInfo> Channels { get { return this.channels; } }
-    public int Count { get { return channels.Count; } }
-    public int DuplicateUidCount { get { return duplicateUidCount; } }
-    public int DuplicateProgNrCount { get { return duplicateProgNrCount; } }
+    public string ShortCaption { get; }
+    public SignalSource SignalSource { get; }
+    public IList<ChannelInfo> Channels { get; } = new List<ChannelInfo>();
+    public int Count => Channels.Count;
+    public int DuplicateUidCount => duplicateUidCount;
+    public int DuplicateProgNrCount => duplicateProgNrCount;
     public bool ReadOnly { get; set; }
     public int MaxChannelNameLength { get; set; }
     public int PresetProgramNrCount { get; private set; }
+    public IList<string> VisibleColumnFieldNames;
 
     #region Caption
     public string Caption
@@ -97,7 +96,7 @@ namespace ChanSort.Api
       if (ci.ProgramNrPreset != 0)
         ++this.PresetProgramNrCount;
 
-      this.channels.Add(ci);
+      this.Channels.Add(ci);
       
       return warning2;
     }
@@ -130,21 +129,21 @@ namespace ChanSort.Api
     #region GetChannelByNewProgNr()
     public IList<ChannelInfo> GetChannelByNewProgNr(int newProgNr)
     {
-      return this.channels.Where(c => c.NewProgramNr == newProgNr).ToList();
+      return this.Channels.Where(c => c.NewProgramNr == newProgNr).ToList();
     }
     #endregion
 
     #region GetChannelsByNewOrder()
     public IList<ChannelInfo> GetChannelsByNewOrder()
     {
-        return this.channels.OrderBy(c => c.NewProgramNr).ToList();
+        return this.Channels.OrderBy(c => c.NewProgramNr).ToList();
     }
     #endregion
 
     #region RemoveChannel()
     public void RemoveChannel(ChannelInfo channel)
     {
-      this.channels.Remove(channel);
+      this.Channels.Remove(channel);
       var list = this.channelByUid.TryGet(channel.Uid);
       if (list != null && list.Contains(channel))
         list.Remove(channel);

@@ -13,9 +13,7 @@ SERVICETYPE;211;Option
 
 ONID;Start;End;Name;Operator
 ONID;0x0000;0x0000;(Reserved);(Reserved)
-ONID;0x0001;0x0001;Société Européenne des Satellites;Société Européenne des Satellites
-ONID;0x0002;0x0002;Société Européenne des Satellites;Société Européenne des Satellites
-ONID;0x0003;0x0019;Société Européenne des Satellites;Société Européenne des Satellites
+ONID;0x0001;0x0019;SES/Astra;SES/Astra
 ONID;0x001A;0x001A;Quiero Televisión  ;Quiero Televisión  
 ONID;0x001B;0x001B;RAI;RAI
 ONID;0x001C;0x001C;Hellas-Sat S.A.;Hellas-Sat S.A.

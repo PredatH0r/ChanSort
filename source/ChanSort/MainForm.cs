@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2015-09-16";
+    public const string AppVersion = "v2015-09-19";
 
     private const int MaxMruEntries = 10;
 
@@ -598,7 +598,7 @@ namespace ChanSort.Ui
         this.SaveInputGridLayout(this.currentChannelList.SignalSource);
       if (channelList != null)
       {
-        this.LoadInputGridLayout(channelList.SignalSource);
+        this.LoadInputGridLayout(channelList);
         this.gridRight.DataSource = channelList.Channels;
         this.gridLeft.DataSource = channelList.Channels;
 
@@ -1224,9 +1224,10 @@ namespace ChanSort.Ui
     #endregion
 
     #region LoadInputGridLayout()
-    private void LoadInputGridLayout(SignalSource newSource)
+    private void LoadInputGridLayout(ChannelList list)
     {
       string newLayout;
+      var newSource = list.SignalSource;
       if ((newSource & SignalSource.Analog) != 0)
         newLayout = Settings.Default.InputGridLayoutAnalog;
       else if ((newSource & SignalSource.DvbS) != 0)
@@ -1237,7 +1238,7 @@ namespace ChanSort.Ui
         this.SetGridLayout(this.gviewRight, newLayout);
       
       foreach (GridColumn col in this.gviewRight.Columns)
-        col.Visible = GetGridColumnVisibility(col, newSource);
+        col.Visible = GetGridColumnVisibility(col, list);
 
       this.ClearRightFilter();
     }
@@ -1258,8 +1259,13 @@ namespace ChanSort.Ui
 
     #region GetGridColumnVisibility()
 
-    private bool GetGridColumnVisibility(GridColumn col, SignalSource source)
+    private bool GetGridColumnVisibility(GridColumn col, ChannelList list)
     {
+      var filter = list.VisibleColumnFieldNames;
+      if (filter != null && !filter.Contains(col.FieldName))
+        return false;
+
+      var source = list.SignalSource;
       if (col == this.colChannelOrTransponder) return (source & SignalSource.Sat) == 0;
       if (col == this.colShortName) return (source & SignalSource.Digital) != 0;
       if (col == this.colEncrypted) return (source & SignalSource.Digital) != 0;
