@@ -117,7 +117,7 @@ namespace ChanSort.Loader.GlobalClone
       if (binTlls.Length > 0)
       {
         var txt = Resources.GcSerializer_ReadModelInfo_ModelWarning;
-        if (MessageBox.Show(txt, "LG GlobalClone", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        if (MessageBox.Show(txt, "LG GlobalClone", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
         {
           foreach (var file in binTlls)
             File.Move(file, file + "_bak");

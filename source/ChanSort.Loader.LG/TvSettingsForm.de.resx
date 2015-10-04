@@ -155,12 +155,24 @@
     <value>Senderliste automatisch aktualisieren (empfohlen: AUS)</value>
   </data>
   <data name="grpSetup.Text" xml:space="preserve">
-    <value>EINST. Menu</value>
+    <value>EINST. Menü</value>
   </data>
   <data name="labelControl4.Text" xml:space="preserve">
     <value>Das Dateiformat Ihres TV-Modells wird nicht vollständig unterstützt. Deshalb sind viele Einstellungen in diesem Dialog gesperrt.</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>TV Einstellungen</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="grpInformation.Text" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="grpOption.Text" xml:space="preserve">
+    <value>OPTION Menü</value>
+  </data>
+  <data name="lblHotelMenuAutoDetect.Text" xml:space="preserve">
+    <value>Hotelmodus-Menü suchen</value>
   </data>
 </root>

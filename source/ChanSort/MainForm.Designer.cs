@@ -748,10 +748,10 @@
       // 
       // colServiceTypeName
       // 
+      resources.ApplyResources(this.colServiceTypeName, "colServiceTypeName");
       this.colServiceTypeName.FieldName = "ServiceTypeName";
       this.colServiceTypeName.Name = "colServiceTypeName";
       this.colServiceTypeName.OptionsColumn.AllowEdit = false;
-      resources.ApplyResources(this.colServiceTypeName, "colServiceTypeName");
       // 
       // colSatellite
       // 
@@ -2006,6 +2006,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.popupInputSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.popupFavList)).EndInit();
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 

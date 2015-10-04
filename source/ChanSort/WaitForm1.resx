@@ -140,7 +140,7 @@
   </data>
   <data name="progressPanel1.Text" xml:space="preserve">
     <value>progressPanel1</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="tableLayoutPanel1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 14, 0, 14</value>
   </data>
@@ -243,7 +243,7 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Form1</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="resource.GradientMode" type="System.Drawing.Drawing2D.LinearGradientMode, System.Drawing">
     <value>Horizontal</value>
   </data>
@@ -253,4 +253,7 @@
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="progressPanel1.Caption" xml:space="preserve">
+    <value>Please be patient</value>
+  </data>
 </root>

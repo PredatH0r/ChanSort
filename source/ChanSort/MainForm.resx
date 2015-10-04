@@ -132,7 +132,7 @@
     <value>Fill</value>
   </data>
   <data name="gridLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 54</value>
+    <value>2, 53</value>
   </data>
   <data name="gviewLeft.Appearance.FocusedRow.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
@@ -211,7 +211,7 @@
   </data>
   <data name="colUid1.Caption" xml:space="preserve">
     <value>UID</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="colOutLock.Caption" xml:space="preserve">
     <value>Lock</value>
   </data>
@@ -258,7 +258,7 @@
     <value>Numeric</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 418</value>
+    <value>449, 419</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -373,7 +373,7 @@
   </data>
   <data name="grpSubList.Text" xml:space="preserve">
     <value>Sub List</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="grpSubList.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -465,38 +465,38 @@
     <value>Add to &amp;Favorites</value>
   </data>
   <data name="miFavASet.Caption" xml:space="preserve">
-    <value>Set &amp;A</value>
-  </data>
+    <value>&amp;A</value>
+  <comment>@Invariant</comment></data>
   <data name="miFavBSet.Caption" xml:space="preserve">
-    <value>Set &amp;B</value>
-  </data>
+    <value>&amp;B</value>
+  <comment>@Invariant</comment></data>
   <data name="miFavCSet.Caption" xml:space="preserve">
-    <value>Set &amp;C</value>
-  </data>
+    <value>&amp;C</value>
+  <comment>@Invariant</comment></data>
   <data name="miFavDSet.Caption" xml:space="preserve">
-    <value>Set &amp;D</value>
-  </data>
+    <value>&amp;D</value>
+  <comment>@Invariant</comment></data>
   <data name="miFavESet.Caption" xml:space="preserve">
-    <value>Set &amp;E</value>
-  </data>
+    <value>&amp;E</value>
+  <comment>@Invariant</comment></data>
   <data name="mnuFavUnset.Caption" xml:space="preserve">
     <value>Remove from Favorites</value>
   </data>
   <data name="miFavAUnset.Caption" xml:space="preserve">
-    <value>Unset &amp;A</value>
-  </data>
+    <value>&amp;A</value>
+  <comment>@Invariant</comment></data>
   <data name="miFavBUnset.Caption" xml:space="preserve">
-    <value>Unset &amp;B</value>
-  </data>
+    <value>&amp;B</value>
+  <comment>@Invariant</comment></data>
   <data name="miFavCUnset.Caption" xml:space="preserve">
-    <value>Unset &amp;C</value>
-  </data>
+    <value>&amp;C</value>
+  <comment>@Invariant</comment></data>
   <data name="miFavDUnset.Caption" xml:space="preserve">
-    <value>Unset &amp;D</value>
-  </data>
+    <value>&amp;D</value>
+  <comment>@Invariant</comment></data>
   <data name="miFavEUnset.Caption" xml:space="preserve">
-    <value>Unset &amp;E</value>
-  </data>
+    <value>&amp;E</value>
+  <comment>@Invariant</comment></data>
   <data name="miLockOn.Caption" xml:space="preserve">
     <value>&amp;Lock channel: on</value>
   </data>
@@ -535,16 +535,16 @@
   </data>
   <data name="miEnglish.Caption" xml:space="preserve">
     <value>&amp;English</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="miGerman.Caption" xml:space="preserve">
     <value>&amp;Deutsch</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="miPortuguese.Caption" xml:space="preserve">
     <value>Português</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="miRussian.Caption" xml:space="preserve">
     <value>ру́сский</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Character set</value>
   </data>
@@ -552,10 +552,13 @@
     <value>All &amp;character sets...</value>
   </data>
   <data name="miIsoCharSets.Caption" xml:space="preserve">
-    <value>ISO Zeichensätze</value>
+    <value>ISO character sets</value>
   </data>
   <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
     <value>Show warnings after loading file</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
+    <value>Automatically show any warnings after opening a file</value>
   </data>
   <data name="mnuAccessibility.Caption" xml:space="preserve">
     <value>&amp;Accessibility</value>
@@ -568,7 +571,7 @@
   </data>
   <data name="mnuInputSource.Caption" xml:space="preserve">
     <value>mnuInputSource</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
     <value>Opens a submenu for the program of favorite list selection. This menu can be directly activated with the Shift+F1 key</value>
   </data>
@@ -577,7 +580,7 @@
   </data>
   <data name="mnuFavList.Caption" xml:space="preserve">
     <value>mnuFavList</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="miSelectFavList0.Caption" xml:space="preserve">
     <value>Program list</value>
   </data>
@@ -626,8 +629,8 @@
   <assembly alias="DevExpress.XtraBars.v15.1" name="DevExpress.XtraBars.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNC4yLCBWZXJzaW9uPTE0
-        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4xLCBWZXJzaW9uPTE1
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
@@ -636,8 +639,8 @@
   </data>
   <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNC4yLCBWZXJzaW9uPTE0
-        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4xLCBWZXJzaW9uPTE1
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
@@ -646,8 +649,8 @@
   </data>
   <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNC4yLCBWZXJzaW9uPTE0
-        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4xLCBWZXJzaW9uPTE1
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
@@ -656,8 +659,8 @@
   </data>
   <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNC4yLCBWZXJzaW9uPTE0
-        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4xLCBWZXJzaW9uPTE1
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
         X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
@@ -666,8 +669,8 @@
   </data>
   <data name="barManager1.Categories4" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNC4yLCBWZXJzaW9uPTE0
-        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4xLCBWZXJzaW9uPTE1
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAADUFjY2Vzc2liaWxpdHkE/P///wtTeXN0ZW0uR3VpZAsA
         AAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICeIvz
@@ -1001,7 +1004,7 @@
   </data>
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="txtSetSlot.Properties.Mask.MaskType" type="DevExpress.XtraEditors.Mask.MaskType, DevExpress.XtraEditors.v15.1">
     <value>RegEx</value>
   </data>
@@ -1034,9 +1037,6 @@
   </data>
   <data name="grpTopPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="grpTopPanel.Text" xml:space="preserve">
-    <value>groupControl1</value>
   </data>
   <data name="&gt;&gt;grpTopPanel.Name" xml:space="preserve">
     <value>grpTopPanel</value>
@@ -1819,7 +1819,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>06/13/2015 13:20:52</value>
+    <value>10/04/2015 16:31:34</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1865,7 +1865,7 @@
   </data>
   <data name="btnToggleFavE.Text" xml:space="preserve">
     <value>±E</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="&gt;&gt;btnToggleFavE.Name" xml:space="preserve">
     <value>btnToggleFavE</value>
   </data>
@@ -1892,7 +1892,7 @@
   </data>
   <data name="btnToggleFavD.Text" xml:space="preserve">
     <value>±D</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="&gt;&gt;btnToggleFavD.Name" xml:space="preserve">
     <value>btnToggleFavD</value>
   </data>
@@ -1919,7 +1919,7 @@
   </data>
   <data name="btnToggleFavC.Text" xml:space="preserve">
     <value>±C</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="&gt;&gt;btnToggleFavC.Name" xml:space="preserve">
     <value>btnToggleFavC</value>
   </data>
@@ -1946,7 +1946,7 @@
   </data>
   <data name="btnToggleFavB.Text" xml:space="preserve">
     <value>±B</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="&gt;&gt;btnToggleFavB.Name" xml:space="preserve">
     <value>btnToggleFavB</value>
   </data>
@@ -1973,7 +1973,7 @@
   </data>
   <data name="btnToggleFavA.Text" xml:space="preserve">
     <value>±A</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="&gt;&gt;btnToggleFavA.Name" xml:space="preserve">
     <value>btnToggleFavA</value>
   </data>
@@ -2131,7 +2131,7 @@
     <value>Top</value>
   </data>
   <data name="pnlEditControls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 21</value>
+    <value>2, 20</value>
   </data>
   <data name="pnlEditControls.Size" type="System.Drawing.Size, System.Drawing">
     <value>449, 33</value>
@@ -2180,12 +2180,12 @@
   </data>
   <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
     <value>Panel1</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="gridRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="gridRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 54</value>
+    <value>2, 53</value>
   </data>
   <data name="gviewRight.Appearance.FocusedRow.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
@@ -2386,7 +2386,7 @@
     <value>40</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>Service Type</value>
+    <value>Service Type ID</value>
   </data>
   <data name="colServiceType.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2396,6 +2396,9 @@
   </data>
   <data name="colServiceType.Width" type="System.Int32, mscorlib">
     <value>45</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Service Type</value>
   </data>
   <data name="colServiceTypeName.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2432,7 +2435,7 @@
   </data>
   <data name="colTransportStreamId.Caption" xml:space="preserve">
     <value>TS ID</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="colTransportStreamId.ToolTip" xml:space="preserve">
     <value>Transport Stream ID</value>
   </data>
@@ -2465,7 +2468,7 @@
   </data>
   <data name="colUid.Caption" xml:space="preserve">
     <value>Uid</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="colUid.Width" type="System.Int32, mscorlib">
     <value>120</value>
   </data>
@@ -2503,7 +2506,7 @@
     <value>Signal source</value>
   </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1012, 418</value>
+    <value>1012, 419</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2579,9 +2582,6 @@
   </data>
   <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
     <value>Append all currently unsorted channels at the end of the list</value>
-  </data>
-  <data name="btnAddAll.AccessibleName" xml:space="preserve">
-    <value />
   </data>
   <data name="btnAddAll.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 5</value>
@@ -2674,7 +2674,7 @@
     <value>Top</value>
   </data>
   <data name="panelControl3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 21</value>
+    <value>2, 20</value>
   </data>
   <data name="panelControl3.Size" type="System.Drawing.Size, System.Drawing">
     <value>1012, 33</value>
@@ -2723,7 +2723,7 @@
   </data>
   <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
     <value>Panel2</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="splitContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1474, 491</value>
   </data>
@@ -2732,7 +2732,7 @@
   </data>
   <data name="splitContainerControl1.Text" xml:space="preserve">
     <value>splitContainerControl1</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="&gt;&gt;splitContainerControl1.Name" xml:space="preserve">
     <value>splitContainerControl1</value>
   </data>

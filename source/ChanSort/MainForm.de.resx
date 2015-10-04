@@ -464,7 +464,7 @@
     <value>Markierte Sender aus sortierter Liste entfernen</value>
   </data>
   <data name="grpOutputList.Text" xml:space="preserve">
-    <value>Sortierte Sender (.csv)</value>
+    <value>Sortierte Sender</value>
   </data>
   <data name="colSlotOld.Caption" xml:space="preserve">
     <value>Alte Pr#</value>
@@ -561,5 +561,71 @@
   </data>
   <data name="grpInputList.Text" xml:space="preserve">
     <value>Alle Sender</value>
+  </data>
+  <data name="btnClearLeftFilter.Text" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="btnClearRightFilter.Text" xml:space="preserve">
+    <value>FIlter</value>
+  </data>
+  <data name="bar1.Text" xml:space="preserve">
+    <value>Werkzeuge</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio PID</value>
+  </data>
+  <data name="colIndex.Caption" xml:space="preserve">
+    <value>Pr. Index</value>
+  </data>
+  <data name="colIndex1.Caption" xml:space="preserve">
+    <value>Pr. Index</value>
+  </data>
+  <data name="colLogicalIndex.Caption" xml:space="preserve">
+    <value>Reihenfolge</value>
+  </data>
+  <data name="colNetworkId.Caption" xml:space="preserve">
+    <value>Netzwerk (ONID)</value>
+  </data>
+  <data name="colOutServiceType.Caption" xml:space="preserve">
+    <value>Service Typ</value>
+  </data>
+  <data name="colProvider.Caption" xml:space="preserve">
+    <value>Anbieter</value>
+  </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>Service ID</value>
+  </data>
+  <data name="colServiceType.Caption" xml:space="preserve">
+    <value>Service Typ ID</value>
+  </data>
+  <data name="colSignalSource.Caption" xml:space="preserve">
+    <value>Signal- quelle</value>
+  </data>
+  <data name="colVideoPid.Caption" xml:space="preserve">
+    <value>Video PID</value>
+  </data>
+  <data name="miCharsetForm.Caption" xml:space="preserve">
+    <value>Alle Zeichensätze...</value>
+  </data>
+  <data name="miAddFromRefList.Caption" xml:space="preserve">
+    <value>Sender aus Referenzliste hinzufügen...</value>
+  </data>
+  <data name="miIsoCharSets.Caption" xml:space="preserve">
+    <value>ISO Zeichensätze</value>
+  </data>
+  <data name="miRecentFiles.Caption" xml:space="preserve">
+    <value>Zuletzt verwendet</value>
+  </data>
+  <data name="miWiki.Caption" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="pageProgNr.Text" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
+    <value>Transport Stream ID</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Service Typ</value>
   </data>
 </root>

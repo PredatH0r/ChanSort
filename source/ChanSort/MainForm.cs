@@ -1885,12 +1885,12 @@ namespace ChanSort.Ui
 
     private void miWiki_ItemClick(object sender, ItemClickEventArgs e)
     {
-      BrowserHelper.OpenUrl("http://sourceforge.net/p/chansort/wiki/Home/");
+      BrowserHelper.OpenUrl("https://github.com/PredatH0r/ChanSort/wiki");
     }
 
     private void miOpenWebsite_ItemClick(object sender, ItemClickEventArgs e)
     {
-      BrowserHelper.OpenUrl("http://sourceforge.net/p/chansort/");
+      BrowserHelper.OpenUrl("https://github.com/PredatH0r/ChanSort");
     }
 
     private void miAbout_ItemClick(object sender, ItemClickEventArgs e)

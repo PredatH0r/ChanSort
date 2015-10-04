@@ -224,7 +224,7 @@
   </data>
   <data name="fontEdit1.EditValue" xml:space="preserve">
     <value>Tahoma</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="fontEdit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>106, 52</value>
   </data>

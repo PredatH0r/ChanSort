@@ -98,11 +98,4 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-  <data name="ScmSerializer_AllBytesInFileAreZero" xml:space="preserve">
-    <value>Diese Datei enthält keine Daten, alle Bytes darin haben den Wert 0.
-    
-Bitte stellen Sie sicher, dass der USB Stick mit FAT32 formatiert ist und wenn möglich nicht größer als 4GB ist.
-Sollte es danach weiterhin nicht funktionieren, versuchen Sie bitte das Gerät auf Werkseinstellungen zurückzusetzen und einen Suchlauf durchzuführen. 
-(Dies kann nach machen Firmwareupdates nötig sein, damit Export/Import wieder funktionieren.)</value>
-  </data>
 </root>

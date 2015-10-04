@@ -117,29 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="labelControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 13</value>
-  </data>
-  <data name="labelControl1.Text" xml:space="preserve">
-    <value>Sortieren nach:</value>
-  </data>
-  <data name="rbSortByNumber.Properties.Caption" xml:space="preserve">
-    <value>Nummer</value>
-  </data>
-  <data name="labelControl2.Text" xml:space="preserve">
-    <value>Schriftart:</value>
-  </data>
-  <data name="btnPreview.Text" xml:space="preserve">
-    <value>Vorschau...</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Набор символов</value>
   </data>
   <data name="btnCancel.Text" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Отменить</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Druckoptionen</value>
+  <data name="btnMyCountry.Text" xml:space="preserve">
+    <value>Набор символов по умолчанию для моей страны</value>
   </data>
-  <data name="rbSortByName.Properties.Caption" xml:space="preserve">
-    <value>Name</value>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>Ok</value>
   </data>
 </root>

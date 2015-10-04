@@ -98,11 +98,4 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-  <data name="ScmSerializer_AllBytesInFileAreZero" xml:space="preserve">
-    <value>This file contains no data, all bytes in it are set to 0.
-    
-Please make sure your USB stick is formatted as FAT32 and preferrably not larger than 4GB.
-If that still does not work, try to reset your TV to factory defaults and run a new channel search.
-(This might be necessary after a firmware update.)</value>
-  </data>
 </root>

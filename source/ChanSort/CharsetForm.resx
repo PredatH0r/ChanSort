@@ -219,9 +219,6 @@
   <data name="&gt;&gt;colName.Name" xml:space="preserve">
     <value>colName</value>
   </data>
-  <data name="gcCharset.EmbeddedNavigator.ToolTipTitle" xml:space="preserve">
-    <value />
-  </data>
   <data name="panelControl1.Size" type="System.Drawing.Size, System.Drawing">
     <value>433, 37</value>
   </data>
@@ -333,9 +330,6 @@
   <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
     <value>btnOk</value>
   </data>
-  <data name="gcCharset.EmbeddedNavigator.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="&gt;&gt;colDisplayName.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
@@ -364,4 +358,7 @@
   <metadata name="bindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="colDisplayName.Caption" xml:space="preserve">
+    <value>Description</value>
+  </data>
 </root>

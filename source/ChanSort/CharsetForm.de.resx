@@ -129,4 +129,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Zeichensatz</value>
   </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
 </root>

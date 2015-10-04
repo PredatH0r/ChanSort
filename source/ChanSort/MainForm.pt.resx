@@ -82,7 +82,7 @@
   </data>
   <data name="colOutLock.Caption" xml:space="preserve">
     <value>Blo- queado</value>
-  </data>  
+  </data>
   <data name="lblHotkeyLeft.Text" xml:space="preserve">
     <value>F3: Filtro | F4: Lista | -: para cima | +: para baixo | DEL: remover</value>
   </data>
@@ -269,7 +269,7 @@
     <value>Acrescentar e definar posição de canal</value>
   </data>
   <data name="grpOutputList.Text" xml:space="preserve">
-    <value>Canais ordenados (.csv)</value>
+    <value>Canais ordenados</value>
   </data>
   <data name="colSlotOld.Caption" xml:space="preserve">
     <value>Valor Pr# anterior</value>
@@ -329,7 +329,7 @@
     <value>Nome da rede</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>Tipo serviço</value>
+    <value>Tipo serviço ID</value>
   </data>
   <data name="colServiceId.Caption" xml:space="preserve">
     <value>Sserviço ID</value>
@@ -366,5 +366,8 @@
   </data>
   <data name="colOutHide.Caption" xml:space="preserve">
     <value>Esc- onder</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Tipo serviço</value>
   </data>
 </root>

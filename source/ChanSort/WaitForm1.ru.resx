@@ -117,29 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="labelControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 13</value>
-  </data>
-  <data name="labelControl1.Text" xml:space="preserve">
-    <value>Sortieren nach:</value>
-  </data>
-  <data name="rbSortByNumber.Properties.Caption" xml:space="preserve">
-    <value>Nummer</value>
-  </data>
-  <data name="labelControl2.Text" xml:space="preserve">
-    <value>Schriftart:</value>
-  </data>
-  <data name="btnPreview.Text" xml:space="preserve">
-    <value>Vorschau...</value>
-  </data>
-  <data name="btnCancel.Text" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Druckoptionen</value>
-  </data>
-  <data name="rbSortByName.Properties.Caption" xml:space="preserve">
-    <value>Name</value>
+  <data name="progressPanel1.Description" xml:space="preserve">
+    <value>Создание файла данных ТВ...</value>
   </data>
 </root>

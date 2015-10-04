@@ -153,7 +153,7 @@
   </data>
   <data name="lnkDownload.EditValue" xml:space="preserve">
     <value>http://github.com/PredatH0r/ChanSort</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="lnkDownload.Location" type="System.Drawing.Point, System.Drawing">
     <value>108, 90</value>
   </data>
@@ -198,7 +198,7 @@
   </data>
   <data name="lnkEmail.EditValue" xml:space="preserve">
     <value>horst@beham.biz</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="lnkEmail.Location" type="System.Drawing.Point, System.Drawing">
     <value>108, 31</value>
   </data>
@@ -282,7 +282,7 @@
   </data>
   <data name="lnkLicense.EditValue" xml:space="preserve">
     <value>GNU GPLv3</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="lnkLicense.Location" type="System.Drawing.Point, System.Drawing">
     <value>108, 66</value>
   </data>
@@ -396,7 +396,7 @@
   </data>
   <data name="txtAuthor.Text" xml:space="preserve">
     <value>Horst Beham</value>
-  </data>
+  <comment>@Invariant</comment></data>
   <data name="&gt;&gt;txtAuthor.Name" xml:space="preserve">
     <value>txtAuthor</value>
   </data>
