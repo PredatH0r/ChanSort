@@ -11,6 +11,7 @@ namespace ChanSort.Api
       public bool DeviceSettings { get; set; }
       public bool CanDeleteChannels { get; set; }
       public bool CanHaveGaps { get; set; }
+      public bool EncryptedFlagEdit { get; set; }
 
       public SupportedFeatures()
       {

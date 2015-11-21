@@ -124,6 +124,7 @@ Soll ChanSort die störenden Dateien jetzt umbenennen?</value>
   <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
     <value>HINWEIS:
 Bitte stellen Sie sicher, dass auf Ihrem webOS basierenden Gerät eine aktuelle Firmware installiert ist (LB600 und höher: 4.41.32, UB: 4.51.44).
-Ältere Versionen können Senderlisten nicht korrekt einlesen und verändern diese willkürlich im laufenden Betrieb.</value>
+Ältere Versionen können Senderlisten nicht korrekt einlesen und verändern diese willkürlich im laufenden Betrieb.
+(Sie können diese Meldung ignorieren, wenn Ihre Firmwareversion aktueller ist.)</value>
   </data>
 </root>

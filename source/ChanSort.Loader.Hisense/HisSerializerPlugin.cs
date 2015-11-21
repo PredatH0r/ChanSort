@@ -12,8 +12,8 @@ namespace ChanSort.Loader.Hisense
 #if HISENSE_ENABLED
   public class HisSerializerPlugin : ISerializerPlugin
   {
-    public string PluginName => "Hisense HIS_*.bin";
-    public string FileFilter => "HIS_SVL.BIN";
+    public string PluginName => "Hisense *.sqlite";
+    public string FileFilter => "*.sqlite";
 
 #region CreateSerializer()
     public SerializerBase CreateSerializer(string inputFile)

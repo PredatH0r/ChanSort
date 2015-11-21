@@ -74,7 +74,7 @@ namespace ChanSort.Loader.GlobalClone {
         ///   Looks up a localized string similar to ATTENTION:
         ///Please make sure that your webOS based TV is using a recent firmware version (LB600 and higher: 4.41.32, UB: 4.51.44).
         ///Older LG firmware for webOS based TV models does not handle the import of channel lists properly and randomly reorders channels.
-        ///.
+        ///(If your firmware is newer, you can ignore is message.).
         /// </summary>
         internal static string GcSerializer_webOsFirmwareWarning {
             get {

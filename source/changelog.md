@@ -1,6 +1,17 @@
 ChanSort Change Log 
 ===================
 
+TBA
+- Toshiba file detection changed from *.zip to Hotel*.zip
+- Samsung J series file detection changed from channel_list_t*.zip to *.zip
+- Added comment to info screen when opening LG LB/UB series GlobalClone list
+
+2015-10-15
+- Samsung J series: fixed error when saving certain lists which don't
+  contain an "SRV_DVB_EXT" table.
+- Panasonic: allow to edit the "Encrypted" flag, which is sometimes
+  set incorrectly during the channel search.
+
 2015-09-19
 - Samsung J series: fixed deleting of channels
 - LG GlobalClone: modified channel names were not written to the file

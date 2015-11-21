@@ -32,7 +32,8 @@ namespace ChanSort.Loader.SamsungJ
     #endregion
 
     #region DisplayName
-    public override string DisplayName { get { return "Samsung J-Series .zip Loader"; } }
+    public override string DisplayName => "Samsung J-Series .zip Loader";
+
     #endregion
 
 
@@ -181,7 +182,7 @@ namespace ChanSort.Loader.SamsungJ
         {
           Satellite sat = new Satellite(r.GetInt32(0));
           int pos = Math.Abs(r.GetInt32(2));
-          sat.OrbitalPosition = string.Format("{0}.{1}{2}", pos / 10, pos % 10, r.GetInt32(3) == 1 ? "E" : "W");
+          sat.OrbitalPosition = $"{pos/10}.{pos%10}{(r.GetInt32(3) == 1 ? "E" : "W")}";
           sat.Name = ReadUtf16(r, 1);
           this.DataRoot.AddSatellite(sat);
         }
@@ -274,7 +275,7 @@ namespace ChanSort.Loader.SamsungJ
       {
         while (r.Read())
         {
-          var tp = this.transponderByFreq != null ? this.transponderByFreq.TryGet(r.GetInt32(2)) : null;
+          var tp = this.transponderByFreq?.TryGet(r.GetInt32(2));
           var channel = new DbChannel(r, fields, this.DataRoot, providers, sat, tp);
           if (!channel.IsDeleted)
           {
@@ -496,12 +497,21 @@ namespace ChanSort.Loader.SamsungJ
     private static SQLiteCommand PrepareDeleteCommand(SQLiteConnection conn, bool digital)
     {
       var cmd = conn.CreateCommand();
-      cmd.CommandText = "delete from SRV where srvId=@id";
+      cmd.CommandText = "select count(1) from sqlite_master where upper(name)='SRV_DVB_EXT' and type='table'";
+      bool hasDvbExt = (long) cmd.ExecuteScalar() > 0;
+
+      cmd.CommandText += "; delete from SRV_FAV where srvId=@id";
+
       if (digital)
-        cmd.CommandText += "; delete from SRV_DVB where srvId=@id; delete from SRV_DVB_EXT where srvId=@id";
+      {
+        if (hasDvbExt)
+          cmd.CommandText += "; delete from SRV_DVB_EXT where srvId=@id";
+        cmd.CommandText += "; delete from SRV_DVB where srvId=@id";
+      }
       else
         cmd.CommandText += "; delete from SRV_ANL where srvId=@id";
-      cmd.CommandText += "; delete from SRV_FAV where srvId=@id";
+
+      cmd.CommandText = "delete from SRV where srvId=@id";
 
       cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
       cmd.Prepare();

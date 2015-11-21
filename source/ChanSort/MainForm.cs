@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2015-09-19";
+    public const string AppVersion = "v2015-10-15";
 
     private const int MaxMruEntries = 10;
 
@@ -234,6 +234,7 @@ namespace ChanSort.Ui
 
         //this.SetControlsEnabled(!this.dataRoot.IsEmpty);
         this.UpdateFavoritesEditor(this.dataRoot.SupportedFavorites);
+        this.colEncrypted.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.EncryptedFlagEdit;
 
         if (this.dataRoot.Warnings.Length > 0 && this.miShowWarningsAfterLoad.Checked)
           this.BeginInvoke((Action)this.ShowFileInformation);
