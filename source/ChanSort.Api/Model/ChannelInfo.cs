@@ -63,11 +63,11 @@ namespace ChanSort.Api
     /// <summary>
     /// Constructor for exiting TV channel
     /// </summary>
-    public ChannelInfo(SignalSource source, int index, int oldProgNr, string name) : this()
+    public ChannelInfo(SignalSource source, long index, int oldProgNr, string name) : this()
     {
       this.SignalSource = source;
       this.RecordIndex = index;
-      this.RecordOrder = index;
+      this.RecordOrder = (int)index;
       this.NewProgramNr = -1;
       this.OldProgramNr = oldProgNr;
       this.Name = name;

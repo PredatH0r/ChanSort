@@ -214,7 +214,7 @@ namespace ChanSort.Loader.Hisense
       {
         while (r.Read())
         {
-          var id = r.GetInt32(0) | (tableNr << 16);
+          var id = ((long)tableNr << 32) | (uint)r.GetInt32(0);
           var prNr = (int)((uint)r.GetInt32(1)) >> 18;
           var trans = this.DataRoot.Transponder.TryGet(r.GetInt32(2));
           var stype = (ServiceType) r.GetInt32(3);
@@ -280,27 +280,6 @@ namespace ChanSort.Loader.Hisense
 
     #endregion
 
-#if false
-
-    #region ReadDvbData()
-    private void ReadDvbData(ChannelInfo ci)
-    {
-      var mask = dvbMapping.GetDword("LinkageMask");
-      var tsFlag = dvbMapping.Settings.GetInt("LinkageMask_Ts");
-
-      if ((mask & tsFlag) != 0)
-      {
-        ci.OriginalNetworkId = dvbMapping.GetWord("Onid");
-        ci.TransportStreamId = dvbMapping.GetWord("Tsid");
-        ci.ServiceId = dvbMapping.GetWord("Ssid");
-      }
-      //ci.Encrypted = dvbMapping.GetByte("Encrypted") != 0;
-
-    }
-    #endregion
-
-#endif
-
     // Saving ====================================
 
     #region Save()
@@ -336,8 +315,9 @@ namespace ChanSort.Loader.Hisense
     #region UpdateChannel()
     private void UpdateChannel(SQLiteCommand cmd, ChannelInfo ci)
     {
-      int x = (int)ci.RecordIndex >> 16;
-      int id = (int)ci.RecordIndex & 0xFFFF;
+      int x = (int)((ulong)ci.RecordIndex >> 32);   // the table number is kept in the higher 32 bits
+      int id = (int)(ci.RecordIndex & 0xFFFFFFFF);  // the record id is kept in the lower 32 bits
+
       if (ci.NewProgramNr != ci.OldProgramNr)
       {
         if (ci.NewProgramNr >= 0)
@@ -384,7 +364,7 @@ namespace ChanSort.Loader.Hisense
       cmd.Parameters.Add("@resetFlags", DbType.Int32);
       cmd.Parameters.Add("@setFlags", DbType.Int32);
       cmd.Parameters["@id"].Value = id;
-      cmd.Parameters["@resetFlags"].Value = ~(int) resetFlags;
+      cmd.Parameters["@resetFlags"].Value = ~(int)resetFlags;
       cmd.Parameters["@setFlags"].Value = (int)setFlags;
       cmd.ExecuteNonQuery();
     }
