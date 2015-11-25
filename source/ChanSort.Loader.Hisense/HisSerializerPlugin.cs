@@ -1,4 +1,4 @@
-﻿//#define HISENSE_ENABLED
+﻿#define HISENSE_ENABLED
 
 /*
 Support for the Hisense file format (Sep 2015) is currently disabled due to the risk of damaging the TV when 
@@ -12,8 +12,8 @@ namespace ChanSort.Loader.Hisense
 #if HISENSE_ENABLED
   public class HisSerializerPlugin : ISerializerPlugin
   {
-    public string PluginName => "Hisense *.sqlite";
-    public string FileFilter => "*.sqlite";
+    public string PluginName => "Hisense *.db";
+    public string FileFilter => "channel.db";
 
 #region CreateSerializer()
     public SerializerBase CreateSerializer(string inputFile)

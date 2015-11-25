@@ -39,10 +39,11 @@ namespace ChanSort.Api
       trans.Satellite = sat;
       if (this.transponder.ContainsKey(trans.Id))
       {
-        this.warnings.AppendFormat("Duplicate transponder data record for satellite #{0} with id {1}\r\n", sat.Id, trans.Id);
+        this.warnings.AppendFormat("Duplicate transponder data record for satellite #{0} with id {1}\r\n", sat?.Id, trans.Id);
         return;
       }
-      sat.Transponder.Add(trans.Id, trans);
+      if (sat != null)
+        sat.Transponder.Add(trans.Id, trans);
       this.transponder.Add(trans.Id, trans);
     }
     #endregion

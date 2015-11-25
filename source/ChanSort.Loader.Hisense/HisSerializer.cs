@@ -1,19 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using ChanSort.Api;
 using System.Data.SQLite;
+using System.Text.RegularExpressions;
 
 namespace ChanSort.Loader.Hisense
 {
   public class HisSerializer : SerializerBase
   {
-    public override string DisplayName => "Hisense SQLite Loader";
-
-
-    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC | SignalSource.Tv, "Analog-C");
-    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
-    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Radio, "DVB-T");
-    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
+    public override string DisplayName => "Hisense *.db Loader";
 
     #region enums and bitmasks
 
@@ -21,9 +17,9 @@ namespace ChanSort.Loader.Hisense
     internal enum BroadcastMedium { DigTer = 1, DigCab = 2, DigSat = 3, AnaTer = 4, AnaCab = 5, AnaSat = 6 }
     internal enum ServiceType { Tv = 1, Radio = 2, App = 3}
     [Flags]
-    internal enum NwMask { Hide = 0, Skip = 1<<3, Fav1 = 1<<4, Fav2 = 1<<5, Fav3 = 1<<6, Fav4 = 1<<7, Lock = 1<<8 }
+    internal enum NwMask { Active = 1<<1, Visible = 1<<3, Fav1 = 1<<4, Fav2 = 1<<5, Fav3 = 1<<6, Fav4 = 1<<7, Lock = 1<<8 }
     [Flags]
-    internal enum OptionMask { Rename = 1<<3, Move = 1<<10 }
+    internal enum OptionMask { NameEdited = 1<<3, ChNumEdited = 1<<10, DeletedByUser = 1<<13 }
     [Flags]
     internal enum HashCode { Name = 1<<0, ChannelId = 1<<1, BroadcastType = 1<<2, TsRecId = 1<<3, ProgNum = 1<<4, DvbShortName = 1<<5, Radio = 1<<10, Encrypted = 1<<11, Tv = 1<<13 }
     [Flags]
@@ -31,15 +27,28 @@ namespace ChanSort.Loader.Hisense
 
     #endregion
 
+    private readonly List<ChannelList> channelLists = new List<ChannelList>();
+    private List<string> tableNames;
+
 
     #region ctor()
     public HisSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      this.DataRoot.AddChannelList(avbcChannels);
-      this.DataRoot.AddChannelList(dvbcChannels);
-      this.DataRoot.AddChannelList(dvbtChannels);
-      this.DataRoot.AddChannelList(dvbsChannels);
+      this.Features.CanDeleteChannels = false;
+      channelLists.Add(new ChannelList(SignalSource.Antenna | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Antenna"));
+      channelLists.Add(new ChannelList(SignalSource.Cable | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Cable"));
+      channelLists.Add(new ChannelList(SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Sat"));
+      channelLists.Add(new ChannelList(SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Prefered Sat"));
+      channelLists.Add(new ChannelList(SignalSource.Antenna | SignalSource.Cable | SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "CI 1"));
+      channelLists.Add(new ChannelList(SignalSource.Antenna | SignalSource.Cable | SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "CI 2"));
+
+      foreach (var list in this.channelLists)
+      {
+        this.DataRoot.ChannelLists.Add(list);
+        list.VisibleColumnFieldNames = new List<string> {"Position", "OldProgramNr", "Name", "ShortName", "Favorites", "Lock", "Hidden", "Encrypted",
+          "FreqInMhz", "OriginalNetworkId", "TransportStreamId", "ServiceId", "ServiceTypeName", "NetworkName", "SymbolRate" };
+      }
     }
     #endregion
 
@@ -54,13 +63,13 @@ namespace ChanSort.Loader.Hisense
         using (var cmd = conn.CreateCommand())
         {
           this.RepairCorruptedDatabaseImage(cmd);
+          this.LoadTableNames(cmd);
           this.LoadSatelliteData(cmd);
           this.LoadTslData(cmd);
           this.LoadSvlData(cmd);
         }
       }
     }
-
     #endregion
 
     #region RepairCorruptedDatabaseImage()
@@ -71,19 +80,39 @@ namespace ChanSort.Loader.Hisense
     }
     #endregion
 
-    #region LoadSatelliteData()
-    private void LoadSatelliteData(SQLiteCommand cmd)
+    #region LoadTableNames()
+    private void LoadTableNames(SQLiteCommand cmd)
     {
-      cmd.CommandText = "select ui2_satl_rec_id, ui4_mask, i2_orb_pos, ac_sat_name from satl_x";
+      this.tableNames = new List<string>();
+      cmd.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table' order by name";
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
+          tableNames.Add(r.GetString(0));
+      }
+    }
+
+    #endregion
+
+    #region LoadSatelliteData()
+    private void LoadSatelliteData(SQLiteCommand cmd)
+    {
+      var regex = new Regex(@"^satl_\d$");
+      foreach (var tableName in this.tableNames)
+      {
+        if (!regex.IsMatch(tableName))
+          continue;
+        cmd.CommandText = "select satl_rec_id, mask, i2_orb_pos, ac_sat_name from " + tableName;
+        using (var r = cmd.ExecuteReader())
         {
-          var sat = new Satellite(r.GetInt32(0));
-          var pos = r.GetInt16(2);
-          sat.OrbitalPosition = $"{(decimal)Math.Abs(pos)/10:n1}{(pos < 0 ? 'W' : 'E')}";
-          sat.Name = r.GetString(3);
-          this.DataRoot.AddSatellite(sat);
+          while (r.Read())
+          {
+            var sat = new Satellite(r.GetInt32(0));
+            var pos = r.GetInt32(2);
+            sat.OrbitalPosition = $"{(decimal) Math.Abs(pos)/10:n1}{(pos < 0 ? 'W' : 'E')}";
+            sat.Name = r.GetString(3);
+            this.DataRoot.AddSatellite(sat);
+          }
         }
       }
     }
@@ -93,38 +122,51 @@ namespace ChanSort.Loader.Hisense
 
     private void LoadTslData(SQLiteCommand cmd)
     {
-      this.LoadTslData(cmd, "tsl_x_data_ter_dig", ", ui4_freq", (t, r, i0) => { t.FrequencyInMhz = r.GetInt32(i0 + 0); });
-
-      this.LoadTslData(cmd, "tsl_x_data_cab_dig", ", ui4_freq, ui3_sym_rate", (t, r, i0) =>
+      var regex = new Regex(@"^tsl_(\d)$");
+      foreach (var table in this.tableNames)
       {
-        t.FrequencyInMhz = r.GetInt32(i0 + 0);
-        t.SymbolRate = r.GetInt32(i0 + 1);
-      });
+        var match = regex.Match(table);
+        if (!match.Success)
+          continue;
+        int x = int.Parse(match.Groups[1].Value);
 
-      this.LoadTslData(cmd, "tsl_x_data_sat_dig", ", ui4_freq, ui4_sym_rate", (t, r, i0) =>
-      {
-        t.FrequencyInMhz = r.GetInt32(i0 + 0);
-        t.SymbolRate = r.GetInt32(i0 + 1);
-      });
+        this.LoadTslData(cmd, x, "tsl_#_data_ter_dig", ", freq", (t, r, i0) =>
+        {
+          t.FrequencyInMhz = (decimal)r.GetInt32(i0 + 0) / 1000000;
+        });
+
+        this.LoadTslData(cmd, x, "tsl_#_data_cab_dig", ", freq, sym_rate", (t, r, i0) =>
+        {
+          t.FrequencyInMhz = (decimal)r.GetInt32(i0 + 0) / 1000000;
+          t.SymbolRate = r.GetInt32(i0 + 1);
+        });
+
+        this.LoadTslData(cmd, x, "tsl_#_data_sat_dig", ", freq, sym_rate", (t, r, i0) =>
+        {
+          t.FrequencyInMhz = r.GetInt32(i0 + 0);
+          t.SymbolRate = r.GetInt32(i0 + 1);
+        });
+      }
     }
 
-    private void LoadTslData(SQLiteCommand cmd, string joinTable, string joinFields, Action<Transponder, SQLiteDataReader, int> enhanceTransponderInfo)
+    private void LoadTslData(SQLiteCommand cmd, int tableNr, string joinTable, string joinFields, Action<Transponder, SQLiteDataReader, int> enhanceTransponderInfo)
     {
-      cmd.CommandText = "select tsl_x.ui2_tsl_rec_id, `t_desc.ui2_on_id`, `t_desc.ui2_ts_id`, `t_ref.ui2_satl_rec_id` " + joinFields
-        + " from tsl_x inner join " + joinTable + " on " + joinTable + ".ui2_tsl_rec_id=tsl_x.ui2_tsl_rec_id"
-        //+ $" where `t_desc.e_bcst_type` in ({(int)BroadcastType.Analog},{(int)BroadcastType.Dvb}) "
-        //+ $" and `tdesc.e_bcst_medium` in ({(int)BroadcastMedium.DigTer},{(int)BroadcastMedium.DigCab},{(int)BroadcastMedium.DigSat},{(int)BroadcastMedium.AnaCab})"
-        ;
+      if (!this.tableNames.Contains(joinTable.Replace("#", tableNr.ToString())))
+        return;
+
+      cmd.CommandText = $"select tsl_#.tsl_rec_id, `t_desc.on_id`, `t_desc.ts_id`, `t_ref.satl_rec_id`, `t_desc.e_bcst_medium` {joinFields} "
+        + $" from tsl_# inner join {joinTable} on {joinTable}.tsl_rec_id=tsl_#.tsl_rec_id";
+      cmd.CommandText = cmd.CommandText.Replace("#", tableNr.ToString());
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
         {
-          var trans = new Transponder(r.GetInt16(0));
-          trans.OriginalNetworkId = r.GetInt16(1);
-          trans.TransportStreamId = r.GetInt16(2);
+          var trans = new Transponder(r.GetInt32(0));
+          trans.OriginalNetworkId = r.GetInt32(1);
+          trans.TransportStreamId = r.GetInt32(2);
           trans.Satellite = this.DataRoot.Satellites.TryGet(r.GetInt32(3));
 
-          enhanceTransponderInfo(trans, r, 4);
+          enhanceTransponderInfo(trans, r, 5);
 
           this.DataRoot.AddTransponder(trans.Satellite, trans);
         }
@@ -136,37 +178,53 @@ namespace ChanSort.Loader.Hisense
 
     private void LoadSvlData(SQLiteCommand cmd)
     {
-      this.LoadSvlData(cmd, "svl_x_data_analog", "", (ci, r, i0) => { });
-      this.LoadSvlData(cmd, "svl_x_data_dvb", ", b_free_ca_mode", (ci, r, i0) => { ci.Encrypted = r.GetBoolean(i0 + 0); });
+      var regex = new Regex(@"^svl_(\d)$");
+      foreach (var table in this.tableNames)
+      {
+        var match = regex.Match(table);
+        if (!match.Success)
+          continue;
+        int x = int.Parse(match.Groups[1].Value);
+        if (x < 1 || x > 6)
+        {
+          this.DataRoot.Warnings.AppendLine("Skipping unknown channel list with number " + x);
+          return;
+        }
+
+        this.LoadSvlData(cmd, x, "svl_#_data_analog", "", (ci, r, i0) => { });
+        this.LoadSvlData(cmd, x, "svl_#_data_dvb", ", b_free_ca_mode, s_svc_name", (ci, r, i0) =>
+        {
+          ci.Encrypted = r.GetBoolean(i0 + 0);
+          ci.ShortName = r.GetString(i0 + 1);
+          if ((ci.SignalSource & SignalSource.DvbT) == SignalSource.DvbT)
+            ci.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(ci.FreqInMhz).ToString();
+        });
+      }
     }
 
-    private void LoadSvlData(SQLiteCommand cmd, string joinTable, string joinFields, Action<ChannelInfo, SQLiteDataReader, int> enhanceChannelInfo)
+    private void LoadSvlData(SQLiteCommand cmd, int tableNr, string joinTable, string joinFields, Action<ChannelInfo, SQLiteDataReader, int> enhanceChannelInfo)
     {
-      cmd.CommandText = "select svl_x.ui2_svl_rec_id, ui4_channel_id, ui2_tsl_rec_id, e_brdcst_type, e_serv_type, ac_name, ui4_nw_mask, ui4_hashcode " + joinFields
-        + " from svl_x inner join " + joinTable + " on " + joinTable + ".ui2_svl_rec_id=svl_x.ui2_svl_rec_id"
-        //+ $" where `e_brdcst_type` in ({(int)BroadcastType.Analog},{(int)BroadcastType.Dvb}) "
-        ;
+      if (!this.tableNames.Contains(joinTable.Replace("#", tableNr.ToString())))
+        return;
+
+      cmd.CommandText = $"select svl_#.svl_rec_id, channel_id, svl_#.tsl_rec_id, e_serv_type, ac_name, nw_mask, prog_id, `t_desc.e_bcst_medium` {joinFields}"
+        + $" from svl_# inner join {joinTable} on {joinTable}.svl_rec_id=svl_#.svl_rec_id inner join tsl_# on tsl_#.tsl_rec_id=svl_#.tsl_rec_id";
+      cmd.CommandText = cmd.CommandText.Replace("#", tableNr.ToString());
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
         {
-          var id = r.GetInt16(0);
-          var hashcode = (HashCode)r.GetInt32(7);
-          var progNr = (hashcode & HashCode.ProgNum) == 0 || r.IsDBNull(1) ? -1 : r.GetInt32(1) >> 2;
-          var trans = this.DataRoot.Transponder.TryGet(r.GetInt16(2));
-          var bcast = (BroadcastType)r.GetInt16(3);
-          var stype = (ServiceType) r.GetInt16(4);
-          var name = (hashcode & HashCode.Name) == 0 || r.IsDBNull(5) ? "" : r.GetString(5);
+          var id = r.GetInt32(0) | (tableNr << 16);
+          var prNr = (int)((uint)r.GetInt32(1)) >> 18;
+          var trans = this.DataRoot.Transponder.TryGet(r.GetInt32(2));
+          var stype = (ServiceType) r.GetInt32(3);
+          var name = r.GetString(4);
+          var nwMask = (NwMask)r.GetInt32(5);
+          var sid = r.GetInt32(6);
+          var bmedium = (BroadcastMedium)r.GetInt32(7);
 
-          var ssource = trans == null || bcast == BroadcastType.Analog ? SignalSource.Analog : SignalSource.Digital;
-          ssource |= stype == ServiceType.Radio ? SignalSource.Radio : SignalSource.Tv;
-
-
-          int idx = name.IndexOf("\0");
-          if (idx >= 0)
-            name = name.Substring(0, idx);
-
-          var ci = new ChannelInfo(ssource, id, progNr, name);
+          var ssource = DetermineSignalSource(bmedium, stype);
+          var ci = new ChannelInfo(ssource, id, prNr, name);
           if (trans != null)
           {
             ci.Transponder = trans;
@@ -174,161 +232,55 @@ namespace ChanSort.Loader.Hisense
             ci.TransportStreamId = trans.TransportStreamId;
             ci.SymbolRate = trans.SymbolRate;
             ci.FreqInMhz = trans.FrequencyInMhz;
+            ci.Satellite = trans.Satellite?.ToString();
           }
 
-          var nwMask = (NwMask)r.GetInt32(6);
-          ci.Skip = (nwMask & NwMask.Skip) != 0;
+          ci.ServiceId = sid;
+
+          //ci.Skip = (nwMask & NwMask.Active) == 0;
           ci.Lock = (nwMask & NwMask.Lock) != 0;
-          ci.Hidden = (nwMask & NwMask.Hide) != 0;
+          ci.Hidden = (nwMask & NwMask.Visible) == 0;
           ci.Favorites |= (Favorites) ((int)(nwMask & (NwMask.Fav1 | NwMask.Fav2 | NwMask.Fav3 | NwMask.Fav4)) >> 4);
 
-          if (stype == ServiceType.App)
+          if (stype == ServiceType.Radio)
+            ci.ServiceTypeName = "Radio";
+          else if (stype == ServiceType.Tv)
+            ci.ServiceTypeName = "TV";
+          else if (stype == ServiceType.App)
             ci.ServiceTypeName = "Data";
 
           enhanceChannelInfo(ci, r, 8);
 
-          var list = this.DataRoot.GetChannelList(ssource);
+          var list = this.channelLists[tableNr - 1];
           this.DataRoot.AddChannel(list, ci);
         }
       }
     }
     #endregion
 
+    #region DetermineSignalSource()
+    private static SignalSource DetermineSignalSource(BroadcastMedium bmedium, ServiceType stype)
+    {
+      SignalSource ssource = 0;
+      if (bmedium == BroadcastMedium.AnaCab)
+        ssource = SignalSource.AnalogC;
+      else if (bmedium == BroadcastMedium.AnaSat)
+        ssource = SignalSource.Analog | SignalSource.Sat;
+      else if (bmedium == BroadcastMedium.AnaTer)
+        ssource = SignalSource.AnalogT;
+      else if (bmedium == BroadcastMedium.DigCab)
+        ssource = SignalSource.DvbC;
+      else if (bmedium == BroadcastMedium.DigSat)
+        ssource = SignalSource.DvbS;
+      else if (bmedium == BroadcastMedium.DigTer)
+        ssource = SignalSource.DvbT;
+      ssource |= stype == ServiceType.Radio ? SignalSource.Radio : SignalSource.Tv;
+      return ssource;
+    }
+
+    #endregion
+
 #if false
-
-    #region ReadHeader()
-    private int ReadHeader(byte[] data, ref int off)
-    {
-      if (off + 40 > data.Length)
-        throw new FileLoadException(ERR_badFileFormat);
-      var blockSize = BitConverter.ToInt32(data, off + 36);
-      if (off + blockSize > data.Length)
-        throw new FileLoadException(ERR_badFileFormat);
-
-      off += 40;
-      return blockSize;
-    }
-    #endregion
-
-    #region ReadChannelList()
-    private void ReadChannelList(ref int off, int size, int table, ChannelList channels)
-    {
-      int recordSize = svlMapping.Settings.GetInt("RecordSize");
-      if (size % recordSize != 0)
-        throw new FileLoadException(ERR_badFileFormat);
-      int channelCount = size/recordSize;
-      if (channelCount == 0)
-        return;
-
-      var broadcastDataOffset = svlMapping.Settings.GetInt("BroadcastSystemData");
-      var nameLength = svlMapping.Settings.GetInt("NameLength");
-      var source = channels.SignalSource & (SignalSource.MaskAnalogDigital | SignalSource.MaskAntennaCableSat);
-      for (int i = 0; i < channelCount; i++)
-      {
-        svlMapping.SetDataPtr(svlFileContent, off);
-        dvbMapping.SetDataPtr(svlFileContent, off + broadcastDataOffset);
-        var ci = ReadChannel(source, i, nameLength);
-        if (ci != null)
-          this.DataRoot.AddChannel(channels, ci);        
-        off += recordSize;
-      }
-    }
-    #endregion
-
-    #region ReadChannel()
-    private ChannelInfo ReadChannel(SignalSource source, int index, int nameLength)
-    {
-      ChannelInfo ci = new ChannelInfo(source, index, 0, "");
-      //ci.RecordIndex = svlMapping.GetWord("RecordId");
-      ci.OldProgramNr = svlMapping.GetWord("ChannelId") >> 2;
-
-      var nwMask = svlMapping.GetDword("NwMask");
-      ci.Skip = (nwMask & svlMapping.Settings.GetInt("NwMask_Skip")) != 0;
-      ci.Lock = (nwMask & svlMapping.Settings.GetInt("NwMask_Lock")) != 0;
-      ci.Hidden = (nwMask & svlMapping.Settings.GetInt("NwMask_Hide")) != 0;
-      for (int i = 0; i < 3; i++)
-      {
-        bool isFav = (nwMask & svlMapping.Settings.GetInt("NwMask_Fav" + (i + 1))) != 0;
-        if (isFav)
-          ci.Favorites |= (Favorites) (1 << i);
-      }
-
-      var fieldMask = svlMapping.GetDword("HashcodeFieldMask");
-
-      if ((fieldMask & svlMapping.Settings.GetInt("HashcodeFieldMask_Name")) != 0)
-      {
-        ci.Name = svlMapping.GetString("Name", nameLength);
-        int term = ci.Name.IndexOf('\0');
-        if (term >= 0)
-          ci.Name = ci.Name.Substring(0, term);
-      }
-
-      var serviceType = svlMapping.GetByte("ServiceType");
-      if (serviceType == 1)
-      {
-        ci.SignalSource |= SignalSource.Tv;
-        ci.ServiceTypeName = "TV";
-      }
-      else if (serviceType == 2)
-      {
-        ci.SignalSource |= SignalSource.Radio;
-        ci.ServiceTypeName = "Radio";
-      }
-      else
-      {
-        ci.ServiceTypeName = "Data";
-      }
-
-      if ((fieldMask & svlMapping.Settings.GetInt("HashcodeFieldMask_TslRecId")) != 0)
-      {
-        int transpTableId = svlMapping.GetByte("TslTableId");
-        int transpRecordId = svlMapping.GetByte("TslRecordId");
-        var transpId = (transpTableId << 16) + transpRecordId;
-        var transp = this.transponder.TryGet(transpId);
-        if (transp != null)
-        {
-          ci.Transponder = transp;
-          ci.FreqInMhz = transp.FrequencyInMhz;
-          ci.SymbolRate = transp.SymbolRate;
-        }
-      }
-
-      if ((fieldMask & svlMapping.Settings.GetInt("HashcodeFieldMask_BroadcastType")) != 0)
-      {
-        var bcastType = svlMapping.GetByte("BroadcastType");
-        if (bcastType == 1)
-          ReadAnalogData(ci);
-        else if (bcastType == 2)
-          ReadDvbData(ci);
-      }
-
-      ci.Encrypted = (fieldMask & svlMapping.Settings.GetInt("HashcodeFieldMask_Encrypted")) != 0;
-
-      //ci.AddDebug("u1=");
-      //ci.AddDebug(svlMapping.Data, svlMapping.BaseOffset + 2, 2);
-      //ci.AddDebug("u2=");
-      //ci.AddDebug(svlMapping.Data, svlMapping.BaseOffset + 4, 2);
-      //ci.AddDebug(", hash=");
-      //ci.AddDebug(svlMapping.Data, svlMapping.BaseOffset + 8, 2);
-      //ci.AddDebug(", nw=");
-      //ci.AddDebug(svlMapping.Data, svlMapping.BaseOffset + 12, 4);
-      //ci.AddDebug(", o1=");
-      //ci.AddDebug(svlMapping.Data, svlMapping.BaseOffset + 16, 4);
-      ci.AddDebug(", o2=");
-      ci.AddDebug(svlMapping.Data, svlMapping.BaseOffset + 20, 4);
-      ci.AddDebug("progId=");
-      ci.AddDebug(svlMapping.Data, svlMapping.BaseOffset + 24, 4);
-
-      return ci;
-    }
-    #endregion
-
-    #region ReadAnalogData()
-    private void ReadAnalogData(ChannelInfo ci)
-    {
-      
-    }
-    #endregion
 
     #region ReadDvbData()
     private void ReadDvbData(ChannelInfo ci)
@@ -344,10 +296,6 @@ namespace ChanSort.Loader.Hisense
       }
       //ci.Encrypted = dvbMapping.GetByte("Encrypted") != 0;
 
-      if ((ci.SignalSource & SignalSource.DvbT) == SignalSource.DvbT)
-        ci.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(ci.FreqInMhz).ToString();
-
-      ci.ShortName = dvbMapping.GetString("ShortName", dvbMapping.Settings.GetInt("ShortName_Size"));
     }
     #endregion
 
@@ -388,41 +336,56 @@ namespace ChanSort.Loader.Hisense
     #region UpdateChannel()
     private void UpdateChannel(SQLiteCommand cmd, ChannelInfo ci)
     {
+      int x = (int)ci.RecordIndex >> 16;
+      int id = (int)ci.RecordIndex & 0xFFFF;
       if (ci.NewProgramNr != ci.OldProgramNr)
       {
         if (ci.NewProgramNr >= 0)
         {
-          cmd.CommandText = "update svl_x set channel_id=@chnr, ui4_option_mask=ui4_option_mask|" + ((int) OptionMask.Move) + " where ui2_svl_rec_id=@id";
+          cmd.CommandText = $"update svl_{x} set channel_id=(channel_id & {0xFFFC}) | @chnr, option_mask=option_mask | " + ((int) OptionMask.ChNumEdited) + " where svl_rec_id=@id";
           cmd.Parameters.Clear();
-          cmd.Parameters.Add("@id", DbType.Int16);
+          cmd.Parameters.Add("@id", DbType.Int32);
           cmd.Parameters.Add("@chnr", DbType.Int32);
-          cmd.Parameters["@id"].Value = ci.RecordIndex;
-          cmd.Parameters["@chnr"].Value = ci.NewProgramNr;
+          cmd.Parameters["@id"].Value = id;
+          cmd.Parameters["@chnr"].Value = ci.NewProgramNr << 18;
           cmd.ExecuteNonQuery();
         }
         else
         {
-          // TODO: delete channel .. HOW?!?
+          cmd.CommandText = $"update svl_{x} set nw_mask=nw_mask | " + ((int)OptionMask.DeletedByUser) + " where svl_rec_id=@id";
+          cmd.Parameters.Clear();
+          cmd.Parameters.Add("@id", DbType.Int32);
+          cmd.Parameters.Add("@fav", DbType.Int32);
+          cmd.Parameters["@id"].Value = id;
+          cmd.Parameters["@fav"].Value = ((int)ci.Favorites & 0x0F) << 4;
+          cmd.ExecuteNonQuery();
         }
       }
 
       if (ci.IsNameModified)
       {
-        cmd.CommandText = "update svl_x set name=@name, ui4_option_mask=ui4_option_mask|" + ((int)OptionMask.Rename) + " where ui2_svl_rec_id=@id";
+        cmd.CommandText = $"update svl_{x} set name=@name, option_mask=option_mask|" + ((int)OptionMask.NameEdited) + " where svl_rec_id=@id";
         cmd.Parameters.Clear();
-        cmd.Parameters.Add("@id", DbType.Int16);
+        cmd.Parameters.Add("@id", DbType.Int32);
         cmd.Parameters.Add("@name", DbType.String);
-        cmd.Parameters["@id"].Value = ci.RecordIndex;
+        cmd.Parameters["@id"].Value = id;
         cmd.Parameters["@name"].Value = ci.Name;
         cmd.ExecuteNonQuery();
       }
 
-      cmd.CommandText = "update svl_x set ui4_nw_mask=(ui4_nw_mask & 0xFFFFF0F)|@fav where ui2_svl_rec_id=@id";
+      var resetFlags = NwMask.Fav1 | NwMask.Fav2 | NwMask.Fav3 | NwMask.Fav4 | NwMask.Lock | NwMask.Visible;
+      var setFlags = (NwMask)(((int)ci.Favorites & 0x0F) << 4);
+      if (ci.Lock) setFlags |= NwMask.Lock;
+      if (!ci.Hidden) setFlags |= NwMask.Visible;
+
+      cmd.CommandText = $"update svl_{x} set nw_mask=(nw_mask & @resetFlags)|@setFlags where svl_rec_id=@id";
       cmd.Parameters.Clear();
-      cmd.Parameters.Add("@id", DbType.Int16);
-      cmd.Parameters.Add("@fav", DbType.Int32);
-      cmd.Parameters["@id"].Value = ci.RecordIndex;
-      cmd.Parameters["@fav"].Value = ((int)ci.Favorites & 0x0F) << 4;
+      cmd.Parameters.Add("@id", DbType.Int32);
+      cmd.Parameters.Add("@resetFlags", DbType.Int32);
+      cmd.Parameters.Add("@setFlags", DbType.Int32);
+      cmd.Parameters["@id"].Value = id;
+      cmd.Parameters["@resetFlags"].Value = ~(int) resetFlags;
+      cmd.Parameters["@setFlags"].Value = (int)setFlags;
       cmd.ExecuteNonQuery();
     }
 
