@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2015-10-15";
+    public const string AppVersion = "v2015-11-26";
 
     private const int MaxMruEntries = 10;
 
