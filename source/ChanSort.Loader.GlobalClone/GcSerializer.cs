@@ -373,6 +373,7 @@ namespace ChanSort.Loader.GlobalClone
           if (ch == null) continue; // ignore proxy channels from reference lists
           var nameBytes = Encoding.UTF8.GetBytes(ch.Name);
           bool nameNeedsEncoding = nameBytes.Length != ch.Name.Length;
+          string mapType = "";
           
           foreach (XmlNode node in ch.XmlNode.ChildNodes)
           {
@@ -414,6 +415,13 @@ namespace ChanSort.Loader.GlobalClone
                 break;
               case "isUserSelCHNo":
                 node.InnerText = "1";
+                break;
+              case "mapType":
+                mapType = node.InnerText;
+                break;
+              case "mapAttr":
+                if (mapType == "1")
+                  node.InnerText = ((int) ch.Favorites).ToString();
                 break;
             }
           }

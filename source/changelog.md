@@ -1,9 +1,10 @@
 ChanSort Change Log 
 ===================
 
-TBA
-- Toshiba file detection changed from *.zip to Hotel*.zip
-- Samsung J series file detection changed from channel_list_t*.zip to *.zip
+2015-11-26
+- Samsung J series: file detection changed from channel_list_t\*.zip to \*.zip
+- Toshiba: file detection changed from \*.zip to Hotel\*.zip
+- LG GlobalClone: favorites are now saved to the file
 - Added comment to info screen when opening LG LB/UB series GlobalClone list
 
 2015-10-15

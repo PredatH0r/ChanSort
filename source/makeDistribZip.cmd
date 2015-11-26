@@ -1,4 +1,5 @@
 @echo off
+cd /d %~dp0
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
 set DXversion=15.1
@@ -19,6 +20,7 @@ xcopy /siy debug\ru "%target%\ru"
 copy ..\readme.md "%target%\readme.txt"
 copy changelog.md "%target%\changelog.txt"
 for %%f in (Utils Data Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
+call :CodeSigning
 
 cd ..
 del Website\ChanSort.zip 2>nul
@@ -28,6 +30,20 @@ cd %target%\..
 
 
 pause
+goto:eof
+
+:CodeSigning
+rem -----------------------------
+rem If you want to digitally sign the generated .exe and .dll files, 
+rem you need to have your code signing certificate installed in the Windows certificate storage
+rem -----------------------------
+set signtool="C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin\signtool.exe"
+set oldcd=%cd%
+cd %target%
+set files=ChanSort.exe ChanSort*.dll de\ChanSort*.dll ru\ChanSort*.dll pt\ChanSort*.dll
+%signtool% sign /a /t "http://timestamp.comodoca.com/authenticode" %files%
+if errorlevel 1 goto :error
+cd %oldcd%
 goto:eof
 
 :copyDll
@@ -44,4 +60,8 @@ set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framewo
 if exist %source% copy %source% "%target%\%2"
 set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
 if exist %source% copy %source% "%target%\%2"
+goto:eof
+
+:error
+pause
 goto:eof
