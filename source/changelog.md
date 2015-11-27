@@ -1,6 +1,13 @@
 ChanSort Change Log 
 ===================
 
+2015-11-27
+- disable editing of predefined channel lists (based on LCN). 
+  TVs can show erratic behavior when a predefined list is modified.
+  e.g. Samsung J built-in "Astra 19.2E" list, LG "Astra" or "Sky" lists, ...
+  (can be overridden in the Settings menu)
+- new skin
+
 2015-11-26
 - Samsung J series: file detection changed from channel_list_t\*.zip to \*.zip
 - Toshiba: file detection changed from \*.zip to Hotel\*.zip

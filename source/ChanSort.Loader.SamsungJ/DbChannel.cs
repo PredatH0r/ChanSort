@@ -73,13 +73,7 @@ namespace ChanSort.Loader.SamsungJ
       this.VideoPid = r.GetInt32(field["vidPid"]);
       if (!r.IsDBNull(field["provId"]))
         this.Provider = providers.TryGet(r.GetInt64(field["provId"]));
-    }
-    #endregion
-
-
-    #region UpdateRawData()
-    public override void UpdateRawData()
-    {
+      this.AddDebug(r.GetInt32(field["lcn"]).ToString());
     }
     #endregion
   }

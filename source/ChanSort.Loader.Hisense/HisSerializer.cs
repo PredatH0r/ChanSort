@@ -34,6 +34,8 @@ namespace ChanSort.Loader.Hisense
     #region ctor()
     public HisSerializer(string inputFile) : base(inputFile)
     {
+      DepencencyChecker.AssertVc2010RedistPackageX86Installed();
+
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanDeleteChannels = false;
       channelLists.Add(new ChannelList(SignalSource.Antenna | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Antenna"));
@@ -192,12 +194,16 @@ namespace ChanSort.Loader.Hisense
         }
 
         this.LoadSvlData(cmd, x, "svl_#_data_analog", "", (ci, r, i0) => { });
-        this.LoadSvlData(cmd, x, "svl_#_data_dvb", ", b_free_ca_mode, s_svc_name", (ci, r, i0) =>
+        this.LoadSvlData(cmd, x, "svl_#_data_dvb", ", b_free_ca_mode, s_svc_name, cur_lcn", (ci, r, i0) =>
         {
           ci.Encrypted = r.GetBoolean(i0 + 0);
           ci.ShortName = r.GetString(i0 + 1);
           if ((ci.SignalSource & SignalSource.DvbT) == SignalSource.DvbT)
             ci.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(ci.FreqInMhz).ToString();
+
+          // make the current list read-only if LCN is used
+          if (r.GetInt32(i0 + 2) != 0)
+            this.channelLists[x - 1].ReadOnly = true;
         });
       }
     }

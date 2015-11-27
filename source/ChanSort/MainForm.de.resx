@@ -628,4 +628,19 @@
   <data name="colServiceTypeName.Caption" xml:space="preserve">
     <value>Service Typ</value>
   </data>
+  <data name="lblPredefinedList.Text" xml:space="preserve">
+    <value>Diese vorprogrammierte Liste kann nicht bearbeitet werden.</value>
+  </data>
+  <data name="lblPredefinedList.ToolTip" xml:space="preserve">
+    <value>Bei der Einrichtung ihres TVs wurde eine vordefinierte Senderliste gewählt.
+Das Ändern dieser Liste würde zu Fehlfunktionen des Geräts führen.
+Führen Sie bitte einen Sender-Vollsuchlauf aus und wählen Sie dabei keine
+speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Caption" xml:space="preserve">
+    <value>Bearbeiten vordefinierter Listen erlauben (GEFÄHRLICH)</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Hint" xml:space="preserve">
+    <value>Der Fernseher funktioniert dabei unter Umständen nicht mehr korrekt.</value>
+  </data>
 </root>

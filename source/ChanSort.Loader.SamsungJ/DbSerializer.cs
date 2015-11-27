@@ -25,7 +25,7 @@ namespace ChanSort.Loader.SamsungJ
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      this.Features.CanDeleteChannels = true;
+      this.Features.CanDeleteChannels = false;
       this.DataRoot.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
       this.DataRoot.SortedFavorites = false;
     }
@@ -56,6 +56,9 @@ namespace ChanSort.Loader.SamsungJ
 
       foreach (var filePath in Directory.GetFiles(tempDir, "*."))
       {
+        var filename = Path.GetFileName(filePath) ?? "";
+        if (filename.StartsWith("vconf_"))
+          continue;
         try
         {
           using (var conn = new SQLiteConnection("Data Source=" + filePath))
@@ -265,7 +268,13 @@ namespace ChanSort.Loader.SamsungJ
                             "SRV.srvId", "major", "progNum", "cast(srvName as blob)", "srvType", "hidden", "scrambled", "lockMode", "numSel", // SRV
                             };
       if (digital)
-        fieldNames.AddRange(new[] { "onid", "tsid", "vidPid", "provId", "cast(shrtSrvName as blob)" }); // SRV_DVB
+      {
+        fieldNames.AddRange(new[] {"onid", "tsid", "vidPid", "provId", "cast(shrtSrvName as blob)", "lcn"}); // SRV_DVB
+
+        // make LCN-based channel lists read-only
+        cmd.CommandText = "select count(1) from SRV_DVB where lcn<>65535";
+        channelList.ReadOnly = (long)cmd.ExecuteScalar() > 0;
+      }
 
       var sql = this.BuildQuery(table, fieldNames);
       var fields = this.GetFieldMap(fieldNames);
@@ -497,22 +506,14 @@ namespace ChanSort.Loader.SamsungJ
     private static SQLiteCommand PrepareDeleteCommand(SQLiteConnection conn, bool digital)
     {
       var cmd = conn.CreateCommand();
-      cmd.CommandText = "select count(1) from sqlite_master where upper(name)='SRV_DVB_EXT' and type='table'";
-      bool hasDvbExt = (long) cmd.ExecuteScalar() > 0;
-
-      cmd.CommandText += "; delete from SRV_FAV where srvId=@id";
-
-      if (digital)
+      var sql = new StringBuilder();
+      cmd.CommandText = "select name from sqlite_master where sql like '%srvId integer%' order by name desc";
+      using (var r = cmd.ExecuteReader())
       {
-        if (hasDvbExt)
-          cmd.CommandText += "; delete from SRV_DVB_EXT where srvId=@id";
-        cmd.CommandText += "; delete from SRV_DVB where srvId=@id";
+        while (r.Read())
+          sql.AppendLine($"; delete from {r.GetString(0)} where srvId=@id");
       }
-      else
-        cmd.CommandText += "; delete from SRV_ANL where srvId=@id";
-
-      cmd.CommandText = "delete from SRV where srvId=@id";
-
+      cmd.CommandText = sql.ToString();
       cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
       cmd.Prepare();
       return cmd;
@@ -559,7 +560,7 @@ namespace ChanSort.Loader.SamsungJ
         var channel = channelInfo as DbChannel;
         if (channel == null) // ignore reference list proxy channels
           continue;
-        channel.UpdateRawData();
+        
         if (channel.NewProgramNr < 0)
         {
           cmdDeleteSrv.Parameters["@id"].Value = channel.RecordIndex;
@@ -572,7 +573,7 @@ namespace ChanSort.Loader.SamsungJ
           cmdUpdateSrv.Parameters["@lock"].Value = channel.Lock;
           cmdUpdateSrv.Parameters["@hidden"].Value = channel.Hidden;
           cmdUpdateSrv.Parameters["@numsel"].Value = !channel.Skip;
-          cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? null : Encoding.BigEndianUnicode.GetBytes(channel.Name);
+          cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? (object)DBNull.Value : Encoding.BigEndianUnicode.GetBytes(channel.Name);
           cmdUpdateSrv.ExecuteNonQuery();
         }
 

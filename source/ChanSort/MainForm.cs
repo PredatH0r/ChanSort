@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2015-11-26";
+    public const string AppVersion = "v2015-11-27";
 
     private const int MaxMruEntries = 10;
 
@@ -624,14 +624,29 @@ namespace ChanSort.Ui
       if (gviewLeft.IsValidRowHandle(0))
         this.SelectFocusedRow(this.gviewLeft, 0);
 
-      bool allowEdit = channelList != null && !channelList.ReadOnly;
-      this.gviewLeft.OptionsBehavior.Editable = allowEdit;
-      this.gviewRight.OptionsBehavior.Editable = allowEdit;
+      UpdateGridReadOnly();
 
 
       this.UpdateInsertSlotTextBox();
       this.UpdateMenu();
     }
+    #endregion
+
+    #region UpdateGridReadOnly
+    private void UpdateGridReadOnly()
+    {
+      bool allowEdit = !this.currentChannelList?.ReadOnly ?? true;
+      bool forceEdit = this.miAllowEditPredefinedLists.Down;
+
+      this.gviewLeft.OptionsBehavior.Editable = allowEdit || forceEdit;
+      this.gviewRight.OptionsBehavior.Editable = allowEdit || forceEdit;
+      this.gviewLeft.Appearance.Row.BackColor = this.gviewRight.Appearance.Row.BackColor = Color.MistyRose;
+      this.gviewLeft.Appearance.Empty.BackColor = this.gviewRight.Appearance.Empty.BackColor = Color.MistyRose;
+      this.gviewLeft.Appearance.Row.Options.UseBackColor = this.gviewRight.Appearance.Row.Options.UseBackColor = !allowEdit;
+      this.gviewLeft.Appearance.Empty.Options.UseBackColor = this.gviewRight.Appearance.Empty.Options.UseBackColor = !allowEdit;
+      this.lblPredefinedList.Visible = !(allowEdit || forceEdit);
+    }
+
     #endregion
 
     #region ShowSaveFileDialog()
@@ -2579,8 +2594,14 @@ namespace ChanSort.Ui
       TryExecute(this.editor.ApplyPrNrToFavLists);
       this.RefreshGrid(this.gviewLeft, this.gviewRight);
     }
+
     #endregion
 
-
+    #region miAllowEditPredefinedLists_DownChanged
+    private void miAllowEditPredefinedLists_DownChanged(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.UpdateGridReadOnly);
+    }
+    #endregion
   }
 }

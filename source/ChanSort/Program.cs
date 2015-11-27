@@ -17,6 +17,7 @@ namespace ChanSort.Ui
       AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
       Application.ThreadException += Application_ThreadException;
       Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+      DevExpress.Skins.SkinManager.EnableFormSkins();
       do
       {
         ChangeLanguage = false;

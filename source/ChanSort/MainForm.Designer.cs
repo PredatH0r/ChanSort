@@ -95,6 +95,7 @@
       this.colSignalSource = new DevExpress.XtraGrid.Columns.GridColumn();
       this.lblHotkeyRight = new DevExpress.XtraEditors.LabelControl();
       this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
+      this.lblPredefinedList = new DevExpress.XtraEditors.LabelControl();
       this.btnRemoveRight = new DevExpress.XtraEditors.SimpleButton();
       this.btnAddAll = new DevExpress.XtraEditors.SimpleButton();
       this.btnClearRightFilter = new DevExpress.XtraEditors.SimpleButton();
@@ -153,6 +154,7 @@
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
       this.miShowWarningsAfterLoad = new DevExpress.XtraBars.BarCheckItem();
+      this.miAllowEditPredefinedLists = new DevExpress.XtraBars.BarButtonItem();
       this.mnuAccessibility = new DevExpress.XtraBars.BarSubItem();
       this.mnuGotoChannelList = new DevExpress.XtraBars.BarSubItem();
       this.mnuInputSource = new DevExpress.XtraBars.BarLinkContainerItem();
@@ -844,12 +846,20 @@
       // 
       // panelControl3
       // 
+      this.panelControl3.Controls.Add(this.lblPredefinedList);
       this.panelControl3.Controls.Add(this.btnRemoveRight);
       this.panelControl3.Controls.Add(this.btnAddAll);
       this.panelControl3.Controls.Add(this.btnClearRightFilter);
       this.panelControl3.Controls.Add(this.btnAdd);
       resources.ApplyResources(this.panelControl3, "panelControl3");
       this.panelControl3.Name = "panelControl3";
+      // 
+      // lblPredefinedList
+      // 
+      this.lblPredefinedList.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("lblPredefinedList.Appearance.Font")));
+      this.lblPredefinedList.Appearance.ForeColor = ((System.Drawing.Color)(resources.GetObject("lblPredefinedList.Appearance.ForeColor")));
+      resources.ApplyResources(this.lblPredefinedList, "lblPredefinedList");
+      this.lblPredefinedList.Name = "lblPredefinedList";
       // 
       // btnRemoveRight
       // 
@@ -972,9 +982,10 @@
             this.mnuInputSource,
             this.mnuGotoFavList,
             this.mnuFavList,
-            this.miRussian});
+            this.miRussian,
+            this.miAllowEditPredefinedLists});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 94;
+      this.barManager1.MaxItemId = 95;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1461,7 +1472,8 @@
       this.mnuOptions.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barSubItem1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuCharset, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miShowWarningsAfterLoad)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miShowWarningsAfterLoad),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miAllowEditPredefinedLists)});
       this.mnuOptions.Name = "mnuOptions";
       // 
       // barSubItem1
@@ -1555,6 +1567,15 @@
       resources.ApplyResources(this.miShowWarningsAfterLoad, "miShowWarningsAfterLoad");
       this.miShowWarningsAfterLoad.Id = 54;
       this.miShowWarningsAfterLoad.Name = "miShowWarningsAfterLoad";
+      // 
+      // miAllowEditPredefinedLists
+      // 
+      this.miAllowEditPredefinedLists.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miAllowEditPredefinedLists, "miAllowEditPredefinedLists");
+      this.miAllowEditPredefinedLists.Id = 94;
+      this.miAllowEditPredefinedLists.ImageIndex = 37;
+      this.miAllowEditPredefinedLists.Name = "miAllowEditPredefinedLists";
+      this.miAllowEditPredefinedLists.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miAllowEditPredefinedLists_DownChanged);
       // 
       // mnuAccessibility
       // 
@@ -1813,7 +1834,7 @@
       // 
       // defaultLookAndFeel1
       // 
-      this.defaultLookAndFeel1.LookAndFeel.SkinName = "Office 2007 Blue";
+      this.defaultLookAndFeel1.LookAndFeel.SkinName = "Office 2010 Blue";
       // 
       // grpTopPanel
       // 
@@ -1986,6 +2007,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckedComboBoxEdit2)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).EndInit();
       this.panelControl3.ResumeLayout(false);
+      this.panelControl3.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.txtSetSlot.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.picDonate.Properties)).EndInit();
@@ -2180,6 +2202,8 @@
     private DevExpress.XtraBars.BarLinkContainerItem mnuFavList;
     private DevExpress.XtraBars.BarButtonItem miRussian;
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
+    private DevExpress.XtraEditors.LabelControl lblPredefinedList;
+    private DevExpress.XtraBars.BarButtonItem miAllowEditPredefinedLists;
   }
 }
 
