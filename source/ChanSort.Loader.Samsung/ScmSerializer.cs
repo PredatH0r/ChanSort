@@ -9,7 +9,7 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace ChanSort.Loader.Samsung
 {
-  class ScmSerializer : SerializerBase
+  internal class ScmSerializer : SerializerBase
   {
     private readonly Dictionary<string, ModelConstants> modelConstants = new Dictionary<string, ModelConstants>();
     private readonly MappingPool<DataMapping> analogMappings = new MappingPool<DataMapping>("Analog");
@@ -140,7 +140,7 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region DetectModelConstants()
-    private void DetectModelConstants(ZipFile zip)
+    internal void DetectModelConstants(ZipFile zip)
     {
       if (DetectModelFromFileName()) return;
       if (DetectModelFromCloneInfoFile(zip)) return;
@@ -165,9 +165,9 @@ namespace ChanSort.Loader.Samsung
           case "1101": series = "D"; break;
           case "1201":
             var letter = match.Groups[2].Value;
-            series = match.Groups[1].Value.StartsWith("LT") ? "F" : // LTxxCxxx is actually an F-series model
-              StringComparer.OrdinalIgnoreCase.Compare(letter, "E") < 0 ? "E" : // at least E sereis
-              letter; // E, F, H
+
+            // F, H and low-end J series use same file format            
+            series = letter == "E" ? "E" : "F";
             break;
           default:
             return false;
@@ -192,8 +192,12 @@ namespace ChanSort.Loader.Samsung
       if (cloneInfo.Length >= 9)
       {
         char series = (char) cloneInfo[8];
-        if (series == 'B') // 2013 B-series uses E/F-series format
+        if (series == 'B') // LTxxBxxx uses E/F format. the old B-series has no CloneInfo file, so we can tell the difference
           series = 'F';
+        else if (series == 'C') // there are models with a C that are actually F: LTxxCxxx, HExxCxxx, ... so we can't decide here
+          return false; 
+        else if (series >= 'F') // F, H, low-end J
+          series = 'F'; 
         if (this.modelConstants.TryGetValue("Series:" + series, out this.c))
           return true;
       }
@@ -212,7 +216,7 @@ namespace ChanSort.Loader.Samsung
                               DetectModelFromAstraHdPlusD(zip)
                             };
 
-      // note: E, F and B(2013) series use an identical format, so we only care about E here
+      // E, F, B(2013), H, low-end J series use an identical format, so we only care about one here      
       string validCandidates = "BCDE";
       foreach (var candidateList in candidates)
       {
@@ -230,7 +234,10 @@ namespace ChanSort.Loader.Samsung
       if (validCandidates.Length == 0)
         return false;
 
-      this.modelConstants.TryGetValue("Series:" + validCandidates[0], out this.c);
+      var series = validCandidates[0];
+      if (series == 'E') // E allows favorites to be individually sorted, while F-J require them to match the main program nr
+        series = 'F';    // since we can't tell the difference from the format, we use the safe F/H/J logic, which also works for E
+      this.modelConstants.TryGetValue("Series:" + series, out this.c);
       return true;
     }
 

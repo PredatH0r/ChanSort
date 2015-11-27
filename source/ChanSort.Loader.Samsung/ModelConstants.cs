@@ -7,13 +7,13 @@ namespace ChanSort.Loader.Samsung
     /// <summary>
     /// D model uses values 0 and 1
     /// </summary>
-    Flag = 0,
+    Boolean = 0,
     /// <summary>
-    /// E model uses -1 for not-a-fav and 1-x for a fav program number
+    /// E model uses -1 for not-a-fav and 1..x for a fav program number
     /// </summary>
     IndividuallySorted = 1,
     /// <summary>
-    /// some F models and H series uses -1 for not-a-fav, but expects 1-x to match the main program number
+    /// some F models and H series uses -1 for not-a-fav, but expects 1..x to match the main program number
     /// </summary>
     MainProgramnrIndex = 2
   }

@@ -80,9 +80,9 @@ namespace ChanSort.Loader.Samsung
       foreach (int off in offsets)
       {
         int favValue = BitConverter.ToInt32(this.rawData, baseOffset + off);
-        if (sortedFavorites == FavoritesIndexMode.Flag && favValue != 0)
+        if (sortedFavorites == FavoritesIndexMode.Boolean && favValue != 0)
           fav |= mask;
-        else if (sortedFavorites != FavoritesIndexMode.Flag && favValue != -1)
+        else if (sortedFavorites != FavoritesIndexMode.Boolean && favValue != -1)
           fav |= mask;
         if (sortedFavorites == FavoritesIndexMode.IndividuallySorted)
           this.FavIndex[favIndex] = favValue;
@@ -173,7 +173,7 @@ namespace ChanSort.Loader.Samsung
       foreach (int off in offsets)
       {
         int favValue;
-        if (this.sortedFavorites == FavoritesIndexMode.Flag) // D series
+        if (this.sortedFavorites == FavoritesIndexMode.Boolean) // D series
           favValue = (fav & mask) != 0 ? 1 : 0; // D series
         else if (this.sortedFavorites == FavoritesIndexMode.IndividuallySorted) // E series (and some F models with early firmware)
           favValue = (fav & mask) != 0 ? this.FavIndex[favIndex] : -1;

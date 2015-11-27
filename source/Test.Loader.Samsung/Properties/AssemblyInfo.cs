@@ -2,19 +2,15 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: InternalsVisibleTo("Test.Loader")]
-[assembly: InternalsVisibleTo("Test.Loader.Samsung")]
-
-
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ChanSort.Loader.Samsung")]
+[assembly: AssemblyTitle("Test.Loader.Samsung")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ChanSort.Loader.Samsung")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyProduct("Test.Loader.Samsung")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -24,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6f59ac5a-afba-42e3-a63e-c74793c15980")]
+[assembly: Guid("1ed68a9b-6698-4609-b9e6-8e08b6055f2e")]
 
 // Version information for an assembly consists of the following four values:
 //
