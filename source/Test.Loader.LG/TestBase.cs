@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChanSort.Api;
 using ChanSort.Loader.LG;
@@ -83,6 +84,11 @@ namespace Test.Loader.LG
       mem.Seek(0, SeekOrigin.Begin);
       var actual = new StreamReader(mem).ReadToEnd();
       var expected = File.ReadAllText(refListFile);
+
+      // satellite orbital position is no longer part of the UID (Samsung J series doesn't provide this information)
+      var regex = new Regex(@",S\d+.\d+[EW](-\d+-\d+-\d+,)");
+      expected = regex.Replace(expected, @",S$1"); 
+
       Assert.AreEqual(expected, actual);
     }
     #endregion
