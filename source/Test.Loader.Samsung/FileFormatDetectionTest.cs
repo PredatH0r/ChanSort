@@ -81,5 +81,14 @@ namespace Test.Loader.Samsung
       Assert.AreEqual("F", s.Series);
     }
 
+    [TestMethod]
+    public void LoadJSeriesWithScm1201Format()
+    {
+      // J-series model with SCM format
+      var s = new ScmSerializer(RootPath + @"__J\HenryLoenwind_SCM\channel_list_UE32J5170_1201_orig.scm");
+      s.Load();
+      Assert.AreEqual("F", s.Series);
+    }
+
   }
 }

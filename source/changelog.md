@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2015-11-28
+- fixed file format detection for Samsung J series models with .scm file extension
+
 2015-11-27
 - disable editing of predefined channel lists (based on LCN). 
   TVs can show erratic behavior when a predefined list is modified.

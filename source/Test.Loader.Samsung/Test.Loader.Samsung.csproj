@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="FileFormatDetectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SamsungTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
@@ -82,6 +83,10 @@
     <ProjectReference Include="..\ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj">
       <Project>{a1c9a98d-368a-44e8-9b7f-7eaca46c9ec5}</Project>
       <Name>ChanSort.Loader.Samsung</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Test.Loader\Test.Loader.csproj">
+      <Project>{68cfcb2f-b52a-43a1-aa5c-5d64a1d655d2}</Project>
+      <Name>Test.Loader</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

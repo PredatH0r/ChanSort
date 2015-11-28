@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Linq;
@@ -165,8 +164,8 @@ namespace ChanSort.Loader.Samsung
           case "1101": series = "D"; break;
           case "1201":
             var letter = match.Groups[2].Value;
-
-            // F, H and low-end J series use same file format            
+            // E, F, H and low-end J series use same file format
+            // E however allows individually sorted favorites while the other require the fav number to be equal to the main program nr
             series = letter == "E" ? "E" : "F";
             break;
           default:
@@ -694,8 +693,8 @@ namespace ChanSort.Loader.Samsung
 
     private void RemoveDuplicateAnalogList(StringBuilder log)
     {
-      if (this.avbtChannels.Count == 0 || this.avbcChannels.Count == 0)
-        return;
+      //if (this.avbtChannels.Count == 0 || this.avbcChannels.Count == 0)
+      //  return;
       // TODO
     }
 
@@ -703,11 +702,11 @@ namespace ChanSort.Loader.Samsung
 
     // ------- testing -----------
 
-    internal string Series { get { return c.series; } }
-    internal int AnalogChannelLength { get { return c.avbtChannelLength; } }
-    internal int DigitalChannelLength { get { return c.dvbtChannelLength; } }
-    internal int SatChannelLength { get { return c.dvbsChannelLength; } }
-    internal int HdPlusChannelLength { get { return c.hdplusChannelLength; } }
+    internal string Series => c.series;
+    internal int AnalogChannelLength => c.avbtChannelLength;
+    internal int DigitalChannelLength => c.dvbtChannelLength;
+    internal int SatChannelLength => c.dvbsChannelLength;
+    internal int HdPlusChannelLength => c.hdplusChannelLength;
     internal int SatDatabaseVersion { get; private set; }
   }
 }
