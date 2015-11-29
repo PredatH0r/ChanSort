@@ -1,8 +1,14 @@
 ChanSort Change Log 
 ===================
 
+2015-11-29
+- Samsung E,F,H,J .scm file format: allow independant reordering of each 
+  favorites list
+- Samsung J .zip file format: predefined lists can be edited again, allow
+  independant reordering of each favorites list, allow deleting channels
+
 2015-11-28
-- fixed file format detection for Samsung J series models with .scm file extension
+- fixed file format detection for Samsung J models with .scm file extension
 
 2015-11-27
 - disable editing of predefined channel lists (based on LCN). 

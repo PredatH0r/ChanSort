@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2015-11-28";
+    public const string AppVersion = "v2015-11-29";
 
     private const int MaxMruEntries = 10;
 
@@ -1382,7 +1382,7 @@ namespace ChanSort.Ui
     {
       bool fileLoaded = this.dataRoot != null;
       bool isRight = this.lastFocusedGrid == this.gviewRight;
-      bool mayEdit = fileLoaded && this.currentChannelList != null && !this.currentChannelList.ReadOnly;
+      bool mayEdit = fileLoaded && this.currentChannelList != null && (!this.currentChannelList.ReadOnly || this.miAllowEditPredefinedLists.Down);
 
       foreach (BarItemLink link in this.miEdit.ItemLinks)
         link.Item.Enabled = mayEdit;
@@ -2600,7 +2600,11 @@ namespace ChanSort.Ui
     #region miAllowEditPredefinedLists_DownChanged
     private void miAllowEditPredefinedLists_DownChanged(object sender, ItemClickEventArgs e)
     {
-      TryExecute(this.UpdateGridReadOnly);
+      TryExecute(() => 
+      {
+        this.UpdateGridReadOnly();
+        this.UpdateMenu();
+      });
     }
     #endregion
   }

@@ -10,7 +10,7 @@ using ChanSort.Api;
 namespace ChanSort.Loader.Hisense
 {
 #if HISENSE_ENABLED
-  public class HisSerializerPlugin : ISerializerPlugin
+  public class DbSerializerPlugin : ISerializerPlugin
   {
     public string PluginName => "Hisense *.db";
     public string FileFilter => "channel.db";
@@ -18,7 +18,7 @@ namespace ChanSort.Loader.Hisense
 #region CreateSerializer()
     public SerializerBase CreateSerializer(string inputFile)
     {
-      return new HisSerializer(inputFile);
+      return new DbSerializer(inputFile);
     }
 #endregion
   }

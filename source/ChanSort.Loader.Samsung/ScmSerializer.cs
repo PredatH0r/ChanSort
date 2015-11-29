@@ -163,10 +163,9 @@ namespace ChanSort.Loader.Samsung
           case "1001": series = "C"; break;
           case "1101": series = "D"; break;
           case "1201":
-            var letter = match.Groups[2].Value;
-            // E, F, H and low-end J series use same file format
-            // E however allows individually sorted favorites while the other require the fav number to be equal to the main program nr
-            series = letter == "E" ? "E" : "F";
+            //var letter = match.Groups[2].Value;
+            // E, F, H and some J models use same file format
+            series = "E";
             break;
           default:
             return false;
@@ -191,12 +190,12 @@ namespace ChanSort.Loader.Samsung
       if (cloneInfo.Length >= 9)
       {
         char series = (char) cloneInfo[8];
-        if (series == 'B') // LTxxBxxx uses E/F format. the old B-series has no CloneInfo file, so we can tell the difference
-          series = 'F';
-        else if (series == 'C') // there are models with a C that are actually F: LTxxCxxx, HExxCxxx, ... so we can't decide here
+        if (series == 'B') // LTxxBxxx uses 1201 format. The 2009 B-models have no CloneInfo file, so we can tell the difference
+          series = 'E';
+        else if (series == 'C') // "C" usually means 1001 format, but there some with 1201 format: LTxxCxxx, HExxCxxx, ... so we can't decide here
           return false; 
-        else if (series >= 'F') // F, H, low-end J
-          series = 'F'; 
+        else if (series >= 'E') // E, F, H, some J
+          series = 'E'; 
         if (this.modelConstants.TryGetValue("Series:" + series, out this.c))
           return true;
       }
@@ -215,7 +214,7 @@ namespace ChanSort.Loader.Samsung
                               DetectModelFromAstraHdPlusD(zip)
                             };
 
-      // E, F, B(2013), H, low-end J series use an identical format, so we only care about one here      
+      // E, F, H, some J and a few others use an identical format, which we all treat as "E"
       string validCandidates = "BCDE";
       foreach (var candidateList in candidates)
       {
@@ -234,8 +233,6 @@ namespace ChanSort.Loader.Samsung
         return false;
 
       var series = validCandidates[0];
-      if (series == 'E') // E allows favorites to be individually sorted, while F-J require them to match the main program nr
-        series = 'F';    // since we can't tell the difference from the format, we use the safe F/H/J logic, which also works for E
       this.modelConstants.TryGetValue("Series:" + series, out this.c);
       return true;
     }

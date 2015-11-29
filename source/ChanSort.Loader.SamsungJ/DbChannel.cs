@@ -6,11 +6,8 @@ namespace ChanSort.Loader.SamsungJ
 {
   internal class DbChannel : ChannelInfo
   {
-#if INDIVIDUALLY_SORTED_FAVS
-    internal Dictionary<int,int> OriginalFavIndex = new Dictionary<int, int>();
-#else
+    internal List<int> OriginalFavIndex = new List<int> { -1, -1, -1, -1 , -1 };
     internal Favorites OriginalFavs;
-#endif
 
     #region ctor()
     internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers, Satellite sat, Transponder tp)
@@ -50,6 +47,7 @@ namespace ChanSort.Loader.SamsungJ
 
       base.IsDeleted = this.OldProgramNr == -1;
     }
+
     #endregion
 
     #region ReadAnalogData()

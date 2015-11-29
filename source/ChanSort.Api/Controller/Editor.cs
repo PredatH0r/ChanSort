@@ -402,5 +402,24 @@ namespace ChanSort.Api
     }
 
     #endregion
+
+    #region SequentializeFavPos()
+    /// <summary>
+    /// Put the numbers in channel.FavIndex[i] in a sequential order, starting with 1
+    /// </summary>
+    /// <param name="channelList"></param>
+    /// <param name="favCount">Number of favorite lists (i=0..favCount-1)</param>
+    public static void SequentializeFavPos(ChannelList channelList, int favCount)
+    {     
+      for (int fav = 0; fav < favCount; fav++)
+      {
+        var list = channelList.Channels.Where(c => c.FavIndex[fav] >= 0).OrderBy(c => c.FavIndex[fav]).ToList();
+        int i = 0;
+        foreach (var channel in list)
+          channel.FavIndex[fav] = ++i;
+      }
+    }
+    #endregion
+
   }
 }

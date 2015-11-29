@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using ChanSort.Api;
 using System.Data.SQLite;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ChanSort.Loader.Hisense
 {
-  public class HisSerializer : SerializerBase
+  public class DbSerializer : SerializerBase
   {
     public override string DisplayName => "Hisense *.db Loader";
 
@@ -32,7 +33,7 @@ namespace ChanSort.Loader.Hisense
 
 
     #region ctor()
-    public HisSerializer(string inputFile) : base(inputFile)
+    public DbSerializer(string inputFile) : base(inputFile)
     {
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();
 
@@ -324,55 +325,38 @@ namespace ChanSort.Loader.Hisense
       int x = (int)((ulong)ci.RecordIndex >> 32);   // the table number is kept in the higher 32 bits
       int id = (int)(ci.RecordIndex & 0xFFFFFFFF);  // the record id is kept in the lower 32 bits
 
-      if (ci.NewProgramNr != ci.OldProgramNr)
-      {
-        if (ci.NewProgramNr >= 0)
-        {
-          cmd.CommandText = $"update svl_{x} set channel_id=(channel_id & {0xFFFC}) | @chnr, option_mask=option_mask | " + ((int) OptionMask.ChNumEdited) + " where svl_rec_id=@id";
-          cmd.Parameters.Clear();
-          cmd.Parameters.Add("@id", DbType.Int32);
-          cmd.Parameters.Add("@chnr", DbType.Int32);
-          cmd.Parameters["@id"].Value = id;
-          cmd.Parameters["@chnr"].Value = ci.NewProgramNr << 18;
-          cmd.ExecuteNonQuery();
-        }
-        else
-        {
-          cmd.CommandText = $"update svl_{x} set nw_mask=nw_mask | " + ((int)OptionMask.DeletedByUser) + " where svl_rec_id=@id";
-          cmd.Parameters.Clear();
-          cmd.Parameters.Add("@id", DbType.Int32);
-          cmd.Parameters.Add("@fav", DbType.Int32);
-          cmd.Parameters["@id"].Value = id;
-          cmd.Parameters["@fav"].Value = ((int)ci.Favorites & 0x0F) << 4;
-          cmd.ExecuteNonQuery();
-        }
-      }
-
-      if (ci.IsNameModified)
-      {
-        cmd.CommandText = $"update svl_{x} set name=@name, option_mask=option_mask|" + ((int)OptionMask.NameEdited) + " where svl_rec_id=@id";
-        cmd.Parameters.Clear();
-        cmd.Parameters.Add("@id", DbType.Int32);
-        cmd.Parameters.Add("@name", DbType.String);
-        cmd.Parameters["@id"].Value = id;
-        cmd.Parameters["@name"].Value = ci.Name;
-        cmd.ExecuteNonQuery();
-      }
-
       var resetFlags = NwMask.Fav1 | NwMask.Fav2 | NwMask.Fav3 | NwMask.Fav4 | NwMask.Lock | NwMask.Visible;
       var setFlags = (NwMask)(((int)ci.Favorites & 0x0F) << 4);
       if (ci.Lock) setFlags |= NwMask.Lock;
       if (!ci.Hidden) setFlags |= NwMask.Visible;
 
-      cmd.CommandText = $"update svl_{x} set nw_mask=(nw_mask & @resetFlags)|@setFlags where svl_rec_id=@id";
-      cmd.Parameters.Clear();
-      cmd.Parameters.Add("@id", DbType.Int32);
-      cmd.Parameters.Add("@resetFlags", DbType.Int32);
-      cmd.Parameters.Add("@setFlags", DbType.Int32);
-      cmd.Parameters["@id"].Value = id;
-      cmd.Parameters["@resetFlags"].Value = ~(int)resetFlags;
-      cmd.Parameters["@setFlags"].Value = (int)setFlags;
-      cmd.ExecuteNonQuery();
+      //if (ci.NewProgramNr >= 0)
+      {
+        cmd.CommandText = $"update svl_{x} set channel_id=(channel_id&{0xFFFC})|@chnr, name=cast(@name as varchar), " + 
+          $"option_mask=option_mask|{(int)(OptionMask.ChNumEdited|OptionMask.NameEdited)}, nw_mask=(nw_mask&@resetFlags)|@setFlags where svl_rec_id=@id";
+        cmd.Parameters.Clear();
+        cmd.Parameters.Add("@id", DbType.Int32);
+        cmd.Parameters.Add("@chnr", DbType.Int32);
+        cmd.Parameters.Add("@name", DbType.Binary);
+        cmd.Parameters.Add("@resetFlags", DbType.Int32);
+        cmd.Parameters.Add("@setFlags", DbType.Int32);
+        cmd.Parameters["@id"].Value = id;
+        cmd.Parameters["@chnr"].Value = ci.NewProgramNr << 18;
+        cmd.Parameters["@name"].Value = Encoding.BigEndianUnicode.GetBytes(ci.Name);
+        cmd.Parameters["@resetFlags"].Value = ~(int)resetFlags;
+        cmd.Parameters["@setFlags"].Value = (int)setFlags;
+        cmd.ExecuteNonQuery();
+      }
+      //else
+      //{
+      //  cmd.CommandText = $"update svl_{x} set nw_mask=nw_mask | " + ((int)OptionMask.DeletedByUser) + " where svl_rec_id=@id";
+      //  cmd.Parameters.Clear();
+      //  cmd.Parameters.Add("@id", DbType.Int32);
+      //  cmd.Parameters.Add("@fav", DbType.Int32);
+      //  cmd.Parameters["@id"].Value = id;
+      //  cmd.Parameters["@fav"].Value = ((int)ci.Favorites & 0x0F) << 4;
+      //  cmd.ExecuteNonQuery();
+      //}
     }
 
     #endregion
