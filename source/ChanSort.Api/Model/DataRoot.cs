@@ -15,11 +15,13 @@ namespace ChanSort.Api
     public IDictionary<int, Satellite> Satellites { get { return this.satellites; } }
     public IDictionary<int, Transponder> Transponder { get { return this.transponder; } }
     public IDictionary<int, LnbConfig> LnbConfig { get { return this.lnbConfig; } }
-    public ICollection<ChannelList> ChannelLists { get { return this.channelLists; } }
+    public IEnumerable<ChannelList> ChannelLists { get { return this.channelLists; } }
     public bool IsEmpty { get { return this.channelLists.Count == 0; } }
     public bool NeedsSaving { get; set; }
     public Favorites SupportedFavorites { get; set; }
     public bool SortedFavorites { get; set; }
+    public bool MixedSourceFavorites { get; set; }
+    public bool AllowGapsInFavNumbers { get; set; }
 
     public DataRoot()
     {
@@ -59,6 +61,7 @@ namespace ChanSort.Api
     public virtual void AddChannelList(ChannelList list)
     {
       this.channelLists.Add(list);
+      this.MixedSourceFavorites |= list.IsMixedSouceFavoritesList;
     }
     #endregion
 

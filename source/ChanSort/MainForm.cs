@@ -376,8 +376,6 @@ namespace ChanSort.Ui
         this.tabSubList.SelectedTabPageIndex = 0;
         this.subListIndex = 0;
       }
-      this.grpSubList.Visible = this.dataRoot.SortedFavorites;
-      this.mnuFavList.Enabled = this.dataRoot.SortedFavorites;
       this.colOutFav.OptionsColumn.AllowEdit = !this.dataRoot.SortedFavorites;
       this.colFavorites.OptionsColumn.AllowEdit = !this.dataRoot.SortedFavorites;
     }
@@ -609,11 +607,36 @@ namespace ChanSort.Ui
         if ((this.currentTvSerializer.Features.ChannelNameEdit & ChannelNameEditMode.Digital) != 0)
           src |= SignalSource.Digital;
         this.colName.OptionsColumn.AllowEdit = this.colOutName.OptionsColumn.AllowEdit = (channelList.SignalSource & src) != 0;
+
+        if (this.dataRoot.MixedSourceFavorites)
+        {
+          if (channelList.IsMixedSouceFavoritesList)
+          {
+            this.tabSubList.SelectedTabPageIndex = 1;
+            this.pageProgNr.PageVisible = false;
+            this.grpSubList.Visible = true;
+          }
+          else
+          {
+            this.grpSubList.Visible = false;
+            this.pageProgNr.PageVisible = true;
+            this.tabSubList.SelectedTabPageIndex = 0;
+          }           
+        }
+        else
+        {
+          this.pageProgNr.PageVisible = true;
+          this.grpSubList.Visible = dataRoot.SortedFavorites;
+        }
+        
+        //this.tabSubList.TabPages[0].PageVisible = !channelList.IsMixedSouceFavoritesList;
+        //this.pageProgNr.Enabled = this.pageProgNr.Visible;
       }
       else
       {
         this.gridRight.DataSource = null;
-        this.gridLeft.DataSource = null;        
+        this.gridLeft.DataSource = null;
+        this.grpSubList.Visible = false;
       }
       this.currentChannelList = channelList;
       this.editor.ChannelList = channelList;
@@ -629,6 +652,10 @@ namespace ChanSort.Ui
 
       this.UpdateInsertSlotTextBox();
       this.UpdateMenu();
+
+      this.mnuFavList.Enabled = this.grpSubList.Visible;
+      if (!this.grpSubList.Visible)
+        this.tabSubList.SelectedTabPageIndex = 0;
     }
     #endregion
 

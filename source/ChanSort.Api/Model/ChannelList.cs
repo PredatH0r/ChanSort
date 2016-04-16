@@ -30,6 +30,7 @@ namespace ChanSort.Api
     public int MaxChannelNameLength { get; set; }
     public int PresetProgramNrCount { get; private set; }
     public IList<string> VisibleColumnFieldNames;
+    public bool IsMixedSouceFavoritesList { get; set; }
 
     #region Caption
     public string Caption

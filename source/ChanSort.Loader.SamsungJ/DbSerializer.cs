@@ -28,6 +28,7 @@ namespace ChanSort.Loader.SamsungJ
       this.Features.CanDeleteChannels = true;
       this.DataRoot.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
       this.DataRoot.SortedFavorites = true;
+      this.DataRoot.AllowGapsInFavNumbers = false;
     }
     #endregion
 
