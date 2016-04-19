@@ -10,6 +10,7 @@ namespace ChanSort.Api
       public bool CleanUpChannelData { get; set; }
       public bool DeviceSettings { get; set; }
       public bool CanDeleteChannels { get; set; }
+      public bool CanSkipChannels { get; set; } = true;
       public bool CanHaveGaps { get; set; }
       public bool EncryptedFlagEdit { get; set; }
 

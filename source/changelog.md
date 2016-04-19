@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2016-04-18
+- added support for Hisense channel.db channel lists
+
 2015-11-29
 - Samsung E,F,H,J .scm file format: allow independant reordering of each 
   favorites list

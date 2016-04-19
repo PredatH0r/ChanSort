@@ -25,7 +25,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2015-11-29";
+    public const string AppVersion = "v2016-04-19";
 
     private const int MaxMruEntries = 10;
 
@@ -73,6 +73,9 @@ namespace ChanSort.Ui
     private readonly List<string> mruFiles = new List<string>();
     private DevExpress.XtraGrid.Views.Grid.ViewInfo.GridHitInfo downHit;
     private DragDropInfo dragDropInfo;
+    internal IList<ISerializerPlugin> Plugins => plugins;
+    internal DataRoot DataRoot => dataRoot;
+    internal Editor Editor => editor;
 
     #region ctor()
     public MainForm()
@@ -163,7 +166,7 @@ namespace ChanSort.Ui
     #endregion
 
     #region GetTvDataFileFilter()
-    private string GetTvDataFileFilter(out string supportedExtensions, out int numberOfFilters)
+    internal string GetTvDataFileFilter(out string supportedExtensions, out int numberOfFilters)
     {
       numberOfFilters = 0;
       StringBuilder filter = new StringBuilder();
@@ -265,7 +268,7 @@ namespace ChanSort.Ui
     #endregion
 
     #region DetectCommonFileCorruptions()
-    private bool DetectCommonFileCorruptions(string tvDataFile)
+    internal bool DetectCommonFileCorruptions(string tvDataFile)
     {
       var content = File.ReadAllBytes(tvDataFile);
       bool isAllZero = true;
@@ -383,7 +386,7 @@ namespace ChanSort.Ui
     #endregion
 
     #region GetTvFileSerializer()
-    private ISerializerPlugin GetPluginForFile(string inputFileName)
+    internal ISerializerPlugin GetPluginForFile(string inputFileName)
     {
       if (!File.Exists(inputFileName))
       {
@@ -1282,6 +1285,8 @@ namespace ChanSort.Ui
       
       foreach (GridColumn col in this.gviewRight.Columns)
         col.Visible = GetGridColumnVisibility(col, list);
+      foreach (GridColumn col in this.gviewLeft.Columns)
+        col.Visible = GetGridColumnVisibility(col, list);
 
       this.ClearRightFilter();
     }
@@ -1446,6 +1451,7 @@ namespace ChanSort.Ui
       this.miMoveUp.Visibility = visLeft;
       this.miMoveDown.Visibility = visLeft;
       this.miAddChannel.Visibility = visRight;
+      this.miSkipOn.Enabled = this.miSkipOff.Enabled = this.currentTvSerializer?.Features.CanSkipChannels ?? false;
 
       bool isLeftGridSortedByNewProgNr = this.IsLeftGridSortedByNewProgNr;
       var sel = this.gviewLeft.GetSelectedRows();
@@ -1737,7 +1743,12 @@ namespace ChanSort.Ui
 
     private void miOpenReferenceFile_ItemClick(object sender, ItemClickEventArgs e)
     {
-      this.TryExecute(() => this.ShowOpenReferenceFileDialog(false));
+      //this.TryExecute(() => this.ShowOpenReferenceFileDialog(false));
+      this.TryExecute(() =>
+      {
+        using (var form = new ReferenceListForm(this))
+          form.ShowDialog(this);
+      });
     }
 
     private void miAddFromRefList_ItemClick(object sender, ItemClickEventArgs e)

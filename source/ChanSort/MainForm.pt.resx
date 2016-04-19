@@ -65,184 +65,20 @@
   <assembly alias="DevExpress.Data.v15.2" name="DevExpress.Data.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <assembly alias="DevExpress.XtraEditors.v15.2" name="DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <assembly alias="DevExpress.Utils.v15.2" name="DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Tipo serviço</value>
-  </data>
   <data name="colOutSlot.Caption" xml:space="preserve">
     <value>Novo Pr#</value>
-  </data>
-  <data name="colOutSlot.ToolTip" xml:space="preserve">
-    <value>Posição de canal novo</value>
-  </data>
-  <data name="colOutName.Caption" xml:space="preserve">
-    <value>Nome do canal</value>
-  </data>
-  <data name="colOutFav.Caption" xml:space="preserve">
-    <value>Favoritos</value>
-  </data>
-  <data name="colOutLock.Caption" xml:space="preserve">
-    <value>Blo- queado</value>
-  </data>
-  <data name="lblHotkeyLeft.Text" xml:space="preserve">
-    <value>F3: Filtro | F4: Lista | -: para cima | +: para baixo | DEL: remover</value>
-  </data>
-  <data name="lblInsertMode.Text" xml:space="preserve">
-    <value>Modo acrescentar:</value>
-  </data>
-  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
-    <value>Antes</value>
-  </data>
-  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
-    <value>Depois</value>
-  </data>
-  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
-    <value>Comutar</value>
-  </data>
-  <data name="miFile.Caption" xml:space="preserve">
-    <value>&amp;Ficheiro</value>
   </data>
   <data name="miOpen.Caption" xml:space="preserve">
     <value>Abrir &amp;lista de canais...</value>
   </data>
-  <data name="miReload.Caption" xml:space="preserve">
-    <value>&amp;Recarregar</value>
-  </data>
-  <data name="miRestoreOriginal.Caption" xml:space="preserve">
-    <value>Repor cópia de segurança</value>
-  </data>
-  <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>Informações&amp; do ficheiro...</value>
-  </data>
-  <data name="miSave.Caption" xml:space="preserve">
-    <value>&amp;Gravar</value>
-  </data>
-  <data name="miSaveAs.Caption" xml:space="preserve">
-    <value>Gravar &amp;como...</value>
-  </data>
-  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Abrir lista de referência...</value>
-  </data>
-  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
-    <value>Gravar lista de referência...</value>
-  </data>
-  <data name="miExcelExport.Caption" xml:space="preserve">
-    <value>Exportar lista de Excel...</value>
-  </data>
-  <data name="miQuit.Caption" xml:space="preserve">
-    <value>&amp;Terminar</value>
-  </data>
-  <data name="miEdit.Caption" xml:space="preserve">
-    <value>&amp;Editar</value>
-  </data>
-  <data name="miAddChannel.Caption" xml:space="preserve">
-    <value>Aceitar &amp;canal</value>
-  </data>
-  <data name="miRemove.Caption" xml:space="preserve">
-    <value>Remover &amp;canal</value>
-  </data>
-  <data name="miRenameChannel.Caption" xml:space="preserve">
-    <value>Rebatizar canal</value>
-  </data>
-  <data name="miSort.Caption" xml:space="preserve">
-    <value>Ordenar canais alfabeticamente</value>
-  </data>
-  <data name="miRenum.Caption" xml:space="preserve">
-    <value>Renumerar &amp;canais de novo</value>
-  </data>
   <data name="mnuFavSet.Caption" xml:space="preserve">
     <value>&amp;Acrescentar favoritos</value>
   </data>
-  <data name="mnuFavUnset.Caption" xml:space="preserve">
-    <value>Remover favoritos</value>
+  <data name="grpInputList.Text" xml:space="preserve">
+    <value>Todos os canais</value>
   </data>
-  <data name="miLockOn.Caption" xml:space="preserve">
-    <value>Bloquear &amp;canais: SIM</value>
-  </data>
-  <data name="miLockOff.Caption" xml:space="preserve">
-    <value>Bloquear canais: NÃO</value>
-  </data>
-  <data name="miSkipOn.Caption" xml:space="preserve">
-    <value>Saltar &amp;canais: SIM</value>
-  </data>
-  <data name="miSkipOff.Caption" xml:space="preserve">
-    <value>Saltar canais: NÃO</value>
-  </data>
-  <data name="miHideOn.Caption" xml:space="preserve">
-    <value>Esconder &amp;canais: SIM</value>
-  </data>
-  <data name="miHideOff.Caption" xml:space="preserve">
-    <value>Esconder canais: NÃO</value>
-  </data>
-  <data name="barSubItem2.Caption" xml:space="preserve">
-    <value>Televisor</value>
-  </data>
-  <data name="miTvSettings.Caption" xml:space="preserve">
-    <value>Configurações TV...</value>
-  </data>
-  <data name="mnuOptions.Caption" xml:space="preserve">
-    <value>&amp;Configurações</value>
-  </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
-    <value>&amp;Idioma</value>
-  </data>
-  <data name="mnuCharset.Caption" xml:space="preserve">
-    <value>&amp;Tabela de caracteres</value>
-  </data>
-  <data name="mnuHelp.Caption" xml:space="preserve">
-    <value>&amp;Ajuda</value>
-  </data>
-  <data name="miAbout.Caption" xml:space="preserve">
-    <value>&amp;Sobre ChanSort...</value>
-  </data>
-  <assembly alias="DevExpress.XtraBars.v15.2" name="DevExpress.XtraBars.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
-        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
-        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
-        Xxl+0wEL
-</value>
-  </data>
-  <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
-        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
-        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
-        KphCYAEL
-</value>
-  </data>
-  <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
-        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
-        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
-        ZMgcwAEL
-</value>
-  </data>
-  <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
-        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
-        X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
-        WIeWYGkVXQEL
-</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - Editor de listas de canais para televisores Samsung, LG, Panasonic e Toshiba</value>
-  </data>
-  <data name="miMoveUp.Caption" xml:space="preserve">
-    <value>Para cima</value>
-  </data>
-  <data name="miMoveDown.Caption" xml:space="preserve">
-    <value>Para baixo</value>
+  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
+    <value>Comutar</value>
   </data>
   <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
     <value>Repor filtro</value>
@@ -258,15 +94,6 @@
   </data>
   <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
     <value>Remover canais seleccionados</value>
-  </data>
-  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
-    <value>Remover canais seleccionados</value>
-  </data>
-  <data name="lblSetProgramNr.Text" xml:space="preserve">
-    <value>Aplicar Pr#:</value>
-  </data>
-  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
-    <value>Acrescentar e definar posição de canal</value>
   </data>
   <data name="grpOutputList.Text" xml:space="preserve">
     <value>Canais ordenados</value>
@@ -316,6 +143,15 @@
   <data name="colFreqInMhz.Caption" xml:space="preserve">
     <value>Frequência (MHz)</value>
   </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>Sserviço ID</value>
+  </data>
+  <data name="colServiceType.Caption" xml:space="preserve">
+    <value>Tipo serviço ID</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Tipo serviço</value>
+  </data>
   <data name="colSatellite.Caption" xml:space="preserve">
     <value>Sátelite</value>
   </data>
@@ -328,17 +164,14 @@
   <data name="colNetworkName.Caption" xml:space="preserve">
     <value>Nome da rede</value>
   </data>
-  <data name="colServiceType.Caption" xml:space="preserve">
-    <value>Tipo serviço ID</value>
-  </data>
-  <data name="colServiceId.Caption" xml:space="preserve">
-    <value>Sserviço ID</value>
-  </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
     <value>Operador</value>
   </data>
   <data name="lblHotkeyRight.Text" xml:space="preserve">
     <value>F5: Filtro | F6: Lista | Entrada: aceitar</value>
+  </data>
+  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
+    <value>Remover canais seleccionados</value>
   </data>
   <data name="btnAddAll.Text" xml:space="preserve">
     <value>&lt;&lt; Acrescentar todos</value>
@@ -349,25 +182,192 @@
   <data name="btnAdd.ToolTip" xml:space="preserve">
     <value>Aceitar canais assinalados</value>
   </data>
-  <data name="grpInputList.Text" xml:space="preserve">
-    <value>Todos os canais</value>
+  <data name="mnuHelp.Caption" xml:space="preserve">
+    <value>&amp;Ajuda</value>
   </data>
-  <data name="pageEmpty.Text" xml:space="preserve">
-    <value>No lista de canais</value>
+  <data name="miAbout.Caption" xml:space="preserve">
+    <value>&amp;Sobre ChanSort...</value>
   </data>
-  <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Parental lock</value>
+  <data name="miMoveUp.Caption" xml:space="preserve">
+    <value>Para cima</value>
+  </data>
+  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
+    <value>Depois</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - Editor de listas de canais para televisores Samsung, LG, Panasonic e Toshiba</value>
   </data>
   <data name="btnToggleLock.ToolTip" xml:space="preserve">
     <value>Parental lock</value>
   </data>
-  <data name="colOutSkip.Caption" xml:space="preserve">
-    <value>Sal- tar</value>
+  <data name="mnuFavUnset.Caption" xml:space="preserve">
+    <value>Remover favoritos</value>
+  </data>
+  <data name="miLockOn.Caption" xml:space="preserve">
+    <value>Bloquear &amp;canais: SIM</value>
+  </data>
+  <data name="miLockOff.Caption" xml:space="preserve">
+    <value>Bloquear canais: NÃO</value>
+  </data>
+  <data name="miSkipOn.Caption" xml:space="preserve">
+    <value>Saltar &amp;canais: SIM</value>
+  </data>
+  <data name="miSkipOff.Caption" xml:space="preserve">
+    <value>Saltar canais: NÃO</value>
+  </data>
+  <data name="miHideOn.Caption" xml:space="preserve">
+    <value>Esconder &amp;canais: SIM</value>
+  </data>
+  <data name="miHideOff.Caption" xml:space="preserve">
+    <value>Esconder canais: NÃO</value>
+  </data>
+  <data name="barSubItem2.Caption" xml:space="preserve">
+    <value>Televisor</value>
+  </data>
+  <data name="miTvSettings.Caption" xml:space="preserve">
+    <value>Configurações TV...</value>
+  </data>
+  <data name="mnuOptions.Caption" xml:space="preserve">
+    <value>&amp;Configurações</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>&amp;Idioma</value>
+  </data>
+  <data name="mnuCharset.Caption" xml:space="preserve">
+    <value>&amp;Tabela de caracteres</value>
+  </data>
+  <data name="miQuit.Caption" xml:space="preserve">
+    <value>&amp;Terminar</value>
+  </data>
+  <data name="miEdit.Caption" xml:space="preserve">
+    <value>&amp;Editar</value>
+  </data>
+  <data name="miAddChannel.Caption" xml:space="preserve">
+    <value>Aceitar &amp;canal</value>
+  </data>
+  <data name="miRemove.Caption" xml:space="preserve">
+    <value>Remover &amp;canal</value>
+  </data>
+  <data name="miSort.Caption" xml:space="preserve">
+    <value>Ordenar canais alfabeticamente</value>
+  </data>
+  <data name="miRenum.Caption" xml:space="preserve">
+    <value>Renumerar &amp;canais de novo</value>
+  </data>
+  <data name="miReload.Caption" xml:space="preserve">
+    <value>&amp;Recarregar</value>
+  </data>
+  <data name="miRestoreOriginal.Caption" xml:space="preserve">
+    <value>Repor cópia de segurança</value>
+  </data>
+  <data name="miFileInformation.Caption" xml:space="preserve">
+    <value>Informações&amp; do ficheiro...</value>
+  </data>
+  <data name="miSave.Caption" xml:space="preserve">
+    <value>&amp;Gravar</value>
+  </data>
+  <data name="miSaveAs.Caption" xml:space="preserve">
+    <value>Gravar &amp;como...</value>
+  </data>
+  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
+    <value>Abrir lista de referência...</value>
+  </data>
+  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
+    <value>Gravar lista de referência...</value>
+  </data>
+  <data name="miExcelExport.Caption" xml:space="preserve">
+    <value>Exportar lista de Excel...</value>
+  </data>
+  <data name="colOutSlot.ToolTip" xml:space="preserve">
+    <value>Posição de canal novo</value>
+  </data>
+  <data name="colOutName.Caption" xml:space="preserve">
+    <value>Nome do canal</value>
+  </data>
+  <data name="colOutFav.Caption" xml:space="preserve">
+    <value>Favoritos</value>
+  </data>
+  <data name="colOutLock.Caption" xml:space="preserve">
+    <value>Blo- queado</value>
+  </data>
+  <data name="colOutLock.ToolTip" xml:space="preserve">
+    <value>Parental lock</value>
   </data>
   <data name="colOutHide.Caption" xml:space="preserve">
     <value>Esc- onder</value>
   </data>
-  <data name="colServiceTypeName.Caption" xml:space="preserve">
+  <data name="lblHotkeyLeft.Text" xml:space="preserve">
+    <value>F3: Filtro | F4: Lista | -: para cima | +: para baixo | DEL: remover</value>
+  </data>
+  <data name="miFile.Caption" xml:space="preserve">
+    <value>&amp;Ficheiro</value>
+  </data>
+  <data name="colOutSkip.Caption" xml:space="preserve">
+    <value>Sal- tar</value>
+  </data>
+  <data name="miRenameChannel.Caption" xml:space="preserve">
+    <value>Rebatizar canal</value>
+  </data>
+  <data name="miMoveDown.Caption" xml:space="preserve">
+    <value>Para baixo</value>
+  </data>
+  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
+    <value>Antes</value>
+  </data>
+  <data name="lblInsertMode.Text" xml:space="preserve">
+    <value>Modo acrescentar:</value>
+  </data>
+  <data name="pageEmpty.Text" xml:space="preserve">
+    <value>No lista de canais</value>
+  </data>
+  <data name="lblSetProgramNr.Text" xml:space="preserve">
+    <value>Aplicar Pr#:</value>
+  </data>
+  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
+    <value>Acrescentar e definar posição de canal</value>
+  </data>
+  <data name="colOutServiceType.Caption" xml:space="preserve">
     <value>Tipo serviço</value>
+  </data>
+  <assembly alias="DevExpress.XtraBars.v15.2" name="DevExpress.XtraBars.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
+        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
+        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
+        Xxl+0wEL
+</value>
+  </data>
+  <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
+        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
+        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
+        KphCYAEL
+</value>
+  </data>
+  <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
+        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
+        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
+        ZMgcwAEL
+</value>
+  </data>
+  <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
+        LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
+        X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
+        WIeWYGkVXQEL
+</value>
   </data>
 </root>

@@ -146,6 +146,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ReferenceListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReferenceListForm.Designer.cs">
+      <DependentUpon>ReferenceListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="UpdateCheck.cs" />
     <Compile Include="WaitForm1.cs">
@@ -265,6 +271,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.ru.resx" />
+    <EmbeddedResource Include="ReferenceListForm.resx">
+      <DependentUpon>ReferenceListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WaitForm1.de.resx">
       <DependentUpon>WaitForm1.cs</DependentUpon>
     </EmbeddedResource>

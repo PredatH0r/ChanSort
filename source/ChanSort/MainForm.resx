@@ -143,9 +143,6 @@
   <data name="colIndex1.Caption" xml:space="preserve">
     <value>Pr. index</value>
   </data>
-  <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Service Type</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="colOutServiceType.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -156,12 +153,6 @@
   <data name="colOutServiceType.Width" type="System.Int32, mscorlib">
     <value>45</value>
   </data>
-  <data name="colOutSlot.Caption" xml:space="preserve">
-    <value>New Pr#</value>
-  </data>
-  <data name="colOutSlot.ToolTip" xml:space="preserve">
-    <value>New program number</value>
-  </data>
   <data name="colOutSlot.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -171,9 +162,6 @@
   <data name="colOutSlot.Width" type="System.Int32, mscorlib">
     <value>50</value>
   </data>
-  <data name="colOutName.Caption" xml:space="preserve">
-    <value>Channel name</value>
-  </data>
   <data name="colOutName.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -182,9 +170,6 @@
   </data>
   <data name="colOutName.Width" type="System.Int32, mscorlib">
     <value>158</value>
-  </data>
-  <data name="colOutFav.Caption" xml:space="preserve">
-    <value>Favorites</value>
   </data>
   <data name="repositoryItemCheckedComboBoxEdit1.AutoHeight" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -209,15 +194,6 @@
   <data name="colOutFav.Width" type="System.Int32, mscorlib">
     <value>55</value>
   </data>
-  <data name="colUid1.Caption" xml:space="preserve">
-    <value>UID</value>
-  </data>
-  <data name="colOutLock.Caption" xml:space="preserve">
-    <value>Lock</value>
-  </data>
-  <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Parental lock</value>
-  </data>
   <data name="colOutLock.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -227,9 +203,6 @@
   <data name="colOutLock.Width" type="System.Int32, mscorlib">
     <value>35</value>
   </data>
-  <data name="colOutSkip.Caption" xml:space="preserve">
-    <value>Skip</value>
-  </data>
   <data name="colOutSkip.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -238,9 +211,6 @@
   </data>
   <data name="colOutSkip.Width" type="System.Int32, mscorlib">
     <value>35</value>
-  </data>
-  <data name="colOutHide.Caption" xml:space="preserve">
-    <value>Hide</value>
   </data>
   <data name="colOutHide.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -258,7 +228,7 @@
     <value>Numeric</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 404</value>
+    <value>449, 398</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -279,7 +249,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 458</value>
+    <value>2, 452</value>
   </data>
   <data name="lblHotkeyLeft.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -289,9 +259,6 @@
   </data>
   <data name="lblHotkeyLeft.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="lblHotkeyLeft.Text" xml:space="preserve">
-    <value>F3: Filter | F4: List | -: move up | +: move down | Del: remove</value>
   </data>
   <data name="&gt;&gt;lblHotkeyLeft.Name" xml:space="preserve">
     <value>lblHotkeyLeft</value>
@@ -315,7 +282,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1462, 587</value>
+    <value>1456, 581</value>
   </data>
   <data name="tabSubList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
@@ -324,10 +291,7 @@
     <value>0, 5</value>
   </data>
   <data name="pageProgNr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1451, 0</value>
-  </data>
-  <data name="pageProgNr.Text" xml:space="preserve">
-    <value>Pr#</value>
+    <value>1445, 0</value>
   </data>
   <data name="&gt;&gt;pageProgNr.Name" xml:space="preserve">
     <value>pageProgNr</value>
@@ -342,7 +306,7 @@
     <value>0</value>
   </data>
   <data name="tabSubList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1457, 22</value>
+    <value>1451, 22</value>
   </data>
   <data name="tabSubList.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -366,13 +330,10 @@
     <value>0, 83</value>
   </data>
   <data name="grpSubList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1462, 27</value>
+    <value>1456, 27</value>
   </data>
   <data name="grpSubList.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
-  </data>
-  <data name="grpSubList.Text" xml:space="preserve">
-    <value>Sub List</value>
   </data>
   <data name="grpSubList.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -395,242 +356,8 @@
   <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>475, 17</value>
   </metadata>
-  <data name="miFile.Caption" xml:space="preserve">
-    <value>&amp;File</value>
-  </data>
-  <data name="miOpen.Caption" xml:space="preserve">
-    <value>&amp;Open TV data file...</value>
-  </data>
-  <data name="miReload.Caption" xml:space="preserve">
-    <value>&amp;Reload</value>
-  </data>
-  <data name="miRestoreOriginal.Caption" xml:space="preserve">
-    <value>Restore backup</value>
-  </data>
-  <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>File &amp;information...</value>
-  </data>
-  <data name="miSave.Caption" xml:space="preserve">
-    <value>&amp;Save</value>
-  </data>
-  <data name="miSaveAs.Caption" xml:space="preserve">
-    <value>Save &amp;as...</value>
-  </data>
-  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Load reference list...</value>
-  </data>
-  <data name="miAddFromRefList.Caption" xml:space="preserve">
-    <value>Add channels from reference list...</value>
-  </data>
-  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
-    <value>Save reference list...</value>
-  </data>
-  <data name="miExcelExport.Caption" xml:space="preserve">
-    <value>Export Excel list...</value>
-  </data>
-  <data name="miPrint.Caption" xml:space="preserve">
-    <value>&amp;Print...</value>
-  </data>
-  <data name="miQuit.Caption" xml:space="preserve">
-    <value>&amp;Quit</value>
-  </data>
-  <data name="miRecentFiles.Caption" xml:space="preserve">
-    <value>Recent files</value>
-  </data>
-  <data name="miEdit.Caption" xml:space="preserve">
-    <value>&amp;Edit</value>
-  </data>
-  <data name="miAddChannel.Caption" xml:space="preserve">
-    <value>&amp;Add channels</value>
-  </data>
-  <data name="miRemove.Caption" xml:space="preserve">
-    <value>&amp;Remove channels</value>
-  </data>
-  <data name="miRenameChannel.Caption" xml:space="preserve">
-    <value>Rename channel</value>
-  </data>
-  <data name="miSort.Caption" xml:space="preserve">
-    <value>Sor&amp;t channels alphabetically</value>
-  </data>
-  <data name="miRenum.Caption" xml:space="preserve">
-    <value>Re&amp;number channels</value>
-  </data>
-  <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
-    <value>Renumber favorites by Pr#</value>
-  </data>
-  <data name="miRenumFavByPrNr.Hint" xml:space="preserve">
-    <value>Uses the same Pr# in all channel and favorites lists</value>
-  </data>
-  <data name="mnuFavSet.Caption" xml:space="preserve">
-    <value>Add to &amp;Favorites</value>
-  </data>
-  <data name="miFavASet.Caption" xml:space="preserve">
-    <value>&amp;A</value>
-  </data>
-  <data name="miFavBSet.Caption" xml:space="preserve">
-    <value>&amp;B</value>
-  </data>
-  <data name="miFavCSet.Caption" xml:space="preserve">
-    <value>&amp;C</value>
-  </data>
-  <data name="miFavDSet.Caption" xml:space="preserve">
-    <value>&amp;D</value>
-  </data>
-  <data name="miFavESet.Caption" xml:space="preserve">
-    <value>&amp;E</value>
-  </data>
-  <data name="mnuFavUnset.Caption" xml:space="preserve">
-    <value>Remove from Favorites</value>
-  </data>
-  <data name="miFavAUnset.Caption" xml:space="preserve">
-    <value>&amp;A</value>
-  </data>
-  <data name="miFavBUnset.Caption" xml:space="preserve">
-    <value>&amp;B</value>
-  </data>
-  <data name="miFavCUnset.Caption" xml:space="preserve">
-    <value>&amp;C</value>
-  </data>
-  <data name="miFavDUnset.Caption" xml:space="preserve">
-    <value>&amp;D</value>
-  </data>
-  <data name="miFavEUnset.Caption" xml:space="preserve">
-    <value>&amp;E</value>
-  </data>
-  <data name="miLockOn.Caption" xml:space="preserve">
-    <value>&amp;Lock channel: on</value>
-  </data>
-  <data name="miLockOff.Caption" xml:space="preserve">
-    <value>Lock channel: off</value>
-  </data>
-  <data name="miSkipOn.Caption" xml:space="preserve">
-    <value>&amp;Skip channel: on</value>
-  </data>
-  <data name="miSkipOff.Caption" xml:space="preserve">
-    <value>Skip channel: off</value>
-  </data>
-  <data name="miHideOn.Caption" xml:space="preserve">
-    <value>&amp;Hide channel: on</value>
-  </data>
-  <data name="miHideOff.Caption" xml:space="preserve">
-    <value>Hide channel: off</value>
-  </data>
-  <data name="barSubItem2.Caption" xml:space="preserve">
-    <value>TV-Set</value>
-  </data>
-  <data name="miTvSettings.Caption" xml:space="preserve">
-    <value>Device setting...</value>
-  </data>
-  <data name="miCleanupChannels.Caption" xml:space="preserve">
-    <value>Cleanup channel data</value>
-  </data>
-  <data name="miCleanupChannels.Hint" xml:space="preserve">
-    <value>Reorganize channel records and remove duplicates</value>
-  </data>
-  <data name="mnuOptions.Caption" xml:space="preserve">
-    <value>&amp;Settings</value>
-  </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
-    <value>&amp;Language</value>
-  </data>
-  <data name="miEnglish.Caption" xml:space="preserve">
-    <value>&amp;English</value>
-  </data>
-  <data name="miGerman.Caption" xml:space="preserve">
-    <value>&amp;Deutsch</value>
-  </data>
-  <data name="miPortuguese.Caption" xml:space="preserve">
-    <value>Português</value>
-  </data>
-  <data name="miRussian.Caption" xml:space="preserve">
-    <value>ру́сский</value>
-  </data>
-  <data name="mnuCharset.Caption" xml:space="preserve">
-    <value>&amp;Character set</value>
-  </data>
-  <data name="miCharsetForm.Caption" xml:space="preserve">
-    <value>All &amp;character sets...</value>
-  </data>
-  <data name="miIsoCharSets.Caption" xml:space="preserve">
-    <value>ISO character sets</value>
-  </data>
-  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
-    <value>Show warnings after loading file</value>
-  </data>
-  <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
-    <value>Automatically show any warnings after opening a file</value>
-  </data>
-  <data name="miAllowEditPredefinedLists.Caption" xml:space="preserve">
-    <value>Allow editing predefined lists (DANGEROUS)</value>
-  </data>
-  <data name="miAllowEditPredefinedLists.Hint" xml:space="preserve">
-    <value>Your TV may malfunction when you edit a list with predefined channel numbers</value>
-  </data>
-  <data name="mnuAccessibility.Caption" xml:space="preserve">
-    <value>&amp;Accessibility</value>
-  </data>
-  <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
-    <value>Opens a submenu for the input source selection. This menu can be directly activated with the F1 key</value>
-  </data>
-  <data name="mnuGotoChannelList.Caption" xml:space="preserve">
-    <value>Select &amp;input source</value>
-  </data>
-  <data name="mnuInputSource.Caption" xml:space="preserve">
-    <value>mnuInputSource</value>
-  </data>
-  <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
-    <value>Opens a submenu for the program of favorite list selection. This menu can be directly activated with the Shift+F1 key</value>
-  </data>
-  <data name="mnuGotoFavList.Caption" xml:space="preserve">
-    <value>Select program/&amp;favorite list</value>
-  </data>
-  <data name="mnuFavList.Caption" xml:space="preserve">
-    <value>mnuFavList</value>
-  </data>
-  <data name="miSelectFavList0.Caption" xml:space="preserve">
-    <value>Program list</value>
-  </data>
-  <data name="miSelectFavListA.Caption" xml:space="preserve">
-    <value>Favorites A</value>
-  </data>
-  <data name="miSelectFavListB.Caption" xml:space="preserve">
-    <value>Favorites B</value>
-  </data>
-  <data name="miSelectFavListC.Caption" xml:space="preserve">
-    <value>Favorites C</value>
-  </data>
-  <data name="miSelectFavListD.Caption" xml:space="preserve">
-    <value>Favorites D</value>
-  </data>
-  <data name="miSelectFavListE.Caption" xml:space="preserve">
-    <value>Favorites E</value>
-  </data>
-  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
-    <value>&amp;Left list filter</value>
-  </data>
-  <data name="miGotoLeftList.Caption" xml:space="preserve">
-    <value>Left list</value>
-  </data>
-  <data name="miRightListFilter.Caption" xml:space="preserve">
-    <value>&amp;Right list filter</value>
-  </data>
-  <data name="miGotoRightList.Caption" xml:space="preserve">
-    <value>Right list</value>
-  </data>
-  <data name="mnuHelp.Caption" xml:space="preserve">
-    <value>&amp;Help</value>
-  </data>
-  <data name="miWiki.Caption" xml:space="preserve">
-    <value>Wiki</value>
-  </data>
-  <data name="miOpenWebsite.Caption" xml:space="preserve">
-    <value>ChanSort website...</value>
-  </data>
-  <data name="miAbout.Caption" xml:space="preserve">
-    <value>&amp;About ChanSort...</value>
-  </data>
-  <data name="bar1.Text" xml:space="preserve">
-    <value>Tools</value>
+  <data name="colOutServiceType.Caption" xml:space="preserve">
+    <value>Service Type</value>
   </data>
   <assembly alias="DevExpress.XtraBars.v15.2" name="DevExpress.XtraBars.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -690,7 +417,7 @@
     <value>0, 0</value>
   </data>
   <data name="barDockControlTop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1462, 26</value>
+    <value>1456, 26</value>
   </data>
   <data name="&gt;&gt;barDockControlTop.Name" xml:space="preserve">
     <value>barDockControlTop</value>
@@ -708,10 +435,10 @@
     <value>Bottom</value>
   </data>
   <data name="barDockControlBottom.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 587</value>
+    <value>0, 581</value>
   </data>
   <data name="barDockControlBottom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1462, 0</value>
+    <value>1456, 0</value>
   </data>
   <data name="&gt;&gt;barDockControlBottom.Name" xml:space="preserve">
     <value>barDockControlBottom</value>
@@ -732,7 +459,7 @@
     <value>0, 26</value>
   </data>
   <data name="barDockControlLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 561</value>
+    <value>0, 555</value>
   </data>
   <data name="&gt;&gt;barDockControlLeft.Name" xml:space="preserve">
     <value>barDockControlLeft</value>
@@ -750,10 +477,10 @@
     <value>Right</value>
   </data>
   <data name="barDockControlRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1462, 26</value>
+    <value>1456, 26</value>
   </data>
   <data name="barDockControlRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 561</value>
+    <value>0, 555</value>
   </data>
   <data name="&gt;&gt;barDockControlRight.Name" xml:space="preserve">
     <value>barDockControlRight</value>
@@ -766,15 +493,6 @@
   </data>
   <data name="&gt;&gt;barDockControlRight.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="miMoveUp.Caption" xml:space="preserve">
-    <value>Move up</value>
-  </data>
-  <data name="miMoveDown.Caption" xml:space="preserve">
-    <value>Move down</value>
-  </data>
-  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
-    <value>swap</value>
   </data>
   <assembly alias="DevExpress.Data.v15.2" name="DevExpress.Data.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="rbInsertSwap.Properties.GlyphAlignment" type="DevExpress.Utils.HorzAlignment, DevExpress.Data.v15.2">
@@ -804,9 +522,6 @@
   <data name="rbInsertAfter.Location" type="System.Drawing.Point, System.Drawing">
     <value>185, 6</value>
   </data>
-  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
-    <value>after</value>
-  </data>
   <data name="rbInsertAfter.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 19</value>
   </data>
@@ -827,9 +542,6 @@
   </data>
   <data name="rbInsertBefore.Location" type="System.Drawing.Point, System.Drawing">
     <value>107, 6</value>
-  </data>
-  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
-    <value>before</value>
   </data>
   <data name="rbInsertBefore.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 19</value>
@@ -855,17 +567,11 @@
   <data name="cbCloseGap.Location" type="System.Drawing.Point, System.Drawing">
     <value>543, 6</value>
   </data>
-  <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
-    <value>Close gap when moving/deleting a channel</value>
-  </data>
   <data name="cbCloseGap.Size" type="System.Drawing.Size, System.Drawing">
     <value>322, 19</value>
   </data>
   <data name="cbCloseGap.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
-  </data>
-  <data name="cbCloseGap.ToolTip" xml:space="preserve">
-    <value>When active, all channels after the current one will be automatically renumbered</value>
   </data>
   <data name="&gt;&gt;cbCloseGap.Name" xml:space="preserve">
     <value>cbCloseGap</value>
@@ -888,9 +594,6 @@
   <data name="lblInsertMode.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="lblInsertMode.Text" xml:space="preserve">
-    <value>Insert mode:</value>
-  </data>
   <data name="&gt;&gt;lblInsertMode.Name" xml:space="preserve">
     <value>lblInsertMode</value>
   </data>
@@ -907,7 +610,7 @@
     <value>Top, Right</value>
   </data>
   <data name="picDonate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1284, 4</value>
+    <value>1278, 4</value>
   </data>
   <data name="picDonate.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
     <value>Transparent</value>
@@ -937,10 +640,7 @@
     <value>0, 33</value>
   </data>
   <data name="pageEmpty.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1272, 0</value>
-  </data>
-  <data name="pageEmpty.Text" xml:space="preserve">
-    <value>No channel lists</value>
+    <value>1266, 0</value>
   </data>
   <data name="&gt;&gt;pageEmpty.Name" xml:space="preserve">
     <value>pageEmpty</value>
@@ -955,7 +655,7 @@
     <value>0</value>
   </data>
   <data name="tabChannelList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1278, 22</value>
+    <value>1272, 22</value>
   </data>
   <data name="tabChannelList.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -984,12 +684,6 @@
   <data name="lblSetProgramNr.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="lblSetProgramNr.Text" xml:space="preserve">
-    <value>Set Pr#:</value>
-  </data>
-  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
-    <value>Program number for insert and set operations</value>
-  </data>
   <data name="&gt;&gt;lblSetProgramNr.Name" xml:space="preserve">
     <value>lblSetProgramNr</value>
   </data>
@@ -1007,9 +701,6 @@
   </data>
   <data name="txtSetSlot.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v15.2">
     <value>OK</value>
-  </data>
-  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
-    <value>\d{1,4}</value>
   </data>
   <data name="txtSetSlot.Properties.Mask.MaskType" type="DevExpress.XtraEditors.Mask.MaskType, DevExpress.XtraEditors.v15.2">
     <value>RegEx</value>
@@ -1039,7 +730,7 @@
     <value>0, 26</value>
   </data>
   <data name="grpTopPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1462, 57</value>
+    <value>1456, 57</value>
   </data>
   <data name="grpTopPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1058,9 +749,6 @@
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - Channel List Editor for Samsung, LG, Pansonic and Toshiba TVs</value>
   </data>
   <data name="&gt;&gt;dsChannels.Name" xml:space="preserve">
     <value>dsChannels</value>
@@ -1831,7 +1519,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>03/01/2016 12:33:44</value>
+    <value>04/19/2016 13:27:29</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1845,12 +1533,6 @@
   <data name="btnToggleLock.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
   </data>
-  <data name="btnToggleLock.Text" xml:space="preserve">
-    <value>Toggle parental lock</value>
-  </data>
-  <data name="btnToggleLock.ToolTip" xml:space="preserve">
-    <value>Parental lock</value>
-  </data>
   <data name="&gt;&gt;btnToggleLock.Name" xml:space="preserve">
     <value>btnToggleLock</value>
   </data>
@@ -1863,9 +1545,6 @@
   <data name="&gt;&gt;btnToggleLock.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
-    <value>Toggle Favorite E</value>
-  </data>
   <data name="btnToggleFavE.Location" type="System.Drawing.Point, System.Drawing">
     <value>232, 5</value>
   </data>
@@ -1874,9 +1553,6 @@
   </data>
   <data name="btnToggleFavE.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
-  </data>
-  <data name="btnToggleFavE.Text" xml:space="preserve">
-    <value>±E</value>
   </data>
   <data name="&gt;&gt;btnToggleFavE.Name" xml:space="preserve">
     <value>btnToggleFavE</value>
@@ -1890,9 +1566,6 @@
   <data name="&gt;&gt;btnToggleFavE.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
-    <value>Toggle Favorite D</value>
-  </data>
   <data name="btnToggleFavD.Location" type="System.Drawing.Point, System.Drawing">
     <value>207, 5</value>
   </data>
@@ -1901,9 +1574,6 @@
   </data>
   <data name="btnToggleFavD.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
-  </data>
-  <data name="btnToggleFavD.Text" xml:space="preserve">
-    <value>±D</value>
   </data>
   <data name="&gt;&gt;btnToggleFavD.Name" xml:space="preserve">
     <value>btnToggleFavD</value>
@@ -1917,9 +1587,6 @@
   <data name="&gt;&gt;btnToggleFavD.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
-    <value>Toggle Favorite C</value>
-  </data>
   <data name="btnToggleFavC.Location" type="System.Drawing.Point, System.Drawing">
     <value>182, 5</value>
   </data>
@@ -1928,9 +1595,6 @@
   </data>
   <data name="btnToggleFavC.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
-  </data>
-  <data name="btnToggleFavC.Text" xml:space="preserve">
-    <value>±C</value>
   </data>
   <data name="&gt;&gt;btnToggleFavC.Name" xml:space="preserve">
     <value>btnToggleFavC</value>
@@ -1944,8 +1608,542 @@
   <data name="&gt;&gt;btnToggleFavC.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="colOutSlot.Caption" xml:space="preserve">
+    <value>New Pr#</value>
+  </data>
+  <data name="miOpen.Caption" xml:space="preserve">
+    <value>&amp;Open TV data file...</value>
+  </data>
+  <data name="miPrint.Caption" xml:space="preserve">
+    <value>&amp;Print...</value>
+  </data>
+  <data name="mnuFavSet.Caption" xml:space="preserve">
+    <value>Add to &amp;Favorites</value>
+  </data>
+  <data name="mnuGotoFavList.Caption" xml:space="preserve">
+    <value>Select program/&amp;favorite list</value>
+  </data>
+  <data name="btnToggleFavD.Text" xml:space="preserve">
+    <value>±D</value>
+  </data>
+  <data name="grpInputList.Text" xml:space="preserve">
+    <value>Original channels</value>
+  </data>
+  <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
+    <value>Panel2</value>
+  </data>
+  <data name="splitContainerControl1.Text" xml:space="preserve">
+    <value>splitContainerControl1</value>
+  </data>
+  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
+    <value>swap</value>
+  </data>
+  <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
+    <value>Toggle Favorite C</value>
+  </data>
+  <data name="btnToggleFavC.Text" xml:space="preserve">
+    <value>±C</value>
+  </data>
   <data name="btnToggleFavB.AccessibleDescription" xml:space="preserve">
     <value>Toggle Favorite B</value>
+  </data>
+  <data name="btnToggleFavB.Text" xml:space="preserve">
+    <value>±B</value>
+  </data>
+  <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
+    <value>Toggle Favorite A</value>
+  </data>
+  <data name="btnToggleFavA.Text" xml:space="preserve">
+    <value>±A</value>
+  </data>
+  <data name="btnClearLeftFilter.AccessibleDescription" xml:space="preserve">
+    <value>Remove channel filter criteria from sorted channel list</value>
+  </data>
+  <data name="btnClearLeftFilter.Text" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
+    <value>Reset filter</value>
+  </data>
+  <data name="btnRenum.Text" xml:space="preserve">
+    <value>Renumber selected channels sequentially</value>
+  </data>
+  <data name="btnRenum.ToolTip" xml:space="preserve">
+    <value>Renumber selected channels</value>
+  </data>
+  <data name="btnDown.Text" xml:space="preserve">
+    <value>Move selected channel down</value>
+  </data>
+  <data name="btnDown.ToolTip" xml:space="preserve">
+    <value>Move selected channels down</value>
+  </data>
+  <data name="btnUp.Text" xml:space="preserve">
+    <value>Move selected channel up</value>
+  </data>
+  <data name="btnUp.ToolTip" xml:space="preserve">
+    <value>Move selected channels up</value>
+  </data>
+  <data name="btnRemoveLeft.Text" xml:space="preserve">
+    <value>Remove selected channels from sorted list</value>
+  </data>
+  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
+    <value>Remove selected channels</value>
+  </data>
+  <data name="grpOutputList.Text" xml:space="preserve">
+    <value>Sorted channels</value>
+  </data>
+  <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="colIndex.Caption" xml:space="preserve">
+    <value>Pr. index</value>
+  </data>
+  <data name="colSlotOld.Caption" xml:space="preserve">
+    <value>Old Pr#</value>
+  </data>
+  <data name="colSlotOld.ToolTip" xml:space="preserve">
+    <value>Old program number</value>
+  </data>
+  <data name="colSlotNew.Caption" xml:space="preserve">
+    <value>New Pr#</value>
+  </data>
+  <data name="colSlotNew.ToolTip" xml:space="preserve">
+    <value>New program number</value>
+  </data>
+  <data name="colName.Caption" xml:space="preserve">
+    <value>Channel name</value>
+  </data>
+  <data name="colShortName.Caption" xml:space="preserve">
+    <value>Short name</value>
+  </data>
+  <data name="colFavorites.Caption" xml:space="preserve">
+    <value>Favorites</value>
+  </data>
+  <data name="colLock.Caption" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="colSkip.Caption" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="colHidden.Caption" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="colEncrypted.Caption" xml:space="preserve">
+    <value>Crypt</value>
+  </data>
+  <data name="colEncrypted.ToolTip" xml:space="preserve">
+    <value>Encrypted</value>
+  </data>
+  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
+    <value>Chan/ Transp</value>
+  </data>
+  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
+    <value>Channel or transponder number</value>
+  </data>
+  <data name="colFreqInMhz.Caption" xml:space="preserve">
+    <value>Freqency (MHz)</value>
+  </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>Service ID</value>
+  </data>
+  <data name="colVideoPid.Caption" xml:space="preserve">
+    <value>Video PID</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio PID</value>
+  </data>
+  <data name="colServiceType.Caption" xml:space="preserve">
+    <value>Service Type ID</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Service Type</value>
+  </data>
+  <data name="colSatellite.Caption" xml:space="preserve">
+    <value>Satellite</value>
+  </data>
+  <data name="colNetworkId.Caption" xml:space="preserve">
+    <value>Network (ONID)</value>
+  </data>
+  <data name="colTransportStreamId.Caption" xml:space="preserve">
+    <value>TS ID</value>
+  </data>
+  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
+    <value>Transport Stream ID</value>
+  </data>
+  <data name="colSymbolRate.Caption" xml:space="preserve">
+    <value>Symbol rate</value>
+  </data>
+  <data name="colPolarity.Caption" xml:space="preserve">
+    <value>Polarity</value>
+  </data>
+  <data name="colUid.Caption" xml:space="preserve">
+    <value>Uid</value>
+  </data>
+  <data name="colNetworkName.Caption" xml:space="preserve">
+    <value>Network Name</value>
+  </data>
+  <data name="colNetworkOperator.Caption" xml:space="preserve">
+    <value>Network Operator</value>
+  </data>
+  <data name="colProvider.Caption" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="colLogicalIndex.Caption" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="colSignalSource.Caption" xml:space="preserve">
+    <value>Signal source</value>
+  </data>
+  <data name="lblHotkeyRight.Text" xml:space="preserve">
+    <value>F5: Filter | F6: List | Enter: add</value>
+  </data>
+  <data name="lblPredefinedList.Text" xml:space="preserve">
+    <value>This is a predefined list and cannot be edited.</value>
+  </data>
+  <data name="lblPredefinedList.ToolTip" xml:space="preserve">
+    <value>During the setup of your TV you selected a predefined channel list.
+Modifying such a list would cause your TV to malfunction.
+Please run a full channel scan on your TV and do not select any 
+specific provider, satellite or country lists.</value>
+  </data>
+  <data name="btnRemoveRight.Text" xml:space="preserve">
+    <value>Remove selected channels from sorted list</value>
+  </data>
+  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
+    <value>Remove selected channels from sorted list</value>
+  </data>
+  <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
+    <value>Append all currently unsorted channels at the end of the list</value>
+  </data>
+  <data name="btnAddAll.Text" xml:space="preserve">
+    <value>&lt;&lt; Add all</value>
+  </data>
+  <data name="btnAddAll.ToolTip" xml:space="preserve">
+    <value>Append all currently unsorted channels at the end of the list</value>
+  </data>
+  <data name="btnClearRightFilter.AccessibleDescription" xml:space="preserve">
+    <value>Remove channel filter criteria from complete channel list</value>
+  </data>
+  <data name="btnClearRightFilter.Text" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
+    <value>Reset filter</value>
+  </data>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>Add selected channels to sorted list</value>
+  </data>
+  <data name="btnAdd.ToolTip" xml:space="preserve">
+    <value>Add selected channels to sorted list</value>
+  </data>
+  <data name="mnuFavList.Caption" xml:space="preserve">
+    <value>mnuFavList</value>
+  </data>
+  <data name="miSelectFavList0.Caption" xml:space="preserve">
+    <value>Program list</value>
+  </data>
+  <data name="miSelectFavListA.Caption" xml:space="preserve">
+    <value>Favorites A</value>
+  </data>
+  <data name="miSelectFavListB.Caption" xml:space="preserve">
+    <value>Favorites B</value>
+  </data>
+  <data name="miSelectFavListC.Caption" xml:space="preserve">
+    <value>Favorites C</value>
+  </data>
+  <data name="miSelectFavListD.Caption" xml:space="preserve">
+    <value>Favorites D</value>
+  </data>
+  <data name="miSelectFavListE.Caption" xml:space="preserve">
+    <value>Favorites E</value>
+  </data>
+  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+    <value>&amp;Left list filter</value>
+  </data>
+  <data name="miGotoLeftList.Caption" xml:space="preserve">
+    <value>Left list</value>
+  </data>
+  <data name="miRightListFilter.Caption" xml:space="preserve">
+    <value>&amp;Right list filter</value>
+  </data>
+  <data name="miGotoRightList.Caption" xml:space="preserve">
+    <value>Right list</value>
+  </data>
+  <data name="mnuHelp.Caption" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="miWiki.Caption" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="miOpenWebsite.Caption" xml:space="preserve">
+    <value>ChanSort website...</value>
+  </data>
+  <data name="miAbout.Caption" xml:space="preserve">
+    <value>&amp;About ChanSort...</value>
+  </data>
+  <data name="bar1.Text" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="miMoveUp.Caption" xml:space="preserve">
+    <value>Move up</value>
+  </data>
+  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
+    <value>after</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - TV Channel List Editor</value>
+  </data>
+  <data name="btnToggleLock.Text" xml:space="preserve">
+    <value>Toggle parental lock</value>
+  </data>
+  <data name="btnToggleLock.ToolTip" xml:space="preserve">
+    <value>Parental lock</value>
+  </data>
+  <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
+    <value>Toggle Favorite E</value>
+  </data>
+  <data name="btnToggleFavE.Text" xml:space="preserve">
+    <value>±E</value>
+  </data>
+  <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
+    <value>Toggle Favorite D</value>
+  </data>
+  <data name="miFavASet.Caption" xml:space="preserve">
+    <value>&amp;A</value>
+  </data>
+  <data name="miFavBSet.Caption" xml:space="preserve">
+    <value>&amp;B</value>
+  </data>
+  <data name="miFavCSet.Caption" xml:space="preserve">
+    <value>&amp;C</value>
+  </data>
+  <data name="miFavDSet.Caption" xml:space="preserve">
+    <value>&amp;D</value>
+  </data>
+  <data name="miFavESet.Caption" xml:space="preserve">
+    <value>&amp;E</value>
+  </data>
+  <data name="mnuFavUnset.Caption" xml:space="preserve">
+    <value>Remove from Favorites</value>
+  </data>
+  <data name="miFavAUnset.Caption" xml:space="preserve">
+    <value>&amp;A</value>
+  </data>
+  <data name="miFavBUnset.Caption" xml:space="preserve">
+    <value>&amp;B</value>
+  </data>
+  <data name="miFavCUnset.Caption" xml:space="preserve">
+    <value>&amp;C</value>
+  </data>
+  <data name="miFavDUnset.Caption" xml:space="preserve">
+    <value>&amp;D</value>
+  </data>
+  <data name="miFavEUnset.Caption" xml:space="preserve">
+    <value>&amp;E</value>
+  </data>
+  <data name="miLockOn.Caption" xml:space="preserve">
+    <value>&amp;Lock channel: on</value>
+  </data>
+  <data name="miLockOff.Caption" xml:space="preserve">
+    <value>Lock channel: off</value>
+  </data>
+  <data name="miSkipOn.Caption" xml:space="preserve">
+    <value>&amp;Skip channel: on</value>
+  </data>
+  <data name="miSkipOff.Caption" xml:space="preserve">
+    <value>Skip channel: off</value>
+  </data>
+  <data name="miHideOn.Caption" xml:space="preserve">
+    <value>&amp;Hide channel: on</value>
+  </data>
+  <data name="miHideOff.Caption" xml:space="preserve">
+    <value>Hide channel: off</value>
+  </data>
+  <data name="barSubItem2.Caption" xml:space="preserve">
+    <value>TV-Set</value>
+  </data>
+  <data name="miTvSettings.Caption" xml:space="preserve">
+    <value>Device setting...</value>
+  </data>
+  <data name="miCleanupChannels.Caption" xml:space="preserve">
+    <value>Cleanup channel data</value>
+  </data>
+  <data name="miCleanupChannels.Hint" xml:space="preserve">
+    <value>Reorganize channel records and remove duplicates</value>
+  </data>
+  <data name="mnuOptions.Caption" xml:space="preserve">
+    <value>&amp;Settings</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>&amp;Language</value>
+  </data>
+  <data name="miEnglish.Caption" xml:space="preserve">
+    <value>&amp;English</value>
+  </data>
+  <data name="miGerman.Caption" xml:space="preserve">
+    <value>&amp;Deutsch</value>
+  </data>
+  <data name="miPortuguese.Caption" xml:space="preserve">
+    <value>Português</value>
+  </data>
+  <data name="miRussian.Caption" xml:space="preserve">
+    <value>ру́сский</value>
+  </data>
+  <data name="mnuCharset.Caption" xml:space="preserve">
+    <value>&amp;Character set</value>
+  </data>
+  <data name="miCharsetForm.Caption" xml:space="preserve">
+    <value>All &amp;character sets...</value>
+  </data>
+  <data name="miIsoCharSets.Caption" xml:space="preserve">
+    <value>ISO character sets</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
+    <value>Show warnings after loading file</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
+    <value>Automatically show any warnings after opening a file</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Caption" xml:space="preserve">
+    <value>Allow editing predefined lists (DANGEROUS)</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Hint" xml:space="preserve">
+    <value>Your TV may malfunction when you edit a list with predefined channel numbers</value>
+  </data>
+  <data name="mnuAccessibility.Caption" xml:space="preserve">
+    <value>&amp;Accessibility</value>
+  </data>
+  <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
+    <value>Opens a submenu for the input source selection. This menu can be directly activated with the F1 key</value>
+  </data>
+  <data name="mnuGotoChannelList.Caption" xml:space="preserve">
+    <value>Select &amp;input source</value>
+  </data>
+  <data name="mnuInputSource.Caption" xml:space="preserve">
+    <value>mnuInputSource</value>
+  </data>
+  <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
+    <value>Opens a submenu for the program of favorite list selection. This menu can be directly activated with the Shift+F1 key</value>
+  </data>
+  <data name="miQuit.Caption" xml:space="preserve">
+    <value>&amp;Quit</value>
+  </data>
+  <data name="miRecentFiles.Caption" xml:space="preserve">
+    <value>Recent files</value>
+  </data>
+  <data name="miEdit.Caption" xml:space="preserve">
+    <value>&amp;Edit</value>
+  </data>
+  <data name="miAddChannel.Caption" xml:space="preserve">
+    <value>&amp;Add channels</value>
+  </data>
+  <data name="miRemove.Caption" xml:space="preserve">
+    <value>&amp;Remove channels</value>
+  </data>
+  <data name="miSort.Caption" xml:space="preserve">
+    <value>Sor&amp;t channels alphabetically</value>
+  </data>
+  <data name="miRenum.Caption" xml:space="preserve">
+    <value>Re&amp;number channels</value>
+  </data>
+  <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
+    <value>Renumber favorites by Pr#</value>
+  </data>
+  <data name="miRenumFavByPrNr.Hint" xml:space="preserve">
+    <value>Uses the same Pr# in all channel and favorites lists</value>
+  </data>
+  <data name="miReload.Caption" xml:space="preserve">
+    <value>&amp;Reload</value>
+  </data>
+  <data name="miRestoreOriginal.Caption" xml:space="preserve">
+    <value>Restore backup</value>
+  </data>
+  <data name="miFileInformation.Caption" xml:space="preserve">
+    <value>File &amp;information...</value>
+  </data>
+  <data name="miSave.Caption" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="miSaveAs.Caption" xml:space="preserve">
+    <value>Save &amp;as...</value>
+  </data>
+  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
+    <value>Load reference list...</value>
+  </data>
+  <data name="miAddFromRefList.Caption" xml:space="preserve">
+    <value>Add channels from reference list...</value>
+  </data>
+  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
+    <value>Save reference list...</value>
+  </data>
+  <data name="miExcelExport.Caption" xml:space="preserve">
+    <value>Export Excel list...</value>
+  </data>
+  <data name="colOutSlot.ToolTip" xml:space="preserve">
+    <value>New program number</value>
+  </data>
+  <data name="colOutName.Caption" xml:space="preserve">
+    <value>Channel name</value>
+  </data>
+  <data name="colOutFav.Caption" xml:space="preserve">
+    <value>Favorites</value>
+  </data>
+  <data name="colUid1.Caption" xml:space="preserve">
+    <value>UID</value>
+  </data>
+  <data name="colOutLock.Caption" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="colOutLock.ToolTip" xml:space="preserve">
+    <value>Parental lock</value>
+  </data>
+  <data name="colOutHide.Caption" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="lblHotkeyLeft.Text" xml:space="preserve">
+    <value>F3: Filter | F4: List | -: move up | +: move down | Del: remove</value>
+  </data>
+  <data name="pageProgNr.Text" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="grpSubList.Text" xml:space="preserve">
+    <value>Sub List</value>
+  </data>
+  <data name="miFile.Caption" xml:space="preserve">
+    <value>&amp;File</value>
+  </data>
+  <data name="colOutSkip.Caption" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="miRenameChannel.Caption" xml:space="preserve">
+    <value>Rename channel</value>
+  </data>
+  <data name="miMoveDown.Caption" xml:space="preserve">
+    <value>Move down</value>
+  </data>
+  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
+    <value>before</value>
+  </data>
+  <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
+    <value>Close gap when moving/deleting a channel</value>
+  </data>
+  <data name="cbCloseGap.ToolTip" xml:space="preserve">
+    <value>When active, all channels after the current one will be automatically renumbered</value>
+  </data>
+  <data name="lblInsertMode.Text" xml:space="preserve">
+    <value>Insert mode:</value>
+  </data>
+  <data name="pageEmpty.Text" xml:space="preserve">
+    <value>No channel lists</value>
+  </data>
+  <data name="lblSetProgramNr.Text" xml:space="preserve">
+    <value>Set Pr#:</value>
+  </data>
+  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
+    <value>Program number for insert and set operations</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
+    <value>\d{1,4}</value>
   </data>
   <data name="btnToggleFavB.Location" type="System.Drawing.Point, System.Drawing">
     <value>157, 5</value>
@@ -1955,9 +2153,6 @@
   </data>
   <data name="btnToggleFavB.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
-  </data>
-  <data name="btnToggleFavB.Text" xml:space="preserve">
-    <value>±B</value>
   </data>
   <data name="&gt;&gt;btnToggleFavB.Name" xml:space="preserve">
     <value>btnToggleFavB</value>
@@ -1971,9 +2166,6 @@
   <data name="&gt;&gt;btnToggleFavB.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
-    <value>Toggle Favorite A</value>
-  </data>
   <data name="btnToggleFavA.Location" type="System.Drawing.Point, System.Drawing">
     <value>132, 5</value>
   </data>
@@ -1982,9 +2174,6 @@
   </data>
   <data name="btnToggleFavA.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
-  </data>
-  <data name="btnToggleFavA.Text" xml:space="preserve">
-    <value>±A</value>
   </data>
   <data name="&gt;&gt;btnToggleFavA.Name" xml:space="preserve">
     <value>btnToggleFavA</value>
@@ -1998,9 +2187,6 @@
   <data name="&gt;&gt;btnToggleFavA.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="btnClearLeftFilter.AccessibleDescription" xml:space="preserve">
-    <value>Remove channel filter criteria from sorted channel list</value>
-  </data>
   <data name="btnClearLeftFilter.Appearance.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Strikeout</value>
   </data>
@@ -2012,12 +2198,6 @@
   </data>
   <data name="btnClearLeftFilter.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
-  </data>
-  <data name="btnClearLeftFilter.Text" xml:space="preserve">
-    <value>Filter</value>
-  </data>
-  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
-    <value>Reset filter</value>
   </data>
   <data name="&gt;&gt;btnClearLeftFilter.Name" xml:space="preserve">
     <value>btnClearLeftFilter</value>
@@ -2040,12 +2220,6 @@
   <data name="btnRenum.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="btnRenum.Text" xml:space="preserve">
-    <value>Renumber selected channels sequentially</value>
-  </data>
-  <data name="btnRenum.ToolTip" xml:space="preserve">
-    <value>Renumber selected channels</value>
-  </data>
   <data name="&gt;&gt;btnRenum.Name" xml:space="preserve">
     <value>btnRenum</value>
   </data>
@@ -2066,12 +2240,6 @@
   </data>
   <data name="btnDown.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
-  </data>
-  <data name="btnDown.Text" xml:space="preserve">
-    <value>Move selected channel down</value>
-  </data>
-  <data name="btnDown.ToolTip" xml:space="preserve">
-    <value>Move selected channels down</value>
   </data>
   <data name="&gt;&gt;btnDown.Name" xml:space="preserve">
     <value>btnDown</value>
@@ -2094,12 +2262,6 @@
   <data name="btnUp.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="btnUp.Text" xml:space="preserve">
-    <value>Move selected channel up</value>
-  </data>
-  <data name="btnUp.ToolTip" xml:space="preserve">
-    <value>Move selected channels up</value>
-  </data>
   <data name="&gt;&gt;btnUp.Name" xml:space="preserve">
     <value>btnUp</value>
   </data>
@@ -2120,12 +2282,6 @@
   </data>
   <data name="btnRemoveLeft.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="btnRemoveLeft.Text" xml:space="preserve">
-    <value>Remove selected channels from sorted list</value>
-  </data>
-  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
-    <value>Remove selected channels</value>
   </data>
   <data name="&gt;&gt;btnRemoveLeft.Name" xml:space="preserve">
     <value>btnRemoveLeft</value>
@@ -2170,13 +2326,10 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>453, 477</value>
+    <value>453, 471</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="grpOutputList.Text" xml:space="preserve">
-    <value>Sorted channels</value>
   </data>
   <data name="&gt;&gt;grpOutputList.Name" xml:space="preserve">
     <value>grpOutputList</value>
@@ -2190,9 +2343,6 @@
   <data name="&gt;&gt;grpOutputList.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
   <data name="gridRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -2205,15 +2355,6 @@
   <data name="gviewRight.Appearance.HideSelectionRow.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
   </data>
-  <data name="colIndex.Caption" xml:space="preserve">
-    <value>Pr. index</value>
-  </data>
-  <data name="colSlotOld.Caption" xml:space="preserve">
-    <value>Old Pr#</value>
-  </data>
-  <data name="colSlotOld.ToolTip" xml:space="preserve">
-    <value>Old program number</value>
-  </data>
   <data name="colSlotOld.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2222,12 +2363,6 @@
   </data>
   <data name="colSlotOld.Width" type="System.Int32, mscorlib">
     <value>50</value>
-  </data>
-  <data name="colSlotNew.Caption" xml:space="preserve">
-    <value>New Pr#</value>
-  </data>
-  <data name="colSlotNew.ToolTip" xml:space="preserve">
-    <value>New program number</value>
   </data>
   <data name="colSlotNew.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2238,9 +2373,6 @@
   <data name="colSlotNew.Width" type="System.Int32, mscorlib">
     <value>45</value>
   </data>
-  <data name="colName.Caption" xml:space="preserve">
-    <value>Channel name</value>
-  </data>
   <data name="colName.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2250,17 +2382,11 @@
   <data name="colName.Width" type="System.Int32, mscorlib">
     <value>180</value>
   </data>
-  <data name="colShortName.Caption" xml:space="preserve">
-    <value>Short name</value>
-  </data>
   <data name="colShortName.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="colShortName.VisibleIndex" type="System.Int32, mscorlib">
     <value>3</value>
-  </data>
-  <data name="colFavorites.Caption" xml:space="preserve">
-    <value>Favorites</value>
   </data>
   <data name="repositoryItemCheckedComboBoxEdit2.AutoHeight" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -2283,9 +2409,6 @@
   <data name="colFavorites.Width" type="System.Int32, mscorlib">
     <value>55</value>
   </data>
-  <data name="colLock.Caption" xml:space="preserve">
-    <value>Locked</value>
-  </data>
   <data name="colLock.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2294,9 +2417,6 @@
   </data>
   <data name="colLock.Width" type="System.Int32, mscorlib">
     <value>40</value>
-  </data>
-  <data name="colSkip.Caption" xml:space="preserve">
-    <value>Skip</value>
   </data>
   <data name="colSkip.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2307,9 +2427,6 @@
   <data name="colSkip.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
-  <data name="colHidden.Caption" xml:space="preserve">
-    <value>Hide</value>
-  </data>
   <data name="colHidden.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2318,12 +2435,6 @@
   </data>
   <data name="colHidden.Width" type="System.Int32, mscorlib">
     <value>40</value>
-  </data>
-  <data name="colEncrypted.Caption" xml:space="preserve">
-    <value>Crypt</value>
-  </data>
-  <data name="colEncrypted.ToolTip" xml:space="preserve">
-    <value>Encrypted</value>
   </data>
   <data name="colEncrypted.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2334,12 +2445,6 @@
   <data name="colEncrypted.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
-  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Chan/ Transp</value>
-  </data>
-  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
-    <value>Channel or transponder number</value>
-  </data>
   <data name="colChannelOrTransponder.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2348,9 +2453,6 @@
   </data>
   <data name="colChannelOrTransponder.Width" type="System.Int32, mscorlib">
     <value>45</value>
-  </data>
-  <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Freqency (MHz)</value>
   </data>
   <data name="colFreqInMhz.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2361,9 +2463,6 @@
   <data name="colFreqInMhz.Width" type="System.Int32, mscorlib">
     <value>57</value>
   </data>
-  <data name="colServiceId.Caption" xml:space="preserve">
-    <value>Service ID</value>
-  </data>
   <data name="colServiceId.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2372,9 +2471,6 @@
   </data>
   <data name="colServiceId.Width" type="System.Int32, mscorlib">
     <value>45</value>
-  </data>
-  <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>Video PID</value>
   </data>
   <data name="colVideoPid.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2385,9 +2481,6 @@
   <data name="colVideoPid.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
-  <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Audio PID</value>
-  </data>
   <data name="colAudioPid.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2396,9 +2489,6 @@
   </data>
   <data name="colAudioPid.Width" type="System.Int32, mscorlib">
     <value>40</value>
-  </data>
-  <data name="colServiceType.Caption" xml:space="preserve">
-    <value>Service Type ID</value>
   </data>
   <data name="colServiceType.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2409,9 +2499,6 @@
   <data name="colServiceType.Width" type="System.Int32, mscorlib">
     <value>45</value>
   </data>
-  <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Service Type</value>
-  </data>
   <data name="colServiceTypeName.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2420,9 +2507,6 @@
   </data>
   <data name="colServiceTypeName.Width" type="System.Int32, mscorlib">
     <value>45</value>
-  </data>
-  <data name="colSatellite.Caption" xml:space="preserve">
-    <value>Satellite</value>
   </data>
   <data name="colSatellite.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2433,9 +2517,6 @@
   <data name="colSatellite.Width" type="System.Int32, mscorlib">
     <value>100</value>
   </data>
-  <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>Network (ONID)</value>
-  </data>
   <data name="colNetworkId.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2444,12 +2525,6 @@
   </data>
   <data name="colNetworkId.Width" type="System.Int32, mscorlib">
     <value>45</value>
-  </data>
-  <data name="colTransportStreamId.Caption" xml:space="preserve">
-    <value>TS ID</value>
-  </data>
-  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
-    <value>Transport Stream ID</value>
   </data>
   <data name="colTransportStreamId.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2460,9 +2535,6 @@
   <data name="colTransportStreamId.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
-  <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Symbol rate</value>
-  </data>
   <data name="colSymbolRate.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2472,20 +2544,11 @@
   <data name="colSymbolRate.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
-  <data name="colPolarity.Caption" xml:space="preserve">
-    <value>Polarity</value>
-  </data>
   <data name="colPolarity.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
-  <data name="colUid.Caption" xml:space="preserve">
-    <value>Uid</value>
-  </data>
   <data name="colUid.Width" type="System.Int32, mscorlib">
     <value>120</value>
-  </data>
-  <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Network Name</value>
   </data>
   <data name="colNetworkName.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2493,17 +2556,11 @@
   <data name="colNetworkName.VisibleIndex" type="System.Int32, mscorlib">
     <value>20</value>
   </data>
-  <data name="colNetworkOperator.Caption" xml:space="preserve">
-    <value>Network Operator</value>
-  </data>
   <data name="colNetworkOperator.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="colNetworkOperator.VisibleIndex" type="System.Int32, mscorlib">
     <value>21</value>
-  </data>
-  <data name="colProvider.Caption" xml:space="preserve">
-    <value>Provider</value>
   </data>
   <data name="colProvider.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2511,14 +2568,8 @@
   <data name="colProvider.VisibleIndex" type="System.Int32, mscorlib">
     <value>22</value>
   </data>
-  <data name="colLogicalIndex.Caption" xml:space="preserve">
-    <value>Order</value>
-  </data>
-  <data name="colSignalSource.Caption" xml:space="preserve">
-    <value>Signal source</value>
-  </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>999, 404</value>
+    <value>993, 398</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2539,7 +2590,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 458</value>
+    <value>2, 452</value>
   </data>
   <data name="lblHotkeyRight.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2549,9 +2600,6 @@
   </data>
   <data name="lblHotkeyRight.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="lblHotkeyRight.Text" xml:space="preserve">
-    <value>F5: Filter | F6: List | Enter: add</value>
   </data>
   <data name="&gt;&gt;lblHotkeyRight.Name" xml:space="preserve">
     <value>lblHotkeyRight</value>
@@ -2580,15 +2628,6 @@
   <data name="lblPredefinedList.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="lblPredefinedList.Text" xml:space="preserve">
-    <value>This is a predefined list and cannot be edited.</value>
-  </data>
-  <data name="lblPredefinedList.ToolTip" xml:space="preserve">
-    <value>During the setup of your TV you selected a predefined channel list.
-Modifying such a list would cause your TV to malfunction.
-Please run a full channel scan on your TV and do not select any 
-specific provider, satellite or country lists.</value>
-  </data>
   <data name="lblPredefinedList.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -2613,12 +2652,6 @@ specific provider, satellite or country lists.</value>
   <data name="btnRemoveRight.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="btnRemoveRight.Text" xml:space="preserve">
-    <value>Remove selected channels from sorted list</value>
-  </data>
-  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
-    <value>Remove selected channels from sorted list</value>
-  </data>
   <data name="&gt;&gt;btnRemoveRight.Name" xml:space="preserve">
     <value>btnRemoveRight</value>
   </data>
@@ -2631,9 +2664,6 @@ specific provider, satellite or country lists.</value>
   <data name="&gt;&gt;btnRemoveRight.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
-    <value>Append all currently unsorted channels at the end of the list</value>
-  </data>
   <data name="btnAddAll.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 5</value>
   </data>
@@ -2642,12 +2672,6 @@ specific provider, satellite or country lists.</value>
   </data>
   <data name="btnAddAll.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
-  </data>
-  <data name="btnAddAll.Text" xml:space="preserve">
-    <value>&lt;&lt; Add all</value>
-  </data>
-  <data name="btnAddAll.ToolTip" xml:space="preserve">
-    <value>Append all currently unsorted channels at the end of the list</value>
   </data>
   <data name="&gt;&gt;btnAddAll.Name" xml:space="preserve">
     <value>btnAddAll</value>
@@ -2661,9 +2685,6 @@ specific provider, satellite or country lists.</value>
   <data name="&gt;&gt;btnAddAll.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="btnClearRightFilter.AccessibleDescription" xml:space="preserve">
-    <value>Remove channel filter criteria from complete channel list</value>
-  </data>
   <data name="btnClearRightFilter.Appearance.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Strikeout</value>
   </data>
@@ -2675,12 +2696,6 @@ specific provider, satellite or country lists.</value>
   </data>
   <data name="btnClearRightFilter.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="btnClearRightFilter.Text" xml:space="preserve">
-    <value>Filter</value>
-  </data>
-  <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
-    <value>Reset filter</value>
   </data>
   <data name="&gt;&gt;btnClearRightFilter.Name" xml:space="preserve">
     <value>btnClearRightFilter</value>
@@ -2703,12 +2718,6 @@ specific provider, satellite or country lists.</value>
   <data name="btnAdd.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="btnAdd.Text" xml:space="preserve">
-    <value>Add selected channels to sorted list</value>
-  </data>
-  <data name="btnAdd.ToolTip" xml:space="preserve">
-    <value>Add selected channels to sorted list</value>
-  </data>
   <data name="&gt;&gt;btnAdd.Name" xml:space="preserve">
     <value>btnAdd</value>
   </data>
@@ -2728,7 +2737,7 @@ specific provider, satellite or country lists.</value>
     <value>2, 21</value>
   </data>
   <data name="panelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>999, 33</value>
+    <value>993, 33</value>
   </data>
   <data name="panelControl3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2752,13 +2761,10 @@ specific provider, satellite or country lists.</value>
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1003, 477</value>
+    <value>997, 471</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="grpInputList.Text" xml:space="preserve">
-    <value>Original channels</value>
   </data>
   <data name="&gt;&gt;grpInputList.Name" xml:space="preserve">
     <value>grpInputList</value>
@@ -2772,17 +2778,11 @@ specific provider, satellite or country lists.</value>
   <data name="&gt;&gt;grpInputList.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
-    <value>Panel2</value>
-  </data>
   <data name="splitContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1462, 477</value>
+    <value>1456, 471</value>
   </data>
   <data name="splitContainerControl1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
-  </data>
-  <data name="splitContainerControl1.Text" xml:space="preserve">
-    <value>splitContainerControl1</value>
   </data>
   <data name="&gt;&gt;splitContainerControl1.Name" xml:space="preserve">
     <value>splitContainerControl1</value>

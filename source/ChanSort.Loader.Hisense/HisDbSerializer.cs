@@ -1,10 +1,10 @@
-﻿using System;
+﻿//#define LOCK_LCN_LISTS
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using ChanSort.Api;
 using System.Data.SQLite;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -16,34 +16,88 @@ namespace ChanSort.Loader.Hisense
 
     #region enums and bitmasks
 
-    internal enum BroadcastType { Analog = 1, Dvb = 2 }
-    internal enum BroadcastMedium { DigTer = 1, DigCab = 2, DigSat = 3, AnaTer = 4, AnaCab = 5, AnaSat = 6 }
-    internal enum ServiceType { Tv = 1, Radio = 2, App = 3}
+    internal enum BroadcastType
+    {
+      Analog = 1,
+      Dvb = 2
+    }
+
+    internal enum BroadcastMedium
+    {
+      DigTer = 1,
+      DigCab = 2,
+      DigSat = 3,
+      AnaTer = 4,
+      AnaCab = 5,
+      AnaSat = 6
+    }
+
+    internal enum ServiceType
+    {
+      Tv = 1,
+      Radio = 2,
+      App = 3
+    }
+
     [Flags]
-    internal enum NwMask { Active = 1<<1, Visible = 1<<3, Fav1 = 1<<4, Fav2 = 1<<5, Fav3 = 1<<6, Fav4 = 1<<7, Lock = 1<<8 }
+    internal enum NwMask
+    {
+      Active = 1 << 1,
+      Visible = 1 << 3,
+      Fav1 = 1 << 4,
+      Fav2 = 1 << 5,
+      Fav3 = 1 << 6,
+      Fav4 = 1 << 7,
+      Lock = 1 << 8
+    }
+
     [Flags]
-    internal enum OptionMask { NameEdited = 1<<3, ChNumEdited = 1<<10, DeletedByUser = 1<<13 }
+    internal enum OptionMask
+    {
+      NameEdited = 1 << 3,
+      ChNumEdited = 1 << 10,
+      DeletedByUser = 1 << 13
+    }
+
     [Flags]
-    internal enum HashCode { Name = 1<<0, ChannelId = 1<<1, BroadcastType = 1<<2, TsRecId = 1<<3, ProgNum = 1<<4, DvbShortName = 1<<5, Radio = 1<<10, Encrypted = 1<<11, Tv = 1<<13 }
+    internal enum HashCode
+    {
+      Name = 1 << 0,
+      ChannelId = 1 << 1,
+      BroadcastType = 1 << 2,
+      TsRecId = 1 << 3,
+      ProgNum = 1 << 4,
+      DvbShortName = 1 << 5,
+      Radio = 1 << 10,
+      Encrypted = 1 << 11,
+      Tv = 1 << 13
+    }
+
     [Flags]
-    internal enum DvbLinkageMask { Ts = 1<<2 }
+    internal enum DvbLinkageMask
+    {
+      Ts = 1 << 2
+    }
 
     #endregion
 
     private readonly List<ChannelList> channelLists = new List<ChannelList>();
-    private readonly Dictionary<long,ChannelInfo> channelsById = new Dictionary<long, ChannelInfo>();
+    private readonly Dictionary<long, ChannelInfo> channelsById = new Dictionary<long, ChannelInfo>();
     private List<string> tableNames;
 
 
     #region ctor()
+
     public HisDbSerializer(string inputFile) : base(inputFile)
     {
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanDeleteChannels = false;
+      this.Features.CanSkipChannels = false;
+      this.Features.CanHaveGaps = true;
       this.DataRoot.SortedFavorites = true;
-      
+
       channelLists.Add(new ChannelList(SignalSource.Antenna | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Antenna"));
       channelLists.Add(new ChannelList(SignalSource.Cable | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Cable"));
       channelLists.Add(new ChannelList(SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Sat"));
@@ -57,10 +111,29 @@ namespace ChanSort.Loader.Hisense
       foreach (var list in this.channelLists)
       {
         this.DataRoot.AddChannelList(list);
-        list.VisibleColumnFieldNames = new List<string> {"Position", "OldProgramNr", "Name", "ShortName", "Favorites", "Lock", "Hidden", "Encrypted",
-          "FreqInMhz", "OriginalNetworkId", "TransportStreamId", "ServiceId", "ServiceTypeName", "NetworkName", "SymbolRate" };
+        list.VisibleColumnFieldNames = new List<string>
+        {
+          "Position",
+          "OldProgramNr",
+          "Name",
+          "ShortName",
+          "Favorites",
+          "Lock",
+          "Hidden",
+          "Encrypted",
+          "FreqInMhz",
+          "OriginalNetworkId",
+          "TransportStreamId",
+          "ServiceId",
+          "ServiceType",
+          "ServiceTypeName",
+          "NetworkName",
+          "Satellite",
+          "SymbolRate"
+        };
       }
     }
+
     #endregion
 
 
@@ -88,17 +161,21 @@ namespace ChanSort.Loader.Hisense
       if (totalCount == 0)
         MessageBox.Show(Resources.Load_NoChannelsMsg, Resources.Load_NoChannelsCaption, MessageBoxButtons.OK);
     }
+
     #endregion
 
     #region RepairCorruptedDatabaseImage()
+
     private void RepairCorruptedDatabaseImage(SQLiteCommand cmd)
     {
       cmd.CommandText = "REINDEX";
       cmd.ExecuteNonQuery();
     }
+
     #endregion
 
     #region LoadTableNames()
+
     private void LoadTableNames(SQLiteCommand cmd)
     {
       this.tableNames = new List<string>();
@@ -113,6 +190,7 @@ namespace ChanSort.Loader.Hisense
     #endregion
 
     #region LoadSatelliteData()
+
     private void LoadSatelliteData(SQLiteCommand cmd)
     {
       var regex = new Regex(@"^satl_\d$");
@@ -134,6 +212,7 @@ namespace ChanSort.Loader.Hisense
         }
       }
     }
+
     #endregion
 
     #region LoadTslData()
@@ -150,17 +229,17 @@ namespace ChanSort.Loader.Hisense
 
         this.LoadTslData(cmd, x, "tsl_#_data_ter_dig", ", freq", (t, r, i0) =>
         {
-          t.FrequencyInMhz = (decimal)r.GetInt32(i0 + 0) / 1000000;
+          t.FrequencyInMhz = (decimal) r.GetInt32(i0 + 0)/1000000;
         });
 
         this.LoadTslData(cmd, x, "tsl_#_data_ter_ana", ", freq", (t, r, i0) =>
         {
-          t.FrequencyInMhz = (decimal)r.GetInt32(i0 + 0) / 1000000;
+          t.FrequencyInMhz = (decimal) r.GetInt32(i0 + 0)/1000000;
         });
 
         this.LoadTslData(cmd, x, "tsl_#_data_cab_dig", ", freq, sym_rate", (t, r, i0) =>
         {
-          t.FrequencyInMhz = (decimal)r.GetInt32(i0 + 0) / 1000000;
+          t.FrequencyInMhz = (decimal) r.GetInt32(i0 + 0)/1000000;
           t.SymbolRate = r.GetInt32(i0 + 1);
         });
 
@@ -169,10 +248,24 @@ namespace ChanSort.Loader.Hisense
           t.FrequencyInMhz = (decimal) r.GetInt32(i0 + 0)/1000000;
         });
 
-        this.LoadTslData(cmd, x, "tsl_#_data_sat_dig", ", freq, sym_rate", (t, r, i0) =>
+        this.LoadTslData(cmd, x, "tsl_#_data_sat_dig", ", freq, sym_rate, orb_pos", (t, r, i0) =>
         {
           t.FrequencyInMhz = r.GetInt32(i0 + 0);
           t.SymbolRate = r.GetInt32(i0 + 1);
+
+          // satellite information may or may not be available in the database. if there is none, create a proxy sat records from the orbital position in the TSL data
+          if (t.Satellite == null)
+          {
+            var opos = r.GetInt32(i0 + 2);
+            var sat = this.DataRoot.Satellites.TryGet(opos);
+            if (sat == null)
+            {
+              sat = new Satellite(opos);
+              var pos = (decimal) opos/10;
+              sat.Name = pos < 0 ? (-pos).ToString("n1") + "W" : pos.ToString("n1") + "E";
+            }
+            t.Satellite = sat;
+          }
         });
       }
     }
@@ -183,13 +276,14 @@ namespace ChanSort.Loader.Hisense
         return;
 
       cmd.CommandText = $"select tsl_#.tsl_rec_id, `t_desc.on_id`, `t_desc.ts_id`, `t_ref.satl_rec_id`, `t_desc.e_bcst_medium` {joinFields} "
-        + $" from tsl_# inner join {joinTable} on {joinTable}.tsl_rec_id=tsl_#.tsl_rec_id";
+                        + $" from tsl_# inner join {joinTable} on {joinTable}.tsl_rec_id=tsl_#.tsl_rec_id";
       cmd.CommandText = cmd.CommandText.Replace("#", tableNr.ToString());
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
         {
-          var trans = new Transponder(r.GetInt32(0));
+          int id = (tableNr << 16) | r.GetInt32(0);
+          var trans = new Transponder(id);
           trans.OriginalNetworkId = r.GetInt32(1);
           trans.TransportStreamId = r.GetInt32(2);
           trans.Satellite = this.DataRoot.Satellites.TryGet(r.GetInt32(3));
@@ -200,6 +294,7 @@ namespace ChanSort.Loader.Hisense
         }
       }
     }
+
     #endregion
 
     #region LoadSvlData()
@@ -231,9 +326,11 @@ namespace ChanSort.Loader.Hisense
           if ((ci.SignalSource & SignalSource.DvbT) == SignalSource.DvbT)
             ci.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(ci.FreqInMhz).ToString();
 
-          // make the current list read-only if LCN is used
+#if LOCK_LCN_LISTS
+  // make the current list read-only if LCN is used
           if (r.GetInt32(i0 + 3) != 0)
             this.channelLists[x - 1].ReadOnly = true;
+#endif
         });
       }
     }
@@ -243,21 +340,21 @@ namespace ChanSort.Loader.Hisense
       if (!this.tableNames.Contains(joinTable.Replace("#", tableNr.ToString())))
         return;
 
-      cmd.CommandText = $"select svl_#.svl_rec_id, channel_id, svl_#.tsl_rec_id, e_serv_type, ac_name, nw_mask, prog_id, `t_desc.e_bcst_medium` {joinFields}"
-        + $" from svl_# inner join {joinTable} on {joinTable}.svl_rec_id=svl_#.svl_rec_id inner join tsl_# on tsl_#.tsl_rec_id=svl_#.tsl_rec_id";
+      cmd.CommandText = $"select svl_#.svl_rec_id, channel_id, svl_#.tsl_id, svl_#.tsl_rec_id, e_serv_type, ac_name, nw_mask, prog_id, `t_desc.e_bcst_medium` {joinFields}"
+                        + $" from svl_# inner join {joinTable} on {joinTable}.svl_rec_id=svl_#.svl_rec_id inner join tsl_# on tsl_#.tsl_rec_id=svl_#.tsl_rec_id";
       cmd.CommandText = cmd.CommandText.Replace("#", tableNr.ToString());
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
         {
-          var id = ((long)tableNr << 32) | (uint)r.GetInt32(0);
-          var prNr = (int)((uint)r.GetInt32(1)) >> 18;
-          var trans = this.DataRoot.Transponder.TryGet(r.GetInt32(2));
-          var stype = (ServiceType) r.GetInt32(3);
-          var name = r.GetString(4);
-          var nwMask = (NwMask)r.GetInt32(5);
-          var sid = r.GetInt32(6);
-          var bmedium = (BroadcastMedium)r.GetInt32(7);
+          var id = ((long) tableNr << 32) | (uint) r.GetInt32(0);
+          var prNr = (int) ((uint) r.GetInt32(1)) >> 18;
+          var trans = this.DataRoot.Transponder.TryGet((r.GetInt32(2) << 16) | r.GetInt32(3));
+          var stype = (ServiceType) r.GetInt32(4);
+          var name = r.GetString(5);
+          var nwMask = (NwMask) r.GetInt32(6);
+          var sid = r.GetInt32(7);
+          var bmedium = (BroadcastMedium) r.GetInt32(8);
 
           var ssource = DetermineSignalSource(bmedium, stype);
           var ci = new ChannelInfo(ssource, id, prNr, name);
@@ -276,7 +373,7 @@ namespace ChanSort.Loader.Hisense
           //ci.Skip = (nwMask & NwMask.Active) == 0;
           ci.Lock = (nwMask & NwMask.Lock) != 0;
           ci.Hidden = (nwMask & NwMask.Visible) == 0;
-          ci.Favorites |= (Favorites) ((int)(nwMask & (NwMask.Fav1 | NwMask.Fav2 | NwMask.Fav3 | NwMask.Fav4)) >> 4);
+          ci.Favorites |= (Favorites) ((int) (nwMask & (NwMask.Fav1 | NwMask.Fav2 | NwMask.Fav3 | NwMask.Fav4)) >> 4);
 
           if (stype == ServiceType.Radio)
             ci.ServiceTypeName = "Radio";
@@ -285,7 +382,7 @@ namespace ChanSort.Loader.Hisense
           else if (stype == ServiceType.App)
             ci.ServiceTypeName = "Data";
 
-          enhanceChannelInfo(ci, r, 8);
+          enhanceChannelInfo(ci, r, 9);
 
           var list = this.channelLists[tableNr - 1];
           this.DataRoot.AddChannel(list, ci);
@@ -296,9 +393,11 @@ namespace ChanSort.Loader.Hisense
         }
       }
     }
+
     #endregion
 
     #region LoadFavorites()
+
     private void LoadFavorites(SQLiteCommand cmd)
     {
       for (int i = 1; i <= 4; i++)
@@ -310,7 +409,7 @@ namespace ChanSort.Loader.Hisense
         {
           while (r.Read())
           {
-            var id = ((long)r.GetInt32(0) << 32) | (uint)r.GetInt32(1);
+            var id = ((long) r.GetInt32(0) << 32) | (uint) r.GetInt32(1);
             var ci = this.channelsById.TryGet(id);
             if (ci != null)
               ci.FavIndex[i - 1] = int.Parse(r.GetString(2));
@@ -318,9 +417,11 @@ namespace ChanSort.Loader.Hisense
         }
       }
     }
+
     #endregion
 
     #region DetermineSignalSource()
+
     private static SignalSource DetermineSignalSource(BroadcastMedium bmedium, ServiceType stype)
     {
       SignalSource ssource = 0;
@@ -360,9 +461,13 @@ namespace ChanSort.Loader.Hisense
           try
           {
             this.CreateFavTables(cmd);
-
+#if !LOCK_LCN_LISTS
+            this.ResetLcn(cmd);
+#endif
             foreach (var list in this.DataRoot.ChannelLists)
             {
+              if (list.ReadOnly)
+                continue;
               foreach (var ci in list.Channels)
                 this.UpdateChannel(cmd, ci);
             }
@@ -376,11 +481,13 @@ namespace ChanSort.Loader.Hisense
         }
       }
     }
+
     #endregion
 
     #region CreateFavTables()
+
     private void CreateFavTables(SQLiteCommand cmd)
-    {      
+    {
       for (int i = 1; i <= 4; i++)
       {
         if (!this.tableNames.Contains("fav_" + i))
@@ -391,21 +498,39 @@ namespace ChanSort.Loader.Hisense
         }
       }
     }
+
+    #endregion
+
+    #region ResetLcn()
+
+    private void ResetLcn(SQLiteCommand cmd)
+    {
+      var regex = new Regex(@"^svl_\d_data_dvb$");
+      foreach (var table in this.tableNames)
+      {
+        if (!regex.IsMatch(table))
+          continue;
+        cmd.CommandText = "update " + table + " set cur_lcn=0, original_lcn=0, lcn_idx=0";
+        cmd.ExecuteNonQuery();
+      }
+    }
+
     #endregion
 
     #region UpdateChannel()
+
     private void UpdateChannel(SQLiteCommand cmd, ChannelInfo ci)
     {
-      int x = (int)((ulong)ci.RecordIndex >> 32);   // the table number is kept in the higher 32 bits
-      int id = (int)(ci.RecordIndex & 0xFFFFFFFF);  // the record id is kept in the lower 32 bits
+      int x = (int) ((ulong) ci.RecordIndex >> 32); // the table number is kept in the higher 32 bits
+      int id = (int) (ci.RecordIndex & 0xFFFFFFFF); // the record id is kept in the lower 32 bits
 
       var resetFlags = NwMask.Fav1 | NwMask.Fav2 | NwMask.Fav3 | NwMask.Fav4 | NwMask.Lock | NwMask.Visible;
-      var setFlags = (NwMask)(((int)ci.Favorites & 0x0F) << 4);
+      var setFlags = (NwMask) (((int) ci.Favorites & 0x0F) << 4);
       if (ci.Lock) setFlags |= NwMask.Lock;
       if (!ci.Hidden && ci.NewProgramNr >= 0) setFlags |= NwMask.Visible;
 
-      cmd.CommandText = $"update svl_{x} set channel_id=(channel_id&{0xFFFC})|@chnr, ac_name=@name, " + 
-        $"option_mask=option_mask|{(int)(OptionMask.ChNumEdited|OptionMask.NameEdited)}, nw_mask=(nw_mask&@resetFlags)|@setFlags where svl_rec_id=@id";
+      cmd.CommandText = $"update svl_{x} set channel_id=(channel_id&{0xFFFC})|@chnr, ac_name=@name, " +
+                        $"option_mask=option_mask|{(int) (OptionMask.ChNumEdited | OptionMask.NameEdited)}, nw_mask=(nw_mask&@resetFlags)|@setFlags where svl_rec_id=@id";
       cmd.Parameters.Clear();
       cmd.Parameters.Add("@id", DbType.Int32);
       cmd.Parameters.Add("@chnr", DbType.Int32);
@@ -415,8 +540,8 @@ namespace ChanSort.Loader.Hisense
       cmd.Parameters["@id"].Value = id;
       cmd.Parameters["@chnr"].Value = ci.NewProgramNr << 18;
       cmd.Parameters["@name"].Value = ci.Name;
-      cmd.Parameters["@resetFlags"].Value = ~(int)resetFlags;
-      cmd.Parameters["@setFlags"].Value = (int)setFlags;
+      cmd.Parameters["@resetFlags"].Value = ~(int) resetFlags;
+      cmd.Parameters["@setFlags"].Value = (int) setFlags;
       cmd.ExecuteNonQuery();
 
       for (int i = 0; i < 4; i++)
