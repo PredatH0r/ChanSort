@@ -200,7 +200,7 @@ namespace ChanSort.Api
       foreach (var channelList in this.DataRoot.ChannelLists)
       {
         foreach (var channel in channelList.Channels)
-          channel.SetPosition(this.SubListIndex, -1);
+          channel.SetPosition(0, -1);
       }
 
       StringBuilder log = new StringBuilder();
@@ -212,47 +212,76 @@ namespace ChanSort.Api
           log.AppendFormat("Skipped reference list {0}\r\n", refList.ShortCaption);
           continue;
         }
-        foreach (var refChannel in refList.Channels)
+        ApplyReferenceList(refDataRoot, refList, tvList);
+      }
+    }
+
+    public void ApplyReferenceList(DataRoot refDataRoot, ChannelList refList, ChannelList tvList, bool addProxyChannels = true, int positionOffset = 0, Predicate<ChannelInfo> chanFilter = null)
+    {
+      foreach (var refChannel in refList.Channels)
+      {
+        if (!(chanFilter?.Invoke(refChannel) ?? true))
+          continue;
+
+        var tvChannels = tvList.GetChannelByUid(refChannel.Uid);
+        if (tvChannels.Count == 0 && !string.IsNullOrWhiteSpace(refChannel.Name))
+          tvChannels = tvList.GetChannelByName(refChannel.Name).ToList();
+        ChannelInfo tvChannel = tvChannels.FirstOrDefault(c => c.GetPosition(0) == -1);
+        if (tvChannel == null && tvChannels.Count > 0)
+          tvChannel = tvChannels[0];
+
+        if (tvChannel != null)
         {
-          var tvChannels = tvList.GetChannelByUid(refChannel.Uid);
-          ChannelInfo tvChannel = tvChannels.FirstOrDefault(c => c.GetPosition(this.SubListIndex) == -1);
-          if (tvChannel != null)
+          if (!(chanFilter?.Invoke(tvChannel) ?? true))
+            continue;
+
+          var curChans = tvList.GetChannelByNewProgNr(refChannel.OldProgramNr + positionOffset);
+          foreach (var chan in curChans)
+            chan.NewProgramNr = -1;
+
+          tvChannel.SetPosition(0, refChannel.OldProgramNr + positionOffset);
+          tvChannel.Skip = refChannel.Skip;
+          tvChannel.Lock = refChannel.Lock;
+          tvChannel.Hidden = refChannel.Hidden;
+          tvChannel.IsDeleted = refChannel.IsDeleted;
+          if ((tvChannel.SignalSource & SignalSource.Analog) != 0 && !string.IsNullOrEmpty(refChannel.Name))
           {
-            tvChannel.SetPosition(this.SubListIndex, refChannel.OldProgramNr);
-            tvChannel.Favorites = refChannel.Favorites & DataRoot.SupportedFavorites;
-            tvChannel.Skip = refChannel.Skip;
-            tvChannel.Lock = refChannel.Lock;
-            tvChannel.Hidden = refChannel.Hidden;
-            tvChannel.IsDeleted = refChannel.IsDeleted;
-            if ((tvChannel.SignalSource & SignalSource.Analog) != 0)
-            {
-              tvChannel.Name = refChannel.Name;
-              tvChannel.IsNameModified = true;
-            }
-            if (this.DataRoot.SortedFavorites)
-            {
-              if (refDataRoot.SortedFavorites)
-              {
-                var c = Math.Min(refChannel.FavIndex.Count, tvChannel.FavIndex.Count);
-                for (int i = 0; i < c; i++)
-                  tvChannel.FavIndex[i] = refChannel.FavIndex[i];
-              }
-              else
-              {
-                this.ApplyPrNrToFavLists(tvChannel);
-              }               
-            }
+            tvChannel.Name = refChannel.Name;
+            tvChannel.IsNameModified = true;
           }
-          else
-          {
-            tvChannel = new ChannelInfo(refChannel.SignalSource, refChannel.Uid, refChannel.OldProgramNr,
-                                        refChannel.Name);
-            tvList.AddChannel(tvChannel);
-          }
+
+          ApplyFavorites(refDataRoot, refChannel, tvChannel);
+        }
+        else if (addProxyChannels)
+        {
+          tvChannel = new ChannelInfo(refChannel.SignalSource, refChannel.Uid, refChannel.OldProgramNr, refChannel.Name);
+          tvList.AddChannel(tvChannel);
         }
       }
     }
 
+    private void ApplyFavorites(DataRoot refDataRoot, ChannelInfo refChannel, ChannelInfo tvChannel)
+    {
+      if (this.DataRoot.SortedFavorites)
+      {
+        if (!this.DataRoot.MixedSourceFavorites || refDataRoot.MixedSourceFavorites)
+        {
+          tvChannel.Favorites = refChannel.Favorites & DataRoot.SupportedFavorites;
+          if (refDataRoot.SortedFavorites)
+          {
+            var c = Math.Min(refChannel.FavIndex.Count, tvChannel.FavIndex.Count);
+            for (int i = 0; i < c; i++)
+              tvChannel.FavIndex[i] = refChannel.FavIndex[i];
+          }
+          else
+            this.ApplyPrNrToFavLists(tvChannel);
+        }
+      }
+      else
+      {
+        tvChannel.Favorites = refChannel.Favorites & DataRoot.SupportedFavorites;
+      }
+    }
 
     #endregion
 

@@ -521,6 +521,10 @@ namespace ChanSort.Loader.Hisense
 
     private void UpdateChannel(SQLiteCommand cmd, ChannelInfo ci)
     {
+      //return;
+      if (ci.RecordIndex < 0) // skip reference list proxy channels
+        return; 
+
       int x = (int) ((ulong) ci.RecordIndex >> 32); // the table number is kept in the higher 32 bits
       int id = (int) (ci.RecordIndex & 0xFFFFFFFF); // the record id is kept in the lower 32 bits
 
@@ -529,8 +533,12 @@ namespace ChanSort.Loader.Hisense
       if (ci.Lock) setFlags |= NwMask.Lock;
       if (!ci.Hidden && ci.NewProgramNr >= 0) setFlags |= NwMask.Visible;
 
-      cmd.CommandText = $"update svl_{x} set channel_id=(channel_id&{0xFFFC})|@chnr, ac_name=@name, " +
-                        $"option_mask=option_mask|{(int) (OptionMask.ChNumEdited | OptionMask.NameEdited)}, nw_mask=(nw_mask&@resetFlags)|@setFlags where svl_rec_id=@id";
+      cmd.CommandText = $"update svl_{x} set channel_id=(channel_id&{0x3FFFF})|(@chnr << 18)" +
+                        ", ch_id_txt=@chnr || '   0'" +
+                        ", ac_name=@name" +
+                        $", option_mask=option_mask|{(int) (OptionMask.ChNumEdited | OptionMask.NameEdited)}" +
+                        ", nw_mask=(nw_mask&@resetFlags)|@setFlags" +
+                        " where svl_rec_id=@id";
       cmd.Parameters.Clear();
       cmd.Parameters.Add("@id", DbType.Int32);
       cmd.Parameters.Add("@chnr", DbType.Int32);
@@ -538,7 +546,7 @@ namespace ChanSort.Loader.Hisense
       cmd.Parameters.Add("@resetFlags", DbType.Int32);
       cmd.Parameters.Add("@setFlags", DbType.Int32);
       cmd.Parameters["@id"].Value = id;
-      cmd.Parameters["@chnr"].Value = ci.NewProgramNr << 18;
+      cmd.Parameters["@chnr"].Value = ci.NewProgramNr;
       cmd.Parameters["@name"].Value = ci.Name;
       cmd.Parameters["@resetFlags"].Value = ~(int) resetFlags;
       cmd.Parameters["@setFlags"].Value = (int) setFlags;

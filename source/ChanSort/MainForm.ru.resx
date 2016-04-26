@@ -303,9 +303,6 @@
   <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
     <value>после</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - редактор списка каналов для телевизоров Samsung, LG, Pansonic и Toshiba</value>
-  </data>
   <data name="btnToggleLock.ToolTip" xml:space="preserve">
     <value>Родительский контроль</value>
   </data>
@@ -461,6 +458,9 @@
   </data>
   <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Номер программы для добавления и настройки операций</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - редактор списка каналов для телевизоров Samsung, LG, Pansonic и Toshiba</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
     <value>Тип сервиса</value>

@@ -76,6 +76,7 @@ namespace ChanSort.Ui
     internal IList<ISerializerPlugin> Plugins => plugins;
     internal DataRoot DataRoot => dataRoot;
     internal Editor Editor => editor;
+    internal ChannelList CurrentChannelList => currentChannelList;
 
     #region ctor()
     public MainForm()
@@ -1548,6 +1549,12 @@ namespace ChanSort.Ui
     #endregion
 
     #region RefreshGrid()
+
+    internal void RefreshGrids()
+    {
+      RefreshGrid(this.gviewLeft, this.gviewRight);
+    }
+
     private void RefreshGrid(params GridView[] grids)
     {
       foreach (var grid in grids)

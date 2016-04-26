@@ -1890,12 +1890,6 @@ specific provider, satellite or country lists.</value>
   <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
     <value>after</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - TV Channel List Editor</value>
-  </data>
-  <data name="btnToggleLock.Text" xml:space="preserve">
-    <value>Toggle parental lock</value>
-  </data>
   <data name="btnToggleLock.ToolTip" xml:space="preserve">
     <value>Parental lock</value>
   </data>
@@ -2144,6 +2138,12 @@ specific provider, satellite or country lists.</value>
   </data>
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - TV Channel List Editor</value>
+  </data>
+  <data name="btnToggleLock.Text" xml:space="preserve">
+    <value>Toggle parental lock</value>
   </data>
   <data name="btnToggleFavB.Location" type="System.Drawing.Point, System.Drawing">
     <value>157, 5</value>

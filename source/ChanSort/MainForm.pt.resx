@@ -194,9 +194,6 @@
   <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
     <value>Depois</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - Editor de listas de canais para televisores Samsung, LG, Panasonic e Toshiba</value>
-  </data>
   <data name="btnToggleLock.ToolTip" xml:space="preserve">
     <value>Parental lock</value>
   </data>
@@ -325,6 +322,9 @@
   </data>
   <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Acrescentar e definar posição de canal</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - Editor de listas de canais para televisores Samsung, LG, Panasonic e Toshiba</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
     <value>Tipo serviço</value>
