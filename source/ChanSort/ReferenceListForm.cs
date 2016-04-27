@@ -157,7 +157,7 @@ namespace ChanSort.Ui
       this.comboSource.Properties.Items.Clear();
       foreach (var list in serializer.DataRoot.ChannelLists)
       {
-        if (!list.IsMixedSouceFavoritesList && list.Channels.Count > 0)
+        if (!list.IsMixedSourceFavoritesList && list.Channels.Count > 0)
           this.comboSource.Properties.Items.Add(list);
       }
 
@@ -165,7 +165,7 @@ namespace ChanSort.Ui
       this.comboTarget.Properties.Items.Clear();
       foreach (var list in main.DataRoot.ChannelLists)
       {
-        if (!list.IsMixedSouceFavoritesList && list.Channels.Count > 0)
+        if (!list.IsMixedSourceFavoritesList && list.Channels.Count > 0)
         {
           this.comboTarget.Properties.Items.Add(list);
           if (main.CurrentChannelList == list)

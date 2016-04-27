@@ -13,7 +13,7 @@ namespace ChanSort.Loader.Hisense
   public class HisDbSerializerPlugin : ISerializerPlugin
   {
     public string PluginName => "Hisense *.db";
-    public string FileFilter => "channel.db";
+    public string FileFilter => "channel*.db";
 
 #region CreateSerializer()
     public SerializerBase CreateSerializer(string inputFile)

@@ -599,9 +599,13 @@ namespace ChanSort.Ui
     {
       if (this.currentChannelList != null)
         this.SaveInputGridLayout(this.currentChannelList.SignalSource);
+
+      this.currentChannelList = channelList;
+      this.editor.ChannelList = channelList;
+
       if (channelList != null)
       {
-        this.LoadInputGridLayout(channelList);
+        this.LoadInputGridLayout();
         this.gridRight.DataSource = channelList.Channels;
         this.gridLeft.DataSource = channelList.Channels;
 
@@ -614,7 +618,7 @@ namespace ChanSort.Ui
 
         if (this.dataRoot.MixedSourceFavorites)
         {
-          if (channelList.IsMixedSouceFavoritesList)
+          if (channelList.IsMixedSourceFavoritesList)
           {
             this.tabSubList.SelectedTabPageIndex = 1;
             this.pageProgNr.PageVisible = false;
@@ -633,7 +637,7 @@ namespace ChanSort.Ui
           this.grpSubList.Visible = dataRoot.SortedFavorites;
         }
         
-        //this.tabSubList.TabPages[0].PageVisible = !channelList.IsMixedSouceFavoritesList;
+        //this.tabSubList.TabPages[0].PageVisible = !channelList.IsMixedSourceFavoritesList;
         //this.pageProgNr.Enabled = this.pageProgNr.Visible;
       }
       else
@@ -642,8 +646,6 @@ namespace ChanSort.Ui
         this.gridLeft.DataSource = null;
         this.grpSubList.Visible = false;
       }
-      this.currentChannelList = channelList;
-      this.editor.ChannelList = channelList;
 
       if (gviewRight.IsValidRowHandle(0))
         this.SelectFocusedRow(this.gviewRight, 0);
@@ -867,6 +869,17 @@ namespace ChanSort.Ui
             File.Copy(currentTvFile, bakFile);
         }
         this.currentTvSerializer.Save(this.currentTvFile);
+
+        // after saving old numbers match the new numbers
+        foreach (var list in this.dataRoot.ChannelLists)
+        {
+          foreach (var chan in list.Channels)
+          {
+            chan.OldProgramNr = chan.NewProgramNr;
+            chan.OldFavIndex.Clear();
+            chan.OldFavIndex.AddRange(chan.FavIndex);
+          }
+        }
       }
       finally
       {
@@ -1024,11 +1037,15 @@ namespace ChanSort.Ui
       int maxNr = this.currentChannelList.InsertProgramNumber;
       foreach (var channel in this.currentChannelList.Channels)
         maxNr = Math.Max(maxNr, channel.GetPosition(this.subListIndex));
-      foreach (var channel in this.currentChannelList.Channels)
+
+      var max = this.gviewRight.RowCount;
+      for (int handle = 0; handle<max; handle++)
       {
-        if (channel.GetPosition(this.subListIndex) == -1 && !channel.IsDeleted)
+        var channel = (ChannelInfo) this.gviewRight.GetRow(handle);
+        if (channel != null && channel.GetPosition(this.subListIndex) == -1 && !channel.IsDeleted)
           channel.SetPosition(this.subListIndex, maxNr++);
       }
+
       this.gviewRight.EndDataUpdate();
       this.gviewLeft.EndDataUpdate();
     }
@@ -1090,7 +1107,7 @@ namespace ChanSort.Ui
         this.splitContainerControl1.SplitterPosition = width;
       this.SelectLanguageMenuItem();
 
-      this.SetGridLayout(this.gviewLeft, Settings.Default.OutputListLayout);
+      //this.SetGridLayout(this.gviewLeft, Settings.Default.OutputListLayout);
 
       this.miShowWarningsAfterLoad.Checked = Settings.Default.ShowWarningsAfterLoading;
       this.cbCloseGap.Checked = Settings.Default.CloseGaps;
@@ -1266,13 +1283,18 @@ namespace ChanSort.Ui
       this.gviewRight.BeginSort();
       this.gviewRight.ClearColumnsFilter();
       this.colSlotOld.FilterInfo = new ColumnFilterInfo("[OldProgramNr]<>-1");
+      if (this.subListIndex > 0)
+        this.colPrNr.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>-1");
       this.gviewRight.EndSort();
     }
     #endregion
 
     #region LoadInputGridLayout()
-    private void LoadInputGridLayout(ChannelList list)
+    private void LoadInputGridLayout()
     {
+#if false
+      // code disabled because it causes unpredictable column order when working with different file formats which may of may not show columns
+
       string newLayout;
       var newSource = list.SignalSource;
       if ((newSource & SignalSource.Analog) != 0)
@@ -1283,13 +1305,19 @@ namespace ChanSort.Ui
         newLayout = Settings.Default.InputGridLayoutDvbCT;
       if (!string.IsNullOrEmpty(newLayout))
         this.SetGridLayout(this.gviewRight, newLayout);
-      
-      foreach (GridColumn col in this.gviewRight.Columns)
-        col.Visible = GetGridColumnVisibility(col, list);
-      foreach (GridColumn col in this.gviewLeft.Columns)
-        col.Visible = GetGridColumnVisibility(col, list);
-
+#endif
+      this.ShowGridColumns(this.gviewLeft);
+      this.ShowGridColumns(this.gviewRight);
       this.ClearRightFilter();
+    }
+    #endregion
+
+    #region ShowGridColumns()
+    private void ShowGridColumns(GridView gview)
+    {
+      int visIndex = 0;
+      foreach (GridColumn col in gview.Columns)
+        col.VisibleIndex = GetGridColumnVisibility(col) ? visIndex++ : -1;
     }
     #endregion
 
@@ -1308,13 +1336,16 @@ namespace ChanSort.Ui
 
     #region GetGridColumnVisibility()
 
-    private bool GetGridColumnVisibility(GridColumn col, ChannelList list)
+    private bool GetGridColumnVisibility(GridColumn col)
     {
+      var list = this.currentChannelList;
       var filter = list.VisibleColumnFieldNames;
       if (filter != null && !filter.Contains(col.FieldName))
         return false;
 
       var source = list.SignalSource;
+      if (col == this.colSource) return list.IsMixedSourceFavoritesList;
+      if (col == this.colPrNr) return this.subListIndex > 0;
       if (col == this.colChannelOrTransponder) return (source & SignalSource.Sat) == 0;
       if (col == this.colShortName) return (source & SignalSource.Digital) != 0;
       if (col == this.colEncrypted) return (source & SignalSource.Digital) != 0;
@@ -2020,14 +2051,16 @@ namespace ChanSort.Ui
     private void tabSubList_SelectedPageChanged(object sender, TabPageChangedEventArgs e)
     {
       this.subListIndex = this.tabSubList.SelectedTabPageIndex;
+      this.ShowGridColumns(this.gviewRight);
+
       this.editor.SubListIndex = this.subListIndex;
       this.gviewLeft.BeginSort();
       this.gviewLeft.EndSort();
       this.gviewRight.BeginSort();
       if (this.subListIndex > 0)
-        this.colSlotNew.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>-1");
+        this.colPrNr.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>-1");
       else
-        this.colSlotNew.ClearFilter();     
+        this.colPrNr.ClearFilter();     
       this.gviewRight.EndSort();
     }
     #endregion
@@ -2038,6 +2071,8 @@ namespace ChanSort.Ui
       var channel = (ChannelInfo) e.Row;
       if (e.Column.FieldName == "Position")
         e.Value = channel.GetPosition(this.subListIndex);
+      else if (e.Column.FieldName == "OldPosition")
+        e.Value = channel.GetOldPosition(this.subListIndex);
     }
     #endregion
 
@@ -2407,7 +2442,7 @@ namespace ChanSort.Ui
     #region gviewRight_CustomColumnDisplayText
     private void gviewRight_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
     {
-      if (e.Column == this.colSlotNew)
+      if (e.Column == this.colSlotNew || e.Column == this.colSlotOld || e.Column == this.colPrNr)
       {
         if (!(e.Value is int)) return;
         if ((int) e.Value == -1)

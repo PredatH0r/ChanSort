@@ -23,10 +23,7 @@ namespace ChanSort.Api
       int progNr = this.ChannelList.InsertProgramNumber;
       int relativeChannelNumber = 0;
       int progNrCopy = progNr; // prevent "access to modified closure" warning
-      foreach (
-        var channel in
-          this.ChannelList.Channels.Where(c => c.GetPosition(this.SubListIndex) >= progNrCopy)
-              .OrderBy(c => c.GetPosition(this.SubListIndex)))
+      foreach (var channel in this.ChannelList.Channels.Where(c => c.GetPosition(this.SubListIndex) >= progNrCopy).OrderBy(c => c.GetPosition(this.SubListIndex)))
       {
         var curPos = channel.GetPosition(this.SubListIndex);
         int gap = count - (curPos - progNr - relativeChannelNumber);

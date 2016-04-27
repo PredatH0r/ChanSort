@@ -645,10 +645,7 @@ namespace ChanSort.Loader.Samsung
     private void WriteChannels(ChannelList list, byte[] fileContent, FileStream stream)
     {
       foreach (var channel in list.Channels)
-      {
         channel.UpdateRawData();
-        channel.OldProgramNr = channel.NewProgramNr;
-      }
 
       stream.Write(fileContent, 0, fileContent.Length);
     }

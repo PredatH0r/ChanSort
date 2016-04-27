@@ -17,6 +17,7 @@ namespace ChanSort.Api
 
     public virtual bool IsDeleted { get; set; }
     public SignalSource SignalSource { get; set; }
+    public string Source { get; set; }
     public long RecordIndex { get; set; }
     public int RecordOrder { get; set; }
     public int OldProgramNr { get; set; }
@@ -44,7 +45,8 @@ namespace ChanSort.Api
     public string Debug { get; private set; }
     public string SatPosition { get; set; }
     public Transponder Transponder { get; set; }
-    public IList<int> FavIndex { get; private set; }
+    public List<int> FavIndex { get; }
+    public List<int> OldFavIndex { get; }
     public int ProgramNrPreset { get; set; }
 
     public bool IsNameModified { get; set; }
@@ -54,8 +56,12 @@ namespace ChanSort.Api
     {
       this.NewProgramNr = -1;
       this.FavIndex = new List<int>(MAX_FAV_LISTS);
+      this.OldFavIndex = new List<int>(MAX_FAV_LISTS);
       for (int i = 0; i < MAX_FAV_LISTS; i++)
+      {
         this.FavIndex.Add(-1);
+        this.OldFavIndex.Add(-1);
+      }
       this.Name = "";
       this.ShortName = "";
     }
@@ -246,6 +252,11 @@ namespace ChanSort.Api
     public int GetPosition(int subListIndex)
     {
       return subListIndex == 0 ? this.NewProgramNr : this.FavIndex[subListIndex - 1];
+    }
+
+    public int GetOldPosition(int subListIndex)
+    {
+      return subListIndex == 0 ? this.OldProgramNr : this.OldFavIndex[subListIndex - 1];
     }
 
     public void SetPosition(int subListIndex, int newPos)

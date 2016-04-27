@@ -61,7 +61,7 @@ namespace ChanSort.Api
     public virtual void AddChannelList(ChannelList list)
     {
       this.channelLists.Add(list);
-      this.MixedSourceFavorites |= list.IsMixedSouceFavoritesList;
+      this.MixedSourceFavorites |= list.IsMixedSourceFavoritesList;
     }
     #endregion
 

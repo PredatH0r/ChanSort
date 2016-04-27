@@ -66,6 +66,8 @@
       this.colIndex = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSlotOld = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSlotNew = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colSource = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colPrNr = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colShortName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colFavorites = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -302,6 +304,7 @@
       this.gviewLeft.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
       this.gviewLeft.OptionsCustomization.AllowGroup = false;
       this.gviewLeft.OptionsCustomization.AllowQuickHideColumns = false;
+      this.gviewLeft.OptionsDetail.EnableMasterViewMode = false;
       this.gviewLeft.OptionsLayout.LayoutVersion = "2";
       this.gviewLeft.OptionsSelection.MultiSelect = true;
       this.gviewLeft.OptionsView.ColumnAutoWidth = false;
@@ -561,6 +564,8 @@
             this.colIndex,
             this.colSlotOld,
             this.colSlotNew,
+            this.colSource,
+            this.colPrNr,
             this.colName,
             this.colShortName,
             this.colFavorites,
@@ -591,11 +596,13 @@
       this.gviewRight.Name = "gviewRight";
       this.gviewRight.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
       this.gviewRight.OptionsCustomization.AllowGroup = false;
-      this.gviewRight.OptionsLayout.LayoutVersion = "3";
+      this.gviewRight.OptionsDetail.EnableMasterViewMode = false;
+      this.gviewRight.OptionsLayout.LayoutVersion = "5";
       this.gviewRight.OptionsSelection.MultiSelect = true;
       this.gviewRight.OptionsView.ColumnAutoWidth = false;
       this.gviewRight.OptionsView.ShowAutoFilterRow = true;
       this.gviewRight.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
+      this.gviewRight.OptionsView.ShowGroupExpandCollapseButtons = false;
       this.gviewRight.OptionsView.ShowGroupPanel = false;
       this.gviewRight.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colSlotOld, DevExpress.Data.ColumnSortOrder.Ascending)});
@@ -627,10 +634,11 @@
       resources.ApplyResources(this.colSlotOld, "colSlotOld");
       this.colSlotOld.DisplayFormat.FormatString = "d";
       this.colSlotOld.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-      this.colSlotOld.FieldName = "OldProgramNr";
+      this.colSlotOld.FieldName = "OldPosition";
       this.colSlotOld.Name = "colSlotOld";
       this.colSlotOld.OptionsColumn.AllowEdit = false;
       this.colSlotOld.OptionsFilter.AllowAutoFilter = false;
+      this.colSlotOld.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
       // 
       // colSlotNew
       // 
@@ -640,6 +648,19 @@
       this.colSlotNew.FieldName = "Position";
       this.colSlotNew.Name = "colSlotNew";
       this.colSlotNew.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
+      // 
+      // colSource
+      // 
+      resources.ApplyResources(this.colSource, "colSource");
+      this.colSource.FieldName = "Source";
+      this.colSource.Name = "colSource";
+      // 
+      // colPrNr
+      // 
+      resources.ApplyResources(this.colPrNr, "colPrNr");
+      this.colPrNr.FieldName = "NewProgramNr";
+      this.colPrNr.Name = "colPrNr";
+      this.colPrNr.OptionsColumn.AllowEdit = false;
       // 
       // colName
       // 
@@ -2204,6 +2225,8 @@
     private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
     private DevExpress.XtraEditors.LabelControl lblPredefinedList;
     private DevExpress.XtraBars.BarButtonItem miAllowEditPredefinedLists;
+    private DevExpress.XtraGrid.Columns.GridColumn colPrNr;
+    private DevExpress.XtraGrid.Columns.GridColumn colSource;
   }
 }
 

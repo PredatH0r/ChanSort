@@ -1,7 +1,7 @@
 ChanSort Change Log 
 ===================
 
-2016-04-18
+2016-04-27
 - added support for Hisense channel.db channel lists
 
 2015-11-29

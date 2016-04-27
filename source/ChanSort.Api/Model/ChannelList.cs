@@ -30,7 +30,7 @@ namespace ChanSort.Api
     public int MaxChannelNameLength { get; set; }
     public int PresetProgramNrCount { get; private set; }
     public IList<string> VisibleColumnFieldNames;
-    public bool IsMixedSouceFavoritesList { get; set; }
+    public bool IsMixedSourceFavoritesList { get; set; }
 
     #region Caption
     public string Caption
@@ -81,6 +81,9 @@ namespace ChanSort.Api
           isDupeProgNr = true;
         }
       }
+
+      for (int i = 0; i < ci.FavIndex.Count; i++)
+        ci.OldFavIndex[i] = ci.FavIndex[i];
 
       if (!isDupeProgNr)
         this.channelByProgNr[ci.OldProgramNr] = ci;

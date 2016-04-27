@@ -2,7 +2,7 @@
 cd /d %~dp0
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
-set DXversion=15.1
+set DXversion=15.2
 mkdir "%target%" 2>nul
 del /s /q "%target%\*"
 copy debug\ChanSort.exe* "%target%"

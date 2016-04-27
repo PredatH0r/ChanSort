@@ -12,7 +12,7 @@ namespace ChanSort.Loader.Hisense
 {
   public class HisDbSerializer : SerializerBase
   {
-    public override string DisplayName => "Hisense *.db Loader";
+    public override string DisplayName => "Hisense channel.db Loader";
 
     #region enums and bitmasks
 
@@ -106,15 +106,17 @@ namespace ChanSort.Loader.Hisense
       channelLists.Add(new ChannelList(SignalSource.Antenna | SignalSource.Cable | SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "CI 2"));
 
       channelLists.Add(new ChannelList(SignalSource.AnalogCT | SignalSource.DvbCT | SignalSource.DvbS | SignalSource.TvAndRadio, "Favorites"));
-      channelLists[channelLists.Count - 1].IsMixedSouceFavoritesList = true;
+      channelLists[channelLists.Count - 1].IsMixedSourceFavoritesList = true;
 
       foreach (var list in this.channelLists)
       {
         this.DataRoot.AddChannelList(list);
         list.VisibleColumnFieldNames = new List<string>
         {
+          "OldPosition",
           "Position",
-          "OldProgramNr",
+          "Source",
+          "NewProgramNr",
           "Name",
           "ShortName",
           "Favorites",
@@ -385,6 +387,7 @@ namespace ChanSort.Loader.Hisense
           enhanceChannelInfo(ci, r, 9);
 
           var list = this.channelLists[tableNr - 1];
+          ci.Source = list.ShortCaption;
           this.DataRoot.AddChannel(list, ci);
 
           // add the channel to all favorites lists
@@ -521,7 +524,6 @@ namespace ChanSort.Loader.Hisense
 
     private void UpdateChannel(SQLiteCommand cmd, ChannelInfo ci)
     {
-      //return;
       if (ci.RecordIndex < 0) // skip reference list proxy channels
         return; 
 
@@ -534,11 +536,11 @@ namespace ChanSort.Loader.Hisense
       if (!ci.Hidden && ci.NewProgramNr >= 0) setFlags |= NwMask.Visible;
 
       cmd.CommandText = $"update svl_{x} set channel_id=(channel_id&{0x3FFFF})|(@chnr << 18)" +
-                        ", ch_id_txt=@chnr || '   0'" +
-                        ", ac_name=@name" +
+                        $", ch_id_txt=@chnr || '   0'" +
+                        $", ac_name=@name" +
                         $", option_mask=option_mask|{(int) (OptionMask.ChNumEdited | OptionMask.NameEdited)}" +
-                        ", nw_mask=(nw_mask&@resetFlags)|@setFlags" +
-                        " where svl_rec_id=@id";
+                        $", nw_mask=(nw_mask&@resetFlags)|@setFlags" +
+                        $" where svl_rec_id=@id";
       cmd.Parameters.Clear();
       cmd.Parameters.Add("@id", DbType.Int32);
       cmd.Parameters.Add("@chnr", DbType.Int32);

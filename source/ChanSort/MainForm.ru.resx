@@ -120,288 +120,6 @@
   <data name="colOutSlot.Caption" xml:space="preserve">
     <value>Новый</value>
   </data>
-  <data name="miOpen.Caption" xml:space="preserve">
-    <value>Открыть файл данных TV...</value>
-  </data>
-  <data name="mnuFavSet.Caption" xml:space="preserve">
-    <value>Добавить в Избранное</value>
-  </data>
-  <data name="grpInputList.Text" xml:space="preserve">
-    <value>Все каналы</value>
-  </data>
-  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
-    <value>заменить</value>
-  </data>
-  <data name="btnClearLeftFilter.Text" xml:space="preserve">
-    <value>Фильтр</value>
-  </data>
-  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
-    <value>Сбросить фильтр</value>
-  </data>
-  <data name="btnRenum.Text" xml:space="preserve">
-    <value>1-999</value>
-  </data>
-  <data name="btnRenum.ToolTip" xml:space="preserve">
-    <value>Изменить нумерацию выбранных каналов</value>
-  </data>
-  <data name="btnDown.Text" xml:space="preserve">
-    <value>v</value>
-  </data>
-  <data name="btnDown.ToolTip" xml:space="preserve">
-    <value>Переместить выбранные каналы вниз</value>
-  </data>
-  <data name="btnUp.Text" xml:space="preserve">
-    <value>^</value>
-  </data>
-  <data name="btnUp.ToolTip" xml:space="preserve">
-    <value>Переместить выбранные каналы вверх</value>
-  </data>
-  <data name="btnRemoveLeft.Text" xml:space="preserve">
-    <value>X</value>
-  </data>
-  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
-    <value>Удалить выбранные каналы</value>
-  </data>
-  <data name="grpOutputList.Text" xml:space="preserve">
-    <value>Отсортированные каналы</value>
-  </data>
-  <data name="colIndex.Caption" xml:space="preserve">
-    <value>Индекс пр.</value>
-  </data>
-  <data name="colSlotOld.Caption" xml:space="preserve">
-    <value>Старый</value>
-  </data>
-  <data name="colSlotOld.ToolTip" xml:space="preserve">
-    <value>Старый номер программы</value>
-  </data>
-  <data name="colSlotNew.Caption" xml:space="preserve">
-    <value>Новый</value>
-  </data>
-  <data name="colSlotNew.ToolTip" xml:space="preserve">
-    <value>Новый номер программы</value>
-  </data>
-  <data name="colName.Caption" xml:space="preserve">
-    <value>Название канала</value>
-  </data>
-  <data name="colShortName.Caption" xml:space="preserve">
-    <value>Краткое имя</value>
-  </data>
-  <data name="colFavorites.Caption" xml:space="preserve">
-    <value>Избранное</value>
-  </data>
-  <data name="colLock.Caption" xml:space="preserve">
-    <value>Заблокированный</value>
-  </data>
-  <data name="colSkip.Caption" xml:space="preserve">
-    <value>Пропускать</value>
-  </data>
-  <data name="colHidden.Caption" xml:space="preserve">
-    <value>Скрыть</value>
-  </data>
-  <data name="colEncrypted.Caption" xml:space="preserve">
-    <value>Зашифрованный</value>
-  </data>
-  <data name="colEncrypted.ToolTip" xml:space="preserve">
-    <value>Зашифрованный</value>
-  </data>
-  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Канал/Транспондер</value>
-  </data>
-  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
-    <value>Номер канала или транспондер</value>
-  </data>
-  <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Частота (MHz)</value>
-  </data>
-  <data name="colServiceId.Caption" xml:space="preserve">
-    <value>ID сервиса</value>
-  </data>
-  <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>Видео PID</value>
-  </data>
-  <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Аудио PID</value>
-  </data>
-  <data name="colServiceType.Caption" xml:space="preserve">
-    <value>ID Тип сервиса</value>
-  </data>
-  <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Тип сервиса</value>
-  </data>
-  <data name="colSatellite.Caption" xml:space="preserve">
-    <value>Спутник</value>
-  </data>
-  <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>Сеть (ONID)</value>
-  </data>
-  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
-    <value>ID транспортного потока</value>
-  </data>
-  <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Скорость передачи</value>
-  </data>
-  <data name="colPolarity.Caption" xml:space="preserve">
-    <value>Полярность</value>
-  </data>
-  <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Сетевое имя</value>
-  </data>
-  <data name="colNetworkOperator.Caption" xml:space="preserve">
-    <value>Оператор сети</value>
-  </data>
-  <data name="colLogicalIndex.Caption" xml:space="preserve">
-    <value>Order</value>
-  </data>
-  <data name="colSignalSource.Caption" xml:space="preserve">
-    <value>Источник сигнала</value>
-  </data>
-  <data name="lblHotkeyRight.Text" xml:space="preserve">
-    <value>F5: Фильтр | F6: Список | Enter: Добавить</value>
-  </data>
-  <data name="btnRemoveRight.Text" xml:space="preserve">
-    <value>X</value>
-  </data>
-  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
-    <value>Удалить выбранные каналы из отсортированного списка</value>
-  </data>
-  <data name="btnAddAll.Text" xml:space="preserve">
-    <value>&lt;&lt; Добавить все</value>
-  </data>
-  <data name="btnAddAll.ToolTip" xml:space="preserve">
-    <value>Добавить все текущие несортированные каналы в конец списка</value>
-  </data>
-  <data name="btnClearRightFilter.Text" xml:space="preserve">
-    <value>Фильтр</value>
-  </data>
-  <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
-    <value>Сбросить фильтр</value>
-  </data>
-  <data name="btnAdd.Text" xml:space="preserve">
-    <value>&lt;&lt;</value>
-  </data>
-  <data name="btnAdd.ToolTip" xml:space="preserve">
-    <value>Добавить выбранные каналы в отсортированный список</value>
-  </data>
-  <data name="mnuHelp.Caption" xml:space="preserve">
-    <value>Помощь</value>
-  </data>
-  <data name="miWiki.Caption" xml:space="preserve">
-    <value>Вики ChanSort</value>
-  </data>
-  <data name="miOpenWebsite.Caption" xml:space="preserve">
-    <value>Сайт ChanSort...</value>
-  </data>
-  <data name="miAbout.Caption" xml:space="preserve">
-    <value>О ChanSort ...</value>
-  </data>
-  <data name="bar1.Text" xml:space="preserve">
-    <value>Инструменты</value>
-  </data>
-  <data name="miMoveUp.Caption" xml:space="preserve">
-    <value>Переместить вверх</value>
-  </data>
-  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
-    <value>после</value>
-  </data>
-  <data name="btnToggleLock.ToolTip" xml:space="preserve">
-    <value>Родительский контроль</value>
-  </data>
-  <data name="mnuFavUnset.Caption" xml:space="preserve">
-    <value>Удалить из Избранного</value>
-  </data>
-  <data name="miLockOn.Caption" xml:space="preserve">
-    <value>Заблокировать канал</value>
-  </data>
-  <data name="miLockOff.Caption" xml:space="preserve">
-    <value>Разблокировать канал</value>
-  </data>
-  <data name="miSkipOn.Caption" xml:space="preserve">
-    <value>Пропустить канал</value>
-  </data>
-  <data name="miSkipOff.Caption" xml:space="preserve">
-    <value>Не пропускать канал</value>
-  </data>
-  <data name="miHideOn.Caption" xml:space="preserve">
-    <value>Скрыть канал</value>
-  </data>
-  <data name="miHideOff.Caption" xml:space="preserve">
-    <value>Показать канал</value>
-  </data>
-  <data name="barSubItem2.Caption" xml:space="preserve">
-    <value>Телевизор</value>
-  </data>
-  <data name="miTvSettings.Caption" xml:space="preserve">
-    <value>Настройка устройства...</value>
-  </data>
-  <data name="miCleanupChannels.Caption" xml:space="preserve">
-    <value>Очистка данных канала</value>
-  </data>
-  <data name="miCleanupChannels.Hint" xml:space="preserve">
-    <value>Перенастроить канал и удалить дубликаты</value>
-  </data>
-  <data name="mnuOptions.Caption" xml:space="preserve">
-    <value>Настройки</value>
-  </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
-    <value>Язык</value>
-  </data>
-  <data name="mnuCharset.Caption" xml:space="preserve">
-    <value>Набор символов</value>
-  </data>
-  <data name="miCharsetForm.Caption" xml:space="preserve">
-    <value>Все наборы символов...</value>
-  </data>
-  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
-    <value>Показывать предупреждения после загрузки файла</value>
-  </data>
-  <data name="miQuit.Caption" xml:space="preserve">
-    <value>Выход</value>
-  </data>
-  <data name="miRecentFiles.Caption" xml:space="preserve">
-    <value>Последние файлы</value>
-  </data>
-  <data name="miEdit.Caption" xml:space="preserve">
-    <value>Правка</value>
-  </data>
-  <data name="miAddChannel.Caption" xml:space="preserve">
-    <value>Добавить каналы</value>
-  </data>
-  <data name="miRemove.Caption" xml:space="preserve">
-    <value>Удалить каналы</value>
-  </data>
-  <data name="miSort.Caption" xml:space="preserve">
-    <value>Сортировать каналы по алфавиту</value>
-  </data>
-  <data name="miRenum.Caption" xml:space="preserve">
-    <value>Изменить нумерацию каналов</value>
-  </data>
-  <data name="miReload.Caption" xml:space="preserve">
-    <value>Перезагрузить</value>
-  </data>
-  <data name="miRestoreOriginal.Caption" xml:space="preserve">
-    <value>Восстановить из резервной копии</value>
-  </data>
-  <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>Файл и информация...</value>
-  </data>
-  <data name="miSave.Caption" xml:space="preserve">
-    <value>Сохранить</value>
-  </data>
-  <data name="miSaveAs.Caption" xml:space="preserve">
-    <value>Сохранить как...</value>
-  </data>
-  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Загрузить список...</value>
-  </data>
-  <data name="miAddFromRefList.Caption" xml:space="preserve">
-    <value>Добавить каналы из списка...</value>
-  </data>
-  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
-    <value>Сохранить список...</value>
-  </data>
-  <data name="miExcelExport.Caption" xml:space="preserve">
-    <value>Экспорт в Excel...</value>
-  </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>Новый номер программы</value>
   </data>
@@ -416,18 +134,6 @@
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
     <value>Родительский контроль</value>
-  </data>
-  <data name="colOutHide.Caption" xml:space="preserve">
-    <value>Скрыть</value>
-  </data>
-  <data name="lblHotkeyLeft.Text" xml:space="preserve">
-    <value>F3: Фильтр | F4: Список | -: Вверх | +: Вниз | Del: Удалить</value>
-  </data>
-  <data name="pageProgNr.Text" xml:space="preserve">
-    <value>Pr#</value>
-  </data>
-  <data name="miFile.Caption" xml:space="preserve">
-    <value>Файл</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
     <value>Пропускать</value>
@@ -461,6 +167,300 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>ChanSort {0} - редактор списка каналов для телевизоров Samsung, LG, Pansonic и Toshiba</value>
+  </data>
+  <data name="grpInputList.Text" xml:space="preserve">
+    <value>Все каналы</value>
+  </data>
+  <data name="btnAdd.ToolTip" xml:space="preserve">
+    <value>Добавить выбранные каналы в отсортированный список</value>
+  </data>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>&lt;&lt;</value>
+  </data>
+  <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
+    <value>Сбросить фильтр</value>
+  </data>
+  <data name="btnClearRightFilter.Text" xml:space="preserve">
+    <value>Фильтр</value>
+  </data>
+  <data name="btnAddAll.ToolTip" xml:space="preserve">
+    <value>Добавить все текущие несортированные каналы в конец списка</value>
+  </data>
+  <data name="btnAddAll.Text" xml:space="preserve">
+    <value>&lt;&lt; Добавить все</value>
+  </data>
+  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
+    <value>Удалить выбранные каналы из отсортированного списка</value>
+  </data>
+  <data name="btnRemoveRight.Text" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="lblHotkeyRight.Text" xml:space="preserve">
+    <value>F5: Фильтр | F6: Список | Enter: Добавить</value>
+  </data>
+  <data name="colSignalSource.Caption" xml:space="preserve">
+    <value>Источник сигнала</value>
+  </data>
+  <data name="colLogicalIndex.Caption" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="colNetworkOperator.Caption" xml:space="preserve">
+    <value>Оператор сети</value>
+  </data>
+  <data name="colNetworkName.Caption" xml:space="preserve">
+    <value>Сетевое имя</value>
+  </data>
+  <data name="colPolarity.Caption" xml:space="preserve">
+    <value>Полярность</value>
+  </data>
+  <data name="colSymbolRate.Caption" xml:space="preserve">
+    <value>Скорость передачи</value>
+  </data>
+  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
+    <value>ID транспортного потока</value>
+  </data>
+  <data name="colNetworkId.Caption" xml:space="preserve">
+    <value>Сеть (ONID)</value>
+  </data>
+  <data name="colSatellite.Caption" xml:space="preserve">
+    <value>Спутник</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Тип сервиса</value>
+  </data>
+  <data name="colServiceType.Caption" xml:space="preserve">
+    <value>ID Тип сервиса</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Аудио PID</value>
+  </data>
+  <data name="colVideoPid.Caption" xml:space="preserve">
+    <value>Видео PID</value>
+  </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>ID сервиса</value>
+  </data>
+  <data name="colFreqInMhz.Caption" xml:space="preserve">
+    <value>Частота (MHz)</value>
+  </data>
+  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
+    <value>Номер канала или транспондер</value>
+  </data>
+  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
+    <value>Канал/Транспондер</value>
+  </data>
+  <data name="colEncrypted.ToolTip" xml:space="preserve">
+    <value>Зашифрованный</value>
+  </data>
+  <data name="colEncrypted.Caption" xml:space="preserve">
+    <value>Зашифрованный</value>
+  </data>
+  <data name="colHidden.Caption" xml:space="preserve">
+    <value>Скрыть</value>
+  </data>
+  <data name="colSkip.Caption" xml:space="preserve">
+    <value>Пропускать</value>
+  </data>
+  <data name="colLock.Caption" xml:space="preserve">
+    <value>Заблокированный</value>
+  </data>
+  <data name="colFavorites.Caption" xml:space="preserve">
+    <value>Избранное</value>
+  </data>
+  <data name="colShortName.Caption" xml:space="preserve">
+    <value>Краткое имя</value>
+  </data>
+  <data name="colName.Caption" xml:space="preserve">
+    <value>Название канала</value>
+  </data>
+  <data name="colSlotNew.ToolTip" xml:space="preserve">
+    <value>Новый номер программы</value>
+  </data>
+  <data name="colSlotNew.Caption" xml:space="preserve">
+    <value>Новый</value>
+  </data>
+  <data name="colSlotOld.ToolTip" xml:space="preserve">
+    <value>Старый номер программы</value>
+  </data>
+  <data name="colSlotOld.Caption" xml:space="preserve">
+    <value>Старый</value>
+  </data>
+  <data name="colIndex.Caption" xml:space="preserve">
+    <value>Индекс пр.</value>
+  </data>
+  <data name="grpOutputList.Text" xml:space="preserve">
+    <value>Отсортированные каналы</value>
+  </data>
+  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
+    <value>Удалить выбранные каналы</value>
+  </data>
+  <data name="btnRemoveLeft.Text" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="btnUp.ToolTip" xml:space="preserve">
+    <value>Переместить выбранные каналы вверх</value>
+  </data>
+  <data name="btnUp.Text" xml:space="preserve">
+    <value>^</value>
+  </data>
+  <data name="btnDown.ToolTip" xml:space="preserve">
+    <value>Переместить выбранные каналы вниз</value>
+  </data>
+  <data name="btnDown.Text" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="btnRenum.ToolTip" xml:space="preserve">
+    <value>Изменить нумерацию выбранных каналов</value>
+  </data>
+  <data name="btnRenum.Text" xml:space="preserve">
+    <value>1-999</value>
+  </data>
+  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
+    <value>Сбросить фильтр</value>
+  </data>
+  <data name="btnClearLeftFilter.Text" xml:space="preserve">
+    <value>Фильтр</value>
+  </data>
+  <data name="btnToggleLock.ToolTip" xml:space="preserve">
+    <value>Родительский контроль</value>
+  </data>
+  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
+    <value>после</value>
+  </data>
+  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
+    <value>заменить</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
+    <value>Показывать предупреждения после загрузки файла</value>
+  </data>
+  <data name="miCharsetForm.Caption" xml:space="preserve">
+    <value>Все наборы символов...</value>
+  </data>
+  <data name="mnuCharset.Caption" xml:space="preserve">
+    <value>Набор символов</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="mnuOptions.Caption" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="miCleanupChannels.Hint" xml:space="preserve">
+    <value>Перенастроить канал и удалить дубликаты</value>
+  </data>
+  <data name="miCleanupChannels.Caption" xml:space="preserve">
+    <value>Очистка данных канала</value>
+  </data>
+  <data name="miTvSettings.Caption" xml:space="preserve">
+    <value>Настройка устройства...</value>
+  </data>
+  <data name="barSubItem2.Caption" xml:space="preserve">
+    <value>Телевизор</value>
+  </data>
+  <data name="miHideOff.Caption" xml:space="preserve">
+    <value>Показать канал</value>
+  </data>
+  <data name="miHideOn.Caption" xml:space="preserve">
+    <value>Скрыть канал</value>
+  </data>
+  <data name="miSkipOff.Caption" xml:space="preserve">
+    <value>Не пропускать канал</value>
+  </data>
+  <data name="miSkipOn.Caption" xml:space="preserve">
+    <value>Пропустить канал</value>
+  </data>
+  <data name="miLockOff.Caption" xml:space="preserve">
+    <value>Разблокировать канал</value>
+  </data>
+  <data name="miLockOn.Caption" xml:space="preserve">
+    <value>Заблокировать канал</value>
+  </data>
+  <data name="mnuFavUnset.Caption" xml:space="preserve">
+    <value>Удалить из Избранного</value>
+  </data>
+  <data name="mnuFavSet.Caption" xml:space="preserve">
+    <value>Добавить в Избранное</value>
+  </data>
+  <data name="miRenum.Caption" xml:space="preserve">
+    <value>Изменить нумерацию каналов</value>
+  </data>
+  <data name="miSort.Caption" xml:space="preserve">
+    <value>Сортировать каналы по алфавиту</value>
+  </data>
+  <data name="miRemove.Caption" xml:space="preserve">
+    <value>Удалить каналы</value>
+  </data>
+  <data name="miAddChannel.Caption" xml:space="preserve">
+    <value>Добавить каналы</value>
+  </data>
+  <data name="miEdit.Caption" xml:space="preserve">
+    <value>Правка</value>
+  </data>
+  <data name="miRecentFiles.Caption" xml:space="preserve">
+    <value>Последние файлы</value>
+  </data>
+  <data name="miQuit.Caption" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="miExcelExport.Caption" xml:space="preserve">
+    <value>Экспорт в Excel...</value>
+  </data>
+  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
+    <value>Сохранить список...</value>
+  </data>
+  <data name="miAddFromRefList.Caption" xml:space="preserve">
+    <value>Добавить каналы из списка...</value>
+  </data>
+  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
+    <value>Загрузить список...</value>
+  </data>
+  <data name="miSaveAs.Caption" xml:space="preserve">
+    <value>Сохранить как...</value>
+  </data>
+  <data name="miSave.Caption" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="miFileInformation.Caption" xml:space="preserve">
+    <value>Файл и информация...</value>
+  </data>
+  <data name="miRestoreOriginal.Caption" xml:space="preserve">
+    <value>Восстановить из резервной копии</value>
+  </data>
+  <data name="miReload.Caption" xml:space="preserve">
+    <value>Перезагрузить</value>
+  </data>
+  <data name="miOpen.Caption" xml:space="preserve">
+    <value>Открыть файл данных TV...</value>
+  </data>
+  <data name="miFile.Caption" xml:space="preserve">
+    <value>Файл</value>
+  </data>
+  <data name="pageProgNr.Text" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="lblHotkeyLeft.Text" xml:space="preserve">
+    <value>F3: Фильтр | F4: Список | -: Вверх | +: Вниз | Del: Удалить</value>
+  </data>
+  <data name="colOutHide.Caption" xml:space="preserve">
+    <value>Скрыть</value>
+  </data>
+  <data name="mnuHelp.Caption" xml:space="preserve">
+    <value>Помощь</value>
+  </data>
+  <data name="miWiki.Caption" xml:space="preserve">
+    <value>Вики ChanSort</value>
+  </data>
+  <data name="miOpenWebsite.Caption" xml:space="preserve">
+    <value>Сайт ChanSort...</value>
+  </data>
+  <data name="miAbout.Caption" xml:space="preserve">
+    <value>О ChanSort ...</value>
+  </data>
+  <data name="bar1.Text" xml:space="preserve">
+    <value>Инструменты</value>
+  </data>
+  <data name="miMoveUp.Caption" xml:space="preserve">
+    <value>Переместить вверх</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
     <value>Тип сервиса</value>
