@@ -58,7 +58,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\ChlFileSerializer.cs" />
     <Compile Include="Controller\CsvFileSerializer.cs" />
     <Compile Include="Controller\Editor.cs" />
     <Compile Include="Controller\ISerializerPlugin.cs" />

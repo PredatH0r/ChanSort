@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using ChanSort.Api;
 using System.Data.SQLite;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -329,9 +330,11 @@ namespace ChanSort.Loader.Hisense
             ci.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(ci.FreqInMhz).ToString();
 
 #if LOCK_LCN_LISTS
-  // make the current list read-only if LCN is used
+          // make the current list read-only if LCN is used
           if (r.GetInt32(i0 + 3) != 0)
+          {
             this.channelLists[x - 1].ReadOnly = true;
+          }
 #endif
         });
       }
@@ -454,7 +457,10 @@ namespace ChanSort.Loader.Hisense
     {
       Editor.SequentializeFavPos(this.channelLists[6], 4);
 
-      using (var conn = new SQLiteConnection("Data Source=" + this.FileName))
+      if (tvOutputFile != this.FileName)
+        File.Copy(this.FileName, tvOutputFile, true);
+
+      using (var conn = new SQLiteConnection("Data Source=" + tvOutputFile))
       {
         conn.Open();
         using (var trans = conn.BeginTransaction())
@@ -475,6 +481,7 @@ namespace ChanSort.Loader.Hisense
                 this.UpdateChannel(cmd, ci);
             }
             trans.Commit();
+            this.FileName = tvOutputFile;
           }
           catch
           {

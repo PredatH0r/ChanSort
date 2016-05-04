@@ -21,15 +21,33 @@ namespace ChanSort.Ui
       this.UpdateButtons();
     }
 
+    #region OnLoad()
+    protected override void OnLoad(EventArgs e)
+    {
+      base.OnLoad(e);
+
+      this.CreateHandle();
+      this.Update();
+      BeginInvoke((Action) (() =>
+      {
+        var ser = ShowOpenFileDialog(main);
+        if (ser != null)
+          this.SetInput(ser);
+      }));
+    }
+    #endregion
+
+    #region UpdateButtons()
     private void UpdateButtons()
     {
       this.btnOk.Visible = this.rbAuto.Checked;
       this.btnClose.Text = this.rbAuto.Checked ? "Cancel" : "Close";
     }
+    #endregion
 
     #region ShowOpenFileDialog()
 
-    private SerializerBase ShowOpenFileDialog()
+    private static SerializerBase ShowOpenFileDialog(MainForm main)
     {
       try
       {
@@ -45,7 +63,7 @@ namespace ChanSort.Ui
           dlg.FilterIndex = numberOfFilters + 1;
           dlg.CheckFileExists = true;
           dlg.RestoreDirectory = true;
-          if (dlg.ShowDialog() != DialogResult.OK)
+          if (dlg.ShowDialog(main) != DialogResult.OK)
             return null;
 
           if (main.DetectCommonFileCorruptions(dlg.FileName))
@@ -142,14 +160,19 @@ namespace ChanSort.Ui
     }
     #endregion
 
+
     #region edFile_ButtonClick
 
     private void edFile_ButtonClick(object sender, ButtonPressedEventArgs e)
     {
-      serializer = ShowOpenFileDialog();
-      if (serializer == null)
-        return;
+      var ser = ShowOpenFileDialog(this.main);
+      if (ser != null)
+        SetInput(ser);
+    }
 
+    private void SetInput(SerializerBase ser)
+    {
+      this.serializer = ser;
       this.edFile.Text = serializer.FileName;
       this.rbAuto.Enabled = this.rbManual.Enabled = true;
 
@@ -201,6 +224,40 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region comboTarget_EditValueChanged
+    private void comboTarget_EditValueChanged(object sender, EventArgs e)
+    {
+      UpdateInfoTextAndOptions();
+
+      // auto-select a compatible source list
+      var list = (ChannelList)this.comboTarget.EditValue;
+      if (list != null)
+      {
+        this.comboSource.SelectedIndex = -1;
+        var src = list.SignalSource;
+        foreach (ChannelList sourceList in this.comboSource.Properties.Items)
+        {
+          if ((sourceList.SignalSource & src) == src)
+          {
+            this.comboSource.SelectedItem = sourceList;
+            break;
+          }
+        }
+      }
+    }
+    #endregion
+
+    #region comboSource_EditValueChanged
+
+    private void comboSource_EditValueChanged(object sender, EventArgs e)
+    {
+      UpdateInfoTextAndOptions();
+      var list = (ChannelList)this.comboSource.EditValue;
+      this.comboPrNr.Text = list == null || list.Count == 0 ? "1" : list.Channels.Min(ch => Math.Max(ch.OldProgramNr, 1)).ToString();
+    }
+
+    #endregion
+
     #region btnApply_Click
 
     private void btnApply_Click(object sender, EventArgs e)
@@ -226,36 +283,5 @@ namespace ChanSort.Ui
 
     #endregion
 
-    private void comboTarget_EditValueChanged(object sender, EventArgs e)
-    {
-      UpdateInfoTextAndOptions();
-
-      // auto-select a compatible source list
-      var list = (ChannelList)this.comboTarget.EditValue;
-      if (list != null)
-      {
-        this.comboSource.SelectedIndex = -1;
-        var src = list.SignalSource;
-        foreach (ChannelList sourceList in this.comboSource.Properties.Items)
-        {
-          if ((sourceList.SignalSource & src) == src)
-          {
-            this.comboSource.SelectedItem = sourceList;
-            break;
-          }
-        }
-      }
-    }
-
-    #region comboSource_EditValueChanged
-
-    private void comboSource_EditValueChanged(object sender, EventArgs e)
-    {
-      UpdateInfoTextAndOptions();
-      var list = (ChannelList)this.comboSource.EditValue;
-      this.comboPrNr.Text = list == null || list.Count == 0 ? "1" : list.Channels.Min(ch => Math.Max(ch.OldProgramNr, 1)).ToString();
-    }
-
-    #endregion
   }
 }

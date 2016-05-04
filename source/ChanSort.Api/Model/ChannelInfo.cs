@@ -103,12 +103,20 @@ namespace ChanSort.Api
       {
         if (this.uid == null)
         {
-          if ((this.SignalSource & SignalSource.Digital) == 0)
-            this.uid = "A-0-" + (int)(this.FreqInMhz*20) + "-0";
-          else if ((this.SignalSource & SignalSource.Sat) != 0)
-            this.uid = "S" + /*this.SatPosition + */ "-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
+          if ((this.SignalSource & SignalSource.MaskAnalogDigital) == SignalSource.Analog)
+            this.uid = "A-0-" + (int) (this.FreqInMhz*20) + "-0";
           else
-            this.uid = "C-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId + "-" + this.ChannelOrTransponder;
+          {
+            if ((this.SignalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Sat)
+              this.uid = "S" + /*this.SatPosition + */ "-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
+            else if ((this.SignalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Antenna || (this.SignalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Cable)
+            {
+              // ChannelOrTransponder is needed for DVB-T where the same ONID+TSID+SID can be received from 2 different towers (on different frequencies)
+              this.uid = "C-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId + "-" + this.ChannelOrTransponder;
+            }
+            else
+              this.uid = this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
+          }
         }
         return this.uid;
       }

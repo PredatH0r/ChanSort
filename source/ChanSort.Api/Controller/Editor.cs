@@ -215,14 +215,42 @@ namespace ChanSort.Api
 
     public void ApplyReferenceList(DataRoot refDataRoot, ChannelList refList, ChannelList tvList, bool addProxyChannels = true, int positionOffset = 0, Predicate<ChannelInfo> chanFilter = null)
     {
+      // create Hashtable for exact channel lookup
+      // the UID of a TV channel list contains a source-indicator (Analog, Cable, Sat), which may be undefined in the reference list)
+      var onidTsidSid = new Dictionary<long, List<ChannelInfo>>();
+      foreach (var channel in tvList.Channels)
+      {
+        var key = DvbKey(channel.OriginalNetworkId, channel.TransportStreamId, channel.ServiceId);
+        var list = onidTsidSid.TryGet(key);
+        if (list == null)
+        {
+          list = new List<ChannelInfo>();
+          onidTsidSid.Add(key, list);
+        }
+        list.Add(channel);
+      }
+
       foreach (var refChannel in refList.Channels)
       {
         if (!(chanFilter?.Invoke(refChannel) ?? true))
           continue;
 
         var tvChannels = tvList.GetChannelByUid(refChannel.Uid);
+
+        // try to find matching channels based on ONID+TSID+SID
+        if (tvChannels.Count == 0)
+        {
+          var key = DvbKey(refChannel.OriginalNetworkId, refChannel.TransportStreamId, refChannel.ServiceId);
+          List<ChannelInfo> candidates;
+          if (key != 0 && onidTsidSid.TryGetValue(key, out candidates))
+            tvChannels = candidates;
+        }
+
+        // try to find matching channels by name
         if (tvChannels.Count == 0 && !string.IsNullOrWhiteSpace(refChannel.Name))
           tvChannels = tvList.GetChannelByName(refChannel.Name).ToList();
+
+        // get the first unassigned channel from the candidates (e.g. when matching by non-unique names), or fall back to the first matching channel (e.g. by unique ID)
         ChannelInfo tvChannel = tvChannels.FirstOrDefault(c => c.GetPosition(0) == -1);
         if (tvChannel == null && tvChannels.Count > 0)
           tvChannel = tvChannels[0];
@@ -255,6 +283,11 @@ namespace ChanSort.Api
           tvList.AddChannel(tvChannel);
         }
       }
+    }
+
+    long DvbKey(int onid, int tsid, int sid)
+    {
+      return (onid << 32) | (tsid << 16) | sid;
     }
 
     private void ApplyFavorites(DataRoot refDataRoot, ChannelInfo refChannel, ChannelInfo tvChannel)

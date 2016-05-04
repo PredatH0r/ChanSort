@@ -306,6 +306,10 @@
       <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
       <Name>ChanSort.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.RefList\ChanSort.Loader.RefList.csproj">
+      <Project>{a2a5c606-167c-4fc2-87a8-2d67590b283b}</Project>
+      <Name>ChanSort.Loader.RefList</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="app.ico" />
