@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using ChanSort.Api;
 
-namespace ChanSort.Loader.RefList
+namespace ChanSort.Api
 {
   public class RefSerializer : SerializerBase
   {
@@ -90,6 +89,7 @@ namespace ChanSort.Loader.RefList
 
     #endregion
 
+
     #region GetFileInformation()
 
     public override string GetFileInformation()
@@ -102,14 +102,7 @@ namespace ChanSort.Loader.RefList
     #endregion
 
     #region Save()
-
-    //public override void Save(string tvOutputFile)
-    //{
-    //  var writer = new ChlFileSerializer();
-    //  writer.Save(tvOutputFile, this.allChannels);
-    //  this.FileName = tvOutputFile;
-    //}
-
+   
     public override void Save(string tvOutputFile)
     {
       Save(tvOutputFile, this.allChannels);

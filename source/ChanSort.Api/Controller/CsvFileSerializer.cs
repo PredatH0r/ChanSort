@@ -1,57 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace ChanSort.Api
 {
   /// <summary>
-  /// Reads a reference list from a .csv file with the format 
-  /// [dummy1],ProgramNr,[dummy2],UID,ChannelName[,SignalSource,FavAndFlags]
+  ///   Reads a reference list from a .csv file with the format
+  ///   [dummy1],ProgramNr,[dummy2],UID,ChannelName[,SignalSource,FavAndFlags]
   /// </summary>
-  public class CsvFileSerializer
+  public class CsvFileSerializer : SerializerBase
   {
-    private readonly HashSet<ChannelList> clearedLists = new HashSet<ChannelList>();
-    private readonly DataRoot dataRoot;
-    private readonly string fileName;
-    private readonly bool addChannels;
+    private static readonly List<string> Columns = new List<string>
+    {
+      "OldPosition",
+      "Position",
+      "Name",
+      "OriginalNetworkId",
+      "TransportStreamId",
+      "ServiceId",
+      "Favorites",
+      "Skip",
+      "Lock",
+      "Hidden"
+    };
 
     #region ctor()
-    public CsvFileSerializer(string fileName, DataRoot dataRoot, bool addChannels)
+
+    public CsvFileSerializer(string fileName) : base(fileName)
     {
-      this.fileName = fileName;
-      this.dataRoot = dataRoot;
-      this.addChannels = addChannels;
+      this.Features.ChannelNameEdit = ChannelNameEditMode.All;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanDeleteChannels = true;
+      this.Features.CanHaveGaps = true;
+      this.Features.EncryptedFlagEdit = false;
+      this.DataRoot.SortedFavorites = false;
+      this.DataRoot.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
     }
+
     #endregion
+
+    public override string DisplayName => "ChanSort .csv Reference List Loader";
 
     #region Load()
-    public void Load()
-    {
-      this.clearedLists.Clear();
-      using (var stream = new StreamReader(fileName))
-        this.ReadChannelsFromStream(stream);
-    }
-    #endregion
 
-    #region ReadChannelsFromStream()
-
-    public void ReadChannelsFromStream(TextReader stream)
+    public override void Load()
     {
-      int lineNr = 0;
-      string line = "";
-      try
+      using (var stream = new StreamReader(this.FileName))
       {
-        while ((line = stream.ReadLine()) != null)
+        var lineNr = 0;
+        var line = "";
+        try
         {
-          ++lineNr;
-          this.ReadChannel(line);
+          while ((line = stream.ReadLine()) != null)
+            this.ReadChannel(line, ++lineNr);
         }
-      }
-      catch (Exception ex)
-      {
-        throw new FileLoadException(string.Format("Error in reference file line #{0}: {1}", lineNr, line), ex);
+        catch (Exception ex)
+        {
+          throw new FileLoadException($"Error in reference file line #{lineNr}: {line}", ex);
+        }
       }
     }
 
@@ -59,67 +66,62 @@ namespace ChanSort.Api
 
     #region ReadChannel()
 
-    private void ReadChannel(string line)
+    private void ReadChannel(string line, int lineNr)
     {
       var parts = CsvFile.Parse(line, ',');
       if (parts.Count < 5) return;
       int programNr;
       if (!int.TryParse(parts[1], out programNr)) return;
-      string uid = parts[3];
+      var uid = parts[3];
       if (uid.StartsWith("S")) // remove satellite orbital position from UID ... not all TV models provide this information
         uid = "S" + uid.Substring(uid.IndexOf('-'));
-      SignalSource signalSource = GetSignalSource(ref programNr, uid, parts);
+      var signalSource = GetSignalSource(ref programNr, uid, parts);
       if (signalSource == 0)
         return;
 
-      string name = parts[4];
-      ChannelList channelList = this.GetInitiallyClearedChannelList(signalSource);
+      var channelList = this.GetChannelList(signalSource);
       if (channelList == null)
         return;
 
-      IEnumerable<ChannelInfo> channels = FindChannels(channelList, name, uid);
-      var channel = channels == null ? null : channels.FirstOrDefault(c => c.NewProgramNr == -1);
-      if (channel != null)
+      var name = parts[4];
+      var channel = new ChannelInfo(signalSource, lineNr, programNr, name);
+
+      var uidParts = uid.Split('-');
+      if (uidParts.Length >= 4)
       {
-        if (!this.addChannels)
-        {
-          channel.NewProgramNr = programNr;
-          if ((channel.SignalSource & SignalSource.Analog) != 0)
-          {
-            channel.Name = name;
-            channel.IsNameModified = true;
-          }
-          if (parts.Count >= 7)
-            ApplyFlags(channel, parts[6]);
-        }
+        int val;
+        if (int.TryParse(uidParts[1], out val))
+          channel.OriginalNetworkId = val;
+        if (int.TryParse(uidParts[2], out val))
+          channel.TransportStreamId = val;
+        if (int.TryParse(uidParts[3], out val))
+          channel.ServiceId = val;
       }
-      else if (parts.Count >= 6) // create proxy channel when using the new ref-list format
-      {        
-        channel = new ChannelInfo(signalSource, uid, programNr, name);
-        if (addChannels)
-        {
-          channel.NewProgramNr = -1;
-          channel.OldProgramNr = programNr;
-        }
-        channelList.AddChannel(channel);
-      }
+
+      if (parts.Count >= 7)
+        ApplyFlags(channel, parts[6]);
+
+      this.DataRoot.AddChannel(channelList, channel);
     }
+
     #endregion
 
     #region GetSignalSource()
+
     private static SignalSource GetSignalSource(ref int slot, string uid, IList<string> parts)
     {
       // new lists store a bitmask which defines the type of channel and list it came from
       if (parts.Count >= 6 && parts[5].Length >= 4)
       {
         SignalSource s = 0;
-        string code = parts[5];
+        var code = parts[5];
         if (code[0] == 'A') s |= SignalSource.Analog;
         else if (code[0] == 'D') s |= SignalSource.Digital;
 
         if (code[1] == 'A') s |= SignalSource.Antenna;
         else if (code[1] == 'C') s |= SignalSource.Cable;
         else if (code[1] == 'S') s |= SignalSource.Sat;
+        else if (code[1] == 'I') s |= SignalSource.IP;
 
         if (code[2] == 'T') s |= SignalSource.Tv;
         else if (code[2] == 'R') s |= SignalSource.Radio;
@@ -129,16 +131,25 @@ namespace ChanSort.Api
       }
 
       // compatibility for older lists
-      bool isTv = slot < 0x4000;
+      var isTv = slot < 0x4000;
       slot &= 0x3FFFF;
       SignalSource signalSource;
       switch (uid[0])
       {
-        case 'S': signalSource = SignalSource.DvbS; break;
-        case 'C': signalSource = SignalSource.DvbCT; break;
-        case 'A': signalSource = SignalSource.AnalogCT; break;
-        case 'H': signalSource = SignalSource.HdPlusD; break;
-        default: return 0;
+        case 'S':
+          signalSource = SignalSource.DvbS;
+          break;
+        case 'C':
+          signalSource = SignalSource.DvbCT;
+          break;
+        case 'A':
+          signalSource = SignalSource.AnalogCT;
+          break;
+        case 'H':
+          signalSource = SignalSource.HdPlusD;
+          break;
+        default:
+          return 0;
       }
       signalSource |= isTv ? SignalSource.Tv : SignalSource.Radio;
       return signalSource;
@@ -146,100 +157,92 @@ namespace ChanSort.Api
 
     #endregion
 
-    #region GetInitiallyClearedChannelList()
-    private ChannelList GetInitiallyClearedChannelList(SignalSource signalSource)
+    #region GetChannelList()
+
+    private ChannelList GetChannelList(SignalSource signalSource)
     {
-      var channelList = dataRoot.GetChannelList(signalSource);
-      if (channelList == null || channelList.ReadOnly)
-        return null;
-      if (!this.addChannels && !this.clearedLists.Contains(channelList))
+      var channelList = this.DataRoot.GetChannelList(signalSource);
+      if (channelList == null)
       {
-        foreach (var channel in channelList.Channels)
-          channel.NewProgramNr = -1;
-        this.clearedLists.Add(channelList);
+        channelList = new ChannelList(signalSource, CreateCaption(signalSource));
+        channelList.VisibleColumnFieldNames = Columns;
+        this.DataRoot.AddChannelList(channelList);
       }
       return channelList;
     }
+
     #endregion
 
-    #region FindChannels()
-    private IEnumerable<ChannelInfo> FindChannels(ChannelList channelList, string name, string uid)
+    #region CreateCaption()
+
+    private string CreateCaption(SignalSource signalSource)
     {
-      // if there's only a single channel with the given name, use it regardless of UID (allows for a changed freq/tranpsonder)
-      IList<ChannelInfo> list = channelList.GetChannelByName(name).ToList();
-      if (list.Count == 1)
-        return list;
+      var sb = new StringBuilder();
+      if ((signalSource & SignalSource.DvbT) == SignalSource.DvbT)
+        sb.Append("DVB-T");
+      else if ((signalSource & SignalSource.DvbC) == SignalSource.DvbC)
+        sb.Append("DVB-C");
+      else if ((signalSource & SignalSource.DvbS) == SignalSource.DvbS)
+        sb.Append("DVB-S");
+      else if ((signalSource & SignalSource.IP) == SignalSource.IP)
+        sb.Append("IP");
+      else if ((signalSource & SignalSource.Digital) == SignalSource.Digital)
+        sb.Append("DVB");
+      else if ((signalSource & SignalSource.Analog) == SignalSource.Analog)
+        sb.Append("Analog");
 
-      string[] uidParts;
-      if (uid.StartsWith("C") && (uidParts = uid.Split('-')).Length <= 4)
-      {
-        // older CSV files didn't use the Transponder as part of the UID, which is necessary
-        // to distinguish between DVB-T channels with identical (onid,tsid,sid), which may be received 
-        // from multiple regional transmitters on different transponders
-        int onid = int.Parse(uidParts[1]);
-        int tsid = int.Parse(uidParts[2]);
-        int sid = int.Parse(uidParts[3]);
-        return channelList.Channels.Where(c => 
-          c.OriginalNetworkId == onid && 
-          c.TransportStreamId == tsid &&
-          c.ServiceId == sid
-          ).ToList();
-      }
+      sb.Append(" ");
+      if ((signalSource & SignalSource.Tv) == SignalSource.Tv)
+        sb.Append("TV");
+      else if ((signalSource & SignalSource.Radio) == SignalSource.Radio)
+        sb.Append("Radio");
+      else
+        sb.Append("Data");
 
-      var byUidList = channelList.GetChannelByUid(uid);
-      return byUidList;
+      return sb.ToString();
     }
+
     #endregion
 
     #region ApplyFlags()
+
     private void ApplyFlags(ChannelInfo channel, string flags)
     {
       channel.Lock = false;
       channel.Skip = false;
       channel.Hidden = false;
 
-      foreach (char c in flags)
+      foreach (var c in flags)
       {
         switch (c)
         {
-          case '1': channel.Favorites |= Favorites.A; break;
-          case '2': channel.Favorites |= Favorites.B; break;
-          case '3': channel.Favorites |= Favorites.C; break;
-          case '4': channel.Favorites |= Favorites.D; break;
-          case '5': channel.Favorites |= Favorites.E; break;
-          case 'L': channel.Lock = true; break;
-          case 'S': channel.Skip = true; break;
-          case 'H': channel.Hidden = true; break;
-          case 'D': channel.IsDeleted = true; break;
-        }
-      }
-    }
-    #endregion
-
-    #region Save()
-    public void Save()
-    {
-      using (StreamWriter stream = new StreamWriter(fileName))
-      {
-        Save(stream);
-      }
-    }
-
-    public void Save(StreamWriter stream)
-    {
-      foreach (var channelList in dataRoot.ChannelLists)
-      {
-        foreach (var channel in channelList.Channels.Where(ch => ch.NewProgramNr != -1).OrderBy(ch => ch.NewProgramNr))
-        {
-          string line = string.Format("{0},{1},{2},{3},\"{4}\",{5},{6}",
-                                      "", // past: channel.RecordIndex,
-                                      channel.NewProgramNr,
-                                      "", // past: channel.TransportStreamId,
-                                      channel.Uid,
-                                      channel.Name,
-                                      this.EncodeSignalSource(channel.SignalSource),
-                                      this.EncodeFavoritesAndFlags(channel));
-          stream.WriteLine(line);
+          case '1':
+            channel.Favorites |= Favorites.A;
+            break;
+          case '2':
+            channel.Favorites |= Favorites.B;
+            break;
+          case '3':
+            channel.Favorites |= Favorites.C;
+            break;
+          case '4':
+            channel.Favorites |= Favorites.D;
+            break;
+          case '5':
+            channel.Favorites |= Favorites.E;
+            break;
+          case 'L':
+            channel.Lock = true;
+            break;
+          case 'S':
+            channel.Skip = true;
+            break;
+          case 'H':
+            channel.Hidden = true;
+            break;
+          case 'D':
+            channel.IsDeleted = true;
+            break;
         }
       }
     }
@@ -247,28 +250,32 @@ namespace ChanSort.Api
     #endregion
 
     #region EncodeSignalSource()
-    private object EncodeSignalSource(SignalSource signalSource)
+
+    private static string EncodeSignalSource(SignalSource signalSource)
     {
-      StringBuilder sb = new StringBuilder();
+      var sb = new StringBuilder();
       if ((signalSource & SignalSource.Analog) != 0) sb.Append('A');
       else sb.Append('D');
 
       if ((signalSource & SignalSource.Antenna) != 0) sb.Append('A');
       else if ((signalSource & SignalSource.Cable) != 0) sb.Append('C');
-      else sb.Append('S');
+      else if ((signalSource & SignalSource.Sat) != 0) sb.Append('S');
+      else sb.Append("I");
 
       if ((signalSource & SignalSource.Radio) != 0) sb.Append('R');
       else sb.Append('T');
 
-      sb.Append((int)signalSource >> 12);
+      sb.Append((int) signalSource >> 12);
       return sb.ToString();
     }
+
     #endregion
 
     #region EncodeFavoritesAndFlags()
-    private string EncodeFavoritesAndFlags(ChannelInfo channel)
+
+    private static string EncodeFavoritesAndFlags(ChannelInfo channel)
     {
-      StringBuilder sb = new StringBuilder();
+      var sb = new StringBuilder();
       if ((channel.Favorites & Favorites.A) != 0) sb.Append('1');
       if ((channel.Favorites & Favorites.B) != 0) sb.Append('2');
       if ((channel.Favorites & Favorites.C) != 0) sb.Append('3');
@@ -279,6 +286,48 @@ namespace ChanSort.Api
       if (channel.Hidden) sb.Append('H');
       if (channel.IsDeleted) sb.Append('D');
       return sb.ToString();
+    }
+
+    #endregion
+
+    #region Save()
+
+    public override void Save(string tvDataFile)
+    {
+      Save(tvDataFile, this.DataRoot);
+      this.FileName = tvDataFile;
+    }
+
+    public static void Save(string tvDataFile, DataRoot dataRoot)
+    {
+      using (var stream = new StreamWriter(tvDataFile))
+      {
+        Save(stream, dataRoot);
+      }
+    }
+
+    public static void Save(StreamWriter stream, DataRoot dataRoot)
+    {
+      foreach (var channelList in dataRoot.ChannelLists)
+      {
+        if (channelList.IsMixedSourceFavoritesList) // these pseudo-lists would create dupes for all channels
+          continue;
+
+        foreach (var channel in channelList.GetChannelsByNewOrder())
+        {
+          if (channel.NewProgramNr == -1)
+            continue;
+          var line = string.Format("{0},{1},{2},{3},\"{4}\",{5},{6}",
+            "", // past: channel.RecordIndex,
+            channel.NewProgramNr,
+            "", // past: channel.TransportStreamId,
+            channel.Uid,
+            channel.Name,
+            EncodeSignalSource(channel.SignalSource),
+            EncodeFavoritesAndFlags(channel));
+          stream.WriteLine(line);
+        }
+      }
     }
 
     #endregion

@@ -61,6 +61,8 @@
     <Compile Include="Controller\CsvFileSerializer.cs" />
     <Compile Include="Controller\Editor.cs" />
     <Compile Include="Controller\ISerializerPlugin.cs" />
+    <Compile Include="Controller\RefSerializer.cs" />
+    <Compile Include="Controller\RefSerializerPlugin.cs" />
     <Compile Include="Model\ChannelList.cs" />
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\LnbConfig.cs" />

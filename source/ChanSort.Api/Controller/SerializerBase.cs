@@ -4,6 +4,8 @@ namespace ChanSort.Api
 {
   public abstract class SerializerBase
   {
+    #region class SupportedFeatures
+
     public class SupportedFeatures
     {
       public ChannelNameEditMode ChannelNameEdit { get; set; }
@@ -20,6 +22,7 @@ namespace ChanSort.Api
         this.CanHaveGaps = true;
       }
     }
+    #endregion
 
     private Encoding defaultEncoding;
 
