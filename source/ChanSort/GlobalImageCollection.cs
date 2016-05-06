@@ -55,6 +55,9 @@ namespace ChanSort.Ui
       this.sharedImageCollection1.ImageSource.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("sharedImageCollection1.ImageSource.ImageStream")));
       this.sharedImageCollection1.ImageSource.Images.SetKeyName(36, "0036.png");
       this.sharedImageCollection1.ImageSource.Images.SetKeyName(37, "0037.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(38, "0038.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(39, "0039.png");
+      this.sharedImageCollection1.ImageSource.Images.SetKeyName(40, "0040.png");
       this.sharedImageCollection1.ParentControl = null;
       ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1.ImageSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.sharedImageCollection1)).EndInit();

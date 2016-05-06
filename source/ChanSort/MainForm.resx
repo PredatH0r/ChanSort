@@ -125,9 +125,9 @@
   <data name="splitContainerControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 110</value>
   </data>
-  <metadata name="dsChannels.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <data name="dsChannels.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>361, 17</value>
-  </metadata>
+  </data>
   <data name="gridLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -305,12 +305,12 @@
   <data name="&gt;&gt;lblHotkeyLeft.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <metadata name="globalImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <data name="globalImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>600, 17</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  </data>
+  <data name="$this.Localizable" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
@@ -392,9 +392,9 @@
   <data name="rbInsertSwap.Location" type="System.Drawing.Point, System.Drawing">
     <value>256, 6</value>
   </data>
-  <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <data name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>475, 17</value>
-  </metadata>
+  </data>
   <data name="miFile.Caption" xml:space="preserve">
     <value>&amp;File</value>
   </data>
@@ -417,7 +417,7 @@
     <value>Save &amp;as...</value>
   </data>
   <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Load reference list...</value>
+    <value>Apply order from a reference list...</value>
   </data>
   <data name="miAddFromRefList.Caption" xml:space="preserve">
     <value>Add channels from reference list...</value>
@@ -1230,36 +1230,6 @@
   <data name="&gt;&gt;colEncrypted.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;colChannelOrTransponder.Name" xml:space="preserve">
-    <value>colChannelOrTransponder</value>
-  </data>
-  <data name="&gt;&gt;colChannelOrTransponder.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colFreqInMhz.Name" xml:space="preserve">
-    <value>colFreqInMhz</value>
-  </data>
-  <data name="&gt;&gt;colFreqInMhz.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colServiceId.Name" xml:space="preserve">
-    <value>colServiceId</value>
-  </data>
-  <data name="&gt;&gt;colServiceId.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colVideoPid.Name" xml:space="preserve">
-    <value>colVideoPid</value>
-  </data>
-  <data name="&gt;&gt;colVideoPid.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colAudioPid.Name" xml:space="preserve">
-    <value>colAudioPid</value>
-  </data>
-  <data name="&gt;&gt;colAudioPid.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;colServiceType.Name" xml:space="preserve">
     <value>colServiceType</value>
   </data>
@@ -1270,6 +1240,18 @@
     <value>colServiceTypeName</value>
   </data>
   <data name="&gt;&gt;colServiceTypeName.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colFreqInMhz.Name" xml:space="preserve">
+    <value>colFreqInMhz</value>
+  </data>
+  <data name="&gt;&gt;colFreqInMhz.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colChannelOrTransponder.Name" xml:space="preserve">
+    <value>colChannelOrTransponder</value>
+  </data>
+  <data name="&gt;&gt;colChannelOrTransponder.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;colSatellite.Name" xml:space="preserve">
@@ -1290,6 +1272,24 @@
   <data name="&gt;&gt;colTransportStreamId.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;colServiceId.Name" xml:space="preserve">
+    <value>colServiceId</value>
+  </data>
+  <data name="&gt;&gt;colServiceId.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colVideoPid.Name" xml:space="preserve">
+    <value>colVideoPid</value>
+  </data>
+  <data name="&gt;&gt;colVideoPid.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colAudioPid.Name" xml:space="preserve">
+    <value>colAudioPid</value>
+  </data>
+  <data name="&gt;&gt;colAudioPid.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;colSymbolRate.Name" xml:space="preserve">
     <value>colSymbolRate</value>
   </data>
@@ -1300,12 +1300,6 @@
     <value>colPolarity</value>
   </data>
   <data name="&gt;&gt;colPolarity.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colUid.Name" xml:space="preserve">
-    <value>colUid</value>
-  </data>
-  <data name="&gt;&gt;colUid.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;colNetworkName.Name" xml:space="preserve">
@@ -1326,10 +1320,10 @@
   <data name="&gt;&gt;colProvider.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;colDebug.Name" xml:space="preserve">
-    <value>colDebug</value>
+  <data name="&gt;&gt;colUid.Name" xml:space="preserve">
+    <value>colUid</value>
   </data>
-  <data name="&gt;&gt;colDebug.Type" xml:space="preserve">
+  <data name="&gt;&gt;colUid.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;colLogicalIndex.Name" xml:space="preserve">
@@ -1342,6 +1336,12 @@
     <value>colSignalSource</value>
   </data>
   <data name="&gt;&gt;colSignalSource.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colDebug.Name" xml:space="preserve">
+    <value>colDebug</value>
+  </data>
+  <data name="&gt;&gt;colDebug.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;barManager1.Name" xml:space="preserve">
@@ -1843,7 +1843,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>05/05/2016 19:53:32</value>
+    <value>05/06/2016 20:31:55</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -2814,19 +2814,19 @@ specific provider, satellite or country lists.</value>
   <data name="&gt;&gt;splitContainerControl1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="defaultLookAndFeel1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <data name="defaultLookAndFeel1.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>194, 17</value>
-  </metadata>
-  <metadata name="popupContext.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  </data>
+  <data name="popupContext.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>781, 17</value>
-  </metadata>
-  <metadata name="timerEditDelay.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  </data>
+  <data name="timerEditDelay.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>911, 17</value>
-  </metadata>
-  <metadata name="popupInputSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  </data>
+  <data name="popupInputSource.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>1042, 17</value>
-  </metadata>
-  <metadata name="popupFavList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  </data>
+  <data name="popupFavList.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>1196, 17</value>
-  </metadata>
+  </data>
 </root>

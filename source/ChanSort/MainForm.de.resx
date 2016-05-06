@@ -472,13 +472,13 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
     <value>Excel liste exportieren...</value>
   </data>
   <data name="miSaveReferenceFile.Caption" xml:space="preserve">
-    <value>Referenzliste speichern...</value>
+    <value>Vorlagedatei exportieren...</value>
   </data>
   <data name="miAddFromRefList.Caption" xml:space="preserve">
-    <value>Sender aus Referenzliste hinzufügen...</value>
+    <value>Vorlagedatei hinzufügen...</value>
   </data>
   <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Referenzliste öffnen...</value>
+    <value>Reihenfolge aus Vorlage übernehmen...</value>
   </data>
   <data name="miSaveAs.Caption" xml:space="preserve">
     <value>Speichern &amp;unter...</value>

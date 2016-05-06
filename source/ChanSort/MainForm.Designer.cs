@@ -76,25 +76,25 @@
       this.colSkip = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colHidden = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colEncrypted = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colChannelOrTransponder = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colFreqInMhz = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colServiceId = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colVideoPid = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colAudioPid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colServiceType = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colServiceTypeName = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colFreqInMhz = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colChannelOrTransponder = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSatellite = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colNetworkId = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colTransportStreamId = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colServiceId = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colVideoPid = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colAudioPid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSymbolRate = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colPolarity = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colUid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colNetworkName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colNetworkOperator = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colProvider = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colDebug = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colUid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colLogicalIndex = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSignalSource = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colDebug = new DevExpress.XtraGrid.Columns.GridColumn();
       this.lblHotkeyRight = new DevExpress.XtraEditors.LabelControl();
       this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
       this.lblPredefinedList = new DevExpress.XtraEditors.LabelControl();
@@ -726,42 +726,6 @@
       this.colEncrypted.OptionsColumn.AllowEdit = false;
       this.colEncrypted.OptionsColumn.FixedWidth = true;
       // 
-      // colChannelOrTransponder
-      // 
-      resources.ApplyResources(this.colChannelOrTransponder, "colChannelOrTransponder");
-      this.colChannelOrTransponder.FieldName = "ChannelOrTransponder";
-      this.colChannelOrTransponder.Name = "colChannelOrTransponder";
-      this.colChannelOrTransponder.OptionsColumn.AllowEdit = false;
-      // 
-      // colFreqInMhz
-      // 
-      resources.ApplyResources(this.colFreqInMhz, "colFreqInMhz");
-      this.colFreqInMhz.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-      this.colFreqInMhz.FieldName = "FreqInMhz";
-      this.colFreqInMhz.Name = "colFreqInMhz";
-      this.colFreqInMhz.OptionsColumn.AllowEdit = false;
-      // 
-      // colServiceId
-      // 
-      resources.ApplyResources(this.colServiceId, "colServiceId");
-      this.colServiceId.FieldName = "ServiceId";
-      this.colServiceId.Name = "colServiceId";
-      this.colServiceId.OptionsColumn.AllowEdit = false;
-      // 
-      // colVideoPid
-      // 
-      resources.ApplyResources(this.colVideoPid, "colVideoPid");
-      this.colVideoPid.FieldName = "VideoPid";
-      this.colVideoPid.Name = "colVideoPid";
-      this.colVideoPid.OptionsColumn.AllowEdit = false;
-      // 
-      // colAudioPid
-      // 
-      resources.ApplyResources(this.colAudioPid, "colAudioPid");
-      this.colAudioPid.FieldName = "AudioPid";
-      this.colAudioPid.Name = "colAudioPid";
-      this.colAudioPid.OptionsColumn.AllowEdit = false;
-      // 
       // colServiceType
       // 
       resources.ApplyResources(this.colServiceType, "colServiceType");
@@ -775,6 +739,21 @@
       this.colServiceTypeName.FieldName = "ServiceTypeName";
       this.colServiceTypeName.Name = "colServiceTypeName";
       this.colServiceTypeName.OptionsColumn.AllowEdit = false;
+      // 
+      // colFreqInMhz
+      // 
+      resources.ApplyResources(this.colFreqInMhz, "colFreqInMhz");
+      this.colFreqInMhz.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+      this.colFreqInMhz.FieldName = "FreqInMhz";
+      this.colFreqInMhz.Name = "colFreqInMhz";
+      this.colFreqInMhz.OptionsColumn.AllowEdit = false;
+      // 
+      // colChannelOrTransponder
+      // 
+      resources.ApplyResources(this.colChannelOrTransponder, "colChannelOrTransponder");
+      this.colChannelOrTransponder.FieldName = "ChannelOrTransponder";
+      this.colChannelOrTransponder.Name = "colChannelOrTransponder";
+      this.colChannelOrTransponder.OptionsColumn.AllowEdit = false;
       // 
       // colSatellite
       // 
@@ -797,6 +776,27 @@
       this.colTransportStreamId.Name = "colTransportStreamId";
       this.colTransportStreamId.OptionsColumn.AllowEdit = false;
       // 
+      // colServiceId
+      // 
+      resources.ApplyResources(this.colServiceId, "colServiceId");
+      this.colServiceId.FieldName = "ServiceId";
+      this.colServiceId.Name = "colServiceId";
+      this.colServiceId.OptionsColumn.AllowEdit = false;
+      // 
+      // colVideoPid
+      // 
+      resources.ApplyResources(this.colVideoPid, "colVideoPid");
+      this.colVideoPid.FieldName = "VideoPid";
+      this.colVideoPid.Name = "colVideoPid";
+      this.colVideoPid.OptionsColumn.AllowEdit = false;
+      // 
+      // colAudioPid
+      // 
+      resources.ApplyResources(this.colAudioPid, "colAudioPid");
+      this.colAudioPid.FieldName = "AudioPid";
+      this.colAudioPid.Name = "colAudioPid";
+      this.colAudioPid.OptionsColumn.AllowEdit = false;
+      // 
       // colSymbolRate
       // 
       resources.ApplyResources(this.colSymbolRate, "colSymbolRate");
@@ -810,13 +810,6 @@
       this.colPolarity.FieldName = "Polarity";
       this.colPolarity.Name = "colPolarity";
       this.colPolarity.OptionsColumn.AllowEdit = false;
-      // 
-      // colUid
-      // 
-      resources.ApplyResources(this.colUid, "colUid");
-      this.colUid.FieldName = "Uid";
-      this.colUid.Name = "colUid";
-      this.colUid.OptionsColumn.AllowEdit = false;
       // 
       // colNetworkName
       // 
@@ -839,11 +832,12 @@
       this.colProvider.Name = "colProvider";
       this.colProvider.OptionsColumn.AllowEdit = false;
       // 
-      // colDebug
+      // colUid
       // 
-      this.colDebug.FieldName = "Debug";
-      this.colDebug.Name = "colDebug";
-      this.colDebug.OptionsColumn.AllowEdit = false;
+      resources.ApplyResources(this.colUid, "colUid");
+      this.colUid.FieldName = "Uid";
+      this.colUid.Name = "colUid";
+      this.colUid.OptionsColumn.AllowEdit = false;
       // 
       // colLogicalIndex
       // 
@@ -859,6 +853,12 @@
       this.colSignalSource.FieldName = "SignalSource";
       this.colSignalSource.Name = "colSignalSource";
       this.colSignalSource.OptionsColumn.AllowEdit = false;
+      // 
+      // colDebug
+      // 
+      this.colDebug.FieldName = "Debug";
+      this.colDebug.Name = "colDebug";
+      this.colDebug.OptionsColumn.AllowEdit = false;
       // 
       // lblHotkeyRight
       // 
@@ -908,7 +908,7 @@
       // 
       // btnAdd
       // 
-      this.btnAdd.ImageIndex = 26;
+      this.btnAdd.ImageIndex = 39;
       this.btnAdd.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnAdd, "btnAdd");
       this.btnAdd.Name = "btnAdd";

@@ -420,20 +420,20 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ChanSort Reference List|*.csv|SamToolBox Reference List|*.chl|All Reference Lists|*.csv;*.chl.
+        ///   Looks up a localized string similar to To swap channels an equal number of rows must be selected in the left and right table..
         /// </summary>
-        internal static string MainForm_ShowOpenReferenceFileDialog_Filter {
+        internal static string MainForm_SwapChannels_RowCountMsg {
             get {
-                return ResourceManager.GetString("MainForm_ShowOpenReferenceFileDialog_Filter", resourceCulture);
+                return ResourceManager.GetString("MainForm_SwapChannels_RowCountMsg", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open Reference List.
+        ///   Looks up a localized string similar to Swap Channels.
         /// </summary>
-        internal static string MainForm_ShowOpenReferenceFileDialog_Title {
+        internal static string MainForm_SwapChannels_RowCountTitle {
             get {
-                return ResourceManager.GetString("MainForm_ShowOpenReferenceFileDialog_Title", resourceCulture);
+                return ResourceManager.GetString("MainForm_SwapChannels_RowCountTitle", resourceCulture);
             }
         }
         
@@ -505,6 +505,15 @@ namespace ChanSort.Ui.Properties {
         internal static string ReferenceListForm_btnApply_ConflictHandling {
             get {
                 return ResourceManager.GetString("ReferenceListForm_btnApply_ConflictHandling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a reference list to import.
+        /// </summary>
+        internal static string ReferenceListForm_ShowOpenFileDialog_Title {
+            get {
+                return ResourceManager.GetString("ReferenceListForm_ShowOpenFileDialog_Title", resourceCulture);
             }
         }
         

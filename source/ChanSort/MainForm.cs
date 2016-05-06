@@ -532,6 +532,7 @@ namespace ChanSort.Ui
       {
         this.DataRoot.ApplyCurrentProgramNumbers();
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
+        this.rbInsertSwap.Checked = true;
       }
     }
 
@@ -541,47 +542,7 @@ namespace ChanSort.Ui
 
     private void ShowOpenReferenceFileDialog(bool addChannels)
     {
-#if false
-      using (OpenFileDialog dlg = new OpenFileDialog())
-      {
-        dlg.Title = Resources.MainForm_ShowOpenReferenceFileDialog_Title;
-
-        var dir = Path.GetDirectoryName(this.currentTvFile);
-        var file = Path.GetFileNameWithoutExtension(this.currentTvFile) + ".csv";
-        var path = dir + "\\" + file;
-        if (File.Exists(path))
-        {
-          dlg.InitialDirectory = dir;
-          dlg.FileName = file; // path
-        }
-        else
-        {
-          dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);          
-        }
-        string supportedExtensions;
-        int numberOfFilters;
-        string filter = this.GetTvDataFileFilter(out supportedExtensions, out numberOfFilters);
-        filter = "ChanSort|*.csv|SamToolBox|*.chl|" + filter;
-        supportedExtensions = "*.csv;*.chl;" + supportedExtensions;
-        dlg.AddExtension = true;
-        dlg.AutoUpgradeEnabled = true;
-        dlg.CheckFileExists = true;
-        dlg.DefaultExt = ".csv";
-        dlg.DereferenceLinks = true;
-        dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
-        dlg.FilterIndex = numberOfFilters + 3;
-        dlg.RestoreDirectory = true;
-        dlg.SupportMultiDottedExtensions = false;
-        dlg.ValidateNames = true;
-        dlg.Title = this.miOpenReferenceFile.Caption;
-        if (dlg.ShowDialog(this) == DialogResult.OK)
-        {
-          this.LoadReferenceFile(dlg.FileName, addChannels);
-        }
-      }
-#else
       new ReferenceListForm(this).ShowDialog(this);
-#endif
     }
 
     #endregion
@@ -894,15 +855,35 @@ namespace ChanSort.Ui
 
     private void AddChannels()
     {
-      var selectedChannels = this.GetSelectedChannels(gviewRight);
-      if (selectedChannels.Count == 0) return;
-
       if (this.rbInsertSwap.Checked)
-        this.RemoveChannels(this.gviewLeft, this.cbCloseGap.Checked);
+      {
+        this.SwapChannels();
+        return;
+      }
+
+      var selectedChannels = this.GetSelectedChannels(gviewRight);
+      if (selectedChannels.Count == 0) return;      
 
       ChannelInfo lastInsertedChannel;
       this.gviewLeft.BeginDataUpdate();
       this.gviewRight.BeginDataUpdate();
+
+      // remove all the selected channels which are about to be added. 
+      // This may require an adjustment of the insert position when channels are removed in front of it and gaps are closed.
+      var insertSlot = this.CurrentChannelList.InsertProgramNumber;
+      var contextRow = (ChannelInfo)this.gviewLeft.GetFocusedRow();
+      if (contextRow != null)
+      {
+        if (!(this.rbInsertBefore.Checked && insertSlot == contextRow.NewProgramNr || this.rbInsertAfter.Checked && insertSlot == contextRow.NewProgramNr + 1))
+          contextRow = null;
+      }
+      this.RemoveChannels(gviewRight, this.cbCloseGap.Checked);
+      if (contextRow != null)
+        this.CurrentChannelList.InsertProgramNumber = this.rbInsertBefore.Checked ? contextRow.NewProgramNr : contextRow.NewProgramNr + 1;
+      else
+        this.CurrentChannelList.InsertProgramNumber = insertSlot;
+
+
       try
       {
         lastInsertedChannel = this.Editor.AddChannels(selectedChannels);
@@ -927,6 +908,58 @@ namespace ChanSort.Ui
       this.SelectFocusedRow(this.gviewLeft, rowHandle);
     }
 
+    #endregion
+
+    #region SwapChannels()
+    private void SwapChannels()
+    {
+      if (this.gviewRight.SelectedRowsCount == 0)
+        return;
+
+      if (this.gviewLeft.SelectedRowsCount != this.gviewRight.SelectedRowsCount)
+      {
+        XtraMessageBox.Show(this, Resources.MainForm_SwapChannels_RowCountMsg, Resources.MainForm_SwapChannels_RowCountTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        return;
+      }
+
+      // get selected channel objects from left and right grid before we start modifying the data
+      var leftChannels = this.GetSelectedChannels(gviewLeft);
+      var rightChannels = this.GetSelectedChannels(gviewRight);
+
+      // swap channel numbers
+      ChannelInfo ch1 = null, ch2 = null;
+      for (int i = 0, c = leftChannels.Count; i < c; i++)
+      {
+        ch1 = leftChannels[i];
+        ch2 = rightChannels[i];
+        int p = ch1.NewProgramNr;
+        ch1.NewProgramNr = ch2.NewProgramNr;
+        ch2.NewProgramNr = p;
+      }
+
+      // resort the grids
+      this.RefreshGrids();
+
+      // in the left grid, select the last swapped channel from the right grid
+      this.gviewLeft.ClearSelection();
+      var h = this.gviewLeft.GetRowHandle(this.CurrentChannelList.Channels.IndexOf(ch2));
+      if (h >= 0)
+      {
+        this.gviewLeft.SelectRow(h);
+        this.gviewLeft.FocusedRowHandle = h;
+        this.gviewLeft.MakeRowVisible(h);
+      }
+
+      // in the right grid, select the last swapped channel from the left grid
+      this.gviewRight.ClearSelection();
+      h = this.gviewRight.GetRowHandle(this.CurrentChannelList.Channels.IndexOf(ch1));
+      if (h >= 0)
+      {
+        this.gviewRight.SelectRow(h);
+        this.gviewRight.FocusedRowHandle = h;
+        this.gviewRight.MakeRowVisible(h);
+      }
+    }
     #endregion
 
     #region RemoveChannels()
@@ -1006,6 +1039,7 @@ namespace ChanSort.Ui
       try
       {
         this.Editor.SetSlotNumber(selectedChannels, prog, this.rbInsertSwap.Checked, this.cbCloseGap.Checked);
+        this.txtSetSlot.Text = (prog + selectedChannels.Count).ToString();
       }
       finally
       {
@@ -2175,7 +2209,17 @@ namespace ChanSort.Ui
     private void gviewRight_RowClick(object sender, RowClickEventArgs e)
     {
       if (e.Clicks == 2 && e.Button == MouseButtons.Left && this.gviewRight.IsDataRow(e.RowHandle))
-        TryExecute(this.AddChannels);
+      {
+        if (this.rbInsertSwap.Checked)
+        {
+          TryExecute(this.SwapChannels);          
+        }
+        else
+          TryExecute(this.AddChannels);
+
+        // rows were re-arranged and the pending MouseDown event handler would focus+select the wrong row again
+        this.dontFocusClickedRow = true;
+      }
     }
 
     #endregion
@@ -2237,8 +2281,11 @@ namespace ChanSort.Ui
         return;
       try
       {
+        this.btnAdd.ImageIndex = this.rbInsertSwap.Checked ? 38 : this.rbInsertAfter.Checked ? 39 : 40;
+
         if (this.CurrentChannelList == null)
           return;
+
         var delta = this.curEditMode == EditMode.InsertAfter
           ? -1
           : this.rbInsertAfter.Checked ? +1 : 0;
@@ -2720,6 +2767,8 @@ namespace ChanSort.Ui
     // these 4 event handler in combination override the default row-selection and editor-opening 
     // behavior of the grid control.
 
+    private bool dontFocusClickedRow;
+
     private void gview_MouseDown(object sender, MouseEventArgs e)
     {
       var view = (GridView) sender;
@@ -2731,7 +2780,7 @@ namespace ChanSort.Ui
       {
         if (ModifierKeys == Keys.None)
         {
-          if (downHit.RowHandle != view.FocusedRowHandle)
+          if (downHit.RowHandle != view.FocusedRowHandle && !dontFocusClickedRow)
             SelectFocusedRow(view, downHit.RowHandle);
           this.timerEditDelay.Start();
         }
@@ -2748,6 +2797,7 @@ namespace ChanSort.Ui
       }
 
       this.dontOpenEditor = true;
+      this.dontFocusClickedRow = false;
     }
 
     private void gview_MouseUp(object sender, MouseEventArgs e)

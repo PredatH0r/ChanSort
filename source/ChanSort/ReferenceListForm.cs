@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -62,12 +63,13 @@ namespace ChanSort.Ui
 
         using (var dlg = new OpenFileDialog())
         {
-          dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+          dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) ?? ".", "ReferenceLists");
           dlg.AddExtension = true;
           dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
           dlg.FilterIndex = numberOfFilters + 1;
           dlg.CheckFileExists = true;
-          dlg.RestoreDirectory = true;
+          dlg.RestoreDirectory = false;
+          dlg.Title = Resources.ReferenceListForm_ShowOpenFileDialog_Title;
           if (dlg.ShowDialog(main) != DialogResult.OK)
             return null;
 
