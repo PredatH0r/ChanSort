@@ -464,6 +464,51 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Antenna,Cable,Sat,IP,Analog,Digital,TV,Radio.
+        /// </summary>
+        internal static string ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio {
+            get {
+                return ResourceManager.GetString("ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear target list before applying reference list.
+        /// </summary>
+        internal static string ReferenceListForm_btnApply_Click_Clear {
+            get {
+                return ResourceManager.GetString("ReferenceListForm_btnApply_Click_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep current channel at the Pr#.
+        /// </summary>
+        internal static string ReferenceListForm_btnApply_Click_Keep {
+            get {
+                return ResourceManager.GetString("ReferenceListForm_btnApply_Click_Keep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite Pr# with the channel from the reference list.
+        /// </summary>
+        internal static string ReferenceListForm_btnApply_Click_Overwrite {
+            get {
+                return ResourceManager.GetString("ReferenceListForm_btnApply_Click_Overwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How do you want to handle it when a Pr# is already taken in the target list?.
+        /// </summary>
+        internal static string ReferenceListForm_btnApply_ConflictHandling {
+            get {
+                return ResourceManager.GetString("ReferenceListForm_btnApply_ConflictHandling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Version.
         /// </summary>
         internal static string UpdateCheck_NotifyAboutNewVersion_Caption {

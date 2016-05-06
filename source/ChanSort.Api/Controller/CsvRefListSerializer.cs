@@ -9,7 +9,7 @@ namespace ChanSort.Api
   ///   Reads a reference list from a .csv file with the format
   ///   [dummy1],ProgramNr,[dummy2],UID,ChannelName[,SignalSource,FavAndFlags]
   /// </summary>
-  public class CsvFileSerializer : SerializerBase
+  public class CsvRefListSerializer : SerializerBase
   {
     private static readonly List<string> Columns = new List<string>
     {
@@ -27,7 +27,7 @@ namespace ChanSort.Api
 
     #region ctor()
 
-    public CsvFileSerializer(string fileName) : base(fileName)
+    public CsvRefListSerializer(string fileName) : base(fileName)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanSkipChannels = true;
@@ -306,7 +306,7 @@ namespace ChanSort.Api
       }
     }
 
-    public static void Save(StreamWriter stream, DataRoot dataRoot)
+    public static void Save(TextWriter stream, DataRoot dataRoot)
     {
       foreach (var channelList in dataRoot.ChannelLists)
       {

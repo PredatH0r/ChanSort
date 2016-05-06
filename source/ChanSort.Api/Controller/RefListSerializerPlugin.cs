@@ -12,9 +12,9 @@ namespace ChanSort.Api
     {
       var ext = (Path.GetExtension(inputFile) ?? "").ToLower();
       if (ext == ".csv")
-        return new CsvFileSerializer(inputFile);
+        return new CsvRefListSerializer(inputFile);
       else
-        return new RefSerializer(inputFile);
+        return new TxtRefListSerializer(inputFile);
     }
   }
 }

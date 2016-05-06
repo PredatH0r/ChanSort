@@ -242,7 +242,7 @@ Möchten Sie die Downloadseite öffnen?</value>
     <value>Bestehende Liste bearbeiten: Derzeitige Senderreihenfolge übernehmen und anschließend bearbeiten</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
-    <value>Reihenfolge kopieren: Senderreihenfolge und Favoriten aus einer Referenzdatei übernehmen</value>
+    <value>Vorlage übernehmen: Senderreihenfolge und Favoriten aus einer Vorlagedatei übernehmen</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
     <value>Was soll mit den unsortierten Sendern geschehen?</value>
@@ -273,5 +273,20 @@ Sollen die Programmnummern in fortlaufende Zahlen umgeändert werden?</value>
   <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
     <value>Der Inhalt der Datei ist ungültig, da sie entweder 0 Byte groß is oder ausschließlich Nullwerte enthält.
 Mögliche Ursachen sind USB-Sticks, die mit NTFS formatiert sind (FAT32 sollte immer funktionieren) oder ein am TV durchgeführtes Firmwareupdate, ohne einen anschließenden neuen Suchlauf. Dabei kann dann unter Umständen die neue Firmware die alten Daten nicht korrekt exportieren.</value>
+  </data>
+  <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
+    <value>Antenne,Kabel,Sat,IP,Analog,Digital,TV,Radio</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
+    <value>Wie soll vorgegangen werden, wenn eine Pr# bereits vergeben ist?</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Clear" xml:space="preserve">
+    <value>Zielliste vor der Übernahme leeren</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Overwrite" xml:space="preserve">
+    <value>Pr# dem Sender gemäß Vorlage zuordnen</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Keep" xml:space="preserve">
+    <value>Pr# beim bisherigen Sender belassen</value>
   </data>
 </root>

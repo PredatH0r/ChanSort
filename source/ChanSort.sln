@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Hisense", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Samsung", "Test.Loader.Samsung\Test.Loader.Samsung.csproj", "{1ED68A9B-6698-4609-B9E6-8E08B6055F2E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReferenceLists", "ReferenceLists", "{382AB628-3B89-4966-8D89-36BED9F1F836}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -206,5 +208,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{382AB628-3B89-4966-8D89-36BED9F1F836} = {67AED502-8AEB-45F2-9B95-AC42B6A5D2C4}
 	EndGlobalSection
 EndGlobal

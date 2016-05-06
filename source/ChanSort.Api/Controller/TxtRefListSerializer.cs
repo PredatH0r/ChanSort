@@ -4,16 +4,15 @@ using System.Text;
 
 namespace ChanSort.Api
 {
-  public class RefSerializer : SerializerBase
+  public class TxtRefListSerializer : SerializerBase
   {
     private static readonly char[] Separators = { ';' };
 
-    private readonly ChannelList allChannels =
-      new ChannelList(SignalSource.DvbT | SignalSource.DvbC | SignalSource.DvbS | SignalSource.AnalogC | SignalSource.AnalogT | SignalSource.Tv | SignalSource.Radio, "All");
+    private readonly ChannelList allChannels = new ChannelList(SignalSource.MaskAntennaCableSat | SignalSource.MaskAnalogDigital | SignalSource.MaskTvRadio, "All");
 
     #region ctor()
 
-    public RefSerializer(string inputFile) : base(inputFile)
+    public TxtRefListSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanSkipChannels = false;
@@ -26,6 +25,7 @@ namespace ChanSort.Api
 
       allChannels.VisibleColumnFieldNames = new List<string>
       {
+        "OldPosition",
         "Position",
         "Name",
         "OriginalNetworkId",

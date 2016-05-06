@@ -573,25 +573,25 @@
             this.colSkip,
             this.colHidden,
             this.colEncrypted,
-            this.colChannelOrTransponder,
-            this.colFreqInMhz,
-            this.colServiceId,
-            this.colVideoPid,
-            this.colAudioPid,
             this.colServiceType,
             this.colServiceTypeName,
+            this.colFreqInMhz,
+            this.colChannelOrTransponder,
             this.colSatellite,
             this.colNetworkId,
             this.colTransportStreamId,
+            this.colServiceId,
+            this.colVideoPid,
+            this.colAudioPid,
             this.colSymbolRate,
             this.colPolarity,
-            this.colUid,
             this.colNetworkName,
             this.colNetworkOperator,
             this.colProvider,
-            this.colDebug,
+            this.colUid,
             this.colLogicalIndex,
-            this.colSignalSource});
+            this.colSignalSource,
+            this.colDebug});
       this.gviewRight.GridControl = this.gridRight;
       this.gviewRight.Name = "gviewRight";
       this.gviewRight.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;

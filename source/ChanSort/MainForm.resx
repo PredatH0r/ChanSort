@@ -1843,7 +1843,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>05/04/2016 22:31:52</value>
+    <value>05/05/2016 19:53:32</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -2358,77 +2358,8 @@
   <data name="colEncrypted.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
-  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Chan/ Transp</value>
-  </data>
-  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
-    <value>Channel or transponder number</value>
-  </data>
-  <data name="colChannelOrTransponder.Visible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="colChannelOrTransponder.VisibleIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="colChannelOrTransponder.Width" type="System.Int32, mscorlib">
-    <value>45</value>
-  </data>
-  <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Freqency (MHz)</value>
-  </data>
-  <data name="colFreqInMhz.Visible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="colFreqInMhz.VisibleIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="colFreqInMhz.Width" type="System.Int32, mscorlib">
-    <value>57</value>
-  </data>
-  <data name="colServiceId.Caption" xml:space="preserve">
-    <value>Service ID</value>
-  </data>
-  <data name="colServiceId.Visible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="colServiceId.VisibleIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="colServiceId.Width" type="System.Int32, mscorlib">
-    <value>45</value>
-  </data>
-  <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>Video PID</value>
-  </data>
-  <data name="colVideoPid.Visible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="colVideoPid.VisibleIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="colVideoPid.Width" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
-  <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Audio PID</value>
-  </data>
-  <data name="colAudioPid.Visible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="colAudioPid.VisibleIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="colAudioPid.Width" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
   <data name="colServiceType.Caption" xml:space="preserve">
     <value>Service Type ID</value>
-  </data>
-  <data name="colServiceType.Visible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="colServiceType.VisibleIndex" type="System.Int32, mscorlib">
-    <value>15</value>
   </data>
   <data name="colServiceType.Width" type="System.Int32, mscorlib">
     <value>45</value>
@@ -2445,6 +2376,33 @@
   <data name="colServiceTypeName.Width" type="System.Int32, mscorlib">
     <value>45</value>
   </data>
+  <data name="colFreqInMhz.Caption" xml:space="preserve">
+    <value>Freqency (MHz)</value>
+  </data>
+  <data name="colFreqInMhz.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colFreqInMhz.VisibleIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="colFreqInMhz.Width" type="System.Int32, mscorlib">
+    <value>57</value>
+  </data>
+  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
+    <value>Chan/ Transp</value>
+  </data>
+  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
+    <value>Channel or transponder number</value>
+  </data>
+  <data name="colChannelOrTransponder.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colChannelOrTransponder.VisibleIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="colChannelOrTransponder.Width" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
   <data name="colSatellite.Caption" xml:space="preserve">
     <value>Satellite</value>
   </data>
@@ -2452,7 +2410,7 @@
     <value>True</value>
   </data>
   <data name="colSatellite.VisibleIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>12</value>
   </data>
   <data name="colSatellite.Width" type="System.Int32, mscorlib">
     <value>100</value>
@@ -2464,7 +2422,7 @@
     <value>True</value>
   </data>
   <data name="colNetworkId.VisibleIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>13</value>
   </data>
   <data name="colNetworkId.Width" type="System.Int32, mscorlib">
     <value>45</value>
@@ -2479,9 +2437,45 @@
     <value>True</value>
   </data>
   <data name="colTransportStreamId.VisibleIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>14</value>
   </data>
   <data name="colTransportStreamId.Width" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>Service ID</value>
+  </data>
+  <data name="colServiceId.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colServiceId.VisibleIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="colServiceId.Width" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="colVideoPid.Caption" xml:space="preserve">
+    <value>Video PID</value>
+  </data>
+  <data name="colVideoPid.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colVideoPid.VisibleIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="colVideoPid.Width" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio PID</value>
+  </data>
+  <data name="colAudioPid.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colAudioPid.VisibleIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="colAudioPid.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
   <data name="colSymbolRate.Caption" xml:space="preserve">
@@ -2491,7 +2485,7 @@
     <value>True</value>
   </data>
   <data name="colSymbolRate.VisibleIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>18</value>
   </data>
   <data name="colSymbolRate.Width" type="System.Int32, mscorlib">
     <value>40</value>
@@ -2502,12 +2496,6 @@
   <data name="colPolarity.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
-  <data name="colUid.Caption" xml:space="preserve">
-    <value>Uid</value>
-  </data>
-  <data name="colUid.Width" type="System.Int32, mscorlib">
-    <value>120</value>
-  </data>
   <data name="colNetworkName.Caption" xml:space="preserve">
     <value>Network Name</value>
   </data>
@@ -2515,7 +2503,7 @@
     <value>True</value>
   </data>
   <data name="colNetworkName.VisibleIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>19</value>
   </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
     <value>Network Operator</value>
@@ -2524,7 +2512,7 @@
     <value>True</value>
   </data>
   <data name="colNetworkOperator.VisibleIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+    <value>20</value>
   </data>
   <data name="colProvider.Caption" xml:space="preserve">
     <value>Provider</value>
@@ -2533,7 +2521,13 @@
     <value>True</value>
   </data>
   <data name="colProvider.VisibleIndex" type="System.Int32, mscorlib">
-    <value>22</value>
+    <value>21</value>
+  </data>
+  <data name="colUid.Caption" xml:space="preserve">
+    <value>Uid</value>
+  </data>
+  <data name="colUid.Width" type="System.Int32, mscorlib">
+    <value>120</value>
   </data>
   <data name="colLogicalIndex.Caption" xml:space="preserve">
     <value>Order</value>

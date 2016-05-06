@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -6,6 +7,7 @@ using ChanSort.Api;
 using ChanSort.Ui.Properties;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraPrinting.Native;
 
 namespace ChanSort.Ui
 {
@@ -13,13 +15,24 @@ namespace ChanSort.Ui
   {
     private readonly MainForm main;
     private SerializerBase serializer;
+    private readonly string[] closeButtonText;
 
     public ReferenceListForm(MainForm main)
     {
       this.main = main;
       InitializeComponent();
+
+      this.closeButtonText = this.btnClose.Text.Split('/');
       this.UpdateButtons();
     }
+
+    #region UpdateButtons()
+    private void UpdateButtons()
+    {
+      this.btnOk.Visible = this.rbAuto.Checked;
+      this.btnClose.Text = this.rbAuto.Checked ? closeButtonText[1] : closeButtonText[0];
+    }
+    #endregion
 
     #region OnLoad()
     protected override void OnLoad(EventArgs e)
@@ -34,14 +47,6 @@ namespace ChanSort.Ui
         if (ser != null)
           this.SetInput(ser);
       }));
-    }
-    #endregion
-
-    #region UpdateButtons()
-    private void UpdateButtons()
-    {
-      this.btnOk.Visible = this.rbAuto.Checked;
-      this.btnClose.Text = this.rbAuto.Checked ? "Cancel" : "Close";
     }
     #endregion
 
@@ -83,93 +88,7 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region UpdateInfoTextAndOptions()
-
-    private void UpdateInfoTextAndOptions()
-    {
-      foreach (var ctl in this.grpManual.Controls)
-      {
-        var checkEdit = ctl as CheckEdit;
-        if (checkEdit != null)
-          checkEdit.Checked = checkEdit.Enabled = true;
-      }
-
-      var list = (ChannelList) this.comboSource.EditValue;
-      this.lblSourceInfo.Text = GetInfoText(list);
-      list = (ChannelList) this.comboTarget.EditValue;
-      this.lblTargetInfo.Text = GetInfoText(list);
-
-      var canApply = (cbAnalog.Checked || cbDigital.Checked) && (cbTv.Checked || cbRadio.Checked);
-      this.btnApply.Enabled = canApply;
-    }
-
-    #endregion
-
-    #region GetInfoText()
-
-    private string GetInfoText(ChannelList list)
-    {
-      var src = list?.SignalSource ?? 0;
-      var sb = new StringBuilder();
-
-      if ((src & SignalSource.Antenna) != 0)
-        sb.Append(", Antenna");
-      if ((src & SignalSource.Cable) != 0)
-        sb.Append(", Cable");
-      if ((src & SignalSource.Sat) != 0)
-        sb.Append(", Satellite");
-      if ((src & SignalSource.IP) != 0)
-        sb.Append(", IP");
-
-      if ((src & SignalSource.Analog) != 0)
-        sb.Append(", Analog");
-      else
-        this.cbAnalog.Enabled = this.cbAnalog.Checked = false;
-
-      if ((src & SignalSource.Digital) != 0)
-        sb.Append(", Digital");
-      else
-        this.cbDigital.Enabled = this.cbDigital.Checked = false;
-
-      if ((src & SignalSource.Tv) != 0)
-        sb.Append(", TV");
-      else
-        this.cbTv.Enabled = this.cbTv.Checked = false;
-
-      if ((src & SignalSource.Radio) != 0)
-        sb.Append(", Radio");
-      else
-        this.cbRadio.Enabled = this.cbRadio.Checked = false;
-
-      if (sb.Length >= 2)
-        sb.Remove(0, 2);
-      return sb.ToString();
-    }
-
-    #endregion
-
-    #region FilterChannel()
-    private bool FilterChannel(ChannelInfo ch)
-    {
-      var ss = ch.SignalSource;
-      if (!(this.cbAnalog.Checked && (ss & SignalSource.Analog) != 0 || this.cbDigital.Checked && (ss & SignalSource.Digital) != 0))
-        return false;
-      if (!(this.cbTv.Checked && (ss & SignalSource.Tv) != 0 || this.cbRadio.Checked && (ss & SignalSource.Radio) != 0))
-        return false;
-      return true;
-    }
-    #endregion
-
-
-    #region edFile_ButtonClick
-
-    private void edFile_ButtonClick(object sender, ButtonPressedEventArgs e)
-    {
-      var ser = ShowOpenFileDialog(this.main);
-      if (ser != null)
-        SetInput(ser);
-    }
-
+    #region SetInput()
     private void SetInput(SerializerBase ser)
     {
       this.serializer = ser;
@@ -199,17 +118,109 @@ namespace ChanSort.Ui
       if (this.comboTarget.SelectedIndex < 0 && this.comboTarget.Properties.Items.Count > 0)
         this.comboTarget.SelectedIndex = 0;
 
+      // detect whether auto-sorting is possible
       this.rbAuto.Enabled = true;
       foreach (var list in main.DataRoot.ChannelLists)
-        this.rbAuto.Enabled &= (serializer.DataRoot.GetChannelList(list.SignalSource)?.SignalSource ?? 0) == list.SignalSource;
-        //serializer.DataRoot.MixedSourceFavorites == main.DataRoot.MixedSourceFavorites &&
-        //serializer.DataRoot.SortedFavorites == main.DataRoot.SortedFavorites;
+      {
+        if (!list.IsMixedSourceFavoritesList)
+          this.rbAuto.Enabled &= (serializer.DataRoot.GetChannelList(list.SignalSource)?.SignalSource ?? 0) == list.SignalSource;
+      }
       if (this.rbAuto.Enabled)
         this.rbAuto.Checked = true;
       else
         this.rbManual.Checked = true;
     }
 
+    #endregion
+
+    #region UpdateInfoTextAndOptions()
+
+    private void UpdateInfoTextAndOptions()
+    {
+      foreach (var ctl in this.grpManual.Controls)
+      {
+        if (ctl == this.cbConsecutive)
+          continue;
+        var checkEdit = ctl as CheckEdit;
+        if (checkEdit != null)
+          checkEdit.Checked = checkEdit.Enabled = true;
+      }
+
+      var list = (ChannelList) this.comboSource.EditValue;
+      this.lblSourceInfo.Text = GetInfoText(list, true);
+      list = (ChannelList) this.comboTarget.EditValue;
+      this.lblTargetInfo.Text = GetInfoText(list, false);
+
+      var canApply = (cbAnalog.Checked || cbDigital.Checked) && (cbTv.Checked || cbRadio.Checked);
+      this.btnApply.Enabled = canApply;
+    }
+
+    #endregion
+
+    #region GetInfoText()
+
+    private string GetInfoText(ChannelList list, bool source)
+    {
+      var src = list?.SignalSource ?? 0;
+      var sb = new StringBuilder();
+
+      var sigSource = new[] {SignalSource.Antenna, SignalSource.Cable, SignalSource.Sat, SignalSource.IP, SignalSource.Analog, SignalSource.Digital, SignalSource.Tv, SignalSource.Radio};
+      var infoText = Resources.ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio.Split(',');
+      var controls = new[] {cbAntenna, cbCable, cbSat, cbIp, cbAnalog, cbDigital, cbTv, cbRadio };
+
+      for (int i = 0, c = sigSource.Length; i < c; i++)
+      {
+        if ((src & sigSource[i]) != 0)
+          sb.Append(", ").Append(infoText[i]);
+        else
+        {
+          controls[i].Checked = false;
+          if (source || i >= 4)
+            controls[i].Enabled = false;
+        }      
+      }
+
+      if (sb.Length >= 2)
+        sb.Remove(0, 2);
+      return sb.ToString();
+    }
+
+    #endregion
+
+    #region FilterChannel()
+    private bool FilterChannel(ChannelInfo ch, bool source)
+    {
+      var ss = ch.SignalSource;
+      if (source)
+      {
+        if (
+          !(this.cbAntenna.Checked && (ss & SignalSource.Antenna) != 0 || this.cbCable.Checked && (ss & SignalSource.Cable) != 0 || this.cbSat.Checked && (ss & SignalSource.Sat) != 0 ||
+            this.cbIp.Checked && (ss & SignalSource.IP) != 0))
+          return false;
+      }
+      if (!(this.cbAnalog.Checked && (ss & SignalSource.Analog) != 0 || this.cbDigital.Checked && (ss & SignalSource.Digital) != 0))
+        return false;
+      if (!(this.cbTv.Checked && (ss & SignalSource.Tv) != 0 || this.cbRadio.Checked && (ss & SignalSource.Radio) != 0))
+        return false;
+      return true;
+    }
+    #endregion
+
+
+    #region edFile_ButtonClick
+    private void edFile_ButtonClick(object sender, ButtonPressedEventArgs e)
+    {
+      var ser = ShowOpenFileDialog(this.main);
+      if (ser != null)
+        SetInput(ser);
+    }
+    #endregion
+
+    #region linkWiki_HyperlinkClick
+    private void linkWiki_HyperlinkClick(object sender, DevExpress.Utils.HyperlinkClickEventArgs e)
+    {
+      Process.Start("https://github.com/PredatH0r/ChanSort/wiki/Reference-Lists");
+    }
     #endregion
 
     #region rbAuto_CheckedChanged
@@ -267,7 +278,34 @@ namespace ChanSort.Ui
       int offset;
       if (int.TryParse(this.comboPrNr.Text, out offset))
         offset -= src.Channels.Min(ch => Math.Max(ch.OldProgramNr, 1));
-      main.Editor.ApplyReferenceList(this.serializer.DataRoot, src, target, false, offset, FilterChannel);
+
+      bool overwrite = true;
+      if (target.GetChannelsByNewOrder().Any(ch => ch.NewProgramNr != -1))
+      {
+        using (var dlg = new ActionBoxDialog(Resources.ReferenceListForm_btnApply_ConflictHandling))
+        {
+          dlg.AddAction(Resources.ReferenceListForm_btnApply_Click_Clear, DialogResult.OK, dlg.EmptyList);
+          dlg.AddAction(Resources.ReferenceListForm_btnApply_Click_Overwrite, DialogResult.Yes, dlg.Overwrite);
+          dlg.AddAction(Resources.ReferenceListForm_btnApply_Click_Keep, DialogResult.No, dlg.CopyList);
+          dlg.AddAction(closeButtonText[1], DialogResult.Cancel, dlg.Cancel);
+          switch (dlg.ShowDialog(this))
+          {
+            case DialogResult.OK:
+              target.Channels.ForEach(ch => ch.NewProgramNr = -1);
+              break;
+            case DialogResult.Yes:
+              //overwrite = true;
+              break;
+            case DialogResult.No:
+              overwrite = false;
+              break;
+            case DialogResult.Cancel:
+              return;
+          }
+        }
+      }
+
+      main.Editor.ApplyReferenceList(this.serializer.DataRoot, src, target, false, offset, FilterChannel, overwrite, this.cbConsecutive.Checked);
       main.RefreshGrids();
     }
 
@@ -282,6 +320,5 @@ namespace ChanSort.Ui
     }
 
     #endregion
-
   }
 }

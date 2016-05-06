@@ -117,4 +117,976 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="labelControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 39</value>
+  </data>
+  <data name="labelControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 13</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="labelControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="labelControl1.Text" xml:space="preserve">
+    <value>Reference List File:</value>
+  </data>
+  <data name="&gt;&gt;labelControl1.Name" xml:space="preserve">
+    <value>labelControl1</value>
+  </data>
+  <data name="&gt;&gt;labelControl1.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl1.Parent" xml:space="preserve">
+    <value>groupControl1</value>
+  </data>
+  <data name="&gt;&gt;labelControl1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="edFile.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="edFile.EditValue" xml:space="preserve">
+    <value>← press button to select a file</value>
+  </data>
+  <data name="edFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>132, 36</value>
+  </data>
+  <assembly alias="DevExpress.Utils.v15.2" name="DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="edFile.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v15.2">
+    <value>Ellipsis</value>
+  </data>
+  <data name="edFile.Properties.Buttons1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="edFile.Properties.Buttons2" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
+  <data name="edFile.Properties.Buttons3" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="edFile.Properties.Buttons4" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="edFile.Properties.Buttons5" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="DevExpress.XtraEditors.v15.2" name="DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="edFile.Properties.Buttons6" type="DevExpress.XtraEditors.ImageLocation, DevExpress.XtraEditors.v15.2">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="edFile.Properties.Buttons7" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="edFile.Properties.Buttons8" xml:space="preserve">
+    <value />
+  </data>
+  <data name="edFile.Properties.Buttons9" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="edFile.Properties.Buttons10" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="edFile.Properties.Buttons11" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="edFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>549, 20</value>
+  </data>
+  <data name="edFile.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;edFile.Name" xml:space="preserve">
+    <value>edFile</value>
+  </data>
+  <data name="&gt;&gt;edFile.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.ButtonEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;edFile.Parent" xml:space="preserve">
+    <value>groupControl1</value>
+  </data>
+  <data name="&gt;&gt;edFile.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="labelControl2.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v15.2">
+    <value>Vertical</value>
+  </data>
+  <data name="labelControl2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>132, 62</value>
+  </data>
+  <data name="labelControl2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>549, 39</value>
+  </data>
+  <data name="labelControl2.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="labelControl2.Text" xml:space="preserve">
+    <value>Choose a file which contains the channel order that you wish to apply to the current list.
+You can use one of ChanSort's predefined lists (TXT, CHL, CSV)
+or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
+  </data>
+  <data name="&gt;&gt;labelControl2.Name" xml:space="preserve">
+    <value>labelControl2</value>
+  </data>
+  <data name="&gt;&gt;labelControl2.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl2.Parent" xml:space="preserve">
+    <value>groupControl1</value>
+  </data>
+  <data name="&gt;&gt;labelControl2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="rbAuto.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="rbAuto.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 43</value>
+  </data>
+  <data name="rbAuto.Properties.Caption" xml:space="preserve">
+    <value>Automatically reorder all lists in the TV file</value>
+  </data>
+  <data name="rbAuto.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 19</value>
+  </data>
+  <data name="rbAuto.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;rbAuto.Name" xml:space="preserve">
+    <value>rbAuto</value>
+  </data>
+  <data name="&gt;&gt;rbAuto.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;rbAuto.Parent" xml:space="preserve">
+    <value>groupControl2</value>
+  </data>
+  <data name="&gt;&gt;rbAuto.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="rbManual.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="rbManual.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 117</value>
+  </data>
+  <data name="rbManual.Properties.Caption" xml:space="preserve">
+    <value>Advanced reordering</value>
+  </data>
+  <data name="rbManual.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 19</value>
+  </data>
+  <data name="rbManual.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;rbManual.Name" xml:space="preserve">
+    <value>rbManual</value>
+  </data>
+  <data name="&gt;&gt;rbManual.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;rbManual.Parent" xml:space="preserve">
+    <value>groupControl2</value>
+  </data>
+  <data name="&gt;&gt;rbManual.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="labelControl3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 36</value>
+  </data>
+  <data name="labelControl3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="labelControl3.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Reference List:</value>
+  </data>
+  <data name="&gt;&gt;labelControl3.Name" xml:space="preserve">
+    <value>labelControl3</value>
+  </data>
+  <data name="&gt;&gt;labelControl3.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl3.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;labelControl3.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="comboSource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 33</value>
+  </data>
+  <data name="comboSource.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v15.2">
+    <value>Combo</value>
+  </data>
+  <data name="comboSource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 20</value>
+  </data>
+  <data name="comboSource.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;comboSource.Name" xml:space="preserve">
+    <value>comboSource</value>
+  </data>
+  <data name="&gt;&gt;comboSource.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;comboSource.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;comboSource.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="comboTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 7</value>
+  </data>
+  <data name="comboTarget.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v15.2">
+    <value>Combo</value>
+  </data>
+  <data name="comboTarget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 20</value>
+  </data>
+  <data name="comboTarget.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;comboTarget.Name" xml:space="preserve">
+    <value>comboTarget</value>
+  </data>
+  <data name="&gt;&gt;comboTarget.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;comboTarget.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;comboTarget.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="labelControl4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 10</value>
+  </data>
+  <data name="labelControl4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 13</value>
+  </data>
+  <data name="labelControl4.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="labelControl4.Text" xml:space="preserve">
+    <value>Target List:</value>
+  </data>
+  <data name="&gt;&gt;labelControl4.Name" xml:space="preserve">
+    <value>labelControl4</value>
+  </data>
+  <data name="&gt;&gt;labelControl4.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl4.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;labelControl4.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="cbTv.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 109</value>
+  </data>
+  <data name="cbTv.Properties.Caption" xml:space="preserve">
+    <value>TV</value>
+  </data>
+  <data name="cbTv.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 19</value>
+  </data>
+  <data name="cbTv.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;cbTv.Name" xml:space="preserve">
+    <value>cbTv</value>
+  </data>
+  <data name="&gt;&gt;cbTv.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbTv.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbTv.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="cbRadio.Location" type="System.Drawing.Point, System.Drawing">
+    <value>204, 109</value>
+  </data>
+  <data name="cbRadio.Properties.Caption" xml:space="preserve">
+    <value>Radio</value>
+  </data>
+  <data name="cbRadio.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 19</value>
+  </data>
+  <data name="cbRadio.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;cbRadio.Name" xml:space="preserve">
+    <value>cbRadio</value>
+  </data>
+  <data name="&gt;&gt;cbRadio.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbRadio.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbRadio.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="labelControl5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 137</value>
+  </data>
+  <data name="labelControl5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 13</value>
+  </data>
+  <data name="labelControl5.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="labelControl5.Text" xml:space="preserve">
+    <value>Start at Pr#:</value>
+  </data>
+  <data name="&gt;&gt;labelControl5.Name" xml:space="preserve">
+    <value>labelControl5</value>
+  </data>
+  <data name="&gt;&gt;labelControl5.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl5.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;labelControl5.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="labelControl6.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v15.2">
+    <value>Vertical</value>
+  </data>
+  <data name="labelControl6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 137</value>
+  </data>
+  <data name="labelControl6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>323, 26</value>
+  </data>
+  <data name="labelControl6.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="labelControl6.Text" xml:space="preserve">
+    <value>(i.e. let radio channels start at 5000 to avoid conflicts with TV channel numbers)</value>
+  </data>
+  <data name="&gt;&gt;labelControl6.Name" xml:space="preserve">
+    <value>labelControl6</value>
+  </data>
+  <data name="&gt;&gt;labelControl6.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl6.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;labelControl6.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="comboPrNr.EditValue" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboPrNr.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 134</value>
+  </data>
+  <data name="comboPrNr.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v15.2">
+    <value>Combo</value>
+  </data>
+  <data name="comboPrNr.Properties.Items" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboPrNr.Properties.Items1" xml:space="preserve">
+    <value>100</value>
+  </data>
+  <data name="comboPrNr.Properties.Items2" xml:space="preserve">
+    <value>500</value>
+  </data>
+  <data name="comboPrNr.Properties.Items3" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items4" xml:space="preserve">
+    <value>2000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items5" xml:space="preserve">
+    <value>5000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items6" xml:space="preserve">
+    <value>7000</value>
+  </data>
+  <data name="comboPrNr.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 20</value>
+  </data>
+  <data name="comboPrNr.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;comboPrNr.Name" xml:space="preserve">
+    <value>comboPrNr</value>
+  </data>
+  <data name="&gt;&gt;comboPrNr.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;comboPrNr.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;comboPrNr.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="grpManual.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="cbConsecutive.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 167</value>
+  </data>
+  <data name="cbConsecutive.Properties.Caption" xml:space="preserve">
+    <value>Use consecutive numbers (remove gaps from reference list Pr#)</value>
+  </data>
+  <data name="cbConsecutive.Size" type="System.Drawing.Size, System.Drawing">
+    <value>484, 19</value>
+  </data>
+  <data name="cbConsecutive.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;cbConsecutive.Name" xml:space="preserve">
+    <value>cbConsecutive</value>
+  </data>
+  <data name="&gt;&gt;cbConsecutive.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbConsecutive.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbConsecutive.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cbIp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 59</value>
+  </data>
+  <data name="cbIp.Properties.Caption" xml:space="preserve">
+    <value>IP (Network)</value>
+  </data>
+  <data name="cbIp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 19</value>
+  </data>
+  <data name="cbIp.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;cbIp.Name" xml:space="preserve">
+    <value>cbIp</value>
+  </data>
+  <data name="&gt;&gt;cbIp.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbIp.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbIp.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cbSat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 59</value>
+  </data>
+  <data name="cbSat.Properties.Caption" xml:space="preserve">
+    <value>Satellite</value>
+  </data>
+  <data name="cbSat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 19</value>
+  </data>
+  <data name="cbSat.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;cbSat.Name" xml:space="preserve">
+    <value>cbSat</value>
+  </data>
+  <data name="&gt;&gt;cbSat.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbSat.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbSat.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="labelControl11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 62</value>
+  </data>
+  <data name="labelControl11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 13</value>
+  </data>
+  <data name="labelControl11.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="labelControl11.Text" xml:space="preserve">
+    <value>Input:</value>
+  </data>
+  <data name="&gt;&gt;labelControl11.Name" xml:space="preserve">
+    <value>labelControl11</value>
+  </data>
+  <data name="&gt;&gt;labelControl11.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl11.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;labelControl11.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cbAntenna.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 59</value>
+  </data>
+  <data name="cbAntenna.Properties.Caption" xml:space="preserve">
+    <value>Antenna</value>
+  </data>
+  <data name="cbAntenna.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 19</value>
+  </data>
+  <data name="cbAntenna.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;cbAntenna.Name" xml:space="preserve">
+    <value>cbAntenna</value>
+  </data>
+  <data name="&gt;&gt;cbAntenna.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbAntenna.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbAntenna.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cbCable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>204, 59</value>
+  </data>
+  <data name="cbCable.Properties.Caption" xml:space="preserve">
+    <value>Cable</value>
+  </data>
+  <data name="cbCable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 19</value>
+  </data>
+  <data name="cbCable.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;cbCable.Name" xml:space="preserve">
+    <value>cbCable</value>
+  </data>
+  <data name="&gt;&gt;cbCable.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbCable.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbCable.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="labelControl9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 87</value>
+  </data>
+  <data name="labelControl9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 13</value>
+  </data>
+  <data name="labelControl9.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="labelControl9.Text" xml:space="preserve">
+    <value>Signal Type:</value>
+  </data>
+  <data name="&gt;&gt;labelControl9.Name" xml:space="preserve">
+    <value>labelControl9</value>
+  </data>
+  <data name="&gt;&gt;labelControl9.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl9.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;labelControl9.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="cbAnalog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 84</value>
+  </data>
+  <data name="cbAnalog.Properties.Caption" xml:space="preserve">
+    <value>Analog</value>
+  </data>
+  <data name="cbAnalog.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 19</value>
+  </data>
+  <data name="cbAnalog.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;cbAnalog.Name" xml:space="preserve">
+    <value>cbAnalog</value>
+  </data>
+  <data name="&gt;&gt;cbAnalog.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbAnalog.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbAnalog.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="cbDigital.Location" type="System.Drawing.Point, System.Drawing">
+    <value>204, 84</value>
+  </data>
+  <data name="cbDigital.Properties.Caption" xml:space="preserve">
+    <value>Digital</value>
+  </data>
+  <data name="cbDigital.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 19</value>
+  </data>
+  <data name="cbDigital.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;cbDigital.Name" xml:space="preserve">
+    <value>cbDigital</value>
+  </data>
+  <data name="&gt;&gt;cbDigital.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbDigital.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbDigital.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="lblTargetInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>308, 10</value>
+  </data>
+  <data name="lblTargetInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>3, 13</value>
+  </data>
+  <data name="lblTargetInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblTargetInfo.Text" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="&gt;&gt;lblTargetInfo.Name" xml:space="preserve">
+    <value>lblTargetInfo</value>
+  </data>
+  <data name="&gt;&gt;lblTargetInfo.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;lblTargetInfo.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;lblTargetInfo.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="lblSourceInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>308, 36</value>
+  </data>
+  <data name="lblSourceInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>3, 13</value>
+  </data>
+  <data name="lblSourceInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="lblSourceInfo.Text" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="&gt;&gt;lblSourceInfo.Name" xml:space="preserve">
+    <value>lblSourceInfo</value>
+  </data>
+  <data name="&gt;&gt;lblSourceInfo.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;lblSourceInfo.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;lblSourceInfo.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="labelControl7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 112</value>
+  </data>
+  <data name="labelControl7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 13</value>
+  </data>
+  <data name="labelControl7.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="labelControl7.Text" xml:space="preserve">
+    <value>Channel Type:</value>
+  </data>
+  <data name="&gt;&gt;labelControl7.Name" xml:space="preserve">
+    <value>labelControl7</value>
+  </data>
+  <data name="&gt;&gt;labelControl7.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl7.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;labelControl7.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="btnApply.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="btnApply.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 205</value>
+  </data>
+  <data name="btnApply.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 23</value>
+  </data>
+  <data name="btnApply.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="btnApply.Text" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="&gt;&gt;btnApply.Name" xml:space="preserve">
+    <value>btnApply</value>
+  </data>
+  <data name="&gt;&gt;btnApply.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnApply.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;btnApply.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="grpManual.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="grpManual.Location" type="System.Drawing.Point, System.Drawing">
+    <value>69, 197</value>
+  </data>
+  <data name="grpManual.Size" type="System.Drawing.Size, System.Drawing">
+    <value>612, 241</value>
+  </data>
+  <data name="grpManual.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="grpManual.Text" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;grpManual.Name" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;grpManual.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;grpManual.Parent" xml:space="preserve">
+    <value>groupControl2</value>
+  </data>
+  <data name="&gt;&gt;grpManual.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnOk.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>526, 662</value>
+  </data>
+  <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 23</value>
+  </data>
+  <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
+    <value>btnOk</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnOk.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>621, 662</value>
+  </data>
+  <data name="btnClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 23</value>
+  </data>
+  <data name="btnClose.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="btnClose.Text" xml:space="preserve">
+    <value>Close/Cancel</value>
+  </data>
+  <data name="&gt;&gt;btnClose.Name" xml:space="preserve">
+    <value>btnClose</value>
+  </data>
+  <data name="&gt;&gt;btnClose.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnClose.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="groupControl1.AppearanceCaption.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 12pt</value>
+  </data>
+  <data name="linkWiki.Location" type="System.Drawing.Point, System.Drawing">
+    <value>132, 121</value>
+  </data>
+  <data name="linkWiki.Size" type="System.Drawing.Size, System.Drawing">
+    <value>351, 13</value>
+  </data>
+  <data name="linkWiki.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="linkWiki.Text" xml:space="preserve">
+    <value>Open ChanSort Wiki for more information and to download reference lists</value>
+  </data>
+  <data name="&gt;&gt;linkWiki.Name" xml:space="preserve">
+    <value>linkWiki</value>
+  </data>
+  <data name="&gt;&gt;linkWiki.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.HyperlinkLabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;linkWiki.Parent" xml:space="preserve">
+    <value>groupControl1</value>
+  </data>
+  <data name="&gt;&gt;linkWiki.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 22</value>
+  </data>
+  <data name="groupControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>696, 142</value>
+  </data>
+  <data name="groupControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupControl1.Text" xml:space="preserve">
+    <value>1. Select reference list file</value>
+  </data>
+  <data name="&gt;&gt;groupControl1.Name" xml:space="preserve">
+    <value>groupControl1</value>
+  </data>
+  <data name="&gt;&gt;groupControl1.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;groupControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupControl1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupControl2.AppearanceCaption.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 12pt</value>
+  </data>
+  <data name="labelControl10.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v15.2">
+    <value>Vertical</value>
+  </data>
+  <data name="labelControl10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>74, 142</value>
+  </data>
+  <data name="labelControl10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>607, 39</value>
+  </data>
+  <data name="labelControl10.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="labelControl10.Text" xml:space="preserve">
+    <value>If the TV and reference file contain multiple lists or use different grouping, you can apply selected parts of the reference list to a target list.
+This step can be repeated as needed.</value>
+  </data>
+  <data name="&gt;&gt;labelControl10.Name" xml:space="preserve">
+    <value>labelControl10</value>
+  </data>
+  <data name="&gt;&gt;labelControl10.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl10.Parent" xml:space="preserve">
+    <value>groupControl2</value>
+  </data>
+  <data name="&gt;&gt;labelControl10.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="labelControl8.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v15.2">
+    <value>Vertical</value>
+  </data>
+  <data name="labelControl8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>74, 68</value>
+  </data>
+  <data name="labelControl8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>607, 26</value>
+  </data>
+  <data name="labelControl8.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="labelControl8.Text" xml:space="preserve">
+    <value>This option is only available when the TV file and the reference list are organized the same way.
+(i.e. same sub-lists for combinations of Antenna/Cable/Sat, TV/Radio, Analog/Digital)</value>
+  </data>
+  <data name="&gt;&gt;labelControl8.Name" xml:space="preserve">
+    <value>labelControl8</value>
+  </data>
+  <data name="&gt;&gt;labelControl8.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;labelControl8.Parent" xml:space="preserve">
+    <value>groupControl2</value>
+  </data>
+  <data name="&gt;&gt;labelControl8.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupControl2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 184</value>
+  </data>
+  <data name="groupControl2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>696, 456</value>
+  </data>
+  <data name="groupControl2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="groupControl2.Text" xml:space="preserve">
+    <value>2. Bring order to your TV file</value>
+  </data>
+  <data name="&gt;&gt;groupControl2.Name" xml:space="preserve">
+    <value>groupControl2</value>
+  </data>
+  <data name="&gt;&gt;groupControl2.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;groupControl2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupControl2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>721, 697</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Apply Reference List</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ReferenceListForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
 </root>

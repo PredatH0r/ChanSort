@@ -60,6 +60,12 @@ namespace ChanSort.Ui
       this.LookAndFeel.SetSkinStyle("Office 2010 Blue");
       InitializeComponent();
 
+      // remember which columns should be visible by default
+      foreach (GridColumn col in this.gviewLeft.Columns)
+        col.Tag = col.Visible;
+      foreach (GridColumn col in this.gviewRight.Columns)
+        col.Tag = col.Visible;
+
       if (!Settings.Default.WindowSize.IsEmpty)
         this.Size = Settings.Default.WindowSize;
       this.title = string.Format(base.Text, AppVersion);
@@ -79,6 +85,7 @@ namespace ChanSort.Ui
       else if (this.curEditMode == EditMode.InsertBefore) this.rbInsertBefore.Checked = true;
       else this.rbInsertSwap.Checked = true;
       this.ActiveControl = this.gridRight;
+
 
 #if !ADD_CHANNELS_FROM_REF_LIST
       this.miAddFromRefList.Visibility = BarItemVisibility.Never;
@@ -513,9 +520,9 @@ namespace ChanSort.Ui
       var msg = Resources.MainForm_InitInitialChannelOrder_Question;
       using (var dlg = new ActionBoxDialog(msg))
       {
+        dlg.AddAction(Resources.MainForm_InitInitialChannelOrder_ReferenceList, DialogResult.Yes, dlg.CopyList, true);
+        dlg.AddAction(Resources.MainForm_InitInitialChannelOrder_CurrentList, DialogResult.No, dlg.FullList);
         dlg.AddAction(Resources.MainForm_InitInitialChannelOrder_EmptyList, DialogResult.Cancel, dlg.EmptyList);
-        dlg.AddAction(Resources.MainForm_InitInitialChannelOrder_CurrentList, DialogResult.No, dlg.FullList, true);
-        dlg.AddAction(Resources.MainForm_InitInitialChannelOrder_ReferenceList, DialogResult.Yes, dlg.CopyList);
         res = dlg.ShowDialog(this);
       }
 
@@ -841,9 +848,9 @@ namespace ChanSort.Ui
 
       var ext = (Path.GetExtension(fileName) ?? "").ToLower();
       if (ext == ".csv")
-        CsvFileSerializer.Save(fileName, this.DataRoot);
+        CsvRefListSerializer.Save(fileName, this.DataRoot);
       else if (ext == ".chl" || ext == ".txt")
-        RefSerializer.Save(fileName, this.CurrentChannelList);
+        TxtRefListSerializer.Save(fileName, this.CurrentChannelList);
     }
 
     #endregion
@@ -1338,7 +1345,7 @@ namespace ChanSort.Ui
       if (col == this.colServiceId) return (source & SignalSource.Digital) != 0;
       if (col == this.colVideoPid) return (source & SignalSource.Digital) != 0;
       if (col == this.colAudioPid) return (source & SignalSource.Digital) != 0;
-      if (col == this.colServiceType) return (source & SignalSource.Digital) != 0;
+      //if (col == this.colServiceType) return (source & SignalSource.Digital) != 0;
       if (col == this.colServiceTypeName) return (source & SignalSource.Digital) != 0;
       if (col == this.colEncrypted) return (source & SignalSource.Digital) != 0;
       if (col == this.colTransportStreamId) return (source & SignalSource.Digital) != 0;
@@ -1355,7 +1362,7 @@ namespace ChanSort.Ui
       if (col == this.colLogicalIndex) return colLogicalIndex.Visible;
       if (col == this.colPolarity) return false;
 
-      return true;
+      return (bool)(col.Tag ?? false);
     }
 
     #endregion

@@ -271,6 +271,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.ru.resx" />
+    <EmbeddedResource Include="ReferenceListForm.de.resx">
+      <DependentUpon>ReferenceListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReferenceListForm.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
