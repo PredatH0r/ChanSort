@@ -7,7 +7,6 @@ Links
 
 About ChanSort
 --------------
-
 ChanSort is a PC/Windows application that allows you to reorder your TV's channel list.  
 Most modern TVs can ex- and import channel lists via USB stick, which you can plug into your PC.  
 ChanSort supports various models from Hisense (**NEW**), LG, Panasonic, Samsung, Toshiba and the Linux VDR project.
@@ -16,7 +15,6 @@ ChanSort supports various models from Hisense (**NEW**), LG, Panasonic, Samsung,
 
 Features
 --------
-
 - Reorder channels (change numbers directly, move up/down, drag&drop, double-click)
 - Use another channel list as a reference to apply the same ordering
 - Multi-selection for editing multiple channels at once
@@ -36,12 +34,11 @@ There is a chance of unwanted side-effects or even damage to your TV, as reporte
 
 System requirements
 -------------------
-
 - [Microsoft .NET Framework 4.0 (Full)](http://www.microsoft.com/en-us/download/details.aspx?id=17851): 
   included in Win8, required for Win7, Vista and XP SP3
 - [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328):
-  required to edit SQLite lists (Panasonic, Toshiba and Samsung J-series)
-- USB stick/SD-card to transfer the channel list between your TV and PC
+  required to edit SQLite lists (Hisense, Panasonic, Toshiba and Samsung J-series)
+- USB stick/SD-card to transfer the channel list between your TV and PC (FAT32 file system recommended)
 - Some LG models require a special service remote control to access the import/export functions (see Wiki for details)
 
 Supported TV models 
@@ -97,7 +94,6 @@ Implementation for this was provided by TCr82 from the VDR project.
 
 License (GPLv3)
 ---------------
-
 GNU General Public Licence, Version 3: http://www.gnu.org/licenses/gpl.html  
 Source code is available on https://github.com/PredatH0r/ChanSort
 

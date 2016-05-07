@@ -14,9 +14,11 @@ del "%target%\*nunit*.dll"
 mkdir "%target%\de" 2>nul
 mkdir "%target%\pt" 2>nul
 mkdir "%target%\ru" 2>nul
+mkdir "%target%\ReferenceLists" 2>nul
 xcopy /siy debug\de "%target%\de"
 xcopy /siy debug\pt "%target%\pt"
 xcopy /siy debug\ru "%target%\ru"
+xcopy /siy ChanSort\ReferenceLists\* "%target%\ReferenceLists"
 copy ..\readme.md "%target%\readme.txt"
 copy changelog.md "%target%\changelog.txt"
 for %%f in (Utils Data Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
