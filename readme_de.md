@@ -30,7 +30,7 @@ Manche Funktionen sind nicht bei allen TV-Modellen und Empfangsarten verfügbar (
 
 ! VERWENDUNG AUF EIGENE GEFAHR !
 ------------------------
-Diese Software wurde ohne Unterstützung durch TV-Hersteller und ohne Zugang zu offiziellen
+Diese Software wurde großteils ohne Unterstützung durch TV-Hersteller und ohne Zugang zu offiziellen
 Unterlagen über die Dateiformate erstellt. Es beruht ausschließlich auf der Analyse von Dateien, Versuchen and Fehlerkorrekturen.
 Es besteht die Möglichkeit von unerwarteten Nebeneffekten oder Schaden am Gerät (wie in 2 Fällen berichtet).
 

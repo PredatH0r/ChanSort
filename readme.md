@@ -86,7 +86,7 @@ Viera models with an svl.bin or svl.db channel list (most models since 2011)
 Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.  
 (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
 
-**VDR (Linux Video Disk Recorder)**
+**VDR (Linux Video Disk Recorder)**  
 Supports the channels.conf file format.  
 Implementation for this was provided by TCr82 from the VDR project.
 
