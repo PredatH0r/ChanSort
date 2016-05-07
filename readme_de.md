@@ -10,7 +10,7 @@ Links
 Über ChanSort
 --------------
 ChanSort ist eine PC/Windows-Anwendung, die das Sortieren von Fernsehsenderlisten erlaubt.  
-Die meisten modernen Fernseher können Senderlisten auf USB-Stick übertragen, der dann am PC angeschlossen werden kann.
+Die meisten modernen Fernseher können Senderlisten auf einen USB-Stick übertragen, den man danach am PC anschließt.
 ChanSort unterstützt diverse Modelle von **Hisense** (NEU), LG, Panasonic, Samsung, Toshiba und das Linux VDR Projekt.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-de.png)
@@ -34,6 +34,8 @@ Diese Software wurde ohne Unterstützung durch TV-Hersteller und ohne Zugang zu o
 Unterlagen über die Dateiformate erstellt. Es beruht ausschließlich auf der Analyse von Dateien, Versuchen and Fehlerkorrekturen.
 Es besteht die Möglichkeit von unerwarteten Nebeneffekten oder Schaden am Gerät (wie in 2 Fällen berichtet).
 
+Hisense ist der einzige Hersteller, der Informationen und ein Testgerät bereitstellten.
+
 Systemvoraussetzungen
 -------------------
 - [Microsoft .NET Framework 4.0 (Full)](http://www.microsoft.com/en-us/download/details.aspx?id=17851): 
@@ -44,14 +46,13 @@ Systemvoraussetzungen
 - Einige TV-Modelle von LG erfordern eine spezielle Service-Fernbedienung zum Aufruf der Export/Import-Funktionen (Details in der Wiki)
 
 Unterstützte TV-Modelle 
-===================
+---------------------
 
-Hisense
--------
-Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500
+**Hisense**  
+Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500  
+Besonderen Dank an Hisense für die Bereitstellung von technischen Informationen und einem Testgerät!
 
-Samsung 
--------
+**Samsung**  
 Serie: B (2009)*, B (2013), C, D, E, F, H, J  
 Listen:  Air analog, Air digital, Cable analog, Cable digital, 
 		Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
@@ -64,8 +65,7 @@ unterstützt, da keine entsprechenden Testdateien vorhanden ist.
 Eine Anleitung zum Übertragen der Liste auf/von USB befindet sich auf:
 http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-importieren/
 
-LG
----
+**LG**  
 Serien: CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
 Listen:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
 
@@ -77,17 +77,14 @@ Andere Modelle können ebenfalls funktionieren, wurden aber nicht getestet. Erfah
 
 Eine Anleitung zum Aufruf des geheimen Service-Menüs zur Senderlistenübertragung befindet sich in der Wiki.
 
-Panasonic
--------
+**Panasonic**  
 Viera-Modelle mit svl.bin oder svl.db Dateien (die meisten Modelle seit 2011)
 
-Toshiba
--------
+**Toshiba**  
 Modelle, die eine .zip-Datei mit folgendem Inhalt: chmgt.db, dvbSysData.db und dvbMainData.db.  
 (z.B. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
 
-VDR (Linux Video Disk Recorder)
--------
+**VDR (Linux Video Disk Recorder)**  
 Unterstützung des channels.conf Dateiformats.  
 Die Implementation hierfür wurde vom Mitglied "TCr82" des VDR Projekts beigesteuert.
 
