@@ -1,8 +1,15 @@
 ChanSort Change Log 
 ===================
-
-2016-04-27
-- added support for Hisense channel.db channel lists
+2016-05-07
+- added support for Hisense channel.db file format
+- text reference lists (.txt, .csv, .chl) can now be opened and edited
+  just like TV data files.
+- added dialog for advanced reference list support to apply partial 
+  lists or from different input sources.
+- swap 2 channels by selecting one in the left list and double-click
+  another one in the right list
+- inserting channels now also works with channels that already have a
+  new number assigned
 
 2015-11-29
 - Samsung E,F,H,J .scm file format: allow independant reordering of each 

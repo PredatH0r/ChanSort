@@ -326,11 +326,17 @@
     <None Include="Resources\btn_donateCC_LG_de.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReferenceLists\at_astra192E_hd.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="ReferenceLists\at_astra192E_orf-freehd.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\at_cable_liwest.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="ReferenceLists\at_liwest.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\de_astra192E_hisense_freehd.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\de_astra192E_hisense_hdplus.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
