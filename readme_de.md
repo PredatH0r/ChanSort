@@ -1,9 +1,11 @@
 Links
 -----
+[![EN](http://beham.biz/chansort/flag_en.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme.md)
+[![DE](http://beham.biz/chansort/flag_de.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md) |
 [Download](https://github.com/PredatH0r/ChanSort/releases) | 
-[Documentation](https://github.com/PredatH0r/ChanSort/wiki) |
+[Dokumentation](https://github.com/PredatH0r/ChanSort/wiki) |
 [Forum](https://github.com/PredatH0r/ChanSort/issues) | 
-[E-mail](mailto:horst@beham.biz)
+[E-Mail](mailto:horst@beham.biz)
 
 Über ChanSort
 --------------

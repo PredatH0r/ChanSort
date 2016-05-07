@@ -1,15 +1,17 @@
 Links
 -----
+[![EN](http://beham.biz/chansort/flag_en.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme.md)
+[![DE](http://beham.biz/chansort/flag_de.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md) |
 [Download](https://github.com/PredatH0r/ChanSort/releases) | 
 [Documentation](https://github.com/PredatH0r/ChanSort/wiki) |
 [Forum](https://github.com/PredatH0r/ChanSort/issues) | 
-[E-mail](mailto:horst@beham.biz)
+[E-Mail](mailto:horst@beham.biz)
 
 About ChanSort
 --------------
 ChanSort is a PC/Windows application that allows you to reorder your TV's channel list.  
 Most modern TVs can ex- and import channel lists via USB stick, which you can plug into your PC.  
-ChanSort supports various models from Hisense (**NEW**), LG, Panasonic, Samsung, Toshiba and the Linux VDR project.
+ChanSort supports various models from **Hisense** (NEW), LG, Panasonic, Samsung, Toshiba and the Linux VDR project.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-en.png)
 
