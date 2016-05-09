@@ -3,7 +3,7 @@ Links
 [![EN](http://beham.biz/chansort/flag_en.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme.md)
 [![DE](http://beham.biz/chansort/flag_de.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md) |
 [Download](https://github.com/PredatH0r/ChanSort/releases) | 
-[Dokumentation](https://github.com/PredatH0r/ChanSort/wiki) |
+[Dokumentation](https://github.com/PredatH0r/ChanSort/wiki/Home-(de)) |
 [Forum](https://github.com/PredatH0r/ChanSort/issues) | 
 [E-Mail](mailto:horst@beham.biz)
 

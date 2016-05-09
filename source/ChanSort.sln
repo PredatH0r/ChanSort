@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		changelog.md = changelog.md
 		..\readme.md = ..\readme.md
+		..\readme_de.md = ..\readme_de.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader", "Test.Loader\Test.Loader.csproj", "{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}"
