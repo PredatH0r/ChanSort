@@ -194,7 +194,7 @@ namespace ChanSort.Loader.Samsung
           series = 'E';
         else if (series == 'C') // "C" usually means 1001 format, but there some with 1201 format: LTxxCxxx, HExxCxxx, ... so we can't decide here
           return false; 
-        else if (series >= 'E') // E, F, H, some J
+        else if ("EFHJ".Contains(series)) // E, F, H, some J
           series = 'E'; 
         if (this.modelConstants.TryGetValue("Series:" + series, out this.c))
           return true;

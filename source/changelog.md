@@ -1,5 +1,9 @@
 ChanSort Change Log 
 ===================
+2016-08-10
+- fixed saving of LG GlobalClone format (LH series and others)
+- fixed wrong .scm format detection when file was renamed by user
+
 2016-05-07
 - added support for Hisense channel.db file format
 - text reference lists (.txt, .csv, .chl) can now be opened and edited

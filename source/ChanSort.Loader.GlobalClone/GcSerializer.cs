@@ -319,7 +319,6 @@ namespace ChanSort.Loader.GlobalClone
     private string ParseName(string input)
     {
       var bytes = Encoding.UTF8.GetBytes(input);
-
       if (bytes.Length == 0 || bytes[0] < 0xC0)
         return input;
 
@@ -395,7 +394,9 @@ namespace ChanSort.Loader.GlobalClone
                 break;
               case "vchName":
                 if (channel.IsNameModified)
-                  node.InnerText = nameNeedsEncoding ? "" : ch.Name;
+                  node.InnerText = nameNeedsEncoding ? " " : ch.Name;
+                if (node.InnerText == "") // XmlTextReader removed the required space from empty channel names
+                  node.InnerText = " ";
                 break;
               case "isInvisable":
                 node.InnerText = ch.Hidden ? "1" : "0";
@@ -414,7 +415,8 @@ namespace ChanSort.Loader.GlobalClone
                 node.InnerText = ch.IsDeleted ? "1" : "0";
                 break;
               case "isUserSelCHNo":
-                node.InnerText = "1";
+                if (ch.NewProgramNr != ch.OldProgramNr)
+                  node.InnerText = "1";
                 break;
               case "mapType":
                 mapType = node.InnerText;
@@ -441,8 +443,13 @@ namespace ChanSort.Loader.GlobalClone
       using (XmlWriter xw = XmlWriter.Create(sw, settings))
       {
         doc.Save(xw);
+        xw.Flush();
         string xml = RestoreInvalidXmlCharacters(sw.ToString());
         xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n" + xml;
+        xml = xml.Replace("<ATV></ATV>\r\n", "<ATV>\r\n</ATV>\r\n");
+        xml = xml.Replace("<DTV></DTV>\r\n", "<DTV>\r\n</DTV>\r\n");
+        if (!xml.EndsWith("\r\n"))
+          xml += "\r\n";
         File.WriteAllText(tvOutputFile, xml, settings.Encoding);
       }
     }

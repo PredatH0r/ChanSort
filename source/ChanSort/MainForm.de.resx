@@ -556,7 +556,7 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   <data name="lblHotkeyLeft.Size" type="System.Drawing.Size, System.Drawing">
     <value>333, 17</value>
   </data>
-  <assembly alias="DevExpress.XtraBars.v15.2" name="DevExpress.XtraBars.v15.2, Version=15.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.XtraBars.v15.2" name="DevExpress.XtraBars.v15.2, Version=15.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1

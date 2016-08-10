@@ -31,7 +31,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2016-05-07";
+    public const string AppVersion = "v2016-08-10";
 
     private const int MaxMruEntries = 10;
     private readonly List<string> isoEncodings = new List<string>();
