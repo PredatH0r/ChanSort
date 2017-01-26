@@ -108,7 +108,7 @@
     <value>Acrescentar e definar posição de canal</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - Editor de listas de canais para televisores Samsung, LG, Panasonic e Toshiba</value>
+    <value>ChanSort {0} - Editor de listas de canais para televisores</value>
   </data>
   <data name="grpInputList.Text" xml:space="preserve">
     <value>Todos os canais</value>

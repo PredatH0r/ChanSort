@@ -125,9 +125,9 @@
   <data name="splitContainerControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 110</value>
   </data>
-  <data name="dsChannels.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  <metadata name="dsChannels.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>361, 17</value>
-  </data>
+  </metadata>
   <data name="gridLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -305,12 +305,12 @@
   <data name="&gt;&gt;lblHotkeyLeft.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="globalImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  <metadata name="globalImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>600, 17</value>
-  </data>
-  <data name="$this.Localizable" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
@@ -392,9 +392,9 @@
   <data name="rbInsertSwap.Location" type="System.Drawing.Point, System.Drawing">
     <value>256, 6</value>
   </data>
-  <data name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>475, 17</value>
-  </data>
+  </metadata>
   <data name="miFile.Caption" xml:space="preserve">
     <value>&amp;File</value>
   </data>
@@ -545,6 +545,9 @@
   <data name="miRussian.Caption" xml:space="preserve">
     <value>ру́сский</value>
   <comment>@Invariant</comment></data>
+  <data name="miCzech.Caption" xml:space="preserve">
+    <value>Česky</value>
+  </data>
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Character set</value>
   </data>
@@ -635,52 +638,52 @@
   <assembly alias="DevExpress.XtraBars.v15.2" name="DevExpress.XtraBars.v15.2, Version=15.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
-        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
-        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
-        Xxl+0wEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF5EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
+        LjIuMTAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iODhkMTc1NGQ3MDBlNDlhBQEA
+        AAAmRGV2RXhwcmVzcy5YdHJhQmFycy5CYXJNYW5hZ2VyQ2F0ZWdvcnkDAAAABE5hbWUER3VpZAdWaXNp
+        YmxlAQMAC1N5c3RlbS5HdWlkAQIAAAAGAwAAAARGaWxlBPz///8LU3lzdGVtLkd1aWQLAAAAAl9hAl9i
+        Al9jAl9kAl9lAl9mAl9nAl9oAl9pAl9qAl9rAAAAAAAAAAAAAAAIBwcCAgICAgICAimjyeYLAXlNjU0h
+        Xl8ZftMBCw==
 </value>
   </data>
   <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
-        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
-        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
-        KphCYAEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF5EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
+        LjIuMTAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iODhkMTc1NGQ3MDBlNDlhBQEA
+        AAAmRGV2RXhwcmVzcy5YdHJhQmFycy5CYXJNYW5hZ2VyQ2F0ZWdvcnkDAAAABE5hbWUER3VpZAdWaXNp
+        YmxlAQMAC1N5c3RlbS5HdWlkAQIAAAAGAwAAAARIZWxwBPz///8LU3lzdGVtLkd1aWQLAAAAAl9hAl9i
+        Al9jAl9kAl9lAl9mAl9nAl9oAl9pAl9qAl9rAAAAAAAAAAAAAAAIBwcCAgICAgICAnRFVQ3oMDFNmnDa
+        cCqYQmABCw==
 </value>
   </data>
   <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
-        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
-        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
-        ZMgcwAEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF5EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
+        LjIuMTAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iODhkMTc1NGQ3MDBlNDlhBQEA
+        AAAmRGV2RXhwcmVzcy5YdHJhQmFycy5CYXJNYW5hZ2VyQ2F0ZWdvcnkDAAAABE5hbWUER3VpZAdWaXNp
+        YmxlAQMAC1N5c3RlbS5HdWlkAQIAAAAGAwAAAARFZGl0BPz///8LU3lzdGVtLkd1aWQLAAAAAl9hAl9i
+        Al9jAl9kAl9lAl9mAl9nAl9oAl9pAl9qAl9rAAAAAAAAAAAAAAAIBwcCAgICAgICAmTE7tfJWUVPiKpg
+        LmTIHMABCw==
 </value>
   </data>
   <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
-        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
-        X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
-        WIeWYGkVXQEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF5EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
+        LjIuMTAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iODhkMTc1NGQ3MDBlNDlhBQEA
+        AAAmRGV2RXhwcmVzcy5YdHJhQmFycy5CYXJNYW5hZ2VyQ2F0ZWdvcnkDAAAABE5hbWUER3VpZAdWaXNp
+        YmxlAQMAC1N5c3RlbS5HdWlkAQIAAAAGAwAAAAdPcHRpb25zBPz///8LU3lzdGVtLkd1aWQLAAAAAl9h
+        Al9iAl9jAl9kAl9lAl9mAl9nAl9oAl9pAl9qAl9rAAAAAAAAAAAAAAAIBwcCAgICAgICAlyTDofZ8wJC
+        nFiHlmBpFV0BCw==
 </value>
   </data>
   <data name="barManager1.Categories4" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v15.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
-        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
-        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
-        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAADUFjY2Vzc2liaWxpdHkE/P///wtTeXN0ZW0uR3VpZAsA
-        AAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICeIvz
-        nH8WlU24SIo8kTIJxAEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF5EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
+        LjIuMTAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iODhkMTc1NGQ3MDBlNDlhBQEA
+        AAAmRGV2RXhwcmVzcy5YdHJhQmFycy5CYXJNYW5hZ2VyQ2F0ZWdvcnkDAAAABE5hbWUER3VpZAdWaXNp
+        YmxlAQMAC1N5c3RlbS5HdWlkAQIAAAAGAwAAAA1BY2Nlc3NpYmlsaXR5BPz///8LU3lzdGVtLkd1aWQL
+        AAAAAl9hAl9iAl9jAl9kAl9lAl9mAl9nAl9oAl9pAl9qAl9rAAAAAAAAAAAAAAAIBwcCAgICAgICAniL
+        85x/FpVNuEiKPJEyCcQBCw==
 </value>
   </data>
   <data name="barDockControlTop.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1644,6 +1647,12 @@
   <data name="&gt;&gt;miRussian.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v15.2, Version=15.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miCzech.Name" xml:space="preserve">
+    <value>miCzech</value>
+  </data>
+  <data name="&gt;&gt;miCzech.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v15.2, Version=15.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;mnuCharset.Name" xml:space="preserve">
     <value>mnuCharset</value>
   </data>
@@ -1843,7 +1852,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v15.2, Version=15.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>05/06/2016 20:31:55</value>
+    <value>01/26/2017 12:52:08</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -2814,19 +2823,19 @@ specific provider, satellite or country lists.</value>
   <data name="&gt;&gt;splitContainerControl1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="defaultLookAndFeel1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  <metadata name="defaultLookAndFeel1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>194, 17</value>
-  </data>
-  <data name="popupContext.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="popupContext.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>781, 17</value>
-  </data>
-  <data name="timerEditDelay.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="timerEditDelay.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>911, 17</value>
-  </data>
-  <data name="popupInputSource.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="popupInputSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1042, 17</value>
-  </data>
-  <data name="popupFavList.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="popupFavList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1196, 17</value>
-  </data>
+  </metadata>
 </root>

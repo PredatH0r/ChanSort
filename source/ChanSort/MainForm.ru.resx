@@ -166,7 +166,7 @@
     <value>Номер программы для добавления и настройки операций</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - редактор списка каналов для телевизоров Samsung, LG, Pansonic и Toshiba</value>
+    <value>ChanSort {0} - редактор списка каналов для телевизоров</value>
   </data>
   <data name="grpInputList.Text" xml:space="preserve">
     <value>Все каналы</value>
