@@ -117,6 +117,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="PresetProgramNrDialog.cs.resx">
+      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PresetProgramNrDialog.de.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -130,6 +133,7 @@
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Resource.cs.resx" />
     <EmbeddedResource Include="Resource.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.de.Designer.cs</LastGenOutput>
@@ -142,6 +146,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource.ru.resx" />
+    <EmbeddedResource Include="TvSettingsForm.cs.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TvSettingsForm.de.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>

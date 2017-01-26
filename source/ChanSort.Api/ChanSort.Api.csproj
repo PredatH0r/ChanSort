@@ -101,6 +101,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources.cs.resx" />
     <EmbeddedResource Include="Resources.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>

@@ -193,8 +193,7 @@ namespace ChanSort.Ui.Properties {
         ///It is recommended to use a clean input file for any modifications.
         ///To do that, turn Hotel Mode OFF, reset the TV to 
         ///factory defaults, run a new blind channel scan and turn
-        ///Hotel Mode back ON, then export a new clean TLL file.
-        ///.
+        ///Hotel Mode back ON, then export a new clean TLL file..
         /// </summary>
         internal static string MainForm_LoadFiles_DupeWarningMsg {
             get {
@@ -382,8 +381,7 @@ namespace ChanSort.Ui.Properties {
         ///- you have write permission on the file
         ///- the file is not open in another program
         ///
-        ///The error message is:
-        ///.
+        ///The error message is:.
         /// </summary>
         internal static string MainForm_SaveFiles_ErrorMsg {
             get {
@@ -416,6 +414,24 @@ namespace ChanSort.Ui.Properties {
         internal static string MainForm_SaveTllFile_Success {
             get {
                 return ResourceManager.GetString("MainForm_SaveTllFile_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ChanSort Reference List|*.csv|SamToolBox Reference List|*.chl|All Reference Lists|*.csv;*.chl.
+        /// </summary>
+        internal static string MainForm_ShowOpenReferenceFileDialog_Filter {
+            get {
+                return ResourceManager.GetString("MainForm_ShowOpenReferenceFileDialog_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Reference List.
+        /// </summary>
+        internal static string MainForm_ShowOpenReferenceFileDialog_Title {
+            get {
+                return ResourceManager.GetString("MainForm_ShowOpenReferenceFileDialog_Title", resourceCulture);
             }
         }
         

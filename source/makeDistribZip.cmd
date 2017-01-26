@@ -14,10 +14,12 @@ del "%target%\*nunit*.dll"
 mkdir "%target%\de" 2>nul
 mkdir "%target%\pt" 2>nul
 mkdir "%target%\ru" 2>nul
+mkdir "%target%\cs" 2>nul
 mkdir "%target%\ReferenceLists" 2>nul
 xcopy /siy debug\de "%target%\de"
 xcopy /siy debug\pt "%target%\pt"
 xcopy /siy debug\ru "%target%\ru"
+xcopy /siy debug\cs "%target%\cs"
 xcopy /siy ChanSort\ReferenceLists\* "%target%\ReferenceLists"
 copy ..\readme.md "%target%\readme.txt"
 copy changelog.md "%target%\changelog.txt"
@@ -39,10 +41,10 @@ rem -----------------------------
 rem If you want to digitally sign the generated .exe and .dll files, 
 rem you need to have your code signing certificate installed in the Windows certificate storage
 rem -----------------------------
-set signtool="C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin\signtool.exe"
+set signtool="C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\signtool.exe"
 set oldcd=%cd%
 cd %target%
-set files=ChanSort.exe ChanSort*.dll de\ChanSort*.dll ru\ChanSort*.dll pt\ChanSort*.dll
+set files=ChanSort.exe ChanSort*.dll de\ChanSort*.dll ru\ChanSort*.dll pt\ChanSort*.dll cs\ChanSort*.dll
 %signtool% sign /a /t "http://timestamp.comodoca.com/authenticode" %files%
 if errorlevel 1 goto :error
 cd %oldcd%

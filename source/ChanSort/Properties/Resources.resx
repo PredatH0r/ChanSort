@@ -178,8 +178,7 @@ This is typically caused by running a manual transponder scan.
 It is recommended to use a clean input file for any modifications.
 To do that, turn Hotel Mode OFF, reset the TV to 
 factory defaults, run a new blind channel scan and turn
-Hotel Mode back ON, then export a new clean TLL file.
-</value>
+Hotel Mode back ON, then export a new clean TLL file.</value>
   </data>
   <data name="MainForm_btnResetChannelData_Click_Message" xml:space="preserve">
     <value>WARNING: All analog, DVB-C/T and DVB-S channel and transponder data will be deleted.
@@ -211,8 +210,7 @@ Do you want to continue?</value>
 - you have write permission on the file
 - the file is not open in another program
 
-The error message is:
-</value>
+The error message is:</value>
   </data>
   <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
     <value>File write error</value>
@@ -291,5 +289,11 @@ or firmware upgrades without running a new channel scan.
   </data>
   <data name="ReferenceListForm_ShowOpenFileDialog_Title" xml:space="preserve">
     <value>Select a reference list to import</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Filter" xml:space="preserve">
+    <value>ChanSort Reference List|*.csv|SamToolBox Reference List|*.chl|All Reference Lists|*.csv;*.chl</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Title" xml:space="preserve">
+    <value>Open Reference List</value>
   </data>
 </root>

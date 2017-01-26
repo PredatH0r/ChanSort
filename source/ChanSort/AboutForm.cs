@@ -15,6 +15,9 @@ namespace ChanSort.Ui
 @"TCr82:
 Support for VDR's channels.conf file format
 
+Pavel Mizera:
+Czech translation
+
 Vitor Martins Augusto:
 Portuguese translation
 

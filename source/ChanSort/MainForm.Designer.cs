@@ -152,6 +152,7 @@
       this.miGerman = new DevExpress.XtraBars.BarButtonItem();
       this.miPortuguese = new DevExpress.XtraBars.BarButtonItem();
       this.miRussian = new DevExpress.XtraBars.BarButtonItem();
+      this.miCzech = new DevExpress.XtraBars.BarButtonItem();
       this.mnuCharset = new DevExpress.XtraBars.BarSubItem();
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
@@ -1004,9 +1005,10 @@
             this.mnuGotoFavList,
             this.mnuFavList,
             this.miRussian,
-            this.miAllowEditPredefinedLists});
+            this.miAllowEditPredefinedLists,
+            this.miCzech});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 95;
+      this.barManager1.MaxItemId = 96;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1507,7 +1509,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miEnglish),
             new DevExpress.XtraBars.LinkPersistInfo(this.miGerman),
             new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miRussian)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRussian),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miCzech)});
       this.barSubItem1.Name = "barSubItem1";
       this.barSubItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
       // 
@@ -1552,6 +1555,16 @@
       this.miRussian.Name = "miRussian";
       this.miRussian.Tag = "ru-RU";
       this.miRussian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
+      // miCzech
+      // 
+      this.miCzech.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miCzech, "miCzech");
+      this.miCzech.Id = 95;
+      this.miCzech.ImageIndex = 41;
+      this.miCzech.Name = "miCzech";
+      this.miCzech.Tag = "cs-CS";
+      this.miCzech.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // mnuCharset
       // 
@@ -2227,6 +2240,7 @@
     private DevExpress.XtraBars.BarButtonItem miAllowEditPredefinedLists;
     private DevExpress.XtraGrid.Columns.GridColumn colPrNr;
     private DevExpress.XtraGrid.Columns.GridColumn colSource;
+    private DevExpress.XtraBars.BarButtonItem miCzech;
   }
 }
 

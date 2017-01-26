@@ -201,15 +201,15 @@ namespace ChanSort.Loader.Hisense
       {
         if (!regex.IsMatch(tableName))
           continue;
-        cmd.CommandText = "select satl_rec_id, mask, i2_orb_pos, ac_sat_name from " + tableName;
+        cmd.CommandText = "select satl_rec_id, i2_orb_pos, ac_sat_name from " + tableName;
         using (var r = cmd.ExecuteReader())
         {
           while (r.Read())
           {
             var sat = new Satellite(r.GetInt32(0));
-            var pos = r.GetInt32(2);
+            var pos = r.GetInt32(1);
             sat.OrbitalPosition = $"{(decimal) Math.Abs(pos)/10:n1}{(pos < 0 ? 'W' : 'E')}";
-            sat.Name = r.GetString(3);
+            sat.Name = r.GetString(2);
             this.DataRoot.AddSatellite(sat);
           }
         }

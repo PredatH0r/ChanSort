@@ -1,5 +1,10 @@
 ChanSort Change Log 
 ===================
+
+2017-01-26
+- added Czech translation (thanks to Pavel Mizera)
+- fixed error when opening latest Hisense channel.db file format
+
 2016-08-10
 - fixed saving of LG GlobalClone format (LH series and others)
 - fixed wrong .scm format detection when file was renamed by user

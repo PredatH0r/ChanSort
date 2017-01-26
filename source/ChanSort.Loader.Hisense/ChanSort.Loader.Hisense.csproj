@@ -87,6 +87,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources.cs.resx" />
     <EmbeddedResource Include="Resources.de.resx" />
     <EmbeddedResource Include="Resources.pt.resx" />
     <EmbeddedResource Include="Resources.resx">

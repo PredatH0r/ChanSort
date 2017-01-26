@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainForm_btnResetChannelData_Click_Caption" xml:space="preserve">
+    <value>Vymazat všechny údaje o kanálech</value>
+  </data>
+  <data name="MainForm_btnResetChannelData_Click_Message" xml:space="preserve">
+    <value>VAROVÁNÍ: Všechny údaje o analogových, DVB-C/T a DVB-S kanálech a transpondérech budou odstraněny.
+Po načtení tohoto souboru do televizoru budete muset spustit úplné vyhledávání kanálů.
+Chcete pokračovat?</value>
+  </data>
+  <data name="MainForm_Cancel" xml:space="preserve">
+    <value>Storno</value>
+  </data>
+  <data name="MainForm_ExportExcelList_Message" xml:space="preserve">
+    <value>Seznam kanálů byl uložen do schránky
+a lze ho vložit do aplikace Excel nebo libovolného textového editoru.</value>
+  </data>
+  <data name="MainForm_FileDialog_OpenFileFilter" xml:space="preserve">
+    <value>Podporované soubory|{0}|Všechny soubory (*.*)|*</value>
+  </data>
+  <data name="MainForm_FileDialog_SaveFileFilter" xml:space="preserve">
+    <value>{0} souborů|*{0}|Všechny soubory (*.*)|*</value>
+  </data>
+  <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
+    <value>Pokud budou mezi čísly kanálů mezery, nebude možná váš televizor správně fungovat.
+Chcete čísla kanálů seřadit do posloupnosti?</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
+    <value>Upravit aktuální seznam: Začněte s aktuálním seznamem a podle potřeby jej upravte.</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
+    <value>Vytvořit nový seznam: Začněte s prázdným seznamem a přidejte do něho kanály v požadovaném pořadí.</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_Question" xml:space="preserve">
+    <value>Jak byste chtěli svůj seznam kanálů upravit?</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
+    <value>Kopírovat seznam kanálů: Seřadit kanály ve stejném pořadí jako v referenčním seznamu</value>
+  </data>
+  <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
+    <value>Obsah souboru je neplatný. Velikost souboru je buď nulová, nebo bajty souboru mají hodnotu 0.
+Obvyklou příčinou bývá USB flash disk se systémem souborů NTFS (zkuste namísto toho použít FAT32)
+nebo aktualizace firmwaru bez spuštění nového vyhledávání kanálů. 
+(Nový software v televizoru zřejmě není během exportu schopen zpracovat původní informace o kanálech.)</value>
+  </data>
+  <data name="MainForm_LoadFiles_DupeWarningMsg" xml:space="preserve">
+    <value>Vstupní soubor obsahuje více záznamů se stejným 
+číslem programu. Je možné, že televizor nepřijme
+změny provedené programem ChanSort.
+Obvyklou příčinou bývá spuštění ručního prohledávání transpondéru.
+Pro případné úpravy doporučujeme použít nový vstupní soubor.
+To uděláte tak, že nastavíte hotelový režim na VYPNUTO, obnovíte 
+tovární nastavení televizoru, spustíte nové kompletní vyhledání kanálů a znovu nastavíte
+hotelový režim na ZAPNUTO, a následně provedete export nového čistého souboru TLL.</value>
+  </data>
+  <data name="MainForm_LoadFiles_IOException" xml:space="preserve">
+    <value>Chyba při načítání souboru</value>
+  </data>
+  <data name="MainForm_LoadFiles_ValidationWarningCap" xml:space="preserve">
+    <value>Ověření dat</value>
+  </data>
+  <data name="MainForm_LoadFiles_ValidationWarningMsg" xml:space="preserve">
+    <value>Obsah souboru vykazuje anomálie a soubor je možná poškozen.</value>
+  </data>
+  <data name="MainForm_LoadTll_Exception" xml:space="preserve">
+    <value>Při načítání datového souboru televizoru došlo k chybě:
+{0}</value>
+  </data>
+  <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
+    <value>Nebyl nalezen zásuvný modul pro čtení/zápis {0} souborů.</value>
+  </data>
+  <data name="MainForm_LoadTll_SourceTllNotFound" xml:space="preserve">
+    <value>Quell-TLL könnte nicht gefunden werden:
+'{0}'</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Caption" xml:space="preserve">
+    <value>Soubor nebyl nenalezen</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Message" xml:space="preserve">
+    <value>Soubor {0} neexistuje.</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_ItemClick_Confirm" xml:space="preserve">
+    <value>Chystáte se obnovit záložní soubor. Ztratíte tak všechny provedené změny!
+Chcete pokračovat?</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_ItemClick_NoBackup" xml:space="preserve">
+    <value>Záložní soubor nebyl nalezen: {0}</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_Message" xml:space="preserve">
+    <value>Soubor .bak nelze zkopírovat do {0}</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Append" xml:space="preserve">
+    <value>Připojit nesetříděné kanály na konec seznamu</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
+    <value>Odstranit nesetříděné kanály ze seznamu</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
+    <value>Co by se mělo stát s nesetříděnými kanály?</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
+    <value>Zahodit změny</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Question" xml:space="preserve">
+    <value>Chcete provedené změny uložit?</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Save" xml:space="preserve">
+    <value>Uložit změny</value>
+  </data>
+  <data name="MainForm_RestoreScanOrder_Caption" xml:space="preserve">
+    <value>Obnovit pořadí z vyhledávání kanálů</value>
+  </data>
+  <data name="MainForm_RestoreScanOrder_Message" xml:space="preserve">
+    <value>Všechny uživatelské změny budou ztraceny.
+Skutečně chcete obnovit pořadí z vyhledávání kanálů?</value>
+  </data>
+  <data name="MainForm_SaveFiles_ErrorMsg" xml:space="preserve">
+    <value>Při ukládání souboru došlo k chybě. Zkontrolujte, zda
+- máte oprávnění k zápisu souboru
+-soubor není otevřen v jiném programu
+
+Chybová zpráva je následující:</value>
+  </data>
+  <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
+    <value>Chyba při zápisu souboru</value>
+  </data>
+  <data name="MainForm_SaveTllFile_Exception" xml:space="preserve">
+    <value>Došlo k chybě při zápisu do datového souboru televizoru:
+{0}</value>
+  </data>
+  <data name="MainForm_SaveTllFile_Success" xml:space="preserve">
+    <value>Setříděný datový soubor televizoru byl úspěšně vytvořen.</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Filter" xml:space="preserve">
+    <value>Referenční seznam ChanSort|*.csv|Referenční seznam SamToolBox|*.chl|Všechny referenční seznamy|*.csv;*.chl</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Title" xml:space="preserve">
+    <value>Otevřít referenční seznam</value>
+  </data>
+  <data name="MainForm_TryExecute_Exception" xml:space="preserve">
+    <value>Došlo k neočekávané chybě:
+{0}</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
+    <value>Nová verze</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Message" xml:space="preserve">
+    <value>K dispozici je novější verze: v {0}.
+Chcete otevřít stránku ke stažení?</value>
+  </data>
+</root>
