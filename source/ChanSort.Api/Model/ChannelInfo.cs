@@ -282,6 +282,14 @@ namespace ChanSort.Api
       }
     }
 
+    public void SetOldPosition(int subListIndex, int oldPos)
+    {
+      if (subListIndex == 0)
+        this.OldProgramNr = oldPos;
+      else
+        this.OldFavIndex[subListIndex - 1] = oldPos;
+    }
+
     internal void ChangePosition(int subListIndex, int delta)
     {
       if (subListIndex == 0)

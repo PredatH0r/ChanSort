@@ -12,8 +12,8 @@ namespace ChanSort.Loader.Hisense
 #if HISENSE_ENABLED
   public class HisDbSerializerPlugin : ISerializerPlugin
   {
-    public string PluginName => "Hisense channel.db";
-    public string FileFilter => "channel*.db";
+    public string PluginName => "Hisense servicelist.db";
+    public string FileFilter => "servicelist*.db";
 
 #region CreateSerializer()
     public SerializerBase CreateSerializer(string inputFile)

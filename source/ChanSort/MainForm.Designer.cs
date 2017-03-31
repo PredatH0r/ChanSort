@@ -1563,7 +1563,7 @@
       this.miCzech.Id = 95;
       this.miCzech.ImageIndex = 41;
       this.miCzech.Name = "miCzech";
-      this.miCzech.Tag = "cs-CS";
+      this.miCzech.Tag = "cs-CZ";
       this.miCzech.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // mnuCharset

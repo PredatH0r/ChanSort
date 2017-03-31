@@ -16,8 +16,9 @@ namespace ChanSort.Api
     Analog = 0x0001,
     Digital = 0x0002,
 
-    // bit 5+6+7+8: Antenna/Cable/Sat/IP
-    MaskAntennaCableSat = 0x00F0,
+    // bit 4+5+6+7+8: AvInput/Antenna/Cable/Sat/IP
+    MaskAntennaCableSat = 0x00F8,
+    AvInput = 0x0008,
     Antenna = 0x0010,
     Cable = 0x0020,
     Sat = 0x0040,

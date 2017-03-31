@@ -1,6 +1,6 @@
 struct TLL_DvbsHeaderSubblock
 {
-  dword Crc32;
+  dword Crc_32;
   byte DVBS_S2_Tag[8];
   word Temp03[2];
 };
