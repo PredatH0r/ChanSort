@@ -2895,6 +2895,8 @@ namespace ChanSort.Ui
     private void gview_ShownEditor(object sender, EventArgs e)
     {
       var view = (GridView) sender;
+      if (view.FocusedRowHandle < 0)
+        return;
       var edit = view.ActiveEditor as TextEdit;
       if (edit == null) return;
       edit.Properties.MaxLength = view.FocusedColumn.FieldName == "Name" ? this.CurrentChannelList.MaxChannelNameLength : 0;
