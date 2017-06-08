@@ -22,6 +22,7 @@ namespace ChanSort.Api
     public bool SortedFavorites { get; set; }
     public bool MixedSourceFavorites { get; set; }
     public bool AllowGapsInFavNumbers { get; set; }
+    public bool ShowDeletedChannels { get; set; }
 
     public DataRoot()
     {
@@ -105,10 +106,20 @@ namespace ChanSort.Api
     #region ApplyCurrentProgramNumbers()
     public void ApplyCurrentProgramNumbers()
     {
+      int c = 0;
+      if (this.MixedSourceFavorites || this.SortedFavorites)
+      {
+        for (int m = (int) this.SupportedFavorites; m != 0; m >>= 1)
+          ++c;
+      }
+
       foreach (var list in this.ChannelLists)
       {
         foreach (var channel in list.Channels)
-          channel.NewProgramNr = channel.OldProgramNr;
+        {
+          for (int i=0; i<=c; i++)
+            channel.SetPosition(i, channel.GetOldPosition(i));
+        }
       }
     }
     #endregion

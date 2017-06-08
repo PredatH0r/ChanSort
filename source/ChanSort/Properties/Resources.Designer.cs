@@ -239,6 +239,17 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file is not a valid .zip archive.
+        ///TVs often export corrupted files to USB sticks formatted with the NTFS file system.
+        ///Please try exporting to a stick formatted with FAT32.
+        /// </summary>
+        internal static string MainForm_LoadTll_InvalidZip {
+            get {
+                return ResourceManager.GetString("MainForm_LoadTll_InvalidZip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No plugin found to read/write {0} files..
         /// </summary>
         internal static string MainForm_LoadTll_SerializerNotFound {

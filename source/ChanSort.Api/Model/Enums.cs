@@ -58,7 +58,9 @@ namespace ChanSort.Api
     TivuSatD = Digital + Sat + TivuSat,
     CanalDigitalSatD = Digital + Sat + CanalDigital,
     DigitalPlusD = Digital + Sat + DigitalPlus,
-    CyfraPlusD = Digital + Sat + CyfraPlus
+    CyfraPlusD = Digital + Sat + CyfraPlus,
+
+    All = MaskAnalogDigital | MaskAntennaCableSat | MaskTvRadio
   }
   #endregion
 

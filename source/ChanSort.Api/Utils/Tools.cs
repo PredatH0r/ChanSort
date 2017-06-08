@@ -6,11 +6,10 @@ namespace ChanSort.Api
 {
   public static class Tools
   {
-    public static V TryGet<K, V>(this IDictionary<K, V> dict, K key)
+    public static V TryGet<K, V>(this IDictionary<K, V> dict, K key, V defaultValue = default(V))
     {
       V val;
-      dict.TryGetValue(key, out val);
-      return val;
+      return dict.TryGetValue(key, out val) ? val : defaultValue;
     }
 
     #region GetAnalogChannelNumber()

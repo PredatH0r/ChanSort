@@ -144,6 +144,8 @@ namespace ChanSort.Loader.Samsung
       mapping.SetFlag(_Lock, this.Lock);
       mapping.SetFlag(_Deleted, this.NewProgramNr < 0);
       mapping.SetFlag(_IsActive, this.NewProgramNr >= 0);
+      if (this.Encrypted != null)
+        mapping.SetFlag(_Encrypted, this.Encrypted.Value);
       this.UpdateChecksum();
     }
     #endregion

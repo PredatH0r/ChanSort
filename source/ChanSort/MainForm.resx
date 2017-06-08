@@ -211,7 +211,7 @@
   </data>
   <data name="colUid1.Caption" xml:space="preserve">
     <value>UID</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="colOutLock.Caption" xml:space="preserve">
     <value>Lock</value>
   </data>
@@ -373,7 +373,7 @@
   </data>
   <data name="grpSubList.Text" xml:space="preserve">
     <value>Sub List</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="grpSubList.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -466,37 +466,37 @@
   </data>
   <data name="miFavASet.Caption" xml:space="preserve">
     <value>&amp;A</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miFavBSet.Caption" xml:space="preserve">
     <value>&amp;B</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miFavCSet.Caption" xml:space="preserve">
     <value>&amp;C</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miFavDSet.Caption" xml:space="preserve">
     <value>&amp;D</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miFavESet.Caption" xml:space="preserve">
     <value>&amp;E</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="mnuFavUnset.Caption" xml:space="preserve">
     <value>Remove from Favorites</value>
   </data>
   <data name="miFavAUnset.Caption" xml:space="preserve">
     <value>&amp;A</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miFavBUnset.Caption" xml:space="preserve">
     <value>&amp;B</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miFavCUnset.Caption" xml:space="preserve">
     <value>&amp;C</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miFavDUnset.Caption" xml:space="preserve">
     <value>&amp;D</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miFavEUnset.Caption" xml:space="preserve">
     <value>&amp;E</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miLockOn.Caption" xml:space="preserve">
     <value>&amp;Lock channel: on</value>
   </data>
@@ -535,16 +535,16 @@
   </data>
   <data name="miEnglish.Caption" xml:space="preserve">
     <value>&amp;English</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miGerman.Caption" xml:space="preserve">
     <value>&amp;Deutsch</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miPortuguese.Caption" xml:space="preserve">
     <value>Português</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miRussian.Caption" xml:space="preserve">
     <value>ру́сский</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miCzech.Caption" xml:space="preserve">
     <value>Česky</value>
   </data>
@@ -580,7 +580,7 @@
   </data>
   <data name="mnuInputSource.Caption" xml:space="preserve">
     <value>mnuInputSource</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
     <value>Opens a submenu for the program of favorite list selection. This menu can be directly activated with the Shift+F1 key</value>
   </data>
@@ -589,7 +589,7 @@
   </data>
   <data name="mnuFavList.Caption" xml:space="preserve">
     <value>mnuFavList</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="miSelectFavList0.Caption" xml:space="preserve">
     <value>Program list</value>
   </data>
@@ -1013,7 +1013,7 @@
   </data>
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="txtSetSlot.Properties.Mask.MaskType" type="DevExpress.XtraEditors.Mask.MaskType, DevExpress.XtraEditors.v15.2">
     <value>RegEx</value>
   </data>
@@ -1852,7 +1852,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v15.2, Version=15.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>01/26/2017 12:52:08</value>
+    <value>06/08/2017 17:07:00</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -1898,7 +1898,7 @@
   </data>
   <data name="btnToggleFavE.Text" xml:space="preserve">
     <value>±E</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="&gt;&gt;btnToggleFavE.Name" xml:space="preserve">
     <value>btnToggleFavE</value>
   </data>
@@ -1925,7 +1925,7 @@
   </data>
   <data name="btnToggleFavD.Text" xml:space="preserve">
     <value>±D</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="&gt;&gt;btnToggleFavD.Name" xml:space="preserve">
     <value>btnToggleFavD</value>
   </data>
@@ -1952,7 +1952,7 @@
   </data>
   <data name="btnToggleFavC.Text" xml:space="preserve">
     <value>±C</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="&gt;&gt;btnToggleFavC.Name" xml:space="preserve">
     <value>btnToggleFavC</value>
   </data>
@@ -1979,7 +1979,7 @@
   </data>
   <data name="btnToggleFavB.Text" xml:space="preserve">
     <value>±B</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="&gt;&gt;btnToggleFavB.Name" xml:space="preserve">
     <value>btnToggleFavB</value>
   </data>
@@ -2006,7 +2006,7 @@
   </data>
   <data name="btnToggleFavA.Text" xml:space="preserve">
     <value>±A</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="&gt;&gt;btnToggleFavA.Name" xml:space="preserve">
     <value>btnToggleFavA</value>
   </data>
@@ -2213,7 +2213,7 @@
   </data>
   <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
     <value>Panel1</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="gridRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -2438,7 +2438,7 @@
   </data>
   <data name="colTransportStreamId.Caption" xml:space="preserve">
     <value>TS ID</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="colTransportStreamId.ToolTip" xml:space="preserve">
     <value>Transport Stream ID</value>
   </data>
@@ -2534,7 +2534,7 @@
   </data>
   <data name="colUid.Caption" xml:space="preserve">
     <value>Uid</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="colUid.Width" type="System.Int32, mscorlib">
     <value>120</value>
   </data>
@@ -2801,7 +2801,7 @@ specific provider, satellite or country lists.</value>
   </data>
   <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
     <value>Panel2</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="splitContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1444, 459</value>
   </data>
@@ -2810,7 +2810,7 @@ specific provider, satellite or country lists.</value>
   </data>
   <data name="splitContainerControl1.Text" xml:space="preserve">
     <value>splitContainerControl1</value>
-  <comment>@Invariant</comment></data>
+  </data>
   <data name="&gt;&gt;splitContainerControl1.Name" xml:space="preserve">
     <value>splitContainerControl1</value>
   </data>

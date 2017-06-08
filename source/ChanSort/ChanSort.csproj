@@ -332,6 +332,42 @@
       <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
       <Name>ChanSort.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.GlobalClone\ChanSort.Loader.GlobalClone.csproj">
+      <Project>{5361c8cb-f737-4709-af8c-e1f0456f3c5b}</Project>
+      <Name>ChanSort.Loader.GlobalClone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Hisense2017\ChanSort.Loader.Hisense2017.csproj">
+      <Project>{9282e1db-cd1f-400a-aca1-17e0c4562acf}</Project>
+      <Name>ChanSort.Loader.Hisense2017</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj">
+      <Project>{d093e7ee-d3ad-4e7b-af82-c6918ca017fb}</Project>
+      <Name>ChanSort.Loader.Hisense</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj">
+      <Project>{e972d8a1-2f5f-421c-ac91-cff45e5191be}</Project>
+      <Name>ChanSort.Loader.LG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj">
+      <Project>{68da8072-3a29-4076-9f64-d66f38349585}</Project>
+      <Name>ChanSort.Loader.Panasonic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.SamsungJ\ChanSort.Loader.SamsungJ.csproj">
+      <Project>{33897002-0537-49a4-b963-a18d17311b3d}</Project>
+      <Name>ChanSort.Loader.SamsungJ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj">
+      <Project>{a1c9a98d-368a-44e8-9b7f-7eaca46c9ec5}</Project>
+      <Name>ChanSort.Loader.Samsung</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Toshiba\ChanSort.Loader.Toshiba.csproj">
+      <Project>{f6f02792-07f1-48d5-9af3-f945ca5e3931}</Project>
+      <Name>ChanSort.Loader.Toshiba</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj">
+      <Project>{74a18c6f-09ff-413e-90d9-827066fa5b36}</Project>
+      <Name>ChanSort.Loader.VDR</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="app.ico" />

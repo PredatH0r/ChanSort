@@ -50,6 +50,7 @@ namespace ChanSort.Api
     public int ProgramNrPreset { get; set; }
 
     public bool IsNameModified { get; set; }
+    public bool IsProxy => this.RecordIndex < 0;
 
     #region ctor()
     protected ChannelInfo()

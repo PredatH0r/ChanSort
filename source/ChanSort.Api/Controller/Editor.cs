@@ -351,6 +351,8 @@ namespace ChanSort.Api
       this.unsortedChannelMode = mode;
       foreach (var list in DataRoot.ChannelLists)
       {
+        if (list.IsMixedSourceFavoritesList)
+          continue;
         var sortedChannels = list.Channels.OrderBy(ChanSortCriteria).ToList();
         int maxProgNr = 0;
 

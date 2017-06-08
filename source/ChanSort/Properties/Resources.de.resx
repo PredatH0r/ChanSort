@@ -292,4 +292,9 @@ Mögliche Ursachen sind USB-Sticks, die mit NTFS formatiert sind (FAT32 sollte i
   <data name="ReferenceListForm_ShowOpenFileDialog_Title" xml:space="preserve">
     <value>Wählen Sie eine Vorlagedatei für die Senderreihenfolge</value>
   </data>
+  <data name="MainForm_LoadTll_InvalidZip" xml:space="preserve">
+    <value>Diese Datei ist kein gültiges .zip Archiv.
+TVs exportieren oft defekte Dateien auf USB Sticks, die mit NTFS formatiert sind.
+Bitte versuchen Sie, die Senderliste auf einen Stick mit FAT32 Formatierung zu exportieren.</value>
+  </data>
 </root>

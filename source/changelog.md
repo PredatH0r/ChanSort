@@ -1,6 +1,18 @@
 ChanSort Change Log 
 ===================
 
+2017-06-08
+- added experimental support for Loewe / Hisense 2017 servicelist.db 
+  file format
+- show error message when trying to open a .zip file that doen't contain
+  the expected files of a Samsung J series or Toshiba .zip channel list
+- show error message when trying to open a broken .zip file, which is
+  most likely caused by exporting to a USB stick formatted with NTFS
+- allow changing the "crypt" flag for Samsung .scm lists
+- less reliable on file name / extension to detect file format
+  (trying all loaders which support the file extension until one can
+   successfully read the file)
+
 2017-01-26
 - added Czech translation (thanks to Pavel Mizera)
 - fixed error when opening latest Hisense channel.db file format

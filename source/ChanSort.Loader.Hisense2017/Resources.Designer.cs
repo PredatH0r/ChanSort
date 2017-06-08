@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ChanSort.Loader.Hisense {
+namespace ChanSort.Loader.Hisense2017 {
     using System;
     
     

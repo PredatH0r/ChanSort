@@ -296,4 +296,9 @@ or firmware upgrades without running a new channel scan.
   <data name="MainForm_ShowOpenReferenceFileDialog_Title" xml:space="preserve">
     <value>Open Reference List</value>
   </data>
+  <data name="MainForm_LoadTll_InvalidZip" xml:space="preserve">
+    <value>The file is not a valid .zip archive.
+TVs often export corrupted files to USB sticks formatted with the NTFS file system.
+Please try exporting to a stick formatted with FAT32</value>
+  </data>
 </root>

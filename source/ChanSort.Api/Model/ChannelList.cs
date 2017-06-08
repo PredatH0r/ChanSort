@@ -30,6 +30,11 @@ namespace ChanSort.Api
     public int MaxChannelNameLength { get; set; }
     public int PresetProgramNrCount { get; private set; }
     public IList<string> VisibleColumnFieldNames;
+
+    /// <summary>
+    /// Set for helper lists used to manage favorites mixed from all input sources.
+    /// When true, the UI won't show the "Pr#" tab but will show "Fav A-D" tabs and a "Source" column.
+    /// </summary>
     public bool IsMixedSourceFavoritesList { get; set; }
 
     #region Caption

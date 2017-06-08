@@ -76,10 +76,8 @@ namespace ChanSort.Ui
           if (main.DetectCommonFileCorruptions(dlg.FileName))
             return null;
 
-          var plugin = dlg.FilterIndex <= main.Plugins.Count ? main.Plugins[dlg.FilterIndex - 1] : main.GetPluginForFile(dlg.FileName);
-          var ser = plugin.CreateSerializer(dlg.FileName);
-          ser.Load();
-          return ser;
+          ISerializerPlugin hint = dlg.FilterIndex <= main.Plugins.Count ? main.Plugins[dlg.FilterIndex - 1] : null;
+          return main.GetSerializerForFile(dlg.FileName, ref hint);
         }
       }
       catch

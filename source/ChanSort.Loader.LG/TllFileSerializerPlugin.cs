@@ -4,7 +4,7 @@ namespace ChanSort.Loader.LG
 {
   public class TllFileSerializerPlugin : ISerializerPlugin
   {
-    public string PluginName { get { return "LG-Electronics xx*.tll"; } }
+    public string PluginName { get { return "LG model specific (xx*.tll)"; } }
     public string FileFilter { get { return "xx*.TLL"; } }
 
     #region CreateSerializer()

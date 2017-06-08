@@ -55,7 +55,11 @@ namespace ChanSort.Loader.SamsungJ
         catch { }
       }
 
-      foreach (var filePath in Directory.GetFiles(tempDir, "*."))
+      var files = Directory.GetFiles(tempDir, "*.");
+      if (files.Length == 0)
+        throw new FileLoadException("The Samsung .zip channel list archive does not contain any supported files.");
+
+      foreach (var filePath in files)
       {
         var filename = Path.GetFileName(filePath) ?? "";
         if (filename.StartsWith("vconf_"))

@@ -614,6 +614,7 @@
       this.gviewRight.ShownEditor += new System.EventHandler(this.gview_ShownEditor);
       this.gviewRight.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewRight_FocusedRowChanged);
       this.gviewRight.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewRight_CellValueChanged);
+      this.gviewRight.CustomColumnSort += new DevExpress.XtraGrid.Views.Base.CustomColumnSortEventHandler(this.gviewRight_CustomColumnSort);
       this.gviewRight.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gview_CustomUnboundColumnData);
       this.gviewRight.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gviewRight_CustomColumnDisplayText);
       this.gviewRight.LayoutUpgrade += new DevExpress.Utils.LayoutUpgradeEventHandler(this.gviewRight_LayoutUpgrade);
@@ -639,6 +640,7 @@
       this.colSlotOld.Name = "colSlotOld";
       this.colSlotOld.OptionsColumn.AllowEdit = false;
       this.colSlotOld.OptionsFilter.AllowAutoFilter = false;
+      this.colSlotOld.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
       this.colSlotOld.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
       // 
       // colSlotNew

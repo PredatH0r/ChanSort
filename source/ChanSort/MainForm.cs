@@ -31,7 +31,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2017-03-29";
+    public const string AppVersion = "v2017-06-08";
 
     private const int MaxMruEntries = 10;
     private readonly List<string> isoEncodings = new List<string>();
@@ -186,12 +186,17 @@ namespace ChanSort.Ui
       numberOfFilters = 0;
       var filter = new StringBuilder();
       var extension = new StringBuilder();
-      foreach (var plugin in this.Plugins)
+      var sortedPlugins = this.Plugins.ToList();
+      sortedPlugins.Sort((a, b) => a.PluginName.CompareTo(b.PluginName));
+      foreach (var plugin in sortedPlugins)
       {
         filter.Append(plugin.PluginName).Append("|").Append(plugin.FileFilter);
-        extension.Append(plugin.FileFilter);
         filter.Append("|");
-        extension.Append(";");
+        if (!(";" + extension + ";").Contains(plugin.FileFilter))
+        {
+          extension.Append(plugin.FileFilter);
+          extension.Append(";");
+        }
         ++numberOfFilters;
       }
       if (extension.Length > 0)
@@ -252,7 +257,7 @@ namespace ChanSort.Ui
         this.Editor.ChannelList = null;
         this.gridRight.DataSource = null;
         this.gridLeft.DataSource = null;
-        this.FillChannelListCombo();
+        this.FillChannelListTabs();
 
         //this.SetControlsEnabled(!this.dataRoot.IsEmpty);
         this.UpdateFavoritesEditor(this.DataRoot.SupportedFavorites);
@@ -314,9 +319,9 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region FillChannelListCombo()
+    #region FillChannelListTabs()
 
-    private void FillChannelListCombo()
+    private void FillChannelListTabs()
     {
       this.tabChannelList.TabPages.Clear();
 
@@ -408,23 +413,60 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region GetTvFileSerializer()
+    #region GetSerializerForFile()
 
-    internal ISerializerPlugin GetPluginForFile(string inputFileName)
+    internal SerializerBase GetSerializerForFile(string inputFileName, ref ISerializerPlugin hint)
     {
       if (!File.Exists(inputFileName))
       {
         XtraMessageBox.Show(this, string.Format(Resources.MainForm_LoadTll_SourceTllNotFound, inputFileName));
         return null;
       }
-      var upperFileName = (Path.GetFileName(inputFileName) ?? "").ToUpper();
-      foreach (var plugin in this.Plugins)
+
+      List<ISerializerPlugin> candidates = new List<ISerializerPlugin>();
+      if (hint != null)
+        candidates.Add(hint);
+      else
       {
-        foreach (var filter in plugin.FileFilter.ToUpper().Split(';'))
+        var upperFileName = (Path.GetFileName(inputFileName) ?? "").ToUpper();
+        foreach (var plugin in this.Plugins)
         {
-          var regex = filter.Replace(".", "\\.").Replace("*", ".*").Replace("?", ".");
-          if (Regex.IsMatch(upperFileName, regex))
-            return plugin;
+          foreach (var filter in plugin.FileFilter.ToUpper().Split(';'))
+          {
+            var regex = filter.Replace(".", "\\.").Replace("*", ".*").Replace("?", ".");
+            if (Regex.IsMatch(upperFileName, regex))
+            {
+              candidates.Add(plugin);
+              break;
+            }
+          }
+        }
+      }
+
+      foreach (var plugin in candidates)
+      {
+        try
+        {
+          var serializer = plugin.CreateSerializer(inputFileName);
+          if (serializer != null)
+          {
+            serializer.DefaultEncoding = this.defaultEncoding;
+            serializer.Load();
+            hint = plugin;
+            return serializer;
+          }
+        }
+        catch (Exception ex)
+        {
+          if (ex is ArgumentException)
+          {
+            var msg = ex.ToString();
+            if (msg.Contains("ZipFile..ctor()"))
+            {
+              XtraMessageBox.Show(this, string.Format(Resources.MainForm_LoadTll_InvalidZip, inputFileName));
+              return null;
+            }
+          }
         }
       }
 
@@ -446,18 +488,14 @@ namespace ChanSort.Ui
         return false;
       }
 
-      if (plugin == null)
-        plugin = this.GetPluginForFile(tvDataFile);
       // abort action if there is no currentTvSerializer for the input file
-      var serializer = plugin == null ? null : plugin.CreateSerializer(tvDataFile);
+      SerializerBase serializer = this.GetSerializerForFile(tvDataFile, ref plugin);
       if (serializer == null)
         return false;
 
       if (!this.PromptSaveAndContinue())
         return false;
 
-      serializer.DefaultEncoding = this.defaultEncoding;
-      serializer.Load();
       this.SetFileName(tvDataFile);
       this.currentPlugin = plugin;
       this.currentTvSerializer = serializer;
@@ -530,6 +568,7 @@ namespace ChanSort.Ui
         this.BeginInvoke((Action) (() => this.ShowOpenReferenceFileDialog(false)));
       else if (res == DialogResult.No)
       {
+        //this.currentTvSerializer.ApplyCurrentProgramNumbers();
         this.DataRoot.ApplyCurrentProgramNumbers();
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
         this.rbInsertSwap.Checked = true;
@@ -590,9 +629,6 @@ namespace ChanSort.Ui
           this.pageProgNr.PageVisible = true;
           this.grpSubList.Visible = DataRoot.SortedFavorites;
         }
-
-        //this.tabSubList.TabPages[0].PageVisible = !channelList.IsMixedSourceFavoritesList;
-        //this.pageProgNr.Enabled = this.pageProgNr.Visible;
       }
       else
       {
@@ -610,7 +646,7 @@ namespace ChanSort.Ui
       UpdateGridReadOnly();
 
 
-      this.UpdateInsertSlotTextBox();
+      this.UpdateInsertSlotNumber();
       this.UpdateMenu();
 
       this.mnuFavList.Enabled = this.grpSubList.Visible;
@@ -703,7 +739,7 @@ namespace ChanSort.Ui
       {
         foreach (var channel in list.Channels)
         {
-          if (channel.NewProgramNr < 0)
+          if (channel.NewProgramNr < 0 && channel.OldProgramNr >= 0)
           {
             hasUnsorted = true;
             break;
@@ -871,6 +907,8 @@ namespace ChanSort.Ui
       // remove all the selected channels which are about to be added. 
       // This may require an adjustment of the insert position when channels are removed in front of it and gaps are closed.
       var insertSlot = this.CurrentChannelList.InsertProgramNumber;
+      if (insertSlot == 1 && this.rbInsertAfter.Checked && this.gviewLeft.RowCount == 0)
+        insertSlot = 0;     
       var contextRow = (ChannelInfo)this.gviewLeft.GetFocusedRow();
       if (contextRow != null)
       {
@@ -1684,7 +1722,7 @@ namespace ChanSort.Ui
       if (this.currentTvSerializer != null && this.currentTvSerializer.Features.CleanUpChannelData)
       {
         var msg = this.currentTvSerializer.CleanUpChannelData();
-        this.FillChannelListCombo();
+        this.FillChannelListTabs();
         InfoBox.Show(this, msg, this.miCleanupChannels.Caption);
         this.RefreshGrid(gviewLeft, gviewRight);
       }
@@ -1837,11 +1875,13 @@ namespace ChanSort.Ui
       this.gviewLeft.BeginSort();
       this.gviewLeft.EndSort();
       this.gviewRight.BeginSort();
-      if (this.subListIndex > 0)
+      if (this.subListIndex > 0 && !this.CurrentChannelList.IsMixedSourceFavoritesList)
         this.colPrNr.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>-1");
       else
         this.colPrNr.ClearFilter();
       this.gviewRight.EndSort();
+
+      this.UpdateInsertSlotNumber();
     }
 
     #endregion
@@ -2050,7 +2090,7 @@ namespace ChanSort.Ui
     {
       var channel = (ChannelInfo) this.gviewLeft.GetRow(e.RowHandle);
       if (channel == null) return;
-      if (channel.OldProgramNr == -1)
+      if (channel.IsProxy)
       {
         e.Appearance.ForeColor = Color.Red;
         e.Appearance.Options.UseForeColor = true;
@@ -2190,7 +2230,7 @@ namespace ChanSort.Ui
     {
       var channel = (ChannelInfo) this.gviewRight.GetRow(e.RowHandle);
       if (channel == null) return;
-      if (channel.OldProgramNr == -1)
+      if (channel.IsProxy)
       {
         e.Appearance.ForeColor = Color.Red;
         e.Appearance.Options.UseForeColor = true;
@@ -2261,6 +2301,22 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region gviewRight_CustomColumnSort
+    private void gviewRight_CustomColumnSort(object sender, CustomColumnSortEventArgs e)
+    {
+      if (e.Column == this.colSlotOld)
+      {
+        // sort unassigned channels (PrNr = -1) to the bottom of the list
+        var ch1 = (int)this.gviewRight.GetListSourceRowCellValue(e.ListSourceRowIndex1, e.Column);
+        var ch2 = (int)this.gviewRight.GetListSourceRowCellValue(e.ListSourceRowIndex2, e.Column);
+        if (ch1 < 0) ch1 = int.MaxValue;
+        if (ch2 < 0) ch2 = int.MaxValue;
+        e.Result = System.Collections.Comparer.Default.Compare(ch1, ch2);
+        e.Handled = true;
+      }
+    }
+    #endregion
+
     #region gviewRight_PopupMenuShowing
 
     private void gviewRight_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
@@ -2286,10 +2342,16 @@ namespace ChanSort.Ui
         if (this.CurrentChannelList == null)
           return;
 
-        var delta = this.curEditMode == EditMode.InsertAfter
-          ? -1
-          : this.rbInsertAfter.Checked ? +1 : 0;
-        this.CurrentChannelList.InsertProgramNumber += delta;
+        if (this.gviewLeft.RowCount == 0)
+          this.CurrentChannelList.InsertProgramNumber = 1;
+        else
+        {
+          var delta = this.curEditMode == EditMode.InsertAfter
+            ? -1
+            : this.rbInsertAfter.Checked ? +1 : 0;
+          this.CurrentChannelList.InsertProgramNumber += delta;
+        }
+
         this.UpdateInsertSlotTextBox();
         this.curEditMode = this.rbInsertBefore.Checked
           ? EditMode.InsertBefore
@@ -2458,8 +2520,9 @@ namespace ChanSort.Ui
     {
       this.gviewRight.BeginSort();
       this.gviewRight.ClearColumnsFilter();
-      this.colSlotOld.FilterInfo = new ColumnFilterInfo("[OldProgramNr]<>-1");
-      if (this.subListIndex > 0)
+      if (this.DataRoot != null && !this.DataRoot.ShowDeletedChannels)
+        this.colSlotOld.FilterInfo = new ColumnFilterInfo("[OldProgramNr]<>-1");
+      if (this.subListIndex > 0 && !this.CurrentChannelList.IsMixedSourceFavoritesList)
         this.colPrNr.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>-1");
       this.gviewRight.EndSort();
     }
