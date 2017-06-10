@@ -340,7 +340,7 @@ namespace ChanSort.Loader.Panasonic
           RepairCorruptedDatabaseImage(cmd);
           InitCharacterEncoding(cmd);
 
-          cmd.CommandText = "SELECT count(1) FROM sqlite_master WHERE type = 'table' and name in ('svl', 'tsl')";
+          cmd.CommandText = "SELECT count(1) FROM sqlite_master WHERE type = 'table' and name in ('SVL', 'TSL')";
           if (Convert.ToInt32(cmd.ExecuteScalar()) != 2)
             throw new FileLoadException("File doesn't contain the expected TSL/SVL tables");
 
