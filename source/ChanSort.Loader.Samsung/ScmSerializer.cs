@@ -131,8 +131,8 @@ namespace ChanSort.Loader.Samsung
         ReadDvbctChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, out this.canalDigitalFileContent, this.dvbcFrequency);
         ReadDvbctChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, out this.digitalPlusFileContent, this.dvbcFrequency);
         ReadSatellites(zip);
+        ReadTransponder(zip, "UserTransponderDataBase.dat"); // read user data first so it has priority over overridden default transponsers
         ReadTransponder(zip, "TransponderDataBase.dat");
-        ReadTransponder(zip, "UserTransponderDataBase.dat");
         ReadDvbsChannels(zip, "map-SateD", this.dvbsChannels, out this.dvbsFileContent, c.dvbsChannelLength);
         ReadDvbsChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
         ReadAstraHdPlusChannels(zip);        
