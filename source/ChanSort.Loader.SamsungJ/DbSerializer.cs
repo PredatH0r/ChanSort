@@ -15,7 +15,6 @@ namespace ChanSort.Loader.SamsungJ
     private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
     private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
     private string tempDir;
-    private Dictionary<int, Transponder> transponderByFreq;
 
     private enum FileType { Unknown, SatDb, ChannelDbDvb, ChannelDbAnalog }
 
@@ -190,8 +189,10 @@ namespace ChanSort.Loader.SamsungJ
         {
           Satellite sat = new Satellite(r.GetInt32(0));
           int pos = Math.Abs(r.GetInt32(2));
-          sat.OrbitalPosition = $"{pos/10}.{pos%10}{(r.GetInt32(3) == 1 ? "E" : "W")}";
-          sat.Name = ReadUtf16(r, 1);
+          // 171027 - ohuseyinoglu: For user-defined satellites, the direction may be -1
+          // (and not just 1 for "E", 0 for "W")
+          int dir = r.GetInt32(3);
+          sat.OrbitalPosition = $"{pos / 10}.{pos % 10}{(dir == 1 ? "E" : dir == 0 ? "W" : "")}"; sat.Name = ReadUtf16(r, 1);
           this.DataRoot.AddSatellite(sat);
         }
       }
@@ -206,16 +207,14 @@ namespace ChanSort.Loader.SamsungJ
       {
         while (r.Read())
         {
-          int satId = r.GetInt32(0);
-          int freq = r.GetInt32(1);
-          int id = satId * 1000000 + freq / 1000;
-          if (this.DataRoot.Transponder.TryGet(id) != null)
-            continue;
+          // 171027 - ohuseyinoglu: tpId is the primary key of this table, we should be able to use it as "id/dict. index"
+          // It will also be our lookup value for the CHNL table
+          int id = r.GetInt32(4);
           Transponder tp = new Transponder(id);
-          tp.FrequencyInMhz = (decimal)freq / 1000;
-          tp.Number = r.GetInt32(4);
+          tp.FrequencyInMhz = (decimal)r.GetInt32(1) / 1000;
+          tp.Number = id;
           tp.Polarity = r.GetInt32(2) == 0 ? 'H' : 'V';
-          tp.Satellite = this.DataRoot.Satellites.TryGet(satId);
+          tp.Satellite = this.DataRoot.Satellites.TryGet(r.GetInt32(0));
           tp.SymbolRate = r.GetInt32(3);
           this.DataRoot.AddTransponder(tp.Satellite, tp);
         }
@@ -230,7 +229,6 @@ namespace ChanSort.Loader.SamsungJ
       this.channelById.Clear();
       using (var cmd = conn.CreateCommand())
       {
-        this.RepairCorruptedDatabaseImage(cmd);
         var providers = digital ? this.ReadProviders(cmd) : null;
         var channelList = this.ReadChannels(cmd, dbPath, providers, digital);
         this.ReadFavorites(cmd);
@@ -263,7 +261,6 @@ namespace ChanSort.Loader.SamsungJ
     private ChannelList ReadChannels(SQLiteCommand cmd, string dbPath, Dictionary<long, string> providers, bool digital)
     {
       var signalSource = DetectSignalSource(cmd, digital);
-      var sat = (signalSource & SignalSource.Sat) == 0 ? null : this.DetectSatellite(cmd);
 
       string name = Path.GetFileName(dbPath);
       ChannelList channelList = new ChannelList(signalSource, name);
@@ -283,7 +280,11 @@ namespace ChanSort.Loader.SamsungJ
       {
         while (r.Read())
         {
-          var tp = this.transponderByFreq?.TryGet(r.GetInt32(2));
+          // 171027 - ohuseyinoglu: With our change in transponder indexing, we can directly look it up by "chNum" now!
+          var tp = this.DataRoot.Transponder.TryGet(r.GetInt32(1));
+          // ... and get the satellite from that transponder - if set
+          // Note that we can have channels from multiple satellites in the same list, so this is a loop variable now
+          var sat = tp?.Satellite;
           var channel = new DbChannel(r, fields, this.DataRoot, providers, sat, tp);
           if (!channel.IsDeleted)
           {
@@ -329,48 +330,6 @@ namespace ChanSort.Loader.SamsungJ
         case 7: return SignalSource.DvbS;
         default: return 0;
       }      
-    }
-    #endregion
-
-    #region DetectSatellite()
-
-    /// <summary>
-    /// I haven't found a direct way to link a dvbs database file or its channels to a satId.
-    /// This workaround compares the transponder frequencies in the channel list with the transponder frequencies of each satellite to find a match.
-    /// </summary>
-    private Satellite DetectSatellite(SQLiteCommand cmd)
-    {
-      List<int> tpFreq = new List<int>();
-      cmd.CommandText = "select freq from CHNL where chType=7";
-      using (var r = cmd.ExecuteReader())
-      {
-        while (r.Read())
-          tpFreq.Add(r.GetInt32(0));
-      }
-
-      this.transponderByFreq = null;
-      foreach (var sat in DataRoot.Satellites.Values)
-      {
-        Dictionary<int, Transponder> satFreq = new Dictionary<int, Transponder>();
-        foreach (var tp in sat.Transponder.Values)
-          satFreq.Add((int) (tp.FrequencyInMhz*1000), tp);
-
-        int mismatch = 0;
-        foreach (int freq in tpFreq)
-        {
-          if (satFreq.ContainsKey(freq) || satFreq.ContainsKey(freq - 1000) || satFreq.ContainsKey(freq + 1000))
-            continue;
-
-          ++mismatch;
-        }
-
-        if (mismatch < 10)
-        {
-          this.transponderByFreq = satFreq;
-          return sat;
-        }
-      }
-      return null;
     }
     #endregion
 

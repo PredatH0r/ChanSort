@@ -1,4 +1,8 @@
-﻿namespace ChanSort.Ui
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace ChanSort.Ui
 {
   partial class ActionBoxDialog
   {

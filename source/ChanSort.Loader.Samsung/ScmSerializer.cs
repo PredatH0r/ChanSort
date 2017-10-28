@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using ChanSort.Api;
 using ICSharpCode.SharpZipLib.Zip;
 
@@ -233,7 +234,26 @@ namespace ChanSort.Loader.Samsung
       if (validCandidates.Length == 0)
         return false;
 
-      var series = validCandidates[0];
+      char series;
+      if (validCandidates.Length == 1)
+        series = validCandidates[0];
+      else
+      {
+        using (var dlg = View.View.Default?.CreateActionBox(""))
+        {
+          if (dlg == null) // during unit testing
+            return false;
+          dlg.Message = "File type could not be detected automatically.\nPlease choose the model series of your TV:";
+          foreach(var cand in validCandidates)
+            dlg.AddAction("Series " + cand, cand);
+          dlg.AddAction("Cancel", 0);
+          dlg.ShowDialog();
+          if (dlg.SelectedAction == 0)
+            return false;
+          series = (char)dlg.SelectedAction;
+        }
+      }
+
       this.modelConstants.TryGetValue("Series:" + series, out this.c);
       return true;
     }

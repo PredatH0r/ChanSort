@@ -152,7 +152,7 @@
     <value>Änderungen verwerfen</value>
   </data>
   <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
-    <value>Es konnte kein Modul zum Lesen/Schreiben von {0}-Dateien gefunden werden.</value>
+    <value>Es konnte kein Modul zum Lesen/Schreiben von {0} gefunden werden.</value>
   </data>
   <data name="MainForm_LoadFiles_IOException" xml:space="preserve">
     <value>Fehler beim Laden der Datei</value>

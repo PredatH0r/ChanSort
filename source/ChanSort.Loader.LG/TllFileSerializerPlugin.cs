@@ -4,6 +4,8 @@ namespace ChanSort.Loader.LG
 {
   public class TllFileSerializerPlugin : ISerializerPlugin
   {
+    public string DllName { get; set; }
+
     public string PluginName { get { return "LG model specific (xx*.tll)"; } }
     public string FileFilter { get { return "xx*.TLL"; } }
 

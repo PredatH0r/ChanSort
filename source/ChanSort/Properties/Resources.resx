@@ -152,7 +152,7 @@
     <value>Discard changes</value>
   </data>
   <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
-    <value>No plugin found to read/write {0} files.</value>
+    <value>No plugin found to read/write {0}.</value>
   </data>
   <data name="MainForm_LoadFiles_IOException" xml:space="preserve">
     <value>Error loading file</value>

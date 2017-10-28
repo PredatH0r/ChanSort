@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -11,6 +12,12 @@ namespace ChanSort.Ui
     [STAThread]
     static void Main()
     {
+      // if there is no valid locale set up in the Windows region settings, SharpZipLib will fail to open zip files.
+      if (Thread.CurrentThread.CurrentCulture.TextInfo.OEMCodePage <= 1)
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+      if (Thread.CurrentThread.CurrentUICulture.TextInfo.OEMCodePage <= 1)
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
 

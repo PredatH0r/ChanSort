@@ -4,6 +4,7 @@ namespace ChanSort.Loader.VDR
 {
   public class SerializerPlugin : ISerializerPlugin
   {
+    public string DllName { get; set; }
     public string PluginName { get { return "Linux VDR"; } }
     public string FileFilter { get { return "*.conf"; } }
     

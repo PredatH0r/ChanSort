@@ -4,6 +4,8 @@ namespace ChanSort.Api
 {
   public class RefSerializerPlugin : ISerializerPlugin
   {
+    public string DllName { get; set; }
+
     public string PluginName => "ChanSort Reference List";
 
     public string FileFilter => "*.txt;*.chl;*.csv";

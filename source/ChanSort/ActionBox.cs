@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ChanSort.View;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
 
 namespace ChanSort.Ui
 {
 
-  public partial class ActionBoxDialog : XtraForm
+  public partial class ActionBoxDialog : XtraForm, IActionBoxDialog
   {
     private const int ButtonSpacing = 10;
     private const int ButtonHeight = 50;
@@ -27,8 +28,27 @@ namespace ChanSort.Ui
     public Image Overwrite { get { return this.imageCollection1.Images[6]; } }
     public Image Discard { get { return this.imageCollection1.Images[7]; } }
 
+    #region Message
+    public string Message
+    {
+      get => this.lblMessage.Text;
+      set => this.lblMessage.Text = value;
+    }
+    #endregion
+
     #region AddAction()
+
     public void AddAction(string text, DialogResult result, Image image = null, bool isDefault = false)
+    {
+      this.AddAction(text, (object)result, image, isDefault);
+    }
+
+    public void AddAction(string text, int result, Image image = null, bool isDefault = false)
+    {
+      this.AddAction(text, (object)result, image, isDefault);
+    }
+
+    private void AddAction(string text, object result, Image image = null, bool isDefault = false)
     {
       int width = this.ClientSize.Width-20;
       var button = new SimpleButton();
@@ -47,21 +67,26 @@ namespace ChanSort.Ui
       if (isDefault)
         this.AcceptButton = button;
 
-      button.DialogResult = result;
-      if (result == DialogResult.Cancel)
+      if (result is DialogResult)
       {
-        this.CancelButton = button;
-        this.ControlBox = true;
-        this.SelectedAction = result;
+        button.DialogResult = (DialogResult) result;
+
+        if ((DialogResult) result == DialogResult.Cancel)
+        {
+          this.CancelButton = button;
+          this.ControlBox = true;
+          this.SelectedAction = (int)(DialogResult)result;
+        }
       }
     }
     #endregion
 
     #region SelectedAction
+
     /// <summary>
     /// Returns the action selected by the user
     /// </summary>
-    public DialogResult SelectedAction { get; protected set; }
+    public int SelectedAction { get; protected set; }
     #endregion
 
     #region OnCreateControl()
@@ -86,9 +111,23 @@ namespace ChanSort.Ui
     #region button_Click
     void button_Click(object sender, EventArgs e)
     {
-      this.SelectedAction = (DialogResult)((Control)sender).Tag;
-      this.DialogResult = this.SelectedAction;
+      this.SelectedAction = (int)((Control)sender).Tag;
+      var dlgResult = ((SimpleButton) sender).DialogResult;
+      this.DialogResult = dlgResult != DialogResult.None ? dlgResult : DialogResult.OK;
     }
+    #endregion
+
+    #region IActionBoxDialog
+
+    // Implementation of an interfact that can be used by the Loaders without a reference to Windows.Forms or DevExpress assemblies
+
+    public void AddAction(string text, int result)
+    {
+      AddAction(text, result, null, false);
+    }
+
+    void IActionBoxDialog.ShowDialog() => this.ShowDialog();
+
     #endregion
   }
 }

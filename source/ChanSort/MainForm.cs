@@ -91,6 +91,9 @@ namespace ChanSort.Ui
       this.miAddFromRefList.Visibility = BarItemVisibility.Never;
       this.miAddFromRefList.Enabled = false;
 #endif
+
+      View.View.Default = new View.View();
+      View.View.Default.CreateActionBox = msg => new ActionBoxDialog(msg);
     }
 
     #endregion
@@ -120,6 +123,23 @@ namespace ChanSort.Ui
 
     private void InitAppAfterMainWindowWasShown()
     {
+      if (!DepencencyChecker.IsVc2010RedistPackageX86Installed())
+      {
+        if (XtraMessageBox.Show(this,
+              "Some channel list file formats can only be read when the\n" +
+              "Microsoft Visual C++ Redistributable (x86) package is installed.\n" +
+              "\nDo you want to open the download page and quit ChanSort?",
+              "ChanSort",
+              MessageBoxButtons.YesNo,
+              MessageBoxIcon.Question,
+              MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+        {
+          System.Diagnostics.Process.Start("https://www.microsoft.com/en-us/download/details.aspx?id=5555");
+          Application.Exit();
+          return;
+        }
+      }
+
       this.BeginInvoke((Action) UpdateCheck.CheckForNewVersion);
     }
 
@@ -139,8 +159,12 @@ namespace ChanSort.Ui
           var assembly = Assembly.UnsafeLoadFrom(file);
           foreach (var type in assembly.GetTypes())
           {
-            if (typeof (ISerializerPlugin).IsAssignableFrom(type) && !type.IsAbstract)
-              list.Add((ISerializerPlugin) Activator.CreateInstance(type));
+            if (typeof(ISerializerPlugin).IsAssignableFrom(type) && !type.IsAbstract)
+            {
+              var plugin = (ISerializerPlugin) Activator.CreateInstance(type);
+              plugin.DllName = Path.GetFileName(file);
+              list.Add(plugin);
+            }
           }
         }
         catch (Exception ex)
@@ -443,6 +467,7 @@ namespace ChanSort.Ui
         }
       }
 
+      var errorMsgs = new StringBuilder();
       foreach (var plugin in candidates)
       {
         try
@@ -458,6 +483,7 @@ namespace ChanSort.Ui
         }
         catch (Exception ex)
         {
+          errorMsgs.AppendLine($"{plugin.DllName} ({plugin.PluginName}): {ex}\n\n");
           if (ex is ArgumentException)
           {
             var msg = ex.ToString();
@@ -470,7 +496,8 @@ namespace ChanSort.Ui
         }
       }
 
-      XtraMessageBox.Show(this, string.Format(Resources.MainForm_LoadTll_SerializerNotFound, inputFileName));
+
+      XtraMessageBox.Show(this, string.Format(Resources.MainForm_LoadTll_SerializerNotFound, inputFileName) + "\n\n" + errorMsgs);
       return null;
     }
 

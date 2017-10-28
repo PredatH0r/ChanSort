@@ -2,6 +2,8 @@
 {
   public interface ISerializerPlugin
   {
+    string DllName { get; set; }
+
     /// <summary>
     /// Name of the plugin, as displayed in the OpenFileDialog file-type selection combo box
     /// </summary>

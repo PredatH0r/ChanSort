@@ -250,7 +250,7 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No plugin found to read/write {0} files..
+        ///   Looks up a localized string similar to No plugin found to read/write {0}..
         /// </summary>
         internal static string MainForm_LoadTll_SerializerNotFound {
             get {

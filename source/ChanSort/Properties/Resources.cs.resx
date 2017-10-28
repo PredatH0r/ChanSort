@@ -184,7 +184,7 @@ hotelový režim na ZAPNUTO, a následně provedete export nového čistého sou
 {0}</value>
   </data>
   <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
-    <value>Nebyl nalezen zásuvný modul pro čtení/zápis {0} souborů.</value>
+    <value>Nebyl nalezen zásuvný modul pro čtení/zápis {0}.</value>
   </data>
   <data name="MainForm_LoadTll_SourceTllNotFound" xml:space="preserve">
     <value>Quell-TLL könnte nicht gefunden werden:

@@ -43,6 +43,9 @@ namespace Test.Loader
       var models = new Dictionary<string, string>();
       foreach (var file in list)
       {
+        if (file.Contains("Apu TV")) // files in this dir are renamed and the format can't be detected automatically
+          continue;
+
         Debug.Print("Testing " + file);
         try
         {
