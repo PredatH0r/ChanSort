@@ -127,7 +127,7 @@ namespace ChanSort.Ui
       {
         if (XtraMessageBox.Show(this,
               "Some channel list file formats can only be read when the\n" +
-              "Microsoft Visual C++ Redistributable (x86) package is installed.\n" +
+              "Microsoft Visual C++ 2010 Redistributable Package (x86) is installed.\n" +
               "\nDo you want to open the download page and quit ChanSort?",
               "ChanSort",
               MessageBoxButtons.YesNo,
