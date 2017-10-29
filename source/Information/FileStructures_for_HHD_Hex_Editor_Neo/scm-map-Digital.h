@@ -44,7 +44,7 @@ struct SCM_mapDigital_C_entry
    word ServiceId;
    byte Unknown8[4];
    byte Qam;
-   byte Unknown13;
+   byte Skip;
    byte Bandwidth;
    byte ServiceType;
    byte Codec;
@@ -52,7 +52,7 @@ struct SCM_mapDigital_C_entry
    word HRes;
    word VRes;
    byte Encrypted;
-   byte FrameRate;
+   byte Hidden;
    byte Unknown26[2];
    word SymbolRate;
    byte Unknown30;
@@ -93,7 +93,7 @@ struct SCM_mapDigital_DEF_entry
    byte SignalSource;
    byte SignalType;
    byte Qam;
-   byte Unknown13;
+   byte Skip;
    byte BandwidthIs8MHz;
    byte ServiceType;
    byte Codec;
@@ -101,7 +101,7 @@ struct SCM_mapDigital_DEF_entry
    word HRes;
    word VRes;
    byte Encrypted;
-   byte FrameRate;
+   byte Hidden;
    byte Unknown26[2];
    word SymbolRate;
    byte Unknown30;

@@ -93,9 +93,12 @@ namespace ChanSort.Api
       #region ParseNumber()
       private int ParseNumber(string value)
       {
+        int sig = value.StartsWith("-") ? -1 : 1;
+        if (sig < 0)
+          value = value.Substring(1).Trim();
         if (value.ToLower().StartsWith("0x"))
         {
-          try { return Convert.ToInt32(value, 16); }
+          try { return Convert.ToInt32(value, 16) * sig; }
           catch { return 0; }
         }
         int intValue;

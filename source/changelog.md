@@ -1,6 +1,15 @@
 ChanSort Change Log 
 ===================
 
+2017-10-29
+- Show popup with download link for MS Visual C++ 2010 x86 Redist
+  (this package is needed to open lists with a SQLite file format)
+- Show diagnostic information when no plugin was able to load a file
+- Samsung .zip: improved detection of transponder data
+- Samsung .scm: user defined transponders now have priority
+- Samsung .scm: DVB-T and DVB-C lists now support Skip and Hide flags
+  (DVB-S lists still don't)
+
 2017-06-08
 - added experimental support for Loewe / Hisense 2017 servicelist.db 
   file format

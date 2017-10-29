@@ -21,6 +21,8 @@ namespace ChanSort.Loader.Samsung
     private const string _Checksum = "offChecksum";
 
     // DVB
+    private const string _Skip = "Skip";
+    private const string _Hidden = "Hidden";
     private const string _ServiceId = "offServiceId";
     private const string _VideoPid = "offVideoPid";
     private const string _AudioPid = "offAudioPid";
@@ -59,6 +61,8 @@ namespace ChanSort.Loader.Samsung
       this.Name = data.GetString(_Name, data.Settings.GetInt("lenName"));
       this.Favorites = this.ParseRawFavorites();
       this.Lock = data.GetFlag(_Lock);
+      this.Hidden = data.GetFlag(_Hidden);
+      this.Skip = data.GetFlag(_Skip);
       this.Encrypted = data.GetFlag(_Encrypted);
       this.IsDeleted = data.GetFlag(_Deleted, false) || !data.GetFlag(_IsActive, true);
       if (this.IsDeleted)
@@ -144,6 +148,8 @@ namespace ChanSort.Loader.Samsung
       mapping.SetFlag(_Lock, this.Lock);
       mapping.SetFlag(_Deleted, this.NewProgramNr < 0);
       mapping.SetFlag(_IsActive, this.NewProgramNr >= 0);
+      mapping.SetFlag(_Skip, this.Skip);
+      mapping.SetFlag(_Hidden, this.Hidden);
       if (this.Encrypted != null)
         mapping.SetFlag(_Encrypted, this.Encrypted.Value);
       this.UpdateChecksum();

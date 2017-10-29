@@ -3,7 +3,6 @@ using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using ChanSort.Api;
 using ICSharpCode.SharpZipLib.Zip;
 

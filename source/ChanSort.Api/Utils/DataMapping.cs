@@ -132,9 +132,17 @@ namespace ChanSort.Api
     public bool GetFlag(string valueKey, int mask, bool defaultValue = false)
     {
       if (mask == 0) return defaultValue;
+
+      bool reverseLogic = false;
+      if (mask < 0)
+      {
+        reverseLogic = true;
+        mask = -mask;
+      }
       var offsets = settings.GetIntList(valueKey);
       if (offsets.Length == 0) return defaultValue;
-      return (this.data[baseOffset + offsets[0]] & mask) == mask;
+      bool isSet = (this.data[baseOffset + offsets[0]] & mask) == mask;
+      return isSet != reverseLogic;
     }
     #endregion
 
@@ -153,10 +161,16 @@ namespace ChanSort.Api
     public void SetFlag(string valueKey, int mask, bool value)
     {
       if (mask == 0) return;
+      bool reverseLogic = false;
+      if (mask < 0)
+      {
+        reverseLogic = true;
+        mask = -mask;
+      }
       var offsets = settings.GetIntList(valueKey);
       foreach (var offset in offsets)
       {
-        if (value)
+        if (value != reverseLogic)
           this.data[baseOffset + offset] |= (byte)mask;
         else
           this.data[baseOffset + offset] &= (byte)~mask;
