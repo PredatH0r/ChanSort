@@ -31,7 +31,7 @@ namespace ChanSort.Ui
 {
   public partial class MainForm : XtraForm
   {
-    public const string AppVersion = "v2017-10-29";
+    public static string AppVersion { get; private set; }
 
     private const int MaxMruEntries = 10;
     private readonly List<string> isoEncodings = new List<string>();
@@ -59,6 +59,9 @@ namespace ChanSort.Ui
         Thread.CurrentThread.CurrentUICulture = new CultureInfo(Settings.Default.Language);
       this.LookAndFeel.SetSkinStyle("Office 2010 Blue");
       InitializeComponent();
+
+      var version = this.GetType().Assembly.GetName().Version;
+      AppVersion = new DateTime(2000, 1, 1).AddDays(version.Build).ToString("yyyy-MM-dd");
 
       // remember which columns should be visible by default
       foreach (GridColumn col in this.gviewLeft.Columns)
