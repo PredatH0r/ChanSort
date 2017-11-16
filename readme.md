@@ -11,7 +11,7 @@ About ChanSort
 --------------
 ChanSort is a PC/Windows application that allows you to reorder your TV's channel list.  
 Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
-ChanSort supports various models from **Hisense** (NEW), LG, Panasonic, Samsung, Toshiba and the Linux VDR project.
+ChanSort supports various models from Hisense, Samsung, LG, Panasonic, Toshiba and the Linux VDR project.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-en.png)
 
@@ -34,14 +34,14 @@ Most of this software was written without support from TV manufacturers or acces
 documentation about the file formats. It is solely based on analysing existing data files, trial and error.
 There is a chance of unwanted side-effects or even damage to your TV, as reported in 2 cases.
 
-Hisense is the only manufacturer who provided both information and a test device.
+Hisense is the only manufacturer who provided technical information and a test device.
 
 System requirements
 -------------------
 - [Microsoft .NET Framework 4.0 (Full)](http://www.microsoft.com/en-us/download/details.aspx?id=17851): 
   included in Win8, required for Win7, Vista and XP SP3
 - [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328):
-  required to edit SQLite lists (Hisense, Panasonic, Toshiba and Samsung J-series)
+  required to edit SQLite lists (Hisense, Panasonic, Toshiba and Samsung .zip format)
 - USB stick/SD-card to transfer the channel list between your TV and PC (FAT32 file system recommended)
 - Some LG models require a special service remote control to access the import/export functions (see Wiki for details)
 
@@ -49,11 +49,13 @@ Supported TV models
 -------------------
 
 **Hisense**  
-Smart models (2016) with a channel.db format, i.e. H65M5500  
+2016 "Smart" models with a channel.db file, i.e. H65M5500  
+2017 models with a servicelist.db file  
 Special thanks to Hisense for supporting ChanSort with technical information and a test device!
 
 **Samsung**  
-Series: B (2009)*, B (2013), C, D, E, F, H, J  
+.scm files: B (2009)*, B (2013), C, D, E, F, H series  
+.zip files: H, J, K, M series  
 Lists:  Air analog, Air digital, Cable analog, Cable digital, 
 		Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
 		Canal Digital Sat, Digital+, Cyfra+
@@ -68,10 +70,11 @@ http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-i
 
 **LG**  
 Series: CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
+and all newer models using the GlobalClone.TLL format  
 Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
 
 \*: Some devices behave erroneously due to firmware issues.  
-+: See system requirements for LM-series. xxLM640T is not supported due to firmware limitations.  
++: See system requirements for LM-series. xxLM640T is not supported due to its firmware limitations.  
 \#: Only satellite channels supported.
 
 Other models might also work, but have not been tested. If you have a .TLL file of a series not listed here, please send it to me.

@@ -1434,6 +1434,8 @@ namespace ChanSort.Ui
     private bool GetGridColumnVisibility(GridColumn col)
     {
       var list = this.CurrentChannelList;
+      if (list == null)
+        return false;
       var filter = list.VisibleColumnFieldNames;
       if (filter != null && !filter.Contains(col.FieldName))
         return false;
