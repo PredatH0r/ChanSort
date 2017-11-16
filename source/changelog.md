@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2017-11-13
+- Samsung .zip: fixed loading/saving of favorites A-E
+
+
 2017-10-29
 - Show popup with download link for MS Visual C++ 2010 x86 Redist
   (this package is needed to open lists with a SQLite file format)

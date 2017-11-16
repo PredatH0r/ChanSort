@@ -6,9 +6,6 @@ namespace ChanSort.Loader.SamsungJ
 {
   internal class DbChannel : ChannelInfo
   {
-    internal List<int> OriginalFavIndex = new List<int> { -1, -1, -1, -1 , -1 };
-    internal Favorites OriginalFavs;
-
     #region ctor()
     internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers, Satellite sat, Transponder tp)
     {
