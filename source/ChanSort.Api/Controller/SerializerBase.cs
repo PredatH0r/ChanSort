@@ -65,6 +65,7 @@ namespace ChanSort.Api
         int deleted = 0;
         int hidden = 0;
         int skipped = 0;
+        int locked = 0;
         foreach (var channel in list.Channels)
         {
           if (channel.IsDeleted)
@@ -73,10 +74,13 @@ namespace ChanSort.Api
             ++hidden;
           if (channel.Skip)
             ++skipped;
+          if (channel.Lock)
+            ++locked;
         }
         sb.Append("number of deleted channels: ").AppendLine(deleted.ToString());
         sb.Append("number of hidden channels: ").AppendLine(hidden.ToString());
         sb.Append("number of skipped channels: ").AppendLine(skipped.ToString());
+        sb.Append("number of locked channels: ").AppendLine(locked.ToString());
         sb.AppendLine();
       }
       return sb.ToString(); 

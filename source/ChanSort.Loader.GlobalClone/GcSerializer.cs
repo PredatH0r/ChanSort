@@ -217,7 +217,7 @@ namespace ChanSort.Loader.GlobalClone
     #endregion
 
     #region ParseChannelInfoNode()
-    private void ParseChannelInfoNodes(XmlNode itemNode, ChannelInfo ch, bool onlyNames = false)
+    private void ParseChannelInfoNodes(XmlNode itemNode, GcChannel ch, bool onlyNames = false)
     {
       bool hasHexName = false;
       int mapType = 0;
@@ -230,7 +230,9 @@ namespace ChanSort.Loader.GlobalClone
         {
             // common to ATV and DTV
           case "prNum":
-            ch.OldProgramNr = int.Parse(info.InnerText) & 0x3FFF;
+            ch.OldProgramNr = int.Parse(info.InnerText);
+            if (ch.OldProgramNr != -1) // older versions of ChanSort accidentally saved -1 instead of IsDeleted=1
+              ch.OldProgramNr &= 0x3FFF;
             break;
           case "vchName":
             // In old file format versions, this field contains binary data stuffed into UTF8 envelopes. that data is correct
@@ -292,6 +294,9 @@ namespace ChanSort.Loader.GlobalClone
             // ?
             break;
           case "isDisabled":
+            ch.IsDisabled = int.Parse(info.InnerText) != 0;
+            break;
+          case "isDeleted":
             ch.IsDeleted = int.Parse(info.InnerText) != 0;
             break;
           case "usSatelliteHandle":
@@ -366,6 +371,7 @@ namespace ChanSort.Loader.GlobalClone
     {
       foreach (var list in this.DataRoot.ChannelLists)
       {
+        
         foreach (var channel in list.Channels)
         {
           var ch = channel as GcChannel;
@@ -411,6 +417,8 @@ namespace ChanSort.Loader.GlobalClone
                 // ?
                 break;
               case "isDisabled":
+                node.InnerText = ch.IsDeleted || ch.IsDisabled ? "1" : "0";
+                break;
               case "isDeleted":
                 node.InnerText = ch.IsDeleted ? "1" : "0";
                 break;
@@ -475,11 +483,13 @@ namespace ChanSort.Loader.GlobalClone
     {
       foreach (var list in this.DataRoot.ChannelLists)
       {
+        if (list.IsMixedSourceFavoritesList)
+          continue;
         foreach (var channel in list.Channels)
         {
           var gcChannel = channel as GcChannel;
           if (gcChannel != null)
-            this.ParseChannelInfoNodes(gcChannel.XmlNode, channel, true);
+            this.ParseChannelInfoNodes(gcChannel.XmlNode, gcChannel, true);
         }
       }
     }

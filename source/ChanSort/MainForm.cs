@@ -526,10 +526,11 @@ namespace ChanSort.Ui
       if (!this.PromptSaveAndContinue())
         return false;
 
+      serializer.DataRoot.SetPrNrForDeletedChannels();
       this.SetFileName(tvDataFile);
       this.currentPlugin = plugin;
       this.currentTvSerializer = serializer;
-      this.DataRoot = this.currentTvSerializer.DataRoot;
+      this.DataRoot = serializer.DataRoot;
       this.AddFileToMruList(this.currentTvFile);
       this.UpdateMruMenu();
 
@@ -769,32 +770,37 @@ namespace ChanSort.Ui
       {
         foreach (var channel in list.Channels)
         {
-          if (channel.NewProgramNr < 0 && channel.OldProgramNr >= 0)
+          if (channel.NewProgramNr < 0 && !channel.IsDeleted)
           {
             hasUnsorted = true;
             break;
           }
         }
       }
-      if (!hasUnsorted)
-        return true;
 
-      var msg = Resources.MainForm_PromptHandlingOfUnsortedChannels_Question;
-      DialogResult res;
-      using (var dlg = new ActionBoxDialog(msg))
+      UnsortedChannelMode mode = UnsortedChannelMode.MarkDeleted;
+
+      if (hasUnsorted)
       {
-        dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Append, DialogResult.Yes, dlg.FullList);
-        if (this.currentTvSerializer.Features.CanDeleteChannels)
-          dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Delete, DialogResult.No, dlg.Delete);
-        dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
-        res = dlg.ShowDialog(this);
+        var msg = Resources.MainForm_PromptHandlingOfUnsortedChannels_Question;
+        DialogResult res;
+        using (var dlg = new ActionBoxDialog(msg))
+        {
+          dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Append, DialogResult.Yes, dlg.FullList);
+          if (this.currentTvSerializer.Features.CanDeleteChannels)
+            dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Delete, DialogResult.No, dlg.Delete);
+          dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
+          res = dlg.ShowDialog(this);
+        }
+
+        if (res == DialogResult.Cancel)
+          return false;
+        if (res == DialogResult.Yes)
+          mode = UnsortedChannelMode.AppendInOrder;
       }
 
-      if (res == DialogResult.Cancel)
-        return false;
-
-      this.Editor.AutoNumberingForUnassignedChannels(
-        res == DialogResult.Yes ? UnsortedChannelMode.AppendInOrder : UnsortedChannelMode.MarkDeleted);
+      // ensure unsorted and deleted channels have a valid program number
+      this.Editor.AutoNumberingForUnassignedChannels(mode);
       return true;
     }
 
@@ -903,6 +909,8 @@ namespace ChanSort.Ui
         {
           foreach (var chan in list.Channels)
           {
+            if (chan.IsDeleted) // during the saving process, deleted channels temporarily got a NewProgramNr assigned
+              chan.NewProgramNr = -1;
             chan.OldProgramNr = chan.NewProgramNr;
             chan.OldFavIndex.Clear();
             chan.OldFavIndex.AddRange(chan.FavIndex);
@@ -1774,7 +1782,7 @@ namespace ChanSort.Ui
       {
         foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr))
         {
-          if (channel.IsDeleted || channel.OldProgramNr == -1)
+          if (channel.IsDeleted || channel.NewProgramNr == -1)
             continue;
           sb.Append(list.ShortCaption).Append(sep);
           sb.Append(channel.NewProgramNr).Append(sep);

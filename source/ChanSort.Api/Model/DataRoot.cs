@@ -119,7 +119,29 @@ namespace ChanSort.Api
         foreach (var channel in list.Channels)
         {
           for (int i=0; i<=c; i++)
-            channel.SetPosition(i, channel.GetOldPosition(i));
+            channel.SetPosition(i, channel.IsDeleted ? -1 : channel.GetOldPosition(i));
+        }
+      }
+    }
+    #endregion
+
+    #region SetPrNrForDeletedChannels()
+    public void SetPrNrForDeletedChannels()
+    {
+      // make sure that deleted channels have OldProgramNr = -1
+      foreach (var list in this.ChannelLists)
+      {
+        if (list.IsMixedSourceFavoritesList)
+          continue;
+        foreach (var chan in list.Channels)
+        {
+          if (chan.IsDeleted)
+          {
+            chan.NewProgramNr = -1;
+            chan.OldProgramNr = -1;
+          }
+          else if (chan.OldProgramNr == -1) // old versions of ChanSort saved -1 and without setting IsDeleted
+            chan.IsDeleted = true;
         }
       }
     }

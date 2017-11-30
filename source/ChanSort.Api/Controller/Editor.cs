@@ -364,9 +364,12 @@ namespace ChanSort.Api
           if (appChannel.NewProgramNr == -1)
           {
             if (mode == UnsortedChannelMode.MarkDeleted)
-              continue;
-            appChannel.Hidden = true;
-            appChannel.Skip = true;
+              appChannel.IsDeleted = true;
+            else
+            {
+              appChannel.Hidden = true;
+              appChannel.Skip = true;
+            }
           }
 
           int progNr = GetNewPogramNr(appChannel, ref maxProgNr);
@@ -381,7 +384,7 @@ namespace ChanSort.Api
     {
       // explicitly sorted
       if (channel.GetPosition(this.SubListIndex) != -1)
-        return channel.GetPosition(this.SubListIndex).ToString("d4");
+        return channel.GetPosition(this.SubListIndex).ToString("d5");
 
       // eventually hide unsorted channels
       if (this.unsortedChannelMode == UnsortedChannelMode.MarkDeleted)
@@ -389,7 +392,7 @@ namespace ChanSort.Api
 
       // eventually append in old order
       if (this.unsortedChannelMode == UnsortedChannelMode.AppendInOrder)
-        return "B" + channel.OldProgramNr.ToString("d4");
+        return "B" + channel.OldProgramNr.ToString("d5");
 
       // sort alphabetically, with "." and "" on the bottom
       if (channel.Name == ".")
@@ -409,10 +412,7 @@ namespace ChanSort.Api
       if (prNr > maxPrNr)
         maxPrNr = prNr;
       if (prNr == -1)
-      {
-        if (appChannel.OldProgramNr != -1 && this.unsortedChannelMode != UnsortedChannelMode.MarkDeleted)
-          prNr = ++maxPrNr;
-      }
+        prNr = ++maxPrNr;
       return prNr;
     }
 

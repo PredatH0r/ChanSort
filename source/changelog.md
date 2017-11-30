@@ -1,9 +1,12 @@
 ChanSort Change Log 
 ===================
+2017-11-30
+- fixed: deleting channels and selecting to "Remove unsorted channels"
+  when saving could produce problems loading the list on the TV.
+  i.e. LG GlobalClone.TLL
 
 2017-11-13
 - Samsung .zip: fixed loading/saving of favorites A-E
-
 
 2017-10-29
 - Show popup with download link for MS Visual C++ 2010 x86 Redist

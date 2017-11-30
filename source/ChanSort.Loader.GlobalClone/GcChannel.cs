@@ -7,6 +7,7 @@ namespace ChanSort.Loader.GlobalClone
   {
     internal int Index;
     internal XmlNode XmlNode;
+    internal bool IsDisabled;
 
     #region ctor()
     internal GcChannel(SignalSource source, int index, XmlNode node)
