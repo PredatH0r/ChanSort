@@ -118,187 +118,181 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainForm_LoadTll_SourceTllNotFound" xml:space="preserve">
-    <value>Quell-TLL konnte nicht gefunden werden:
+    <value>Quell-TLL nu a fost găsit în acest moment:
 '{0}'</value>
   </data>
   <data name="MainForm_LoadTll_Exception" xml:space="preserve">
-    <value>An error occured while loading the TV's data file:
+    <value>A apărut o eroare la încărcarea fișierului de date al televizorului:
 {0}</value>
   </data>
   <data name="MainForm_FileDialog_OpenFileFilter" xml:space="preserve">
-    <value>Supported Files|{0}|All Files (*.*)|*</value>
+    <value>Fișiere acceptate|{0}|Toate fișierele (*.*)|*</value>
   </data>
   <data name="MainForm_FileDialog_SaveFileFilter" xml:space="preserve">
-    <value>{0}-Files|*{0}|All Files (*.*)|*</value>
+    <value>{0}-Fișiere|*{0}|Toate fișierele (*.*)|*</value>
   </data>
   <data name="MainForm_TryExecute_Exception" xml:space="preserve">
-    <value>An unexpected error occured:
+    <value>A apărut o eroare neașteptată:
 {0}</value>
   </data>
   <data name="MainForm_SaveTllFile_Exception" xml:space="preserve">
-    <value>An error occured while writing the TV data file:
+    <value>A apărut o eroare la scrierea fișierului de date TV:
 {0}</value>
   </data>
   <data name="MainForm_SaveTllFile_Success" xml:space="preserve">
-    <value>Sorted TV data file was created successfully.</value>
+    <value>Fișierul cu date de sortare TV a fost creat cu succes.</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Question" xml:space="preserve">
-    <value>Do you want so save your changes?</value>
+    <value>Vrei să salvezi modificările?</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Save" xml:space="preserve">
-    <value>Save changes</value>
+    <value>Salvează modificările</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
-    <value>Discard changes</value>
+    <value>Renunțați la modificări</value>
   </data>
   <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
-    <value>No plugin found to read/write {0} files.</value>
+    <value>Nu a fost găsit nici un plugin pentru citirea/scrierea fișierelor {0}.</value>
   </data>
   <data name="MainForm_LoadFiles_IOException" xml:space="preserve">
-    <value>Error loading file</value>
+    <value>Eroare la încărcarea fișierului</value>
   </data>
   <data name="MainForm_LoadFiles_ValidationWarningMsg" xml:space="preserve">
-    <value>The file content shows some anomalies and is possibly corrupt.</value>
+    <value>Conținutul fișierului prezintă unele anomalii și este posibil corupt.</value>
   </data>
   <data name="MainForm_LoadFiles_ValidationWarningCap" xml:space="preserve">
-    <value>Data validation</value>
+    <value>Data validarii</value>
   </data>
   <data name="MainForm_RestoreScanOrder_Message" xml:space="preserve">
-    <value>All custom storing will be lost.
-Are you sure you want to restore the order from the channel scan?</value>
+    <value>Toate stocurile personalizate vor fi pierdute.
+Sigur doriți să restaurați ordinea din scanarea canalului?</value>
   </data>
   <data name="MainForm_RestoreScanOrder_Caption" xml:space="preserve">
-    <value>Restore order from channel scan</value>
+    <value>Restaurați ordinea de scanare a canalelor</value>
   </data>
   <data name="MainForm_LoadFiles_DupeWarningMsg" xml:space="preserve">
-    <value>The input file contains multiple records that use the same 
-program number. It is possible that the TV will not accept
-the changes made by ChanSort.
-This is typically caused by running a manual transponder scan.
-It is recommended to use a clean input file for any modifications.
-To do that, turn Hotel Mode OFF, reset the TV to 
-factory defaults, run a new blind channel scan and turn
-Hotel Mode back ON, then export a new clean TLL file.</value>
+    <value>Fișierul de intrare conține mai multe înregistrări care utilizează același lucru
+număr de program. Este posibil ca televizorul să nu accepte
+modificările aduse de ChanSort.
+Acest lucru este în mod obișnuit cauzat de rularea unei scanări manuale a transponderului.
+Se recomandă utilizarea unui fișier de intrare curat pentru orice modificare.
+Pentru a face acest lucru, dezactivați modul Hotel, resetați televizorul
+la setările implicite din fabrică, executați un nou canal orizontal de scanare și rotire
+Hotel Mode înapoi ON, apoi exportați un nou fișier TLL curat.</value>
   </data>
   <data name="MainForm_btnResetChannelData_Click_Message" xml:space="preserve">
-    <value>WARNING: All analog, DVB-C/T and DVB-S channel and transponder data will be deleted.
-You will have to run a full channel scan after loading this file into your TV.
-Proceed?</value>
+    <value>AVERTISMENT: Toate datele analogice, DVB-C/T și DVB-S vor fi șterse.
+Va trebui să executați o scanare completă a canalului după încărcarea acestui fișier în televizor.
+Continua?
+</value>
   </data>
   <data name="MainForm_btnResetChannelData_Click_Caption" xml:space="preserve">
-    <value>Erase all channel data</value>
+    <value>Ștergeți toate datele canalului</value>
   </data>
   <data name="MainForm_miRestoreOriginal_Message" xml:space="preserve">
-    <value>Unable to copy .bak file to {0}</value>
+    <value>Imposibil de copiat fișierul .bak la {0}</value>
   </data>
   <data name="MainForm_miRestoreOriginal_ItemClick_NoBackup" xml:space="preserve">
-    <value>No backup file found: {0}</value>
+    <value>Nu s-a găsit nici un fișier de backup: {0}</value>
   </data>
   <data name="MainForm_miRestoreOriginal_ItemClick_Confirm" xml:space="preserve">
-    <value>You are about to restore the backup file. All changes will be lost!
-Do you want to continue?</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Donate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_donateCC_LG.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="paypal_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\paypal-button.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>Veți restabili fișierul de rezervă. Toate modificările vor fi pierdute!
+Doriți să continuați?</value>
   </data>
   <data name="MainForm_SaveFiles_ErrorMsg" xml:space="preserve">
-    <value>There was an error saving the file. Please make sure that
-- you have write permission on the file
-- the file is not open in another program
+    <value>A apărut o eroare la salvarea fișierului. Asigurați-vă că
+- aveți permisiunea de scriere fișier
+- fișierul nu este deschis în alt program
 
-The error message is:</value>
+Mesajul de eroare este:</value>
   </data>
   <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
-    <value>File write error</value>
+    <value>Eroare la scrierea fișierului</value>
   </data>
   <data name="UpdateCheck_NotifyAboutNewVersion_Message" xml:space="preserve">
-    <value>A newer version is available: v{0}.
-Do you want to open the download website?</value>
+    <value>O versiune mai nouă este disponibilă: v{0}.
+Doriți să deschideți site-ul de descărcare?</value>
   </data>
   <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
-    <value>New Version</value>
+    <value>Versiune noua</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_Question" xml:space="preserve">
-    <value>How would you like to edit your channel list?</value>
+    <value>Cum doriți să modificați lista de canale?</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
-    <value>Create new list: Start with an empty list and add channels in desired order</value>
+    <value>Creați o listă nouă: Începeți cu o listă goală și adăugați canale în ordinea dorită</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
-    <value>Modify current list: Start with current list and modify it as needed</value>
+    <value>Modificați lista curentă: Începeți cu lista curentă și modificați-o după cum este necesar</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
-    <value>Copy channel list: Order the channels the same way as in a reference list</value>
+    <value>Copiați lista de canale: Comandați canalele în același mod ca într-o listă de referință</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
-    <value>What should happen to unsorted channels?</value>
+    <value>Ce ar trebui să se întâmple cu canalele nesortate?</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Append" xml:space="preserve">
-    <value>Append unsorted channels the end of the list</value>
+    <value>Adăugați canalele nesortate la sfârșitul listei</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
-    <value>Delete unsorted channels from the list</value>
+    <value>Ștergeți canalele nesortate din listă</value>
   </data>
   <data name="MainForm_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Anulare</value>
   </data>
   <data name="MainForm_LoadTvDataFile_FileNotFound_Caption" xml:space="preserve">
-    <value>File not found</value>
+    <value>Fișierul nu a fost găsit</value>
   </data>
   <data name="MainForm_LoadTvDataFile_FileNotFound_Message" xml:space="preserve">
-    <value>The file {0} does not exist.</value>
+    <value>Fișierul {0} nu există.</value>
   </data>
   <data name="MainForm_ExportExcelList_Message" xml:space="preserve">
-    <value>The channel list has been copied to the clipboard
-and can be pasted into Excel or any text editor.</value>
+    <value>Lista de canale a fost copiată în clipboard
+și pot fi lipite în Excel sau orice editor de text.</value>
   </data>
   <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
-    <value>Your TV might not be able to work correctly when there are gaps in the channel numbers.
-Do you want the channel numbers to be rearranged consecutively?</value>
+    <value>Este posibil ca televizorul dvs. să nu poată funcționa corect atunci când există numere în canal.
+Doriți ca numerele de canale să fie rearanjate consecutiv?</value>
   </data>
   <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
-    <value>The content of the file is invalid. It has either size 0 or all its bytes have the the value 0.
-Typical causes are USB sticks with an NTFS file system (try using FAT32 instead)
-or firmware upgrades without running a new channel scan. 
-(The new software in the TV might be unable to process the old channel data during the export.)</value>
+    <value>Conținutul fișierului este nevalid, are dimensiunea 0 sau toți octeții lui au valoarea 0.
+Cauzele tipice sunt stick-urile USB cu un sistem de fișiere NTFS (încercați să utilizați FAT32 în schimb)
+sau actualizări ale firmware-ului fără a efectua o nouă scanare a canalelor.
+(Noul software din televizor ar putea să nu poată procesa datele vechi ale canalului în timpul exportului.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antenna,Cable,Sat,IP,Analog,Digital,TV,Radio</value>
+    <value>Antenă, Cablu, Sat, IP, analog, digital, TV, radio</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
-    <value>How do you want to handle it when a Pr# is already taken in the target list?</value>
+    <value>Cum doriți să o gestionați atunci când un Pr # este deja luat în lista țintă?</value>
   </data>
   <data name="ReferenceListForm_btnApply_Click_Clear" xml:space="preserve">
-    <value>Clear target list before applying reference list</value>
+    <value>Ștergeți lista țintă înainte de a aplica lista de referințe</value>
   </data>
   <data name="ReferenceListForm_btnApply_Click_Overwrite" xml:space="preserve">
-    <value>Overwrite Pr# with the channel from the reference list</value>
+    <value>Suprascrieți Pr # cu canalul din lista de referință</value>
   </data>
   <data name="ReferenceListForm_btnApply_Click_Keep" xml:space="preserve">
-    <value>Keep current channel at the Pr#</value>
+    <value>Păstrați canalul curent la Pr #</value>
   </data>
   <data name="MainForm_SwapChannels_RowCountMsg" xml:space="preserve">
-    <value>To swap channels an equal number of rows must be selected in the left and right table.</value>
+    <value>Pentru a schimba canalele, trebuie să fie selectat un număr egal de rânduri în tabelul din stânga și din dreapta.</value>
   </data>
   <data name="MainForm_SwapChannels_RowCountTitle" xml:space="preserve">
-    <value>Swap Channels</value>
+    <value>Schimbați canalele</value>
   </data>
   <data name="ReferenceListForm_ShowOpenFileDialog_Title" xml:space="preserve">
-    <value>Select a reference list to import</value>
+    <value>Selectați o listă de referințe pentru a importa</value>
   </data>
   <data name="MainForm_ShowOpenReferenceFileDialog_Filter" xml:space="preserve">
-    <value>ChanSort Reference List|*.csv|SamToolBox Reference List|*.chl|All Reference Lists|*.csv;*.chl</value>
+    <value>Lista de referințe pentru lista de referințe | * .csv | Lista de referințe SamToolBox | * .chl | Toate listele de referință | * .csv; * .chl</value>
   </data>
   <data name="MainForm_ShowOpenReferenceFileDialog_Title" xml:space="preserve">
-    <value>Open Reference List</value>
+    <value>Deschideți lista de referințe</value>
   </data>
   <data name="MainForm_LoadTll_InvalidZip" xml:space="preserve">
-    <value>The file is not a valid .zip archive.
-TVs often export corrupted files to USB sticks formatted with the NTFS file system.
-Please try exporting to a stick formatted with FAT32</value>
+    <value>Fișierul nu este o arhivă .zip validă.
+Televizorii exportă adesea fișiere corupte pe stick-uri USB formatate cu sistemul de fișiere NTFS.
+Încercați să exportați un stick formatat cu FAT32</value>
   </data>
 </root>

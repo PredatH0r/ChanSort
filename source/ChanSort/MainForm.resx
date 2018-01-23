@@ -126,7 +126,7 @@
     <value>0, 110</value>
   </data>
   <metadata name="dsChannels.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 95</value>
+    <value>361, 17</value>
   </metadata>
   <data name="gridLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -306,7 +306,7 @@
     <value>1</value>
   </data>
   <metadata name="globalImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 173</value>
+    <value>600, 17</value>
   </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -393,7 +393,7 @@
     <value>256, 6</value>
   </data>
   <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 134</value>
+    <value>475, 17</value>
   </metadata>
   <data name="miFile.Caption" xml:space="preserve">
     <value>&amp;File</value>
@@ -547,6 +547,9 @@
   </data>
   <data name="miCzech.Caption" xml:space="preserve">
     <value>Česky</value>
+  </data>
+  <data name="miRomanian.Caption" xml:space="preserve">
+    <value>Română</value>
   </data>
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Character set</value>
@@ -1147,7 +1150,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.6529.20410, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.6597.38723, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1653,6 +1656,12 @@
   <data name="&gt;&gt;miCzech.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miRomanian.Name" xml:space="preserve">
+    <value>miRomanian</value>
+  </data>
+  <data name="&gt;&gt;miRomanian.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;mnuCharset.Name" xml:space="preserve">
     <value>mnuCharset</value>
   </data>
@@ -1850,6 +1859,12 @@
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
+    <value>01/23/2018 21:33:41</value>
+  </data>
+  <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
+    <value>16, 16</value>
   </data>
   <data name="btnToggleLock.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 5</value>
@@ -2818,18 +2833,18 @@ specific provider, satellite or country lists.</value>
     <value>0</value>
   </data>
   <metadata name="defaultLookAndFeel1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
+    <value>194, 17</value>
   </metadata>
   <metadata name="popupContext.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 212</value>
+    <value>781, 17</value>
   </metadata>
   <metadata name="timerEditDelay.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 251</value>
+    <value>911, 17</value>
   </metadata>
   <metadata name="popupInputSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 290</value>
+    <value>1042, 17</value>
   </metadata>
   <metadata name="popupFavList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 329</value>
+    <value>1196, 17</value>
   </metadata>
 </root>

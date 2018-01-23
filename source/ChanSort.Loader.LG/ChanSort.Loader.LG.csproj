@@ -130,6 +130,9 @@
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PresetProgramNrDialog.ro.resx">
+      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PresetProgramNrDialog.ru.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,6 +149,7 @@
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resource.ro.resx" />
     <EmbeddedResource Include="Resource.ru.resx" />
     <EmbeddedResource Include="TvSettingsForm.cs.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
@@ -160,6 +164,9 @@
     <EmbeddedResource Include="TvSettingsForm.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TvSettingsForm.ro.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TvSettingsForm.ru.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>

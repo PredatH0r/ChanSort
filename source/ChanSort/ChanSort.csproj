@@ -194,6 +194,9 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="AboutForm.ro.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AboutForm.ru.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -207,6 +210,9 @@
       <DependentUpon>ActionBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ActionBox.resx">
+      <DependentUpon>ActionBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActionBox.ro.resx">
       <DependentUpon>ActionBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ActionBox.ru.resx">
@@ -224,6 +230,9 @@
     <EmbeddedResource Include="CharsetForm.resx">
       <DependentUpon>CharsetForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharsetForm.ro.resx">
+      <DependentUpon>CharsetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CharsetForm.ru.resx">
       <DependentUpon>CharsetForm.cs</DependentUpon>
@@ -249,6 +258,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.ro.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.ru.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -266,6 +278,9 @@
       <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Printing\ReportOptionsDialog.resx">
+      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printing\ReportOptionsDialog.ro.resx">
       <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Printing\ReportOptionsDialog.ru.resx">
@@ -293,6 +308,7 @@
       <DependentUpon>Resources.de.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.ro.resx" />
     <EmbeddedResource Include="Properties\Resources.ru.resx" />
     <EmbeddedResource Include="ReferenceListForm.cs.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
@@ -301,6 +317,9 @@
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReferenceListForm.resx">
+      <DependentUpon>ReferenceListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReferenceListForm.ro.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaitForm1.cs.resx">
@@ -315,6 +334,9 @@
     <EmbeddedResource Include="WaitForm1.resx">
       <DependentUpon>WaitForm1.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitForm1.ro.resx">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaitForm1.ru.resx">
       <DependentUpon>WaitForm1.cs</DependentUpon>

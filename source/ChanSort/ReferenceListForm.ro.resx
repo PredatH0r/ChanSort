@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="labelControl1.Text" xml:space="preserve">
+    <value>Listă fișier de referințe:</value>
+  </data>
+  <data name="edFile.EditValue" xml:space="preserve">
+    <value>← apăsați butonul pentru a selecta un fișier</value>
+  </data>
+  <data name="labelControl2.Text" xml:space="preserve">
+    <value>Alegeți un fișier care conține ordinea canalelor pe care doriți să o aplicați în lista curentă.
+Puteți utiliza una dintre listele predefinite ale ChanSort (TXT, CHL, CSV)
+sau un fișier de date de la un alt televizor (SCM, TLL, DB, BIN, ...)</value>
+  </data>
+  <data name="rbAuto.Properties.Caption" xml:space="preserve">
+    <value>Reordonați automat toate listele din fișierul TV</value>
+  </data>
+  <data name="rbManual.Properties.Caption" xml:space="preserve">
+    <value>Reordonare avansată</value>
+  </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Lista de referinte:</value>
+  </data>
+  <data name="labelControl4.Text" xml:space="preserve">
+    <value>Lista țintă:</value>
+  </data>
+  <data name="cbTv.Properties.Caption" xml:space="preserve">
+    <value>TV</value>
+  </data>
+  <data name="cbRadio.Properties.Caption" xml:space="preserve">
+    <value>Radio</value>
+  </data>
+  <data name="labelControl5.Text" xml:space="preserve">
+    <value>Începeți la Pr#:</value>
+  </data>
+  <data name="labelControl6.Text" xml:space="preserve">
+    <value>(adică lăsați canalele radio să înceapă la 5000 pentru a evita conflictele cu numerele de canale TV)</value>
+  </data>
+  <data name="comboPrNr.EditValue" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboPrNr.Properties.Items" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboPrNr.Properties.Items1" xml:space="preserve">
+    <value>100</value>
+  </data>
+  <data name="comboPrNr.Properties.Items2" xml:space="preserve">
+    <value>500</value>
+  </data>
+  <data name="comboPrNr.Properties.Items3" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items4" xml:space="preserve">
+    <value>2000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items5" xml:space="preserve">
+    <value>5000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items6" xml:space="preserve">
+    <value>7000</value>
+  </data>
+  <data name="cbConsecutive.Properties.Caption" xml:space="preserve">
+    <value>Utilizați numere consecutive (eliminați lacunele din lista de referință Pr#)</value>
+  </data>
+  <data name="cbIp.Properties.Caption" xml:space="preserve">
+    <value>IP (rețea)</value>
+  </data>
+  <data name="cbSat.Properties.Caption" xml:space="preserve">
+    <value>Satelit</value>
+  </data>
+  <data name="labelControl11.Text" xml:space="preserve">
+    <value>Intrare:</value>
+  </data>
+  <data name="cbAntenna.Properties.Caption" xml:space="preserve">
+    <value>Antenă</value>
+  </data>
+  <data name="cbCable.Properties.Caption" xml:space="preserve">
+    <value>Cablu</value>
+  </data>
+  <data name="labelControl9.Text" xml:space="preserve">
+    <value>Tipul semnalului:</value>
+  </data>
+  <data name="cbAnalog.Properties.Caption" xml:space="preserve">
+    <value>analog</value>
+  </data>
+  <data name="cbDigital.Properties.Caption" xml:space="preserve">
+    <value>Digital</value>
+  </data>
+  <data name="labelControl7.Text" xml:space="preserve">
+    <value>Tipul canalului:</value>
+  </data>
+  <data name="btnApply.Text" xml:space="preserve">
+    <value>Aplică</value>
+  </data>
+  <data name="grpManual.Text" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="btnClose.Text" xml:space="preserve">
+    <value>Închide/Anulare</value>
+  </data>
+  <data name="linkWiki.Text" xml:space="preserve">
+    <value>Deschideți ChanSort Wiki pentru mai multe informații și pentru a descărca liste de referințe</value>
+  </data>
+  <data name="groupControl1.Text" xml:space="preserve">
+    <value>1. Selectați fișierul listă de referință</value>
+  </data>
+  <data name="labelControl10.Text" xml:space="preserve">
+    <value>Dacă televizorul și fișierul de referință conțin mai multe liste sau utilizează grupări diferite, puteți aplica anumite părți ale listei de referință într-o listă țintă.
+Acest pas poate fi repetat după cum este necesar.</value>
+  </data>
+  <data name="labelControl8.Text" xml:space="preserve">
+    <value>Această opțiune este disponibilă numai atunci când fișierul TV și lista de referințe sunt organizate în același mod.
+(adică aceleași sub-liste pentru combinații de Antena/Cablu/Sat, TV/Radio, Analog/Digital)</value>
+  </data>
+  <data name="groupControl2.Text" xml:space="preserve">
+    <value>2. Aduceți ordine în fișierul dvs. TV</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Aplicați lista de referințe</value>
+  </data>
+</root>
