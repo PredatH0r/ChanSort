@@ -34,7 +34,6 @@ namespace ChanSort.Ui
     {
       string response;
 
-      var oldCallback = ServicePointManager.ServerCertificateValidationCallback;
       var oldProtocol = ServicePointManager.SecurityProtocol;
       try
       {
@@ -49,7 +48,6 @@ namespace ChanSort.Ui
       }
       finally
       {
-        //ServicePointManager.ServerCertificateValidationCallback = oldCallback;
         ServicePointManager.SecurityProtocol = oldProtocol;
       }
 
