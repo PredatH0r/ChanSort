@@ -192,7 +192,8 @@ namespace ChanSort.Loader.SamsungJ
           // 171027 - ohuseyinoglu: For user-defined satellites, the direction may be -1
           // (and not just 1 for "E", 0 for "W")
           int dir = r.GetInt32(3);
-          sat.OrbitalPosition = $"{pos / 10}.{pos % 10}{(dir == 1 ? "E" : dir == 0 ? "W" : "")}"; sat.Name = ReadUtf16(r, 1);
+          sat.OrbitalPosition = $"{pos / 10}.{pos % 10}{(dir == 1 ? "E" : dir == 0 ? "W" : "")}";
+          sat.Name = ReadUtf16(r, 1);
           this.DataRoot.AddSatellite(sat);
         }
       }
@@ -386,7 +387,7 @@ namespace ChanSort.Loader.SamsungJ
         return null;
       byte[] nameBytes = new byte[200];
       int nameLen = (int)r.GetBytes(fieldIndex, 0, nameBytes, 0, nameBytes.Length);
-      return Encoding.BigEndianUnicode.GetString(nameBytes, 0, nameLen);
+      return Encoding.BigEndianUnicode.GetString(nameBytes, 0, nameLen).Replace("\0", ""); // remove trailing \0 characters found in Samsung "_T_..." channel list
     }
     #endregion
 

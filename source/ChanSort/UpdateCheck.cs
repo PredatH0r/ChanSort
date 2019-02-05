@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Net.Security;
 using System.Threading;
 using ChanSort.Ui.Properties;
 using DevExpress.XtraEditors;
@@ -7,7 +9,7 @@ namespace ChanSort.Ui
 {
   class UpdateCheck
   {
-    private const string UpdateUrl = "http://github.com/PredatH0r/ChanSort/releases";
+    private const string UpdateUrl = "https://github.com/PredatH0r/ChanSort/releases";
     private const string SearchString = "ChanSort_";
 
     public static void CheckForNewVersion()
@@ -31,11 +33,26 @@ namespace ChanSort.Ui
     private string GetLatestVersion()
     {
       string response;
-      using (WebClient client = new WebClient())
+
+      var oldCallback = ServicePointManager.ServerCertificateValidationCallback;
+      var oldProtocol = ServicePointManager.SecurityProtocol;
+      try
       {
-        client.Proxy = null; // prevent a 1min wait/timeout by a .NET bug
-        response = client.DownloadString(UpdateUrl);
+        //Change SSL checks so that all checks pass
+        //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        using (WebClient client = new WebClient())
+        {
+          client.Proxy = null; // prevent a 1min wait/timeout by a .NET bug
+          response = client.DownloadString(UpdateUrl);
+        }
       }
+      finally
+      {
+        //ServicePointManager.ServerCertificateValidationCallback = oldCallback;
+        ServicePointManager.SecurityProtocol = oldProtocol;
+      }
+
       int start = response.IndexOf(SearchString);
       if (start >= 0)
       {

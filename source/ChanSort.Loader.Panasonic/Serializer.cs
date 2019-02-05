@@ -319,6 +319,12 @@ namespace ChanSort.Loader.Panasonic
       this.DataRoot.AddChannelList(this.dvbsChannels);
       this.DataRoot.AddChannelList(this.satipChannels);
       this.DataRoot.AddChannelList(this.freesatChannels);
+
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        list.VisibleColumnFieldNames.Remove("VideoPid");
+        list.VisibleColumnFieldNames.Remove("AudioPid");
+      }
     }
     #endregion
 
