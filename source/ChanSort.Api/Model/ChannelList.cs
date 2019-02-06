@@ -13,11 +13,14 @@ namespace ChanSort.Api
     private int duplicateUidCount;
     private int duplicateProgNrCount;
 
+    public static List<string> DefaultVisibleColumns { get; set; } // initialized by MainForm
+
     public ChannelList(SignalSource source, string caption)
     {
       this.SignalSource = source;
       this.ShortCaption = caption;
       this.FirstProgramNumber = (source & SignalSource.Digital) != 0 ? 1 : 0;
+      this.VisibleColumnFieldNames = DefaultVisibleColumns;
     }
 
     public string ShortCaption { get; }

@@ -97,6 +97,15 @@ namespace ChanSort.Ui
 
       View.View.Default = new View.View();
       View.View.Default.CreateActionBox = msg => new ActionBoxDialog(msg);
+
+      var defaultColumns = new List<string>();
+      foreach (GridColumn col in this.gviewRight.Columns)
+      {
+        if (col.Visible)
+          defaultColumns.Add(col.FieldName);
+      }
+
+      ChannelList.DefaultVisibleColumns = defaultColumns;
     }
 
     #endregion
