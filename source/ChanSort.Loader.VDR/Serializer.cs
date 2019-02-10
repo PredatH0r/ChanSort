@@ -59,9 +59,11 @@ namespace ChanSort.Loader.VDR
 
         using (StreamWriter file = new StreamWriter(tvOutputFile))
         {
-            foreach (Channels channelInfo in this.allChannels.GetChannelsByNewOrder())
+            foreach (ChannelInfo channel in this.allChannels.GetChannelsByNewOrder())
             {
-                file.WriteLine(channelInfo.confLine);
+              // when a reference list was applied, the list may contain proxy entries for deleted channels, which must be ignored
+              if (channel is Channels vdrChannel)
+                file.WriteLine(vdrChannel.confLine);
             }
         }
     }

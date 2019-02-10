@@ -107,8 +107,13 @@ namespace ChanSort.Loader.SamsungJ
 
       using (ZipFile zip = new ZipFile(this.FileName))
       {
-        foreach(ZipEntry entry in zip)
-          this.Expand(zip, entry.Name);
+        foreach (ZipEntry entry in zip)
+        {
+          // only expand files from the root folder to avoid pit-falls with incorrectly rezipped lists
+          // that contain the data files in a subfolder
+          if (Path.GetDirectoryName(entry.Name) == "")
+            this.Expand(zip, entry.Name);
+        }
       }
     }
     #endregion
