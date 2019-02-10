@@ -139,6 +139,8 @@ namespace ChanSort.Loader.Samsung
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
+        if (list.VisibleColumnFieldNames == null)
+          continue;
         list.VisibleColumnFieldNames.Add("PcrPid");
         list.VisibleColumnFieldNames.Remove("AudioPid");
       }
