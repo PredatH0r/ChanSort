@@ -34,6 +34,7 @@ namespace ChanSort.Api
     public decimal FreqInMhz { get; set; }
     public char Polarity { get; set; }
     public int ServiceId { get; set; }
+    public int PcrPid { get; set; }
     public int VideoPid { get; set; }
     public int AudioPid { get; set; }
     public int OriginalNetworkId { get; set; }

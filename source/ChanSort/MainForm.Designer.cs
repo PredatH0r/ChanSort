@@ -84,6 +84,7 @@
       this.colNetworkId = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colTransportStreamId = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colServiceId = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colPcrPid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colVideoPid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colAudioPid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSymbolRate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -446,7 +447,7 @@
       // 
       // btnToggleLock
       // 
-      this.btnToggleLock.ImageOptions.ImageIndex = 15;
+      this.btnToggleLock.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnToggleLock.ImageOptions.ImageIndex")));
       this.btnToggleLock.ImageOptions.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnToggleLock, "btnToggleLock");
       this.btnToggleLock.Name = "btnToggleLock";
@@ -493,14 +494,14 @@
       resources.ApplyResources(this.btnClearLeftFilter, "btnClearLeftFilter");
       this.btnClearLeftFilter.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("btnClearLeftFilter.Appearance.Font")));
       this.btnClearLeftFilter.Appearance.Options.UseFont = true;
-      this.btnClearLeftFilter.ImageOptions.ImageIndex = 28;
+      this.btnClearLeftFilter.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnClearLeftFilter.ImageOptions.ImageIndex")));
       this.btnClearLeftFilter.ImageOptions.ImageList = this.globalImageCollection1;
       this.btnClearLeftFilter.Name = "btnClearLeftFilter";
       this.btnClearLeftFilter.Click += new System.EventHandler(this.btnClearLeftFilter_Click);
       // 
       // btnRenum
       // 
-      this.btnRenum.ImageOptions.ImageIndex = 22;
+      this.btnRenum.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnRenum.ImageOptions.ImageIndex")));
       this.btnRenum.ImageOptions.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnRenum, "btnRenum");
       this.btnRenum.Name = "btnRenum";
@@ -508,7 +509,7 @@
       // 
       // btnDown
       // 
-      this.btnDown.ImageOptions.ImageIndex = 25;
+      this.btnDown.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnDown.ImageOptions.ImageIndex")));
       this.btnDown.ImageOptions.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnDown, "btnDown");
       this.btnDown.Name = "btnDown";
@@ -516,7 +517,7 @@
       // 
       // btnUp
       // 
-      this.btnUp.ImageOptions.ImageIndex = 24;
+      this.btnUp.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnUp.ImageOptions.ImageIndex")));
       this.btnUp.ImageOptions.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnUp, "btnUp");
       this.btnUp.Name = "btnUp";
@@ -524,7 +525,7 @@
       // 
       // btnRemoveLeft
       // 
-      this.btnRemoveLeft.ImageOptions.ImageIndex = 11;
+      this.btnRemoveLeft.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnRemoveLeft.ImageOptions.ImageIndex")));
       this.btnRemoveLeft.ImageOptions.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnRemoveLeft, "btnRemoveLeft");
       this.btnRemoveLeft.Name = "btnRemoveLeft";
@@ -583,6 +584,7 @@
             this.colNetworkId,
             this.colTransportStreamId,
             this.colServiceId,
+            this.colPcrPid,
             this.colVideoPid,
             this.colAudioPid,
             this.colSymbolRate,
@@ -787,6 +789,12 @@
       this.colServiceId.Name = "colServiceId";
       this.colServiceId.OptionsColumn.AllowEdit = false;
       // 
+      // colPcrPid
+      // 
+      resources.ApplyResources(this.colPcrPid, "colPcrPid");
+      this.colPcrPid.FieldName = "PcrPid";
+      this.colPcrPid.Name = "colPcrPid";
+      // 
       // colVideoPid
       // 
       resources.ApplyResources(this.colVideoPid, "colVideoPid");
@@ -882,7 +890,7 @@
       // lblPredefinedList
       // 
       this.lblPredefinedList.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("lblPredefinedList.Appearance.Font")));
-      this.lblPredefinedList.Appearance.ForeColor = ((System.Drawing.Color)(resources.GetObject("lblPredefinedList.Appearance.ForeColor")));
+      this.lblPredefinedList.Appearance.ForeColor = System.Drawing.Color.Maroon;
       this.lblPredefinedList.Appearance.Options.UseFont = true;
       this.lblPredefinedList.Appearance.Options.UseForeColor = true;
       resources.ApplyResources(this.lblPredefinedList, "lblPredefinedList");
@@ -890,7 +898,7 @@
       // 
       // btnRemoveRight
       // 
-      this.btnRemoveRight.ImageOptions.ImageIndex = 11;
+      this.btnRemoveRight.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnRemoveRight.ImageOptions.ImageIndex")));
       this.btnRemoveRight.ImageOptions.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnRemoveRight, "btnRemoveRight");
       this.btnRemoveRight.Name = "btnRemoveRight";
@@ -907,14 +915,14 @@
       resources.ApplyResources(this.btnClearRightFilter, "btnClearRightFilter");
       this.btnClearRightFilter.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("btnClearRightFilter.Appearance.Font")));
       this.btnClearRightFilter.Appearance.Options.UseFont = true;
-      this.btnClearRightFilter.ImageOptions.ImageIndex = 28;
+      this.btnClearRightFilter.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnClearRightFilter.ImageOptions.ImageIndex")));
       this.btnClearRightFilter.ImageOptions.ImageList = this.globalImageCollection1;
       this.btnClearRightFilter.Name = "btnClearRightFilter";
       this.btnClearRightFilter.Click += new System.EventHandler(this.btnClearRightFilter_Click);
       // 
       // btnAdd
       // 
-      this.btnAdd.ImageOptions.ImageIndex = 39;
+      this.btnAdd.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnAdd.ImageOptions.ImageIndex")));
       this.btnAdd.ImageOptions.ImageList = this.globalImageCollection1;
       resources.ApplyResources(this.btnAdd, "btnAdd");
       this.btnAdd.Name = "btnAdd";
@@ -1079,7 +1087,7 @@
       resources.ApplyResources(this.miOpen, "miOpen");
       this.miOpen.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miOpen.Id = 5;
-      this.miOpen.ImageOptions.ImageIndex = 3;
+      this.miOpen.ImageOptions.ImageIndex = ((int)(resources.GetObject("miOpen.ImageOptions.ImageIndex")));
       this.miOpen.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O));
       this.miOpen.Name = "miOpen";
       this.miOpen.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpen_ItemClick);
@@ -1090,7 +1098,7 @@
       this.miReload.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miReload.Enabled = false;
       this.miReload.Id = 7;
-      this.miReload.ImageOptions.ImageIndex = 5;
+      this.miReload.ImageOptions.ImageIndex = ((int)(resources.GetObject("miReload.ImageOptions.ImageIndex")));
       this.miReload.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R));
       this.miReload.Name = "miReload";
       this.miReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miReload_ItemClick);
@@ -1100,7 +1108,7 @@
       resources.ApplyResources(this.miRestoreOriginal, "miRestoreOriginal");
       this.miRestoreOriginal.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miRestoreOriginal.Id = 42;
-      this.miRestoreOriginal.ImageOptions.ImageIndex = 31;
+      this.miRestoreOriginal.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRestoreOriginal.ImageOptions.ImageIndex")));
       this.miRestoreOriginal.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.R));
       this.miRestoreOriginal.Name = "miRestoreOriginal";
@@ -1111,7 +1119,7 @@
       resources.ApplyResources(this.miFileInformation, "miFileInformation");
       this.miFileInformation.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miFileInformation.Id = 43;
-      this.miFileInformation.ImageOptions.ImageIndex = 30;
+      this.miFileInformation.ImageOptions.ImageIndex = ((int)(resources.GetObject("miFileInformation.ImageOptions.ImageIndex")));
       this.miFileInformation.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I));
       this.miFileInformation.Name = "miFileInformation";
       this.miFileInformation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miFileInformation_ItemClick);
@@ -1122,7 +1130,7 @@
       this.miSave.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miSave.Enabled = false;
       this.miSave.Id = 6;
-      this.miSave.ImageOptions.ImageIndex = 4;
+      this.miSave.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSave.ImageOptions.ImageIndex")));
       this.miSave.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S));
       this.miSave.Name = "miSave";
       this.miSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSave_ItemClick);
@@ -1133,7 +1141,7 @@
       this.miSaveAs.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miSaveAs.Enabled = false;
       this.miSaveAs.Id = 8;
-      this.miSaveAs.ImageOptions.ImageIndex = 33;
+      this.miSaveAs.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSaveAs.ImageOptions.ImageIndex")));
       this.miSaveAs.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.S));
       this.miSaveAs.Name = "miSaveAs";
@@ -1144,7 +1152,7 @@
       resources.ApplyResources(this.miOpenReferenceFile, "miOpenReferenceFile");
       this.miOpenReferenceFile.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miOpenReferenceFile.Id = 44;
-      this.miOpenReferenceFile.ImageOptions.ImageIndex = 23;
+      this.miOpenReferenceFile.ImageOptions.ImageIndex = ((int)(resources.GetObject("miOpenReferenceFile.ImageOptions.ImageIndex")));
       this.miOpenReferenceFile.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.O));
       this.miOpenReferenceFile.Name = "miOpenReferenceFile";
@@ -1161,7 +1169,7 @@
       // 
       resources.ApplyResources(this.miSaveReferenceFile, "miSaveReferenceFile");
       this.miSaveReferenceFile.Id = 57;
-      this.miSaveReferenceFile.ImageOptions.ImageIndex = 6;
+      this.miSaveReferenceFile.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSaveReferenceFile.ImageOptions.ImageIndex")));
       this.miSaveReferenceFile.Name = "miSaveReferenceFile";
       this.miSaveReferenceFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveReferenceFile_ItemClick);
       // 
@@ -1169,7 +1177,7 @@
       // 
       resources.ApplyResources(this.miExcelExport, "miExcelExport");
       this.miExcelExport.Id = 59;
-      this.miExcelExport.ImageOptions.ImageIndex = 32;
+      this.miExcelExport.ImageOptions.ImageIndex = ((int)(resources.GetObject("miExcelExport.ImageOptions.ImageIndex")));
       this.miExcelExport.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.C));
       this.miExcelExport.Name = "miExcelExport";
@@ -1179,7 +1187,7 @@
       // 
       resources.ApplyResources(this.miPrint, "miPrint");
       this.miPrint.Id = 62;
-      this.miPrint.ImageOptions.ImageIndex = 34;
+      this.miPrint.ImageOptions.ImageIndex = ((int)(resources.GetObject("miPrint.ImageOptions.ImageIndex")));
       this.miPrint.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P));
       this.miPrint.Name = "miPrint";
       this.miPrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miPrint_ItemClick);
@@ -1227,7 +1235,7 @@
       resources.ApplyResources(this.miAddChannel, "miAddChannel");
       this.miAddChannel.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miAddChannel.Id = 39;
-      this.miAddChannel.ImageOptions.ImageIndex = 26;
+      this.miAddChannel.ImageOptions.ImageIndex = ((int)(resources.GetObject("miAddChannel.ImageOptions.ImageIndex")));
       this.miAddChannel.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Add));
       this.miAddChannel.Name = "miAddChannel";
       // 
@@ -1236,7 +1244,7 @@
       resources.ApplyResources(this.miRemove, "miRemove");
       this.miRemove.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miRemove.Id = 25;
-      this.miRemove.ImageOptions.ImageIndex = 11;
+      this.miRemove.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRemove.ImageOptions.ImageIndex")));
       this.miRemove.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X));
       this.miRemove.Name = "miRemove";
       this.miRemove.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRemove_ItemClick);
@@ -1246,7 +1254,7 @@
       resources.ApplyResources(this.miRenameChannel, "miRenameChannel");
       this.miRenameChannel.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miRenameChannel.Id = 52;
-      this.miRenameChannel.ImageOptions.ImageIndex = 29;
+      this.miRenameChannel.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRenameChannel.ImageOptions.ImageIndex")));
       this.miRenameChannel.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
       this.miRenameChannel.Name = "miRenameChannel";
       this.miRenameChannel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenameChannel_ItemClick);
@@ -1256,7 +1264,7 @@
       resources.ApplyResources(this.miSort, "miSort");
       this.miSort.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miSort.Id = 40;
-      this.miSort.ImageOptions.ImageIndex = 21;
+      this.miSort.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSort.ImageOptions.ImageIndex")));
       this.miSort.Name = "miSort";
       this.miSort.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSort_ItemClick);
       // 
@@ -1265,7 +1273,7 @@
       resources.ApplyResources(this.miRenum, "miRenum");
       this.miRenum.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miRenum.Id = 41;
-      this.miRenum.ImageOptions.ImageIndex = 22;
+      this.miRenum.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRenum.ImageOptions.ImageIndex")));
       this.miRenum.Name = "miRenum";
       this.miRenum.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenum_ItemClick);
       // 
@@ -1281,7 +1289,7 @@
       resources.ApplyResources(this.mnuFavSet, "mnuFavSet");
       this.mnuFavSet.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.mnuFavSet.Id = 37;
-      this.mnuFavSet.ImageOptions.ImageIndex = 13;
+      this.mnuFavSet.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuFavSet.ImageOptions.ImageIndex")));
       this.mnuFavSet.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miFavASet),
             new DevExpress.XtraBars.LinkPersistInfo(this.miFavBSet),
@@ -1414,7 +1422,7 @@
       resources.ApplyResources(this.miLockOn, "miLockOn");
       this.miLockOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miLockOn.Id = 27;
-      this.miLockOn.ImageOptions.ImageIndex = 15;
+      this.miLockOn.ImageOptions.ImageIndex = ((int)(resources.GetObject("miLockOn.ImageOptions.ImageIndex")));
       this.miLockOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L));
       this.miLockOn.Name = "miLockOn";
       this.miLockOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miLockOn_ItemClick);
@@ -1434,7 +1442,7 @@
       resources.ApplyResources(this.miSkipOn, "miSkipOn");
       this.miSkipOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miSkipOn.Id = 29;
-      this.miSkipOn.ImageOptions.ImageIndex = 16;
+      this.miSkipOn.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSkipOn.ImageOptions.ImageIndex")));
       this.miSkipOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K));
       this.miSkipOn.Name = "miSkipOn";
       this.miSkipOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSkipOn_ItemClick);
@@ -1454,7 +1462,7 @@
       resources.ApplyResources(this.miHideOn, "miHideOn");
       this.miHideOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miHideOn.Id = 31;
-      this.miHideOn.ImageOptions.ImageIndex = 17;
+      this.miHideOn.ImageOptions.ImageIndex = ((int)(resources.GetObject("miHideOn.ImageOptions.ImageIndex")));
       this.miHideOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H));
       this.miHideOn.Name = "miHideOn";
       this.miHideOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miHideOn_ItemClick);
@@ -1482,7 +1490,7 @@
       // 
       resources.ApplyResources(this.miTvSettings, "miTvSettings");
       this.miTvSettings.Id = 48;
-      this.miTvSettings.ImageOptions.ImageIndex = 27;
+      this.miTvSettings.ImageOptions.ImageIndex = ((int)(resources.GetObject("miTvSettings.ImageOptions.ImageIndex")));
       this.miTvSettings.Name = "miTvSettings";
       this.miTvSettings.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTvCountrySetup_ItemClick);
       // 
@@ -1510,7 +1518,7 @@
       resources.ApplyResources(this.barSubItem1, "barSubItem1");
       this.barSubItem1.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.barSubItem1.Id = 0;
-      this.barSubItem1.ImageOptions.ImageIndex = 14;
+      this.barSubItem1.ImageOptions.ImageIndex = ((int)(resources.GetObject("barSubItem1.ImageOptions.ImageIndex")));
       this.barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miEnglish),
             new DevExpress.XtraBars.LinkPersistInfo(this.miGerman),
@@ -1527,7 +1535,7 @@
       resources.ApplyResources(this.miEnglish, "miEnglish");
       this.miEnglish.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.miEnglish.Id = 2;
-      this.miEnglish.ImageOptions.ImageIndex = 0;
+      this.miEnglish.ImageOptions.ImageIndex = ((int)(resources.GetObject("miEnglish.ImageOptions.ImageIndex")));
       this.miEnglish.Name = "miEnglish";
       this.miEnglish.Tag = "en";
       this.miEnglish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
@@ -1538,7 +1546,7 @@
       resources.ApplyResources(this.miGerman, "miGerman");
       this.miGerman.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.miGerman.Id = 1;
-      this.miGerman.ImageOptions.ImageIndex = 1;
+      this.miGerman.ImageOptions.ImageIndex = ((int)(resources.GetObject("miGerman.ImageOptions.ImageIndex")));
       this.miGerman.Name = "miGerman";
       this.miGerman.Tag = "de-DE";
       this.miGerman.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
@@ -1548,7 +1556,7 @@
       this.miPortuguese.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
       resources.ApplyResources(this.miPortuguese, "miPortuguese");
       this.miPortuguese.Id = 60;
-      this.miPortuguese.ImageOptions.ImageIndex = 2;
+      this.miPortuguese.ImageOptions.ImageIndex = ((int)(resources.GetObject("miPortuguese.ImageOptions.ImageIndex")));
       this.miPortuguese.Name = "miPortuguese";
       this.miPortuguese.Tag = "pt-PT";
       this.miPortuguese.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
@@ -1558,7 +1566,7 @@
       this.miRussian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
       resources.ApplyResources(this.miRussian, "miRussian");
       this.miRussian.Id = 93;
-      this.miRussian.ImageOptions.ImageIndex = 35;
+      this.miRussian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRussian.ImageOptions.ImageIndex")));
       this.miRussian.Name = "miRussian";
       this.miRussian.Tag = "ru-RU";
       this.miRussian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
@@ -1568,7 +1576,7 @@
       this.miCzech.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
       resources.ApplyResources(this.miCzech, "miCzech");
       this.miCzech.Id = 95;
-      this.miCzech.ImageOptions.ImageIndex = 41;
+      this.miCzech.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCzech.ImageOptions.ImageIndex")));
       this.miCzech.Name = "miCzech";
       this.miCzech.Tag = "cs-CZ";
       this.miCzech.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
@@ -1578,7 +1586,7 @@
       this.miRomanian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
       resources.ApplyResources(this.miRomanian, "miRomanian");
       this.miRomanian.Id = 96;
-      this.miRomanian.ImageOptions.ImageIndex = 42;
+      this.miRomanian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRomanian.ImageOptions.ImageIndex")));
       this.miRomanian.Name = "miRomanian";
       this.miRomanian.Tag = "ro-RO";
       this.miRomanian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
@@ -1588,7 +1596,7 @@
       resources.ApplyResources(this.mnuCharset, "mnuCharset");
       this.mnuCharset.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.mnuCharset.Id = 15;
-      this.mnuCharset.ImageOptions.ImageIndex = 9;
+      this.mnuCharset.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuCharset.ImageOptions.ImageIndex")));
       this.mnuCharset.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miCharsetForm),
             new DevExpress.XtraBars.LinkPersistInfo(this.miIsoCharSets, true)});
@@ -1600,7 +1608,7 @@
       resources.ApplyResources(this.miCharsetForm, "miCharsetForm");
       this.miCharsetForm.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.miCharsetForm.Id = 13;
-      this.miCharsetForm.ImageOptions.ImageIndex = 9;
+      this.miCharsetForm.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCharsetForm.ImageOptions.ImageIndex")));
       this.miCharsetForm.Name = "miCharsetForm";
       this.miCharsetForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCharset_ItemClick);
       // 
@@ -1624,7 +1632,7 @@
       this.miAllowEditPredefinedLists.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
       resources.ApplyResources(this.miAllowEditPredefinedLists, "miAllowEditPredefinedLists");
       this.miAllowEditPredefinedLists.Id = 94;
-      this.miAllowEditPredefinedLists.ImageOptions.ImageIndex = 37;
+      this.miAllowEditPredefinedLists.ImageOptions.ImageIndex = ((int)(resources.GetObject("miAllowEditPredefinedLists.ImageOptions.ImageIndex")));
       this.miAllowEditPredefinedLists.Name = "miAllowEditPredefinedLists";
       this.miAllowEditPredefinedLists.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miAllowEditPredefinedLists_DownChanged);
       // 
@@ -1806,7 +1814,7 @@
       resources.ApplyResources(this.miAbout, "miAbout");
       this.miAbout.CategoryGuid = new System.Guid("0d554574-30e8-4d31-9a70-da702a984260");
       this.miAbout.Id = 11;
-      this.miAbout.ImageOptions.ImageIndex = 7;
+      this.miAbout.ImageOptions.ImageIndex = ((int)(resources.GetObject("miAbout.ImageOptions.ImageIndex")));
       this.miAbout.Name = "miAbout";
       this.miAbout.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miAbout_ItemClick);
       // 
@@ -1839,7 +1847,7 @@
       resources.ApplyResources(this.miMoveUp, "miMoveUp");
       this.miMoveUp.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miMoveUp.Id = 45;
-      this.miMoveUp.ImageOptions.ImageIndex = 24;
+      this.miMoveUp.ImageOptions.ImageIndex = ((int)(resources.GetObject("miMoveUp.ImageOptions.ImageIndex")));
       this.miMoveUp.Name = "miMoveUp";
       this.miMoveUp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miMoveUp_ItemClick);
       // 
@@ -1848,7 +1856,7 @@
       resources.ApplyResources(this.miMoveDown, "miMoveDown");
       this.miMoveDown.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miMoveDown.Id = 46;
-      this.miMoveDown.ImageOptions.ImageIndex = 25;
+      this.miMoveDown.ImageOptions.ImageIndex = ((int)(resources.GetObject("miMoveDown.ImageOptions.ImageIndex")));
       this.miMoveDown.Name = "miMoveDown";
       this.miMoveDown.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miMoveDown_ItemClick);
       // 
@@ -1883,7 +1891,7 @@
       this.picDonate.EditValue = global::ChanSort.Ui.Properties.Resources.Donate;
       this.picDonate.MenuManager = this.barManager1;
       this.picDonate.Name = "picDonate";
-      this.picDonate.Properties.Appearance.BackColor = ((System.Drawing.Color)(resources.GetObject("picDonate.Properties.Appearance.BackColor")));
+      this.picDonate.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
       this.picDonate.Properties.Appearance.Options.UseBackColor = true;
       this.picDonate.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
       this.picDonate.Properties.PictureAlignment = System.Drawing.ContentAlignment.TopRight;
@@ -2265,6 +2273,7 @@
     private DevExpress.XtraGrid.Columns.GridColumn colSource;
     private DevExpress.XtraBars.BarButtonItem miCzech;
     private DevExpress.XtraBars.BarButtonItem miRomanian;
+    private DevExpress.XtraGrid.Columns.GridColumn colPcrPid;
   }
 }
 

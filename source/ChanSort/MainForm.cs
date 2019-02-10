@@ -1453,8 +1453,16 @@ namespace ChanSort.Ui
       var list = this.CurrentChannelList;
       if (list == null)
         return false;
+
       var filter = list.VisibleColumnFieldNames;
-      if (filter != null && !filter.Contains(col.FieldName))
+      if (filter != null)
+      {
+        if (!filter.Contains(col.FieldName)) // force-hide without further checks
+          return false;
+        if (filter.Contains("+" + col.FieldName)) // force-show without further checks
+          return true;
+      }
+      else if (col.Tag is bool originalVisible && !originalVisible)
         return false;
 
       var source = list.SignalSource;
@@ -1464,6 +1472,7 @@ namespace ChanSort.Ui
       if (col == this.colShortName) return (source & SignalSource.Digital) != 0;
       if (col == this.colEncrypted) return (source & SignalSource.Digital) != 0;
       if (col == this.colServiceId) return (source & SignalSource.Digital) != 0;
+      if (col == this.colPcrPid) return (source & SignalSource.Digital) != 0;
       if (col == this.colVideoPid) return (source & SignalSource.Digital) != 0;
       if (col == this.colAudioPid) return (source & SignalSource.Digital) != 0;
       //if (col == this.colServiceType) return (source & SignalSource.Digital) != 0;
@@ -1475,15 +1484,15 @@ namespace ChanSort.Ui
       if (col == this.colProvider) return (source & SignalSource.Digital) != 0;
       if (col == this.colSatellite) return (source & SignalSource.Sat) != 0;
       if (col == this.colNetworkId) return (source & SignalSource.Digital) != 0;
-      if (col == this.colSymbolRate) return (source & SignalSource.Sat) != 0;
+      if (col == this.colSymbolRate) return (source & SignalSource.Digital) != 0;
       if (col == this.colIndex) return col.Visible;
       if (col == this.colUid) return col.Visible;
-      if (col == this.colDebug) return colDebug.Visible;
+      if (col == this.colDebug) return col.Visible;
       if (col == this.colSignalSource) return col.Visible;
-      if (col == this.colLogicalIndex) return colLogicalIndex.Visible;
+      if (col == this.colLogicalIndex) return col.Visible;
       if (col == this.colPolarity) return false;
 
-      return (bool)(col.Tag ?? false);
+      return true;
     }
 
     #endregion

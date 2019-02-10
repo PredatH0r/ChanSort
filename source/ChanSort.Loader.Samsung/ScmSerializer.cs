@@ -136,6 +136,12 @@ namespace ChanSort.Loader.Samsung
         ReadDvbsChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
         ReadAstraHdPlusChannels(zip);        
       }
+
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        list.VisibleColumnFieldNames.Add("PcrPid");
+        list.VisibleColumnFieldNames.Remove("AudioPid");
+      }
     }
     #endregion
 

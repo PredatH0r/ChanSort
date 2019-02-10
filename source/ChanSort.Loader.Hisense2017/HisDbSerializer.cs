@@ -124,7 +124,7 @@ namespace ChanSort.Loader.Hisense2017
       Features.CanHaveGaps = true;
       DataRoot.MixedSourceFavorites = true;
       DataRoot.SortedFavorites = true;
-      DataRoot.ShowDeletedChannels = true;
+      DataRoot.ShowDeletedChannels = false;
     }
 
     #endregion

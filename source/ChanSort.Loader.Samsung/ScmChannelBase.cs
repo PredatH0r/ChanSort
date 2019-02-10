@@ -23,7 +23,9 @@ namespace ChanSort.Loader.Samsung
     // DVB
     private const string _Skip = "Skip";
     private const string _Hidden = "Hidden";
+    private const string _HiddenAlt = "HiddenAlt";
     private const string _ServiceId = "offServiceId";
+    private const string _PcrPid = "offPcrPid";
     private const string _VideoPid = "offVideoPid";
     private const string _AudioPid = "offAudioPid";
     private const string _OriginalNetworkId = "offOriginalNetworkId";
@@ -61,12 +63,17 @@ namespace ChanSort.Loader.Samsung
       this.Name = data.GetString(_Name, data.Settings.GetInt("lenName"));
       this.Favorites = this.ParseRawFavorites();
       this.Lock = data.GetFlag(_Lock);
-      this.Hidden = data.GetFlag(_Hidden);
+      int hiddenPrimary = data.GetByte(_Hidden);
+      if (hiddenPrimary == 255)
+        this.Hidden = data.GetByte(_HiddenAlt) != 0;
+      else
+        this.Hidden = hiddenPrimary != 0;
       this.Skip = data.GetFlag(_Skip);
       this.Encrypted = data.GetFlag(_Encrypted);
       this.IsDeleted = data.GetFlag(_Deleted, false) || !data.GetFlag(_IsActive, true);
       if (this.IsDeleted)
         this.OldProgramNr = -1;
+      this.AddDebug(data.Data, data.BaseOffset + 25, 3);
     }
     #endregion
 
@@ -103,7 +110,7 @@ namespace ChanSort.Loader.Samsung
     {
       this.ShortName = data.GetString(_ShortName, data.Settings.GetInt("lenShortName"));
       this.ServiceId = data.GetWord(_ServiceId);
-      //this.PcrPid = data.GetWord(_PcrPid);
+      this.PcrPid = data.GetWord(_PcrPid);
       this.VideoPid = data.GetWord(_VideoPid);
       this.AudioPid = data.GetWord(_AudioPid);
       this.OriginalNetworkId = data.GetWord(_OriginalNetworkId);
@@ -149,7 +156,7 @@ namespace ChanSort.Loader.Samsung
       mapping.SetFlag(_Deleted, this.NewProgramNr < 0);
       mapping.SetFlag(_IsActive, this.NewProgramNr >= 0);
       mapping.SetFlag(_Skip, this.Skip);
-      mapping.SetFlag(_Hidden, this.Hidden);
+      mapping.SetByte(this.mapping.GetByte(_Hidden) != 255 ? _Hidden : _HiddenAlt, this.Hidden ? 1 : 0);
       if (this.Encrypted != null)
         mapping.SetFlag(_Encrypted, this.Encrypted.Value);
       this.UpdateChecksum();

@@ -320,8 +320,10 @@ namespace ChanSort.Loader.Panasonic
       this.DataRoot.AddChannelList(this.satipChannels);
       this.DataRoot.AddChannelList(this.freesatChannels);
 
+      // hide columns for fields that don't exist in Panasonic channel list
       foreach (var list in this.DataRoot.ChannelLists)
       {
+        list.VisibleColumnFieldNames.Remove("PcrPid");
         list.VisibleColumnFieldNames.Remove("VideoPid");
         list.VisibleColumnFieldNames.Remove("AudioPid");
       }

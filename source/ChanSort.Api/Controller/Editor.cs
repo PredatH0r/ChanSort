@@ -372,8 +372,9 @@ namespace ChanSort.Api
             }
           }
 
-          int progNr = GetNewPogramNr(appChannel, ref maxProgNr);
-          appChannel.NewProgramNr = progNr;
+          int progNr = this.GetNewProgramNr(appChannel, ref maxProgNr);
+          if (mode != UnsortedChannelMode.MarkDeleted)
+            appChannel.NewProgramNr = progNr;
         }
       }
     }
@@ -404,9 +405,9 @@ namespace ChanSort.Api
 
     #endregion
 
-    #region GetNewPogramNr()
+    #region GetNewProgramNr()
 
-    private int GetNewPogramNr(ChannelInfo appChannel, ref int maxPrNr)
+    private int GetNewProgramNr(ChannelInfo appChannel, ref int maxPrNr)
     {
       int prNr = appChannel.NewProgramNr;
       if (prNr > maxPrNr)

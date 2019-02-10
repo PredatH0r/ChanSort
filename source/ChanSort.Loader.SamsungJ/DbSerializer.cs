@@ -10,6 +10,9 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace ChanSort.Loader.SamsungJ
 {
+  /// <summary>
+  /// Loader for Samsung J/K/M/Q/N/... series .zip files
+  /// </summary>
   class DbSerializer : SerializerBase
   {
     private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
@@ -28,11 +31,12 @@ namespace ChanSort.Loader.SamsungJ
       this.DataRoot.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
       this.DataRoot.SortedFavorites = true;
       this.DataRoot.AllowGapsInFavNumbers = false;
+      this.DataRoot.ShowDeletedChannels = false;
     }
     #endregion
 
     #region DisplayName
-    public override string DisplayName => "Samsung J-Series .zip Loader";
+    public override string DisplayName => "Samsung .zip Loader";
 
     #endregion
 
@@ -519,7 +523,10 @@ namespace ChanSort.Loader.SamsungJ
         var channel = channelInfo as DbChannel;
         if (channel == null) // ignore reference list proxy channels
           continue;
-        
+
+#if false        
+        // disabled, because channels should just be marked as deleted and not physically deleted
+
         if (channel.NewProgramNr < 0)
         {
           // delete channel from all tables that have a reference to srvId
@@ -527,10 +534,11 @@ namespace ChanSort.Loader.SamsungJ
           cmdDeleteSrv.ExecuteNonQuery();
           continue;
         }
+#endif
 
         // update channel record
         cmdUpdateSrv.Parameters["@id"].Value = channel.RecordIndex;
-        cmdUpdateSrv.Parameters["@nr"].Value = channel.NewProgramNr;
+        cmdUpdateSrv.Parameters["@nr"].Value = channel.IsDeleted ? -1 : channel.NewProgramNr;
         cmdUpdateSrv.Parameters["@lock"].Value = channel.Lock;
         cmdUpdateSrv.Parameters["@hidden"].Value = channel.Hidden;
         cmdUpdateSrv.Parameters["@numsel"].Value = !channel.Skip;

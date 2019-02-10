@@ -305,6 +305,9 @@
   <data name="&gt;&gt;lblHotkeyLeft.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="btnToggleLock.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
   <metadata name="globalImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>600, 17</value>
   </metadata>
@@ -401,23 +404,44 @@
   <data name="miOpen.Caption" xml:space="preserve">
     <value>&amp;Open TV data file...</value>
   </data>
+  <data name="miOpen.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
   <data name="miReload.Caption" xml:space="preserve">
     <value>&amp;Reload</value>
+  </data>
+  <data name="miReload.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="miRestoreOriginal.Caption" xml:space="preserve">
     <value>Restore backup</value>
   </data>
+  <data name="miRestoreOriginal.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
   <data name="miFileInformation.Caption" xml:space="preserve">
     <value>File &amp;information...</value>
+  </data>
+  <data name="miFileInformation.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>30</value>
   </data>
   <data name="miSave.Caption" xml:space="preserve">
     <value>&amp;Save</value>
   </data>
+  <data name="miSave.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
   <data name="miSaveAs.Caption" xml:space="preserve">
     <value>Save &amp;as...</value>
   </data>
+  <data name="miSaveAs.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
   <data name="miOpenReferenceFile.Caption" xml:space="preserve">
     <value>Apply order from a reference list...</value>
+  </data>
+  <data name="miOpenReferenceFile.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>23</value>
   </data>
   <data name="miAddFromRefList.Caption" xml:space="preserve">
     <value>Add channels from reference list...</value>
@@ -425,11 +449,20 @@
   <data name="miSaveReferenceFile.Caption" xml:space="preserve">
     <value>Save reference list...</value>
   </data>
+  <data name="miSaveReferenceFile.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
   <data name="miExcelExport.Caption" xml:space="preserve">
     <value>Export Excel list...</value>
   </data>
+  <data name="miExcelExport.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
   <data name="miPrint.Caption" xml:space="preserve">
     <value>&amp;Print...</value>
+  </data>
+  <data name="miPrint.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>34</value>
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
     <value>&amp;Quit</value>
@@ -443,17 +476,32 @@
   <data name="miAddChannel.Caption" xml:space="preserve">
     <value>&amp;Add channels</value>
   </data>
+  <data name="miAddChannel.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
   <data name="miRemove.Caption" xml:space="preserve">
     <value>&amp;Remove channels</value>
+  </data>
+  <data name="miRemove.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>11</value>
   </data>
   <data name="miRenameChannel.Caption" xml:space="preserve">
     <value>Rename channel</value>
   </data>
+  <data name="miRenameChannel.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
   <data name="miSort.Caption" xml:space="preserve">
     <value>Sor&amp;t channels alphabetically</value>
   </data>
+  <data name="miSort.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
   <data name="miRenum.Caption" xml:space="preserve">
     <value>Re&amp;number channels</value>
+  </data>
+  <data name="miRenum.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>22</value>
   </data>
   <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
     <value>Renumber favorites by Pr#</value>
@@ -463,6 +511,9 @@
   </data>
   <data name="mnuFavSet.Caption" xml:space="preserve">
     <value>Add to &amp;Favorites</value>
+  </data>
+  <data name="mnuFavSet.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>13</value>
   </data>
   <data name="miFavASet.Caption" xml:space="preserve">
     <value>&amp;A</value>
@@ -500,17 +551,26 @@
   <data name="miLockOn.Caption" xml:space="preserve">
     <value>&amp;Lock channel: on</value>
   </data>
+  <data name="miLockOn.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
   <data name="miLockOff.Caption" xml:space="preserve">
     <value>Lock channel: off</value>
   </data>
   <data name="miSkipOn.Caption" xml:space="preserve">
     <value>&amp;Skip channel: on</value>
   </data>
+  <data name="miSkipOn.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
   <data name="miSkipOff.Caption" xml:space="preserve">
     <value>Skip channel: off</value>
   </data>
   <data name="miHideOn.Caption" xml:space="preserve">
     <value>&amp;Hide channel: on</value>
+  </data>
+  <data name="miHideOn.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>17</value>
   </data>
   <data name="miHideOff.Caption" xml:space="preserve">
     <value>Hide channel: off</value>
@@ -520,6 +580,9 @@
   </data>
   <data name="miTvSettings.Caption" xml:space="preserve">
     <value>Device setting...</value>
+  </data>
+  <data name="miTvSettings.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>27</value>
   </data>
   <data name="miCleanupChannels.Caption" xml:space="preserve">
     <value>Cleanup channel data</value>
@@ -533,29 +596,56 @@
   <data name="barSubItem1.Caption" xml:space="preserve">
     <value>&amp;Language</value>
   </data>
+  <data name="barSubItem1.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
   <data name="miEnglish.Caption" xml:space="preserve">
     <value>&amp;English</value>
+  </data>
+  <data name="miEnglish.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="miGerman.Caption" xml:space="preserve">
     <value>&amp;Deutsch</value>
   </data>
+  <data name="miGerman.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
   <data name="miPortuguese.Caption" xml:space="preserve">
     <value>Português</value>
+  </data>
+  <data name="miPortuguese.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="miRussian.Caption" xml:space="preserve">
     <value>ру́сский</value>
   </data>
+  <data name="miRussian.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
   <data name="miCzech.Caption" xml:space="preserve">
     <value>Česky</value>
+  </data>
+  <data name="miCzech.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>41</value>
   </data>
   <data name="miRomanian.Caption" xml:space="preserve">
     <value>Română</value>
   </data>
+  <data name="miRomanian.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Character set</value>
   </data>
+  <data name="mnuCharset.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
   <data name="miCharsetForm.Caption" xml:space="preserve">
     <value>All &amp;character sets...</value>
+  </data>
+  <data name="miCharsetForm.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>9</value>
   </data>
   <data name="miIsoCharSets.Caption" xml:space="preserve">
     <value>ISO character sets</value>
@@ -571,6 +661,9 @@
   </data>
   <data name="miAllowEditPredefinedLists.Hint" xml:space="preserve">
     <value>Your TV may malfunction when you edit a list with predefined channel numbers</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>37</value>
   </data>
   <data name="mnuAccessibility.Caption" xml:space="preserve">
     <value>&amp;Accessibility</value>
@@ -635,14 +728,17 @@
   <data name="miAbout.Caption" xml:space="preserve">
     <value>&amp;About ChanSort...</value>
   </data>
+  <data name="miAbout.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
   <data name="bar1.Text" xml:space="preserve">
     <value>Tools</value>
   </data>
   <assembly alias="DevExpress.XtraBars.v18.2" name="DevExpress.XtraBars.v18.2, Version=18.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v18.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNy4xLCBWZXJzaW9uPTE3
-        LjEuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxOC4yLCBWZXJzaW9uPTE4
+        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
@@ -651,8 +747,8 @@
   </data>
   <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v18.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNy4xLCBWZXJzaW9uPTE3
-        LjEuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxOC4yLCBWZXJzaW9uPTE4
+        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
@@ -661,8 +757,8 @@
   </data>
   <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v18.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNy4xLCBWZXJzaW9uPTE3
-        LjEuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxOC4yLCBWZXJzaW9uPTE4
+        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
@@ -671,8 +767,8 @@
   </data>
   <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v18.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNy4xLCBWZXJzaW9uPTE3
-        LjEuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxOC4yLCBWZXJzaW9uPTE4
+        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
         X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
@@ -681,8 +777,8 @@
   </data>
   <data name="barManager1.Categories4" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v18.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNy4xLCBWZXJzaW9uPTE3
-        LjEuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxOC4yLCBWZXJzaW9uPTE4
+        LjIuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAADUFjY2Vzc2liaWxpdHkE/P///wtTeXN0ZW0uR3VpZAsA
         AAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICeIvz
@@ -776,8 +872,14 @@
   <data name="miMoveUp.Caption" xml:space="preserve">
     <value>Move up</value>
   </data>
+  <data name="miMoveUp.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
   <data name="miMoveDown.Caption" xml:space="preserve">
     <value>Move down</value>
+  </data>
+  <data name="miMoveDown.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>25</value>
   </data>
   <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
     <value>swap</value>
@@ -914,9 +1016,6 @@
   </data>
   <data name="picDonate.Location" type="System.Drawing.Point, System.Drawing">
     <value>1266, 4</value>
-  </data>
-  <data name="picDonate.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
-    <value>Transparent</value>
   </data>
   <data name="picDonate.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 54</value>
@@ -1150,7 +1249,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.6597.38723, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.6980.23278, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1282,6 +1381,12 @@
     <value>colServiceId</value>
   </data>
   <data name="&gt;&gt;colServiceId.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v18.2, Version=18.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colPcrPid.Name" xml:space="preserve">
+    <value>colPcrPid</value>
+  </data>
+  <data name="&gt;&gt;colPcrPid.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v18.2, Version=18.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;colVideoPid.Name" xml:space="preserve">
@@ -1861,7 +1966,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v18.2, Version=18.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>01/23/2018 21:33:41</value>
+    <value>02/10/2019 13:13:51</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -2034,6 +2139,9 @@
   <data name="btnClearLeftFilter.Appearance.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Strikeout</value>
   </data>
+  <data name="btnClearLeftFilter.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
   <data name="btnClearLeftFilter.Location" type="System.Drawing.Point, System.Drawing">
     <value>295, 4</value>
   </data>
@@ -2060,6 +2168,9 @@
   </data>
   <data name="&gt;&gt;btnClearLeftFilter.ZOrder" xml:space="preserve">
     <value>6</value>
+  </data>
+  <data name="btnRenum.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>22</value>
   </data>
   <data name="btnRenum.Location" type="System.Drawing.Point, System.Drawing">
     <value>98, 5</value>
@@ -2088,6 +2199,9 @@
   <data name="&gt;&gt;btnRenum.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="btnDown.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
   <data name="btnDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>34, 5</value>
   </data>
@@ -2115,6 +2229,9 @@
   <data name="&gt;&gt;btnDown.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
+  <data name="btnUp.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
   <data name="btnUp.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 5</value>
   </data>
@@ -2141,6 +2258,9 @@
   </data>
   <data name="&gt;&gt;btnUp.ZOrder" xml:space="preserve">
     <value>9</value>
+  </data>
+  <data name="btnRemoveLeft.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>11</value>
   </data>
   <data name="btnRemoveLeft.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 5</value>
@@ -2472,6 +2592,21 @@
   <data name="colServiceId.Width" type="System.Int32, mscorlib">
     <value>45</value>
   </data>
+  <data name="colPcrPid.Caption" xml:space="preserve">
+    <value>PCR PID</value>
+  </data>
+  <data name="colPcrPid.ToolTip" xml:space="preserve">
+    <value>Program Clock Reference Packet-ID</value>
+  </data>
+  <data name="colPcrPid.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colPcrPid.VisibleIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="colPcrPid.Width" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
   <data name="colVideoPid.Caption" xml:space="preserve">
     <value>Video PID</value>
   </data>
@@ -2479,7 +2614,7 @@
     <value>True</value>
   </data>
   <data name="colVideoPid.VisibleIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="colVideoPid.Width" type="System.Int32, mscorlib">
     <value>40</value>
@@ -2491,7 +2626,7 @@
     <value>True</value>
   </data>
   <data name="colAudioPid.VisibleIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="colAudioPid.Width" type="System.Int32, mscorlib">
     <value>40</value>
@@ -2503,7 +2638,7 @@
     <value>True</value>
   </data>
   <data name="colSymbolRate.VisibleIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>19</value>
   </data>
   <data name="colSymbolRate.Width" type="System.Int32, mscorlib">
     <value>40</value>
@@ -2521,7 +2656,7 @@
     <value>True</value>
   </data>
   <data name="colNetworkName.VisibleIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
     <value>Network Operator</value>
@@ -2530,7 +2665,7 @@
     <value>True</value>
   </data>
   <data name="colNetworkOperator.VisibleIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>21</value>
   </data>
   <data name="colProvider.Caption" xml:space="preserve">
     <value>Provider</value>
@@ -2539,7 +2674,7 @@
     <value>True</value>
   </data>
   <data name="colProvider.VisibleIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+    <value>22</value>
   </data>
   <data name="colUid.Caption" xml:space="preserve">
     <value>Uid</value>
@@ -2604,9 +2739,6 @@
   <data name="lblPredefinedList.Appearance.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 12pt, style=Bold</value>
   </data>
-  <data name="lblPredefinedList.Appearance.ForeColor" type="System.Drawing.Color, System.Drawing">
-    <value>Maroon</value>
-  </data>
   <data name="lblPredefinedList.Location" type="System.Drawing.Point, System.Drawing">
     <value>291, 7</value>
   </data>
@@ -2639,6 +2771,9 @@ specific provider, satellite or country lists.</value>
   </data>
   <data name="&gt;&gt;lblPredefinedList.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="btnRemoveRight.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>11</value>
   </data>
   <data name="btnRemoveRight.Location" type="System.Drawing.Point, System.Drawing">
     <value>34, 5</value>
@@ -2703,6 +2838,9 @@ specific provider, satellite or country lists.</value>
   <data name="btnClearRightFilter.Appearance.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Strikeout</value>
   </data>
+  <data name="btnClearRightFilter.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
   <data name="btnClearRightFilter.Location" type="System.Drawing.Point, System.Drawing">
     <value>198, 5</value>
   </data>
@@ -2729,6 +2867,9 @@ specific provider, satellite or country lists.</value>
   </data>
   <data name="&gt;&gt;btnClearRightFilter.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="btnAdd.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>39</value>
   </data>
   <data name="btnAdd.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 5</value>
