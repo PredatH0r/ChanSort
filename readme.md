@@ -66,7 +66,7 @@ editing features due to a lack of test files. If you have such a file,
 please send it to me.
 
 Instructions for transferring the channel list can be found on:
-http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-importieren/
+https://github.com/PredatH0r/ChanSort/wiki/Samsung
 
 **LG**  
 Series: CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
