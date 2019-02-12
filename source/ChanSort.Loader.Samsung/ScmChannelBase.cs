@@ -22,8 +22,8 @@ namespace ChanSort.Loader.Samsung
 
     // DVB
     private const string _Skip = "Skip";
-    private const string _Hidden = "Hidden";
-    private const string _HiddenAlt = "HiddenAlt";
+    private const string _Hidden = "offHidden";
+    private const string _HiddenAlt = "offHiddenAlt";
     private const string _ServiceId = "offServiceId";
     private const string _PcrPid = "offPcrPid";
     private const string _VideoPid = "offVideoPid";
