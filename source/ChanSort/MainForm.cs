@@ -2396,6 +2396,7 @@ namespace ChanSort.Ui
       try
       {
         this.btnAdd.ImageIndex = this.rbInsertSwap.Checked ? 38 : this.rbInsertAfter.Checked ? 39 : 40;
+        this.miAddChannel.ImageIndex = this.btnAdd.ImageIndex;
 
         if (this.CurrentChannelList == null)
           return;
@@ -2713,6 +2714,11 @@ namespace ChanSort.Ui
     #endregion
 
     #region Edit menu
+
+    private void miAddChannel_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      this.TryExecute(this.AddChannels);
+    }
 
     private void miMoveDown_ItemClick(object sender, ItemClickEventArgs e)
     {
@@ -3073,5 +3079,6 @@ namespace ChanSort.Ui
     }
 
     #endregion
+
   }
 }

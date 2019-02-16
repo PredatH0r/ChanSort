@@ -216,6 +216,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).BeginInit();
       this.pnlEditControls.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).BeginInit();
       this.grpInputList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridRight)).BeginInit();
@@ -452,6 +453,10 @@
       resources.ApplyResources(this.btnToggleLock, "btnToggleLock");
       this.btnToggleLock.Name = "btnToggleLock";
       this.btnToggleLock.Click += new System.EventHandler(this.btnToggleLock_Click);
+      // 
+      // globalImageCollection1
+      // 
+      this.globalImageCollection1.ParentControl = this;
       // 
       // btnToggleFavE
       // 
@@ -1238,6 +1243,7 @@
       this.miAddChannel.ImageOptions.ImageIndex = ((int)(resources.GetObject("miAddChannel.ImageOptions.ImageIndex")));
       this.miAddChannel.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Add));
       this.miAddChannel.Name = "miAddChannel";
+      this.miAddChannel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miAddChannel_ItemClick);
       // 
       // miRemove
       // 
@@ -2064,6 +2070,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).EndInit();
       this.pnlEditControls.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).EndInit();
       this.grpInputList.ResumeLayout(false);
       this.grpInputList.PerformLayout();

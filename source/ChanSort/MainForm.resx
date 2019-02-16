@@ -477,7 +477,7 @@
     <value>&amp;Add channels</value>
   </data>
   <data name="miAddChannel.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
-    <value>26</value>
+    <value>40</value>
   </data>
   <data name="miRemove.Caption" xml:space="preserve">
     <value>&amp;Remove channels</value>
@@ -1249,7 +1249,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.6980.23278, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.6986.20519, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1964,12 +1964,6 @@
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v18.2, Version=18.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>02/10/2019 13:13:51</value>
-  </data>
-  <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
-    <value>16, 16</value>
   </data>
   <data name="btnToggleLock.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 5</value>
