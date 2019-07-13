@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ChanSort.Loader.SamsungJ")]
+[assembly: AssemblyTitle("ChanSort.Loader.SilvaSchneider")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ChanSort.Loader.SamsungJ")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyProduct("ChanSort.Loader.SilvaSchneider")]
+[assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2e9d8977-acba-492f-92d9-d070d4e43a87")]
+[assembly: Guid("FAEFA732-0096-45AE-97ED-DBE40764DA15")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -47,6 +47,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Samsung", "Test.Loader.Samsung\Test.Loader.Samsung.csproj", "{1ED68A9B-6698-4609-B9E6-8E08B6055F2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Hisense2017", "ChanSort.Loader.Hisense2017\ChanSort.Loader.Hisense2017.csproj", "{9282E1DB-CD1F-400A-ACA1-17E0C4562ACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.SilvaSchneider", "ChanSort.Loader.SilvaSchneider\ChanSort.Loader.SilvaSchneider.csproj", "{E6279FF8-362A-41E6-AC0D-D0861D43F01C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -226,8 +228,23 @@ Global
 		{9282E1DB-CD1F-400A-ACA1-17E0C4562ACF}.Release|Mixed Platforms.Build.0 = Release|x86
 		{9282E1DB-CD1F-400A-ACA1-17E0C4562ACF}.Release|x86.ActiveCfg = Release|x86
 		{9282E1DB-CD1F-400A-ACA1-17E0C4562ACF}.Release|x86.Build.0 = Release|x86
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Debug|x86.ActiveCfg = Debug|x86
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Debug|x86.Build.0 = Debug|x86
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Release|x86.ActiveCfg = Release|Any CPU
+		{E6279FF8-362A-41E6-AC0D-D0861D43F01C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBF1F6CB-9445-4F6C-A69A-15C4DA246814}
 	EndGlobalSection
 EndGlobal

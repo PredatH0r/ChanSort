@@ -1,5 +1,38 @@
 ChanSort Change Log 
 ===================
+2019-07-14
+- added support for Silva-Schneider .sdx channel lists
+
+2019-07-13
+- support for channel file name as command line argument
+- added explorer integration option in settings menu (to register file types)
+- added drag/drop support to drag a file from windows explorer onto chansort to open it
+- added reference list for vodafone cable TV in Berlin
+- added missing DLL required for printing
+- upgrade to DX 19.1
+
+2019-02-12
+- fixed "hidden" flag for Samsung C/D/E/F series (.scm lists)
+
+2019-02-10
+- fixed "delete channels", which were added at the end regardless of the user selection
+- fixed handling of SCM lists where the value of the "hidden" flag is 255 (using best-guess based on another field)
+- changed logic how channel lists can control which columns are visible in the UI
+- added column for PcrPid
+- removed column AudioPid from SCM lists
+- fixed saving VDR lists after applying a reference list which contained no longer existing channels (cast exception for the proxy ChannelInfo record)
+- no longer load samsung .zip lists with invalid internal folder structure (all files must be in the root folder of the .zip)
+
+2019-02-06
+- fixed deployment script to include DevExpress 18.2 DLLs, which are required to run ChanSort
+
+2019-02-05
+- upgraded to DevExpress 18.2
+- hide VPID and APID columns for Panasonic (no data provided)
+- Samsung J lists could have a \0 character at the end of a unicode16 string, which caused "Copy to Excel" to truncate the text
+- fixed new-version check to work with github (only supports TLS 1.2 and newer now, not SSL 3.0)
+- added pull-request with GB Sky reference channel list
+
 2017-11-30
 - fixed: deleting channels and selecting to "Remove unsorted channels"
   when saving could produce problems loading the list on the TV.

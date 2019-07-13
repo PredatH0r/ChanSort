@@ -160,6 +160,7 @@
       this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
       this.miShowWarningsAfterLoad = new DevExpress.XtraBars.BarCheckItem();
       this.miAllowEditPredefinedLists = new DevExpress.XtraBars.BarButtonItem();
+      this.miExplorerIntegration = new DevExpress.XtraBars.BarButtonItem();
       this.mnuAccessibility = new DevExpress.XtraBars.BarSubItem();
       this.mnuGotoChannelList = new DevExpress.XtraBars.BarSubItem();
       this.mnuInputSource = new DevExpress.XtraBars.BarLinkContainerItem();
@@ -205,7 +206,6 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
-      this.miExplorerIntegration = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -1642,6 +1642,14 @@
       this.miAllowEditPredefinedLists.Name = "miAllowEditPredefinedLists";
       this.miAllowEditPredefinedLists.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miAllowEditPredefinedLists_DownChanged);
       // 
+      // miExplorerIntegration
+      // 
+      this.miExplorerIntegration.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miExplorerIntegration, "miExplorerIntegration");
+      this.miExplorerIntegration.Id = 97;
+      this.miExplorerIntegration.Name = "miExplorerIntegration";
+      this.miExplorerIntegration.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miExplorerIntegration_ItemClick);
+      // 
       // mnuAccessibility
       // 
       resources.ApplyResources(this.mnuAccessibility, "mnuAccessibility");
@@ -2043,14 +2051,6 @@
       this.popupFavList.MenuCaption = "Select program or favorite list";
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
-      // 
-      // miExplorerIntegration
-      // 
-      this.miExplorerIntegration.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
-      resources.ApplyResources(this.miExplorerIntegration, "miExplorerIntegration");
-      this.miExplorerIntegration.Id = 97;
-      this.miExplorerIntegration.Name = "miExplorerIntegration";
-      this.miExplorerIntegration.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miExplorerIntegration_ItemClick);
       // 
       // MainForm
       // 

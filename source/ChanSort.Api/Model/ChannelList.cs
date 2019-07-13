@@ -148,7 +148,7 @@ namespace ChanSort.Api
     #region GetChannelsByNewOrder()
     public IList<ChannelInfo> GetChannelsByNewOrder()
     {
-        return this.Channels.OrderBy(c => c.NewProgramNr).ToList();
+      return this.Channels.OrderBy(c => c.NewProgramNr).ToList();
     }
     #endregion
 
