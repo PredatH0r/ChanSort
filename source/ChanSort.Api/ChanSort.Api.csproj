@@ -82,6 +82,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Utils\DependencyChecker.cs" />
+    <Compile Include="Utils\FileAssociation.cs" />
     <Compile Include="View\View.cs" />
     <None Include="Utils\ChannelMappingBase.cs" />
     <Compile Include="Utils\BrowserHelper.cs" />

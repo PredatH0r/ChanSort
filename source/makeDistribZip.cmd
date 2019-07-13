@@ -2,11 +2,12 @@
 cd /d %~dp0
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
-set DXversion=18.2
+set DXversion=19.1
 mkdir "%target%" 2>nul
 del /s /q "%target%\*"
 copy debug\ChanSort.exe* "%target%"
 copy debug\ChanSort.*.dll "%target%"
+copy debug\ChanSort.ico "%target%"
 copy debug\ChanSort.*.ini "%target%"
 copy debug\Lookup.csv "%target%"
 copy DLL\* "%target%"
@@ -23,7 +24,7 @@ xcopy /siy debug\cs "%target%\cs"
 xcopy /siy ChanSort\ReferenceLists\* "%target%\ReferenceLists"
 copy ..\readme.md "%target%\readme.txt"
 copy changelog.md "%target%\changelog.txt"
-for %%f in (Utils Data Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
+for %%f in (Utils Data DataAccess Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
 call :CodeSigning
 
 cd ..

@@ -1264,6 +1264,8 @@ namespace ChanSort.Ui
           this.AddFileToMruList((string) prop.GetValue(Settings.Default, null));
       }
       this.UpdateMruMenu();
+
+      this.miExplorerIntegration.Down = Settings.Default.ExplorerIntegration;
     }
 
     #endregion
@@ -1852,8 +1854,41 @@ namespace ChanSort.Ui
     {
       this.TryExecute(this.LoadSettings);
       this.TryExecute(this.InitAppAfterMainWindowWasShown);
+
+      var args = Environment.GetCommandLineArgs();
+      if (args.Length > 1)
+        this.TryExecute(() => this.LoadFiles(null, args[args.Length - 1]));
     }
 
+    #endregion
+
+    #region MainForm_DragEnter, DragDrop
+
+    private void MainForm_DragEnter(object sender, DragEventArgs e)
+    {
+      e.Effect = DragDropEffects.None;
+      if (e.Data.GetDataPresent("FileNameW"))
+      {
+        if (e.Data.GetData("FileNameW") is string[] files && files.Length == 1)
+          e.Effect = DragDropEffects.Copy;
+      }
+    }
+
+    private void MainForm_DragDrop(object sender, DragEventArgs e)
+    {
+      try
+      {
+        if (e.Data.GetDataPresent("FileNameW"))
+        {
+          if (e.Data.GetData("FileNameW") is string[] files && files.Length == 1)
+            this.LoadFiles(null, files[0]);
+        }
+      }
+      catch (Exception ex)
+      {
+        HandleException(ex);
+      }
+    }
     #endregion
 
     #region ProcessCmdKey()
@@ -2017,7 +2052,10 @@ namespace ChanSort.Ui
     private void gridLeft_DragOver(object sender, DragEventArgs e)
     {
       if (this.dragDropInfo == null) // drag operation from outside ChanSort
+      {
+        MainForm_DragEnter(sender, e);
         return;
+      }
 
       // this event is called on the current target of the drag operation
       var point = this.gridLeft.PointToClient(MousePosition);
@@ -2056,6 +2094,12 @@ namespace ChanSort.Ui
     {
       try
       {
+        if (this.dragDropInfo == null)
+        {
+          MainForm_DragDrop(sender, e);
+          return;
+        }
+
         if (this.dragDropInfo.DropRowHandle < 0) return;
         this.curEditMode = this.dragDropInfo.EditMode;
         var dropChannel = (ChannelInfo) this.gviewLeft.GetRow(this.dragDropInfo.DropRowHandle);
@@ -2251,6 +2295,18 @@ namespace ChanSort.Ui
       }
     }
 
+    #endregion
+
+    #region gridRight_DragEnter, DragDrop
+    private void gridRight_DragEnter(object sender, DragEventArgs e)
+    {
+      MainForm_DragEnter(sender, e);
+    }
+
+    private void gridRight_DragDrop(object sender, DragEventArgs e)
+    {
+      MainForm_DragDrop(sender, e);
+    }
     #endregion
 
     #region gviewRight_FocusedRowChanged
@@ -2550,6 +2606,7 @@ namespace ChanSort.Ui
       Settings.Default.CloseGaps = this.cbCloseGap.Checked;
       for (var i = 0; i < this.mruFiles.Count; i++)
         Settings.Default.GetType().GetProperty("MruFile" + i).SetValue(Settings.Default, this.mruFiles[i], null);
+      Settings.Default.ExplorerIntegration = this.miExplorerIntegration.Down;
 
       Settings.Default.Save();
     }
@@ -2889,6 +2946,39 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region miExplorerIntegration_ItemClick
+    private void miExplorerIntegration_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      try
+      {
+        // get all file extensions from loader plugins
+        var ext = new HashSet<string>();
+        foreach (var loader in this.Plugins)
+        {
+          var filters = loader.FileFilter.Split(';');
+          foreach (var filter in filters)
+          {
+            int i = filter.LastIndexOf('.');
+            if (i >= 0 && i < filter.Length - 1)
+              ext.Add(filter.Substring(i).ToLowerInvariant());
+          }
+        }
+
+        if (this.miExplorerIntegration.Down)
+          FileAssociations.CreateMissingAssociations(ext);
+        else
+          FileAssociations.DeleteAssociations(ext);
+
+        this.SaveSettings();
+      }
+      catch (Exception ex)
+      {
+        HandleException(ex);
+      }
+    }
+    #endregion
+
+
     #region gview_MouseDown, gview_MouseUp, timerEditDelay_Tick, gview_ShowingEditor
 
     // these 4 event handler in combination override the default row-selection and editor-opening 
@@ -3079,6 +3169,5 @@ namespace ChanSort.Ui
     }
 
     #endregion
-
   }
 }

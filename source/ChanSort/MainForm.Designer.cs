@@ -205,6 +205,7 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
+      this.miExplorerIntegration = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -216,7 +217,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).BeginInit();
       this.pnlEditControls.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).BeginInit();
       this.grpInputList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridRight)).BeginInit();
@@ -454,10 +454,6 @@
       this.btnToggleLock.Name = "btnToggleLock";
       this.btnToggleLock.Click += new System.EventHandler(this.btnToggleLock_Click);
       // 
-      // globalImageCollection1
-      // 
-      this.globalImageCollection1.ParentControl = this;
-      // 
       // btnToggleFavE
       // 
       resources.ApplyResources(this.btnToggleFavE, "btnToggleFavE");
@@ -557,6 +553,8 @@
       this.gridRight.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gviewRight});
       this.gridRight.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridRight_ProcessGridKey);
+      this.gridRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.gridRight_DragDrop);
+      this.gridRight.DragEnter += new System.Windows.Forms.DragEventHandler(this.gridRight_DragEnter);
       this.gridRight.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.grid_GiveFeedback);
       // 
       // gviewRight
@@ -1025,9 +1023,10 @@
             this.miRussian,
             this.miAllowEditPredefinedLists,
             this.miCzech,
-            this.miRomanian});
+            this.miRomanian,
+            this.miExplorerIntegration});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 97;
+      this.barManager1.MaxItemId = 98;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1516,7 +1515,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barSubItem1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuCharset, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.miShowWarningsAfterLoad),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miAllowEditPredefinedLists)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miAllowEditPredefinedLists),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miExplorerIntegration)});
       this.mnuOptions.Name = "mnuOptions";
       // 
       // barSubItem1
@@ -2044,8 +2044,17 @@
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
       // 
+      // miExplorerIntegration
+      // 
+      this.miExplorerIntegration.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miExplorerIntegration, "miExplorerIntegration");
+      this.miExplorerIntegration.Id = 97;
+      this.miExplorerIntegration.Name = "miExplorerIntegration";
+      this.miExplorerIntegration.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miExplorerIntegration_ItemClick);
+      // 
       // MainForm
       // 
+      this.AllowDrop = true;
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.splitContainerControl1);
@@ -2058,6 +2067,8 @@
       this.Name = "MainForm";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
       this.Load += new System.EventHandler(this.MainForm_Load);
+      this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
+      this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
       this.splitContainerControl1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).EndInit();
@@ -2070,7 +2081,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).EndInit();
       this.pnlEditControls.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).EndInit();
       this.grpInputList.ResumeLayout(false);
       this.grpInputList.PerformLayout();
@@ -2281,6 +2291,7 @@
     private DevExpress.XtraBars.BarButtonItem miCzech;
     private DevExpress.XtraBars.BarButtonItem miRomanian;
     private DevExpress.XtraGrid.Columns.GridColumn colPcrPid;
+    private DevExpress.XtraBars.BarButtonItem miExplorerIntegration;
   }
 }
 
