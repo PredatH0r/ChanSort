@@ -332,6 +332,8 @@ namespace ChanSort.Loader.Hisense
 
           if ((ci.SignalSource & SignalSource.DvbT) == SignalSource.DvbT)
             ci.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(ci.FreqInMhz).ToString();
+          else if ((ci.SignalSource & SignalSource.DvbC) == SignalSource.DvbC)
+            ci.ChannelOrTransponder = LookupData.Instance.GetDvbcTransponder(ci.FreqInMhz).ToString();
 
 #if LOCK_LCN_LISTS
           // make the current list read-only if LCN is used

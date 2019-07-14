@@ -204,7 +204,7 @@ namespace ChanSort.Api
     #endregion   
 
     #region GetDvbtFrequency()
-    public decimal GetDvbtFrequeny(int channelTransponder)
+    public decimal GetDvbtFrequency(int channelTransponder)
     {
       return channelTransponder * 8 + 306;
     }
@@ -212,12 +212,17 @@ namespace ChanSort.Api
 
     public int GetDvbcTransponder(decimal freqInMhz)
     {
-      return GetDvbtTransponder(freqInMhz) + 25; // Samsung handles it like this
+      return (int)(freqInMhz - 106) / 8;
+    }
+
+    public decimal GetDvbcFrequency(int channelTransponder)
+    {
+      return channelTransponder * 8 + 106;
     }
 
     public string GetDvbcChannelName(decimal freqInMhz)
     {
-      return dvbcChannels.TryGet((int)(freqInMhz * 1000)) ?? "";      
+      return dvbcChannels.TryGet((int)(freqInMhz * 1000)) ?? dvbcChannels.TryGet((int)((freqInMhz-1) * 1000)) ?? "";      
     }
   }
 }

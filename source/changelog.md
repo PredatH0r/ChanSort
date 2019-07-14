@@ -1,5 +1,10 @@
 ChanSort Change Log 
 ===================
+
+2019-07-xx
+- added partial support for Sony sdb.xml channel list format (DVB-S only)
+- added option to disable check for program updates
+
 2019-07-14
 - added support for Silva-Schneider .sdx channel lists
 

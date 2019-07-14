@@ -21,7 +21,12 @@ namespace ChanSort.Loader.Samsung
       int transp = data.GetByte(_ChannelOrTransponder);
       decimal freq = transpFreq.TryGet(transp);
       if (freq == 0)
-        freq = LookupData.Instance.GetDvbtFrequeny(transp); // transp*8 + 106); // (106 = DVB-C; DVB-T=306?)
+      {
+        if ((this.SignalSource & SignalSource.Antenna) != 0)
+          freq = transp * 8 + 306;
+        else if ((this.SignalSource & SignalSource.Cable) != 0)
+          freq = transp * 8 + 106;
+      }
 
       this.ChannelOrTransponder = transp.ToString();
       this.FreqInMhz = freq;

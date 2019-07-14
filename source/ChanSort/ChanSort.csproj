@@ -396,6 +396,10 @@
       <Project>{e6279ff8-362a-41e6-ac0d-d0861d43f01c}</Project>
       <Name>ChanSort.Loader.SilvaSchneider</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj">
+      <Project>{70e29c6b-b926-4859-9548-23375bf1e1b5}</Project>
+      <Name>ChanSort.Loader.Sony</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Toshiba\ChanSort.Loader.Toshiba.csproj">
       <Project>{f6f02792-07f1-48d5-9af3-f945ca5e3931}</Project>
       <Name>ChanSort.Loader.Toshiba</Name>

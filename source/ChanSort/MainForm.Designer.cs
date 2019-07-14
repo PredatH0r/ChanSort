@@ -206,6 +206,7 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
+      this.miCheckUpdates = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -1024,9 +1025,10 @@
             this.miAllowEditPredefinedLists,
             this.miCzech,
             this.miRomanian,
-            this.miExplorerIntegration});
+            this.miExplorerIntegration,
+            this.miCheckUpdates});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 98;
+      this.barManager1.MaxItemId = 99;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1516,7 +1518,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuCharset, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.miShowWarningsAfterLoad),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAllowEditPredefinedLists),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miExplorerIntegration)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miExplorerIntegration),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miCheckUpdates)});
       this.mnuOptions.Name = "mnuOptions";
       // 
       // barSubItem1
@@ -2052,6 +2055,14 @@
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
       // 
+      // miCheckUpdates
+      // 
+      this.miCheckUpdates.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miCheckUpdates, "miCheckUpdates");
+      this.miCheckUpdates.Id = 98;
+      this.miCheckUpdates.Name = "miCheckUpdates";
+      this.miCheckUpdates.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCheckUpdates_ItemClick);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -2292,6 +2303,7 @@
     private DevExpress.XtraBars.BarButtonItem miRomanian;
     private DevExpress.XtraGrid.Columns.GridColumn colPcrPid;
     private DevExpress.XtraBars.BarButtonItem miExplorerIntegration;
+    private DevExpress.XtraBars.BarButtonItem miCheckUpdates;
   }
 }
 

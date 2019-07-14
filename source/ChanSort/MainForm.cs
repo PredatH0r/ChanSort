@@ -152,7 +152,8 @@ namespace ChanSort.Ui
         }
       }
 
-      this.BeginInvoke((Action) UpdateCheck.CheckForNewVersion);
+      if (Settings.Default.CheckForUpdates)
+        this.BeginInvoke((Action) UpdateCheck.CheckForNewVersion);
     }
 
     #endregion
@@ -1266,6 +1267,7 @@ namespace ChanSort.Ui
       this.UpdateMruMenu();
 
       this.miExplorerIntegration.Down = Settings.Default.ExplorerIntegration;
+      this.miCheckUpdates.Down = Settings.Default.CheckForUpdates;
     }
 
     #endregion
@@ -2607,6 +2609,7 @@ namespace ChanSort.Ui
       for (var i = 0; i < this.mruFiles.Count; i++)
         Settings.Default.GetType().GetProperty("MruFile" + i).SetValue(Settings.Default, this.mruFiles[i], null);
       Settings.Default.ExplorerIntegration = this.miExplorerIntegration.Down;
+      Settings.Default.CheckForUpdates = this.miCheckUpdates.Down;
 
       Settings.Default.Save();
     }
@@ -2951,6 +2954,9 @@ namespace ChanSort.Ui
     {
       try
       {
+        if (this.miExplorerIntegration.Down == Settings.Default.ExplorerIntegration)
+          return;
+
         // get all file extensions from loader plugins
         var ext = new HashSet<string>();
         foreach (var loader in this.Plugins)
@@ -2978,6 +2984,24 @@ namespace ChanSort.Ui
     }
     #endregion
 
+    #region miCheckUpdates_ItemClick
+    private void miCheckUpdates_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      try
+      {
+        if (this.miCheckUpdates.Down == Settings.Default.CheckForUpdates)
+          return;
+
+        if (this.miCheckUpdates.Down)
+          UpdateCheck.CheckForNewVersion();
+        this.SaveSettings();
+      }
+      catch (Exception ex)
+      {
+        HandleException(ex);
+      }
+    }
+    #endregion
 
     #region gview_MouseDown, gview_MouseUp, timerEditDelay_Tick, gview_ShowingEditor
 

@@ -628,4 +628,10 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   <data name="colSource.Caption" xml:space="preserve">
     <value>Quelle</value>
   </data>
+  <data name="miExplorerIntegration.Caption" xml:space="preserve">
+    <value>Windows Explorer Integration</value>
+  </data>
+  <data name="miCheckUpdates.Caption" xml:space="preserve">
+    <value>Nach Programmupdates suchen</value>
+  </data>
 </root>

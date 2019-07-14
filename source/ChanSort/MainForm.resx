@@ -666,7 +666,10 @@
     <value>37</value>
   </data>
   <data name="miExplorerIntegration.Caption" xml:space="preserve">
-    <value>Windows Explorer Integration (handle file extensions)</value>
+    <value>Windows Explorer Integration</value>
+  </data>
+  <data name="miCheckUpdates.Caption" xml:space="preserve">
+    <value>Check for updates</value>
   </data>
   <data name="mnuAccessibility.Caption" xml:space="preserve">
     <value>&amp;Accessibility</value>
@@ -1252,7 +1255,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7133.39305, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7134.23381, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1968,6 +1971,12 @@
   <data name="&gt;&gt;popupFavList.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.PopupMenu, DevExpress.XtraBars.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miCheckUpdates.Name" xml:space="preserve">
+    <value>miCheckUpdates</value>
+  </data>
+  <data name="&gt;&gt;miCheckUpdates.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
@@ -1975,7 +1984,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>07/13/2019 21:51:28</value>
+    <value>07/14/2019 13:16:32</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
