@@ -1,22 +1,18 @@
-﻿using System.Xml;
+﻿using System.Collections.Generic;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Sony
 {
   internal class Channel : ChannelInfo
   {
-    internal int Index;
-    internal XmlNode XmlNode;
-    internal bool IsDisabled;
+    public readonly Dictionary<string,string> ServiceData = new Dictionary<string, string>();
+    public readonly Dictionary<string,string> ProgrammeData = new Dictionary<string, string>();
 
-    #region ctor()
-    internal Channel(SignalSource source, int index, XmlNode node)
+    internal Channel(SignalSource source, int order, int rowId)
     {
       this.SignalSource = source;
-      this.Index = index;
-      this.XmlNode = node;
+      this.RecordOrder = order;
+      this.RecordIndex = rowId;
     }
-    #endregion
-
   }
 }

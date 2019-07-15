@@ -69,7 +69,7 @@ namespace ChanSort.Api
     }
 
     /// <summary>
-    /// Constructor for exiting TV channel
+    /// Constructor for existing TV channel
     /// </summary>
     public ChannelInfo(SignalSource source, long index, int oldProgNr, string name) : this()
     {

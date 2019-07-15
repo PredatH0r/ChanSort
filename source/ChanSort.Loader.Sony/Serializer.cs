@@ -1,7 +1,10 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -30,6 +33,9 @@ namespace ChanSort.Loader.Sony
     private byte[] content;
     private string textContent;
     private string format;
+    private string newline;
+
+    private readonly Dictionary<ChannelList, ChannelListNodes> channeListNodes = new Dictionary<ChannelList, ChannelListNodes>();
 
     #region Crc32Table
     private static readonly uint[] Crc32Table =
@@ -94,10 +100,7 @@ namespace ChanSort.Loader.Sony
         this.doc = new XmlDocument();
         this.content = File.ReadAllBytes(this.FileName);
         this.textContent = Encoding.UTF8.GetString(this.content);
-
-        //var tc2 = ReplaceInvalidXmlCharacters(textContent);
-        //if (tc2 != this.textContent)
-        //  this.textContent = tc2;
+        this.newline = this.textContent.Contains("\r\n") ? "\r\n" : "\n";
 
         var settings = new XmlReaderSettings
         {
@@ -177,6 +180,7 @@ namespace ChanSort.Loader.Sony
     private void ReadSdb(XmlNode node, ChannelList list, int idAdjustment, string dvbSystem)
     {
       list.ReadOnly = node["Editable"].InnerText != "T";
+      this.channeListNodes[list] = new ChannelListNodes(); ;
 
       this.ReadSatellites(node, idAdjustment);
       this.ReadTransponder(node, idAdjustment, dvbSystem);
@@ -256,8 +260,9 @@ namespace ChanSort.Loader.Sony
 
       for (int i = 0, c = svcData["ui2_svl_rec_id"].Length; i < c; i++)
       {
-        var chan = new Channel(SignalSource.DvbS, i, serviceNode.ChildNodes[i]);
-        chan.OldProgramNr = int.Parse(svcData["ui2_svl_rec_id"][i]);
+        var recId = int.Parse(svcData["ui2_svl_rec_id"][i]);
+        var chan = new Channel(list.SignalSource, i, recId);
+        chan.OldProgramNr = recId;
         chan.IsDeleted = svcData["b_deleted_by_user"][i] != "1";
         var nwMask = int.Parse(svcData["ui4_nw_mask"][i]);
         chan.Hidden = (nwMask & 8) == 0;
@@ -304,11 +309,20 @@ namespace ChanSort.Loader.Sony
       var progNode = node["Programme"] ?? throw new FileLoadException("Missing Programme XML element");
       var progData = SplitLines(progNode);
 
+      // remember the nodes that need to be updated when saving
+      var nodes = this.channeListNodes[list];
+      nodes.Service = node["Service"];
+      nodes.Service_Name = node["Service"]["Name"];
+      nodes.Programme = node["Programme"];
+      nodes.Programme_No = node["Programme"]["No"];
+      nodes.Programme_ServiceRowId = node["Programme"]["ServiceRowId"];
+      nodes.Programme_Flag = node["Programme"]["Flag"];
+
       var map = new Dictionary<int, Channel>();
       for (int i = 0, c = svcData["ServiceRowId"].Length; i < c; i++)
       {
         var rowId = int.Parse(svcData["ServiceRowId"][i]);
-        var chan = new Channel(SignalSource.DvbS, rowId, serviceNode.ChildNodes[i]);
+        var chan = new Channel(list.SignalSource, i, rowId);
         map[rowId] = chan;
         chan.OldProgramNr = -1;
         chan.IsDeleted = true;
@@ -335,6 +349,10 @@ namespace ChanSort.Loader.Sony
         var att = this.ParseInt(svcData["Attribute"][i]);
         chan.Encrypted = (att & 8) != 0;
         this.DataRoot.AddChannel(list, chan);
+
+        // keep a copy of all data values (including unknowns) so they can be saved again correctly
+        foreach (XmlNode child in serviceNode.ChildNodes)
+          chan.ServiceData[child.LocalName] = svcData[child.LocalName][i];
       }
 
       for (int i = 0, c = progData["ServiceRowId"].Length; i < c; i++)
@@ -347,6 +365,10 @@ namespace ChanSort.Loader.Sony
         chan.OldProgramNr = int.Parse(progData["No"][i]);
         var flag = int.Parse(progData["Flag"][i]);
         chan.Favorites = (Favorites)(flag & 0x0F);
+
+        // keep a copy of all data values (including unknowns) so they can be saved again correctly
+        foreach (XmlNode child in progNode.ChildNodes)
+          chan.ProgrammeData[child.LocalName] = progData[child.LocalName][i];
       }
     }
     #endregion
@@ -391,16 +413,11 @@ namespace ChanSort.Loader.Sony
       {
         start = this.textContent.IndexOf("<SdbXml>");
         end = this.textContent.IndexOf("</SdbXml>") + 9;
-        // the TV calculates the checksum and then does some XML manipulation afterwards. So we have to undo the manipulations first
+        // the TV calculates the checksum with just LF as newline character, so we need to replace CRLF first
         var text = this.textContent.Substring(start, end - start);
-        text = text.Replace("\r\n", "\n");
-        text = text.Replace(" />", "/>");
-        text = text.Replace("&lt;", "&#60;");
-        text = text.Replace("&gt;", "&#62;");
-        text = text.Replace("&quot;", "&#34;");
-        text = text.Replace("&amp;", "&#38;");
-        text = text.Replace("&apos;", "&#39;");
-        text = text.Replace("'", "&#39;");
+        if (this.newline == "\r\n")
+          text = text.Replace("\r\n", "\n");
+
         data = Encoding.UTF8.GetBytes(text);
         start = 0;
         end = data.Length;
@@ -465,152 +482,144 @@ namespace ChanSort.Loader.Sony
     #region Save()
     public override void Save(string tvOutputFile)
     {
-      throw new NotImplementedException("Sorry, but Sony lists are currently read-only. Support for writing is coming soon.");
       foreach (var list in this.DataRoot.ChannelLists)
+        this.UpdateChannelList(list);
+
+
+      bool isEFormat = this.format.StartsWith("e");
+
+      // by default .NET reformats the whole XML. These settings produce almost same format as the TV xml files use
+      var xmlSettings = new XmlWriterSettings();
+      xmlSettings.Encoding = this.DefaultEncoding;
+      xmlSettings.CheckCharacters = false;
+      xmlSettings.Indent = true;
+      xmlSettings.IndentChars = "";
+      xmlSettings.NewLineHandling = NewLineHandling.None;
+      xmlSettings.NewLineChars = this.newline;
+      xmlSettings.OmitXmlDeclaration = false;
+
+      string xml;
+      using (var sw = new StringWriter())
+      using (var w = new CustomXmlWriter(sw, xmlSettings, isEFormat))
       {
-        
-        foreach (var channel in list.Channels)
+        this.doc.WriteTo(w);
+        w.Flush();
+        xml = sw.ToString();
+      }
+
+      // elements with a 'loop="0"' attribute must contain a newline instead of <...></...> (or <../>)
+      var emptyTagsWithNewline = new[] { "loop=\"0\">", "loop=\"0\" notation=\"DEC\">", "loop=\"0\" notation=\"HEX\">" };
+      foreach (var tag in emptyTagsWithNewline)
+        xml = xml.Replace(tag + "</", tag + this.newline + "</");
+
+      if (isEFormat)
+        xml = xml.Replace(" />", "/>");
+
+      xml += this.newline;
+
+      // TODO update checksum
+
+      var enc = new UTF8Encoding(false, false);
+      File.WriteAllText(tvOutputFile, xml, enc);
+    }
+    #endregion
+
+    private void UpdateChannelList(ChannelList list)
+    {
+      var nodes = this.channeListNodes.TryGet(list);
+      if (nodes == null) // this list wasn't present in the file
+        return;
+
+      var sbNames = new StringBuilder(this.newline);
+      var sbRecordIds = new StringBuilder(this.newline);
+      var sbNumbers = new StringBuilder(this.newline);
+      var sbFlags = new StringBuilder(this.newline);
+
+      var nameModified = false;
+
+      var count = 0;
+      var sbDict = new Dictionary<string,StringBuilder>();
+      foreach(XmlNode node in nodes.Service.ChildNodes)
+        sbDict[node.LocalName] = new StringBuilder(this.newline);
+      foreach (var channel in list.Channels.OrderBy(c => c.RecordOrder))
+      {
+        var ch = channel as Channel;
+        if (ch == null)
+          continue; // ignore proxy channels from reference lists
+        foreach (var field in ch.ServiceData)
         {
-          var ch = channel as Channel;
-          if (ch == null) continue; // ignore proxy channels from reference lists
-          var nameBytes = Encoding.UTF8.GetBytes(ch.Name);
-          bool nameNeedsEncoding = nameBytes.Length != ch.Name.Length;
-          string mapType = "";
-          
-          foreach (XmlNode node in ch.XmlNode.ChildNodes)
+          var sb = sbDict[field.Key];
+          var value = field.Value;
+          if (field.Key == "Name")
           {
-            switch (node.LocalName)
-            {
-              case "prNum":
-                var nr = ch.NewProgramNr;
-                if ((ch.SignalSource & SignalSource.Radio) != 0)
-                  nr |= 0x4000;
-                node.InnerText = nr.ToString();
-                break;
-              case "hexVchName":
-                if (channel.IsNameModified)
-                  node.InnerText = (nameNeedsEncoding ? "15" : "") + Tools.HexEncode(nameBytes); // 0x15 = DVB encoding indicator for UTF-8
-                break;
-              case "notConvertedLengthOfVchName":
-                if (channel.IsNameModified)
-                  node.InnerText = ((nameNeedsEncoding ? 1 : 0) + ch.Name.Length).ToString();
-                break;
-              case "vchName":
-                if (channel.IsNameModified)
-                  node.InnerText = nameNeedsEncoding ? " " : ch.Name;
-                if (node.InnerText == "") // XmlTextReader removed the required space from empty channel names
-                  node.InnerText = " ";
-                break;
-              case "isInvisable":
-                node.InnerText = ch.Hidden ? "1" : "0";
-                break;
-              case "isBlocked":
-                node.InnerText = ch.Lock ? "1" : "0";
-                break;
-              case "isSkipped":
-                node.InnerText = ch.Skip ? "1" : "0";
-                break;
-              case "isNumUnSel":
-                // ?
-                break;
-              case "isDisabled":
-                node.InnerText = ch.IsDeleted || ch.IsDisabled ? "1" : "0";
-                break;
-              case "isDeleted":
-                node.InnerText = ch.IsDeleted ? "1" : "0";
-                break;
-              case "isUserSelCHNo":
-                if (ch.NewProgramNr != ch.OldProgramNr)
-                  node.InnerText = "1";
-                break;
-              case "mapType":
-                mapType = node.InnerText;
-                break;
-              case "mapAttr":
-                if (mapType == "1")
-                  node.InnerText = ((int) ch.Favorites).ToString();
-                break;
-            }
+            nameModified |= channel.IsNameModified;
+            value = channel.Name;
           }
+          sb.Append(value).Append(this.newline);
         }
+        ++count;
+      }
+      foreach (XmlNode node in nodes.Service.ChildNodes)
+      {
+        node.InnerText = sbDict[node.LocalName].ToString();
+        node.Attributes["loop"].InnerText = count.ToString();
       }
 
-      // by default .NET reformats the whole XML. These settings produce the same format as the TV xml files use
-      var settings = new XmlWriterSettings();
-      settings.Encoding = new UTF8Encoding(false);
-      settings.Indent = true;
-      settings.NewLineChars = "\r\n";
-      settings.NewLineHandling = NewLineHandling.Replace;
-      settings.OmitXmlDeclaration = true;
-      settings.IndentChars = "";
-      settings.CheckCharacters = false;
-      using (StringWriter sw = new StringWriter())
-      using (XmlWriter xw = XmlWriter.Create(sw, settings))
+
+      count = 0;
+      sbDict = new Dictionary<string, StringBuilder>();
+      foreach (XmlNode node in nodes.Programme.ChildNodes)
+        sbDict[node.LocalName] = new StringBuilder(this.newline);
+      foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr))
       {
-        doc.Save(xw);
-        xw.Flush();
-        string xml = RestoreInvalidXmlCharacters(sw.ToString());
-        xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n" + xml;
-        xml = xml.Replace("<ATV></ATV>\r\n", "<ATV>\r\n</ATV>\r\n");
-        xml = xml.Replace("<DTV></DTV>\r\n", "<DTV>\r\n</DTV>\r\n");
-        if (!xml.EndsWith("\r\n"))
-          xml += "\r\n";
-        File.WriteAllText(tvOutputFile, xml, settings.Encoding);
-      }
-    }
-    #endregion
+        var ch = channel as Channel;
+        if (ch == null)
+          continue; // ignore proxy channels from reference lists
+        if (ch.IsDeleted || ch.NewProgramNr < 0)
+          continue;
 
-
-
-    #region ReplaceInvalidXmlCharacters()
-    private string ReplaceInvalidXmlCharacters(string input)
-    {
-      StringBuilder output = new StringBuilder();
-      foreach (var c in input)
-      {
-        if (c >= ' ' || c == '\r' || c == '\n' || c == '\t')
-          output.Append(c);
-        else
-          output.AppendFormat("&#x{0:d}{1:d};", c >> 4, c & 0x0F);
-      }
-      return output.ToString();
-    }
-    #endregion
-
-    #region RestoreInvalidXmlCharacters()
-    private string RestoreInvalidXmlCharacters(string input)
-    {
-      StringBuilder output = new StringBuilder();
-      int prevIdx = 0;
-      while(true)
-      {
-        int nextIdx = input.IndexOf("&#", prevIdx);
-        if (nextIdx < 0)
-          break;
-        output.Append(input, prevIdx, nextIdx - prevIdx);
-
-        int numBase = 10;
-        char inChar;
-        int outChar = 0;
-        for (nextIdx += 2; (inChar=input[nextIdx]) != ';'; nextIdx++)
+        foreach (var field in ch.ProgrammeData)
         {
-          if (inChar == 'x' || inChar == 'X')
-            numBase = 16;
-          else
-            outChar = outChar*numBase + HexNibble(inChar);
+          var sb = sbDict[field.Key];
+          var value = field.Value;
+          if (field.Key == "No")
+            value = ch.NewProgramNr.ToString();
+          else if (field.Key == "Flag")
+            value = ((int) channel.Favorites & 0x0F).ToString();
+          sb.Append(value).AppendLine(this.newline);
         }
-        var binChar = (char)outChar;
-        output.Append(binChar);
-        prevIdx = nextIdx + 1;
+        ++count;
       }
-      output.Append(input, prevIdx, input.Length - prevIdx);
-      return output.ToString();
-    }
+      foreach (XmlNode node in nodes.Programme.ChildNodes)
+      {
+        node.InnerText = sbDict[node.LocalName].ToString();
+        node.Attributes["loop"].InnerText = count.ToString();
+      }
 
-    private int HexNibble(char hexDigit)
-    {
-      return hexDigit >= '0' && hexDigit <= '9' ? hexDigit - '0' : (Char.ToUpper(hexDigit) - 'A') + 10;
+
+      //foreach (XmlNode node in nodes.Programme.ChildNodes)
+      //{
+      //  if (node.Attributes?["loop"] != null)
+      //    node.Attributes["loop"].InnerText = count.ToString();
+      //}
+
+      //if (nameModified)
+      //  nodes.Service_Name.InnerText = sbNames.ToString();
+
+      //nodes.Programme_No.InnerText = sbNumbers.ToString();
+      //nodes.Programme_ServiceRowId.InnerText = sbRecordIds.ToString();
+      //nodes.Programme_Flag.InnerText = sbFlags.ToString();
     }
-    #endregion
+  }
+
+  class ChannelListNodes
+  {
+    public XmlNode Service;
+    public XmlNode Service_Name;
+
+    public XmlNode Programme;
+    public XmlNode Programme_ServiceRowId;
+    public XmlNode Programme_No;
+    public XmlNode Programme_Flag;
   }
 }

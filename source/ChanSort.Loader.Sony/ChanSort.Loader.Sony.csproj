@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Channel.cs" />
+    <Compile Include="CustomXmlWriter.cs" />
     <Compile Include="Serializer.cs" />
     <Compile Include="SerializerPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
