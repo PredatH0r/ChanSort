@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -12,11 +11,24 @@ namespace ChanSort.Loader.Sony
 {
   class Serializer : SerializerBase
   {
-    private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "Sat");
+    /*
+     * At the time of this writing, there seem to be 4 different versions of this format.
+     * One defines an element with a typo: <FormateVer>1.1.0</FormateVer>, which has different XML elements and checksum calculation than all other versions.
+     * This format is identified as "e1.1.0" here, with the leading "e".
+     * The other formats define <FormatVer>...</FormatVer> with versions 1.0.0, 1.1.0 and 1.2.0, which are otherwise identical.
+     *
+     * NOTE: Even within the same version, there are some files using CRLF and some using LF for newlines.
+     */
+
+    private readonly ChannelList terrChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-T");
+    private readonly ChannelList cableChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
+    private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
+    private readonly ChannelList satChannelsP = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S Preset");
+    private readonly ChannelList satChannelsCi = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S Ci");
+
     private XmlDocument doc;
     private byte[] content;
     private string textContent;
-    private XmlNode sdbXml;
     private string format;
 
     #region Crc32Table
@@ -48,14 +60,21 @@ namespace ChanSort.Loader.Sony
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanDeleteChannels = true;
 
-      satChannels.VisibleColumnFieldNames.Remove("PcrPid");
-      satChannels.VisibleColumnFieldNames.Remove("VideoPid");
-      satChannels.VisibleColumnFieldNames.Remove("AudioPid");
-      satChannels.VisibleColumnFieldNames.Remove("Lock");
-      satChannels.VisibleColumnFieldNames.Remove("Skip");
-      satChannels.VisibleColumnFieldNames.Remove("Provider");
-
+      this.DataRoot.AddChannelList(this.terrChannels);
+      this.DataRoot.AddChannelList(this.cableChannels);
       this.DataRoot.AddChannelList(this.satChannels);
+      this.DataRoot.AddChannelList(this.satChannelsP);
+
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        list.VisibleColumnFieldNames.Remove("PcrPid");
+        list.VisibleColumnFieldNames.Remove("VideoPid");
+        list.VisibleColumnFieldNames.Remove("AudioPid");
+        list.VisibleColumnFieldNames.Remove("Lock");
+        list.VisibleColumnFieldNames.Remove("Skip");
+        list.VisibleColumnFieldNames.Remove("ShortName");
+        list.VisibleColumnFieldNames.Remove("Provider");
+      }
     }
     #endregion
 
@@ -75,9 +94,11 @@ namespace ChanSort.Loader.Sony
         this.doc = new XmlDocument();
         this.content = File.ReadAllBytes(this.FileName);
         this.textContent = Encoding.UTF8.GetString(this.content);
-        var tc2 = ReplaceInvalidXmlCharacters(textContent);
-        if (tc2 != this.textContent)
-          this.textContent = tc2;
+
+        //var tc2 = ReplaceInvalidXmlCharacters(textContent);
+        //if (tc2 != this.textContent)
+        //  this.textContent = tc2;
+
         var settings = new XmlReaderSettings
         {
           CheckCharacters = false,
@@ -114,8 +135,7 @@ namespace ChanSort.Loader.Sony
         }
       }
 
-      this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      if (this.format != "1.1.0e")
+      if (this.format.StartsWith("e"))
       {
         satChannels.VisibleColumnFieldNames.Remove("Hidden");
         satChannels.VisibleColumnFieldNames.Remove("Satellite");
@@ -126,43 +146,50 @@ namespace ChanSort.Loader.Sony
     #region ReadSdbXml()
     private void ReadSdbXml(XmlNode node)
     {
-      this.sdbXml = node;
-
-      this.format = null;
+      this.format = "";
       var formatNode = node["FormatVer"];
       if (formatNode != null)
         this.format = formatNode.InnerText;
       else if ((formatNode = node["FormateVer"]) != null)
-        this.format = formatNode.InnerText + "e";
+        this.format = "e" + formatNode.InnerText;
 
-      if (" 1.0.0 1.1.0e 1.1.0 1.2.0 ".IndexOf(" " + this.format + " ") < 0)
+      if (" e1.1.0 1.0.0 1.1.0 1.2.0 ".IndexOf(" " + this.format + " ") < 0)
         throw new FileLoadException("Unsupported file format version: " + this.format);
 
       foreach(XmlNode child in node.ChildNodes)
       {
         var name = child.LocalName.ToLowerInvariant();
-        if (name == "sdbgs")
-          ReadSdb(child);
+        if (name == "sdbt")
+          ReadSdb(child, this.terrChannels, 0, "DvbT");
+        else if (name == "sdbc")
+          ReadSdb(child, this.cableChannels, 0x10000, "DvbC");
+        else if (name == "sdbgs")
+          ReadSdb(child, this.satChannels, 0x20000, "DvbS");
+        else if (name == "sdbps")
+          ReadSdb(child, this.satChannelsP, 0x30000, "DvbS");
+        else if (name == "sdbcis")
+          ReadSdb(child, this.satChannelsCi, 0x40000, "DvbS");
       }
     }
     #endregion
 
-    #region ReadSdb
-    private void ReadSdb(XmlNode node)
+    #region ReadSdb()
+    private void ReadSdb(XmlNode node, ChannelList list, int idAdjustment, string dvbSystem)
     {
-      this.satChannels.ReadOnly = node["Editable"].InnerText != "T";
+      list.ReadOnly = node["Editable"].InnerText != "T";
 
-      this.ReadSatellites(node);
-      this.ReadTransponder(node);
-      if (this.format == "1.1.0e")
-        this.ReadServices110e(node);
+      this.ReadSatellites(node, idAdjustment);
+      this.ReadTransponder(node, idAdjustment, dvbSystem);
+
+      if (this.format.StartsWith("e"))
+        this.ReadServicesE110(node, list, idAdjustment);
       else
-        this.ReadServices(node);
+        this.ReadServices(node, list, idAdjustment);
     }
     #endregion
 
-    #region ReadSatellites
-    private void ReadSatellites(XmlNode node)
+    #region ReadSatellites()
+    private void ReadSatellites(XmlNode node, int satIdAdjustment)
     {
       var satlRec = node["SATL_REC"];
       if (satlRec == null)
@@ -171,7 +198,7 @@ namespace ChanSort.Loader.Sony
       var ids = data["ui2_satl_rec_id"];
       for (int i = 0, c = ids.Length; i < c; i++)
       {
-        var sat = new Satellite(int.Parse(ids[i]));
+        var sat = new Satellite(int.Parse(ids[i]) + satIdAdjustment);
         sat.Name = data["ac_sat_name"][i];
         var pos = int.Parse(data["i2_orb_pos"][i]);
         sat.OrbitalPosition = Math.Abs((decimal) pos / 10) + (pos < 0 ? "W" : "E");
@@ -180,23 +207,24 @@ namespace ChanSort.Loader.Sony
     }
     #endregion
 
-    #region ReadTransponder
-    private void ReadTransponder(XmlNode node)
+    #region ReadTransponder()
+    private void ReadTransponder(XmlNode node, int idAdjustment, string dvbSystem)
     {
       var mux = node["Multiplex"] ?? throw new FileLoadException("Missing Multiplex XML element");
 
       var muxData = SplitLines(mux);
-      var muxIds = this.format == "1.1.0e" ? muxData["MuxID"] : muxData["MuxRowId"];
-      var rfParmData = this.format != "1.1.0e" ? SplitLines(mux["RfParam"]) : null;
-      var dvbsData = rfParmData != null ? SplitLines(mux["RfParam"]["DvbS"]) : null;
-
+      var isEFormat = this.format.StartsWith("e");
+      var muxIds = isEFormat ? muxData["MuxID"] : muxData["MuxRowId"];
+      var rfParmData = isEFormat ? null : SplitLines(mux["RfParam"]);
+      var dvbsData = isEFormat ? null : SplitLines(mux["RfParam"][dvbSystem]);
+      var polarity = dvbsData?.ContainsKey("Pola") ?? false ? dvbsData["Pola"] : null;
       for (int i = 0, c = muxIds.Length; i < c; i++)
       {
         Satellite sat = null;
-        var transp = new Transponder(int.Parse(muxIds[i]));
-        if (this.format == "1.1.0e")
+        var transp = new Transponder(int.Parse(muxIds[i]) + idAdjustment);
+        if (isEFormat)
         {
-          var satId = int.Parse(muxData["ui2_satl_rec_id"][i]);
+          var satId = int.Parse(muxData["ui2_satl_rec_id"][i]) + idAdjustment;
           transp.FrequencyInMhz = int.Parse(muxData["SysFreq"][i]);
           transp.SymbolRate = int.Parse(muxData["ui4_sym_rate"][i]);
           transp.Polarity = muxData["e_pol"][i] == "1" ? 'H' : 'V';
@@ -204,10 +232,10 @@ namespace ChanSort.Loader.Sony
         }
         else
         {
-          transp.OriginalNetworkId = intParse(muxData["Onid"][i]);
-          transp.TransportStreamId = intParse(muxData["Tsid"][i]);
+          transp.OriginalNetworkId = this.ParseInt(muxData["Onid"][i]);
+          transp.TransportStreamId = this.ParseInt(muxData["Tsid"][i]);
           transp.FrequencyInMhz = int.Parse(rfParmData["Freq"][i]) / 1000;
-          transp.Polarity = dvbsData["Pola"][i] == "H_L" ? 'H' : 'V';
+          transp.Polarity = polarity == null ? ' ' : polarity[i] == "H_L" ? 'H' : 'V';
           transp.SymbolRate = int.Parse(dvbsData["SymbolRate"][i]) / 1000;
         }
 
@@ -216,8 +244,8 @@ namespace ChanSort.Loader.Sony
     }
     #endregion
 
-    #region ReadServices110e
-    private void ReadServices110e(XmlNode node)
+    #region ReadServicesE110()
+    private void ReadServicesE110(XmlNode node, ChannelList list, int idAdjustment)
     {
       var tsDescrNode = node["TS_Descr"] ?? throw new FileLoadException("Missing TS_Descr XML element");
       var tsData = SplitLines(tsDescrNode);
@@ -238,7 +266,7 @@ namespace ChanSort.Loader.Sony
         chan.Favorites = (Favorites) ((nwMask & 0xF0) >> 4);
         chan.ServiceId = int.Parse(svcData["ui2_prog_id"][i]);
         chan.Name = svcData["Name"][i];
-        var muxId = int.Parse(svcData["MuxID"][i]);
+        var muxId = int.Parse(svcData["MuxID"][i]) + idAdjustment;
         var transp = this.DataRoot.Transponder[muxId];
         chan.Transponder = transp;
         if (transp != null)
@@ -248,6 +276,11 @@ namespace ChanSort.Loader.Sony
           chan.Polarity = transp.Polarity;
           chan.Satellite = transp.Satellite?.Name;
           chan.SatPosition = transp.Satellite?.OrbitalPosition;
+
+          if ((list.SignalSource & SignalSource.Cable) != 0)
+            chan.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(chan.FreqInMhz);
+          if ((list.SignalSource & SignalSource.Cable) != 0)
+            chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
         }
 
         var tsIdx = int.Parse(svcData["ui2_tsl_rec_id"][i]) - 1;
@@ -257,13 +290,13 @@ namespace ChanSort.Loader.Sony
         chan.ServiceType = int.Parse(dvbData["ui1_sdt_service_type"][i]);
         chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType);
 
-        this.DataRoot.AddChannel(this.satChannels, chan);
+        this.DataRoot.AddChannel(list, chan);
       }
     }
     #endregion
 
-    #region ReadServices
-    private void ReadServices(XmlNode node)
+    #region ReadServices()
+    private void ReadServices(XmlNode node, ChannelList list, int idAdjustment)
     {
       var serviceNode = node["Service"] ?? throw new FileLoadException("Missing Service XML element");
       var svcData = SplitLines(serviceNode);
@@ -280,11 +313,11 @@ namespace ChanSort.Loader.Sony
         chan.OldProgramNr = -1;
         chan.IsDeleted = true;
         chan.ServiceType = int.Parse(svcData["Type"][i]);
-        chan.OriginalNetworkId = intParse(svcData["Onid"][i]);
-        chan.TransportStreamId = intParse(svcData["Tsid"][i]);
-        chan.ServiceId = intParse(svcData["Sid"][i]);
+        chan.OriginalNetworkId = this.ParseInt(svcData["Onid"][i]);
+        chan.TransportStreamId = this.ParseInt(svcData["Tsid"][i]);
+        chan.ServiceId = this.ParseInt(svcData["Sid"][i]);
         chan.Name = svcData["Name"][i];
-        var muxId = int.Parse(svcData["MuxRowId"][i]);
+        var muxId = int.Parse(svcData["MuxRowId"][i]) + idAdjustment;
         var transp = this.DataRoot.Transponder[muxId];
         chan.Transponder = transp;
         if (transp != null)
@@ -292,11 +325,16 @@ namespace ChanSort.Loader.Sony
           chan.FreqInMhz = transp.FrequencyInMhz;
           chan.SymbolRate = transp.SymbolRate;
           chan.Polarity = transp.Polarity;
+          if ((list.SignalSource & SignalSource.Cable) != 0)
+            chan.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(chan.FreqInMhz);
+          if ((list.SignalSource & SignalSource.Cable) != 0)
+            chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
         }
+
         chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType);
-        var att = intParse(svcData["Attribute"][i]);
+        var att = this.ParseInt(svcData["Attribute"][i]);
         chan.Encrypted = (att & 8) != 0;
-        this.DataRoot.AddChannel(this.satChannels, chan);
+        this.DataRoot.AddChannel(list, chan);
       }
 
       for (int i = 0, c = progData["ServiceRowId"].Length; i < c; i++)
@@ -313,8 +351,7 @@ namespace ChanSort.Loader.Sony
     }
     #endregion
 
-
-    #region SplitLines
+    #region SplitLines()
     private Dictionary<string, string[]> SplitLines(XmlNode parent)
     {
       var dict = new Dictionary<string, string[]>();
@@ -339,19 +376,22 @@ namespace ChanSort.Loader.Sony
       int end;
       uint expectedCrc;
 
-      if (this.format == "1.1.0e")
+      if (this.format.StartsWith("e"))
       {
-        // files with the typo-element "<FormateVer>1.1.0</FormateVer>" differ in several ways from all other files (including <FormatVer>1.1.0</FormatVer>):
-        // "\n" after the closing <SdbXml> Tag is included in the checksum, the checksum has no 0x prefix and the bytes are used as-is for the calculation, without any XML cleanup
+        // files with the typo-element "<FormateVer>1.1.0</FormateVer>" differ from other formats:
+        // - "\n" after the closing <SdbXml> Tag is included in the checksum,
+        // - the value in the <CheckSum> element has no "0x" prefix
+        // - the file's bytes are used as-is for the calculation, without any prior XML cleanup
         data = this.content;
-        start = this.IndexOf("<SdbXml>");
-        end = this.IndexOf("</SdbXml>") + 10; // including the \n at the end
-        expectedCrc = uint.Parse(node.InnerText, NumberStyles.HexNumber); // no 0x prefix
+        start = this.FindMarker(this.content, "<SdbXml>");
+        end = this.FindMarker(this.content, "</SdbXml>") + 10; // including the \n at the end
+        expectedCrc = uint.Parse(node.InnerText, NumberStyles.HexNumber);
       }
       else
       {
         start = this.textContent.IndexOf("<SdbXml>");
         end = this.textContent.IndexOf("</SdbXml>") + 9;
+        // the TV calculates the checksum and then does some XML manipulation afterwards. So we have to undo the manipulations first
         var text = this.textContent.Substring(start, end - start);
         text = text.Replace("\r\n", "\n");
         text = text.Replace(" />", "/>");
@@ -378,15 +418,17 @@ namespace ChanSort.Loader.Sony
       if (crc != expectedCrc)
         throw new FileLoadException($"Invalid checksum: expected 0x{expectedCrc:x8}, calculated 0x{crc:x8}");
     }
+    #endregion
 
-    private int IndexOf(string marker)
+    #region FindMarker()
+    private int FindMarker(byte[] data, string marker)
     {
       var bytes = Encoding.ASCII.GetBytes(marker);
       var len = bytes.Length;
-      int i = -1, c = this.content.Length - len;
-      for (; ; )
+      int i = -1;
+      for (;;)
       {
-        i = Array.IndexOf(this.content, bytes[0], i + 1);
+        i = Array.IndexOf(data, bytes[0], i + 1);
         if (i < 0)
           return -1;
 
@@ -399,10 +441,24 @@ namespace ChanSort.Loader.Sony
 
         if (j == len)
           return i;
+
+        i += j - 1;
       }
     }
     #endregion
 
+    #region ParseInt()
+    private int ParseInt(string input)
+    {
+      if (string.IsNullOrWhiteSpace(input))
+        return 0;
+      if (input.Length > 2 && input[0] == '0' && char.ToLower(input[1]) == 'x')
+        return int.Parse(input.Substring(2), NumberStyles.HexNumber);
+      if (int.TryParse(input, out var value))
+        return value;
+      return 0;
+    }
+    #endregion
 
 
 
@@ -505,18 +561,6 @@ namespace ChanSort.Loader.Sony
     #endregion
 
 
-    #region intParse
-    private int intParse(string input)
-    {
-      if (string.IsNullOrWhiteSpace(input))
-        return 0;
-      if (input.StartsWith("0x"))
-        return int.Parse(input.Substring(2), NumberStyles.HexNumber);
-      if (int.TryParse(input, out var value))
-        return value;
-      return 0;
-    }
-    #endregion
 
     #region ReplaceInvalidXmlCharacters()
     private string ReplaceInvalidXmlCharacters(string input)
