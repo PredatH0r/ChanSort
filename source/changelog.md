@@ -1,9 +1,10 @@
 ChanSort Change Log 
 ===================
 
-2019-07-xx
-- added partial support for Sony sdb.xml channel list format (DVB-S only)
+2019-07-16
+- added support for various Sony sdb.xml channel list formats
 - added option to disable check for program updates
+- fixed 200 Mhz offset for DVB-C frequencies (Samsung SCM)
 
 2019-07-14
 - added support for Silva-Schneider .sdx channel lists

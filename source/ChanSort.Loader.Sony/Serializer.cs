@@ -21,6 +21,8 @@ namespace ChanSort.Loader.Sony
      * NOTE: Even within the same version, there are some files using CRLF and some using LF for newlines.
      */
 
+    private const string SupportedFormatVersions = " e1.1.0 1.0.0 1.1.0 1.2.0 ";
+
     private readonly ChannelList terrChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-T");
     private readonly ChannelList cableChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
@@ -31,6 +33,7 @@ namespace ChanSort.Loader.Sony
     private byte[] content;
     private string textContent;
     private string format;
+    private bool isEFormat;
     private string newline;
 
     private readonly Dictionary<ChannelList, ChannelListNodes> channeListNodes = new Dictionary<ChannelList, ChannelListNodes>();
@@ -136,7 +139,7 @@ namespace ChanSort.Loader.Sony
         }
       }
 
-      if (this.format.StartsWith("e"))
+      if (!this.isEFormat)
       {
         satChannels.VisibleColumnFieldNames.Remove("Hidden");
         satChannels.VisibleColumnFieldNames.Remove("Satellite");
@@ -148,13 +151,17 @@ namespace ChanSort.Loader.Sony
     private void ReadSdbXml(XmlNode node)
     {
       this.format = "";
+      this.isEFormat = false;
       var formatNode = node["FormatVer"];
       if (formatNode != null)
         this.format = formatNode.InnerText;
       else if ((formatNode = node["FormateVer"]) != null)
+      {
         this.format = "e" + formatNode.InnerText;
+        this.isEFormat = true;
+      }
 
-      if (" e1.1.0 1.0.0 1.1.0 1.2.0 ".IndexOf(" " + this.format + " ", StringComparison.Ordinal) < 0)
+      if (SupportedFormatVersions.IndexOf(" " + this.format + " ", StringComparison.Ordinal) < 0)
         throw new FileLoadException("Unsupported file format version: " + this.format);
 
       foreach(XmlNode child in node.ChildNodes)
@@ -183,7 +190,7 @@ namespace ChanSort.Loader.Sony
       this.ReadSatellites(node, idAdjustment);
       this.ReadTransponder(node, idAdjustment, dvbSystem);
 
-      if (this.format.StartsWith("e"))
+      if (this.isEFormat)
         this.ReadServicesE110(node, list, idAdjustment);
       else
         this.ReadServices(node, list, idAdjustment);
@@ -215,7 +222,6 @@ namespace ChanSort.Loader.Sony
       var mux = node["Multiplex"] ?? throw new FileLoadException("Missing Multiplex XML element");
 
       var muxData = SplitLines(mux);
-      var isEFormat = this.format.StartsWith("e");
       var muxIds = isEFormat ? muxData["MuxID"] : muxData["MuxRowId"];
       var rfParmData = isEFormat ? null : SplitLines(mux["RfParam"]);
       var dvbsData = isEFormat ? null : SplitLines(mux["RfParam"]?[dvbSystem]);
@@ -256,11 +262,15 @@ namespace ChanSort.Loader.Sony
       var svcData = SplitLines(serviceNode);
       var dvbData = SplitLines(serviceNode["dvb_info"]);
 
+      // remember the nodes that need to be updated when saving
+      var nodes = this.channeListNodes[list];
+      nodes.Service = serviceNode;
+
       for (int i = 0, c = svcData["ui2_svl_rec_id"].Length; i < c; i++)
       {
         var recId = int.Parse(svcData["ui2_svl_rec_id"][i]);
         var chan = new Channel(list.SignalSource, i, recId);
-        chan.OldProgramNr = recId;
+        chan.OldProgramNr = (int)((uint)ParseInt(svcData["No"][i]) >> 18);
         chan.IsDeleted = svcData["b_deleted_by_user"][i] != "1";
         var nwMask = int.Parse(svcData["ui4_nw_mask"][i]);
         chan.Hidden = (nwMask & 8) == 0;
@@ -293,6 +303,8 @@ namespace ChanSort.Loader.Sony
         chan.ServiceType = int.Parse(dvbData["ui1_sdt_service_type"][i]);
         chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType);
 
+        CopyDataValues(serviceNode, svcData, i, chan.ServiceData);
+
         this.DataRoot.AddChannel(list, chan);
       }
     }
@@ -309,8 +321,8 @@ namespace ChanSort.Loader.Sony
 
       // remember the nodes that need to be updated when saving
       var nodes = this.channeListNodes[list];
-      nodes.Service = node["Service"];
-      nodes.Programme = node["Programme"];
+      nodes.Service = serviceNode;
+      nodes.Programme = progNode;
 
       var map = new Dictionary<int, Channel>();
       for (int i = 0, c = svcData["ServiceRowId"].Length; i < c; i++)
@@ -342,11 +354,10 @@ namespace ChanSort.Loader.Sony
         chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType);
         var att = this.ParseInt(svcData["Attribute"][i]);
         chan.Encrypted = (att & 8) != 0;
-        this.DataRoot.AddChannel(list, chan);
 
-        // keep a copy of all data values (including unknowns) so they can be saved again correctly
-        foreach (XmlNode child in serviceNode.ChildNodes)
-          chan.ServiceData[child.LocalName] = svcData[child.LocalName][i];
+        CopyDataValues(serviceNode, svcData, i, chan.ServiceData);
+
+        this.DataRoot.AddChannel(list, chan);
       }
 
       for (int i = 0, c = progData["ServiceRowId"].Length; i < c; i++)
@@ -360,9 +371,7 @@ namespace ChanSort.Loader.Sony
         var flag = int.Parse(progData["Flag"][i]);
         chan.Favorites = (Favorites)(flag & 0x0F);
 
-        // keep a copy of all data values (including unknowns) so they can be saved again correctly
-        foreach (XmlNode child in progNode.ChildNodes)
-          chan.ProgrammeData[child.LocalName] = progData[child.LocalName][i];
+        CopyDataValues(progNode, progData, i, chan.ProgrammeData);
       }
     }
     #endregion
@@ -376,10 +385,24 @@ namespace ChanSort.Loader.Sony
         if (node.Attributes?["loop"] == null)
           continue;
         var lines = node.InnerText.Trim('\n').Split('\n');
-        dict[node.LocalName] = lines;
+        dict[node.LocalName] = lines.Length == 1 && lines[0] == "" ? new string[0] : lines;
       }
 
       return dict;
+    }
+    #endregion
+
+    #region CopyDataValues()
+    private void CopyDataValues(XmlNode parentNode, Dictionary<string, string[]> svcData, int i, Dictionary<string, string> target)
+    {
+      // copy of data values from all child nodes into the channel. 
+      // this inverts the [field,channel] data presentation from the file to [channel,field] and is later used for saving channels
+      foreach (XmlNode child in parentNode.ChildNodes)
+      {
+        var field = child.LocalName;
+        if (svcData.ContainsKey(field))
+          target[field] = svcData[field][i];
+      }
     }
     #endregion
 
@@ -387,35 +410,42 @@ namespace ChanSort.Loader.Sony
 
     private void ReadChecksum(XmlNode node)
     {
-      byte[] data;
+      // skip "0x" prefix ("e"-format doesn't have it)
+      uint expectedCrc = uint.Parse(this.isEFormat ? node.InnerText : node.InnerText.Substring(2), NumberStyles.HexNumber);
+
+      uint crc = CalcChecksum(this.content, this.textContent);
+
+      if (crc != expectedCrc)
+        throw new FileLoadException($"Invalid checksum: expected 0x{expectedCrc:x8}, calculated 0x{crc:x8}");
+    }
+    #endregion
+
+    #region CalcChecksum()
+    private uint CalcChecksum(byte[] data, string dataAsText)
+    {
       int start;
       int end;
-      uint expectedCrc;
 
-      if (this.format.StartsWith("e"))
+      if (this.isEFormat)
       {
-        // files with the typo-element "<FormateVer>1.1.0</FormateVer>" differ from other formats:
+        // files with the typo-element "<FormateVer>1.1.0</FormateVer>" differ from the other formats:
         // - "\n" after the closing <SdbXml> Tag is included in the checksum,
-        // - the value in the <CheckSum> element has no "0x" prefix
-        // - the file's bytes are used as-is for the calculation, without any prior XML cleanup
-        data = this.content;
-        start = this.FindMarker(this.content, "<SdbXml>");
-        end = this.FindMarker(this.content, "</SdbXml>") + 10; // including the \n at the end
-        expectedCrc = uint.Parse(node.InnerText, NumberStyles.HexNumber);
+        // - the file's bytes are used as-is for the calculation, without CRLF conversion
+        start = FindMarker(data, "<SdbXml>");
+        end = FindMarker(data, "</SdbXml>") + 10; // including the \n at the end
       }
       else
       {
-        start = this.textContent.IndexOf("<SdbXml>", StringComparison.Ordinal);
-        end = this.textContent.IndexOf("</SdbXml>", StringComparison.Ordinal) + 9;
+        start = dataAsText.IndexOf("<SdbXml>", StringComparison.Ordinal);
+        end = dataAsText.IndexOf("</SdbXml>", StringComparison.Ordinal) + 9;
         // the TV calculates the checksum with just LF as newline character, so we need to replace CRLF first
-        var text = this.textContent.Substring(start, end - start);
+        var text = dataAsText.Substring(start, end - start);
         if (this.newline == "\r\n")
           text = text.Replace("\r\n", "\n");
 
         data = Encoding.UTF8.GetBytes(text);
         start = 0;
         end = data.Length;
-        expectedCrc = uint.Parse(node.InnerText.Substring(2), NumberStyles.HexNumber);
       }
 
       uint crc = 0xFFFFFFFF;
@@ -424,10 +454,7 @@ namespace ChanSort.Loader.Sony
         var b = data[i];
         crc = (crc << 8) ^ Crc32Table[b ^ (crc >> 24)];
       }
-      crc = ~crc;
-
-      if (crc != expectedCrc)
-        throw new FileLoadException($"Invalid checksum: expected 0x{expectedCrc:x8}, calculated 0x{crc:x8}");
+      return ~crc;
     }
     #endregion
 
@@ -446,7 +473,7 @@ namespace ChanSort.Loader.Sony
         int j;
         for (j = 1; j < len; j++)
         {
-          if (this.content[i + j] != bytes[j])
+          if (data[i + j] != bytes[j])
             break;
         }
 
@@ -480,9 +507,6 @@ namespace ChanSort.Loader.Sony
       foreach (var list in this.DataRoot.ChannelLists)
         this.UpdateChannelList(list);
 
-
-      bool isEFormat = this.format.StartsWith("e");
-
       // by default .NET reformats the whole XML. These settings produce almost same format as the TV xml files use
       var xmlSettings = new XmlWriterSettings();
       xmlSettings.Encoding = this.DefaultEncoding;
@@ -502,7 +526,7 @@ namespace ChanSort.Loader.Sony
         xml = sw.ToString();
       }
 
-      // elements with a 'loop="0"' attribute must contain a newline instead of <...></...> (or <../>)
+      // elements with a 'loop="0"' attribute must contain a newline instead of <...></...>
       var emptyTagsWithNewline = new[] { "loop=\"0\">", "loop=\"0\" notation=\"DEC\">", "loop=\"0\" notation=\"HEX\">" };
       foreach (var tag in emptyTagsWithNewline)
         xml = xml.Replace(tag + "</", tag + this.newline + "</");
@@ -512,7 +536,13 @@ namespace ChanSort.Loader.Sony
 
       xml += this.newline;
 
-      // TODO update checksum
+      // put new checksum in place
+      var newContent = Encoding.UTF8.GetBytes(xml);
+      var crc = this.CalcChecksum(newContent, xml);
+      var i1 = xml.LastIndexOf("</CheckSum>", StringComparison.Ordinal);
+      var i0 = xml.LastIndexOf(">", i1, StringComparison.Ordinal);
+      var hexCrc = this.isEFormat ? crc.ToString("x") : "0x" + crc.ToString("X");
+      xml = xml.Substring(0, i0 + 1) + hexCrc + xml.Substring(i1);
 
       var enc = new UTF8Encoding(false, false);
       File.WriteAllText(tvOutputFile, xml, enc);
@@ -526,26 +556,11 @@ namespace ChanSort.Loader.Sony
       if (nodes == null) // this list wasn't present in the file
         return;
 
-      var nameModified = list.Channels.Any(ch => ch.IsNameModified);
+      if (this.isEFormat || list.Channels.Any(ch => ch.IsNameModified))
+        this.UpdateDataInChildNodes(nodes.Service, list.Channels.OrderBy(c => c.RecordOrder), ch => true, ch => ch.ServiceData, this.GetNewValueForServiceNode);
 
-      if (nameModified)
-      {
-        this.UpdateDataInChildNodes(nodes.Service, list.Channels.OrderBy(c => c.RecordOrder), ch => true, ch => ch.ServiceData, (ch, field, value) =>
-        {
-          if (field == "Name")
-            return ch.Name;
-          return value;
-        });
-      }
-
-      this.UpdateDataInChildNodes(nodes.Programme, list.Channels.OrderBy(c => c.NewProgramNr), ch => !(ch.IsDeleted || ch.NewProgramNr < 0), ch => ch.ProgrammeData, (ch, field, value) =>
-      {
-        if (field == "No")
-          return ch.NewProgramNr.ToString();
-        if (field == "Flag")
-          return ((int)ch.Favorites & 0x0F).ToString();
-        return value;
-      });
+      if (!this.isEFormat)
+        this.UpdateDataInChildNodes(nodes.Programme, list.Channels.OrderBy(c => c.NewProgramNr), ch => !(ch.IsDeleted || ch.NewProgramNr < 0), ch => ch.ProgrammeData, this.GetNewValueForProgrammeNode);
     }
     #endregion
 
@@ -590,6 +605,36 @@ namespace ChanSort.Loader.Sony
           node.Attributes["loop"].InnerText = count.ToString();
         }
       }
+    }
+    #endregion
+
+    #region GetNewValueForServiceNode()
+    private string GetNewValueForServiceNode(Channel ch, string field, string value)
+    {
+      if (field == "Name")
+        return ch.IsNameModified ? ch.Name : value;
+
+      if (this.isEFormat)
+      {
+        if (field == "b_deleted_by_user")
+          return ch.IsDeleted ? "0" : "1"; // file seems to contain reverse logic (1 = not deleted)
+        if (field == "No")
+          return ((ch.NewProgramNr << 18) | (int.Parse(value) & 0x3FFFF)).ToString();
+        if (field == "ui4_nw_mask")
+          return (((int)ch.Favorites << 4) | (ch.Hidden ? 0 : 8) | (int.Parse(value) & 0x07)).ToString();
+      }
+      return value;
+    }
+    #endregion
+
+    #region GetNewValueForProgrammeNode()
+    private string GetNewValueForProgrammeNode(Channel ch, string field, string value)
+    {
+      if (field == "No")
+        return ch.NewProgramNr.ToString();
+      if (field == "Flag")
+        return ((int)ch.Favorites & 0x0F).ToString();
+      return value;
     }
     #endregion
   }

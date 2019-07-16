@@ -9,9 +9,9 @@ Links
 
 About ChanSort
 --------------
-ChanSort is a PC/Windows application that allows you to reorder your TV's channel list.  
+ChanSort is a Windows application that allows you to reorder your TV's channel list.  
 Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
-ChanSort supports various models from Hisense, Samsung, LG, Panasonic, Toshiba and the Linux VDR project.
+ChanSort supports various file formats from **Sony** (new), **Silva-Schneider** (new), Hisense, Samsung, LG, Panasonic, Toshiba and the Linux VDR project.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-en.png)
 
@@ -85,9 +85,15 @@ the channel list from/to USB can be found in the Wiki.
 **Panasonic**  
 Viera models with an svl.bin or svl.db channel list (most models since 2011)
 
+**Sony**  
+Android-TVs "sdb.xml" files using formats "FormateVer" 1.1.0 and "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
+
 **Toshiba**  
 Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.  
 (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
+
+**Silva-Schneider**  
+.sdx files (currently only satellite lists are supported)
 
 **VDR (Linux Video Disk Recorder)**  
 Supports the channels.conf file format.  
