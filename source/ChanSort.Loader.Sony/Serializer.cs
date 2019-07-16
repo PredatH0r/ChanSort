@@ -1,7 +1,5 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -156,7 +154,7 @@ namespace ChanSort.Loader.Sony
       else if ((formatNode = node["FormateVer"]) != null)
         this.format = "e" + formatNode.InnerText;
 
-      if (" e1.1.0 1.0.0 1.1.0 1.2.0 ".IndexOf(" " + this.format + " ") < 0)
+      if (" e1.1.0 1.0.0 1.1.0 1.2.0 ".IndexOf(" " + this.format + " ", StringComparison.Ordinal) < 0)
         throw new FileLoadException("Unsupported file format version: " + this.format);
 
       foreach(XmlNode child in node.ChildNodes)
@@ -179,8 +177,8 @@ namespace ChanSort.Loader.Sony
     #region ReadSdb()
     private void ReadSdb(XmlNode node, ChannelList list, int idAdjustment, string dvbSystem)
     {
-      list.ReadOnly = node["Editable"].InnerText != "T";
-      this.channeListNodes[list] = new ChannelListNodes(); ;
+      list.ReadOnly = node["Editable"]?.InnerText == "F";
+      this.channeListNodes[list] = new ChannelListNodes();
 
       this.ReadSatellites(node, idAdjustment);
       this.ReadTransponder(node, idAdjustment, dvbSystem);
@@ -220,7 +218,7 @@ namespace ChanSort.Loader.Sony
       var isEFormat = this.format.StartsWith("e");
       var muxIds = isEFormat ? muxData["MuxID"] : muxData["MuxRowId"];
       var rfParmData = isEFormat ? null : SplitLines(mux["RfParam"]);
-      var dvbsData = isEFormat ? null : SplitLines(mux["RfParam"][dvbSystem]);
+      var dvbsData = isEFormat ? null : SplitLines(mux["RfParam"]?[dvbSystem]);
       var polarity = dvbsData?.ContainsKey("Pola") ?? false ? dvbsData["Pola"] : null;
       for (int i = 0, c = muxIds.Length; i < c; i++)
       {
@@ -312,11 +310,7 @@ namespace ChanSort.Loader.Sony
       // remember the nodes that need to be updated when saving
       var nodes = this.channeListNodes[list];
       nodes.Service = node["Service"];
-      nodes.Service_Name = node["Service"]["Name"];
       nodes.Programme = node["Programme"];
-      nodes.Programme_No = node["Programme"]["No"];
-      nodes.Programme_ServiceRowId = node["Programme"]["ServiceRowId"];
-      nodes.Programme_Flag = node["Programme"]["Flag"];
 
       var map = new Dictionary<int, Channel>();
       for (int i = 0, c = svcData["ServiceRowId"].Length; i < c; i++)
@@ -379,7 +373,7 @@ namespace ChanSort.Loader.Sony
       var dict = new Dictionary<string, string[]>();
       foreach (XmlNode node in parent.ChildNodes)
       {
-        if (node.Attributes["loop"] == null)
+        if (node.Attributes?["loop"] == null)
           continue;
         var lines = node.InnerText.Trim('\n').Split('\n');
         dict[node.LocalName] = lines;
@@ -411,8 +405,8 @@ namespace ChanSort.Loader.Sony
       }
       else
       {
-        start = this.textContent.IndexOf("<SdbXml>");
-        end = this.textContent.IndexOf("</SdbXml>") + 9;
+        start = this.textContent.IndexOf("<SdbXml>", StringComparison.Ordinal);
+        end = this.textContent.IndexOf("</SdbXml>", StringComparison.Ordinal) + 9;
         // the TV calculates the checksum with just LF as newline character, so we need to replace CRLF first
         var text = this.textContent.Substring(start, end - start);
         if (this.newline == "\r\n")
@@ -482,6 +476,7 @@ namespace ChanSort.Loader.Sony
     #region Save()
     public override void Save(string tvOutputFile)
     {
+      // TODO handling for "e"-lists
       foreach (var list in this.DataRoot.ChannelLists)
         this.UpdateChannelList(list);
 
@@ -524,102 +519,84 @@ namespace ChanSort.Loader.Sony
     }
     #endregion
 
+    #region UpdateChannelList()
     private void UpdateChannelList(ChannelList list)
     {
       var nodes = this.channeListNodes.TryGet(list);
       if (nodes == null) // this list wasn't present in the file
         return;
 
-      var sbNames = new StringBuilder(this.newline);
-      var sbRecordIds = new StringBuilder(this.newline);
-      var sbNumbers = new StringBuilder(this.newline);
-      var sbFlags = new StringBuilder(this.newline);
+      var nameModified = list.Channels.Any(ch => ch.IsNameModified);
 
-      var nameModified = false;
+      if (nameModified)
+      {
+        this.UpdateDataInChildNodes(nodes.Service, list.Channels.OrderBy(c => c.RecordOrder), ch => true, ch => ch.ServiceData, (ch, field, value) =>
+        {
+          if (field == "Name")
+            return ch.Name;
+          return value;
+        });
+      }
 
+      this.UpdateDataInChildNodes(nodes.Programme, list.Channels.OrderBy(c => c.NewProgramNr), ch => !(ch.IsDeleted || ch.NewProgramNr < 0), ch => ch.ProgrammeData, (ch, field, value) =>
+      {
+        if (field == "No")
+          return ch.NewProgramNr.ToString();
+        if (field == "Flag")
+          return ((int)ch.Favorites & 0x0F).ToString();
+        return value;
+      });
+    }
+    #endregion
+
+    #region UpdateDataInChildNodes()
+    void UpdateDataInChildNodes(
+      XmlNode parentNode, 
+      IEnumerable<ChannelInfo> channels, 
+      Predicate<ChannelInfo> accept, 
+      Func<Channel,Dictionary<string,string>> getChannelData, 
+      Func<Channel, string, string, string> getNewValue)
+    {
       var count = 0;
-      var sbDict = new Dictionary<string,StringBuilder>();
-      foreach(XmlNode node in nodes.Service.ChildNodes)
-        sbDict[node.LocalName] = new StringBuilder(this.newline);
-      foreach (var channel in list.Channels.OrderBy(c => c.RecordOrder))
+      var sbDict = new Dictionary<string, StringBuilder>();
+      foreach (XmlNode node in parentNode.ChildNodes)
+      {
+        if (node.Attributes["loop"] != null)
+          sbDict[node.LocalName] = new StringBuilder(this.newline);
+      }
+
+      foreach (var channel in channels)
       {
         var ch = channel as Channel;
         if (ch == null)
           continue; // ignore proxy channels from reference lists
-        foreach (var field in ch.ServiceData)
+
+        if (!accept(ch))
+          continue;
+
+        foreach (var field in getChannelData(ch))
         {
           var sb = sbDict[field.Key];
-          var value = field.Value;
-          if (field.Key == "Name")
-          {
-            nameModified |= channel.IsNameModified;
-            value = channel.Name;
-          }
+          var value = getNewValue(ch, field.Key, field.Value);
           sb.Append(value).Append(this.newline);
         }
         ++count;
       }
-      foreach (XmlNode node in nodes.Service.ChildNodes)
+      foreach (XmlNode node in parentNode.ChildNodes)
       {
-        node.InnerText = sbDict[node.LocalName].ToString();
-        node.Attributes["loop"].InnerText = count.ToString();
-      }
-
-
-      count = 0;
-      sbDict = new Dictionary<string, StringBuilder>();
-      foreach (XmlNode node in nodes.Programme.ChildNodes)
-        sbDict[node.LocalName] = new StringBuilder(this.newline);
-      foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr))
-      {
-        var ch = channel as Channel;
-        if (ch == null)
-          continue; // ignore proxy channels from reference lists
-        if (ch.IsDeleted || ch.NewProgramNr < 0)
-          continue;
-
-        foreach (var field in ch.ProgrammeData)
+        if (sbDict.TryGetValue(node.LocalName, out var sb))
         {
-          var sb = sbDict[field.Key];
-          var value = field.Value;
-          if (field.Key == "No")
-            value = ch.NewProgramNr.ToString();
-          else if (field.Key == "Flag")
-            value = ((int) channel.Favorites & 0x0F).ToString();
-          sb.Append(value).AppendLine(this.newline);
+          node.InnerText = sb.ToString();
+          node.Attributes["loop"].InnerText = count.ToString();
         }
-        ++count;
       }
-      foreach (XmlNode node in nodes.Programme.ChildNodes)
-      {
-        node.InnerText = sbDict[node.LocalName].ToString();
-        node.Attributes["loop"].InnerText = count.ToString();
-      }
-
-
-      //foreach (XmlNode node in nodes.Programme.ChildNodes)
-      //{
-      //  if (node.Attributes?["loop"] != null)
-      //    node.Attributes["loop"].InnerText = count.ToString();
-      //}
-
-      //if (nameModified)
-      //  nodes.Service_Name.InnerText = sbNames.ToString();
-
-      //nodes.Programme_No.InnerText = sbNumbers.ToString();
-      //nodes.Programme_ServiceRowId.InnerText = sbRecordIds.ToString();
-      //nodes.Programme_Flag.InnerText = sbFlags.ToString();
     }
+    #endregion
   }
 
   class ChannelListNodes
   {
     public XmlNode Service;
-    public XmlNode Service_Name;
-
     public XmlNode Programme;
-    public XmlNode Programme_ServiceRowId;
-    public XmlNode Programme_No;
-    public XmlNode Programme_Flag;
   }
 }
