@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2019-07-18
+- fixed support for Sony "FormateVer 1.1.0" DVB-C channel lists
+
 2019-07-16
 - added support for various Sony sdb.xml channel list formats
 - added option to disable check for program updates

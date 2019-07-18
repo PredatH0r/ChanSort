@@ -221,6 +221,8 @@ namespace ChanSort.Loader.Sony
     {
       var mux = node["Multiplex"] ?? throw new FileLoadException("Missing Multiplex XML element");
 
+      var transpList = new List<Transponder>();
+
       var muxData = SplitLines(mux);
       var muxIds = isEFormat ? muxData["MuxID"] : muxData["MuxRowId"];
       var rfParmData = isEFormat ? null : SplitLines(mux["RfParam"]);
@@ -232,11 +234,19 @@ namespace ChanSort.Loader.Sony
         var transp = new Transponder(int.Parse(muxIds[i]) + idAdjustment);
         if (isEFormat)
         {
-          var satId = int.Parse(muxData["ui2_satl_rec_id"][i]) + idAdjustment;
           transp.FrequencyInMhz = int.Parse(muxData["SysFreq"][i]);
           transp.SymbolRate = int.Parse(muxData["ui4_sym_rate"][i]);
-          transp.Polarity = muxData["e_pol"][i] == "1" ? 'H' : 'V';
-          sat = DataRoot.Satellites[satId];
+          if (Char.ToLowerInvariant(dvbSystem[dvbSystem.Length - 1]) == 's') // "DvbGs", "DvbPs", "DvbCis"
+          {
+            transp.Polarity = muxData["e_pol"][i] == "1" ? 'H' : 'V';
+            var satId = int.Parse(muxData["ui2_satl_rec_id"][i]) + idAdjustment;
+            sat = DataRoot.Satellites[satId];
+          }
+          else
+          {
+            transp.FrequencyInMhz /= 1000000;
+            transp.SymbolRate /= 1000;
+          }
         }
         else
         {
@@ -248,6 +258,29 @@ namespace ChanSort.Loader.Sony
         }
 
         this.DataRoot.AddTransponder(sat, transp);
+        transpList.Add(transp);
+      }
+
+      // in the "E"-Format, there is a TS_Descr element that holds ONID and TSID, but lacks any sort of key (like "ui4_tsl_rec_id" or similar)
+      // However, it seems like the entries correlate with the entries in the Multiplex element (same number and order)
+      if (this.isEFormat)
+      {
+        var tsDescr = node["TS_Descr"];
+        if (tsDescr == null)
+          return;
+        var tsData = SplitLines(tsDescr);
+        var onids = tsData["Onid"];
+        var tsids = tsData["Tsid"];
+
+        if (onids.Length != muxIds.Length)
+          return;
+
+        for (int i = 0, c = onids.Length; i < c; i++)
+        {
+          var transp = transpList[i];
+          transp.OriginalNetworkId = this.ParseInt(onids[i]);
+          transp.TransportStreamId = this.ParseInt(tsids[i]);
+        }
       }
     }
     #endregion
@@ -255,9 +288,6 @@ namespace ChanSort.Loader.Sony
     #region ReadServicesE110()
     private void ReadServicesE110(XmlNode node, ChannelList list, int idAdjustment)
     {
-      var tsDescrNode = node["TS_Descr"] ?? throw new FileLoadException("Missing TS_Descr XML element");
-      var tsData = SplitLines(tsDescrNode);
-
       var serviceNode = node["Service"] ?? throw new FileLoadException("Missing Service XML element");
       var svcData = SplitLines(serviceNode);
       var dvbData = SplitLines(serviceNode["dvb_info"]);
@@ -270,7 +300,7 @@ namespace ChanSort.Loader.Sony
       {
         var recId = int.Parse(svcData["ui2_svl_rec_id"][i]);
         var chan = new Channel(list.SignalSource, i, recId);
-        chan.OldProgramNr = (int)((uint)ParseInt(svcData["No"][i]) >> 18);
+        chan.OldProgramNr = (int) ((uint) ParseInt(svcData["No"][i]) >> 18);
         chan.IsDeleted = svcData["b_deleted_by_user"][i] != "1";
         var nwMask = int.Parse(svcData["ui4_nw_mask"][i]);
         chan.Hidden = (nwMask & 8) == 0;
@@ -286,19 +316,24 @@ namespace ChanSort.Loader.Sony
         {
           chan.FreqInMhz = transp.FrequencyInMhz;
           chan.SymbolRate = transp.SymbolRate;
+          chan.OriginalNetworkId = transp.OriginalNetworkId;
+          chan.TransportStreamId = transp.TransportStreamId;
           chan.Polarity = transp.Polarity;
           chan.Satellite = transp.Satellite?.Name;
           chan.SatPosition = transp.Satellite?.OrbitalPosition;
 
           if ((list.SignalSource & SignalSource.Cable) != 0)
             chan.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(chan.FreqInMhz);
-          if ((list.SignalSource & SignalSource.Cable) != 0)
+          if ((list.SignalSource & SignalSource.Antenna) != 0)
             chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
         }
-
-        var tsIdx = int.Parse(svcData["ui2_tsl_rec_id"][i]) - 1;
-        chan.TransportStreamId = int.Parse(tsData["Tsid"][tsIdx]);
-        chan.OriginalNetworkId = int.Parse(tsData["Onid"][tsIdx]);
+        else
+        {
+          // this block should never be entered
+          // only DVB-C and -T (in the E-format) contain non-0 values in these fields
+          chan.OriginalNetworkId = this.ParseInt(dvbData["ui2_on_id"][i]);
+          chan.TransportStreamId = this.ParseInt(dvbData["ui2_ts_id"][i]);
+        }
 
         chan.ServiceType = int.Parse(dvbData["ui1_sdt_service_type"][i]);
         chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType);
