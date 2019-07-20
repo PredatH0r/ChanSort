@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2019-07-20
+- user settings are now persisted across releases in %LOCALAPPDATA%\ChanSort\config.xml
+- fixed Sony sdb.xml DVB-T channel lists
+- added support for ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz and Telefunken (same .sdx format as Silva-Schneider)
+- fixed using wrong loader when the file type was manually selected in the "Open File" dialog
+
 2019-07-18
 - fixed support for Sony "FormateVer 1.1.0" DVB-C channel lists
 

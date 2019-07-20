@@ -212,8 +212,10 @@ namespace ChanSort.Loader.Sony
         var transp = new Transponder(int.Parse(muxIds[i]) + idAdjustment);
         if (isEFormat)
         {
-          transp.FrequencyInMhz = int.Parse(muxData["SysFreq"][i]);
-          transp.SymbolRate = int.Parse(muxData["ui4_sym_rate"][i]);
+          var freq = muxData.ContainsKey("ui4_freq") ? muxData["ui4_freq"] : muxData["SysFreq"];
+          transp.FrequencyInMhz = int.Parse(freq[i]);
+          if (muxData.ContainsKey("ui4_sym_rate"))
+            transp.SymbolRate = int.Parse(muxData["ui4_sym_rate"][i]);
           if (Char.ToLowerInvariant(dvbSystem[dvbSystem.Length - 1]) == 's') // "DvbGs", "DvbPs", "DvbCis"
           {
             transp.Polarity = muxData["e_pol"][i] == "1" ? 'H' : 'V';
@@ -232,7 +234,8 @@ namespace ChanSort.Loader.Sony
           transp.TransportStreamId = this.ParseInt(muxData["Tsid"][i]);
           transp.FrequencyInMhz = int.Parse(rfParmData["Freq"][i]) / 1000;
           transp.Polarity = polarity == null ? ' ' : polarity[i] == "H_L" ? 'H' : 'V';
-          transp.SymbolRate = int.Parse(dvbsData["SymbolRate"][i]) / 1000;
+          if (dvbsData.ContainsKey("SymbolRate"))
+            transp.SymbolRate = int.Parse(dvbsData["SymbolRate"][i]) / 1000;
         }
 
         this.DataRoot.AddTransponder(sat, transp);

@@ -6,7 +6,7 @@ namespace ChanSort.Loader.Sony
   {
     public string DllName { get; set; }
     public string PluginName => "Sony sdb.xml";
-    public string FileFilter => "sdb*.xml";
+    public string FileFilter => "*.xml";
 
     public SerializerBase CreateSerializer(string inputFile)
     {

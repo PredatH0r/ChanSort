@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -55,8 +56,8 @@ namespace ChanSort.Ui
 
     public MainForm()
     {
-      if (!string.IsNullOrEmpty(Settings.Default.Language))
-        Thread.CurrentThread.CurrentUICulture = new CultureInfo(Settings.Default.Language);
+      if (!string.IsNullOrEmpty(Config.Default.Language))
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo(Config.Default.Language);
       this.LookAndFeel.SetSkinStyle("Office 2010 Blue");
       InitializeComponent();
 
@@ -69,8 +70,8 @@ namespace ChanSort.Ui
       foreach (GridColumn col in this.gviewRight.Columns)
         col.Tag = col.Visible;
 
-      if (!Settings.Default.WindowSize.IsEmpty)
-        this.Size = Settings.Default.WindowSize;
+      if (!Config.Default.WindowSize.IsEmpty)
+        this.Size = Config.Default.WindowSize;
       this.title = string.Format(base.Text, AppVersion);
       base.Text = title;
       this.Plugins = this.LoadSerializerPlugins();
@@ -152,7 +153,7 @@ namespace ChanSort.Ui
         }
       }
 
-      if (Settings.Default.CheckForUpdates)
+      if (Config.Default.CheckForUpdates)
         this.BeginInvoke((Action) UpdateCheck.CheckForNewVersion);
     }
 
@@ -185,6 +186,7 @@ namespace ChanSort.Ui
           HandleException(new IOException("Plugin " + file + "\n" + ex.Message, ex));
         }
       }
+      list.Sort((a, b) => a.PluginName.CompareTo(b.PluginName));
       return list;
     }
 
@@ -223,13 +225,11 @@ namespace ChanSort.Ui
       numberOfFilters = 0;
       var filter = new StringBuilder();
       var extension = new StringBuilder();
-      var sortedPlugins = this.Plugins.ToList();
-      sortedPlugins.Sort((a, b) => a.PluginName.CompareTo(b.PluginName));
-      foreach (var plugin in sortedPlugins)
+      foreach (var plugin in this.Plugins)
       {
         filter.Append(plugin.PluginName).Append("|").Append(plugin.FileFilter);
         filter.Append("|");
-        if (!(";" + extension + ";").Contains(plugin.FileFilter))
+        if (!(";" + extension + ";").Contains(";" + plugin.FileFilter + ";"))
         {
           extension.Append(plugin.FileFilter);
           extension.Append(";");
@@ -1243,31 +1243,26 @@ namespace ChanSort.Ui
     private void LoadSettings()
     {
       // note: WindowSize must be restored in ctor in order to make WindowStartPosition.CenterScreen work
-      if (!string.IsNullOrEmpty(Settings.Default.Encoding))
-        this.defaultEncoding = Encoding.GetEncoding(Settings.Default.Encoding);
+      if (!string.IsNullOrEmpty(Config.Default.Encoding))
+        this.defaultEncoding = Encoding.GetEncoding(Config.Default.Encoding);
 
-      var width = Settings.Default.LeftPanelWidth;
+      var width = Config.Default.LeftPanelWidth;
       if (width > 0)
         this.splitContainerControl1.SplitterPosition = width;
       this.SelectLanguageMenuItem();
 
-      //this.SetGridLayout(this.gviewLeft, Settings.Default.OutputListLayout);
+      //this.SetGridLayout(this.gviewLeft, Config.Default.OutputListLayout);
 
-      this.miShowWarningsAfterLoad.Checked = Settings.Default.ShowWarningsAfterLoading;
-      this.cbCloseGap.Checked = Settings.Default.CloseGaps;
+      this.miShowWarningsAfterLoad.Checked = Config.Default.ShowWarningsAfterLoading;
+      this.cbCloseGap.Checked = Config.Default.CloseGaps;
       this.ClearLeftFilter();
       this.ClearRightFilter();
-
-      for (var i = MaxMruEntries - 1; i >= 0; i--)
-      {
-        var prop = Settings.Default.GetType().GetProperty("MruFile" + i);
-        if (prop != null)
-          this.AddFileToMruList((string) prop.GetValue(Settings.Default, null));
-      }
+      foreach(var path in Config.Default.MruFiles)
+        this.AddFileToMruList(path);
       this.UpdateMruMenu();
 
-      this.miExplorerIntegration.Down = Settings.Default.ExplorerIntegration;
-      this.miCheckUpdates.Down = Settings.Default.CheckForUpdates;
+      this.miExplorerIntegration.Down = Config.Default.ExplorerIntegration;
+      this.miCheckUpdates.Down = Config.Default.CheckForUpdates;
     }
 
     #endregion
@@ -1279,7 +1274,7 @@ namespace ChanSort.Ui
       this.barManager1.ForceLinkCreate();
       foreach (BarItemLink itemLink in this.barSubItem1.ItemLinks)
       {
-        if (Settings.Default.Language.StartsWith((string) itemLink.Item.Tag))
+        if (Config.Default.Language.StartsWith((string) itemLink.Item.Tag))
         {
           this.ignoreLanguageChange = true;
           ((BarButtonItem) itemLink.Item).Down = true;
@@ -1409,11 +1404,11 @@ namespace ChanSort.Ui
       string newLayout;
       var newSource = list.SignalSource;
       if ((newSource & SignalSource.Analog) != 0)
-        newLayout = Settings.Default.InputGridLayoutAnalog;
+        newLayout = Config.Default.InputGridLayoutAnalog;
       else if ((newSource & SignalSource.DvbS) != 0)
-        newLayout = Settings.Default.InputGridLayoutDvbS; 
+        newLayout = Config.Default.InputGridLayoutDvbS; 
       else
-        newLayout = Settings.Default.InputGridLayoutDvbCT;
+        newLayout = Config.Default.InputGridLayoutDvbCT;
       if (!string.IsNullOrEmpty(newLayout))
         this.SetGridLayout(this.gviewRight, newLayout);
 #endif
@@ -1441,11 +1436,11 @@ namespace ChanSort.Ui
     {
       var currentLayout = GetGridLayout(this.gviewRight);
       if ((signalSource & SignalSource.Analog) != 0)
-        Settings.Default.InputGridLayoutAnalog = currentLayout;
+        Config.Default.InputGridLayoutAnalog = currentLayout;
       else if ((signalSource & SignalSource.DvbS) != 0)
-        Settings.Default.InputGridLayoutDvbS = currentLayout;
+        Config.Default.InputGridLayoutDvbS = currentLayout;
       else //if ((signalSource & SignalSource.DvbCT) != 0)
-        Settings.Default.InputGridLayoutDvbCT = currentLayout;
+        Config.Default.InputGridLayoutDvbCT = currentLayout;
     }
 
     #endregion
@@ -2597,21 +2592,21 @@ namespace ChanSort.Ui
       this.gviewRight.PostEditor();
       this.gviewLeft.PostEditor();
 
-      Settings.Default.WindowSize = this.WindowState == FormWindowState.Normal ? this.Size : this.RestoreBounds.Size;
-      Settings.Default.Encoding = this.defaultEncoding.WebName;
-      Settings.Default.Language = Thread.CurrentThread.CurrentUICulture.Name;
-      Settings.Default.LeftPanelWidth = this.splitContainerControl1.SplitterPosition;
-      Settings.Default.OutputListLayout = GetGridLayout(this.gviewLeft);
+      Config.Default.WindowSize = this.WindowState == FormWindowState.Normal ? this.Size : this.RestoreBounds.Size;
+      Config.Default.Encoding = this.defaultEncoding.WebName;
+      Config.Default.Language = Thread.CurrentThread.CurrentUICulture.Name;
+      Config.Default.LeftPanelWidth = this.splitContainerControl1.SplitterPosition;
+      Config.Default.OutputListLayout = GetGridLayout(this.gviewLeft);
       if (this.CurrentChannelList != null)
         SaveInputGridLayout(this.CurrentChannelList.SignalSource);
-      Settings.Default.ShowWarningsAfterLoading = this.miShowWarningsAfterLoad.Checked;
-      Settings.Default.CloseGaps = this.cbCloseGap.Checked;
-      for (var i = 0; i < this.mruFiles.Count; i++)
-        Settings.Default.GetType().GetProperty("MruFile" + i).SetValue(Settings.Default, this.mruFiles[i], null);
-      Settings.Default.ExplorerIntegration = this.miExplorerIntegration.Down;
-      Settings.Default.CheckForUpdates = this.miCheckUpdates.Down;
+      Config.Default.ShowWarningsAfterLoading = this.miShowWarningsAfterLoad.Checked;
+      Config.Default.CloseGaps = this.cbCloseGap.Checked;
+      Config.Default.MruFiles.Clear();
+      Config.Default.MruFiles.AddRange(this.mruFiles);
+      Config.Default.ExplorerIntegration = this.miExplorerIntegration.Down;
+      Config.Default.CheckForUpdates = this.miCheckUpdates.Down;
 
-      Settings.Default.Save();
+      Config.Default.Save();
     }
 
     private string GetGridLayout(GridView grid)
@@ -2954,7 +2949,7 @@ namespace ChanSort.Ui
     {
       try
       {
-        if (this.miExplorerIntegration.Down == Settings.Default.ExplorerIntegration)
+        if (this.miExplorerIntegration.Down == Config.Default.ExplorerIntegration)
           return;
 
         // get all file extensions from loader plugins
@@ -2989,7 +2984,7 @@ namespace ChanSort.Ui
     {
       try
       {
-        if (this.miCheckUpdates.Down == Settings.Default.CheckForUpdates)
+        if (this.miCheckUpdates.Down == Config.Default.CheckForUpdates)
           return;
 
         if (this.miCheckUpdates.Down)
