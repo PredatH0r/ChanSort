@@ -426,7 +426,7 @@ namespace ChanSort.Loader.LG
         this.dvbsSubblockCrcOffset[i] = off;
         int subblockLength = satConfig.dvbsSubblockLength[i];
         uint fileCrc = BitConverter.ToUInt32(fileContent, off);
-        uint calcCrc = Crc32.CalcCrc32(fileContent, off + 4, subblockLength);
+        uint calcCrc = Crc32.Reversed.CalcCrc32(fileContent, off + 4, subblockLength);
         if (fileCrc != calcCrc)
           throw new FileLoadException(string.Format(ERR_wrongChecksum, fileCrc, calcCrc));
         off += 4 + subblockLength;
@@ -1008,7 +1008,7 @@ namespace ChanSort.Loader.LG
     {
       for (int i = 0; i < this.dvbsSubblockCrcOffset.Length; i++)
       {
-        uint crc32 = Crc32.CalcCrc32(fileContent, this.dvbsSubblockCrcOffset[i] + 4, satConfig.dvbsSubblockLength[i]);
+        uint crc32 = Crc32.Reversed.CalcCrc32(fileContent, this.dvbsSubblockCrcOffset[i] + 4, satConfig.dvbsSubblockLength[i]);
         var bytes = BitConverter.GetBytes(crc32);
         for (int j = 0; j < bytes.Length; j++)
           fileContent[this.dvbsSubblockCrcOffset[i] + j] = bytes[j];
