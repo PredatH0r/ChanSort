@@ -57,6 +57,9 @@ namespace ChanSort.Ui.Properties
 
     public void Save()
     {
+      var folder = Path.GetDirectoryName(ConfigFilePath);
+      Directory.CreateDirectory(folder);
+
       using (var stream = new FileStream(ConfigFilePath, FileMode.Create))
       using (var writer = new StreamWriter(stream, System.Text.Encoding.UTF8))
       {

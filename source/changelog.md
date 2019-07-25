@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2019-07-25
+- fix: Application failed to save config and didn't exit when the folder %LOCALAPPDATA%\ChanSort doesn't exist
+
 2019-07-20
 - user settings are now persisted across releases in %LOCALAPPDATA%\ChanSort\config.xml
 - fixed Sony sdb.xml DVB-T channel lists

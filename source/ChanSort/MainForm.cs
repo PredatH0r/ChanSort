@@ -2516,10 +2516,17 @@ namespace ChanSort.Ui
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-      if (this.PromptSaveAndContinue())
-        this.SaveSettings();
-      else
-        e.Cancel = true;
+      try
+      {
+        if (this.PromptSaveAndContinue())
+          this.SaveSettings();
+        else
+          e.Cancel = true;
+      }
+      catch
+      {
+        // ignore - always allow to exit
+      }
     }
 
     #endregion
