@@ -647,6 +647,9 @@
   <data name="miCharsetForm.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
+  <data name="miUtf8Charset.Caption" xml:space="preserve">
+    <value>UTF-8 (Unicode)</value>
+  </data>
   <data name="miIsoCharSets.Caption" xml:space="preserve">
     <value>ISO character sets</value>
   </data>
@@ -1255,7 +1258,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7134.23381, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7156.40088, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1809,6 +1812,12 @@
   <data name="&gt;&gt;miExplorerIntegration.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miCheckUpdates.Name" xml:space="preserve">
+    <value>miCheckUpdates</value>
+  </data>
+  <data name="&gt;&gt;miCheckUpdates.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;mnuAccessibility.Name" xml:space="preserve">
     <value>mnuAccessibility</value>
   </data>
@@ -1971,10 +1980,10 @@
   <data name="&gt;&gt;popupFavList.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.PopupMenu, DevExpress.XtraBars.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miCheckUpdates.Name" xml:space="preserve">
-    <value>miCheckUpdates</value>
+  <data name="&gt;&gt;miUtf8Charset.Name" xml:space="preserve">
+    <value>miUtf8Charset</value>
   </data>
-  <data name="&gt;&gt;miCheckUpdates.Type" xml:space="preserve">
+  <data name="&gt;&gt;miUtf8Charset.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
@@ -1984,7 +1993,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>07/14/2019 13:16:32</value>
+    <value>08/05/2019 22:23:17</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>

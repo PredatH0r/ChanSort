@@ -386,6 +386,10 @@
       <Project>{68da8072-3a29-4076-9f64-d66f38349585}</Project>
       <Name>ChanSort.Loader.Panasonic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.PhilipsXml\ChanSort.Loader.PhilipsXml.csproj">
+      <Project>{d7bafd55-50f5-46c3-a76b-2193bed5358f}</Project>
+      <Name>ChanSort.Loader.PhilipsXml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.SamsungJ\ChanSort.Loader.SamsungJ.csproj">
       <Project>{33897002-0537-49a4-b963-a18d17311b3d}</Project>
       <Name>ChanSort.Loader.SamsungJ</Name>

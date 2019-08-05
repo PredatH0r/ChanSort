@@ -412,6 +412,9 @@ namespace ChanSort.Ui
 
     private void UpdateFavoritesEditor(Favorites favorites)
     {
+      var miSet = new[] {this.miFavASet, this.miFavBSet, this.miFavCSet, this.miFavDSet, this.miFavESet};
+      var miUnset = new[] { this.miFavAUnset, this.miFavBUnset, this.miFavCUnset, this.miFavDUnset, this.miFavEUnset };
+
       this.repositoryItemCheckedComboBoxEdit1.Items.Clear();
       this.repositoryItemCheckedComboBoxEdit2.Items.Clear();
       byte mask = 0x01;
@@ -424,8 +427,15 @@ namespace ChanSort.Ui
           var c = (char) ('A' + bit);
           this.repositoryItemCheckedComboBoxEdit1.Items.Add(c);
           this.repositoryItemCheckedComboBoxEdit2.Items.Add(c);
+          miSet[bit].Visibility = BarItemVisibility.Always;
+          miUnset[bit].Visibility = BarItemVisibility.Always;
           regex += c;
           ++favCount;
+        }
+        else
+        {
+          miSet[bit].Visibility = BarItemVisibility.Never;
+          miUnset[bit].Visibility = BarItemVisibility.Never;
         }
       }
       regex += "]*";
@@ -1257,8 +1267,8 @@ namespace ChanSort.Ui
       this.cbCloseGap.Checked = Config.Default.CloseGaps;
       this.ClearLeftFilter();
       this.ClearRightFilter();
-      foreach(var path in Config.Default.MruFiles)
-        this.AddFileToMruList(path);
+      this.mruFiles.Clear();
+      this.mruFiles.AddRange(Config.Default.MruFiles);
       this.UpdateMruMenu();
 
       this.miExplorerIntegration.Down = Config.Default.ExplorerIntegration;
@@ -2871,6 +2881,11 @@ namespace ChanSort.Ui
     #endregion
 
     #region Character set menu
+
+    private void MiUtf8Charset_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(() => this.SetDefaultEncoding(Encoding.UTF8));
+    }
 
     private void miIsoCharSets_ListItemClick(object sender, ListItemClickEventArgs e)
     {

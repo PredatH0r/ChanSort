@@ -20,7 +20,7 @@ namespace ChanSort.Api
       this.SignalSource = source;
       this.ShortCaption = caption;
       this.FirstProgramNumber = (source & SignalSource.Digital) != 0 ? 1 : 0;
-      this.VisibleColumnFieldNames = DefaultVisibleColumns;
+      this.VisibleColumnFieldNames = DefaultVisibleColumns.ToList(); // create copy of default list, so it can be modified
     }
 
     public string ShortCaption { get; }

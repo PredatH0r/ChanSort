@@ -161,6 +161,7 @@
       this.miShowWarningsAfterLoad = new DevExpress.XtraBars.BarCheckItem();
       this.miAllowEditPredefinedLists = new DevExpress.XtraBars.BarButtonItem();
       this.miExplorerIntegration = new DevExpress.XtraBars.BarButtonItem();
+      this.miCheckUpdates = new DevExpress.XtraBars.BarButtonItem();
       this.mnuAccessibility = new DevExpress.XtraBars.BarSubItem();
       this.mnuGotoChannelList = new DevExpress.XtraBars.BarSubItem();
       this.mnuInputSource = new DevExpress.XtraBars.BarLinkContainerItem();
@@ -206,7 +207,7 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
-      this.miCheckUpdates = new DevExpress.XtraBars.BarButtonItem();
+      this.miUtf8Charset = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -1026,9 +1027,10 @@
             this.miCzech,
             this.miRomanian,
             this.miExplorerIntegration,
-            this.miCheckUpdates});
+            this.miCheckUpdates,
+            this.miUtf8Charset});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 99;
+      this.barManager1.MaxItemId = 100;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1608,7 +1610,8 @@
       this.mnuCharset.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuCharset.ImageOptions.ImageIndex")));
       this.mnuCharset.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miCharsetForm),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miIsoCharSets, true)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miUtf8Charset, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miIsoCharSets)});
       this.mnuCharset.Name = "mnuCharset";
       this.mnuCharset.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
       // 
@@ -1652,6 +1655,14 @@
       this.miExplorerIntegration.Id = 97;
       this.miExplorerIntegration.Name = "miExplorerIntegration";
       this.miExplorerIntegration.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miExplorerIntegration_ItemClick);
+      // 
+      // miCheckUpdates
+      // 
+      this.miCheckUpdates.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miCheckUpdates, "miCheckUpdates");
+      this.miCheckUpdates.Id = 98;
+      this.miCheckUpdates.Name = "miCheckUpdates";
+      this.miCheckUpdates.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCheckUpdates_ItemClick);
       // 
       // mnuAccessibility
       // 
@@ -2055,13 +2066,12 @@
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
       // 
-      // miCheckUpdates
+      // miUtf8Charset
       // 
-      this.miCheckUpdates.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
-      resources.ApplyResources(this.miCheckUpdates, "miCheckUpdates");
-      this.miCheckUpdates.Id = 98;
-      this.miCheckUpdates.Name = "miCheckUpdates";
-      this.miCheckUpdates.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCheckUpdates_ItemClick);
+      resources.ApplyResources(this.miUtf8Charset, "miUtf8Charset");
+      this.miUtf8Charset.Id = 99;
+      this.miUtf8Charset.Name = "miUtf8Charset";
+      this.miUtf8Charset.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.MiUtf8Charset_ItemClick);
       // 
       // MainForm
       // 
@@ -2304,6 +2314,7 @@
     private DevExpress.XtraGrid.Columns.GridColumn colPcrPid;
     private DevExpress.XtraBars.BarButtonItem miExplorerIntegration;
     private DevExpress.XtraBars.BarButtonItem miCheckUpdates;
+    private DevExpress.XtraBars.BarButtonItem miUtf8Charset;
   }
 }
 

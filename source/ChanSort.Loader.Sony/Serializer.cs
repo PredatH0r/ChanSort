@@ -23,7 +23,7 @@ namespace ChanSort.Loader.Sony
 
     private const string SupportedFormatVersions = " e1.1.0 1.0.0 1.1.0 1.2.0 ";
 
-    private readonly ChannelList terrChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-T");
+    private readonly ChannelList terrChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Radio, "DVB-T");
     private readonly ChannelList cableChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
     private readonly ChannelList satChannelsP = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S Preset");

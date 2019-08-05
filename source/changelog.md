@@ -1,6 +1,13 @@
 ChanSort Change Log 
 ===================
 
+2019-08-05
+- added partial support for Philips .xml channel lists
+  (There are MANY different file formats, only a few are currently supported)
+- fixed "most-recently-used" getting reversed every time the program was started
+- added "UTF-8 (Unicode)" character set to menu
+- fixed disappearing columns when loading different channel lists without restarting the application
+
 2019-07-25
 - fix: Application failed to save config and didn't exit when the folder %LOCALAPPDATA%\ChanSort doesn't exist
 

@@ -24,6 +24,8 @@ namespace ChanSort.Api
     Sat = 0x0040,
     IP = 0x0080,
 
+    MaskAdInput = MaskAnalogDigital | MaskAntennaCableSat,
+
     // bit 9+10: TV/Radio
     MaskTvRadio = 0x0300,
     Tv = 0x0100,

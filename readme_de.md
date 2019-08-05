@@ -11,7 +11,7 @@ Links
 --------------
 ChanSort ist eine Windows-Anwendung, die das Sortieren von Fernsehsenderlisten erlaubt.  
 Die meisten modernen Fernseher können Senderlisten auf einen USB-Stick übertragen, den man danach am PC anschließt.
-ChanSort unterstützt diverse Dateiformate von **Sony** (new), **ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken** (new), 
+ChanSort unterstützt diverse Dateiformate von **Philips** (neu), **Sony** (new), **ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken** (new), 
 Hisense, Samsung, LG, Panasonic, Toshiba und dem Linux VDR Projekt.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-de.png)
@@ -90,6 +90,10 @@ Die Marken nutzen .sdx Dateien (derzeit wird nur Satellitenempfang unterstützt)
 **Toshiba**  
 Modelle, die eine .zip-Datei mit folgendem Inhalt: chmgt.db, dvbSysData.db und dvbMainData.db.  
 (z.B. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
+
+**Philips**
+Philips verwendet unzählige unterschiedliche Dateiformate für diverse TV-Modelle.
+ChanSort unterstützt derzeit 2 Varianten von .xml-Dateien. Andere Formate werden nicht unterstützt.
 
 **VDR (Linux Video Disk Recorder)**  
 Unterstützung des channels.conf Dateiformats.  
