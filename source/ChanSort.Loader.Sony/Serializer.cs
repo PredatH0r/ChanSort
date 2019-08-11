@@ -23,12 +23,6 @@ namespace ChanSort.Loader.Sony
 
     private const string SupportedFormatVersions = " e1.1.0 1.0.0 1.1.0 1.2.0 ";
 
-    private readonly ChannelList terrChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Radio, "DVB-T");
-    private readonly ChannelList cableChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
-    private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
-    private readonly ChannelList satChannelsP = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S Preset");
-    private readonly ChannelList satChannelsCi = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S Ci");
-
     private XmlDocument doc;
     private byte[] content;
     private string textContent;
@@ -36,7 +30,7 @@ namespace ChanSort.Loader.Sony
     private bool isEFormat;
     private string newline;
 
-    private readonly Dictionary<ChannelList, ChannelListNodes> channeListNodes = new Dictionary<ChannelList, ChannelListNodes>();
+    private readonly Dictionary<SignalSource, ChannelListNodes> channeListNodes = new Dictionary<SignalSource, ChannelListNodes>();
 
 
     #region ctor()
@@ -45,10 +39,15 @@ namespace ChanSort.Loader.Sony
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanDeleteChannels = true;
 
-      this.DataRoot.AddChannelList(this.terrChannels);
-      this.DataRoot.AddChannelList(this.cableChannels);
-      this.DataRoot.AddChannelList(this.satChannels);
-      this.DataRoot.AddChannelList(this.satChannelsP);
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Tv, "DVB-T TV"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Radio, "DVB-T Radio"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT, "DVB-T Other"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Tv, "DVB-C TV"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Radio, "DVB-C Radio"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC, "DVB-C Other"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider1, "DVB-S"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider2, "DVB-S Preset"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider3, "DVB-S Ci"));
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -119,8 +118,14 @@ namespace ChanSort.Loader.Sony
 
       if (!this.isEFormat)
       {
-        satChannels.VisibleColumnFieldNames.Remove("Hidden");
-        satChannels.VisibleColumnFieldNames.Remove("Satellite");
+        foreach (var list in this.DataRoot.ChannelLists)
+        {
+          if ((list.SignalSource & SignalSource.Sat) != 0)
+          {
+            list.VisibleColumnFieldNames.Remove("Hidden");
+            list.VisibleColumnFieldNames.Remove("Satellite");
+          }
+        }
       }
     }
     #endregion
@@ -149,32 +154,38 @@ namespace ChanSort.Loader.Sony
       {
         var name = child.LocalName.ToLowerInvariant();
         if (name == "sdbt")
-          ReadSdb(child, this.terrChannels, 0, "DvbT");
+          ReadSdb(child, SignalSource.DvbT, 0, "DvbT");
         else if (name == "sdbc")
-          ReadSdb(child, this.cableChannels, 0x10000, "DvbC");
+          ReadSdb(child, SignalSource.DvbC, 0x10000, "DvbC");
         else if (name == "sdbgs")
-          ReadSdb(child, this.satChannels, 0x20000, "DvbS");
+          ReadSdb(child, SignalSource.DvbS | SignalSource.Provider1, 0x20000, "DvbS");
         else if (name == "sdbps")
-          ReadSdb(child, this.satChannelsP, 0x30000, "DvbS");
+          ReadSdb(child, SignalSource.DvbS | SignalSource.Provider2, 0x30000, "DvbS");
         else if (name == "sdbcis")
-          ReadSdb(child, this.satChannelsCi, 0x40000, "DvbS");
+          ReadSdb(child, SignalSource.DvbS | SignalSource.Provider3, 0x40000, "DvbS");
       }
     }
     #endregion
 
     #region ReadSdb()
-    private void ReadSdb(XmlNode node, ChannelList list, int idAdjustment, string dvbSystem)
+    private void ReadSdb(XmlNode node, SignalSource signalSource, int idAdjustment, string dvbSystem)
     {
-      list.ReadOnly = node["Editable"]?.InnerText == "F";
-      this.channeListNodes[list] = new ChannelListNodes();
+      if (node["Editable"]?.InnerText == "F")
+      {
+        foreach (var list in this.DataRoot.ChannelLists)
+        {
+          if ((list.SignalSource & (SignalSource.MaskAdInput | SignalSource.MaskProvider)) == signalSource)
+            list.ReadOnly = true;
+        }
+      }
 
       this.ReadSatellites(node, idAdjustment);
       this.ReadTransponder(node, idAdjustment, dvbSystem);
 
       if (this.isEFormat)
-        this.ReadServicesE110(node, list, idAdjustment);
+        this.ReadServicesE110(node, signalSource, idAdjustment);
       else
-        this.ReadServices(node, list, idAdjustment);
+        this.ReadServices(node, signalSource, idAdjustment);
     }
     #endregion
 
@@ -270,20 +281,21 @@ namespace ChanSort.Loader.Sony
     #endregion
 
     #region ReadServicesE110()
-    private void ReadServicesE110(XmlNode node, ChannelList list, int idAdjustment)
+    private void ReadServicesE110(XmlNode node, SignalSource signalSource, int idAdjustment)
     {
       var serviceNode = node["Service"] ?? throw new FileLoadException("Missing Service XML element");
       var svcData = SplitLines(serviceNode);
       var dvbData = SplitLines(serviceNode["dvb_info"]);
 
       // remember the nodes that need to be updated when saving
-      var nodes = this.channeListNodes[list];
+      var nodes = new ChannelListNodes();
       nodes.Service = serviceNode;
+      this.channeListNodes[signalSource] = nodes;
 
       for (int i = 0, c = svcData["ui2_svl_rec_id"].Length; i < c; i++)
       {
         var recId = int.Parse(svcData["ui2_svl_rec_id"][i]);
-        var chan = new Channel(list.SignalSource, i, recId);
+        var chan = new Channel(signalSource, i, recId);
         chan.OldProgramNr = (int) ((uint) ParseInt(svcData["No"][i]) >> 18);
         chan.IsDeleted = svcData["b_deleted_by_user"][i] != "1";
         var nwMask = uint.Parse(svcData["ui4_nw_mask"][i]);
@@ -306,9 +318,9 @@ namespace ChanSort.Loader.Sony
           chan.Satellite = transp.Satellite?.Name;
           chan.SatPosition = transp.Satellite?.OrbitalPosition;
 
-          if ((list.SignalSource & SignalSource.Cable) != 0)
+          if ((signalSource & SignalSource.Cable) != 0)
             chan.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(chan.FreqInMhz);
-          if ((list.SignalSource & SignalSource.Antenna) != 0)
+          if ((signalSource & SignalSource.Antenna) != 0)
             chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
         }
         else
@@ -324,13 +336,14 @@ namespace ChanSort.Loader.Sony
 
         CopyDataValues(serviceNode, svcData, i, chan.ServiceData);
 
+        var list = this.DataRoot.GetChannelList(chan.SignalSource);
         this.DataRoot.AddChannel(list, chan);
       }
     }
     #endregion
 
     #region ReadServices()
-    private void ReadServices(XmlNode node, ChannelList list, int idAdjustment)
+    private void ReadServices(XmlNode node, SignalSource signalSource, int idAdjustment)
     {
       var serviceNode = node["Service"] ?? throw new FileLoadException("Missing Service XML element");
       var svcData = SplitLines(serviceNode);
@@ -339,15 +352,16 @@ namespace ChanSort.Loader.Sony
       var progData = SplitLines(progNode);
 
       // remember the nodes that need to be updated when saving
-      var nodes = this.channeListNodes[list];
+      var nodes = new ChannelListNodes();
       nodes.Service = serviceNode;
       nodes.Programme = progNode;
+      this.channeListNodes[signalSource] = nodes;
 
       var map = new Dictionary<int, Channel>();
       for (int i = 0, c = svcData["ServiceRowId"].Length; i < c; i++)
       {
         var rowId = int.Parse(svcData["ServiceRowId"][i]);
-        var chan = new Channel(list.SignalSource, i, rowId);
+        var chan = new Channel(signalSource, i, rowId);
         map[rowId] = chan;
         chan.OldProgramNr = -1;
         chan.IsDeleted = true;
@@ -364,9 +378,9 @@ namespace ChanSort.Loader.Sony
           chan.FreqInMhz = transp.FrequencyInMhz;
           chan.SymbolRate = transp.SymbolRate;
           chan.Polarity = transp.Polarity;
-          if ((list.SignalSource & SignalSource.Cable) != 0)
+          if ((signalSource & SignalSource.Cable) != 0)
             chan.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(chan.FreqInMhz);
-          if ((list.SignalSource & SignalSource.Cable) != 0)
+          if ((signalSource & SignalSource.Cable) != 0)
             chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
         }
 
@@ -376,6 +390,7 @@ namespace ChanSort.Loader.Sony
 
         CopyDataValues(serviceNode, svcData, i, chan.ServiceData);
 
+        var list = this.DataRoot.GetChannelList(chan.SignalSource);
         this.DataRoot.AddChannel(list, chan);
       }
 
@@ -516,9 +531,29 @@ namespace ChanSort.Loader.Sony
     #region Save()
     public override void Save(string tvOutputFile)
     {
-      // TODO handling for "e"-lists
+      if (this.channeListNodes.TryGetValue(SignalSource.DvbT, out var nodes))
+      {
+        var dvbt = this.DataRoot.GetChannelList(SignalSource.DvbT | SignalSource.Tv).Channels
+          .Concat(this.DataRoot.GetChannelList(SignalSource.DvbT | SignalSource.Radio).Channels)
+          .Concat(this.DataRoot.GetChannelList(SignalSource.DvbT).Channels)
+          .ToList();
+        this.UpdateChannelList(dvbt, nodes);
+      }
+
+      if (this.channeListNodes.TryGetValue(SignalSource.DvbC, out nodes))
+      {
+        var dvbc = this.DataRoot.GetChannelList(SignalSource.DvbC | SignalSource.Tv).Channels
+          .Concat(this.DataRoot.GetChannelList(SignalSource.DvbC | SignalSource.Radio).Channels)
+          .Concat(this.DataRoot.GetChannelList(SignalSource.DvbC).Channels)
+          .ToList();
+        this.UpdateChannelList(dvbc, nodes);
+      }
+
       foreach (var list in this.DataRoot.ChannelLists)
-        this.UpdateChannelList(list);
+      {
+        if ((list.SignalSource & SignalSource.DvbS) == SignalSource.DvbS && this.channeListNodes.TryGetValue(list.SignalSource, out nodes))
+          this.UpdateChannelList(list.Channels, nodes);
+      }
 
       // by default .NET reformats the whole XML. These settings produce almost same format as the TV xml files use
       var xmlSettings = new XmlWriterSettings();
@@ -563,17 +598,13 @@ namespace ChanSort.Loader.Sony
     #endregion
 
     #region UpdateChannelList()
-    private void UpdateChannelList(ChannelList list)
+    private void UpdateChannelList(IList<ChannelInfo> channels, ChannelListNodes nodes)
     {
-      var nodes = this.channeListNodes.TryGet(list);
-      if (nodes == null) // this list wasn't present in the file
-        return;
-
-      if (this.isEFormat || list.Channels.Any(ch => ch.IsNameModified))
-        this.UpdateDataInChildNodes(nodes.Service, list.Channels.OrderBy(c => c.RecordOrder), ch => true, ch => ch.ServiceData, this.GetNewValueForServiceNode);
+      if (this.isEFormat || channels.Any(ch => ch.IsNameModified))
+        this.UpdateDataInChildNodes(nodes.Service, channels.OrderBy(c => c.RecordOrder), ch => true, ch => ch.ServiceData, this.GetNewValueForServiceNode);
 
       if (!this.isEFormat)
-        this.UpdateDataInChildNodes(nodes.Programme, list.Channels.OrderBy(c => c.NewProgramNr), ch => !(ch.IsDeleted || ch.NewProgramNr < 0), ch => ch.ProgrammeData, this.GetNewValueForProgrammeNode);
+        this.UpdateDataInChildNodes(nodes.Programme, channels.OrderBy(c => c.NewProgramNr), ch => !(ch.IsDeleted || ch.NewProgramNr < 0), ch => ch.ProgrammeData, this.GetNewValueForProgrammeNode);
     }
     #endregion
 

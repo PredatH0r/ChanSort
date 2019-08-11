@@ -204,7 +204,7 @@ namespace ChanSort.Api
       foreach (var refList in refDataRoot.ChannelLists)
       {
         var tvList = this.DataRoot.GetChannelList(refList.SignalSource);
-        if (tvList == null)
+        if (tvList == null || tvList.SignalSource != refList.SignalSource)
         {
           log.AppendFormat("Skipped reference list {0}\r\n", refList.ShortCaption);
           continue;

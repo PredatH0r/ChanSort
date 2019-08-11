@@ -85,20 +85,19 @@ namespace ChanSort.Api
 
 
     #region GetChannelList()
-    public ChannelList GetChannelList(SignalSource criteriaMask)
+    public ChannelList GetChannelList(SignalSource searchMask)
     {
       foreach (var list in this.channelLists)
       {
-        uint searchMask = (uint)criteriaMask;
-        uint listMask = (uint) list.SignalSource;
+        var listMask = list.SignalSource;
 
-        if ((listMask & 0x000F & searchMask) != (searchMask & 0x000F)) // digital/analog
+        if ((listMask & SignalSource.MaskAnalogDigital) != 0 && (listMask & SignalSource.MaskAnalogDigital & searchMask) == 0) // digital/analog
           continue;
-        if ((listMask & 0x00F0 & searchMask) != (searchMask & 0x00F0)) // air/cable/sat/ip
+        if ((listMask & SignalSource.MaskAntennaCableSat) != 0 && (listMask & SignalSource.MaskAntennaCableSat & searchMask) == 0) // air/cable/sat/ip
           continue;
-        if ((listMask & 0x0F00 & searchMask) != (searchMask & 0x0F00)) // tv/radio
+        if ((listMask & SignalSource.MaskTvRadio) != 0 && (listMask & SignalSource.MaskTvRadio & searchMask) == 0) // tv/radio
           continue;
-        if ((listMask & 0xF000) != (searchMask & 0xF000)) // preset list
+        if ((listMask & SignalSource.MaskProvider) != 0 && (listMask & SignalSource.MaskProvider) != (searchMask & SignalSource.MaskProvider)) // preset list
           continue;
         return list;
       }

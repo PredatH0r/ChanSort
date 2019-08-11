@@ -1,6 +1,11 @@
 ChanSort Change Log 
 ===================
 
+2019-08-11
+- Sony: DVB-T and DVB-C lists are now separated into "TV", "Radio" and "Other" lists, each with their own unique numbering
+- Samsung ZIP: deleting a channel now really deletes it from the file, instead of marking it as deleted
+  and assigning -1 as channel number (which appears as 65535 on some models)
+
 2019-08-05
 - added partial support for Philips .xml channel lists
   (There are MANY different file formats, only a few are currently supported)
