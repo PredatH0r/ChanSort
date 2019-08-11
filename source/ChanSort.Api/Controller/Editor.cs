@@ -373,7 +373,7 @@ namespace ChanSort.Api
           }
 
           int progNr = this.GetNewProgramNr(appChannel, ref maxProgNr);
-          if (mode != UnsortedChannelMode.MarkDeleted)
+          if (mode != UnsortedChannelMode.MarkDeleted || this.DataRoot.DeletedChannelsNeedNumbers)
             appChannel.NewProgramNr = progNr;
         }
       }
@@ -384,8 +384,9 @@ namespace ChanSort.Api
     private string ChanSortCriteria(ChannelInfo channel)
     {
       // explicitly sorted
-      if (channel.GetPosition(this.SubListIndex) != -1)
-        return channel.GetPosition(this.SubListIndex).ToString("d5");
+      var pos = channel.GetPosition(this.SubListIndex);
+      if (pos != -1)
+        return pos.ToString("d5");
 
       // eventually hide unsorted channels
       if (this.unsortedChannelMode == UnsortedChannelMode.MarkDeleted)

@@ -790,7 +790,7 @@ namespace ChanSort.Ui
       {
         foreach (var channel in list.Channels)
         {
-          if (channel.NewProgramNr < 0 && !channel.IsDeleted)
+          if (channel.NewProgramNr < 0 && (!channel.IsDeleted || DataRoot.DeletedChannelsNeedNumbers))
           {
             hasUnsorted = true;
             break;
@@ -929,7 +929,7 @@ namespace ChanSort.Ui
         {
           foreach (var chan in list.Channels)
           {
-            if (chan.IsDeleted) // during the saving process, deleted channels temporarily got a NewProgramNr assigned
+            if (chan.IsDeleted && !this.DataRoot.DeletedChannelsNeedNumbers) // during the saving process, deleted channels temporarily got a NewProgramNr assigned
               chan.NewProgramNr = -1;
             chan.OldProgramNr = chan.NewProgramNr;
             chan.OldFavIndex.Clear();
@@ -2199,7 +2199,7 @@ namespace ChanSort.Ui
     {
       var channel = (ChannelInfo) this.gviewLeft.GetRow(e.RowHandle);
       if (channel == null) return;
-      if (channel.IsProxy)
+      if (channel.IsProxy || channel.IsDeleted)
       {
         e.Appearance.ForeColor = Color.Red;
         e.Appearance.Options.UseForeColor = true;

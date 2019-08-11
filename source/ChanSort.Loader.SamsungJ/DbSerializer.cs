@@ -296,7 +296,7 @@ namespace ChanSort.Loader.SamsungJ
           // Note that we can have channels from multiple satellites in the same list, so this is a loop variable now
           var sat = tp?.Satellite;
           var channel = new DbChannel(r, fields, this.DataRoot, providers, sat, tp);
-          if (!channel.IsDeleted)
+          //if (!channel.IsDeleted)
           {
             this.DataRoot.AddChannel(channelList, channel);
             this.channelById.Add(channel.RecordIndex, channel);
@@ -529,9 +529,6 @@ namespace ChanSort.Loader.SamsungJ
         if (channel == null) // ignore reference list proxy channels
           continue;
 
-#if false        
-        // disabled, because channels should just be marked as deleted and not physically deleted
-
         if (channel.NewProgramNr < 0)
         {
           // delete channel from all tables that have a reference to srvId
@@ -539,11 +536,10 @@ namespace ChanSort.Loader.SamsungJ
           cmdDeleteSrv.ExecuteNonQuery();
           continue;
         }
-#endif
 
         // update channel record
         cmdUpdateSrv.Parameters["@id"].Value = channel.RecordIndex;
-        cmdUpdateSrv.Parameters["@nr"].Value = channel.IsDeleted ? -1 : channel.NewProgramNr;
+        cmdUpdateSrv.Parameters["@nr"].Value = channel.NewProgramNr;
         cmdUpdateSrv.Parameters["@lock"].Value = channel.Lock;
         cmdUpdateSrv.Parameters["@hidden"].Value = channel.Hidden;
         cmdUpdateSrv.Parameters["@numsel"].Value = !channel.Skip;

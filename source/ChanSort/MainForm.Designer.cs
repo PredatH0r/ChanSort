@@ -157,6 +157,7 @@
       this.miRomanian = new DevExpress.XtraBars.BarButtonItem();
       this.mnuCharset = new DevExpress.XtraBars.BarSubItem();
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
+      this.miUtf8Charset = new DevExpress.XtraBars.BarButtonItem();
       this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
       this.miShowWarningsAfterLoad = new DevExpress.XtraBars.BarCheckItem();
       this.miAllowEditPredefinedLists = new DevExpress.XtraBars.BarButtonItem();
@@ -207,7 +208,8 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
-      this.miUtf8Charset = new DevExpress.XtraBars.BarButtonItem();
+      this.colOutDeleted = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colDeleted = new DevExpress.XtraGrid.Columns.GridColumn();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -301,10 +303,11 @@
             this.colOutSlot,
             this.colOutName,
             this.colOutFav,
-            this.colUid1,
             this.colOutLock,
             this.colOutSkip,
-            this.colOutHide});
+            this.colOutHide,
+            this.colOutDeleted,
+            this.colUid1});
       this.gviewLeft.GridControl = this.gridLeft;
       this.gviewLeft.Name = "gviewLeft";
       this.gviewLeft.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
@@ -580,6 +583,7 @@
             this.colLock,
             this.colSkip,
             this.colHidden,
+            this.colDeleted,
             this.colEncrypted,
             this.colServiceType,
             this.colServiceTypeName,
@@ -1624,6 +1628,13 @@
       this.miCharsetForm.Name = "miCharsetForm";
       this.miCharsetForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCharset_ItemClick);
       // 
+      // miUtf8Charset
+      // 
+      resources.ApplyResources(this.miUtf8Charset, "miUtf8Charset");
+      this.miUtf8Charset.Id = 99;
+      this.miUtf8Charset.Name = "miUtf8Charset";
+      this.miUtf8Charset.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.MiUtf8Charset_ItemClick);
+      // 
       // miIsoCharSets
       // 
       resources.ApplyResources(this.miIsoCharSets, "miIsoCharSets");
@@ -2066,12 +2077,17 @@
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
       // 
-      // miUtf8Charset
+      // colOutDeleted
       // 
-      resources.ApplyResources(this.miUtf8Charset, "miUtf8Charset");
-      this.miUtf8Charset.Id = 99;
-      this.miUtf8Charset.Name = "miUtf8Charset";
-      this.miUtf8Charset.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.MiUtf8Charset_ItemClick);
+      resources.ApplyResources(this.colOutDeleted, "colOutDeleted");
+      this.colOutDeleted.FieldName = "IsDeleted";
+      this.colOutDeleted.Name = "colOutDeleted";
+      // 
+      // colDeleted
+      // 
+      resources.ApplyResources(this.colDeleted, "colDeleted");
+      this.colDeleted.FieldName = "IsDeleted";
+      this.colDeleted.Name = "colDeleted";
       // 
       // MainForm
       // 
@@ -2315,6 +2331,8 @@
     private DevExpress.XtraBars.BarButtonItem miExplorerIntegration;
     private DevExpress.XtraBars.BarButtonItem miCheckUpdates;
     private DevExpress.XtraBars.BarButtonItem miUtf8Charset;
+    private DevExpress.XtraGrid.Columns.GridColumn colOutDeleted;
+    private DevExpress.XtraGrid.Columns.GridColumn colDeleted;
   }
 }
 

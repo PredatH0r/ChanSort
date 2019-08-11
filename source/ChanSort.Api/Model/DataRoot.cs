@@ -25,6 +25,8 @@ namespace ChanSort.Api
     public bool AllowGapsInFavNumbers { get; set; }
     public bool ShowDeletedChannels { get; set; }
 
+    public bool DeletedChannelsNeedNumbers { get; set; }
+
     public DataRoot()
     {
       this.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D;
@@ -118,8 +120,8 @@ namespace ChanSort.Api
       {
         foreach (var channel in list.Channels)
         {
-          for (int i=0; i<=c; i++)
-            channel.SetPosition(i, channel.IsDeleted ? -1 : channel.GetOldPosition(i));
+          for (int i = 0; i <= c; i++)
+            channel.SetPosition(i, channel.IsDeleted && !this.DeletedChannelsNeedNumbers ? -1 : channel.GetOldPosition(i));
         }
       }
     }
@@ -128,6 +130,9 @@ namespace ChanSort.Api
     #region SetPrNrForDeletedChannels()
     public void SetPrNrForDeletedChannels()
     {
+      if (this.DeletedChannelsNeedNumbers)
+        return;
+
       // make sure that deleted channels have OldProgramNr = -1
       foreach (var list in this.ChannelLists)
       {

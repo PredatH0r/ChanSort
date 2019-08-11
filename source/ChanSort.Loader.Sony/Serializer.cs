@@ -137,6 +137,9 @@ namespace ChanSort.Loader.Sony
       {
         this.format = "e" + formatNode.InnerText;
         this.isEFormat = true;
+        this.DataRoot.DeletedChannelsNeedNumbers = true;
+        foreach(var list in this.DataRoot.ChannelLists)
+          list.VisibleColumnFieldNames.Add("IsDeleted");
       }
 
       if (SupportedFormatVersions.IndexOf(" " + this.format + " ", StringComparison.Ordinal) < 0)
@@ -283,7 +286,7 @@ namespace ChanSort.Loader.Sony
         var chan = new Channel(list.SignalSource, i, recId);
         chan.OldProgramNr = (int) ((uint) ParseInt(svcData["No"][i]) >> 18);
         chan.IsDeleted = svcData["b_deleted_by_user"][i] != "1";
-        var nwMask = int.Parse(svcData["ui4_nw_mask"][i]);
+        var nwMask = uint.Parse(svcData["ui4_nw_mask"][i]);
         chan.Hidden = (nwMask & 8) == 0;
         chan.Encrypted = (nwMask & 2048) != 0;
         chan.Encrypted = dvbData["t_free_ca_mode"][i] == "1";
@@ -629,9 +632,9 @@ namespace ChanSort.Loader.Sony
         if (field == "b_deleted_by_user")
           return ch.IsDeleted ? "0" : "1"; // file seems to contain reverse logic (1 = not deleted)
         if (field == "No")
-          return ((ch.NewProgramNr << 18) | (int.Parse(value) & 0x3FFFF)).ToString();
+          return ((uint)(ch.NewProgramNr << 18) | (uint.Parse(value) & 0x3FFFF)).ToString();
         if (field == "ui4_nw_mask")
-          return (((int)ch.Favorites << 4) | (ch.Hidden ? 0 : 8) | (int.Parse(value) & 0x07)).ToString();
+          return (((uint)ch.Favorites << 4) | (ch.Hidden ? 0u : 8u) | (uint.Parse(value) & ~0xF8)).ToString();
       }
       return value;
     }
