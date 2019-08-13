@@ -211,6 +211,8 @@ namespace ChanSort.Loader.GlobalClone
         this.ParseChannelInfoNodes(itemNode, ch);
 
         var list = this.DataRoot.GetChannelList(ch.SignalSource);
+        if (list == null && (ch.SignalSource & SignalSource.MaskTvRadio) == 0) // Data/Option channels are put in the TV list
+          list = this.DataRoot.GetChannelList(ch.SignalSource | SignalSource.Tv);
         this.DataRoot.AddChannel(list, ch);
       }
     }
@@ -314,6 +316,17 @@ namespace ChanSort.Loader.GlobalClone
             ch.Name = longName;
             ch.ShortName = shortName;
             hasHexName = true;
+            break;
+          default:
+            if (info.LocalName.StartsWith("favoriteIdx"))
+            {
+              int n = info.LocalName[11] - 'A';
+              var mask = 1 << n;
+              this.DataRoot.SupportedFavorites |= (Favorites)mask;
+              this.DataRoot.SortedFavorites = true;
+              if (((int)ch.Favorites & mask) != 0) // xml element holds bad index data (250) when fav is not set
+                ch.SetPosition(n + 1, int.Parse(info.InnerText));
+            }
             break;
         }
       }
@@ -432,6 +445,16 @@ namespace ChanSort.Loader.GlobalClone
               case "mapAttr":
                 if (mapType == "1")
                   node.InnerText = ((int) ch.Favorites).ToString();
+                break;
+              default:
+                if (node.LocalName.StartsWith("favoriteIdx"))
+                {
+                  int n = node.LocalName[11] - 'A';
+                  var idx = ch.GetPosition(n + 1);
+                  if (idx <= 0)
+                    idx = 250; // this weird value is used by the TV when the fav is not set
+                  node.InnerText = idx.ToString();
+                }
                 break;
             }
           }

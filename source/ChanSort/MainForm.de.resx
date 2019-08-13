@@ -634,4 +634,13 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   <data name="miCheckUpdates.Caption" xml:space="preserve">
     <value>Nach Programmupdates suchen</value>
   </data>
+  <data name="colOutDeleted.Caption" xml:space="preserve">
+    <value>Gelöscht</value>
+  </data>
+  <data name="colDeleted.Caption" xml:space="preserve">
+    <value>Gelöscht</value>
+  </data>
+  <data name="miCopyCsv.Caption" xml:space="preserve">
+    <value>Liste in Zwischenablage kopieren</value>
+  </data>
 </root>

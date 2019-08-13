@@ -21,6 +21,7 @@ using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
@@ -412,31 +413,35 @@ namespace ChanSort.Ui
 
     private void UpdateFavoritesEditor(Favorites favorites)
     {
-      var miSet = new[] {this.miFavASet, this.miFavBSet, this.miFavCSet, this.miFavDSet, this.miFavESet};
-      var miUnset = new[] { this.miFavAUnset, this.miFavBUnset, this.miFavCUnset, this.miFavDUnset, this.miFavEUnset };
+      foreach(var link in this.mnuFavSet.ItemLinks.ToList())
+        link.Item?.Dispose();
+      foreach (var link in this.mnuFavUnset.ItemLinks.ToList())
+        link.Item?.Dispose();
 
       this.repositoryItemCheckedComboBoxEdit1.Items.Clear();
       this.repositoryItemCheckedComboBoxEdit2.Items.Clear();
-      byte mask = 0x01;
       var regex = "[";
       var favCount = 0;
-      for (var bit = 0; bit < 5; bit++, mask <<= 1)
+      for (var favMask = (uint)favorites; (favMask & 1) != 0; favMask >>= 1)
       {
-        if (((int) favorites & mask) != 0)
-        {
-          var c = (char) ('A' + bit);
-          this.repositoryItemCheckedComboBoxEdit1.Items.Add(c);
-          this.repositoryItemCheckedComboBoxEdit2.Items.Add(c);
-          miSet[bit].Visibility = BarItemVisibility.Always;
-          miUnset[bit].Visibility = BarItemVisibility.Always;
-          regex += c;
-          ++favCount;
-        }
-        else
-        {
-          miSet[bit].Visibility = BarItemVisibility.Never;
-          miUnset[bit].Visibility = BarItemVisibility.Never;
-        }
+        var c = (char) ('A' + favCount);
+        ++favCount;
+        this.repositoryItemCheckedComboBoxEdit1.Items.Add(c);
+        this.repositoryItemCheckedComboBoxEdit2.Items.Add(c);
+
+        var miSet = new BarButtonItem(this.barManager1, "&" + c);
+        miSet.Tag = c.ToString();
+        miSet.ItemShortcut = new BarShortcut(Keys.Control | (Keys)((int)Keys.D0 + favCount%10));
+        miSet.ItemClick += this.miFavSet_ItemClick;
+        this.mnuFavSet.AddItem(miSet);
+
+        var miUnset = new BarButtonItem(this.barManager1, "&" + c);
+        miUnset.Tag = c.ToString();
+        miUnset.ItemShortcut = new BarShortcut(Keys.Control | Keys.Shift | (Keys)((int)Keys.D0 + favCount%10));
+        miUnset.ItemClick += this.miFavUnset_ItemClick;
+        this.mnuFavUnset.AddItem(miUnset);
+
+        regex += c;
       }
       regex += "]*";
       this.repositoryItemCheckedComboBoxEdit1.Mask.EditMask = regex;
@@ -1511,14 +1516,14 @@ namespace ChanSort.Ui
     private void SetFavorite(string fav, bool set)
     {
       if (string.IsNullOrEmpty(fav)) return;
-      var ch = char.ToUpper(fav[0]);
-      if (ch < 'A' || ch > 'E' || this.subListIndex == ch - 'A' + 1) return;
+      int idx = char.ToUpper(fav[0]) - 'A';
+      if (idx < 0 || idx >= this.mnuFavSet.ItemLinks.Count || this.subListIndex == idx + 1) return;
       var list = this.GetSelectedChannels(this.lastFocusedGrid);
       if (list.Count == 0) return;
 
       this.gviewRight.BeginDataUpdate();
       this.gviewLeft.BeginDataUpdate();
-      this.Editor.SetFavorites(list, (Favorites) (1 << (ch - 'A')), set);
+      this.Editor.SetFavorites(list, (Favorites) (1 << idx), set);
       this.gviewRight.EndDataUpdate();
       this.gviewLeft.EndDataUpdate();
     }
@@ -1602,6 +1607,9 @@ namespace ChanSort.Ui
       this.btnToggleFavC.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.C) != 0 && this.subListIndex != 3;
       this.btnToggleFavD.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.D) != 0 && this.subListIndex != 4;
       this.btnToggleFavE.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.E) != 0 && this.subListIndex != 5;
+      this.btnToggleFavF.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.F) != 0 && this.subListIndex != 6;
+      this.btnToggleFavG.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.G) != 0 && this.subListIndex != 7;
+      this.btnToggleFavH.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.H) != 0 && this.subListIndex != 8;
       this.btnToggleLock.Enabled = mayEdit;
 
       this.miReload.Enabled = fileLoaded;
@@ -1614,7 +1622,7 @@ namespace ChanSort.Ui
       this.miExcelExport.Enabled = fileLoaded;
       this.miPrint.Enabled = fileLoaded;
 
-      this.miAddChannel.Enabled = isRight;
+      this.miAddChannel.Enabled = fileLoaded && isRight;
 
       var visRight = isRight ? BarItemVisibility.Always : BarItemVisibility.Never;
       var visLeft = isRight ? BarItemVisibility.Never : BarItemVisibility.Always;
@@ -1851,6 +1859,24 @@ namespace ChanSort.Ui
         dlg.ShowDialog(this);
     }
 
+    #endregion
+
+    #region GetFavString()
+    private string GetFavString(Favorites fav)
+    {
+      if (fav == 0)
+        return string.Empty;
+
+      var sb = new StringBuilder();
+      int i = 0;
+      for (var mask = (int)fav; mask != 0; mask >>= 1)
+      {
+        if ((mask & 1) != 0)
+          sb.Append((char)('A' + i));
+        ++i;
+      }
+      return sb.ToString();
+    }
     #endregion
 
     // UI events
@@ -2185,9 +2211,8 @@ namespace ChanSort.Ui
     {
       if (e.Column == this.colOutFav)
       {
-        if (!(e.Value is Favorites)) return;
-        if ((Favorites) e.Value == 0)
-          e.DisplayText = string.Empty;
+        if (e.Value is Favorites fav)
+          e.DisplayText = GetFavString(fav);
       }
     }
 
@@ -2337,9 +2362,8 @@ namespace ChanSort.Ui
       }
       else if (e.Column == this.colFavorites)
       {
-        if (!(e.Value is Favorites)) return;
-        if ((Favorites) e.Value == 0)
-          e.DisplayText = string.Empty;
+        if (e.Value is Favorites fav)
+          e.DisplayText = GetFavString(fav);
       }
     }
 
@@ -2787,6 +2811,38 @@ namespace ChanSort.Ui
 
     #region Edit menu
 
+    private void miCopyCsv_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      var gview = this.gridRight.ContainsFocus ? this.gviewRight : this.gviewLeft;
+      var cols = gview.VisibleColumns;
+
+      var sb = new StringBuilder();
+      foreach (GridColumn col in cols)
+        sb.Append(col.Caption).Append('\t');
+      sb[sb.Length - 1] = '\n';
+      for (int i = 0, c = gview.RowCount; i < c; i++)
+      {
+        foreach (GridColumn col in cols)
+        {
+          if (col.ColumnType == typeof(bool))
+          {
+            var val = gview.GetRowCellValue(i, col);
+            if (val is bool b && b)
+              sb.Append('x');
+            sb.Append('\t');
+          }
+          else
+          {
+            var val = gview.GetRowCellDisplayText(i, col);
+            sb.Append(val).Append('\t');
+          }
+        }
+        sb[sb.Length - 1] = '\n';
+      }
+
+      Clipboard.SetText(sb.ToString(), TextDataFormat.Text);
+    }
+
     private void miAddChannel_ItemClick(object sender, ItemClickEventArgs e)
     {
       this.TryExecute(this.AddChannels);
@@ -3210,5 +3266,6 @@ namespace ChanSort.Ui
     }
 
     #endregion
+
   }
 }

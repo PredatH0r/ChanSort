@@ -1,6 +1,11 @@
 ChanSort Change Log 
 ===================
 
+2019-08-13
+- LG GlobalClone: added support for additional favorites (A-H) and individual fav sorting when supported by the TV
+- LG GlobalClone: data/option channels were not listed before and are now shown in the TV channel list
+- added function to copy list to clipboard (which can then be pasted into Excel or other programs)
+
 2019-08-11
 - Sony: DVB-T and DVB-C lists are now separated into "TV", "Radio" and "Other" lists, each with their own unique numbering
 - Samsung ZIP: deleting a channel now really deletes it from the file, instead of marking it as deleted

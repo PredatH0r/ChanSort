@@ -228,38 +228,8 @@
   <data name="mnuFavSet.Caption" xml:space="preserve">
     <value>Adauga la &amp;favorite</value>
   </data>
-  <data name="miFavASet.Caption" xml:space="preserve">
-    <value>&amp;A</value>
-  </data>
-  <data name="miFavBSet.Caption" xml:space="preserve">
-    <value>&amp;B</value>
-  </data>
-  <data name="miFavCSet.Caption" xml:space="preserve">
-    <value>&amp;C</value>
-  </data>
-  <data name="miFavDSet.Caption" xml:space="preserve">
-    <value>&amp;D</value>
-  </data>
-  <data name="miFavESet.Caption" xml:space="preserve">
-    <value>&amp;E</value>
-  </data>
   <data name="mnuFavUnset.Caption" xml:space="preserve">
     <value>Eliminați din Favorite</value>
-  </data>
-  <data name="miFavAUnset.Caption" xml:space="preserve">
-    <value>&amp;A</value>
-  </data>
-  <data name="miFavBUnset.Caption" xml:space="preserve">
-    <value>&amp;B</value>
-  </data>
-  <data name="miFavCUnset.Caption" xml:space="preserve">
-    <value>&amp;C</value>
-  </data>
-  <data name="miFavDUnset.Caption" xml:space="preserve">
-    <value>&amp;D</value>
-  </data>
-  <data name="miFavEUnset.Caption" xml:space="preserve">
-    <value>&amp;E</value>
   </data>
   <data name="miLockOn.Caption" xml:space="preserve">
     <value>&amp;Blocați canalul: activat</value>

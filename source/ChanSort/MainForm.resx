@@ -311,8 +311,8 @@
   <data name="&gt;&gt;lblHotkeyLeft.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnToggleLock.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
+    <value>Toggle Favorite H</value>
   </data>
   <metadata name="globalImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>600, 17</value>
@@ -497,62 +497,14 @@
   <data name="miRenameChannel.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>29</value>
   </data>
-  <data name="miSort.Caption" xml:space="preserve">
-    <value>Sor&amp;t channels alphabetically</value>
-  </data>
-  <data name="miSort.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="miRenum.Caption" xml:space="preserve">
-    <value>Re&amp;number channels</value>
-  </data>
-  <data name="miRenum.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
-    <value>Renumber favorites by Pr#</value>
-  </data>
-  <data name="miRenumFavByPrNr.Hint" xml:space="preserve">
-    <value>Uses the same Pr# in all channel and favorites lists</value>
-  </data>
   <data name="mnuFavSet.Caption" xml:space="preserve">
     <value>Add to &amp;Favorites</value>
   </data>
   <data name="mnuFavSet.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
-  <data name="miFavASet.Caption" xml:space="preserve">
-    <value>&amp;A</value>
-  </data>
-  <data name="miFavBSet.Caption" xml:space="preserve">
-    <value>&amp;B</value>
-  </data>
-  <data name="miFavCSet.Caption" xml:space="preserve">
-    <value>&amp;C</value>
-  </data>
-  <data name="miFavDSet.Caption" xml:space="preserve">
-    <value>&amp;D</value>
-  </data>
-  <data name="miFavESet.Caption" xml:space="preserve">
-    <value>&amp;E</value>
-  </data>
   <data name="mnuFavUnset.Caption" xml:space="preserve">
     <value>Remove from Favorites</value>
-  </data>
-  <data name="miFavAUnset.Caption" xml:space="preserve">
-    <value>&amp;A</value>
-  </data>
-  <data name="miFavBUnset.Caption" xml:space="preserve">
-    <value>&amp;B</value>
-  </data>
-  <data name="miFavCUnset.Caption" xml:space="preserve">
-    <value>&amp;C</value>
-  </data>
-  <data name="miFavDUnset.Caption" xml:space="preserve">
-    <value>&amp;D</value>
-  </data>
-  <data name="miFavEUnset.Caption" xml:space="preserve">
-    <value>&amp;E</value>
   </data>
   <data name="miLockOn.Caption" xml:space="preserve">
     <value>&amp;Lock channel: on</value>
@@ -580,6 +532,30 @@
   </data>
   <data name="miHideOff.Caption" xml:space="preserve">
     <value>Hide channel: off</value>
+  </data>
+  <data name="miRenum.Caption" xml:space="preserve">
+    <value>Re&amp;number channels</value>
+  </data>
+  <data name="miRenum.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="miSort.Caption" xml:space="preserve">
+    <value>Sor&amp;t channels alphabetically</value>
+  </data>
+  <data name="miSort.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
+    <value>Renumber favorites by Pr#</value>
+  </data>
+  <data name="miRenumFavByPrNr.Hint" xml:space="preserve">
+    <value>Uses the same Pr# in all channel and favorites lists</value>
+  </data>
+  <data name="miCopyCsv.Caption" xml:space="preserve">
+    <value>Copy list to clipboard</value>
+  </data>
+  <data name="miCopyCsv.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>43</value>
   </data>
   <data name="barSubItem2.Caption" xml:space="preserve">
     <value>TV-Set</value>
@@ -1230,12 +1206,6 @@
   <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit1.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit, DevExpress.XtraEditors.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;colUid1.Name" xml:space="preserve">
-    <value>colUid1</value>
-  </data>
-  <data name="&gt;&gt;colUid1.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;colOutLock.Name" xml:space="preserve">
     <value>colOutLock</value>
   </data>
@@ -1254,6 +1224,18 @@
   <data name="&gt;&gt;colOutHide.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;colOutDeleted.Name" xml:space="preserve">
+    <value>colOutDeleted</value>
+  </data>
+  <data name="&gt;&gt;colOutDeleted.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colUid1.Name" xml:space="preserve">
+    <value>colUid1</value>
+  </data>
+  <data name="&gt;&gt;colUid1.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;repositoryItemTextEdit1.Name" xml:space="preserve">
     <value>repositoryItemTextEdit1</value>
   </data>
@@ -1264,7 +1246,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7161.41242, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7164.24093, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1342,6 +1324,12 @@
     <value>colHidden</value>
   </data>
   <data name="&gt;&gt;colHidden.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;colDeleted.Name" xml:space="preserve">
+    <value>colDeleted</value>
+  </data>
+  <data name="&gt;&gt;colDeleted.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;colEncrypted.Name" xml:space="preserve">
@@ -1608,77 +1596,23 @@
   <data name="&gt;&gt;miRenumFavByPrNr.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miCopyCsv.Name" xml:space="preserve">
+    <value>miCopyCsv</value>
+  </data>
+  <data name="&gt;&gt;miCopyCsv.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;mnuFavSet.Name" xml:space="preserve">
     <value>mnuFavSet</value>
   </data>
   <data name="&gt;&gt;mnuFavSet.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miFavASet.Name" xml:space="preserve">
-    <value>miFavASet</value>
-  </data>
-  <data name="&gt;&gt;miFavASet.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavBSet.Name" xml:space="preserve">
-    <value>miFavBSet</value>
-  </data>
-  <data name="&gt;&gt;miFavBSet.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavCSet.Name" xml:space="preserve">
-    <value>miFavCSet</value>
-  </data>
-  <data name="&gt;&gt;miFavCSet.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavDSet.Name" xml:space="preserve">
-    <value>miFavDSet</value>
-  </data>
-  <data name="&gt;&gt;miFavDSet.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavESet.Name" xml:space="preserve">
-    <value>miFavESet</value>
-  </data>
-  <data name="&gt;&gt;miFavESet.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;mnuFavUnset.Name" xml:space="preserve">
     <value>mnuFavUnset</value>
   </data>
   <data name="&gt;&gt;mnuFavUnset.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavAUnset.Name" xml:space="preserve">
-    <value>miFavAUnset</value>
-  </data>
-  <data name="&gt;&gt;miFavAUnset.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavBUnset.Name" xml:space="preserve">
-    <value>miFavBUnset</value>
-  </data>
-  <data name="&gt;&gt;miFavBUnset.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavCUnset.Name" xml:space="preserve">
-    <value>miFavCUnset</value>
-  </data>
-  <data name="&gt;&gt;miFavCUnset.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavDUnset.Name" xml:space="preserve">
-    <value>miFavDUnset</value>
-  </data>
-  <data name="&gt;&gt;miFavDUnset.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miFavEUnset.Name" xml:space="preserve">
-    <value>miFavEUnset</value>
-  </data>
-  <data name="&gt;&gt;miFavEUnset.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;miLockOn.Name" xml:space="preserve">
     <value>miLockOn</value>
@@ -1992,18 +1926,6 @@
   <data name="&gt;&gt;popupFavList.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.PopupMenu, DevExpress.XtraBars.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;colOutDeleted.Name" xml:space="preserve">
-    <value>colOutDeleted</value>
-  </data>
-  <data name="&gt;&gt;colOutDeleted.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colDeleted.Name" xml:space="preserve">
-    <value>colDeleted</value>
-  </data>
-  <data name="&gt;&gt;colDeleted.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
@@ -2011,13 +1933,94 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>08/10/2019 23:05:28</value>
+    <value>08/13/2019 13:25:32</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
   </data>
-  <data name="btnToggleLock.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="btnToggleFavH.Location" type="System.Drawing.Point, System.Drawing">
+    <value>307, 5</value>
+  </data>
+  <data name="btnToggleFavH.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnToggleFavH.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="btnToggleFavH.Text" xml:space="preserve">
+    <value>±H</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavH.Name" xml:space="preserve">
+    <value>btnToggleFavH</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavH.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavH.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavH.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
+    <value>Toggle Favorite G</value>
+  </data>
+  <data name="btnToggleFavG.Location" type="System.Drawing.Point, System.Drawing">
+    <value>282, 5</value>
+  </data>
+  <data name="btnToggleFavG.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnToggleFavG.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="btnToggleFavG.Text" xml:space="preserve">
+    <value>±G</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavG.Name" xml:space="preserve">
+    <value>btnToggleFavG</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavG.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavG.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavG.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
+    <value>Toggle Favorite F</value>
+  </data>
+  <data name="btnToggleFavF.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 5</value>
+  </data>
+  <data name="btnToggleFavF.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnToggleFavF.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="btnToggleFavF.Text" xml:space="preserve">
+    <value>±F</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavF.Name" xml:space="preserve">
+    <value>btnToggleFavF</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavF.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavF.Parent" xml:space="preserve">
+    <value>pnlEditControls</value>
+  </data>
+  <data name="&gt;&gt;btnToggleFavF.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnToggleLock.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="btnToggleLock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>334, 5</value>
   </data>
   <data name="btnToggleLock.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -2041,7 +2044,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnToggleLock.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
     <value>Toggle Favorite E</value>
@@ -2068,7 +2071,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnToggleFavE.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
     <value>Toggle Favorite D</value>
@@ -2095,7 +2098,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnToggleFavD.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
     <value>Toggle Favorite C</value>
@@ -2122,7 +2125,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnToggleFavC.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="btnToggleFavB.AccessibleDescription" xml:space="preserve">
     <value>Toggle Favorite B</value>
@@ -2149,7 +2152,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnToggleFavB.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
     <value>Toggle Favorite A</value>
@@ -2176,7 +2179,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnToggleFavA.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <data name="btnClearLeftFilter.AccessibleDescription" xml:space="preserve">
     <value>Remove channel filter criteria from sorted channel list</value>
@@ -2188,7 +2191,7 @@
     <value>28</value>
   </data>
   <data name="btnClearLeftFilter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>295, 4</value>
+    <value>372, 4</value>
   </data>
   <data name="btnClearLeftFilter.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 23</value>
@@ -2212,7 +2215,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnClearLeftFilter.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>9</value>
   </data>
   <data name="btnRenum.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -2242,7 +2245,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnRenum.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>10</value>
   </data>
   <data name="btnDown.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>25</value>
@@ -2272,7 +2275,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnDown.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>11</value>
   </data>
   <data name="btnUp.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -2302,7 +2305,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnUp.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>12</value>
   </data>
   <data name="btnRemoveLeft.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -2332,7 +2335,7 @@
     <value>pnlEditControls</value>
   </data>
   <data name="&gt;&gt;btnRemoveLeft.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>13</value>
   </data>
   <data name="pnlEditControls.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>

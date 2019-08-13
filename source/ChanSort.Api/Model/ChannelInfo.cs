@@ -5,7 +5,7 @@ namespace ChanSort.Api
 {
   public class ChannelInfo
   {
-    private const int MAX_FAV_LISTS = 5;
+    private const int MAX_FAV_LISTS = 16;
 
     private string uid;
     private string serviceTypeName;

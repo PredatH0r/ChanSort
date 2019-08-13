@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -416,36 +416,6 @@
   </data>
   <data name="miExcelExport.Caption" xml:space="preserve">
     <value>Exportovat seznam do aplikace Excel...</value>
-  </data>
-  <data name="miFavASet.Caption" xml:space="preserve">
-    <value>&amp;A</value>
-  </data>
-  <data name="miFavAUnset.Caption" xml:space="preserve">
-    <value>&amp;A</value>
-  </data>
-  <data name="miFavBSet.Caption" xml:space="preserve">
-    <value>&amp;B</value>
-  </data>
-  <data name="miFavBUnset.Caption" xml:space="preserve">
-    <value>&amp;B</value>
-  </data>
-  <data name="miFavCSet.Caption" xml:space="preserve">
-    <value>&amp;C</value>
-  </data>
-  <data name="miFavCUnset.Caption" xml:space="preserve">
-    <value>&amp;C</value>
-  </data>
-  <data name="miFavDSet.Caption" xml:space="preserve">
-    <value>&amp;D</value>
-  </data>
-  <data name="miFavDUnset.Caption" xml:space="preserve">
-    <value>&amp;D</value>
-  </data>
-  <data name="miFavESet.Caption" xml:space="preserve">
-    <value>&amp;E</value>
-  </data>
-  <data name="miFavEUnset.Caption" xml:space="preserve">
-    <value>&amp;E</value>
   </data>
   <data name="miFile.Caption" xml:space="preserve">
     <value>&amp;Soubor</value>
