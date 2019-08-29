@@ -95,7 +95,7 @@ namespace ChanSort.Api
           continue;
         if ((listMask & SignalSource.MaskAntennaCableSat) != 0 && (listMask & SignalSource.MaskAntennaCableSat & searchMask) == 0) // air/cable/sat/ip
           continue;
-        if ((listMask & SignalSource.MaskTvRadio) != 0 && (listMask & SignalSource.MaskTvRadio & searchMask) == 0) // tv/radio
+        if ((listMask & SignalSource.MaskTvRadioData) != 0 && (listMask & SignalSource.MaskTvRadioData & searchMask) == 0) // tv/radio/data
           continue;
         if ((listMask & SignalSource.MaskProvider) != 0 && (listMask & SignalSource.MaskProvider) != (searchMask & SignalSource.MaskProvider)) // preset list
           continue;

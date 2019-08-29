@@ -17,6 +17,9 @@ namespace ChanSort.Loader.Panasonic
       this.RecordIndex = r.GetInt32(field["rowid"]);
       this.RecordOrder = r.GetInt32(field["major_channel"]);
       this.OldProgramNr = r.GetInt32(field["major_channel"]);
+      if (this.OldProgramNr == 1178)
+      {
+      }
       int ntype = r.GetInt32(field["ntype"]);
       if (ntype == 1)
       {

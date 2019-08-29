@@ -11,7 +11,7 @@ namespace ChanSort.Loader.Samsung
       IDictionary<int, decimal> transpFreq, FavoritesIndexMode sortedFavorites, IDictionary<int, string> providerNames) :
       base(data, sortedFavorites)
     {
-      this.InitCommonData(slot, (SignalSource)((int)signalSource & ~(int)(SignalSource.TvAndRadio)), data);
+      this.InitCommonData(slot, signalSource & ~SignalSource.MaskTvRadioData, data);
 
       if (!this.InUse || this.OldProgramNr == 0)
         return;

@@ -7,7 +7,7 @@ namespace ChanSort.Loader.SilvaSchneider
 {
   internal class Serializer : SerializerBase
   {
-    private readonly ChannelList allChannels = new ChannelList(SignalSource.DvbT | SignalSource.DvbC | SignalSource.DvbS | SignalSource.AnalogC | SignalSource.AnalogT | SignalSource.Tv | SignalSource.Radio, "All");
+    private readonly ChannelList allChannels = new ChannelList(0, "All");
 
     private byte[] content;
 

@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2019-08-28
+- fixed: some UHD channels did not show up in the list
+- fixed: Samsung SCM DVB-T lists did not show radio channels
+
 2019-08-13
 - LG GlobalClone: added support for additional favorites (A-H) and individual fav sorting when supported by the TV
 - LG GlobalClone: data/option channels were not listed before and are now shown in the TV channel list

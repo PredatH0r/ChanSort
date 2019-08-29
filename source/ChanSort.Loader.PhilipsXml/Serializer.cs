@@ -27,11 +27,9 @@ namespace ChanSort.Loader.PhilipsXml
    */
   class Serializer : SerializerBase
   {
-    private readonly ChannelList terrChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Radio, "DVB-T");
-    private readonly ChannelList cableChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
-    private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
-
-    private ChannelList curList;
+    private readonly ChannelList terrChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
+    private readonly ChannelList cableChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
+    private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
 
     private XmlDocument doc;
     private byte[] content;
@@ -104,15 +102,16 @@ namespace ChanSort.Loader.PhilipsXml
 
 
       int rowId = 0;
+      ChannelList curList = null;
       foreach (XmlNode child in root.ChildNodes)
       {
         switch (child.LocalName)
         {
           case "Channel":
             if (rowId == 0)
-              this.DetectFormatAndFeatures(child);
-            if (this.curList != null)
-              this.ReadChannel(child, rowId++);
+              curList = this.DetectFormatAndFeatures(child);
+            if (curList != null)
+              this.ReadChannel(curList, child, rowId++);
             break;
         }
       }
@@ -121,7 +120,7 @@ namespace ChanSort.Loader.PhilipsXml
 
     #region DetectFormatAndFeatures()
 
-    private void DetectFormatAndFeatures(XmlNode node)
+    private ChannelList DetectFormatAndFeatures(XmlNode node)
     {
       var setupNode = node["Setup"] ?? throw new FileLoadException("Missing Setup XML element");
       var bcastNode = node["Broadcast"] ?? throw new FileLoadException("Missing Broadcast XML element");
@@ -166,29 +165,29 @@ namespace ChanSort.Loader.PhilipsXml
       else
         throw new FileLoadException("Unknown data format");
 
+      ChannelList chList = null;
       switch (medium)
       {
         case "dvbt":
-          this.curList = this.terrChannels;
+          chList = this.terrChannels;
           break;
         case "dvbc":
-          this.curList = this.cableChannels;
+          chList = this.cableChannels;
           break;
         case "dvbs":
-          this.curList = this.satChannels;
-          break;
-        default:
-          this.curList = null;
+          chList = this.satChannels;
           break;
       }
 
       if (!hasEncrypt)
-        this.curList?.VisibleColumnFieldNames.Remove("Encrypted");
+        chList?.VisibleColumnFieldNames.Remove("Encrypted");
+
+      return chList;
     }
     #endregion
 
     #region ReadChannel()
-    private void ReadChannel(XmlNode node, int rowId)
+    private void ReadChannel(ChannelList curList, XmlNode node, int rowId)
     {
       var setupNode = node["Setup"] ?? throw new FileLoadException("Missing Setup XML element");
       var bcastNode = node["Broadcast"] ?? throw new FileLoadException("Missing Broadcast XML element");
@@ -199,7 +198,7 @@ namespace ChanSort.Loader.PhilipsXml
           data.Add(attr.LocalName, attr.Value);
       }
       
-      var chan = new Channel(this.curList.SignalSource, rowId, rowId, setupNode);
+      var chan = new Channel(curList.SignalSource, rowId, rowId, setupNode);
       chan.OldProgramNr = -1;
       chan.IsDeleted = false;
       if (this.formatVersion == 1)
@@ -212,7 +211,7 @@ namespace ChanSort.Loader.PhilipsXml
       else if ((chan.SignalSource & SignalSource.MaskAdInput) == SignalSource.DvbC)
         chan.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(chan.FreqInMhz);
 
-      DataRoot.AddChannel(this.curList, chan);
+      DataRoot.AddChannel(curList, chan);
     }
     #endregion
 

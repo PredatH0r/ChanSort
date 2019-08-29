@@ -20,20 +20,20 @@ namespace ChanSort.Loader.Samsung
     private readonly MappingPool<DataMapping> transponderMappings = new MappingPool<DataMapping>("TransponderDataBase");
     private readonly MappingPool<DataMapping> serviceProviderMappings = new MappingPool<DataMapping>("ServiceProvider");
 
-    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT|SignalSource.TvAndRadio, "Analog Air");
-    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC|SignalSource.TvAndRadio, "Analog Cable");
-    private readonly ChannelList avbxChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.TvAndRadio, "Analog Air/Cable");
-    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv, "Digital Air");
-    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.TvAndRadio, "Digital Cable");
-    private readonly ChannelList dvbxChannels = new ChannelList(SignalSource.DvbCT | SignalSource.TvAndRadio, "Digital Air/Cable");
-    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.TvAndRadio, "Satellite");
-    private readonly ChannelList primeChannels = new ChannelList(SignalSource.CablePrimeD | SignalSource.TvAndRadio, "Cable Prime");
-    private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD | SignalSource.TvAndRadio, "Astra HD+");
-    private readonly ChannelList freesatChannels = new ChannelList(SignalSource.FreesatD | SignalSource.TvAndRadio, "Freesat");
-    private readonly ChannelList tivusatChannels = new ChannelList(SignalSource.TivuSatD | SignalSource.TvAndRadio, "TivuSat");
-    private readonly ChannelList canalDigitalChannels = new ChannelList(SignalSource.CanalDigitalSatD | SignalSource.TvAndRadio, "Canal Digital Sat");
-    private readonly ChannelList digitalPlusChannels = new ChannelList(SignalSource.DigitalPlusD | SignalSource.TvAndRadio, "Canal+ Digital");
-    private readonly ChannelList cyfraPlusChannels = new ChannelList(SignalSource.CyfraPlusD | SignalSource.TvAndRadio, "Cyfra+ Digital");
+    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT, "Analog Air");
+    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC, "Analog Cable");
+    private readonly ChannelList avbxChannels = new ChannelList(SignalSource.AnalogCT, "Analog Air/Cable");
+    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "Digital Air");
+    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC, "Digital Cable");
+    private readonly ChannelList dvbxChannels = new ChannelList(SignalSource.DvbCT, "Digital Air/Cable");
+    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS, "Satellite");
+    private readonly ChannelList primeChannels = new ChannelList(SignalSource.CablePrimeD, "Cable Prime");
+    private readonly ChannelList hdplusChannels = new ChannelList(SignalSource.HdPlusD, "Astra HD+");
+    private readonly ChannelList freesatChannels = new ChannelList(SignalSource.FreesatD, "Freesat");
+    private readonly ChannelList tivusatChannels = new ChannelList(SignalSource.TivuSatD, "TivuSat");
+    private readonly ChannelList canalDigitalChannels = new ChannelList(SignalSource.CanalDigitalSatD, "Canal Digital Sat");
+    private readonly ChannelList digitalPlusChannels = new ChannelList(SignalSource.DigitalPlusD, "Canal+ Digital");
+    private readonly ChannelList cyfraPlusChannels = new ChannelList(SignalSource.CyfraPlusD, "Cyfra+ Digital");
     
     private readonly Dictionary<int, decimal> avbtFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> avbcFrequency = new Dictionary<int, decimal>();

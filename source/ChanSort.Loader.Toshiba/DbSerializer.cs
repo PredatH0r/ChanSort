@@ -15,7 +15,7 @@ namespace ChanSort.Loader.Toshiba
     private const string FILE_dvbSysData_db = "dvbSysData.db";
     private const string FILE_dvbMainData_db = "dvbMainData.db";
 
-    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.TvAndRadio, "Analog");
+    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT, "Analog");
     private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Tv, "DTV");
     private readonly ChannelList dtvRadioChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Radio, "Radio");
     private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat-TV");

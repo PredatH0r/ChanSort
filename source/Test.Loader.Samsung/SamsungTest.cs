@@ -107,9 +107,9 @@ namespace Test.Loader
           key = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + Path.GetFileName(file);
           if (expectedData.TryGetValue(key, out exp))
           {
-            var analogTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogC | ChanSort.Api.SignalSource.TvAndRadio);
-            var dtvTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC | ChanSort.Api.SignalSource.TvAndRadio);
-            var satTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.TvAndRadio);
+            var analogTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogC);
+            var dtvTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC);
+            var satTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS);
             expectedData.Remove(key);
             if (exp.AnalogChannels != 0 || analogTv != null)
               Assert.AreEqual(exp.AnalogChannels, analogTv.Channels.Count, file + ": analog");

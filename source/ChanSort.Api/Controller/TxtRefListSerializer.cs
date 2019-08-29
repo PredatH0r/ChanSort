@@ -8,7 +8,7 @@ namespace ChanSort.Api
   {
     private static readonly char[] Separators = { ';' };
 
-    private readonly ChannelList allChannels = new ChannelList(SignalSource.MaskAntennaCableSat | SignalSource.MaskAnalogDigital | SignalSource.MaskTvRadio, "All");
+    private readonly ChannelList allChannels = new ChannelList(0, "All");
 
     #region ctor()
 

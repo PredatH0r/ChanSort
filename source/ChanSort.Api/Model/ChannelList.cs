@@ -13,7 +13,7 @@ namespace ChanSort.Api
     private int duplicateUidCount;
     private int duplicateProgNrCount;
 
-    public static List<string> DefaultVisibleColumns { get; set; } // initialized by MainForm
+    public static List<string> DefaultVisibleColumns { get; set; } = new List<string>(); // initialized by MainForm
 
     public ChannelList(SignalSource source, string caption)
     {

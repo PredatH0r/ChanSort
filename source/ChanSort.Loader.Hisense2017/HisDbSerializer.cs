@@ -52,7 +52,7 @@ namespace ChanSort.Loader.Hisense2017
     /// <summary>
     /// This list is filled with all channels/services and serves as a holder for favorite lists 1-4
     /// </summary>
-    private readonly ChannelList userFavList = new ChannelList(SignalSource.All, "Favorites");
+    private readonly ChannelList userFavList = new ChannelList(0, "Favorites");
 
     /// <summary>
     /// mapping of FavoriteList.Pid for FAV1-4 => index of the internal favorite list within userFavList (0-3)
@@ -90,7 +90,7 @@ namespace ChanSort.Loader.Hisense2017
         "OriginalNetworkId",
         "TransportStreamId",
         "ServiceId",
-        "ServiceType",
+        //"ServiceType",
         "ServiceTypeName",
         "NetworkName",
         "Satellite"
@@ -207,7 +207,7 @@ namespace ChanSort.Loader.Hisense2017
           }
 
           // lists for physical channel sources
-          var list = new ChannelList(SignalSource.All, name);
+          var list = new ChannelList(0, name);
           list.VisibleColumnFieldNames = ColumnNames;
           channelLists.Add(listId, list);
           if (name.StartsWith("$"))

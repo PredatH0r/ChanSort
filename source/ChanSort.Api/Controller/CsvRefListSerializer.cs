@@ -231,6 +231,15 @@ namespace ChanSort.Api
           case '5':
             channel.Favorites |= Favorites.E;
             break;
+          case '6':
+            channel.Favorites |= Favorites.F;
+            break;
+          case '7':
+            channel.Favorites |= Favorites.G;
+            break;
+          case '8':
+            channel.Favorites |= Favorites.H;
+            break;
           case 'L':
             channel.Lock = true;
             break;
@@ -281,6 +290,9 @@ namespace ChanSort.Api
       if ((channel.Favorites & Favorites.C) != 0) sb.Append('3');
       if ((channel.Favorites & Favorites.D) != 0) sb.Append('4');
       if ((channel.Favorites & Favorites.E) != 0) sb.Append('5');
+      if ((channel.Favorites & Favorites.F) != 0) sb.Append('6');
+      if ((channel.Favorites & Favorites.G) != 0) sb.Append('7');
+      if ((channel.Favorites & Favorites.H) != 0) sb.Append('8');
       if (channel.Lock) sb.Append('L');
       if (channel.Skip) sb.Append('S');
       if (channel.Hidden) sb.Append('H');

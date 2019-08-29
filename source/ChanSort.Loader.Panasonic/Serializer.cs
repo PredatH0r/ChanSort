@@ -12,13 +12,13 @@ namespace ChanSort.Loader.Panasonic
   class Serializer : SerializerBase
   {
     private const string ERR_FileFormatOrEncryption = "File uses an unknown format or encryption";
-    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT | SignalSource.Tv | SignalSource.Radio, "Analog Antenna");
-    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC | SignalSource.Tv | SignalSource.Radio, "Analog Cable");
-    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Radio, "DVB-T");
-    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
-    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
-    private readonly ChannelList satipChannels = new ChannelList(SignalSource.SatIP | SignalSource.Tv | SignalSource.Radio, "SAT>IP");
-    private readonly ChannelList freesatChannels = new ChannelList(SignalSource.DvbS | SignalSource.Freesat | SignalSource.Tv | SignalSource.Radio, "Freesat");
+    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT, "Analog Antenna");
+    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC, "Analog Cable");
+    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
+    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
+    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
+    private readonly ChannelList satipChannels = new ChannelList(SignalSource.SatIP, "SAT>IP");
+    private readonly ChannelList freesatChannels = new ChannelList(SignalSource.DvbS | SignalSource.Freesat, "Freesat");
 
     private string workFile;
     private CypherMode cypherMode;
@@ -268,8 +268,7 @@ order by s.ntype,major_channel
           if (!channel.IsDeleted)
           {
             var channelList = this.DataRoot.GetChannelList(channel.SignalSource);
-            if (channelList != null)
-              this.DataRoot.AddChannel(channelList, channel);
+            this.DataRoot.AddChannel(channelList, channel);
           }
         }
       }

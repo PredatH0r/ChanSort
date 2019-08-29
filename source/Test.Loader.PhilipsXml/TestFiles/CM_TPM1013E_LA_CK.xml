@@ -1,0 +1,1935 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ChannelMap>
+<Channel>
+<Setup oldpresetnumber="1" presetnumber="1" name="Das Erste" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="1" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="2" presetnumber="2" name="ZDF" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="2" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="3" presetnumber="3" name="Sat.1" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="3" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="4" presetnumber="4" name="RTL Television" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="4" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="5" presetnumber="5" name="VOX" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="5" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="6" presetnumber="6" name="SUPER RTL" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="6" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="7" presetnumber="7" name="n-tv" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="7" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="8" presetnumber="8" name="ProSieben" ></Setup>
+<Broadcast medium="dvbc" frequency="642000" system="west" serviceID="8" ONID="1" TSID="346" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="9" presetnumber="9" name="RTL 2" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="9" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="10" presetnumber="10" name="Kabel 1" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="10" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="11" presetnumber="11" name="WDR Köln" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="11" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="12" presetnumber="12" name="hr-fernsehen" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="12" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="13" presetnumber="13" name="rbb Berlin" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="13" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="14" presetnumber="14" name="Einsfestival" ></Setup>
+<Broadcast medium="dvbc" frequency="113000" system="west" serviceID="14" ONID="1" TSID="311" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="15" presetnumber="15" name="EinsPlus" ></Setup>
+<Broadcast medium="dvbc" frequency="113000" system="west" serviceID="15" ONID="1" TSID="311" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="16" presetnumber="16" name="arte" ></Setup>
+<Broadcast medium="dvbc" frequency="113000" system="west" serviceID="16" ONID="1" TSID="311" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="17" presetnumber="17" name="PHOENIX" ></Setup>
+<Broadcast medium="dvbc" frequency="113000" system="west" serviceID="17" ONID="1" TSID="311" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="18" presetnumber="18" name="BR-alpha" ></Setup>
+<Broadcast medium="dvbc" frequency="113000" system="west" serviceID="18" ONID="1" TSID="311" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="19" presetnumber="19" name="3sat" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="19" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="20" presetnumber="20" name="KiKA" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="20" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="21" presetnumber="21" name="Eurosport" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="21" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="22" presetnumber="22" name="EuroNews" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="22" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="23" presetnumber="23" name="VIVA" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="23" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="24" presetnumber="24" name="CNN Int." ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="24" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="25" presetnumber="25" name="N24" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="25" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="26" presetnumber="26" name="HSE24" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="26" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="27" presetnumber="27" name="TELE 5" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="27" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="28" presetnumber="28" name="MDR S-Anhalt" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="28" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="29" presetnumber="29" name="NDR FS HH" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="29" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="30" presetnumber="30" name="NDR FS SH" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="30" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="31" presetnumber="31" name="Sonnenklar TV" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="31" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="32" presetnumber="32" name="1-2-3 TV" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="43" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="33" presetnumber="33" name="1-2-3.tv" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="44" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="34" presetnumber="34" name="13th Street" ></Setup>
+<Broadcast medium="dvbc" frequency="386000" system="west" serviceID="45" ONID="133" TSID="1" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="35" presetnumber="35" name="13TH Street" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="46" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="36" presetnumber="36" name="13th Street HD" ></Setup>
+<Broadcast medium="dvbc" frequency="666000" system="west" serviceID="47" ONID="133" TSID="13" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="37" presetnumber="37" name="3sat HD" ></Setup>
+<Broadcast medium="dvbc" frequency="426000" system="west" serviceID="48" ONID="1" TSID="328" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="38" presetnumber="38" name="90 numeri sat" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="49" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="39" presetnumber="39" name="Al Jazeera Channel" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="50" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="40" presetnumber="40" name="Al Jazeera English" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="51" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="41" presetnumber="41" name="Animal Planet" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="52" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="42" presetnumber="42" name="Animal Planet HD" ></Setup>
+<Broadcast medium="dvbc" frequency="578000" system="west" serviceID="53" ONID="158" TSID="5900" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="43" presetnumber="43" name="Animax" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="54" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="44" presetnumber="44" name="Ariana Afghanistan" ></Setup>
+<Broadcast medium="dvbc" frequency="730000" system="west" serviceID="55" ONID="1" TSID="451" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="45" presetnumber="45" name="arte HD" ></Setup>
+<Broadcast medium="dvbc" frequency="129000" system="west" serviceID="56" ONID="1" TSID="1019" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="46" presetnumber="46" name="arte HD" ></Setup>
+<Broadcast medium="dvbc" frequency="121000" system="west" serviceID="57" ONID="41985" TSID="2073" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="47" presetnumber="47" name="atv avrupa" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="58" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="48" presetnumber="48" name="ATV Avrupa" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="59" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="49" presetnumber="49" name="auto motor und sport cha" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="60" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="50" presetnumber="50" name="AXN HD" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="61" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="51" presetnumber="51" name="AXN HD" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="62" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="52" presetnumber="52" name="Bayerisches FS Nord" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="63" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="53" presetnumber="53" name="Bayerisches FS Süd" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="64" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="54" presetnumber="54" name="BBC World" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="65" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="55" presetnumber="55" name="BBC World News" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="66" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="56" presetnumber="56" name="Beate-Uhse.TV" ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="67" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="57" presetnumber="57" name="Bibel TV" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="68" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="58" presetnumber="58" name="Bloomberg" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="69" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="59" presetnumber="59" name="Bloomberg Europe TV" ></Setup>
+<Broadcast medium="dvbc" frequency="714000" system="west" serviceID="70" ONID="1" TSID="357" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="60" presetnumber="60" name="Blue Movie" ></Setup>
+<Broadcast medium="dvbc" frequency="378000" system="west" serviceID="71" ONID="133" TSID="4" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="61" presetnumber="61" name="BonGusto" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="72" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="62" presetnumber="62" name="Boomerang" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="73" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="63" presetnumber="63" name="BR Nord HD" ></Setup>
+<Broadcast medium="dvbc" frequency="137000" system="west" serviceID="74" ONID="1" TSID="1025" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="64" presetnumber="64" name="BR Süd HD" ></Setup>
+<Broadcast medium="dvbc" frequency="137000" system="west" serviceID="75" ONID="1" TSID="1025" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="65" presetnumber="65" name="C Music TV" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="76" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="66" presetnumber="66" name="Canale Aste" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="77" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="67" presetnumber="67" name="Cartoon Network" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="78" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="68" presetnumber="68" name="CCTV-News" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="79" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="69" presetnumber="69" name="CCTV4" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="80" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="70" presetnumber="70" name="CenterTV Koeln" ></Setup>
+<Broadcast medium="dvbc" frequency="714000" system="west" serviceID="81" ONID="1" TSID="357" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="71" presetnumber="71" name="Channel 21" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="82" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="72" presetnumber="72" name="Channel 21 ALT" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="83" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="73" presetnumber="73" name="Channel 21 Shop" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="84" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="74" presetnumber="74" name="Channel One Russia" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="85" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="75" presetnumber="75" name="Classica" ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="86" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="76" presetnumber="76" name="CNBC Europe" ></Setup>
+<Broadcast medium="dvbc" frequency="714000" system="west" serviceID="87" ONID="1" TSID="357" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="77" presetnumber="77" name="CNN" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="88" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="78" presetnumber="78" name="Das Erste HD" ></Setup>
+<Broadcast medium="dvbc" frequency="129000" system="west" serviceID="89" ONID="1" TSID="1019" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="79" presetnumber="79" name="Das Erste HD" ></Setup>
+<Broadcast medium="dvbc" frequency="113000" system="west" serviceID="90" ONID="1" TSID="311" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="80" presetnumber="80" name="Das Vierte" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="91" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="81" presetnumber="81" name="DAS VIERTE" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="92" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="82" presetnumber="82" name="DELUXE MUSIC" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="93" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="83" presetnumber="83" name="Deutsches Musik Fernsehe" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="94" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="84" presetnumber="84" name="Discovery Channel" ></Setup>
+<Broadcast medium="dvbc" frequency="378000" system="west" serviceID="95" ONID="133" TSID="4" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="85" presetnumber="85" name="Discovery Channel HD" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="96" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="86" presetnumber="86" name="Discovery HD" ></Setup>
+<Broadcast medium="dvbc" frequency="658000" system="west" serviceID="97" ONID="133" TSID="6" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="87" presetnumber="87" name="Disney Channel" ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="98" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="88" presetnumber="88" name="Disney Channel HD" ></Setup>
+<Broadcast medium="dvbc" frequency="682000" system="west" serviceID="99" ONID="133" TSID="11" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="89" presetnumber="89" name="Disney Cinemagic" ></Setup>
+<Broadcast medium="dvbc" frequency="362000" system="west" serviceID="100" ONID="133" TSID="3" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="90" presetnumber="90" name="Disney Cinemagic HD" ></Setup>
+<Broadcast medium="dvbc" frequency="666000" system="west" serviceID="101" ONID="133" TSID="13" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="91" presetnumber="91" name="Disney Junior" ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="102" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="92" presetnumber="92" name="Disney XD" ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="103" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="93" presetnumber="93" name="DM-SAT" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="104" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="94" presetnumber="94" name="DMAX" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="105" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="95" presetnumber="95" name="DMAX" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="106" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="96" presetnumber="96" name="Dorcel T.V." ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="107" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="97" presetnumber="97" name="Dorcel TV" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="108" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="98" presetnumber="98" name="E! Entertainment D" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="109" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="99" presetnumber="99" name="EBRU TV" ></Setup>
+<Broadcast medium="dvbc" frequency="730000" system="west" serviceID="110" ONID="1" TSID="451" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="100" presetnumber="100" name="EbS" ></Setup>
+<Broadcast medium="dvbc" frequency="578000" system="west" serviceID="111" ONID="158" TSID="5900" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="101" presetnumber="101" name="EbS+" ></Setup>
+<Broadcast medium="dvbc" frequency="578000" system="west" serviceID="112" ONID="158" TSID="5900" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="102" presetnumber="102" name="Einsfestival HD" ></Setup>
+<Broadcast medium="dvbc" frequency="121000" system="west" serviceID="113" ONID="41985" TSID="2073" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="103" presetnumber="103" name="Einsfestival HD" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="114" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="104" presetnumber="104" name="EURO D" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="115" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="105" presetnumber="105" name="Euro D" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="116" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="106" presetnumber="106" name="Euro Star" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="117" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="107" presetnumber="107" name="EuroNews English" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="118" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="108" presetnumber="108" name="EuroNews French" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="119" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="109" presetnumber="109" name="EuroNews German" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="120" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="110" presetnumber="110" name="EuroNews Italian" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="121" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="111" presetnumber="111" name="EuroNews Portuguese" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="122" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="112" presetnumber="112" name="EuroNews Russia" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="123" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="113" presetnumber="113" name="EuroNews Spanish" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="124" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="114" presetnumber="114" name="Eurosport 2" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="125" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="115" presetnumber="115" name="Eurosport Deutschland" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="126" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="116" presetnumber="116" name="Eurosport HD" ></Setup>
+<Broadcast medium="dvbc" frequency="682000" system="west" serviceID="127" ONID="133" TSID="11" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="117" presetnumber="117" name="EUROSPORT2 BL" ></Setup>
+<Broadcast medium="dvbc" frequency="578000" system="west" serviceID="128" ONID="158" TSID="5900" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="118" presetnumber="118" name="Eurosport360HD 1" ></Setup>
+<Broadcast medium="dvbc" frequency="658000" system="west" serviceID="129" ONID="133" TSID="6" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="119" presetnumber="119" name="Eurosport360HD 2" ></Setup>
+<Broadcast medium="dvbc" frequency="666000" system="west" serviceID="130" ONID="133" TSID="13" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="120" presetnumber="120" name="Eurosport360HD 3" ></Setup>
+<Broadcast medium="dvbc" frequency="674000" system="west" serviceID="131" ONID="133" TSID="12" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="121" presetnumber="121" name="Eurosport360HD 4" ></Setup>
+<Broadcast medium="dvbc" frequency="682000" system="west" serviceID="132" ONID="133" TSID="11" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="122" presetnumber="122" name="Eurosport360HD 5" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="133" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="123" presetnumber="123" name="Eurosport360HD 8" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="134" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="124" presetnumber="124" name="Fashion Now" ></Setup>
+<Broadcast medium="dvbc" frequency="570000" system="west" serviceID="135" ONID="156" TSID="5800" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="125" presetnumber="125" name="Fashion One HD" ></Setup>
+<Broadcast medium="dvbc" frequency="570000" system="west" serviceID="136" ONID="156" TSID="5800" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="126" presetnumber="126" name="Fox HD" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="137" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="127" presetnumber="127" name="FOX HD" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="138" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="128" presetnumber="128" name="Fox Serie" ></Setup>
+<Broadcast medium="dvbc" frequency="386000" system="west" serviceID="139" ONID="133" TSID="1" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="129" presetnumber="129" name="France 2" ></Setup>
+<Broadcast medium="dvbc" frequency="730000" system="west" serviceID="140" ONID="1" TSID="451" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="130" presetnumber="130" name="France 24 (en Français)" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="141" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="131" presetnumber="131" name="France 24 (in Arabic)" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="142" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="132" presetnumber="132" name="France 24 (in English)" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="143" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="133" presetnumber="133" name="France 3" ></Setup>
+<Broadcast medium="dvbc" frequency="730000" system="west" serviceID="144" ONID="1" TSID="451" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="134" presetnumber="134" name="France 5" ></Setup>
+<Broadcast medium="dvbc" frequency="730000" system="west" serviceID="145" ONID="1" TSID="451" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="135" presetnumber="135" name="FTV HD" ></Setup>
+<Broadcast medium="dvbc" frequency="570000" system="west" serviceID="146" ONID="156" TSID="5800" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="136" presetnumber="136" name="FUEL TV HD" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="147" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="137" presetnumber="137" name="GAME ONE" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="148" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="138" presetnumber="138" name="Ginx TV" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="149" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="139" presetnumber="139" name="Goldstar TV" ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="150" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="140" presetnumber="140" name="Gute Laune TV" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="151" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="141" presetnumber="141" name="Heimatkanal" ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="152" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="142" presetnumber="142" name="History" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="153" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="143" presetnumber="143" name="History HD" ></Setup>
+<Broadcast medium="dvbc" frequency="682000" system="west" serviceID="154" ONID="133" TSID="11" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="144" presetnumber="144" name="HSE 24 Extra" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="155" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="145" presetnumber="145" name="HSE24" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="156" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="146" presetnumber="146" name="HSE24 EXTRA" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="157" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="147" presetnumber="147" name="Hustler TV Deutschland" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="158" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="148" presetnumber="148" name="iConcerts" ></Setup>
+<Broadcast medium="dvbc" frequency="570000" system="west" serviceID="159" ONID="156" TSID="5800" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="149" presetnumber="149" name="iM1" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="160" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="150" presetnumber="150" name="iM1" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="161" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="151" presetnumber="151" name="inteRTV Detskii Mir - Te" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="162" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="152" presetnumber="152" name="inteRTV Nashe Kino" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="163" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="153" presetnumber="153" name="iTVN" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="164" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="154" presetnumber="154" name="Junior" ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="165" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="155" presetnumber="155" name="Kabel 1 HD" ></Setup>
+<Broadcast medium="dvbc" frequency="618000" system="west" serviceID="166" ONID="156" TSID="7900" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="156" presetnumber="156" name="kabel eins" ></Setup>
+<Broadcast medium="dvbc" frequency="642000" system="west" serviceID="167" ONID="1" TSID="346" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="157" presetnumber="157" name="kabel eins classics" ></Setup>
+<Broadcast medium="dvbc" frequency="642000" system="west" serviceID="168" ONID="1" TSID="346" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="158" presetnumber="158" name="KabelKiosk -  InfoKanal" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="169" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="159" presetnumber="159" name="Kanal 7 avrupa" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="170" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="160" presetnumber="160" name="KANAL AVRUPA" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="171" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="161" presetnumber="161" name="KBS_WORLD" ></Setup>
+<Broadcast medium="dvbc" frequency="730000" system="west" serviceID="172" ONID="1" TSID="451" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="162" presetnumber="162" name="Khabar TV" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="173" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="163" presetnumber="163" name="KiKA HD" ></Setup>
+<Broadcast medium="dvbc" frequency="426000" system="west" serviceID="174" ONID="1" TSID="328" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="164" presetnumber="164" name="Kinowelt TV" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="175" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="165" presetnumber="165" name="Lust Pur" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="176" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="166" presetnumber="166" name="MDR Sachsen" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="177" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="167" presetnumber="167" name="MDR Thüringen" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="178" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="168" presetnumber="168" name="Mediaset Italia" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="179" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="169" presetnumber="169" name="MEZZO HD" ></Setup>
+<Broadcast medium="dvbc" frequency="570000" system="west" serviceID="180" ONID="156" TSID="5800" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="170" presetnumber="170" name="MGM" ></Setup>
+<Broadcast medium="dvbc" frequency="362000" system="west" serviceID="181" ONID="133" TSID="3" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="171" presetnumber="171" name="MGM HD" ></Setup>
+<Broadcast medium="dvbc" frequency="674000" system="west" serviceID="182" ONID="133" TSID="12" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="172" presetnumber="172" name="Motorvision TV" ></Setup>
+<Broadcast medium="dvbc" frequency="386000" system="west" serviceID="183" ONID="133" TSID="1" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="173" presetnumber="173" name="MTV" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="184" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="174" presetnumber="174" name="MTV BASE FRANCE" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="185" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="175" presetnumber="175" name="MTV Dance" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="186" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="176" presetnumber="176" name="MTV FRANCE" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="187" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="177" presetnumber="177" name="MTV Hits" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="188" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="178" presetnumber="178" name="MTV Hits." ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="189" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="179" presetnumber="179" name="MTV ROCKS" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="190" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="180" presetnumber="180" name="MTV ROCKS." ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="191" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="181" presetnumber="181" name="myZen.tv HD" ></Setup>
+<Broadcast medium="dvbc" frequency="578000" system="west" serviceID="192" ONID="158" TSID="5900" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="182" presetnumber="182" name="n-tv" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="193" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="183" presetnumber="183" name="N24" ></Setup>
+<Broadcast medium="dvbc" frequency="642000" system="west" serviceID="194" ONID="1" TSID="346" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="184" presetnumber="184" name="Nat Geo Wild HD" ></Setup>
+<Broadcast medium="dvbc" frequency="658000" system="west" serviceID="195" ONID="133" TSID="6" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="185" presetnumber="185" name="NatGeo HD" ></Setup>
+<Broadcast medium="dvbc" frequency="666000" system="west" serviceID="196" ONID="133" TSID="13" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="186" presetnumber="186" name="NatGeo Wild" ></Setup>
+<Broadcast medium="dvbc" frequency="378000" system="west" serviceID="197" ONID="133" TSID="4" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="187" presetnumber="187" name="National Geographic" ></Setup>
+<Broadcast medium="dvbc" frequency="378000" system="west" serviceID="198" ONID="133" TSID="4" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="188" presetnumber="188" name="National Geographic HD" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="199" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="189" presetnumber="189" name="NDR FS HH HD" ></Setup>
+<Broadcast medium="dvbc" frequency="137000" system="west" serviceID="200" ONID="1" TSID="1025" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="190" presetnumber="190" name="NDR FS MV" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="201" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="191" presetnumber="191" name="NDR FS MV HD" ></Setup>
+<Broadcast medium="dvbc" frequency="137000" system="west" serviceID="202" ONID="1" TSID="1025" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="192" presetnumber="192" name="NDR FS NDS" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="203" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="193" presetnumber="193" name="NDR FS NDS HD" ></Setup>
+<Broadcast medium="dvbc" frequency="137000" system="west" serviceID="204" ONID="1" TSID="1025" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="194" presetnumber="194" name="NDR FS SH HD" ></Setup>
+<Broadcast medium="dvbc" frequency="137000" system="west" serviceID="205" ONID="1" TSID="1025" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="195" presetnumber="195" name="NHK World TV" ></Setup>
+<Broadcast medium="dvbc" frequency="730000" system="west" serviceID="206" ONID="1" TSID="451" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="196" presetnumber="196" name="Nick Iberia" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="207" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="197" presetnumber="197" name="Nick Junior" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="208" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="198" presetnumber="198" name="Nick Junior." ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="209" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="199" presetnumber="199" name="NICK/COMEDY" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="210" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="200" presetnumber="200" name="Nick/Comedy Central" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="211" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="201" presetnumber="201" name="NICKELODEON France" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="212" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="202" presetnumber="202" name="NICKELODEON France." ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="213" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="203" presetnumber="203" name="NTV avrupa" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="214" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="204" presetnumber="204" name="PHOENIX HD" ></Setup>
+<Broadcast medium="dvbc" frequency="137000" system="west" serviceID="215" ONID="1" TSID="1025" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="205" presetnumber="205" name="Phoenix Info News" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="216" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="206" presetnumber="206" name="PMC" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="217" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="207" presetnumber="207" name="Pro 7" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="218" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="208" presetnumber="208" name="PRO 7 HD" ></Setup>
+<Broadcast medium="dvbc" frequency="618000" system="west" serviceID="219" ONID="156" TSID="7900" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="209" presetnumber="209" name="Pro TV International" ></Setup>
+<Broadcast medium="dvbc" frequency="730000" system="west" serviceID="220" ONID="1" TSID="451" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="210" presetnumber="210" name="ProSieben MAXX" ></Setup>
+<Broadcast medium="dvbc" frequency="642000" system="west" serviceID="221" ONID="1" TSID="346" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="211" presetnumber="211" name="QVC" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="222" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="212" presetnumber="212" name="QVC Deutschland" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="223" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="213" presetnumber="213" name="QVC Plus" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="224" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="214" presetnumber="214" name="Radio Bremen TV" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="225" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="215" presetnumber="215" name="Rai 1" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="226" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="216" presetnumber="216" name="RAI Tre" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="227" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="217" presetnumber="217" name="RAI Uno" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="228" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="218" presetnumber="218" name="rbb Brandenburg" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="229" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="219" presetnumber="219" name="Record News" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="230" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="220" presetnumber="220" name="RedeRecord" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="231" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="221" presetnumber="221" name="RiC" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="232" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="222" presetnumber="222" name="RIT-TV" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="233" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="223" presetnumber="223" name="Romance TV" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="234" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="224" presetnumber="224" name="RTL" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="235" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="225" presetnumber="225" name="RTL 2 HD" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="236" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="226" presetnumber="226" name="RTL Crime" ></Setup>
+<Broadcast medium="dvbc" frequency="386000" system="west" serviceID="237" ONID="133" TSID="1" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="227" presetnumber="227" name="RTL FS" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="238" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="228" presetnumber="228" name="RTL HB NDS" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="239" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="229" presetnumber="229" name="RTL HD" ></Setup>
+<Broadcast medium="dvbc" frequency="618000" system="west" serviceID="240" ONID="156" TSID="7900" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="230" presetnumber="230" name="RTL Living" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="241" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="231" presetnumber="231" name="RTL NITRO" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="242" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="232" presetnumber="232" name="RTL Passion" ></Setup>
+<Broadcast medium="dvbc" frequency="386000" system="west" serviceID="243" ONID="133" TSID="1" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="233" presetnumber="233" name="RTL Regional NRW" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="244" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="234" presetnumber="234" name="RTL2" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="245" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="235" presetnumber="235" name="RTLNITRO" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="246" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="236" presetnumber="236" name="RTR" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="247" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="237" presetnumber="237" name="RTR Planeta" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="248" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="238" presetnumber="238" name="RTS SAT" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="249" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="239" presetnumber="239" name="RTVi Europe" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="250" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="240" presetnumber="240" name="Russia Today" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="251" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="241" presetnumber="241" name="Russia Today" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="252" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="242" presetnumber="242" name="Samanyolu TV AVRUPA" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="253" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="243" presetnumber="243" name="SAT.1" ></Setup>
+<Broadcast medium="dvbc" frequency="642000" system="west" serviceID="254" ONID="1" TSID="346" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="244" presetnumber="244" name="SAT.1 Bayern" ></Setup>
+<Broadcast medium="dvbc" frequency="642000" system="west" serviceID="255" ONID="1" TSID="346" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="245" presetnumber="245" name="SAT.1 Gold" ></Setup>
+<Broadcast medium="dvbc" frequency="642000" system="west" serviceID="256" ONID="1" TSID="346" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="246" presetnumber="246" name="SAT.1 HD" ></Setup>
+<Broadcast medium="dvbc" frequency="618000" system="west" serviceID="257" ONID="156" TSID="7900" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="247" presetnumber="247" name="SAT.1 NRW" ></Setup>
+<Broadcast medium="dvbc" frequency="642000" system="west" serviceID="258" ONID="1" TSID="346" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="248" presetnumber="248" name="SCI FI" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="259" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="249" presetnumber="249" name="SCI FI POL" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="260" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="250" presetnumber="250" name="ServusTV Deutschland" ></Setup>
+<Broadcast medium="dvbc" frequency="714000" system="west" serviceID="261" ONID="1" TSID="357" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="251" presetnumber="251" name="ServusTV HD Deutschland" ></Setup>
+<Broadcast medium="dvbc" frequency="714000" system="west" serviceID="262" ONID="1" TSID="357" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="252" presetnumber="252" name="Show Turk" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="263" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="253" presetnumber="253" name="Silverline" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="264" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="254" presetnumber="254" name="sixx" ></Setup>
+<Broadcast medium="dvbc" frequency="610000" system="west" serviceID="265" ONID="156" TSID="5300" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="255" presetnumber="255" name="SIXX" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="266" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="256" presetnumber="256" name="sixx HD" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="267" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="257" presetnumber="257" name="Sky 3D" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="268" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="258" presetnumber="258" name="Sky Action" ></Setup>
+<Broadcast medium="dvbc" frequency="370000" system="west" serviceID="269" ONID="133" TSID="2" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="259" presetnumber="259" name="Sky Action HD" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="270" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="260" presetnumber="260" name="Sky Atlantic HD" ></Setup>
+<Broadcast medium="dvbc" frequency="666000" system="west" serviceID="271" ONID="133" TSID="13" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="261" presetnumber="261" name="Sky Bundesliga 1" ></Setup>
+<Broadcast medium="dvbc" frequency="378000" system="west" serviceID="272" ONID="133" TSID="4" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="262" presetnumber="262" name="Sky Bundesliga HD 1" ></Setup>
+<Broadcast medium="dvbc" frequency="674000" system="west" serviceID="273" ONID="133" TSID="12" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="263" presetnumber="263" name="Sky Bundesliga HD 2" ></Setup>
+<Broadcast medium="dvbc" frequency="658000" system="west" serviceID="274" ONID="133" TSID="6" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="264" presetnumber="264" name="Sky Bundesliga HD 3" ></Setup>
+<Broadcast medium="dvbc" frequency="666000" system="west" serviceID="275" ONID="133" TSID="13" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="265" presetnumber="265" name="Sky Bundesliga HD 4" ></Setup>
+<Broadcast medium="dvbc" frequency="674000" system="west" serviceID="276" ONID="133" TSID="12" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="266" presetnumber="266" name="Sky Bundesliga HD 5" ></Setup>
+<Broadcast medium="dvbc" frequency="682000" system="west" serviceID="277" ONID="133" TSID="11" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="267" presetnumber="267" name="Sky Bundesliga HD 6" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="278" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="268" presetnumber="268" name="Sky Bundesliga HD 9" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="279" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="269" presetnumber="269" name="Sky Cinema" ></Setup>
+<Broadcast medium="dvbc" frequency="370000" system="west" serviceID="280" ONID="133" TSID="2" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="270" presetnumber="270" name="Sky Cinema +1" ></Setup>
+<Broadcast medium="dvbc" frequency="370000" system="west" serviceID="281" ONID="133" TSID="2" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="271" presetnumber="271" name="Sky Cinema +24" ></Setup>
+<Broadcast medium="dvbc" frequency="370000" system="west" serviceID="282" ONID="133" TSID="2" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="272" presetnumber="272" name="Sky Cinema HD" ></Setup>
+<Broadcast medium="dvbc" frequency="658000" system="west" serviceID="283" ONID="133" TSID="6" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="273" presetnumber="273" name="Sky Comedy" ></Setup>
+<Broadcast medium="dvbc" frequency="370000" system="west" serviceID="284" ONID="133" TSID="2" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="274" presetnumber="274" name="Sky Emotion" ></Setup>
+<Broadcast medium="dvbc" frequency="370000" system="west" serviceID="285" ONID="133" TSID="2" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="275" presetnumber="275" name="Sky HD FanZone" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="286" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="276" presetnumber="276" name="Sky Hits" ></Setup>
+<Broadcast medium="dvbc" frequency="362000" system="west" serviceID="287" ONID="133" TSID="3" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="277" presetnumber="277" name="Sky Hits HD" ></Setup>
+<Broadcast medium="dvbc" frequency="674000" system="west" serviceID="288" ONID="133" TSID="12" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="278" presetnumber="278" name="Sky Krimi" ></Setup>
+<Broadcast medium="dvbc" frequency="386000" system="west" serviceID="289" ONID="133" TSID="1" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="279" presetnumber="279" name="Sky News Intl" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="290" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="280" presetnumber="280" name="Sky News Intl" ></Setup>
+<Broadcast medium="dvbc" frequency="714000" system="west" serviceID="291" ONID="1" TSID="357" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="281" presetnumber="281" name="Sky Nostalgie" ></Setup>
+<Broadcast medium="dvbc" frequency="362000" system="west" serviceID="292" ONID="133" TSID="3" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="282" presetnumber="282" name="Sky Select" ></Setup>
+<Broadcast medium="dvbc" frequency="378000" system="west" serviceID="293" ONID="133" TSID="4" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="283" presetnumber="283" name="Sky Sport 1" ></Setup>
+<Broadcast medium="dvbc" frequency="378000" system="west" serviceID="294" ONID="133" TSID="4" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="284" presetnumber="284" name="Sky Sport 2" ></Setup>
+<Broadcast medium="dvbc" frequency="378000" system="west" serviceID="295" ONID="133" TSID="4" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="285" presetnumber="285" name="Sky Sport Austria" ></Setup>
+<Broadcast medium="dvbc" frequency="386000" system="west" serviceID="296" ONID="133" TSID="1" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="286" presetnumber="286" name="Sky Sport HD 1" ></Setup>
+<Broadcast medium="dvbc" frequency="658000" system="west" serviceID="297" ONID="133" TSID="6" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="287" presetnumber="287" name="Sky Sport HD 10" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="298" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="288" presetnumber="288" name="Sky Sport HD 2" ></Setup>
+<Broadcast medium="dvbc" frequency="666000" system="west" serviceID="299" ONID="133" TSID="13" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="289" presetnumber="289" name="Sky Sport HD 3" ></Setup>
+<Broadcast medium="dvbc" frequency="658000" system="west" serviceID="300" ONID="133" TSID="6" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="290" presetnumber="290" name="Sky Sport HD 4" ></Setup>
+<Broadcast medium="dvbc" frequency="666000" system="west" serviceID="301" ONID="133" TSID="13" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="291" presetnumber="291" name="Sky Sport HD 5" ></Setup>
+<Broadcast medium="dvbc" frequency="674000" system="west" serviceID="302" ONID="133" TSID="12" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="292" presetnumber="292" name="Sky Sport HD 6" ></Setup>
+<Broadcast medium="dvbc" frequency="682000" system="west" serviceID="303" ONID="133" TSID="11" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="293" presetnumber="293" name="Sky Sport HD 7" ></Setup>
+<Broadcast medium="dvbc" frequency="690000" system="west" serviceID="304" ONID="133" TSID="10" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="294" presetnumber="294" name="Sky Sport News" ></Setup>
+<Broadcast medium="dvbc" frequency="362000" system="west" serviceID="305" ONID="133" TSID="3" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="295" presetnumber="295" name="Sky Sport News HD" ></Setup>
+<Broadcast medium="dvbc" frequency="674000" system="west" serviceID="306" ONID="133" TSID="12" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="296" presetnumber="296" name="Spiegel Geschichte" ></Setup>
+<Broadcast medium="dvbc" frequency="378000" system="west" serviceID="307" ONID="133" TSID="4" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="297" presetnumber="297" name="Spiegel TV Wissen HD" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="308" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="298" presetnumber="298" name="SPORT 1" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="309" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="299" presetnumber="299" name="SPORT 1 HD" ></Setup>
+<Broadcast medium="dvbc" frequency="586000" system="west" serviceID="310" ONID="156" TSID="5700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="300" presetnumber="300" name="SPORT1" ></Setup>
+<Broadcast medium="dvbc" frequency="714000" system="west" serviceID="311" ONID="1" TSID="357" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="301" presetnumber="301" name="Sport1+ HD" ></Setup>
+<Broadcast medium="dvbc" frequency="682000" system="west" serviceID="312" ONID="133" TSID="11" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="302" presetnumber="302" name="sportdigital" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="313" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="303" presetnumber="303" name="STB Comag" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="314" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="304" presetnumber="304" name="SUPER RTL" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="315" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="305" presetnumber="305" name="SUPER RTL CH" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="316" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="306" presetnumber="306" name="SUPER RTL HD" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="317" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="307" presetnumber="307" name="SWDL 65533" ></Setup>
+<Broadcast medium="dvbc" frequency="394000" system="west" serviceID="318" ONID="156" TSID="7100" modulation="64" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="308" presetnumber="308" name="SWR BW HD" ></Setup>
+<Broadcast medium="dvbc" frequency="129000" system="west" serviceID="319" ONID="1" TSID="1019" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="309" presetnumber="309" name="SWR Fernsehen BW" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="320" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="310" presetnumber="310" name="SWR Fernsehen RP" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="321" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="311" presetnumber="311" name="SWR RP HD" ></Setup>
+<Broadcast medium="dvbc" frequency="129000" system="west" serviceID="322" ONID="1" TSID="1019" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="312" presetnumber="312" name="Syfy" ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="323" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="313" presetnumber="313" name="Syfy HD" ></Setup>
+<Broadcast medium="dvbc" frequency="674000" system="west" serviceID="324" ONID="133" TSID="12" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="314" presetnumber="314" name="SyFy Universal" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="325" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="315" presetnumber="315" name="tagesschau24" ></Setup>
+<Broadcast medium="dvbc" frequency="113000" system="west" serviceID="326" ONID="1" TSID="311" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="316" presetnumber="316" name="TELE 5" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="327" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="317" presetnumber="317" name="TG NORBA 24" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="328" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="318" presetnumber="318" name="The Biography Channel" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="329" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="319" presetnumber="319" name="TNT Film" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="330" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="320" presetnumber="320" name="TNT Serie" ></Setup>
+<Broadcast medium="dvbc" frequency="386000" system="west" serviceID="331" ONID="133" TSID="1" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="321" presetnumber="321" name="TNT Serie HD" ></Setup>
+<Broadcast medium="dvbc" frequency="682000" system="west" serviceID="332" ONID="133" TSID="11" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="322" presetnumber="322" name="TRACE SPORTS INTER HD" ></Setup>
+<Broadcast medium="dvbc" frequency="578000" system="west" serviceID="333" ONID="158" TSID="5900" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="323" presetnumber="323" name="TRACE URBAN INTER HD" ></Setup>
+<Broadcast medium="dvbc" frequency="578000" system="west" serviceID="334" ONID="158" TSID="5900" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="324" presetnumber="324" name="Travel Channel" ></Setup>
+<Broadcast medium="dvbc" frequency="450000" system="west" serviceID="335" ONID="156" TSID="8300" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="325" presetnumber="325" name="TRT-Turk TV" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="336" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="326" presetnumber="326" name="Tunisie Nationale" ></Setup>
+<Broadcast medium="dvbc" frequency="554000" system="west" serviceID="337" ONID="1" TSID="455" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="327" presetnumber="327" name="TV 5 Monde" ></Setup>
+<Broadcast medium="dvbc" frequency="602000" system="west" serviceID="338" ONID="156" TSID="6500" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="328" presetnumber="328" name="TV Polonia" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="339" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="329" presetnumber="329" name="TV TOGO International" ></Setup>
+<Broadcast medium="dvbc" frequency="570000" system="west" serviceID="340" ONID="156" TSID="5800" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="330" presetnumber="330" name="TV5MONDE EUROPE" ></Setup>
+<Broadcast medium="dvbc" frequency="714000" system="west" serviceID="341" ONID="1" TSID="357" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="331" presetnumber="331" name="TVE Internacional" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="342" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="332" presetnumber="332" name="TVP" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="343" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="333" presetnumber="333" name="TVP Polonia" ></Setup>
+<Broadcast medium="dvbc" frequency="722000" system="west" serviceID="344" ONID="1" TSID="358" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="334" presetnumber="334" name="UNIVERSAL" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="345" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="335" presetnumber="335" name="UNIVERSAL POL" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="346" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="336" presetnumber="336" name="VH1" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="347" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="337" presetnumber="337" name="VH1 Classic" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="348" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="338" presetnumber="338" name="VH1 Classic" ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="349" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="339" presetnumber="339" name="VH1 Classic." ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="350" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="340" presetnumber="340" name="VH1." ></Setup>
+<Broadcast medium="dvbc" frequency="626000" system="west" serviceID="351" ONID="1" TSID="1066" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="341" presetnumber="341" name="VIVA Germany" ></Setup>
+<Broadcast medium="dvbc" frequency="706000" system="west" serviceID="352" ONID="1" TSID="356" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="342" presetnumber="342" name="VOX" ></Setup>
+<Broadcast medium="dvbc" frequency="650000" system="west" serviceID="353" ONID="1" TSID="347" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="343" presetnumber="343" name="VOX HD" ></Setup>
+<Broadcast medium="dvbc" frequency="618000" system="west" serviceID="354" ONID="156" TSID="7900" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="344" presetnumber="344" name="VTV4" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="355" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="345" presetnumber="345" name="WDR Aachen" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="356" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="346" presetnumber="346" name="WDR Bielefeld" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="357" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="347" presetnumber="347" name="WDR Bonn" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="358" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="348" presetnumber="348" name="WDR Düsseldorf" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="359" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="349" presetnumber="349" name="WDR Dortmund" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="360" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="350" presetnumber="350" name="WDR Duisburg" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="361" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="351" presetnumber="351" name="WDR Essen" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="362" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="352" presetnumber="352" name="WDR HD Aachen" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="363" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="353" presetnumber="353" name="WDR HD Bielefeld" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="364" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="354" presetnumber="354" name="WDR HD Bonn" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="365" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="355" presetnumber="355" name="WDR HD Düsseldorf" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="366" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="356" presetnumber="356" name="WDR HD Dortmund" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="367" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="357" presetnumber="357" name="WDR HD Duisburg" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="368" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="358" presetnumber="358" name="WDR HD Essen" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="369" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="359" presetnumber="359" name="WDR HD Köln" ></Setup>
+<Broadcast medium="dvbc" frequency="121000" system="west" serviceID="370" ONID="41985" TSID="2073" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="360" presetnumber="360" name="WDR HD Köln" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="371" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="361" presetnumber="361" name="WDR HD Münster" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="372" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="362" presetnumber="362" name="WDR HD Siegen" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="373" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="363" presetnumber="363" name="WDR HD Wuppertal" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="374" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="364" presetnumber="364" name="WDR Münster" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="375" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="365" presetnumber="365" name="WDR Siegen" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="376" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="366" presetnumber="366" name="WDR Test A" ></Setup>
+<Broadcast medium="dvbc" frequency="442000" system="west" serviceID="377" ONID="1" TSID="1201" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="367" presetnumber="367" name="WDR Wuppertal" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="378" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="368" presetnumber="368" name="Wetter Fernsehen" ></Setup>
+<Broadcast medium="dvbc" frequency="458000" system="west" serviceID="379" ONID="156" TSID="8500" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="369" presetnumber="369" name="yourfamily" ></Setup>
+<Broadcast medium="dvbc" frequency="562000" system="west" serviceID="380" ONID="156" TSID="8700" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="370" presetnumber="370" name="ZDF HD" ></Setup>
+<Broadcast medium="dvbc" frequency="418000" system="west" serviceID="381" ONID="1" TSID="327" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="371" presetnumber="371" name="ZDF HD" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="382" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="372" presetnumber="372" name="zdf.kultur" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="383" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="373" presetnumber="373" name="zdf.kultur HD" ></Setup>
+<Broadcast medium="dvbc" frequency="418000" system="west" serviceID="384" ONID="1" TSID="327" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="374" presetnumber="374" name="zdf_neo" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="385" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="375" presetnumber="375" name="zdf_neo HD" ></Setup>
+<Broadcast medium="dvbc" frequency="418000" system="west" serviceID="386" ONID="1" TSID="327" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="376" presetnumber="376" name="ZDFinfo" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="387" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="377" presetnumber="377" name="ZDFinfo HD" ></Setup>
+<Broadcast medium="dvbc" frequency="426000" system="west" serviceID="388" ONID="1" TSID="328" modulation="256" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="378" presetnumber="378" name="." ></Setup>
+<Broadcast medium="dvbc" frequency="354000" system="west" serviceID="389" ONID="133" TSID="17" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="379" presetnumber="379" name="." ></Setup>
+<Broadcast medium="dvbc" frequency="658000" system="west" serviceID="390" ONID="133" TSID="6" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="380" presetnumber="380" name="." ></Setup>
+<Broadcast medium="dvbc" frequency="658000" system="west" serviceID="391" ONID="133" TSID="6" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="381" presetnumber="381" name="." ></Setup>
+<Broadcast medium="dvbc" frequency="570000" system="west" serviceID="392" ONID="156" TSID="5800" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="391" presetnumber="391" name="3SAT " ></Setup>
+<Broadcast medium="analog" frequency="147250" system="west" serviceID="496" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="392" presetnumber="392" name="-----" ></Setup>
+<Broadcast medium="analog" frequency="154250" system="west" serviceID="497" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="393" presetnumber="393" name="WDR3 " ></Setup>
+<Broadcast medium="analog" frequency="161250" system="west" serviceID="498" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="394" presetnumber="394" name="PHOEN" ></Setup>
+<Broadcast medium="analog" frequency="168250" system="west" serviceID="499" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="395" presetnumber="395" name="ARD  " ></Setup>
+<Broadcast medium="analog" frequency="175250" system="west" serviceID="500" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="396" presetnumber="396" name="SAT1 " ></Setup>
+<Broadcast medium="analog" frequency="182250" system="west" serviceID="501" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="397" presetnumber="397" name="RTL  " ></Setup>
+<Broadcast medium="analog" frequency="189250" system="west" serviceID="502" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="398" presetnumber="398" name="VOX  " ></Setup>
+<Broadcast medium="analog" frequency="196250" system="west" serviceID="503" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="399" presetnumber="399" name="N3   " ></Setup>
+<Broadcast medium="analog" frequency="203250" system="west" serviceID="504" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="400" presetnumber="400" name="ZDF  " ></Setup>
+<Broadcast medium="analog" frequency="210250" system="west" serviceID="505" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="401" presetnumber="401" name="PRO7 " ></Setup>
+<Broadcast medium="analog" frequency="217250" system="west" serviceID="506" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="402" presetnumber="402" name="N-TV " ></Setup>
+<Broadcast medium="analog" frequency="224250" system="west" serviceID="507" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="403" presetnumber="403" name="-----" ></Setup>
+<Broadcast medium="analog" frequency="231250" system="west" serviceID="508" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="404" presetnumber="404" name="EU-SP" ></Setup>
+<Broadcast medium="analog" frequency="238250" system="west" serviceID="509" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="405" presetnumber="405" name="TELE5" ></Setup>
+<Broadcast medium="analog" frequency="245250" system="west" serviceID="510" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="406" presetnumber="406" name="NICK " ></Setup>
+<Broadcast medium="analog" frequency="252250" system="west" serviceID="511" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="407" presetnumber="407" name="RTL2 " ></Setup>
+<Broadcast medium="analog" frequency="259250" system="west" serviceID="512" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="408" presetnumber="408" name="KIKA " ></Setup>
+<Broadcast medium="analog" frequency="266250" system="west" serviceID="513" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="409" presetnumber="409" name="HSE  " ></Setup>
+<Broadcast medium="analog" frequency="273250" system="west" serviceID="514" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="410" presetnumber="410" name="KABEL" ></Setup>
+<Broadcast medium="analog" frequency="280250" system="west" serviceID="515" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="411" presetnumber="411" name="S-RTL" ></Setup>
+<Broadcast medium="analog" frequency="287250" system="west" serviceID="516" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="412" presetnumber="412" name="ARTE " ></Setup>
+<Broadcast medium="analog" frequency="294250" system="west" serviceID="517" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="413" presetnumber="413" name="N24  " ></Setup>
+<Broadcast medium="analog" frequency="303250" system="west" serviceID="518" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="414" presetnumber="414" name="-----" ></Setup>
+<Broadcast medium="analog" frequency="311250" system="west" serviceID="519" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="415" presetnumber="415" name="QVC  " ></Setup>
+<Broadcast medium="analog" frequency="319250" system="west" serviceID="520" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="416" presetnumber="416" name="DMAX " ></Setup>
+<Broadcast medium="analog" frequency="471250" system="west" serviceID="521" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="417" presetnumber="417" name="MDR3 " ></Setup>
+<Broadcast medium="analog" frequency="479250" system="west" serviceID="522" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="418" presetnumber="418" name="DSF  " ></Setup>
+<Broadcast medium="analog" frequency="487250" system="west" serviceID="523" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="419" presetnumber="419" name="     " ></Setup>
+<Broadcast medium="analog" frequency="495250" system="west" serviceID="524" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="420" presetnumber="420" name="DAS4." ></Setup>
+<Broadcast medium="analog" frequency="503250" system="west" serviceID="525" ONID="0" TSID="0" modulation="8" symbolrate="0" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1000" presetnumber="1000" name="B5 aktuell" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="32" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1001" presetnumber="1001" name="Bayern 1" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="33" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1002" presetnumber="1002" name="Fritz" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="34" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1003" presetnumber="1003" name="hr2" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="35" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1004" presetnumber="1004" name="MDR INFO" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="36" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1005" presetnumber="1005" name="NDR Info" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="37" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1006" presetnumber="1006" name="NDR Kultur" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="38" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1007" presetnumber="1007" name="Nordwestradio" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="39" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1008" presetnumber="1008" name="SWR2" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="40" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1009" presetnumber="1009" name="WDR 3" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="41" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1010" presetnumber="1010" name="WDR 5" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="42" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1011" presetnumber="1011" name="1LIVE" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="393" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1012" presetnumber="1012" name="1LIVE diggi" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="394" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1013" presetnumber="1013" name="Antenne Brandenburg" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="395" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1014" presetnumber="1014" name="B5 plus" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="396" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1015" presetnumber="1015" name="Bayern 2" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="397" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1016" presetnumber="1016" name="BAYERN 3" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="398" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1017" presetnumber="1017" name="BAYERN plus" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="399" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1018" presetnumber="1018" name="BR-KLASSIK" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="400" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1019" presetnumber="1019" name="Bremen Eins" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="401" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1020" presetnumber="1020" name="Bremen Vier" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="402" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1021" presetnumber="1021" name="DASDING" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="403" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1022" presetnumber="1022" name="DKULTUR" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="404" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1023" presetnumber="1023" name="DLF" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="405" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1024" presetnumber="1024" name="DRadio Wissen" ></Setup>
+<Broadcast medium="dvbc" frequency="434000" system="west" serviceID="406" ONID="1" TSID="331" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1025" presetnumber="1025" name="hr-iNFO" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="407" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1026" presetnumber="1026" name="hr1" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="408" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1027" presetnumber="1027" name="hr3" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="409" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1028" presetnumber="1028" name="hr4" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="410" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1029" presetnumber="1029" name="Inforadio" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="411" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1030" presetnumber="1030" name="KIRAKA" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="412" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1031" presetnumber="1031" name="Kulturradio" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="413" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1032" presetnumber="1032" name="MDR FIGARO" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="414" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1033" presetnumber="1033" name="MDR JUMP" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="415" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1034" presetnumber="1034" name="MDR KLASSIK" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="416" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1035" presetnumber="1035" name="MDR S-ANHALT" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="417" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1036" presetnumber="1036" name="MDR SPUTNIK" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="418" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1037" presetnumber="1037" name="MDR THÜRINGEN" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="419" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1038" presetnumber="1038" name="MDR1 SACHSEN" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="420" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1039" presetnumber="1039" name="N-JOY" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="421" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1040" presetnumber="1040" name="NDR 1 Nieders." ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="422" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1041" presetnumber="1041" name="NDR 1 Radio MV" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="423" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1042" presetnumber="1042" name="NDR 2" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="424" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1043" presetnumber="1043" name="NDR 90,3" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="425" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1044" presetnumber="1044" name="NDR Blue" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="426" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1045" presetnumber="1045" name="NDR Info Spez." ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="427" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1046" presetnumber="1046" name="NDR1WelleNord" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="428" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1047" presetnumber="1047" name="PEIRAIKI EKKLISIA" ></Setup>
+<Broadcast medium="dvbc" frequency="634000" system="west" serviceID="429" ONID="318" TSID="8100" modulation="256" symbolrate="6900000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1048" presetnumber="1048" name="PULS" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="430" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1049" presetnumber="1049" name="Radio Horeb" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="431" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1050" presetnumber="1050" name="Radio Kara" ></Setup>
+<Broadcast medium="dvbc" frequency="570000" system="west" serviceID="432" ONID="156" TSID="5800" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1051" presetnumber="1051" name="Radio Lome" ></Setup>
+<Broadcast medium="dvbc" frequency="570000" system="west" serviceID="433" ONID="156" TSID="5800" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1052" presetnumber="1052" name="Radio neue Hoffnung" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="434" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1053" presetnumber="1053" name="radioBERLIN 88,8" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="435" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1054" presetnumber="1054" name="radioeins" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="436" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1055" presetnumber="1055" name="RadyoTurk.de" ></Setup>
+<Broadcast medium="dvbc" frequency="338000" system="west" serviceID="437" ONID="156" TSID="8100" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1056" presetnumber="1056" name="RTL RADIO" ></Setup>
+<Broadcast medium="dvbc" frequency="346000" system="west" serviceID="438" ONID="1" TSID="1111" modulation="64" symbolrate="6899000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1057" presetnumber="1057" name="SR 1 Europawelle" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="439" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1058" presetnumber="1058" name="SR 2 KulturRadio" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="440" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1059" presetnumber="1059" name="SR 3 Saarlandwelle" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="441" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1060" presetnumber="1060" name="sunshine live" ></Setup>
+<Broadcast medium="dvbc" frequency="698000" system="west" serviceID="442" ONID="1" TSID="355" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1061" presetnumber="1061" name="SWR1 BW" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="443" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1062" presetnumber="1062" name="SWR1 RP" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="444" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1063" presetnumber="1063" name="SWR3" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="445" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1064" presetnumber="1064" name="SWR4 BW" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="446" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1065" presetnumber="1065" name="SWR4 RP" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="447" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1066" presetnumber="1066" name="SWRinfo" ></Setup>
+<Broadcast medium="dvbc" frequency="402000" system="west" serviceID="448" ONID="41985" TSID="1073" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1067" presetnumber="1067" name="WDR 2" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="449" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1068" presetnumber="1068" name="WDR 4" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="450" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1069" presetnumber="1069" name="WDR Event" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="451" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1070" presetnumber="1070" name="WDR Funkhaus Europa" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="452" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+<Channel>
+<Setup oldpresetnumber="1071" presetnumber="1071" name="YOU FM" ></Setup>
+<Broadcast medium="dvbc" frequency="410000" system="west" serviceID="453" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+</Channel>
+</ChannelMap>

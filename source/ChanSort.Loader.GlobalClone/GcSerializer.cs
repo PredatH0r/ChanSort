@@ -10,10 +10,10 @@ namespace ChanSort.Loader.GlobalClone
 {
   class GcSerializer : SerializerBase
   {
-    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.TvAndRadio, "Analog");
-    private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Tv, "DTV");
+    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT, "Analog");
+    private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.TvAndData, "DTV");
     private readonly ChannelList dtvRadioChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Radio, "Radio");
-    private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat-TV");
+    private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.TvAndData, "Sat-TV");
     private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat-Radio");
     private XmlDocument doc;
     private readonly DvbStringDecoder dvbStringDecoder = new DvbStringDecoder(Encoding.Default);
@@ -211,8 +211,6 @@ namespace ChanSort.Loader.GlobalClone
         this.ParseChannelInfoNodes(itemNode, ch);
 
         var list = this.DataRoot.GetChannelList(ch.SignalSource);
-        if (list == null && (ch.SignalSource & SignalSource.MaskTvRadio) == 0) // Data/Option channels are put in the TV list
-          list = this.DataRoot.GetChannelList(ch.SignalSource | SignalSource.Tv);
         this.DataRoot.AddChannel(list, ch);
       }
     }

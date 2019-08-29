@@ -89,6 +89,13 @@
       <Name>Test.Loader</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="TestFiles\channel_list_UE32J5170_1201_orig.scm" />
+    <None Include="TestFiles\channel_list_UE55H6470_1201-Suchlauf-2015-04-26.scm" />
+    <None Include="TestFiles\channel_list_UE55H6470_1201.scm" />
+    <None Include="TestFiles\E_format_with_B_model_name.scm" />
+    <None Include="TestFiles\E_format_with_C_model_name.scm" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

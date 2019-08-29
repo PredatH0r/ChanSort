@@ -99,14 +99,14 @@ namespace ChanSort.Loader.Hisense
       this.Features.CanHaveGaps = true;
       this.DataRoot.SortedFavorites = true;
 
-      channelLists.Add(new ChannelList(SignalSource.Antenna | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Antenna"));
-      channelLists.Add(new ChannelList(SignalSource.Cable | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Cable"));
-      channelLists.Add(new ChannelList(SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Sat"));
-      channelLists.Add(new ChannelList(SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "Prefered Sat"));
-      channelLists.Add(new ChannelList(SignalSource.Antenna | SignalSource.Cable | SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "CI 1"));
-      channelLists.Add(new ChannelList(SignalSource.Antenna | SignalSource.Cable | SignalSource.Sat | SignalSource.Analog | SignalSource.Digital | SignalSource.Radio | SignalSource.Tv, "CI 2"));
+      channelLists.Add(new ChannelList(SignalSource.Antenna, "Antenna"));
+      channelLists.Add(new ChannelList(SignalSource.Cable, "Cable"));
+      channelLists.Add(new ChannelList(SignalSource.Sat, "Sat"));
+      channelLists.Add(new ChannelList(SignalSource.Sat, "Preferred Sat"));
+      channelLists.Add(new ChannelList(0, "CI 1"));
+      channelLists.Add(new ChannelList(0, "CI 2"));
 
-      channelLists.Add(new ChannelList(SignalSource.AnalogCT | SignalSource.DvbCT | SignalSource.DvbS | SignalSource.TvAndRadio, "Favorites"));
+      channelLists.Add(new ChannelList(0, "Favorites"));
       channelLists[channelLists.Count - 1].IsMixedSourceFavoritesList = true;
 
       foreach (var list in this.channelLists)

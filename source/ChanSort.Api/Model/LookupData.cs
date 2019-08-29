@@ -186,13 +186,15 @@ namespace ChanSort.Api
         case 0x11: // MPEG2-HD
         case 0x16: // H264/AVC-SD
         case 0x19: // H264/AVC-HD
-        case 0x1F: // UHD
+        case 0x1F: // UHD (future use)
+        case 0x9F: // UHD (user defined)
           return SignalSource.Tv;
         case 0x02:
         case 0x0A:
           return SignalSource.Radio;
       }
-      return 0;
+
+      return SignalSource.Data;
     }
     #endregion
 

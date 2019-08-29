@@ -323,7 +323,7 @@ namespace ChanSort.Loader.SamsungJ
             signalSource = ss;
         }
       }
-      return signalSource | SignalSource.TvAndRadio;
+      return signalSource;
     }
 
     #endregion

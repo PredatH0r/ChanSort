@@ -45,7 +45,7 @@ namespace ChanSort.Loader.Sony
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Tv, "DVB-C TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Radio, "DVB-C Radio"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC, "DVB-C Other"));
-      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider1, "DVB-S"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS, "DVB-S"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider2, "DVB-S Preset"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider3, "DVB-S Ci"));
 
