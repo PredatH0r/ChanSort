@@ -29,7 +29,11 @@
     private void InitializeComponent()
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReferenceListForm));
+      DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
       DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+      DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+      DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+      DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
       this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
       this.edFile = new DevExpress.XtraEditors.ButtonEdit();
       this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
@@ -65,6 +69,7 @@
       this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
       this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
       this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
+      this.cbData = new DevExpress.XtraEditors.CheckEdit();
       ((System.ComponentModel.ISupportInitialize)(this.edFile.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.rbAuto.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.rbManual.Properties)).BeginInit();
@@ -86,6 +91,7 @@
       this.groupControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
       this.groupControl2.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.cbData.Properties)).BeginInit();
       this.SuspendLayout();
       // 
       // labelControl1
@@ -98,7 +104,7 @@
       resources.ApplyResources(this.edFile, "edFile");
       this.edFile.Name = "edFile";
       this.edFile.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject("edFile.Properties.Buttons"))), resources.GetString("edFile.Properties.Buttons1"), ((int)(resources.GetObject("edFile.Properties.Buttons2"))), ((bool)(resources.GetObject("edFile.Properties.Buttons3"))), ((bool)(resources.GetObject("edFile.Properties.Buttons4"))), ((bool)(resources.GetObject("edFile.Properties.Buttons5"))), ((DevExpress.XtraEditors.ImageLocation)(resources.GetObject("edFile.Properties.Buttons6"))), ((System.Drawing.Image)(resources.GetObject("edFile.Properties.Buttons7"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, resources.GetString("edFile.Properties.Buttons8"), ((object)(resources.GetObject("edFile.Properties.Buttons9"))), ((DevExpress.Utils.SuperToolTip)(resources.GetObject("edFile.Properties.Buttons10"))), ((bool)(resources.GetObject("edFile.Properties.Buttons11"))))});
+            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject("edFile.Properties.Buttons"))), resources.GetString("edFile.Properties.Buttons1"), ((int)(resources.GetObject("edFile.Properties.Buttons2"))), ((bool)(resources.GetObject("edFile.Properties.Buttons3"))), ((bool)(resources.GetObject("edFile.Properties.Buttons4"))), ((bool)(resources.GetObject("edFile.Properties.Buttons5"))), editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, resources.GetString("edFile.Properties.Buttons6"), ((object)(resources.GetObject("edFile.Properties.Buttons7"))), ((DevExpress.Utils.SuperToolTip)(resources.GetObject("edFile.Properties.Buttons8"))), ((DevExpress.Utils.ToolTipAnchor)(resources.GetObject("edFile.Properties.Buttons9"))))});
       this.edFile.Properties.ReadOnly = true;
       this.edFile.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.edFile_ButtonClick);
       // 
@@ -203,6 +209,7 @@
       // grpManual
       // 
       resources.ApplyResources(this.grpManual, "grpManual");
+      this.grpManual.Controls.Add(this.cbData);
       this.grpManual.Controls.Add(this.cbConsecutive);
       this.grpManual.Controls.Add(this.cbIp);
       this.grpManual.Controls.Add(this.cbSat);
@@ -367,10 +374,19 @@
       resources.ApplyResources(this.labelControl8, "labelControl8");
       this.labelControl8.Name = "labelControl8";
       // 
+      // cbData
+      // 
+      resources.ApplyResources(this.cbData, "cbData");
+      this.cbData.Name = "cbData";
+      this.cbData.Properties.AutoWidth = true;
+      this.cbData.Properties.Caption = resources.GetString("checkEdit1.Properties.Caption");
+      this.cbData.TabStop = false;
+      // 
       // ReferenceListForm
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.CancelButton = this.btnClose;
       this.Controls.Add(this.groupControl2);
       this.Controls.Add(this.groupControl1);
       this.Controls.Add(this.btnClose);
@@ -402,6 +418,8 @@
       this.groupControl1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
       this.groupControl2.ResumeLayout(false);
+      this.groupControl2.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.cbData.Properties)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -443,5 +461,6 @@
     private DevExpress.XtraEditors.CheckEdit cbCable;
     private DevExpress.XtraEditors.HyperlinkLabelControl linkWiki;
     private DevExpress.XtraEditors.CheckEdit cbConsecutive;
+    private DevExpress.XtraEditors.CheckEdit cbData;
   }
 }

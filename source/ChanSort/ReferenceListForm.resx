@@ -172,24 +172,17 @@
   <data name="edFile.Properties.Buttons5" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <assembly alias="DevExpress.XtraEditors.v19.1" name="DevExpress.XtraEditors.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="edFile.Properties.Buttons6" type="DevExpress.XtraEditors.ImageLocation, DevExpress.XtraEditors.v19.1">
-    <value>MiddleCenter</value>
+  <data name="edFile.Properties.Buttons6" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="edFile.Properties.Buttons7" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="edFile.Properties.Buttons8" xml:space="preserve">
+  <data name="edFile.Properties.Buttons8" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="edFile.Properties.Buttons9" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="edFile.Properties.Buttons10" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="edFile.Properties.Buttons11" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="edFile.Properties.Buttons9" type="DevExpress.Utils.ToolTipAnchor, DevExpress.Utils.v19.1">
+    <value>Default</value>
   </data>
   <data name="edFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>549, 20</value>
@@ -209,6 +202,7 @@
   <data name="&gt;&gt;edFile.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <assembly alias="DevExpress.XtraEditors.v19.1" name="DevExpress.XtraEditors.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="labelControl2.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v19.1">
     <value>Vertical</value>
   </data>
@@ -314,7 +308,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;labelControl3.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="comboSource.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 33</value>
@@ -338,7 +332,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;comboSource.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="comboTarget.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 7</value>
@@ -362,7 +356,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;comboTarget.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="labelControl4.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 10</value>
@@ -386,7 +380,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;labelControl4.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="cbTv.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 109</value>
@@ -410,7 +404,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;cbTv.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>21</value>
   </data>
   <data name="cbRadio.Location" type="System.Drawing.Point, System.Drawing">
     <value>204, 109</value>
@@ -434,7 +428,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;cbRadio.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>22</value>
   </data>
   <data name="labelControl5.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 137</value>
@@ -443,7 +437,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>62, 13</value>
   </data>
   <data name="labelControl5.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="labelControl5.Text" xml:space="preserve">
     <value>Start at Pr#:</value>
@@ -458,7 +452,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;labelControl5.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="labelControl6.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v19.1">
     <value>Vertical</value>
@@ -470,7 +464,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>323, 26</value>
   </data>
   <data name="labelControl6.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="labelControl6.Text" xml:space="preserve">
     <value>(i.e. let radio channels start at 5000 to avoid conflicts with TV channel numbers)</value>
@@ -485,7 +479,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;labelControl6.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>19</value>
   </data>
   <data name="comboPrNr.EditValue" xml:space="preserve">
     <value>1</value>
@@ -521,7 +515,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>140, 20</value>
   </data>
   <data name="comboPrNr.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>19</value>
   </data>
   <data name="&gt;&gt;comboPrNr.Name" xml:space="preserve">
     <value>comboPrNr</value>
@@ -533,10 +527,34 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;comboPrNr.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="grpManual.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="cbData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 109</value>
+  </data>
+  <data name="checkEdit1.Properties.Caption" xml:space="preserve">
+    <value>Data/Other</value>
+  </data>
+  <data name="cbData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 19</value>
+  </data>
+  <data name="cbData.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;cbData.Name" xml:space="preserve">
+    <value>cbData</value>
+  </data>
+  <data name="&gt;&gt;cbData.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v19.1, Version=19.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;cbData.Parent" xml:space="preserve">
+    <value>grpManual</value>
+  </data>
+  <data name="&gt;&gt;cbData.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="cbConsecutive.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 167</value>
@@ -560,7 +578,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;cbConsecutive.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="cbIp.Location" type="System.Drawing.Point, System.Drawing">
     <value>368, 59</value>
@@ -584,7 +602,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;cbIp.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="cbSat.Location" type="System.Drawing.Point, System.Drawing">
     <value>284, 59</value>
@@ -608,7 +626,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;cbSat.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="labelControl11.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 62</value>
@@ -632,7 +650,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;labelControl11.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="cbAntenna.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 59</value>
@@ -656,7 +674,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;cbAntenna.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="cbCable.Location" type="System.Drawing.Point, System.Drawing">
     <value>204, 59</value>
@@ -680,7 +698,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;cbCable.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="labelControl9.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 87</value>
@@ -704,7 +722,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;labelControl9.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="cbAnalog.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 84</value>
@@ -728,7 +746,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;cbAnalog.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="cbDigital.Location" type="System.Drawing.Point, System.Drawing">
     <value>204, 84</value>
@@ -752,7 +770,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;cbDigital.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="lblTargetInfo.Location" type="System.Drawing.Point, System.Drawing">
     <value>308, 10</value>
@@ -776,7 +794,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;lblTargetInfo.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="lblSourceInfo.Location" type="System.Drawing.Point, System.Drawing">
     <value>308, 36</value>
@@ -800,7 +818,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;lblSourceInfo.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="labelControl7.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 112</value>
@@ -824,7 +842,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;labelControl7.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="btnApply.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -836,7 +854,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>103, 23</value>
   </data>
   <data name="btnApply.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>22</value>
   </data>
   <data name="btnApply.Text" xml:space="preserve">
     <value>Apply</value>
@@ -851,7 +869,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;btnApply.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="grpManual.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>

@@ -17,6 +17,13 @@ namespace ChanSort.Api
 
     public ChannelList(SignalSource source, string caption)
     {
+      if ((source & SignalSource.MaskAnalogDigital) == 0)
+        source |= SignalSource.MaskAnalogDigital;
+      if ((source & SignalSource.MaskAntennaCableSat) == 0)
+        source |= SignalSource.MaskAntennaCableSat;
+      if ((source & SignalSource.MaskTvRadioData) == 0)
+        source |= SignalSource.MaskTvRadioData;
+
       this.SignalSource = source;
       this.ShortCaption = caption;
       this.FirstProgramNumber = (source & SignalSource.Digital) != 0 ? 1 : 0;

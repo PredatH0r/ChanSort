@@ -269,7 +269,7 @@ Sollen die Programmnummern in fortlaufende Zahlen umgeändert werden?</value>
 Mögliche Ursachen sind USB-Sticks, die mit NTFS formatiert sind (FAT32 sollte immer funktionieren) oder ein am TV durchgeführtes Firmwareupdate, ohne einen anschließenden neuen Suchlauf. Dabei kann dann unter Umständen die neue Firmware die alten Daten nicht korrekt exportieren.</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antenne,Kabel,Sat,IP,Analog,Digital,TV,Radio</value>
+    <value>Antenne,Kabel,Sat,IP,Analog,Digital,TV,Radio,Daten</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
     <value>Wie soll vorgegangen werden, wenn eine Pr# bereits vergeben ist?</value>

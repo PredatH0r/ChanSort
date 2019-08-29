@@ -91,13 +91,13 @@ namespace ChanSort.Api
       {
         var listMask = list.SignalSource;
 
-        if ((listMask & SignalSource.MaskAnalogDigital) != 0 && (listMask & SignalSource.MaskAnalogDigital & searchMask) == 0) // digital/analog
+        if ((searchMask & SignalSource.MaskAnalogDigital) != 0 && (listMask & SignalSource.MaskAnalogDigital & searchMask) == 0) // digital/analog
           continue;
-        if ((listMask & SignalSource.MaskAntennaCableSat) != 0 && (listMask & SignalSource.MaskAntennaCableSat & searchMask) == 0) // air/cable/sat/ip
+        if ((searchMask & SignalSource.MaskAntennaCableSat) != 0 && (listMask & SignalSource.MaskAntennaCableSat & searchMask) == 0) // air/cable/sat/ip
           continue;
-        if ((listMask & SignalSource.MaskTvRadioData) != 0 && (listMask & SignalSource.MaskTvRadioData & searchMask) == 0) // tv/radio/data
+        if ((searchMask & SignalSource.MaskTvRadioData) != 0 && (listMask & SignalSource.MaskTvRadioData & searchMask) == 0) // tv/radio/data
           continue;
-        if ((listMask & SignalSource.MaskProvider) != 0 && (listMask & SignalSource.MaskProvider) != (searchMask & SignalSource.MaskProvider)) // preset list
+        if ((searchMask & SignalSource.MaskProvider) != 0 && (listMask & SignalSource.MaskProvider) != (searchMask & SignalSource.MaskProvider)) // preset list
           continue;
         return list;
       }

@@ -24,7 +24,9 @@ namespace Test.Loader.Sony
     [TestMethod]
     public void TestAndroidSatChannelsAddedToCorrectLists()
     {
-      this.TestChannelsAddedToCorrectLists("android_sdb-sat.xml", SignalSource.DvbS, 1560, 1269, 291);
+      this.TestChannelsAddedToCorrectLists("android_sdb-sat.xml", SignalSource.DvbS, 1163, 1004, 159);
+      this.TestChannelsAddedToCorrectLists("android_sdb-sat.xml", SignalSource.DvbS | SignalSource.Provider1, 397, 265, 132);
+      this.TestChannelsAddedToCorrectLists("android_sdb-sat.xml", SignalSource.DvbS | SignalSource.Provider2, 0, 0, 0);
     }
 
     [TestMethod]

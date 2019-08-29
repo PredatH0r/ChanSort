@@ -41,13 +41,13 @@ namespace ChanSort.Loader.Sony
 
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Tv, "DVB-T TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Radio, "DVB-T Radio"));
-      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT, "DVB-T Other"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Data, "DVB-T Other"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Tv, "DVB-C TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Radio, "DVB-C Radio"));
-      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC, "DVB-C Other"));
-      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS, "DVB-S"));
-      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider2, "DVB-S Preset"));
-      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider3, "DVB-S Ci"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Data, "DVB-C Other"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider0, "DVB-S"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider1, "DVB-S Preset"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Provider2, "DVB-S Ci"));
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -158,11 +158,11 @@ namespace ChanSort.Loader.Sony
         else if (name == "sdbc")
           ReadSdb(child, SignalSource.DvbC, 0x10000, "DvbC");
         else if (name == "sdbgs")
-          ReadSdb(child, SignalSource.DvbS | SignalSource.Provider1, 0x20000, "DvbS");
+          ReadSdb(child, SignalSource.DvbS | SignalSource.Provider0, 0x20000, "DvbS");
         else if (name == "sdbps")
-          ReadSdb(child, SignalSource.DvbS | SignalSource.Provider2, 0x30000, "DvbS");
+          ReadSdb(child, SignalSource.DvbS | SignalSource.Provider1, 0x30000, "DvbS");
         else if (name == "sdbcis")
-          ReadSdb(child, SignalSource.DvbS | SignalSource.Provider3, 0x40000, "DvbS");
+          ReadSdb(child, SignalSource.DvbS | SignalSource.Provider2, 0x40000, "DvbS");
       }
     }
     #endregion

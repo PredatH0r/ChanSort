@@ -1479,13 +1479,7 @@ namespace ChanSort.Ui
       else if (col.Tag is bool originalVisible && !originalVisible)
         return false;
 
-      // find out what sort of channels the list may contain. If a mask yields all bits 0, it means that the list may contain everything
       var source = list.SignalSource;
-      if ((source & SignalSource.MaskAnalogDigital) == 0)
-        source |= SignalSource.MaskAnalogDigital;
-      if ((source & SignalSource.MaskAntennaCableSat) == 0)
-        source |= SignalSource.MaskAntennaCableSat;
-
       if (col == this.colSource) return list.IsMixedSourceFavoritesList;
       if (col == this.colPrNr) return this.subListIndex > 0;
       if (col == this.colChannelOrTransponder) return (source & SignalSource.Sat) == 0;

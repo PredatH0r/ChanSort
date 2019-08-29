@@ -198,7 +198,7 @@ namespace ChanSort.Loader.PhilipsXml
           data.Add(attr.LocalName, attr.Value);
       }
       
-      var chan = new Channel(curList.SignalSource, rowId, rowId, setupNode);
+      var chan = new Channel(curList.SignalSource & SignalSource.MaskAdInput, rowId, rowId, setupNode);
       chan.OldProgramNr = -1;
       chan.IsDeleted = false;
       if (this.formatVersion == 1)
