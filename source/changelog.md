@@ -1,9 +1,11 @@
 ChanSort Change Log 
 ===================
 
-2019-08-28
-- fixed: some UHD channels did not show up in the list
+2019-08-29
+- fixed: some UHD channels did not show up in the list, which caused corrupted Panasonic channel lists
 - fixed: Samsung SCM DVB-T lists did not show radio channels
+- fixed: print caption of a favorites list was off by a letter (printed "Fav B" for the fav-A list)
+- internal restructuring and added automated unit-test for most file formats
 
 2019-08-13
 - LG GlobalClone: added support for additional favorites (A-H) and individual fav sorting when supported by the TV

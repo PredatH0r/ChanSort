@@ -20,7 +20,7 @@ namespace ChanSort.Ui
       InitializeComponent();
       this.DataSource = GenerateDataSource(list);
 
-      this.txtHeading.Text = list.ShortCaption + (subListIndex <= 0 ? "" : " - Fav " + (char)('A' + subListIndex));
+      this.txtHeading.Text = list.ShortCaption + (subListIndex <= 0 ? "" : " - Fav " + (char)('A' + subListIndex - 1));
      
       this.txtHeading.Font = new Font(font.Name, font.Size+4, FontStyle.Bold);
       this.txtNumber.Font = font;
