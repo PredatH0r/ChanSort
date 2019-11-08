@@ -10,7 +10,6 @@ namespace ChanSort.Api
     public DataRoot DataRoot;
     public ChannelList ChannelList;
     public int SubListIndex;
-    private UnsortedChannelMode unsortedChannelMode;
 
     #region AddChannels()
 
@@ -344,75 +343,6 @@ namespace ChanSort.Api
 
     #endregion
 
-    #region AutoNumberingForUnassignedChannels()
-
-    public void AutoNumberingForUnassignedChannels(UnsortedChannelMode mode)
-    {
-      this.unsortedChannelMode = mode;
-      foreach (var list in DataRoot.ChannelLists)
-      {
-        if (list.IsMixedSourceFavoritesList)
-          continue;
-
-        // sort the channels by assigned numbers, then unassigned by original order or alphabetically, then deleted channels
-        var sortedChannels = list.Channels.OrderBy(ChanSortCriteria).ToList();
-        int maxProgNr = 0;
-
-        foreach (var appChannel in sortedChannels)
-        {
-          if (appChannel.IsProxy)
-            continue;
-
-          if (appChannel.NewProgramNr == -1)
-          {
-            if (mode == UnsortedChannelMode.Delete)
-              appChannel.IsDeleted = true;
-            else // append (hidden if possible)
-            {
-              appChannel.Hidden = true;
-              appChannel.Skip = true;
-            }
-
-            // assign a valid number or 0 .... because -1 will never be a valid value for the TV
-            appChannel.NewProgramNr = mode != UnsortedChannelMode.Delete || this.DataRoot.DeletedChannelsNeedNumbers ? ++maxProgNr : 0;
-          }
-          else
-          {
-            if (appChannel.NewProgramNr > maxProgNr)
-              maxProgNr = appChannel.NewProgramNr;
-          }
-        }
-      }
-    }
-
-    #region ChanSortCriteria()
-
-    private string ChanSortCriteria(ChannelInfo channel)
-    {
-      // explicitly sorted
-      var pos = channel.NewProgramNr;
-      if (pos != -1)
-        return pos.ToString("d5");
-
-      // eventually hide unsorted channels
-      if (this.unsortedChannelMode == UnsortedChannelMode.Delete)
-        return "Z" + channel.RecordIndex.ToString("d5");
-
-      // eventually append in old order
-      if (this.unsortedChannelMode == UnsortedChannelMode.AppendInOrder)
-        return "B" + channel.OldProgramNr.ToString("d5");
-
-      // sort alphabetically, with "." and "" on the bottom
-      if (channel.Name == ".")
-        return "B";
-      if (channel.Name == "")
-        return "C";
-      return "A" + channel.Name;
-    }
-
-    #endregion
-
-    #endregion
 
     #region SetFavorites()
     public void SetFavorites(List<ChannelInfo> list, Favorites favorites, bool set)

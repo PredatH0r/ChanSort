@@ -1,11 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Compression;
 using System.Text;
-using System.Windows.Forms;
 
 namespace ChanSort.Api
 {
-  public abstract class SerializerBase
+  public abstract class SerializerBase : IDisposable
   {
     #region class SupportedFeatures
 
@@ -32,10 +32,6 @@ namespace ChanSort.Api
       public bool SortedFavorites { get; set; }
       public bool MixedSourceFavorites { get; set; }
       public bool AllowGapsInFavNumbers { get; set; }
-
-      public bool CanDeleteChannelsWithFlag => this.DeleteMode == DeleteMode.FlagWithPrNr || this.DeleteMode == DeleteMode.FlagWithoutPrNr;
-      public bool CanDeleteChannelsFromFile => this.DeleteMode == DeleteMode.Physically;
-      public bool DeletedChannelsNeedNumbers => this.DeleteMode == DeleteMode.FlagWithPrNr;
 
     }
     #endregion
@@ -107,43 +103,67 @@ namespace ChanSort.Api
 
     // common implementation helper methods
 
-    protected string UnzipFileToTempFolder()
-    {
-      var tempDir = this.FileName + ".tmp";
+    protected string TempPath { get; set; }
 
-      if (Directory.Exists(tempDir))
-        Directory.Delete(tempDir, true);
-      Directory.CreateDirectory(tempDir);
-      ZipFile.ExtractToDirectory(this.FileName, tempDir);
-      this.DeleteOnExit(tempDir);
-      return tempDir;
+    #region UnzipToTempFolder(), ZipToOutputFile()
+
+    protected void UnzipFileToTempFolder()
+    {
+      this.DeleteTempPath();
+      this.TempPath = Path.Combine(Path.GetTempPath(), "ChanSort_" + Path.GetRandomFileName());
+
+      if (Directory.Exists(this.TempPath))
+        Directory.Delete(this.TempPath, true);
+      Directory.CreateDirectory(this.TempPath);
+      ZipFile.ExtractToDirectory(this.FileName, this.TempPath);
     }
 
     protected void ZipToOutputFile(string tvOutputFile)
     {
-      var tempDir = this.FileName + ".tmp";
       File.Delete(tvOutputFile);
-      ZipFile.CreateFromDirectory(tempDir, tvOutputFile);
+      ZipFile.CreateFromDirectory(this.TempPath, tvOutputFile);
       this.FileName = tvOutputFile;
     }
+    #endregion
 
-    // TODO: replace this with a SerializerBase implementing IDisposable
-    protected virtual void DeleteOnExit(string fileOrFolder)
+    #region IDisposable
+
+    public void Dispose()
     {
-      Application.ApplicationExit += (sender, args) =>
-      {
-        try
-        {
-          if (Directory.Exists(fileOrFolder))
-            Directory.Delete(fileOrFolder, true);
-          else if (File.Exists(fileOrFolder))
-            File.Delete(fileOrFolder);
-        }
-        catch
-        {
-          // ignore
-        }
-      };
+      this.Dispose(true);
+      GC.SuppressFinalize(this);
     }
+
+    ~SerializerBase()
+    {
+      this.Dispose(false);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+      this.DeleteTempPath();
+    }
+
+    #endregion
+
+    #region DeleteTempPath()
+    protected void DeleteTempPath()
+    {
+      var path = this.TempPath;
+      if (string.IsNullOrEmpty(path))
+        return;
+      try
+      {
+        if (Directory.Exists(path))
+          Directory.Delete(path, true);
+        else if (File.Exists(path))
+          File.Delete(path);
+      }
+      catch
+      {
+        // ignore
+      }
+    }
+    #endregion
   }
 }

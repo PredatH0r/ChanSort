@@ -55,7 +55,7 @@ Besonderen Dank an Hisense für die Bereitstellung von technischen Informationen 
 
 **Samsung**  
 .scm Dateien: Serien B (2009)*, B (2013), C, D, E, F, H, J  
-.zip Dateien: Serien H, J, K, M, N and Q series  
+.zip Dateien: Serien H, J, K, M, N, Q, R  
 Listen:  Air analog, Air digital, Cable analog, Cable digital, 
 		Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
 		Canal Digital Sat, Digital+, Cyfra+

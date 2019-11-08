@@ -16,7 +16,6 @@ namespace ChanSort.Loader.SamsungJ
   {
     private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
     private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
-    private string tempDir;
 
     private enum FileType { Unknown, SatDb, ChannelDbDvb, ChannelDbAnalog }
 
@@ -39,12 +38,12 @@ namespace ChanSort.Loader.SamsungJ
     {
       try
       {
-        this.tempDir = this.UnzipFileToTempFolder();
-        if (File.Exists(tempDir + "\\sat"))
+        this.UnzipFileToTempFolder();
+        if (File.Exists(this.TempPath + "\\sat"))
         {
           try
           {
-            using (var conn = new SQLiteConnection("Data Source=" + tempDir + "\\sat"))
+            using (var conn = new SQLiteConnection("Data Source=" + this.TempPath + "\\sat"))
             {
               conn.Open();
               this.ReadSatDatabase(conn);
@@ -55,7 +54,7 @@ namespace ChanSort.Loader.SamsungJ
           }
         }
 
-        var files = Directory.GetFiles(tempDir, "*.");
+        var files = Directory.GetFiles(this.TempPath, "*.");
         if (files.Length == 0)
           throw new FileLoadException("The Samsung .zip channel list archive does not contain any supported files.");
 

@@ -27,6 +27,16 @@ namespace ChanSort.Ui
       this.UpdateButtons();
     }
 
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing)
+      {
+        this.components?.Dispose();
+        this.serializer.Dispose();
+      }
+      base.Dispose(disposing);
+    }
+
     #region UpdateButtons()
     private void UpdateButtons()
     {
@@ -91,6 +101,8 @@ namespace ChanSort.Ui
     #region SetInput()
     private void SetInput(SerializerBase ser)
     {
+      this.serializer?.Dispose();
+
       this.serializer = ser;
       this.edFile.Text = serializer.FileName;
       this.rbAuto.Enabled = this.rbManual.Enabled = true;

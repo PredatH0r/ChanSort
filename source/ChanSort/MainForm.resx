@@ -1246,7 +1246,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7248.39737, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7251.34158, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1933,7 +1933,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>11/05/2019 22:23:13</value>
+    <value>11/08/2019 19:29:15</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>

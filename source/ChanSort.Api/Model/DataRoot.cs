@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ChanSort.Api
@@ -21,7 +22,7 @@ namespace ChanSort.Api
     public bool SortedFavorites => this.loader.Features.SortedFavorites;
     public bool MixedSourceFavorites => this.loader.Features.MixedSourceFavorites;
     public bool AllowGapsInFavNumbers => this.loader.Features.AllowGapsInFavNumbers;
-    public bool DeletedChannelsNeedNumbers => this.loader.Features.DeletedChannelsNeedNumbers;
+    public bool DeletedChannelsNeedNumbers => this.loader.Features.DeleteMode == SerializerBase.DeleteMode.FlagWithPrNr;
 
     public DataRoot(SerializerBase loader)
     {
@@ -141,6 +142,73 @@ namespace ChanSort.Api
       }
     }
     #endregion
+
+    #region AssignNumbersToUnsortedAndDeletedChannels()
+
+    public void AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode mode)
+    {
+      foreach (var list in this.ChannelLists)
+      {
+        if (list.IsMixedSourceFavoritesList)
+          continue;
+
+        // sort the channels by assigned numbers, then unassigned by original order or alphabetically, then deleted channels
+        var sortedChannels = list.Channels.OrderBy(ch => ChanSortCriteria(ch, mode));
+        int maxProgNr = 0;
+
+        foreach (var appChannel in sortedChannels)
+        {
+          if (appChannel.IsProxy)
+            continue;
+
+          if (appChannel.NewProgramNr == -1)
+          {
+            if (mode == UnsortedChannelMode.Delete)
+              appChannel.IsDeleted = true;
+            else // append (hidden if possible)
+            {
+              appChannel.Hidden = true;
+              appChannel.Skip = true;
+            }
+
+            // assign a valid number or 0 .... because -1 will never be a valid value for the TV
+            appChannel.NewProgramNr = mode != UnsortedChannelMode.Delete || this.DeletedChannelsNeedNumbers ? ++maxProgNr : 0;
+          }
+          else
+          {
+            appChannel.IsDeleted = false;
+            if (appChannel.NewProgramNr > maxProgNr)
+              maxProgNr = appChannel.NewProgramNr;
+          }
+        }
+      }
+    }
+
+    private string ChanSortCriteria(ChannelInfo channel, UnsortedChannelMode mode)
+    {
+      // explicitly sorted
+      var pos = channel.NewProgramNr;
+      if (pos != -1)
+        return pos.ToString("d5");
+
+      // eventually hide unsorted channels
+      if (mode == UnsortedChannelMode.Delete)
+        return "Z" + channel.RecordIndex.ToString("d5");
+
+      // eventually append in old order
+      if (mode == UnsortedChannelMode.AppendInOrder)
+        return "B" + channel.OldProgramNr.ToString("d5");
+
+      // sort alphabetically, with "." and "" on the bottom
+      if (channel.Name == ".")
+        return "B";
+      if (channel.Name == "")
+        return "C";
+      return "A" + channel.Name;
+    }
+
+    #endregion
+
 
     #region ValidateAfterSave()
     public virtual void ValidateAfterSave()

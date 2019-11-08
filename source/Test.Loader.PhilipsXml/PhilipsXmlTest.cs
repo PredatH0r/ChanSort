@@ -80,9 +80,7 @@ namespace Test.Loader.PhilipsXml
       Assert.IsFalse(ntvHd.IsDeleted);
 
       ntvHd.NewProgramNr = -1;
-      var editor = new Editor();
-      editor.DataRoot = data;
-      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
       Assert.IsTrue(ntvHd.IsDeleted);
       Assert.IsTrue(ntvHd.NewProgramNr == 0);

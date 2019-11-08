@@ -72,9 +72,7 @@ namespace Test.Loader.Hisense
       Assert.IsFalse(orf2e.IsDeleted);
 
       orf2e.NewProgramNr = -1;
-      var editor = new Editor();
-      editor.DataRoot = data;
-      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.AppendInOrder);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.AppendInOrder);
 
       Assert.IsFalse(orf2e.IsDeleted);
       Assert.IsTrue(orf2e.NewProgramNr > 0);

@@ -62,9 +62,7 @@ namespace Test.Loader.LG
       Assert.IsFalse(orf2.IsDeleted);
 
       orf2.NewProgramNr = -1;
-      var editor = new Editor();
-      editor.DataRoot = data;
-      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
       Assert.IsTrue(orf2.IsDeleted);
       Assert.AreEqual(0, orf2.NewProgramNr);

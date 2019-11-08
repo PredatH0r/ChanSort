@@ -166,9 +166,7 @@ namespace Test.Loader.Samsung
       Assert.IsFalse(orf2w.IsDeleted);
 
       orf2w.NewProgramNr = -1;
-      var editor = new Editor();
-      editor.DataRoot = data;
-      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
       Assert.IsTrue(orf2w.IsDeleted);
       Assert.AreNotEqual(-1, orf2w.NewProgramNr);
@@ -218,9 +216,7 @@ namespace Test.Loader.Samsung
       Assert.IsFalse(orf2w.IsDeleted);
 
       orf2w.NewProgramNr = -1;
-      var editor = new Editor();
-      editor.DataRoot = data;
-      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
       Assert.IsTrue(orf2w.IsDeleted);
       Assert.AreNotEqual(-1, orf2w.NewProgramNr);

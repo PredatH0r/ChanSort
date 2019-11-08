@@ -66,9 +66,7 @@ namespace Test.Loader.SilvaSchneider
       Assert.IsFalse(orf2e.IsDeleted);
 
       orf2e.NewProgramNr = -1;
-      var editor = new Editor();
-      editor.DataRoot = data;
-      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
       Assert.IsTrue(orf2e.IsDeleted);
       Assert.IsTrue(orf2e.NewProgramNr == 0);

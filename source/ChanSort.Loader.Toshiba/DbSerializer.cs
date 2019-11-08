@@ -7,9 +7,9 @@ namespace ChanSort.Loader.Toshiba
 {
   class DbSerializer : SerializerBase
   {
-    private const string FILE_chmgt_db = "chmgt_type001\\chmgt.db";
-    private const string FILE_dvbSysData_db = "dvb_type001\\dvbSysData.db";
-    private const string FILE_dvbMainData_db = "dvb_type001\\dvbMainData.db";
+    private const string FILE_chmgt_db = "\\chmgt_type001\\chmgt.db";
+    private const string FILE_dvbSysData_db = "\\dvb_type001\\dvbSysData.db";
+    private const string FILE_dvbMainData_db = "\\dvb_type001\\dvbMainData.db";
 
     private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT, "Analog");
     private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Tv, "DTV");
@@ -17,8 +17,6 @@ namespace ChanSort.Loader.Toshiba
     private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat-TV");
     private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat-Radio");
     private readonly Dictionary<string, bool> channelInfoByUid = new Dictionary<string, bool>();
-
-    private string tempDir;
 
     #region ctor()
     public DbSerializer(string inputFile) : base(inputFile)
@@ -39,9 +37,9 @@ namespace ChanSort.Loader.Toshiba
     #region Load()
     public override void Load()
     {
-      this.tempDir = this.UnzipFileToTempFolder() + "\\"; 
+      this.UnzipFileToTempFolder(); 
 
-      string sysDataConnString = "Data Source=" + tempDir + FILE_dvbSysData_db;
+      string sysDataConnString = "Data Source=" + this.TempPath + FILE_dvbSysData_db;
       using (var conn = new SQLiteConnection(sysDataConnString))
       {
         conn.Open();
@@ -53,7 +51,7 @@ namespace ChanSort.Loader.Toshiba
         }
       }
 
-      string mainDataConnString = "Data Source=" + tempDir + FILE_dvbMainData_db;
+      string mainDataConnString = "Data Source=" + this.TempPath + FILE_dvbMainData_db;
       using (var conn = new SQLiteConnection(mainDataConnString))
       {
         conn.Open();
@@ -63,7 +61,7 @@ namespace ChanSort.Loader.Toshiba
         }
       }
 
-      string channelConnString = "Data Source=" + tempDir + FILE_chmgt_db;
+      string channelConnString = "Data Source=" + this.TempPath + FILE_chmgt_db;
       using (var conn = new SQLiteConnection(channelConnString))
       {
         conn.Open();
@@ -236,7 +234,7 @@ namespace ChanSort.Loader.Toshiba
     #region Save()
     public override void Save(string tvOutputFile)
     {
-      string channelConnString = "Data Source=" + this.tempDir + FILE_chmgt_db;
+      string channelConnString = "Data Source=" + this.TempPath + FILE_chmgt_db;
       using (var conn = new SQLiteConnection(channelConnString))
       {
         conn.Open();

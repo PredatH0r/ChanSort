@@ -98,15 +98,14 @@ namespace ChanSort.Loader.Panasonic
       if (cypherMode == CypherMode.None)
         return this.FileName;
 
-      var tempFile = this.FileName + ".tmp";
-      File.Delete(tempFile);
-      this.DeleteOnExit(tempFile);
+      this.TempPath = Path.GetTempFileName();
+      this.DeleteTempPath();
 
       if (cypherMode == CypherMode.Encryption)
-        this.CypherFile(this.FileName, tempFile, false);
+        this.CypherFile(this.FileName, this.TempPath, false);
       else
-        this.RemoveHeader(this.FileName, tempFile);
-      return tempFile;
+        this.RemoveHeader(this.FileName, this.TempPath);
+      return this.TempPath;
     }
     #endregion
 

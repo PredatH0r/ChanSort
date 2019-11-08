@@ -498,9 +498,10 @@ namespace ChanSort.Ui
       var errorMsgs = new StringBuilder();
       foreach (var plugin in candidates)
       {
+        SerializerBase serializer = null;
         try
         {
-          var serializer = plugin.CreateSerializer(inputFileName);
+          serializer = plugin.CreateSerializer(inputFileName);
           if (serializer != null)
           {
             serializer.DefaultEncoding = this.defaultEncoding;
@@ -511,6 +512,7 @@ namespace ChanSort.Ui
         }
         catch (Exception ex)
         {
+          serializer?.Dispose();
           errorMsgs.AppendLine($"{plugin.DllName} ({plugin.PluginName}): {ex}\n\n");
           if (ex is ArgumentException)
           {
@@ -550,6 +552,8 @@ namespace ChanSort.Ui
 
       if (!this.PromptSaveAndContinue())
         return false;
+
+      this.currentTvSerializer?.Dispose();
 
       serializer.DataRoot.ValidateAfterLoad();
       this.SetFileName(tvDataFile);
@@ -795,7 +799,7 @@ namespace ChanSort.Ui
       {
         foreach (var channel in list.Channels)
         {
-          if (channel.NewProgramNr < 0 && (!channel.IsDeleted /* || DataRoot.DeletedChannelsNeedNumbers */))
+          if (channel.NewProgramNr < 0 && !channel.IsDeleted)
           {
             hasUnsorted = true;
             break;
@@ -812,7 +816,7 @@ namespace ChanSort.Ui
         using (var dlg = new ActionBoxDialog(msg))
         {
           dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Append, DialogResult.Yes, dlg.FullList);
-          if (this.currentTvSerializer.Features.CanDeleteChannelsWithFlag || this.currentTvSerializer.Features.CanDeleteChannelsFromFile)
+          if (this.currentTvSerializer.Features.DeleteMode != SerializerBase.DeleteMode.NotSupported)
             dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Delete, DialogResult.No, dlg.Delete);
           dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
           res = dlg.ShowDialog(this);
@@ -825,7 +829,7 @@ namespace ChanSort.Ui
       }
 
       // ensure unsorted and deleted channels have a valid program number
-      this.Editor.AutoNumberingForUnassignedChannels(mode);
+      this.DataRoot.AssignNumbersToUnsortedAndDeletedChannels(mode);
       return true;
     }
 
@@ -2543,7 +2547,10 @@ namespace ChanSort.Ui
       try
       {
         if (this.PromptSaveAndContinue())
+        {
           this.SaveSettings();
+          this.currentTvSerializer?.Dispose();
+        }
         else
           e.Cancel = true;
       }

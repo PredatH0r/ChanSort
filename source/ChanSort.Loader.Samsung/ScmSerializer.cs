@@ -105,33 +105,33 @@ namespace ChanSort.Loader.Samsung
     #region Load()
     public override void Load()
     {
-      var tempDir = this.UnzipFileToTempFolder();
+      this.UnzipFileToTempFolder();
       
-      DetectModelConstants(tempDir);
+      DetectModelConstants(this.TempPath);
       Features.SupportedFavorites = c.supportedFavorites;
       Features.SortedFavorites = c.SortedFavorites == FavoritesIndexMode.IndividuallySorted;
 
-      ReadAnalogFineTuning(tempDir);
-      ReadAnalogChannels(tempDir, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
-      ReadAnalogChannels(tempDir, "map-CableA", this.avbcChannels, out this.avbcFileContent, this.avbcFrequency);
-      ReadAnalogChannels(tempDir, "map-AirCableMixedA", this.avbxChannels, out this.avbxFileContent, this.avbcFrequency);
-      ReadDvbTransponderFrequenciesFromPtc(tempDir, "PTCAIR", this.dvbtFrequency);
-      ReadDvbServiceProviders(tempDir);
-      ReadDvbctChannels(tempDir, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
-      ReadDvbTransponderFrequenciesFromPtc(tempDir, "PTCCABLE", this.dvbcFrequency);
-      ReadDvbctChannels(tempDir, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(tempDir, "map-AirCableMixedD", this.dvbxChannels, out this.dvbxFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(tempDir, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(tempDir, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(tempDir, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(tempDir, "map-CanalDigitalSatD", this.canalDigitalChannels, out this.canalDigitalFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(tempDir, "map-DigitalPlusD", this.digitalPlusChannels, out this.digitalPlusFileContent, this.dvbcFrequency);
-      ReadSatellites(tempDir);
-      ReadTransponder(tempDir, "UserTransponderDataBase.dat"); // read user data first so it has priority over overridden default transponsers
-      ReadTransponder(tempDir, "TransponderDataBase.dat");
-      ReadDvbsChannels(tempDir, "map-SateD", this.dvbsChannels, out this.dvbsFileContent, c.dvbsChannelLength);
-      ReadDvbsChannels(tempDir, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
-      ReadAstraHdPlusChannels(tempDir);        
+      ReadAnalogFineTuning(this.TempPath);
+      ReadAnalogChannels(this.TempPath, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
+      ReadAnalogChannels(this.TempPath, "map-CableA", this.avbcChannels, out this.avbcFileContent, this.avbcFrequency);
+      ReadAnalogChannels(this.TempPath, "map-AirCableMixedA", this.avbxChannels, out this.avbxFileContent, this.avbcFrequency);
+      ReadDvbTransponderFrequenciesFromPtc(this.TempPath, "PTCAIR", this.dvbtFrequency);
+      ReadDvbServiceProviders(this.TempPath);
+      ReadDvbctChannels(this.TempPath, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
+      ReadDvbTransponderFrequenciesFromPtc(this.TempPath, "PTCCABLE", this.dvbcFrequency);
+      ReadDvbctChannels(this.TempPath, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(this.TempPath, "map-AirCableMixedD", this.dvbxChannels, out this.dvbxFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(this.TempPath, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(this.TempPath, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(this.TempPath, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(this.TempPath, "map-CanalDigitalSatD", this.canalDigitalChannels, out this.canalDigitalFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(this.TempPath, "map-DigitalPlusD", this.digitalPlusChannels, out this.digitalPlusFileContent, this.dvbcFrequency);
+      ReadSatellites(this.TempPath);
+      ReadTransponder(this.TempPath, "UserTransponderDataBase.dat"); // read user data first so it has priority over overridden default transponsers
+      ReadTransponder(this.TempPath, "TransponderDataBase.dat");
+      ReadDvbsChannels(this.TempPath, "map-SateD", this.dvbsChannels, out this.dvbsFileContent, c.dvbsChannelLength);
+      ReadDvbsChannels(this.TempPath, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
+      ReadAstraHdPlusChannels(this.TempPath);        
 
 
       foreach (var list in this.DataRoot.ChannelLists)
@@ -630,7 +630,7 @@ namespace ChanSort.Loader.Samsung
     #region Save()
     public override void Save(string tvOutputFile)
     {
-      string zip = this.FileName + ".tmp";
+      string zip = this.TempPath;
       this.SaveChannels(zip, "map-AirA", this.avbtChannels, this.avbtFileContent);
       this.SaveChannels(zip, "map-CableA", this.avbcChannels, this.avbcFileContent);
       this.SaveChannels(zip, "map-AirCableMixedA", this.avbxChannels, this.avbxFileContent);

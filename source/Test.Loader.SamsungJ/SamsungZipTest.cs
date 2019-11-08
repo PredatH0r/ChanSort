@@ -85,9 +85,7 @@ namespace Test.Loader.SamsungJ
       Assert.IsFalse(orf2e.IsDeleted);
 
       orf2e.NewProgramNr = -1;
-      var editor = new Editor();
-      editor.DataRoot = data;
-      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
       Assert.IsTrue(orf2e.IsDeleted);
       Assert.AreNotEqual(-1, orf2e.NewProgramNr);

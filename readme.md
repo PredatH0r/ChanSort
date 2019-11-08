@@ -56,7 +56,7 @@ Special thanks to Hisense for supporting ChanSort with technical information and
 
 **Samsung**  
 .scm files: B (2009)*, B (2013), C, D, E, F, H, J series  
-.zip files: H, J, K, M, N and Q series  
+.zip files: H, J, K, M, N and Q, R series  
 Lists:  Air analog, Air digital, Cable analog, Cable digital, 
 		Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
 		Canal Digital Sat, Digital+, Cyfra+
