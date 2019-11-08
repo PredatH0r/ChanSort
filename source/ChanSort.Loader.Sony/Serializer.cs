@@ -37,7 +37,7 @@ namespace ChanSort.Loader.Sony
     public Serializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      this.Features.CanDeleteChannels = true;
+      this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr; // in Android/e-format, this will be changed to FlagWithPrNr
 
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Tv, "DVB-T TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Radio, "DVB-T Radio"));
@@ -61,12 +61,6 @@ namespace ChanSort.Loader.Sony
       }
     }
     #endregion
-
-    #region DisplayName
-    public override string DisplayName => "Sony sdb.xml loader";
-
-    #endregion
-
 
     #region Load()
 
@@ -142,9 +136,7 @@ namespace ChanSort.Loader.Sony
       {
         this.format = "e" + formatNode.InnerText;
         this.isEFormat = true;
-        this.DataRoot.DeletedChannelsNeedNumbers = true;
-        foreach(var list in this.DataRoot.ChannelLists)
-          list.VisibleColumnFieldNames.Add("IsDeleted");
+        this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
       }
 
       if (SupportedFormatVersions.IndexOf(" " + this.format + " ", StringComparison.Ordinal) < 0)
@@ -332,7 +324,7 @@ namespace ChanSort.Loader.Sony
         }
 
         chan.ServiceType = int.Parse(dvbData["ui1_sdt_service_type"][i]);
-        chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType);
+        chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType); // could also use <ServiceFilter> information with 1=TV, 2=Radio, 3=Other
 
         CopyDataValues(serviceNode, svcData, i, chan.ServiceData);
 
@@ -535,7 +527,7 @@ namespace ChanSort.Loader.Sony
       {
         var dvbt = this.DataRoot.GetChannelList(SignalSource.DvbT | SignalSource.Tv).Channels
           .Concat(this.DataRoot.GetChannelList(SignalSource.DvbT | SignalSource.Radio).Channels)
-          .Concat(this.DataRoot.GetChannelList(SignalSource.DvbT).Channels)
+          .Concat(this.DataRoot.GetChannelList(SignalSource.DvbT | SignalSource.Data).Channels)
           .ToList();
         this.UpdateChannelList(dvbt, nodes);
       }
@@ -544,14 +536,14 @@ namespace ChanSort.Loader.Sony
       {
         var dvbc = this.DataRoot.GetChannelList(SignalSource.DvbC | SignalSource.Tv).Channels
           .Concat(this.DataRoot.GetChannelList(SignalSource.DvbC | SignalSource.Radio).Channels)
-          .Concat(this.DataRoot.GetChannelList(SignalSource.DvbC).Channels)
+          .Concat(this.DataRoot.GetChannelList(SignalSource.DvbC | SignalSource.Data).Channels)
           .ToList();
         this.UpdateChannelList(dvbc, nodes);
       }
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        if ((list.SignalSource & SignalSource.DvbS) == SignalSource.DvbS && this.channeListNodes.TryGetValue(list.SignalSource, out nodes))
+        if ((list.SignalSource & SignalSource.DvbS) == SignalSource.DvbS && this.channeListNodes.TryGetValue(list.SignalSource & ~SignalSource.MaskTvRadioData, out nodes))
           this.UpdateChannelList(list.Channels, nodes);
       }
 

@@ -16,8 +16,9 @@ namespace ChanSort.Loader.SilvaSchneider
     public Serializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.None;
-      this.DataRoot.SortedFavorites = false;
-      this.DataRoot.SupportedFavorites = 0;
+      this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.SortedFavorites = false;
+      this.Features.SupportedFavorites = 0;
 
       this.DataRoot.AddChannelList(this.allChannels);
 
@@ -36,8 +37,6 @@ namespace ChanSort.Loader.SilvaSchneider
     }
 
     #endregion
-
-    public override string DisplayName => "Silva Schneider *.sdx Loader";
 
     #region Load()
 
@@ -77,7 +76,9 @@ namespace ChanSort.Loader.SilvaSchneider
         foreach (var channel in this.allChannels.GetChannelsByNewOrder())
         {
           // when a reference list was applied, the list may contain proxy entries for deleted channels, which must be ignored
-          if (channel is Channels realChannel && channel.NewProgramNr >= 0)
+          if (channel.IsProxy || channel.IsDeleted)
+            continue;
+          if (channel is Channels realChannel)
             file.Write(this.content, realChannel.FileOffset, realChannel.Length + 1);
         }
       }

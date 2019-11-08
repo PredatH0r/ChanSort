@@ -6,9 +6,9 @@ using System.Text;
 using System.Windows.Forms;
 using ChanSort.Api;
 using ChanSort.Ui.Properties;
+using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraPrinting.Native;
 
 namespace ChanSort.Ui
 {

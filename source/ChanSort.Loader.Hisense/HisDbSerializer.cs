@@ -13,8 +13,6 @@ namespace ChanSort.Loader.Hisense
 {
   public class HisDbSerializer : SerializerBase
   {
-    public override string DisplayName => "Hisense channel.db Loader";
-
     #region enums and bitmasks
 
     internal enum BroadcastType
@@ -94,10 +92,10 @@ namespace ChanSort.Loader.Hisense
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      this.Features.CanDeleteChannels = false;
+      this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanSkipChannels = false;
       this.Features.CanHaveGaps = true;
-      this.DataRoot.SortedFavorites = true;
+      this.Features.SortedFavorites = true;
 
       channelLists.Add(new ChannelList(SignalSource.Antenna, "Antenna"));
       channelLists.Add(new ChannelList(SignalSource.Cable, "Cable"));
@@ -537,7 +535,7 @@ namespace ChanSort.Loader.Hisense
 
     private void UpdateChannel(SQLiteCommand cmd, ChannelInfo ci)
     {
-      if (ci.RecordIndex < 0) // skip reference list proxy channels
+      if (ci.IsProxy)
         return; 
 
       int x = (int) ((ulong) ci.RecordIndex >> 32); // the table number is kept in the higher 32 bits
@@ -571,7 +569,7 @@ namespace ChanSort.Loader.Hisense
       {
         if (ci.FavIndex[i] <= 0)
         {
-          cmd.CommandText = $"delete from fav_{i + 1} where ui2_svc_id={ci.RecordIndex >> 32} and ui2_svc_rec_id={ci.RecordIndex & 0xFFFF}";
+          cmd.CommandText = $"delete from fav_{i + 1} where ui2_svc_id={ci.RecordIndex >> 32} and ui2_svc_rec_id={ci.RecordIndex & 0xFFFFFFFF}";
           cmd.ExecuteNonQuery();
         }
         else

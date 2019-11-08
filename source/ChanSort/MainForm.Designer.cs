@@ -128,10 +128,6 @@
       this.miAddChannel = new DevExpress.XtraBars.BarButtonItem();
       this.miRemove = new DevExpress.XtraBars.BarButtonItem();
       this.miRenameChannel = new DevExpress.XtraBars.BarButtonItem();
-      this.miSort = new DevExpress.XtraBars.BarButtonItem();
-      this.miRenum = new DevExpress.XtraBars.BarButtonItem();
-      this.miRenumFavByPrNr = new DevExpress.XtraBars.BarButtonItem();
-      this.miCopyCsv = new DevExpress.XtraBars.BarButtonItem();
       this.mnuFavSet = new DevExpress.XtraBars.BarSubItem();
       this.mnuFavUnset = new DevExpress.XtraBars.BarSubItem();
       this.miLockOn = new DevExpress.XtraBars.BarButtonItem();
@@ -140,6 +136,10 @@
       this.miSkipOff = new DevExpress.XtraBars.BarButtonItem();
       this.miHideOn = new DevExpress.XtraBars.BarButtonItem();
       this.miHideOff = new DevExpress.XtraBars.BarButtonItem();
+      this.miRenum = new DevExpress.XtraBars.BarButtonItem();
+      this.miSort = new DevExpress.XtraBars.BarButtonItem();
+      this.miRenumFavByPrNr = new DevExpress.XtraBars.BarButtonItem();
+      this.miCopyCsv = new DevExpress.XtraBars.BarButtonItem();
       this.barSubItem2 = new DevExpress.XtraBars.BarSubItem();
       this.miTvSettings = new DevExpress.XtraBars.BarButtonItem();
       this.miCleanupChannels = new DevExpress.XtraBars.BarButtonItem();
@@ -1295,41 +1295,6 @@
       this.miRenameChannel.Name = "miRenameChannel";
       this.miRenameChannel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenameChannel_ItemClick);
       // 
-      // miSort
-      // 
-      resources.ApplyResources(this.miSort, "miSort");
-      this.miSort.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miSort.Id = 40;
-      this.miSort.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSort.ImageOptions.ImageIndex")));
-      this.miSort.Name = "miSort";
-      this.miSort.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSort_ItemClick);
-      // 
-      // miRenum
-      // 
-      resources.ApplyResources(this.miRenum, "miRenum");
-      this.miRenum.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
-      this.miRenum.Id = 41;
-      this.miRenum.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRenum.ImageOptions.ImageIndex")));
-      this.miRenum.Name = "miRenum";
-      this.miRenum.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenum_ItemClick);
-      // 
-      // miRenumFavByPrNr
-      // 
-      resources.ApplyResources(this.miRenumFavByPrNr, "miRenumFavByPrNr");
-      this.miRenumFavByPrNr.Id = 63;
-      this.miRenumFavByPrNr.Name = "miRenumFavByPrNr";
-      this.miRenumFavByPrNr.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenumFavByPrNr_ItemClick);
-      // 
-      // miCopyCsv
-      // 
-      resources.ApplyResources(this.miCopyCsv, "miCopyCsv");
-      this.miCopyCsv.Id = 100;
-      this.miCopyCsv.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCopyCsv.ImageOptions.ImageIndex")));
-      this.miCopyCsv.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-                | System.Windows.Forms.Keys.C));
-      this.miCopyCsv.Name = "miCopyCsv";
-      this.miCopyCsv.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCopyCsv_ItemClick);
-      // 
       // mnuFavSet
       // 
       resources.ApplyResources(this.mnuFavSet, "mnuFavSet");
@@ -1405,6 +1370,41 @@
                 | System.Windows.Forms.Keys.H));
       this.miHideOff.Name = "miHideOff";
       this.miHideOff.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miHideOff_ItemClick);
+      // 
+      // miRenum
+      // 
+      resources.ApplyResources(this.miRenum, "miRenum");
+      this.miRenum.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miRenum.Id = 41;
+      this.miRenum.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRenum.ImageOptions.ImageIndex")));
+      this.miRenum.Name = "miRenum";
+      this.miRenum.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenum_ItemClick);
+      // 
+      // miSort
+      // 
+      resources.ApplyResources(this.miSort, "miSort");
+      this.miSort.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
+      this.miSort.Id = 40;
+      this.miSort.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSort.ImageOptions.ImageIndex")));
+      this.miSort.Name = "miSort";
+      this.miSort.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSort_ItemClick);
+      // 
+      // miRenumFavByPrNr
+      // 
+      resources.ApplyResources(this.miRenumFavByPrNr, "miRenumFavByPrNr");
+      this.miRenumFavByPrNr.Id = 63;
+      this.miRenumFavByPrNr.Name = "miRenumFavByPrNr";
+      this.miRenumFavByPrNr.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenumFavByPrNr_ItemClick);
+      // 
+      // miCopyCsv
+      // 
+      resources.ApplyResources(this.miCopyCsv, "miCopyCsv");
+      this.miCopyCsv.Id = 100;
+      this.miCopyCsv.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCopyCsv.ImageOptions.ImageIndex")));
+      this.miCopyCsv.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.C));
+      this.miCopyCsv.Name = "miCopyCsv";
+      this.miCopyCsv.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCopyCsv_ItemClick);
       // 
       // barSubItem2
       // 

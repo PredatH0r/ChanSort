@@ -76,6 +76,8 @@ namespace ChanSort.Loader.LG
     public TllFileSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.Analog;
+      this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
+      this.Features.CanHaveGaps = true;
       this.Features.DeviceSettings = true;
       this.Features.CleanUpChannelData = true;
       this.SupportedTvCountryCodes = new List<string>
@@ -124,10 +126,6 @@ namespace ChanSort.Loader.LG
     }
     #endregion
 
-
-    #region DisplayName
-    public override string DisplayName { get { return "TLL loader"; } }
-    #endregion
 
     #region Load()
 
@@ -530,11 +528,7 @@ namespace ChanSort.Loader.LG
         else
         {
           if (ci.IsDeleted)
-          {
-            ci.OldProgramNr = -1;
-            ci.NewProgramNr = -1;
             ++this.deletedChannelsSoft;
-          }
 
           var list = this.DataRoot.GetChannelList(ci.SignalSource);
           var dupes = list.GetChannelByUid(ci.Uid);
@@ -923,10 +917,11 @@ namespace ChanSort.Loader.LG
       newDvbctChannelCount = 0;
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        int count = list.Channels.Count;
-        for (int i=0; i<count; i++)
+        foreach(var channel in list.Channels)
         {
-          ChannelInfo channel = list.Channels[i];
+          if (channel.IsProxy)
+            continue;
+
           if (channel.NewProgramNr != -1)
           {
             if ((channel.SignalSource & SignalSource.Analog) != 0)
@@ -935,32 +930,11 @@ namespace ChanSort.Loader.LG
               ++newDvbctChannelCount;
           }
 
-          if (!(channel is TllChannelBase))
-          {
-            var newChannel = this.CreateChannelFromProxy(channel);
-            if (newChannel != null)
-              list.Channels[i] = newChannel;
-          }
           channel.UpdateRawData();
         }
       }
     }
 
-    #endregion
-
-    #region CreateChannelFromProxy()
-    private ChannelInfo CreateChannelFromProxy(ChannelInfo proxy)
-    {
-      if ((proxy.SignalSource & SignalSource.Sat) != 0)
-      {
-        var mapping = this.GetDvbsChannelMapping();
-        var channel = SatChannel.CreateFromProxy(proxy, this.DataRoot, mapping, this.satConfig.dvbsChannelLength);
-        if (channel != null)
-          this.mustReorganizeDvbs = true;
-        return channel;
-      }
-      return null;
-    }
     #endregion
 
     #region ReorderActChannelsPhysically()

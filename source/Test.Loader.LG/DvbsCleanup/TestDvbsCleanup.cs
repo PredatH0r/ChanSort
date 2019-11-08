@@ -35,9 +35,9 @@ namespace Test.Loader.LG
     private void ExecuteTest(string modelAndBaseName, bool generateReferenceFile = false)
     {
       // copy required input and assertion files
-      DeploymentItem("ChanSort.Loader.LG\\ChanSort.Loader.LG.ini");
-      DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".TLL.in");
-      DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".TLL.out");
+      TestUtils.DeploymentItem("ChanSort.Loader.LG\\ChanSort.Loader.LG.ini");
+      TestUtils.DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".TLL.in");
+      TestUtils.DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".TLL.out");
 
       var baseName = Path.GetFileNameWithoutExtension(modelAndBaseName);
 
@@ -52,7 +52,7 @@ namespace Test.Loader.LG
       serializer.CleanUpChannelData();
       serializer.Save(tempFile);
       if (generateReferenceFile)
-        File.Copy(tempFile, this.GetSolutionBaseDir() + "\\Test.Loader.LG\\" + modelAndBaseName + ".TLL.out", true);
+        File.Copy(tempFile, TestUtils.GetSolutionBaseDir() + "\\Test.Loader.LG\\" + modelAndBaseName + ".TLL.out", true);
       else
         AssertBinaryFileContent(tempFile, baseName + ".TLL.out");      
     }

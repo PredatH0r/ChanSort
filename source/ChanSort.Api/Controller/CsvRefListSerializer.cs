@@ -7,7 +7,7 @@ namespace ChanSort.Api
 {
   /// <summary>
   ///   Reads a reference list from a .csv file with the format
-  ///   [dummy1],ProgramNr,[dummy2],UID,ChannelName[,SignalSource,FavAndFlags]
+  ///   [obsolete],ProgramNr,[obsolete],UID,ChannelName[,SignalSource,FavAndFlags]
   /// </summary>
   public class CsvRefListSerializer : SerializerBase
   {
@@ -31,16 +31,14 @@ namespace ChanSort.Api
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanSkipChannels = true;
-      this.Features.CanDeleteChannels = true;
+      this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
       this.Features.CanHaveGaps = true;
       this.Features.EncryptedFlagEdit = false;
-      this.DataRoot.SortedFavorites = false;
-      this.DataRoot.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
+      this.Features.SortedFavorites = false;
+      this.Features.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E | Favorites.F | Favorites.G | Favorites.H;
     }
 
     #endregion
-
-    public override string DisplayName => "ChanSort .csv Reference List Loader";
 
     #region Load()
 
@@ -211,6 +209,8 @@ namespace ChanSort.Api
       channel.Lock = false;
       channel.Skip = false;
       channel.Hidden = false;
+      channel.IsDeleted = false;
+      channel.Favorites = 0;
 
       foreach (var c in flags)
       {
@@ -251,6 +251,7 @@ namespace ChanSort.Api
             break;
           case 'D':
             channel.IsDeleted = true;
+            channel.NewProgramNr = -1;
             break;
         }
       }
@@ -318,7 +319,7 @@ namespace ChanSort.Api
       }
     }
 
-    public static void Save(TextWriter stream, DataRoot dataRoot)
+    public static void Save(TextWriter stream, DataRoot dataRoot, bool includeDeletedChannels = true)
     {
       foreach (var channelList in dataRoot.ChannelLists)
       {
@@ -327,8 +328,9 @@ namespace ChanSort.Api
 
         foreach (var channel in channelList.GetChannelsByNewOrder())
         {
-          if (channel.NewProgramNr == -1)
+          if (channel.NewProgramNr == -1 && !includeDeletedChannels)
             continue;
+
           var line = string.Format("{0},{1},{2},{3},\"{4}\",{5},{6}",
             "", // past: channel.RecordIndex,
             channel.NewProgramNr,

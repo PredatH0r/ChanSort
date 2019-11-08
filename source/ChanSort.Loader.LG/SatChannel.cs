@@ -7,7 +7,7 @@ namespace ChanSort.Loader.LG
     private const string _SatConfigIndex = "offSatelliteNr";
     private const string _TransponderIndex = "offTransponderIndex";
 
-    public bool InUse { get; private set; }
+    public bool InUse { get; }
 
     public SatChannel(int order, int slot, DataMapping data, DataRoot dataRoot) : base(data)
     {
@@ -19,8 +19,8 @@ namespace ChanSort.Loader.LG
       this.InitDvbData(data);
 
       int transponderIndex = data.GetWord(_TransponderIndex);
-      Transponder transponder = dataRoot.Transponder.TryGet(transponderIndex);
-      Satellite sat = transponder.Satellite;
+      var transponder = dataRoot.Transponder.TryGet(transponderIndex);
+      var sat = transponder.Satellite;
 
       this.Transponder = transponder;
       this.Satellite = sat.Name;
@@ -32,23 +32,5 @@ namespace ChanSort.Loader.LG
       this.Polarity = transponder.Polarity;
       this.FreqInMhz = transponder.FrequencyInMhz;
     }
-
-    internal static SatChannel CreateFromProxy(ChannelInfo proxy, DataRoot dataRoot, DataMapping mapping, int rawSize)
-    {
-      if (proxy.Transponder == null || proxy.Transponder.Satellite == null || proxy.Transponder.Satellite.LnbConfig == null)
-        return null;
-
-      byte[] rawData = mapping.Settings.GetBytes("newRecordTemplate");
-      if (rawData == null)
-        return null;
-
-      mapping.SetDataPtr(rawData, 0);
-      mapping.SetWord(_SatConfigIndex, proxy.Transponder.Satellite.LnbConfig.Id);
-      mapping.SetWord(_TransponderIndex, proxy.Transponder.Id);
-      mapping.SetWord(_ServiceId, proxy.ServiceId);
-      var channel = new SatChannel(0, proxy.NewProgramNr, mapping, dataRoot);
-      channel.Name = proxy.Name;
-      return channel;
-    }   
   }
 }

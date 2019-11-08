@@ -8,7 +8,6 @@ namespace ChanSort.Loader.Panasonic
 {
   internal class DbChannel : ChannelInfo
   {
-    internal int Bits;
     internal byte[] RawName;
 
     #region ctor()

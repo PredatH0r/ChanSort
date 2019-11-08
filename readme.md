@@ -55,8 +55,8 @@ Supported TV models
 Special thanks to Hisense for supporting ChanSort with technical information and a test device!
 
 **Samsung**  
-.scm files: B (2009)*, B (2013), C, D, E, F, H series  
-.zip files: H, J, K, M series  
+.scm files: B (2009)*, B (2013), C, D, E, F, H, J series  
+.zip files: H, J, K, M, N and Q series  
 Lists:  Air analog, Air digital, Cable analog, Cable digital, 
 		Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
 		Canal Digital Sat, Digital+, Cyfra+
@@ -87,7 +87,7 @@ the channel list from/to USB can be found in the Wiki.
 Viera models with an svl.bin or svl.db channel list (most models since 2011)
 
 **Sony**  
-Android-TVs "sdb.xml" files using formats "FormateVer" 1.1.0 and "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
+Android-TVs "sdb.xml" files using formats "FormateVer" 1.1.0 and KDL 2012/2014 files using "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
 
 **Toshiba**  
 Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.  

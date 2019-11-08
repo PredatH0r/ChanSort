@@ -12,7 +12,10 @@ namespace ChanSort.Loader.Samsung
     {
       this.InitCommonData(slot, SignalSource.DvbS | presetList, data);
       if (!this.InUse)
+      {
+        this.IsDeleted = true;
         return;
+      }
 
       this.InitDvbData(data, providerNames);
 
@@ -37,7 +40,7 @@ namespace ChanSort.Loader.Samsung
 
     public override void UpdateRawData()
     {
-      if (this.NewProgramNr < 0) // "deleted" flag is currently unknown for sat channels
+      if (this.IsDeleted) // "deleted" flag is currently unknown for sat channels
         this.InUse = false;
       base.UpdateRawData();
     }

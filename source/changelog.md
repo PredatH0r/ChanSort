@@ -1,6 +1,13 @@
 ChanSort Change Log 
 ===================
 
+2019-11-08
+- improved handling for deleting channels across all file formats:
+  Depending on what the actual file format supports, one of the following actions will be taken.
+   - channels are marked as deleted in the data records (so they will not be auto-added as new channels by the TV) 
+   - channels are removed from the file (with the risk of the TV auto-adding them like new channels)
+   - appended at the end of the list, when possible marked as "hidden"
+
 2019-08-29
 - fixed: some UHD channels did not show up in the list, which caused corrupted Panasonic channel lists
 - fixed: Samsung SCM DVB-T lists did not show radio channels

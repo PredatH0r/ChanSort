@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Panasonic
@@ -41,9 +40,10 @@ namespace ChanSort.Loader.Panasonic
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.None; // due to the chaos with binary data inside the "sname" string column, writing back a name has undesired side effects
+      this.Features.DeleteMode = DeleteMode.Physically;
       this.Features.CanHaveGaps = false;
       this.Features.EncryptedFlagEdit = true;
-      this.DataRoot.SortedFavorites = true;
+      this.Features.SortedFavorites = true;
       
       this.DataRoot.AddChannelList(this.avbtChannels);
       this.DataRoot.AddChannelList(this.avbcChannels);
@@ -62,8 +62,6 @@ namespace ChanSort.Loader.Panasonic
       }
     }
     #endregion
-
-    public override string DisplayName => "Panasonic .db/.bin Loader";
 
     #region Load()
     public override void Load()
@@ -102,7 +100,8 @@ namespace ChanSort.Loader.Panasonic
 
       var tempFile = this.FileName + ".tmp";
       File.Delete(tempFile);
-      Application.ApplicationExit += CleanTempFile;
+      this.DeleteOnExit(tempFile);
+
       if (cypherMode == CypherMode.Encryption)
         this.CypherFile(this.FileName, tempFile, false);
       else
@@ -200,18 +199,6 @@ namespace ChanSort.Loader.Panasonic
       return Crc32.Normal.CalcCrc32(data, 0, length);
     }
 
-    #endregion
-
-    #region CleanTempFile()
-    private void CleanTempFile(object sender, EventArgs e)
-    {
-      try
-      {
-        if (this.workFile != null) 
-          File.Delete(this.workFile);
-      }
-      catch { }
-    }
     #endregion
 
     #region CreateDummySatellites()
@@ -351,7 +338,7 @@ order by s.ntype,major_channel
         var channel = channelInfo as DbChannel;
         if (channel == null) // skip reference list proxy channels
           continue;
-        if (channel.NewProgramNr < 0 || channel.OldProgramNr < 0)
+        if (channel.IsDeleted && channel.OldProgramNr >= 0)
           continue;
         cmd.Parameters["@rowid"].Value = channel.RecordIndex;
         cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
@@ -368,7 +355,7 @@ order by s.ntype,major_channel
       cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
       foreach (ChannelInfo channel in channelList.Channels)
       {
-        if (channel.NewProgramNr == -1 && channel.OldProgramNr >= 0)
+        if (channel.IsDeleted && channel.OldProgramNr >= 0)
         {
           cmd.Parameters["@rowid"].Value = channel.RecordIndex;
           cmd.ExecuteNonQuery();

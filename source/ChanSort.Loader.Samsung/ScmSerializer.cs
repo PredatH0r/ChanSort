@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Reflection;
 using System.Linq;
 using System.Text;
 using ChanSort.Api;
-using ICSharpCode.SharpZipLib.Zip;
 
 namespace ChanSort.Loader.Samsung
 {
@@ -62,13 +62,10 @@ namespace ChanSort.Loader.Samsung
     {
       this.ReadConfigurationFromIniFile();
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
+      this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
       this.Features.CleanUpChannelData = true;
       this.Features.EncryptedFlagEdit = true;
     }
-    #endregion
-
-    #region DisplayName
-    public override string DisplayName { get { return "Samsung *.scm Loader"; } }
     #endregion
 
     #region ReadConfigurationFromIniFile()
@@ -108,34 +105,34 @@ namespace ChanSort.Loader.Samsung
     #region Load()
     public override void Load()
     {
-      using (ZipFile zip = new ZipFile(this.FileName))
-      {
-        DetectModelConstants(zip);
-        DataRoot.SupportedFavorites = c.supportedFavorites;
-        DataRoot.SortedFavorites = c.SortedFavorites == FavoritesIndexMode.IndividuallySorted;
+      var tempDir = this.UnzipFileToTempFolder();
+      
+      DetectModelConstants(tempDir);
+      Features.SupportedFavorites = c.supportedFavorites;
+      Features.SortedFavorites = c.SortedFavorites == FavoritesIndexMode.IndividuallySorted;
 
-        ReadAnalogFineTuning(zip);
-        ReadAnalogChannels(zip, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
-        ReadAnalogChannels(zip, "map-CableA", this.avbcChannels, out this.avbcFileContent, this.avbcFrequency);
-        ReadAnalogChannels(zip, "map-AirCableMixedA", this.avbxChannels, out this.avbxFileContent, this.avbcFrequency);
-        ReadDvbTransponderFrequenciesFromPtc(zip, "PTCAIR", this.dvbtFrequency);
-        ReadDvbServiceProviders(zip);
-        ReadDvbctChannels(zip, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
-        ReadDvbTransponderFrequenciesFromPtc(zip, "PTCCABLE", this.dvbcFrequency);
-        ReadDvbctChannels(zip, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
-        ReadDvbctChannels(zip, "map-AirCableMixedD", this.dvbxChannels, out this.dvbxFileContent, this.dvbcFrequency);
-        ReadDvbctChannels(zip, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
-        ReadDvbctChannels(zip, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
-        ReadDvbctChannels(zip, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
-        ReadDvbctChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, out this.canalDigitalFileContent, this.dvbcFrequency);
-        ReadDvbctChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, out this.digitalPlusFileContent, this.dvbcFrequency);
-        ReadSatellites(zip);
-        ReadTransponder(zip, "UserTransponderDataBase.dat"); // read user data first so it has priority over overridden default transponsers
-        ReadTransponder(zip, "TransponderDataBase.dat");
-        ReadDvbsChannels(zip, "map-SateD", this.dvbsChannels, out this.dvbsFileContent, c.dvbsChannelLength);
-        ReadDvbsChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
-        ReadAstraHdPlusChannels(zip);        
-      }
+      ReadAnalogFineTuning(tempDir);
+      ReadAnalogChannels(tempDir, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
+      ReadAnalogChannels(tempDir, "map-CableA", this.avbcChannels, out this.avbcFileContent, this.avbcFrequency);
+      ReadAnalogChannels(tempDir, "map-AirCableMixedA", this.avbxChannels, out this.avbxFileContent, this.avbcFrequency);
+      ReadDvbTransponderFrequenciesFromPtc(tempDir, "PTCAIR", this.dvbtFrequency);
+      ReadDvbServiceProviders(tempDir);
+      ReadDvbctChannels(tempDir, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
+      ReadDvbTransponderFrequenciesFromPtc(tempDir, "PTCCABLE", this.dvbcFrequency);
+      ReadDvbctChannels(tempDir, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(tempDir, "map-AirCableMixedD", this.dvbxChannels, out this.dvbxFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(tempDir, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(tempDir, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(tempDir, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(tempDir, "map-CanalDigitalSatD", this.canalDigitalChannels, out this.canalDigitalFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(tempDir, "map-DigitalPlusD", this.digitalPlusChannels, out this.digitalPlusFileContent, this.dvbcFrequency);
+      ReadSatellites(tempDir);
+      ReadTransponder(tempDir, "UserTransponderDataBase.dat"); // read user data first so it has priority over overridden default transponsers
+      ReadTransponder(tempDir, "TransponderDataBase.dat");
+      ReadDvbsChannels(tempDir, "map-SateD", this.dvbsChannels, out this.dvbsFileContent, c.dvbsChannelLength);
+      ReadDvbsChannels(tempDir, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
+      ReadAstraHdPlusChannels(tempDir);        
+
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -148,11 +145,11 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region DetectModelConstants()
-    internal void DetectModelConstants(ZipFile zip)
+    internal void DetectModelConstants(string tempDir)
     {
       if (DetectModelFromFileName()) return;
-      if (DetectModelFromCloneInfoFile(zip)) return;
-      if (DetectModelFromContentFileLengths(zip)) return;
+      if (DetectModelFromCloneInfoFile(tempDir)) return;
+      if (DetectModelFromContentFileLengths(tempDir)) return;
       throw new FileLoadException("Unable to determine TV model from file content or name");
     }
     #endregion
@@ -187,9 +184,9 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region DetectModelFromCloneInfoFile()
-    private bool DetectModelFromCloneInfoFile(ZipFile zip)
+    private bool DetectModelFromCloneInfoFile(string tempDir)
     {
-      byte[] cloneInfo = ReadFileContent(zip, "CloneInfo");
+      byte[] cloneInfo = ReadFileContent(tempDir, "CloneInfo");
       if (cloneInfo == null)
       {
         this.c = this.modelConstants["Series:B"];
@@ -213,7 +210,7 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region DetectModelFromContentFileLengths()
-    private bool DetectModelFromContentFileLengths(ZipFile zip)
+    private bool DetectModelFromContentFileLengths(string zip)
     {
       string[] candidates = {
                               DetectModelFromAirAOrCableA(zip),
@@ -267,69 +264,84 @@ namespace ChanSort.Loader.Samsung
 
     #endregion
 
-    #region DetectModelFromAirAOrCableA()
-    private string DetectModelFromAirAOrCableA(ZipFile zip)
+    #region GetFileInfo()
+    private FileInfo GetFileInfo(string zipFolder, params string[] fileNames)
     {
-      var entry = zip.GetEntry("map-AirA") ?? zip.GetEntry("map-CableA");
-      if (entry == null)
+      foreach (var fileName in fileNames)
+      {
+        var path = Path.Combine(zipFolder, fileName);
+        var info = new FileInfo(path);
+        if (info.Exists)
+          return info;
+      }
+
+      return null;
+    }
+    #endregion
+
+    #region DetectModelFromAirAOrCableA()
+    private string DetectModelFromAirAOrCableA(string zip)
+    {
+      var info = GetFileInfo(zip, "map-AirA", "map-CableA");
+      if (info == null)
         return null;
 
       var candidates = "";
-      if (entry.Size % 28000 == 0)
+      if (info.Length % 28000 == 0)
         candidates += "B";
-      if (entry.Size % 40000 == 0)
+      if (info.Length % 40000 == 0)
         candidates += "C";
-      if (entry.Size % 64000 == 0)
+      if (info.Length % 64000 == 0)
         candidates += "DE";
       return candidates;
     }
     #endregion
 
     #region DetectModelFromAirDOrCableD()
-    private string DetectModelFromAirDOrCableD(ZipFile zip)
+    private string DetectModelFromAirDOrCableD(string zip)
     {
-      var entry = zip.GetEntry("map-AirD") ?? zip.GetEntry("map-CableD") ?? zip.GetEntry("map-CablePrime_D") ?? zip.GetEntry("map-FreesatD")
-        ?? zip.GetEntry("map-TivusatD") ?? zip.GetEntry("map-CanalDigitalSatD") ?? zip.GetEntry("map-DigitalPlusD");
+      var entry = GetFileInfo(zip, "map-AirD", "map-CableD", "map-CablePrime_D", "map-FreesatD",
+        "map-TivusatD", "map-CanalDigitalSatD", "map-DigitalPlusD");
       if (entry == null)
         return null;
 
       var candidates = "";
-      if (entry.Size % 248 == 0)
+      if (entry.Length % 248 == 0)
         candidates += "B";
-      if (entry.Size % 292 == 0)
+      if (entry.Length % 292 == 0)
         candidates += "C";
-      if (entry.Size % 320 == 0)
+      if (entry.Length % 320 == 0)
         candidates += "DE";
       return candidates;
     }
     #endregion
 
     #region DetectModelFromSateD()
-    private string DetectModelFromSateD(ZipFile zip)
+    private string DetectModelFromSateD(string zip)
     {
-      var entry = zip.GetEntry("map-SateD");
+      var entry = this.GetFileInfo(zip, "map-SateD");
       if (entry == null)
         return null;
 
       var candidates = "";
-      if (entry.Size % 144 == 0)
+      if (entry.Length % 144 == 0)
         candidates += "BC";
-      if (entry.Size % 172 == 0)
+      if (entry.Length % 172 == 0)
         candidates += "D";
-      if (entry.Size % 168 == 0)
+      if (entry.Length % 168 == 0)
         candidates += "E";
       return candidates;
     }
     #endregion
 
     #region DetectModelFromTranspoderDatabase()
-    private string DetectModelFromTranspoderDatabase(ZipFile zip)
+    private string DetectModelFromTranspoderDatabase(string zip)
     {
-      var entry = zip.GetEntry("TransponderDatabase.dat");
+      var entry = GetFileInfo(zip, "TransponderDatabase.dat");
       if (entry == null)
         return null;
 
-      var size = entry.Size - 4;
+      var size = entry.Length - 4;
       var candidates = "";
       if (size%49 == 0)
         candidates += "B";
@@ -340,13 +352,13 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region DetectModelFromAstraHdPlusD()
-    private string DetectModelFromAstraHdPlusD(ZipFile zip)
+    private string DetectModelFromAstraHdPlusD(string zip)
     {
-      var entry = zip.GetEntry("map-AstraHDPlusD");
+      var entry = GetFileInfo(zip, "map-AstraHDPlusD");
       if (entry == null)
         return null;
 
-      var size = entry.Size;
+      var size = entry.Length;
       string candidates = null;
       if (size % 212 == 0)
         candidates += "DE";
@@ -356,7 +368,7 @@ namespace ChanSort.Loader.Samsung
 
 
     #region ReadAnalogFineTuning()
-    private void ReadAnalogFineTuning(ZipFile zip)
+    private void ReadAnalogFineTuning(string zip)
     {
       int entrySize = c.avbtFineTuneLength;
       if (entrySize == 0)
@@ -382,7 +394,7 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region ReadAnalogChannels()
-    private void ReadAnalogChannels(ZipFile zip, string fileName, ChannelList list, out byte[] data, Dictionary<int,decimal> freq)
+    private void ReadAnalogChannels(string zip, string fileName, ChannelList list, out byte[] data, Dictionary<int,decimal> freq)
     {
       data = null;
       int entrySize = c.avbtChannelLength;
@@ -421,7 +433,7 @@ namespace ChanSort.Loader.Samsung
 
 
     #region ReadDvbTransponderFrequenciesFromPtc()
-    private void ReadDvbTransponderFrequenciesFromPtc(ZipFile zip, string file, IDictionary<int, decimal> table)
+    private void ReadDvbTransponderFrequenciesFromPtc(string zip, string file, IDictionary<int, decimal> table)
     {
       byte[] data = ReadFileContent(zip, file);
       if (data == null)
@@ -441,7 +453,7 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region ReadDvbServiceProviders()
-    private void ReadDvbServiceProviders(ZipFile zip)
+    private void ReadDvbServiceProviders(string zip)
     {
       this.serviceProviderNames = new Dictionary<int, string>();
       var data = ReadFileContent(zip, "ServiceProviders");
@@ -466,7 +478,7 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region ReadDvbctChannels()
-    private void ReadDvbctChannels(ZipFile zip, string fileName, ChannelList list, out byte[] data, Dictionary<int, decimal> frequency)
+    private void ReadDvbctChannels(string zip, string fileName, ChannelList list, out byte[] data, Dictionary<int, decimal> frequency)
     {
       data = null;
       int entrySize = c.dvbtChannelLength;
@@ -486,7 +498,7 @@ namespace ChanSort.Loader.Samsung
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
         DigitalChannel ci = new DigitalChannel(slotIndex, source, rawChannel, frequency, c.SortedFavorites, this.serviceProviderNames);
-        if (ci.InUse && !ci.IsDeleted && ci.OldProgramNr > 0)
+        if (ci.InUse)
           this.DataRoot.AddChannel(list, ci);
 
         rawChannel.BaseOffset += entrySize;
@@ -496,7 +508,7 @@ namespace ChanSort.Loader.Samsung
 
 
     #region ReadSatellites()
-    private void ReadSatellites(ZipFile zip)
+    private void ReadSatellites(string zip)
     {
       byte[] data = ReadFileContent(zip, "SatDataBase.dat");
       if (data == null || data.Length < 4)
@@ -527,7 +539,7 @@ namespace ChanSort.Loader.Samsung
 
     #region ReadTransponder()
 
-    private void ReadTransponder(ZipFile zip, string fileName)
+    private void ReadTransponder(string zip, string fileName)
     {
       byte[] data = ReadFileContent(zip, fileName);
       if (data == null)
@@ -562,7 +574,7 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region ReadDvbsChannels()
-    private void ReadDvbsChannels(ZipFile zip, string filename, ChannelList channels, out byte[] fileContent, int entrySize)
+    private void ReadDvbsChannels(string zip, string filename, ChannelList channels, out byte[] fileContent, int entrySize)
     {
       fileContent = ReadFileContent(zip, filename);
       if (fileContent == null)
@@ -585,7 +597,7 @@ namespace ChanSort.Loader.Samsung
     #endregion
 
     #region ReadAstraHdPlusChannels()
-    private void ReadAstraHdPlusChannels(ZipFile zip)
+    private void ReadAstraHdPlusChannels(string zip)
     {
       this.hdplusFileContent = ReadFileContent(zip, "map-AstraHDPlusD");
       if (hdplusFileContent == null || c.hdplusChannelLength == 0)
@@ -608,64 +620,46 @@ namespace ChanSort.Loader.Samsung
 
 
     #region ReadFileContent()
-    private static byte[] ReadFileContent(ZipFile zip, string fileName)
+    private static byte[] ReadFileContent(string tempDir, string fileName)
     {
-      var entry = zip.GetEntry(fileName);
-      if (entry == null)
-        return null;
-      byte[] data = new byte[entry.Size];
-      using (var stream = zip.GetInputStream(entry))
-      {
-        stream.Read(data, 0, data.Length);
-      }
-      return data;
+      var path = Path.Combine(tempDir, fileName);
+      return File.Exists(path) ? File.ReadAllBytes(path) : null;
     }
     #endregion
 
     #region Save()
     public override void Save(string tvOutputFile)
     {
-      if (tvOutputFile != this.FileName)
-      {
-        File.Copy(this.FileName, tvOutputFile, true);
-        this.FileName = tvOutputFile;
-      }
-      using (ZipFile zip = new ZipFile(tvOutputFile))
-      {
-        zip.BeginUpdate();
-        this.SaveChannels(zip, "map-AirA", this.avbtChannels, this.avbtFileContent);
-        this.SaveChannels(zip, "map-CableA", this.avbcChannels, this.avbcFileContent);
-        this.SaveChannels(zip, "map-AirCableMixedA", this.avbxChannels, this.avbxFileContent);
-        this.SaveChannels(zip, "map-AirD", this.dvbtChannels, this.dvbtFileContent);
-        this.SaveChannels(zip, "map-CableD", this.dvbcChannels, this.dvbcFileContent);
-        this.SaveChannels(zip, "map-AirCableMixedD", this.dvbxChannels, this.dvbxFileContent);
-        this.SaveChannels(zip, "map-SateD", this.dvbsChannels, this.dvbsFileContent);
-        this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, this.hdplusFileContent);
-        this.SaveChannels(zip, "map-CablePrime_D", this.primeChannels, this.primeFileContent);
-        this.SaveChannels(zip, "map-FreesatD", this.freesatChannels, this.freesatFileContent);
-        this.SaveChannels(zip, "map-TivusatD", this.tivusatChannels, this.tivusatFileContent);
-        this.SaveChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, this.canalDigitalFileContent);
-        this.SaveChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, this.digitalPlusFileContent);
-        this.SaveChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, this.cyfraPlusFileContent);
-        zip.CommitUpdate();
-      }
+      string zip = this.FileName + ".tmp";
+      this.SaveChannels(zip, "map-AirA", this.avbtChannels, this.avbtFileContent);
+      this.SaveChannels(zip, "map-CableA", this.avbcChannels, this.avbcFileContent);
+      this.SaveChannels(zip, "map-AirCableMixedA", this.avbxChannels, this.avbxFileContent);
+      this.SaveChannels(zip, "map-AirD", this.dvbtChannels, this.dvbtFileContent);
+      this.SaveChannels(zip, "map-CableD", this.dvbcChannels, this.dvbcFileContent);
+      this.SaveChannels(zip, "map-AirCableMixedD", this.dvbxChannels, this.dvbxFileContent);
+      this.SaveChannels(zip, "map-SateD", this.dvbsChannels, this.dvbsFileContent);
+      this.SaveChannels(zip, "map-AstraHDPlusD", this.hdplusChannels, this.hdplusFileContent);
+      this.SaveChannels(zip, "map-CablePrime_D", this.primeChannels, this.primeFileContent);
+      this.SaveChannels(zip, "map-FreesatD", this.freesatChannels, this.freesatFileContent);
+      this.SaveChannels(zip, "map-TivusatD", this.tivusatChannels, this.tivusatFileContent);
+      this.SaveChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, this.canalDigitalFileContent);
+      this.SaveChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, this.digitalPlusFileContent);
+      this.SaveChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, this.cyfraPlusFileContent);
+      this.ZipToOutputFile(tvOutputFile);
     }
     #endregion
 
     #region SaveChannels()
-    private void SaveChannels(ZipFile zip, string fileName, ChannelList channels, byte[] fileContent)
+    private void SaveChannels(string zip, string fileName, ChannelList channels, byte[] fileContent)
     {
       if (fileContent == null)
         return;
-      zip.Delete(fileName);
 
-      string tempFilePath = Path.GetTempFileName();
+      string tempFilePath = Path.Combine(zip, fileName);
       using (var stream = new FileStream(tempFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
       {
         this.WriteChannels(channels, fileContent, stream);
       }
-
-      zip.Add(tempFilePath, fileName);
     }
     #endregion
 

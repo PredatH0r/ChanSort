@@ -353,28 +353,34 @@ namespace ChanSort.Api
       {
         if (list.IsMixedSourceFavoritesList)
           continue;
+
+        // sort the channels by assigned numbers, then unassigned by original order or alphabetically, then deleted channels
         var sortedChannels = list.Channels.OrderBy(ChanSortCriteria).ToList();
         int maxProgNr = 0;
 
         foreach (var appChannel in sortedChannels)
         {
-          if (appChannel.RecordIndex < 0)
+          if (appChannel.IsProxy)
             continue;
 
           if (appChannel.NewProgramNr == -1)
           {
-            if (mode == UnsortedChannelMode.MarkDeleted)
+            if (mode == UnsortedChannelMode.Delete)
               appChannel.IsDeleted = true;
-            else
+            else // append (hidden if possible)
             {
               appChannel.Hidden = true;
               appChannel.Skip = true;
             }
-          }
 
-          int progNr = this.GetNewProgramNr(appChannel, ref maxProgNr);
-          if (mode != UnsortedChannelMode.MarkDeleted || this.DataRoot.DeletedChannelsNeedNumbers)
-            appChannel.NewProgramNr = progNr;
+            // assign a valid number or 0 .... because -1 will never be a valid value for the TV
+            appChannel.NewProgramNr = mode != UnsortedChannelMode.Delete || this.DataRoot.DeletedChannelsNeedNumbers ? ++maxProgNr : 0;
+          }
+          else
+          {
+            if (appChannel.NewProgramNr > maxProgNr)
+              maxProgNr = appChannel.NewProgramNr;
+          }
         }
       }
     }
@@ -384,13 +390,13 @@ namespace ChanSort.Api
     private string ChanSortCriteria(ChannelInfo channel)
     {
       // explicitly sorted
-      var pos = channel.GetPosition(this.SubListIndex);
+      var pos = channel.NewProgramNr;
       if (pos != -1)
         return pos.ToString("d5");
 
       // eventually hide unsorted channels
-      if (this.unsortedChannelMode == UnsortedChannelMode.MarkDeleted)
-        return "Z";
+      if (this.unsortedChannelMode == UnsortedChannelMode.Delete)
+        return "Z" + channel.RecordIndex.ToString("d5");
 
       // eventually append in old order
       if (this.unsortedChannelMode == UnsortedChannelMode.AppendInOrder)
@@ -402,20 +408,6 @@ namespace ChanSort.Api
       if (channel.Name == "")
         return "C";
       return "A" + channel.Name;
-    }
-
-    #endregion
-
-    #region GetNewProgramNr()
-
-    private int GetNewProgramNr(ChannelInfo appChannel, ref int maxPrNr)
-    {
-      int prNr = appChannel.NewProgramNr;
-      if (prNr > maxPrNr)
-        maxPrNr = prNr;
-      if (prNr == -1)
-        prNr = ++maxPrNr;
-      return prNr;
     }
 
     #endregion

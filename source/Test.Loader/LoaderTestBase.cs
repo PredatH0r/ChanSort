@@ -34,11 +34,11 @@ namespace Test.Loader
     {
       string path = this.GetTestFileDirectory(baseDir);
       List<string> files = new List<string>();
-      this.FindAllTllFilesRecursively(path, mask, files);
+      this.GetFilesRecursively(path, mask, files);
       return files;
     }
 
-    private string GetTestFileDirectory(string baseDir)
+    protected string GetTestFileDirectory(string baseDir)
     {
       string exeDir = Assembly.GetExecutingAssembly().Location;
       while (!string.IsNullOrEmpty(exeDir))
@@ -51,11 +51,11 @@ namespace Test.Loader
       throw new FileNotFoundException("No 'TestFiles' directory found");
     }
 
-    private void FindAllTllFilesRecursively(string path, string mask, List<string> files)
+    private void GetFilesRecursively(string path, string mask, List<string> files)
     {
       files.AddRange(Directory.GetFiles(path, mask));
       foreach (var dir in Directory.GetDirectories(path))
-        this.FindAllTllFilesRecursively(dir, mask, files);
+        this.GetFilesRecursively(dir, mask, files);
     }
     #endregion
   }

@@ -82,7 +82,7 @@ namespace ChanSort.Api
   {
     AppendInOrder=0,
     AppendAlphabetically=1,
-    MarkDeleted=2
+    Delete=2
   }
 
   [Flags]

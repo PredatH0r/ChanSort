@@ -1,41 +1,37 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using System.Linq;
 
 namespace ChanSort.Api
 {
   public class DataRoot
   {
-    private readonly IDictionary<int, Satellite> satellites = new Dictionary<int, Satellite>();
-    private readonly IDictionary<int, Transponder> transponder = new Dictionary<int, Transponder>();
-    private readonly IDictionary<int, LnbConfig> lnbConfig = new Dictionary<int, LnbConfig>();
     private readonly IList<ChannelList> channelLists = new List<ChannelList>();
-    private readonly StringBuilder warnings = new StringBuilder();
+    private readonly SerializerBase loader;
 
-    public StringBuilder Warnings { get { return this.warnings; } }
-    public IDictionary<int, Satellite> Satellites { get { return this.satellites; } }
-    public IDictionary<int, Transponder> Transponder { get { return this.transponder; } }
-    public IDictionary<int, LnbConfig> LnbConfig { get { return this.lnbConfig; } }
-    public IEnumerable<ChannelList> ChannelLists { get { return this.channelLists; } }
-    public bool IsEmpty { get { return this.channelLists.Count == 0; } }
+    public StringBuilder Warnings { get; } = new StringBuilder();
+    public IDictionary<int, Satellite> Satellites { get; } = new Dictionary<int, Satellite>();
+    public IDictionary<int, Transponder> Transponder { get; } = new Dictionary<int, Transponder>();
+    public IDictionary<int, LnbConfig> LnbConfig { get; } = new Dictionary<int, LnbConfig>();
+    public IEnumerable<ChannelList> ChannelLists => this.channelLists;
+    public bool IsEmpty => this.channelLists.Count == 0;
     public bool NeedsSaving { get; set; }
-    public Favorites SupportedFavorites { get; set; }
-    public bool SortedFavorites { get; set; }
-    public bool MixedSourceFavorites { get; set; }
-    public bool AllowGapsInFavNumbers { get; set; }
-    public bool ShowDeletedChannels { get; set; }
 
-    public bool DeletedChannelsNeedNumbers { get; set; }
 
-    public DataRoot()
+    public Favorites SupportedFavorites => this.loader.Features.SupportedFavorites;
+    public bool SortedFavorites => this.loader.Features.SortedFavorites;
+    public bool MixedSourceFavorites => this.loader.Features.MixedSourceFavorites;
+    public bool AllowGapsInFavNumbers => this.loader.Features.AllowGapsInFavNumbers;
+    public bool DeletedChannelsNeedNumbers => this.loader.Features.DeletedChannelsNeedNumbers;
+
+    public DataRoot(SerializerBase loader)
     {
-      this.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D;
+      this.loader = loader;
     }
 
     #region AddSatellite()
     public virtual void AddSatellite(Satellite satellite)
     {
-      this.satellites.Add(satellite.Id, satellite);
+      this.Satellites.Add(satellite.Id, satellite);
     }
     #endregion
 
@@ -43,21 +39,21 @@ namespace ChanSort.Api
     public virtual void AddTransponder(Satellite sat, Transponder trans)
     {
       trans.Satellite = sat;
-      if (this.transponder.ContainsKey(trans.Id))
+      if (this.Transponder.ContainsKey(trans.Id))
       {
-        this.warnings.AppendFormat("Duplicate transponder data record for satellite #{0} with id {1}\r\n", sat?.Id, trans.Id);
+        this.Warnings.AppendFormat("Duplicate transponder data record for satellite #{0} with id {1}\r\n", sat?.Id, trans.Id);
         return;
       }
       if (sat != null)
         sat.Transponder.Add(trans.Id, trans);
-      this.transponder.Add(trans.Id, trans);
+      this.Transponder.Add(trans.Id, trans);
     }
     #endregion
 
     #region AddLnbConfig()
     public void AddLnbConfig(LnbConfig lnb)
     {
-      this.lnbConfig.Add(lnb.Id, lnb);
+      this.LnbConfig.Add(lnb.Id, lnb);
     }
     #endregion
 
@@ -65,7 +61,7 @@ namespace ChanSort.Api
     public virtual void AddChannelList(ChannelList list)
     {
       this.channelLists.Add(list);
-      this.MixedSourceFavorites |= list.IsMixedSourceFavoritesList;
+      this.loader.Features.MixedSourceFavorites |= list.IsMixedSourceFavoritesList;
     }
     #endregion
 
@@ -74,7 +70,7 @@ namespace ChanSort.Api
     {
       if (list == null)
       {
-        warnings.AppendFormat("No list found to add channel '{0}'\r\n", channel);
+        this.Warnings.AppendFormat("No list found to add channel '{0}'\r\n", channel);
         return;
       }
       string warning = list.AddChannel(channel);
@@ -105,6 +101,26 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region ValidateAfterLoad()
+    public virtual void ValidateAfterLoad()
+    {
+      foreach (var list in this.ChannelLists)
+      {
+        if (list.IsMixedSourceFavoritesList)
+          continue;
+
+        // make sure that deleted channels have OldProgramNr = -1
+        foreach (var chan in list.Channels)
+        {
+          if (chan.IsDeleted)
+            chan.OldProgramNr = -1;
+          else if (chan.OldProgramNr < 0) // old versions of ChanSort saved -1 and without setting IsDeleted
+            chan.IsDeleted = true;
+        }
+      }
+    }
+    #endregion
+
     #region ApplyCurrentProgramNumbers()
     public void ApplyCurrentProgramNumbers()
     {
@@ -120,35 +136,37 @@ namespace ChanSort.Api
         foreach (var channel in list.Channels)
         {
           for (int i = 0; i <= c; i++)
-            channel.SetPosition(i, channel.IsDeleted && !this.DeletedChannelsNeedNumbers ? -1 : channel.GetOldPosition(i));
+            channel.SetPosition(i, channel.GetOldPosition(i));
         }
       }
     }
     #endregion
 
-    #region SetPrNrForDeletedChannels()
-    public void SetPrNrForDeletedChannels()
+    #region ValidateAfterSave()
+    public virtual void ValidateAfterSave()
     {
-      if (this.DeletedChannelsNeedNumbers)
-        return;
-
-      // make sure that deleted channels have OldProgramNr = -1
+      // set old numbers to match the new numbers
+      // also make sure that deleted channels are either removed from the list or assigned the -1 prNr, depending on the loader's DeleteMode
       foreach (var list in this.ChannelLists)
       {
-        if (list.IsMixedSourceFavoritesList)
-          continue;
-        foreach (var chan in list.Channels)
+        for (int i = 0; i < list.Channels.Count; i++)
         {
+          var chan = list.Channels[i];
           if (chan.IsDeleted)
           {
-            chan.NewProgramNr = -1;
-            chan.OldProgramNr = -1;
+            if (this.loader.Features.DeleteMode == SerializerBase.DeleteMode.Physically)
+              list.Channels.RemoveAt(i--);
+            else
+              chan.NewProgramNr = -1;
           }
-          else if (chan.OldProgramNr == -1) // old versions of ChanSort saved -1 and without setting IsDeleted
-            chan.IsDeleted = true;
+
+          chan.OldProgramNr = chan.NewProgramNr;
+          chan.OldFavIndex.Clear();
+          chan.OldFavIndex.AddRange(chan.FavIndex);
         }
       }
     }
     #endregion
+
   }
 }

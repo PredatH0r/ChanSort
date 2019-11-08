@@ -551,7 +551,7 @@ namespace ChanSort.Ui
       if (!this.PromptSaveAndContinue())
         return false;
 
-      serializer.DataRoot.SetPrNrForDeletedChannels();
+      serializer.DataRoot.ValidateAfterLoad();
       this.SetFileName(tvDataFile);
       this.currentPlugin = plugin;
       this.currentTvSerializer = serializer;
@@ -765,9 +765,9 @@ namespace ChanSort.Ui
 
       try
       {
-        if (!this.PromptHandlingOfUnsortedChannels())
-          return;
         if (!this.HandleChannelNumberGaps())
+          return;
+        if (!this.PromptHandlingOfUnsortedChannels())
           return;
         this.SaveTvDataFile();
         this.DataRoot.NeedsSaving = false;
@@ -795,7 +795,7 @@ namespace ChanSort.Ui
       {
         foreach (var channel in list.Channels)
         {
-          if (channel.NewProgramNr < 0 && (!channel.IsDeleted || DataRoot.DeletedChannelsNeedNumbers))
+          if (channel.NewProgramNr < 0 && (!channel.IsDeleted /* || DataRoot.DeletedChannelsNeedNumbers */))
           {
             hasUnsorted = true;
             break;
@@ -803,7 +803,7 @@ namespace ChanSort.Ui
         }
       }
 
-      UnsortedChannelMode mode = UnsortedChannelMode.MarkDeleted;
+      UnsortedChannelMode mode = UnsortedChannelMode.Delete;
 
       if (hasUnsorted)
       {
@@ -812,7 +812,7 @@ namespace ChanSort.Ui
         using (var dlg = new ActionBoxDialog(msg))
         {
           dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Append, DialogResult.Yes, dlg.FullList);
-          if (this.currentTvSerializer.Features.CanDeleteChannels)
+          if (this.currentTvSerializer.Features.CanDeleteChannelsWithFlag || this.currentTvSerializer.Features.CanDeleteChannelsFromFile)
             dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Delete, DialogResult.No, dlg.Delete);
           dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
           res = dlg.ShowDialog(this);
@@ -928,19 +928,7 @@ namespace ChanSort.Ui
             File.Copy(currentTvFile, bakFile);
         }
         this.currentTvSerializer.Save(this.currentTvFile);
-
-        // after saving old numbers match the new numbers
-        foreach (var list in this.DataRoot.ChannelLists)
-        {
-          foreach (var chan in list.Channels)
-          {
-            if (chan.IsDeleted && !this.DataRoot.DeletedChannelsNeedNumbers) // during the saving process, deleted channels temporarily got a NewProgramNr assigned
-              chan.NewProgramNr = -1;
-            chan.OldProgramNr = chan.NewProgramNr;
-            chan.OldFavIndex.Clear();
-            chan.OldFavIndex.AddRange(chan.FavIndex);
-          }
-        }
+        this.DataRoot.ValidateAfterSave();
       }
       finally
       {
@@ -1692,6 +1680,8 @@ namespace ChanSort.Ui
       try
       {
         File.Copy(bakFile, this.currentTvFile, true);
+        var attr = File.GetAttributes(this.currentTvFile);
+        File.SetAttributes(this.currentTvFile, attr & ~FileAttributes.ReadOnly);
         this.currentTvSerializer.DataRoot.NeedsSaving = false;
         if (this.currentPlugin != null)
           this.LoadFiles(this.currentPlugin, this.currentTvFile);
@@ -2675,8 +2665,7 @@ namespace ChanSort.Ui
     {
       this.gviewRight.BeginSort();
       this.gviewRight.ClearColumnsFilter();
-      if (this.DataRoot != null && !this.DataRoot.ShowDeletedChannels)
-        this.colSlotOld.FilterInfo = new ColumnFilterInfo("[OldProgramNr]<>-1");
+      this.colSlotOld.FilterInfo = new ColumnFilterInfo("[OldProgramNr]<>-1");
       if (this.subListIndex > 0 && !this.CurrentChannelList.IsMixedSourceFavoritesList)
         this.colPrNr.FilterInfo = new ColumnFilterInfo("[NewProgramNr]<>-1");
       this.gviewRight.EndSort();

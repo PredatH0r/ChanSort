@@ -119,17 +119,14 @@ namespace ChanSort.Loader.Hisense2017
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();
 
       Features.ChannelNameEdit = ChannelNameEditMode.All;
-      Features.CanDeleteChannels = true;
+      Features.DeleteMode = DeleteMode.FlagWithPrNr;
       Features.CanSkipChannels = true;
       Features.CanHaveGaps = true;
-      DataRoot.MixedSourceFavorites = true;
-      DataRoot.SortedFavorites = true;
-      DataRoot.ShowDeletedChannels = false;
+      Features.MixedSourceFavorites = true;
+      Features.SortedFavorites = true;
     }
 
     #endregion
-
-    public override string DisplayName => "Hisense servicelist.db Loader";
 
     #region Load()
 
@@ -513,8 +510,8 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
 
           cmd.Parameters["@favId"].Value = favId;
           cmd.Parameters["@servId"].Value = ci.RecordIndex;
-          cmd.Parameters["@ch"].Value = ci.NewProgramNr <= 0 ? 9999 : ci.NewProgramNr;
-          cmd.Parameters["@del"].Value = ci.NewProgramNr <= 0 ? 1 : 0; // 1 or -1 ?
+          cmd.Parameters["@ch"].Value = ci.NewProgramNr;
+          cmd.Parameters["@del"].Value = ci.IsDeleted ? 1 : 0; // 1 or -1 ?
           // not sure if the following columns are used at all. they also exist in the Services table
           cmd.Parameters["@prot"].Value = ci.Lock ? -1 : 0;
           cmd.Parameters["@sel"].Value = ci.Skip ? 0 : -1;

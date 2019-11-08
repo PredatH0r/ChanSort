@@ -56,6 +56,9 @@ namespace ChanSort.Loader.LG
       this.Hidden = data.GetFlag(_Hide);
       this.Encrypted = data.GetFlag(_Encrypted);
       this.IsDeleted = data.GetFlag(_Deleted);
+      if (IsDeleted) // allow setting a breakpoint
+      {
+      }
     }
     #endregion
 
@@ -105,7 +108,7 @@ namespace ChanSort.Loader.LG
       mapping.SetFlag(_Skip, this.Skip);
       mapping.SetFlag(_Lock, this.Lock);
       mapping.SetFlag(_Hide, this.Hidden);
-      if (this.NewProgramNr == -1)
+      if (this.IsDeleted)
       {
         mapping.SetFlag(_Deleted, true);
         mapping.SetByte("off" + _Moved, 0); //skip,lock,hide,moved

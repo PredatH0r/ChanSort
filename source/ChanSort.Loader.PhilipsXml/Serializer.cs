@@ -41,7 +41,7 @@ namespace ChanSort.Loader.PhilipsXml
     public Serializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      this.Features.CanDeleteChannels = true;
+      this.Features.DeleteMode = DeleteMode.Physically;
 
       this.DataRoot.AddChannelList(this.terrChannels);
       this.DataRoot.AddChannelList(this.cableChannels);
@@ -57,11 +57,6 @@ namespace ChanSort.Loader.PhilipsXml
         list.VisibleColumnFieldNames.Remove("Provider");
       }
     }
-    #endregion
-
-    #region DisplayName
-    public override string DisplayName => "Philips *.xml loader";
-
     #endregion
 
 
@@ -134,8 +129,8 @@ namespace ChanSort.Loader.PhilipsXml
       if (setupNode.HasAttribute("ChannelName"))
       {
         this.formatVersion = 1;
-        this.DataRoot.SupportedFavorites = Favorites.A;
-        this.DataRoot.SortedFavorites = true;
+        this.Features.SupportedFavorites = Favorites.A;
+        this.Features.SortedFavorites = true;
 
         var dtype = bcastNode.GetAttribute("DecoderType");
         if (dtype == "1")
@@ -150,8 +145,8 @@ namespace ChanSort.Loader.PhilipsXml
       else if (setupNode.HasAttribute("name"))
       {
         this.formatVersion = 2;
-        this.DataRoot.SupportedFavorites = 0;
-        this.DataRoot.SortedFavorites = false;
+        this.Features.SupportedFavorites = 0;
+        this.Features.SortedFavorites = false;
         foreach (var list in this.DataRoot.ChannelLists)
         {
           list.VisibleColumnFieldNames.Remove("Favorites");

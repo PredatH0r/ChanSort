@@ -13,8 +13,15 @@ namespace ChanSort.Loader.Samsung
     {
       this.InitCommonData(slot, signalSource & ~SignalSource.MaskTvRadioData, data);
 
-      if (!this.InUse || this.OldProgramNr == 0)
+      if (!this.InUse)
         return;
+
+      // "InUse" and "IsDeleted" are not always guessed correctly. If PrNr=0, the channel contains garbage
+      if (this.OldProgramNr == 0)
+      {
+        this.InUse = false;
+        return;
+      }
 
       this.InitDvbData(data, providerNames);
 

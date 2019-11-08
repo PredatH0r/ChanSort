@@ -25,7 +25,8 @@ namespace ChanSort.Loader.GlobalClone
     public GcSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      //this.Features.CanDeleteChannels = false;
+      this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
+      this.Features.CanHaveGaps = true;
 
       this.DataRoot.AddChannelList(this.atvChannels);
       this.DataRoot.AddChannelList(this.dtvTvChannels);
@@ -34,12 +35,6 @@ namespace ChanSort.Loader.GlobalClone
       this.DataRoot.AddChannelList(this.satRadioChannels);
     }
     #endregion
-
-    #region DisplayName
-    public override string DisplayName => "LG GlobalClone loader";
-
-    #endregion
-
 
     #region Load()
 
@@ -320,8 +315,8 @@ namespace ChanSort.Loader.GlobalClone
             {
               int n = info.LocalName[11] - 'A';
               var mask = 1 << n;
-              this.DataRoot.SupportedFavorites |= (Favorites)mask;
-              this.DataRoot.SortedFavorites = true;
+              this.Features.SupportedFavorites |= (Favorites)mask;
+              this.Features.SortedFavorites = true;
               if (((int)ch.Favorites & mask) != 0) // xml element holds bad index data (250) when fav is not set
                 ch.SetPosition(n + 1, int.Parse(info.InnerText));
             }

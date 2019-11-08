@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using ChanSort.Api;
 using ChanSort.Loader.Sony;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,13 +8,6 @@ namespace Test.Loader.Sony
   [TestClass]
   public class SonyXmlTest
   {
-    private static readonly string filesDir;
-
-    static SonyXmlTest()
-    {
-      filesDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\TestFiles\\";
-    }
-
     // Android OS seems to use the "FormateVer" XML element, KDL 2012 and 2014 use "FormatVer"
 
     #region TestAndroid ... ChannelsAddedToCorrectLists
@@ -65,8 +55,9 @@ namespace Test.Loader.Sony
     #region TestChannelsAddedToCorrectList
     private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio, int dataProgramSid = 0, string dataProgramName = null)
     {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\" + fileName);
       var plugin = new SerializerPlugin();
-      var ser = plugin.CreateSerializer(filesDir + fileName);
+      var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
 
       var root = ser.DataRoot;
@@ -86,5 +77,104 @@ namespace Test.Loader.Sony
       }
     }
     #endregion
+
+
+    #region TestAndroidDeletingChannel
+
+    [TestMethod]
+    public void TestAndroidDeletingChannel()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\android_sdb-sat.xml");
+      var plugin = new SerializerPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // Pr# 128 = ORF2E 
+
+      var dvbs = data.GetChannelList(SignalSource.DvbS);
+      var orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
+      Assert.IsNotNull(orf2e);
+      Assert.AreEqual(127, orf2e.OldProgramNr);
+      Assert.AreEqual(127, orf2e.NewProgramNr);
+      Assert.IsFalse(orf2e.IsDeleted);
+
+      orf2e.NewProgramNr = -1;
+      var editor = new Editor();
+      editor.DataRoot = data;
+      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+
+      Assert.IsTrue(orf2e.IsDeleted);
+      Assert.IsTrue(orf2e.NewProgramNr > 0);
+      Assert.AreEqual(0, dvbs.Channels.Count(ch => ch.NewProgramNr <= 0));
+
+
+      // save and reload
+      ser.Save(tempFile);
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // channel was marked deleted
+      dvbs = data.GetChannelList(SignalSource.DvbS);
+      orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
+      Assert.IsNotNull(orf2e);
+      Assert.IsTrue(orf2e.IsDeleted);
+      Assert.AreEqual(-1, orf2e.NewProgramNr);
+    }
+    #endregion
+
+    #region TestKdlDeletingChannel
+
+    [TestMethod]
+    public void TestKdlDeletingChannel()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\kdl_sdb-cable-sat.xml");
+      var plugin = new SerializerPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // Pr# 128 = ORF2E 
+
+      var dvbs = data.GetChannelList(SignalSource.DvbS);
+      var orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
+      Assert.IsNotNull(orf2e);
+      Assert.AreEqual(693, orf2e.OldProgramNr);
+      Assert.AreEqual(693, orf2e.NewProgramNr);
+      Assert.IsFalse(orf2e.IsDeleted);
+
+      orf2e.NewProgramNr = -1;
+      var editor = new Editor();
+      editor.DataRoot = data;
+      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+
+      Assert.IsTrue(orf2e.IsDeleted);
+      Assert.IsTrue(orf2e.NewProgramNr == 0);
+
+
+      // save and reload
+      ser.Save(tempFile);
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // channel was not assigned a number in the file
+      dvbs = data.GetChannelList(SignalSource.DvbS);
+      orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
+      Assert.IsNotNull(orf2e);
+      Assert.IsTrue(orf2e.IsDeleted);
+      Assert.AreEqual(-1, orf2e.NewProgramNr);
+    }
+    #endregion
+
   }
 }

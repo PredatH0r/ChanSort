@@ -71,8 +71,6 @@ namespace ChanSort.Loader.Samsung
       this.Skip = data.GetFlag(_Skip);
       this.Encrypted = data.GetFlag(_Encrypted);
       this.IsDeleted = data.GetFlag(_Deleted, false) || !data.GetFlag(_IsActive, true);
-      if (this.IsDeleted)
-        this.OldProgramNr = -1;
       this.AddDebug(data.Data, data.BaseOffset + 25, 3);
     }
     #endregion
@@ -142,8 +140,7 @@ namespace ChanSort.Loader.Samsung
     {
       mapping.SetDataPtr(this.rawData, this.baseOffset);
       mapping.SetFlag(_InUse, this.InUse);
-      if (this.NewProgramNr >= 0)
-        mapping.SetWord(_ProgramNr, this.NewProgramNr);
+      mapping.SetWord(_ProgramNr, this.NewProgramNr);
 
       if (this.IsNameModified)
       {
@@ -153,8 +150,8 @@ namespace ChanSort.Loader.Samsung
       }
       this.UpdateRawFavorites();
       mapping.SetFlag(_Lock, this.Lock);
-      mapping.SetFlag(_Deleted, this.NewProgramNr < 0);
-      mapping.SetFlag(_IsActive, this.NewProgramNr >= 0);
+      mapping.SetFlag(_Deleted, this.IsDeleted);
+      mapping.SetFlag(_IsActive, !this.IsDeleted);
       mapping.SetFlag(_Skip, this.Skip);
       mapping.SetByte(this.mapping.GetByte(_Hidden) != 255 ? _Hidden : _HiddenAlt, this.Hidden ? 1 : 0);
       if (this.Encrypted != null)

@@ -54,7 +54,8 @@ Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500
 Besonderen Dank an Hisense für die Bereitstellung von technischen Informationen und einem Testgerät!
 
 **Samsung**  
-Serie: B (2009)*, B (2013), C, D, E, F, H, J  
+.scm Dateien: Serien B (2009)*, B (2013), C, D, E, F, H, J  
+.zip Dateien: Serien H, J, K, M, N and Q series  
 Listen:  Air analog, Air digital, Cable analog, Cable digital, 
 		Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
 		Canal Digital Sat, Digital+, Cyfra+
@@ -82,7 +83,7 @@ Eine Anleitung zum Aufruf des geheimen Service-Menüs zur Senderlistenübertragung
 Viera-Modelle mit svl.bin oder svl.db Dateien (die meisten Modelle seit 2011)
 
 **Sony**  
-Android-TV "sdb.xml" Dateien mit Versionen "FormateVer" 1.1.0 and "FormatVer" 1.0.0, 1.1.0 and 1.2.0
+Android-TV "sdb.xml" Dateien mit Versionen "FormateVer" 1.1.0 und KDL 2012/2014 mit "FormatVer" 1.0.0, 1.1.0 and 1.2.0
 
 **ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken**  
 Die Marken nutzen .sdx Dateien (derzeit wird nur Satellitenempfang unterstützt)

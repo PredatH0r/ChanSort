@@ -11,13 +11,6 @@ namespace Test.Loader.Panasonic
   [TestClass]
   public class PanasonicSvlTest
   {
-    private static readonly string filesDir;
-
-    static PanasonicSvlTest()
-    {
-      filesDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\TestFiles\\";
-    }
-
     #region TestSatChannelsAddedToCorrectLists
     [TestMethod]
     public void TestSatChannelsAddedToCorrectLists()
@@ -38,8 +31,9 @@ namespace Test.Loader.Panasonic
     #region TestChannelsAddedToCorrectList
     private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio)
     {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Panasonic\\TestFiles\\" + fileName);
       var plugin = new SerializerPlugin();
-      var ser = plugin.CreateSerializer(filesDir + fileName);
+      var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
 
       var root = ser.DataRoot;
@@ -54,6 +48,53 @@ namespace Test.Loader.Panasonic
     }
     #endregion
 
+
+    #region TestDeletingChannel
+
+    [TestMethod]
+    public void TestDeletingChannel()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Panasonic\\TestFiles\\svl-sat.db");
+      var plugin = new SerializerPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // Pr# 130 = ORF2E 
+
+      var dvbs = data.GetChannelList(SignalSource.DvbS);
+      var orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
+      Assert.IsNotNull(orf2e);
+      Assert.AreEqual(130, orf2e.OldProgramNr);
+      Assert.AreEqual(130, orf2e.NewProgramNr);
+      Assert.IsFalse(orf2e.IsDeleted);
+
+      orf2e.NewProgramNr = -1;
+      var editor = new Editor();
+      editor.DataRoot = data;
+      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+
+      Assert.IsTrue(orf2e.IsDeleted);
+      Assert.IsTrue(orf2e.NewProgramNr == 0);
+      Assert.AreEqual(1, dvbs.Channels.Count(ch => ch.NewProgramNr <= 0));
+
+
+      // save and reload
+      ser.Save(tempFile);
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // channel was deleted from database
+      dvbs = data.GetChannelList(SignalSource.DvbS);
+      orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
+      Assert.IsNull(orf2e);
+    }
+    #endregion
 
   }
 }

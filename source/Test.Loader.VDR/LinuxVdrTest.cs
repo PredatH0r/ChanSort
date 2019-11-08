@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using ChanSort.Api;
 using ChanSort.Loader.VDR;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,13 +8,6 @@ namespace Test.Loader.VDR
   [TestClass]
   public class LinuxVdrTest
   {
-    private static readonly string filesDir;
-
-    static LinuxVdrTest()
-    {
-      filesDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\TestFiles\\";
-    }
-
     #region TestAstraChannelsAddedToCorrectLists
     [TestMethod]
     public void TestAstraChannelsAddedToCorrectLists()
@@ -29,8 +19,9 @@ namespace Test.Loader.VDR
     #region TestChannelsAddedToCorrectList
     private void TestChannelsAddedToCorrectLists(string fileName, int expectedTotal, int expectedTv, int expectedRadio)
     {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.VDR\\TestFiles\\channels.conf");
       var plugin = new SerializerPlugin();
-      var ser = plugin.CreateSerializer(filesDir + fileName);
+      var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
 
       var root = ser.DataRoot;
@@ -45,6 +36,52 @@ namespace Test.Loader.VDR
     }
     #endregion
 
+
+    #region TestDeletingChannel
+
+    [TestMethod]
+    public void TestDeletingChannel()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.VDR\\TestFiles\\channels.conf");
+      var plugin = new SerializerPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // Pr# 421 = ORF2E 
+
+      var dvbs = data.GetChannelList(SignalSource.DvbS);
+      var orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
+      Assert.IsNotNull(orf2e);
+      Assert.AreEqual(421, orf2e.OldProgramNr);
+      Assert.AreEqual(421, orf2e.NewProgramNr);
+      Assert.IsFalse(orf2e.IsDeleted);
+
+      orf2e.NewProgramNr = -1;
+      var editor = new Editor();
+      editor.DataRoot = data;
+      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+
+      Assert.IsTrue(orf2e.IsDeleted);
+      Assert.IsTrue(orf2e.NewProgramNr == 0);
+
+
+      // save and reload
+      ser.Save(tempFile);
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // channel was deleted from file
+      dvbs = data.GetChannelList(SignalSource.DvbS);
+      orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
+      Assert.IsNull(orf2e);
+    }
+    #endregion
 
   }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using ChanSort.Api;
+using ChanSort.Loader.LG;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test.Loader.LG
 {
@@ -36,6 +39,52 @@ namespace Test.Loader.LG
       //this.GenerateTestFiles("LM/xxLM860V-ZB99998");
       this.ExecuteTest("LM/xxLM860V-ZB99998");
     }
+
+    #region TestDeletingChannel
+
+    [TestMethod]
+    public void TestDeletingChannel()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.LG\\LM\\xxLM620s-ZE00001.TLL.in");
+      var plugin = new TllFileSerializerPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // Pr# 127 = ORF2 HD 
+
+      var dvbs = data.GetChannelList(SignalSource.DvbS);
+      var orf2 = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2 HD");
+      Assert.AreEqual(127, orf2.OldProgramNr);
+      Assert.AreEqual(127, orf2.NewProgramNr);
+      Assert.IsFalse(orf2.IsDeleted);
+
+      orf2.NewProgramNr = -1;
+      var editor = new Editor();
+      editor.DataRoot = data;
+      editor.AutoNumberingForUnassignedChannels(UnsortedChannelMode.Delete);
+
+      Assert.IsTrue(orf2.IsDeleted);
+      Assert.AreEqual(0, orf2.NewProgramNr);
+
+      // save and reload
+      ser.Save(tempFile);
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      dvbs = data.GetChannelList(SignalSource.DvbS);
+      orf2 = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2 HD");
+
+      Assert.IsTrue(orf2.IsDeleted);
+      Assert.AreEqual(-1, orf2.OldProgramNr);
+      Assert.AreEqual(-1, orf2.NewProgramNr);
+    }
+    #endregion
 
   }
 }
