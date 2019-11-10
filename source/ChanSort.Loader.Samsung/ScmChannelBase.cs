@@ -94,7 +94,7 @@ namespace ChanSort.Loader.Samsung
         else if (sortedFavorites != FavoritesIndexMode.Boolean && favValue != -1)
           fav |= mask;
         if (sortedFavorites == FavoritesIndexMode.IndividuallySorted)
-          this.FavIndex[favIndex] = favValue;
+          this.OldFavIndex[favIndex] = favValue;
         mask <<= 1;
         ++favIndex;
       }
@@ -131,7 +131,7 @@ namespace ChanSort.Loader.Samsung
         int providerId = data.GetWord(_ServiceProviderId);
         this.Provider = providerNames.TryGet((source << 16) + providerId);
       }
-      this.SignalSource |= LookupData.Instance.IsRadioOrTv(this.ServiceType);
+      this.SignalSource |= LookupData.Instance.IsRadioTvOrData(this.ServiceType);
     }
     #endregion
 

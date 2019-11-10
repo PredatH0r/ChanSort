@@ -275,7 +275,7 @@ namespace ChanSort.Loader.GlobalClone
             break;
           case "serviceType":
             ch.ServiceType = int.Parse(info.InnerText);
-            ch.SignalSource |= LookupData.Instance.IsRadioOrTv(ch.ServiceType);
+            ch.SignalSource |= LookupData.Instance.IsRadioTvOrData(ch.ServiceType);
             break;
           case "frequency":
             ch.FreqInMhz = int.Parse(info.InnerText);

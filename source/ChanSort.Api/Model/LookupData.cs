@@ -49,9 +49,9 @@ namespace ChanSort.Api
     #region GetServiceTypeDescription()
     public string GetServiceTypeDescription(int serviceType)
     {
-      string descr;
-      this.serviceTypeDescriptions.TryGetValue(serviceType, out descr);
-      return descr;
+      if (this.serviceTypeDescriptions.TryGetValue(serviceType, out var descr))
+        return descr;
+      return serviceType.ToString();
     }
     #endregion
 
@@ -177,8 +177,8 @@ namespace ChanSort.Api
     }
     #endregion
 
-    #region IsRadioOrTv()
-    public SignalSource IsRadioOrTv(int dvbServiceType)
+    #region IsRadioTvOrData()
+    public SignalSource IsRadioTvOrData(int dvbServiceType)
     {
       switch (dvbServiceType)
       {

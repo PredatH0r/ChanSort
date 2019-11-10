@@ -422,7 +422,7 @@ namespace ChanSort.Loader.Hisense
             var id = ((long) r.GetInt32(0) << 32) | (uint) r.GetInt32(1);
             var ci = this.channelsById.TryGet(id);
             if (ci != null)
-              ci.FavIndex[i - 1] = int.Parse(r.GetString(2));
+              ci.OldFavIndex[i - 1] = int.Parse(r.GetString(2));
           }
         }
       }

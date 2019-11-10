@@ -333,7 +333,7 @@ namespace ChanSort.Loader.SamsungJ
         if (pos >= 0)
         {
           channel.Favorites |= (Favorites) (1 << fav);
-          channel.FavIndex[fav] = channel.OldFavIndex[fav] = pos + 1;
+          channel.OldFavIndex[fav] = pos + 1;
         }
       }
     }
@@ -509,7 +509,7 @@ namespace ChanSort.Loader.SamsungJ
             cmdDeleteFav.ExecuteNonQuery();
           }
 
-          channel.OldFavIndex[i] = channel.FavIndex[i] = newPos;
+          channel.FavIndex[i] = newPos;
         }
       }
     }

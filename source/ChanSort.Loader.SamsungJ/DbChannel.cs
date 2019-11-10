@@ -61,7 +61,7 @@ namespace ChanSort.Loader.SamsungJ
       this.RecordOrder = r.GetInt32(field["major"]);
       int serviceType = r.GetInt32(field["srvType"]);
       this.ServiceType = serviceType;
-      this.SignalSource |= LookupData.Instance.IsRadioOrTv(serviceType);
+      this.SignalSource |= LookupData.Instance.IsRadioTvOrData(serviceType);
       this.OriginalNetworkId = r.GetInt32(field["onid"]);
       this.TransportStreamId = r.GetInt32(field["tsid"]);
       this.ServiceId = r.GetInt32(field["progNum"]);

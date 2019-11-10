@@ -221,14 +221,14 @@ namespace ChanSort.Loader.PhilipsXml
       chan.Lock = data.TryGet("ChannelLock") == "1";
       chan.Hidden = data.TryGet("UserHidden") == "1";
       var fav = ParseInt(data.TryGet("FavoriteNumber"));
-      chan.FavIndex[0] = fav == 0 ? -1 : fav;
+      chan.OldFavIndex[0] = fav == 0 ? -1 : fav;
       chan.OriginalNetworkId = ParseInt(data.TryGet("Onid"));
       chan.TransportStreamId = ParseInt(data.TryGet("Tsid"));
       chan.ServiceId = ParseInt(data.TryGet("Sid"));
       var freq = ParseInt(data.TryGet("Frequency"));
       chan.FreqInMhz = freq;
       chan.ServiceType = ParseInt(data.TryGet("ServiceType"));
-      chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType);
+      chan.SignalSource |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType);
       chan.SymbolRate = ParseInt(data.TryGet("SymbolRate"));
       if (data.TryGetValue("Polarization", out var pol))
         chan.Polarity = pol == "0" ? 'H' : 'V';

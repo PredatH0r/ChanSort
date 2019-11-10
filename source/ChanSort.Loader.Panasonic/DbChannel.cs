@@ -64,7 +64,7 @@ namespace ChanSort.Loader.Panasonic
         if (favIndex > 0)
         {
           this.Favorites |= (Favorites) (1 << i);
-          this.FavIndex[i] = favIndex;
+          this.OldFavIndex[i] = favIndex;
         }
       }
     }
@@ -82,7 +82,7 @@ namespace ChanSort.Loader.Panasonic
     protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, byte[] delivery)
     {
       int stype = r.GetInt32(field["stype"]);
-      this.SignalSource |= LookupData.Instance.IsRadioOrTv(stype);
+      this.SignalSource |= LookupData.Instance.IsRadioTvOrData(stype);
       this.ServiceType = stype;
 
       int freq = r.GetInt32(field["freq"]);

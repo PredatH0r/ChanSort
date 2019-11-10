@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2019-11-10
+- Sony: added support for independent favorite list ordering for Android channel lists (n)
+- fixed: failed to save Sony lists which contain channel numbers above 8000
+
 2019-11-08
 - improved handling for deleting channels across all file formats:
   Depending on what the actual file format supports, one of the following actions will be taken.

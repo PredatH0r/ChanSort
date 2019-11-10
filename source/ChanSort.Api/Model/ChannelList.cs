@@ -97,9 +97,6 @@ namespace ChanSort.Api
         }
       }
 
-      for (int i = 0; i < ci.FavIndex.Count; i++)
-        ci.OldFavIndex[i] = ci.FavIndex[i];
-
       if (!isDupeProgNr)
         this.channelByProgNr[ci.OldProgramNr] = ci;
 

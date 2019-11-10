@@ -37,6 +37,7 @@
       this.gviewLeft = new DevExpress.XtraGrid.Views.Grid.GridView();
       this.colIndex1 = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutServiceType = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colOutSource = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutSlot = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutFav = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -215,6 +216,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).BeginInit();
       this.pnlEditControls.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).BeginInit();
       this.grpInputList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridRight)).BeginInit();
@@ -250,7 +252,7 @@
       resources.ApplyResources(this.splitContainerControl1.Panel1, "splitContainerControl1.Panel1");
       this.splitContainerControl1.Panel2.Controls.Add(this.grpInputList);
       resources.ApplyResources(this.splitContainerControl1.Panel2, "splitContainerControl1.Panel2");
-      this.splitContainerControl1.SplitterPosition = 453;
+      this.splitContainerControl1.SplitterPosition = 503;
       // 
       // grpOutputList
       // 
@@ -293,7 +295,6 @@
       this.gviewLeft.ColumnPanelRowHeight = 35;
       this.gviewLeft.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIndex1,
-            this.colOutServiceType,
             this.colOutSlot,
             this.colOutName,
             this.colOutFav,
@@ -301,6 +302,8 @@
             this.colOutSkip,
             this.colOutHide,
             this.colOutDeleted,
+            this.colOutServiceType,
+            this.colOutSource,
             this.colUid1});
       this.gviewLeft.GridControl = this.gridLeft;
       this.gviewLeft.Name = "gviewLeft";
@@ -346,6 +349,12 @@
       this.colOutServiceType.FieldName = "ServiceTypeName";
       this.colOutServiceType.Name = "colOutServiceType";
       this.colOutServiceType.OptionsColumn.AllowEdit = false;
+      // 
+      // colOutSource
+      // 
+      resources.ApplyResources(this.colOutSource, "colOutSource");
+      this.colOutSource.FieldName = "Source";
+      this.colOutSource.Name = "colOutSource";
       // 
       // colOutSlot
       // 
@@ -461,6 +470,10 @@
       this.btnToggleFavH.Name = "btnToggleFavH";
       this.btnToggleFavH.Tag = "";
       this.btnToggleFavH.Click += new System.EventHandler(this.btnToggleFav_Click);
+      // 
+      // globalImageCollection1
+      // 
+      this.globalImageCollection1.ParentControl = this;
       // 
       // btnToggleFavG
       // 
@@ -2023,6 +2036,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).EndInit();
       this.pnlEditControls.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).EndInit();
       this.grpInputList.ResumeLayout(false);
       this.grpInputList.PerformLayout();
@@ -2232,6 +2246,7 @@
     private DevExpress.XtraEditors.SimpleButton btnToggleFavG;
     private DevExpress.XtraEditors.SimpleButton btnToggleFavF;
     private DevExpress.XtraBars.BarButtonItem miCopyCsv;
+    private DevExpress.XtraGrid.Columns.GridColumn colOutSource;
   }
 }
 

@@ -143,30 +143,18 @@
   <data name="colIndex1.Caption" xml:space="preserve">
     <value>Pr. index</value>
   </data>
-  <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Service Type</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="colOutServiceType.Visible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="colOutServiceType.VisibleIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="colOutServiceType.Width" type="System.Int32, mscorlib">
-    <value>45</value>
-  </data>
   <data name="colOutSlot.Caption" xml:space="preserve">
     <value>New Pos</value>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>New program number</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="colOutSlot.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="colOutSlot.VisibleIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="colOutSlot.Width" type="System.Int32, mscorlib">
     <value>50</value>
@@ -178,10 +166,10 @@
     <value>True</value>
   </data>
   <data name="colOutName.VisibleIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="colOutName.Width" type="System.Int32, mscorlib">
-    <value>158</value>
+    <value>145</value>
   </data>
   <data name="colOutFav.Caption" xml:space="preserve">
     <value>Favorites</value>
@@ -204,7 +192,7 @@
     <value>True</value>
   </data>
   <data name="colOutFav.VisibleIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="colOutFav.Width" type="System.Int32, mscorlib">
     <value>55</value>
@@ -219,7 +207,7 @@
     <value>True</value>
   </data>
   <data name="colOutLock.VisibleIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="colOutLock.Width" type="System.Int32, mscorlib">
     <value>35</value>
@@ -231,7 +219,7 @@
     <value>True</value>
   </data>
   <data name="colOutSkip.VisibleIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="colOutSkip.Width" type="System.Int32, mscorlib">
     <value>35</value>
@@ -243,7 +231,7 @@
     <value>True</value>
   </data>
   <data name="colOutHide.VisibleIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="colOutHide.Width" type="System.Int32, mscorlib">
     <value>35</value>
@@ -252,6 +240,24 @@
     <value>Deleted</value>
   </data>
   <data name="colOutDeleted.Width" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="colOutServiceType.Caption" xml:space="preserve">
+    <value>Service Type</value>
+  </data>
+  <data name="colOutServiceType.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colOutServiceType.VisibleIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="colOutServiceType.Width" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="colOutSource.Caption" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="colOutSource.Width" type="System.Int32, mscorlib">
     <value>60</value>
   </data>
   <data name="colUid1.Caption" xml:space="preserve">
@@ -264,7 +270,7 @@
     <value>Numeric</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 386</value>
+    <value>499, 386</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1182,6 +1188,12 @@
   <data name="&gt;&gt;colOutServiceType.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;colOutSource.Name" xml:space="preserve">
+    <value>colOutSource</value>
+  </data>
+  <data name="&gt;&gt;colOutSource.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;colOutSlot.Name" xml:space="preserve">
     <value>colOutSlot</value>
   </data>
@@ -1246,7 +1258,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7251.34158, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7253.27315, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1932,12 +1944,6 @@
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>11/08/2019 19:29:15</value>
-  </data>
-  <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
-    <value>16, 16</value>
-  </data>
   <data name="btnToggleFavH.Location" type="System.Drawing.Point, System.Drawing">
     <value>307, 5</value>
   </data>
@@ -2344,7 +2350,7 @@
     <value>2, 21</value>
   </data>
   <data name="pnlEditControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 33</value>
+    <value>499, 33</value>
   </data>
   <data name="pnlEditControls.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2368,7 +2374,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>453, 459</value>
+    <value>503, 459</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2743,7 +2749,7 @@
     <value>Signal source</value>
   </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>981, 386</value>
+    <value>931, 386</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2959,7 +2965,7 @@ specific provider, satellite or country lists.</value>
     <value>2, 21</value>
   </data>
   <data name="panelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>981, 33</value>
+    <value>931, 33</value>
   </data>
   <data name="panelControl3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2983,7 +2989,7 @@ specific provider, satellite or country lists.</value>
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 459</value>
+    <value>935, 459</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

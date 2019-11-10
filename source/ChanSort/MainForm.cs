@@ -71,6 +71,8 @@ namespace ChanSort.Ui
       foreach (GridColumn col in this.gviewRight.Columns)
         col.Tag = col.Visible;
 
+      this.colOutSource.Caption = this.colSource.Caption; // copy translated caption
+
       if (!Config.Default.WindowSize.IsEmpty)
         this.Size = Config.Default.WindowSize;
       this.title = string.Format(base.Text, AppVersion);
@@ -255,7 +257,7 @@ namespace ChanSort.Ui
         this.currentRefFile = Path.Combine(Path.GetDirectoryName(this.currentTvFile) ?? "",
           Path.GetFileNameWithoutExtension(this.currentTvFile) + ".txt");
       }
-      this.Text = this.title + "  -  " + Path.GetFileName(this.currentTvFile);
+      this.Text = this.title + "  -  " + this.currentTvFile;
     }
 
     #endregion
@@ -631,7 +633,7 @@ namespace ChanSort.Ui
         //this.currentTvSerializer.ApplyCurrentProgramNumbers();
         this.DataRoot.ApplyCurrentProgramNumbers();
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
-        this.rbInsertSwap.Checked = true;
+        //this.rbInsertSwap.Checked = true;
       }
     }
 
@@ -1460,6 +1462,12 @@ namespace ChanSort.Ui
       if (list == null)
         return false;
 
+      if (list.IsMixedSourceFavoritesList)
+      {
+        if (col == this.colSource || col == this.colOutSource) return true;
+        if (col == this.colOutHide || col == this.colOutLock || col == this.colOutSkip) return false;
+      }
+      
       var filter = list.VisibleColumnFieldNames;
       if (filter != null)
       {
@@ -1472,7 +1480,6 @@ namespace ChanSort.Ui
         return false;
 
       var source = list.SignalSource;
-      if (col == this.colSource) return list.IsMixedSourceFavoritesList;
       if (col == this.colPrNr) return this.subListIndex > 0;
       if (col == this.colChannelOrTransponder) return (source & SignalSource.Sat) == 0;
       if (col == this.colShortName) return (source & SignalSource.Digital) != 0;

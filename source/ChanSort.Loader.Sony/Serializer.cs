@@ -19,6 +19,11 @@ namespace ChanSort.Loader.Sony
      * The other formats define <FormatVer>...</FormatVer> with versions 1.0.0, 1.1.0 and 1.2.0, which are otherwise identical.
      *
      * NOTE: Even within the same version, there are some files using CRLF and some using LF for newlines.
+     *
+     * A couple anomalies that I encountered in some test files:
+     * - for the "e" format with independent fav list numbers, the fav-flag can be inconsistent (e.g. the flag for FAV1 is set, but in the aui1_custom_data there is a 0 for that channel in fav list 1)
+     * - encrypted flags are sometimes inconsistent (in ui4_nw_mask and t_free_ca_mode)
+     * - "deleted" flags are inconsistent (or not fully understood)... there is one flag in the ui4_nw_mask and also a b_deleted_by_user
      */
 
     private const string SupportedFormatVersions = " e1.1.0 1.0.0 1.1.0 1.2.0 ";
@@ -31,6 +36,26 @@ namespace ChanSort.Loader.Sony
     private string newline;
 
     private readonly Dictionary<SignalSource, ChannelListNodes> channeListNodes = new Dictionary<SignalSource, ChannelListNodes>();
+    private ChannelList mixedFavList;
+
+    #region enum NwMask
+    // ui4_nw_mask for the Android "e110"-format
+    [Flags]
+    private enum NwMask
+    {
+      //Active = 0x0002, // guess based on values from Hisense
+      Visible = 0x0008,
+      FavMask = 0x00F0,
+      Fav1 = 0x0010,
+      Fav2 = 0x0020,
+      Fav3 = 0x0040,
+      Fav4 = 0x0080,
+      // Skip = 0x0100, // guess based on values from Hisense
+      NotDeletedByUserOption = 0x0200,
+      Radio = 0x0400,
+      Encrypted = 0x0800,
+    }
+    #endregion
 
 
     #region ctor()
@@ -38,6 +63,8 @@ namespace ChanSort.Loader.Sony
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr; // in Android/e-format, this will be changed to FlagWithPrNr
+      this.Features.MixedSourceFavorites = false; // true for Android/e-format
+      this.Features.SortedFavorites = false; // true for Android/e-format
 
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Tv, "DVB-T TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Radio, "DVB-T Radio"));
@@ -137,6 +164,11 @@ namespace ChanSort.Loader.Sony
         this.format = "e" + formatNode.InnerText;
         this.isEFormat = true;
         this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
+        this.Features.MixedSourceFavorites = true;
+        this.Features.SortedFavorites = true;
+        this.mixedFavList = new ChannelList(SignalSource.All, "Favorites");
+        this.mixedFavList.IsMixedSourceFavoritesList = true;
+        this.DataRoot.AddChannelList(this.mixedFavList);
       }
 
       if (SupportedFormatVersions.IndexOf(" " + this.format + " ", StringComparison.Ordinal) < 0)
@@ -289,18 +321,28 @@ namespace ChanSort.Loader.Sony
         var recId = int.Parse(svcData["ui2_svl_rec_id"][i]);
         var chan = new Channel(signalSource, i, recId);
         chan.OldProgramNr = (ParseInt(svcData["No"][i]) >> 18) & 0x3FFFF;
-        chan.IsDeleted = svcData["b_deleted_by_user"][i] != "1";
-        var nwMask = uint.Parse(svcData["ui4_nw_mask"][i]);
+        var nwMask = (NwMask)uint.Parse(svcData["ui4_nw_mask"][i]);
         chan.AddDebug("NW=");
-        chan.AddDebug(nwMask);
+        chan.AddDebug((uint)nwMask);
         chan.AddDebug("OPT=");
         chan.AddDebug(uint.Parse(svcData["ui4_nw_option_mask"][i]));
-        chan.Hidden = (nwMask & 8) == 0;
-        chan.Encrypted = (nwMask & 2048) != 0;
-        //chan.Encrypted = dvbData["t_free_ca_mode"][i] == "1";
-        chan.Favorites = (Favorites) ((nwMask & 0xF0) >> 4);
+        chan.IsDeleted = (nwMask & NwMask.NotDeletedByUserOption) == 0;
+        chan.IsDeleted |= svcData["b_deleted_by_user"][i] != "1";
+        chan.Hidden = (nwMask & NwMask.Visible) == 0;
+        chan.Encrypted = (nwMask & NwMask.Encrypted) != 0;
+        chan.Encrypted |= dvbData["t_free_ca_mode"][i] == "1";
+        chan.Favorites = (Favorites) ((uint)(nwMask & NwMask.FavMask) >> 4);
         chan.ServiceId = int.Parse(svcData["ui2_prog_id"][i]);
         chan.Name = svcData["Name"][i];
+        var favNumbers = svcData["aui1_custom_data"][i]?.Split(' ');
+        if (favNumbers != null)
+        {
+          for (int j = 0; j < 4 && j < favNumbers.Length; j++)
+          {
+            if (int.TryParse(favNumbers[j], out var favNr) && favNr > 0)
+              chan.OldFavIndex[j] = favNr;
+          }
+        }
         var muxId = int.Parse(svcData["MuxID"][i]) + idAdjustment;
         var transp = this.DataRoot.Transponder[muxId];
         chan.Transponder = transp;
@@ -328,12 +370,17 @@ namespace ChanSort.Loader.Sony
         }
 
         chan.ServiceType = int.Parse(dvbData["ui1_sdt_service_type"][i]);
-        chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType); // could also use <ServiceFilter> information with 1=TV, 2=Radio, 3=Other
+        if ((nwMask & NwMask.Radio) != 0)
+          chan.SignalSource |= SignalSource.Radio;
+        else
+          chan.SignalSource |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType); 
 
         CopyDataValues(serviceNode, svcData, i, chan.ServiceData);
 
         var list = this.DataRoot.GetChannelList(chan.SignalSource);
+        chan.Source = list.ShortCaption;
         this.DataRoot.AddChannel(list, chan);
+        this.mixedFavList.Channels.Add(chan);
       }
     }
     #endregion
@@ -380,7 +427,7 @@ namespace ChanSort.Loader.Sony
             chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
         }
 
-        chan.SignalSource |= LookupData.Instance.IsRadioOrTv(chan.ServiceType);
+        chan.SignalSource |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType);
         var att = this.ParseInt(svcData["Attribute"][i]);
         chan.Encrypted = (att & 8) != 0;
 
@@ -661,7 +708,14 @@ namespace ChanSort.Loader.Sony
         if (field == "No")
           return ((ch.NewProgramNr << 18) | (int.Parse(value) & 0x3FFFF)).ToString();
         if (field == "ui4_nw_mask")
-          return (((uint)ch.Favorites << 4) | (ch.Hidden ? 0u : 8u) | (uint.Parse(value) & ~0xF8)).ToString();
+          return (((uint)ch.Favorites << 4) | (ch.Hidden ? 0u : (uint)NwMask.Visible) | (uint.Parse(value) & ~(uint)(NwMask.FavMask|NwMask.Visible))).ToString();
+        if (field == "aui1_custom_data") // mixed favorite list position
+        {
+          var vals = value.Split(' ');
+          for (int i = 0; i < 4; i++)
+            vals[i] = ch.FavIndex[i] <= 0 ? "0" : ch.FavIndex[i].ToString();
+          return string.Join(" ", vals);
+        }
       }
       return value;
     }
