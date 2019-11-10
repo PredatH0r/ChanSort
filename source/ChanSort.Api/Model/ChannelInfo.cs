@@ -249,9 +249,17 @@ namespace ChanSort.Api
     public void AddDebug(ushort val)
     {
       if (this.Debug == null)
-        this.Debug = val.ToString("x2");
+        this.Debug = val.ToString("x4");
       else
         this.Debug += " " + val.ToString("x4");
+    }
+
+    public void AddDebug(uint val)
+    {
+      if (this.Debug == null)
+        this.Debug = val.ToString("x8");
+      else
+        this.Debug += " " + val.ToString("x8");
     }
 
     public void AddDebug(byte[] data, int offset, int len)

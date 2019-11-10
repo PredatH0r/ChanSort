@@ -288,12 +288,16 @@ namespace ChanSort.Loader.Sony
       {
         var recId = int.Parse(svcData["ui2_svl_rec_id"][i]);
         var chan = new Channel(signalSource, i, recId);
-        chan.OldProgramNr = (int) ((uint) ParseInt(svcData["No"][i]) >> 18);
+        chan.OldProgramNr = (ParseInt(svcData["No"][i]) >> 18) & 0x3FFFF;
         chan.IsDeleted = svcData["b_deleted_by_user"][i] != "1";
         var nwMask = uint.Parse(svcData["ui4_nw_mask"][i]);
+        chan.AddDebug("NW=");
+        chan.AddDebug(nwMask);
+        chan.AddDebug("OPT=");
+        chan.AddDebug(uint.Parse(svcData["ui4_nw_option_mask"][i]));
         chan.Hidden = (nwMask & 8) == 0;
         chan.Encrypted = (nwMask & 2048) != 0;
-        chan.Encrypted = dvbData["t_free_ca_mode"][i] == "1";
+        //chan.Encrypted = dvbData["t_free_ca_mode"][i] == "1";
         chan.Favorites = (Favorites) ((nwMask & 0xF0) >> 4);
         chan.ServiceId = int.Parse(svcData["ui2_prog_id"][i]);
         chan.Name = svcData["Name"][i];
@@ -655,7 +659,7 @@ namespace ChanSort.Loader.Sony
         if (field == "b_deleted_by_user")
           return ch.IsDeleted ? "0" : "1"; // file seems to contain reverse logic (1 = not deleted)
         if (field == "No")
-          return ((uint)(ch.NewProgramNr << 18) | (uint.Parse(value) & 0x3FFFF)).ToString();
+          return ((ch.NewProgramNr << 18) | (int.Parse(value) & 0x3FFFF)).ToString();
         if (field == "ui4_nw_mask")
           return (((uint)ch.Favorites << 4) | (ch.Hidden ? 0u : 8u) | (uint.Parse(value) & ~0xF8)).ToString();
       }
