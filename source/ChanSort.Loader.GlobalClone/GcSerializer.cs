@@ -45,6 +45,8 @@ namespace ChanSort.Loader.GlobalClone
       {
         this.doc = new XmlDocument();
         string textContent = File.ReadAllText(this.FileName, Encoding.UTF8);
+        if (textContent[0] != '<')
+          throw new FileLoadException("Invalid GlobalClone/XML file format. Maybe a binary xx*.TLL file?", this.FileName);
         textContent = ReplaceInvalidXmlCharacters(textContent);
         var settings = new XmlReaderSettings { CheckCharacters = false };
         using (var reader = XmlReader.Create(new StringReader(textContent), settings))
@@ -109,7 +111,7 @@ namespace ChanSort.Loader.GlobalClone
       // ask whether binary TLL file should be deleted
       var dir = Path.GetDirectoryName(this.FileName) ?? ".";
       var binTlls = Directory.GetFiles(dir, "xx" + series + "*.tll");
-      if (binTlls.Length > 0)
+      if (binTlls.Length > 0 && !(binTlls.Length == 1 && Path.GetFileName(binTlls[0]).ToLower() == Path.GetFileName(this.FileName).ToLower()))
       {
         var txt = Resources.GcSerializer_ReadModelInfo_ModelWarning;
         if (MessageBox.Show(txt, "LG GlobalClone", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)

@@ -149,9 +149,12 @@ namespace ChanSort.Loader.LG
 
       long fileSize = new FileInfo(this.FileName).Length;
       if (fileSize > MaxFileSize)
-        throw new FileLoadException(string.Format(ERR_fileTooBig, fileSize, MaxFileSize));
+        throw new FileLoadException(string.Format(ERR_fileTooBig, fileSize, MaxFileSize), this.FileName);
 
       this.fileContent = File.ReadAllBytes(this.FileName);
+      if (this.fileContent[0] == '<')
+        throw new FileLoadException("Invalid binary TLL file format. Maybe a GlobalClone/XML file?", this.FileName);
+
       int off = 0;
 
       this.ReadFileHeader(ref off);
