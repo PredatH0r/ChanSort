@@ -556,19 +556,6 @@ namespace ChanSort.Loader.Sony
     }
     #endregion
 
-    #region ParseInt()
-    private int ParseInt(string input)
-    {
-      if (string.IsNullOrWhiteSpace(input))
-        return 0;
-      if (input.Length > 2 && input[0] == '0' && char.ToLower(input[1]) == 'x')
-        return int.Parse(input.Substring(2), NumberStyles.HexNumber);
-      if (int.TryParse(input, out var value))
-        return value;
-      return 0;
-    }
-    #endregion
-
 
 
     #region Save()

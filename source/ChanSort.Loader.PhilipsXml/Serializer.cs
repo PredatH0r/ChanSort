@@ -225,8 +225,9 @@ namespace ChanSort.Loader.PhilipsXml
       chan.OriginalNetworkId = ParseInt(data.TryGet("Onid"));
       chan.TransportStreamId = ParseInt(data.TryGet("Tsid"));
       chan.ServiceId = ParseInt(data.TryGet("Sid"));
-      var freq = ParseInt(data.TryGet("Frequency"));
-      chan.FreqInMhz = freq;
+      chan.FreqInMhz = ParseInt(data.TryGet("Frequency")); ;
+      if (chan.FreqInMhz > 100000)
+        chan.FreqInMhz /= 1000;
       chan.ServiceType = ParseInt(data.TryGet("ServiceType"));
       chan.SignalSource |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType);
       chan.SymbolRate = ParseInt(data.TryGet("SymbolRate"));
@@ -252,19 +253,6 @@ namespace ChanSort.Loader.PhilipsXml
       chan.TransportStreamId = ParseInt(data.TryGet("TSID"));
       chan.ServiceType = ParseInt(data.TryGet("serviceType"));
       chan.SymbolRate = ParseInt(data.TryGet("symbolrate")) / 1000;
-    }
-    #endregion
-
-    #region ParseInt()
-    private int ParseInt(string input)
-    {
-      if (string.IsNullOrWhiteSpace(input))
-        return 0;
-      if (input.Length > 2 && input[0] == '0' && char.ToLower(input[1]) == 'x')
-        return int.Parse(input.Substring(2), NumberStyles.HexNumber);
-      if (int.TryParse(input, out var value))
-        return value;
-      return 0;
     }
     #endregion
 

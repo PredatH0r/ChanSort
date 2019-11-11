@@ -4,6 +4,7 @@ ChanSort Change Log
 2019-11-11
 - LG hospitality TVs using files names like xx[modelname].TLL can now be loaded
   (They use the naming pattern of binary TLL files, but contain GlobalClone/XML text data)
+- fixed: Philips DVBC.XML files with frequency values in Hz instead of MHz caused an overflow exception
 
 2019-11-10
 - Sony: added support for independent favorite list ordering for Android channel lists (n)

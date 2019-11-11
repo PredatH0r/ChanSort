@@ -224,6 +224,12 @@ namespace ChanSort.Api
 
     public string GetDvbcChannelName(decimal freqInMhz)
     {
+      // in case the parameter is in Hz or kHz, correct it to MHz to avoid overflow errors. 2 GHz is the largest plausible frequency
+      if (freqInMhz > 2000)
+        freqInMhz /= 1000;
+      if (freqInMhz > 2000)
+        freqInMhz /= 1000;
+
       return dvbcChannels.TryGet((int)(freqInMhz * 1000)) ?? dvbcChannels.TryGet((int)((freqInMhz-1) * 1000)) ?? "";      
     }
   }

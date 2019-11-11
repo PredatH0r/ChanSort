@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
@@ -165,5 +166,32 @@ namespace ChanSort.Api
       }
     }
     #endregion
+
+    #region ParseInt()
+    protected int ParseInt(string input)
+    {
+      if (string.IsNullOrWhiteSpace(input))
+        return 0;
+      if (input.Length > 2 && input[0] == '0' && char.ToLower(input[1]) == 'x')
+        return int.Parse(input.Substring(2), NumberStyles.HexNumber);
+      if (int.TryParse(input, out var value))
+        return value;
+      return 0;
+    }
+    #endregion
+
+    #region ParseInt()
+    protected long ParseLong(string input)
+    {
+      if (string.IsNullOrWhiteSpace(input))
+        return 0;
+      if (input.Length > 2 && input[0] == '0' && char.ToLower(input[1]) == 'x')
+        return long.Parse(input.Substring(2), NumberStyles.HexNumber);
+      if (long.TryParse(input, out var value))
+        return value;
+      return 0;
+    }
+    #endregion
+
   }
 }
