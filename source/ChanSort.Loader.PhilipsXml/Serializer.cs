@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -31,17 +31,19 @@ namespace ChanSort.Loader.PhilipsXml
     private readonly ChannelList cableChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
 
-    private XmlDocument doc;
-    private byte[] content;
-    private string textContent;
-    private string newline;
-    private int formatVersion;
+    private readonly List<FileData> fileDataList = new List<FileData>();
+    //private XmlDocument doc;
+    //private byte[] content;
+    //private string textContent;
+    //private string newline;
+    //private int formatVersion;
 
     #region ctor()
     public Serializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.CanSaveAs = false;
 
       this.DataRoot.AddChannelList(this.terrChannels);
       this.DataRoot.AddChannelList(this.cableChannels);
@@ -59,18 +61,61 @@ namespace ChanSort.Loader.PhilipsXml
     }
     #endregion
 
-
     #region Load()
-
     public override void Load()
     {
+      // read all files from a directory structure that looks like
+      // ./CM_TPM1013E_LA_CK.xml
+      // - or - 
+      // ChannelMap_100/ChannelList/channellib/DVBC.xml
+      // ChannelMap_100/ChannelList/channellib/DVBT.xml
+      // ChannelMap_100/ChannelList/s2channellib/DVBS.xml
+      // ChannelMap_100/ChannelList/s2channellib/DVBSall.xml
+      // ChannelMap_100/ChannelList/chanLst.bin
+      // + optionally
+      // ChannelMap_100/ChannelList/channelFile.bin
+      // ChannelMap_100/ChannelList/Favorite.xml
+      // ChannelMap_100/ChannelList/satInfo.bin
+
+      var dataFiles = new[] { @"channellib\DVBC.xml", @"channellib\DVBT.xml", @"s2channellib\DVBS.xml", @"s2channellib\DVBSall.xml" };
+
+      // support for files in a ChannelMap_xxx directory structure
+      var dir = Path.GetDirectoryName(this.FileName);
+      var dirName = Path.GetFileName(dir).ToLower();
+      if (dirName == "channellib" || dirName == "s2channellib")
+        dir = Path.GetDirectoryName(dir);
+
+      var binFile = Path.Combine(dir, "chanLst.bin");  // the .bin file is used as a proxy for the whole directory structure
+      if (File.Exists(binFile))
+      {
+        this.FileName = binFile;
+        foreach (var file in dataFiles)
+        {
+          var fullPath = Path.GetFullPath(Path.Combine(dir, file));
+          this.LoadFile(fullPath);
+        }
+
+        return;
+      }
+
+      // otherwise load the single file that was originally selected by the user
+      LoadFile(this.FileName);
+    }
+    #endregion
+
+    #region LoadFile()
+
+    private void LoadFile(string fileName)
+    {
       bool fail = false;
+      var fileData = new FileData();
       try
       {
-        this.doc = new XmlDocument();
-        this.content = File.ReadAllBytes(this.FileName);
-        this.textContent = Encoding.UTF8.GetString(this.content);
-        this.newline = this.textContent.Contains("\r\n") ? "\r\n" : "\n";
+        fileData.path = fileName;
+        fileData.doc = new XmlDocument();
+        fileData.content = File.ReadAllBytes(fileName);
+        fileData.textContent = Encoding.UTF8.GetString(fileData.content);
+        fileData.newline = fileData.textContent.Contains("\r\n") ? "\r\n" : "\n";
 
         var settings = new XmlReaderSettings
         {
@@ -79,9 +124,9 @@ namespace ChanSort.Loader.PhilipsXml
           ValidationFlags = XmlSchemaValidationFlags.None,
           DtdProcessing = DtdProcessing.Ignore
         };
-        using (var reader = XmlReader.Create(new StringReader(textContent), settings))
+        using (var reader = XmlReader.Create(new StringReader(fileData.textContent), settings))
         {
-          doc.Load(reader);
+          fileData.doc.Load(reader);
         }
       }
       catch
@@ -89,11 +134,11 @@ namespace ChanSort.Loader.PhilipsXml
         fail = true;
       }
 
-      var root = doc.FirstChild;
+      var root = fileData.doc.FirstChild;
       if (root is XmlDeclaration)
         root = root.NextSibling;
       if (fail || root == null || root.LocalName != "ChannelMap")
-        throw new FileLoadException("\"" + this.FileName + "\" is not a supported Philips XML file");
+        throw new FileLoadException("\"" + fileName + "\" is not a supported Philips XML file");
 
 
       int rowId = 0;
@@ -104,18 +149,19 @@ namespace ChanSort.Loader.PhilipsXml
         {
           case "Channel":
             if (rowId == 0)
-              curList = this.DetectFormatAndFeatures(child);
+              curList = this.DetectFormatAndFeatures(fileData, child);
             if (curList != null)
-              this.ReadChannel(curList, child, rowId++);
+              this.ReadChannel(fileData, curList, child, rowId++);
             break;
         }
       }
+      this.fileDataList.Add(fileData);
     }
     #endregion
 
     #region DetectFormatAndFeatures()
 
-    private ChannelList DetectFormatAndFeatures(XmlNode node)
+    private ChannelList DetectFormatAndFeatures(FileData file, XmlNode node)
     {
       var setupNode = node["Setup"] ?? throw new FileLoadException("Missing Setup XML element");
       var bcastNode = node["Broadcast"] ?? throw new FileLoadException("Missing Broadcast XML element");
@@ -128,7 +174,7 @@ namespace ChanSort.Loader.PhilipsXml
 
       if (setupNode.HasAttribute("ChannelName"))
       {
-        this.formatVersion = 1;
+        file.formatVersion = 1;
         this.Features.SupportedFavorites = Favorites.A;
         this.Features.SortedFavorites = true;
 
@@ -144,7 +190,7 @@ namespace ChanSort.Loader.PhilipsXml
       }
       else if (setupNode.HasAttribute("name"))
       {
-        this.formatVersion = 2;
+        file.formatVersion = 2;
         this.Features.SupportedFavorites = 0;
         this.Features.SortedFavorites = false;
         foreach (var list in this.DataRoot.ChannelLists)
@@ -182,7 +228,7 @@ namespace ChanSort.Loader.PhilipsXml
     #endregion
 
     #region ReadChannel()
-    private void ReadChannel(ChannelList curList, XmlNode node, int rowId)
+    private void ReadChannel(FileData file, ChannelList curList, XmlNode node, int rowId)
     {
       var setupNode = node["Setup"] ?? throw new FileLoadException("Missing Setup XML element");
       var bcastNode = node["Broadcast"] ?? throw new FileLoadException("Missing Broadcast XML element");
@@ -196,9 +242,9 @@ namespace ChanSort.Loader.PhilipsXml
       var chan = new Channel(curList.SignalSource & SignalSource.MaskAdInput, rowId, rowId, setupNode);
       chan.OldProgramNr = -1;
       chan.IsDeleted = false;
-      if (this.formatVersion == 1)
+      if (file.formatVersion == 1)
         this.ParseChannelFormat1(data, chan);
-      else if (this.formatVersion == 2)
+      else if (file.formatVersion == 2)
         this.ParseChannelFormat2(data, chan);
 
       if ((chan.SignalSource & SignalSource.MaskAdInput) == SignalSource.DvbT)
@@ -226,7 +272,9 @@ namespace ChanSort.Loader.PhilipsXml
       chan.TransportStreamId = ParseInt(data.TryGet("Tsid"));
       chan.ServiceId = ParseInt(data.TryGet("Sid"));
       chan.FreqInMhz = ParseInt(data.TryGet("Frequency")); ;
-      if (chan.FreqInMhz > 100000)
+      if (chan.FreqInMhz > 2000)
+        chan.FreqInMhz /= 1000;
+      if (chan.FreqInMhz > 2000)
         chan.FreqInMhz /= 1000;
       chan.ServiceType = ParseInt(data.TryGet("ServiceType"));
       chan.SignalSource |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType);
@@ -246,7 +294,7 @@ namespace ChanSort.Loader.PhilipsXml
       chan.Name = data.TryGet("name");
       chan.RawName = chan.Name;
       chan.FreqInMhz = ParseInt(data.TryGet("frequency"));
-      if (chan.FreqInMhz > 100000)
+      if (chan.FreqInMhz > 2000)
         chan.FreqInMhz /= 1000;
       chan.ServiceId = ParseInt(data.TryGet("serviceID"));
       chan.OriginalNetworkId = ParseInt(data.TryGet("ONID"));
@@ -306,11 +354,31 @@ namespace ChanSort.Loader.PhilipsXml
     }
     #endregion
 
+    #region GetDataFilePaths()
+    public override IEnumerable<string> GetDataFilePaths()
+    {
+      return this.fileDataList.Select(f => f.path);
+    }
+    #endregion
+
+
+
     #region Save()
+
     public override void Save(string tvOutputFile)
     {
+      // "Save As..." is not supported by this loader
+      foreach(var file in this.fileDataList)
+        this.SaveFile(file);
+    }
+
+    #endregion
+
+    #region SaveFile()
+    private void SaveFile(FileData file)
+    {
       foreach (var list in this.DataRoot.ChannelLists)
-        this.UpdateChannelList(list);
+        this.UpdateChannelList(file, list);
 
       // by default .NET reformats the whole XML. These settings produce almost same format as the TV xml files use
       var xmlSettings = new XmlWriterSettings();
@@ -319,25 +387,25 @@ namespace ChanSort.Loader.PhilipsXml
       xmlSettings.Indent = true;
       xmlSettings.IndentChars = "";
       xmlSettings.NewLineHandling = NewLineHandling.None;
-      xmlSettings.NewLineChars = this.newline;
+      xmlSettings.NewLineChars = file.newline;
       xmlSettings.OmitXmlDeclaration = false;
 
       string xml;
       using (var sw = new StringWriter())
       using (var w = new CustomXmlWriter(sw, xmlSettings, false))
       {
-        this.doc.WriteTo(w);
+        file.doc.WriteTo(w);
         w.Flush();
         xml = sw.ToString();
       }
 
       var enc = new UTF8Encoding(false, false);
-      File.WriteAllText(tvOutputFile, xml, enc);
+      File.WriteAllText(file.path, xml, enc);
     }
     #endregion
 
     #region UpdateChannelList()
-    private void UpdateChannelList(ChannelList list)
+    private void UpdateChannelList(FileData file, ChannelList list)
     {
       foreach (var channel in list.Channels)
       {
@@ -351,9 +419,9 @@ namespace ChanSort.Loader.PhilipsXml
           continue;
         }
 
-        if (this.formatVersion == 1)
+        if (file.formatVersion == 1)
           this.UpdateChannelFormat1(ch);
-        else if (this.formatVersion == 2)
+        else if (file.formatVersion == 2)
           this.UpdateChannelFormat2(ch);
       }
     }
@@ -384,6 +452,19 @@ namespace ChanSort.Loader.PhilipsXml
       foreach (var b in bytes)
         sb.Append($"0x{b:X2} 0x00 ");
       return sb.ToString();
+    }
+    #endregion
+
+
+    #region class FileData
+    private class FileData
+    {
+      public string path;
+      public XmlDocument doc;
+      public byte[] content;
+      public string textContent;
+      public string newline;
+      public int formatVersion;
     }
     #endregion
   }

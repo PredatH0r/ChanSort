@@ -6,7 +6,7 @@ namespace ChanSort.Loader.PhilipsXml
   {
     public string DllName { get; set; }
     public string PluginName => "Philips .xml";
-    public string FileFilter => "*.xml";
+    public string FileFilter => "*.xml;*.bin";
 
     public SerializerBase CreateSerializer(string inputFile)
     {

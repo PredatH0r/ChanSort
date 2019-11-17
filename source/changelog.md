@@ -1,6 +1,11 @@
 ChanSort Change Log 
 ===================
 
+2019-11-17
+- Philips: Improved support for ChannelMap_xxx channel lists directory structure.
+  Selecting any .xml or .bin file in the folder will now load all DVB\*.xml files from the 
+  channellib and s2channellib sub folders.
+
 2019-11-11
 - LG hospitality TVs using files names like xx[modelname].TLL can now be loaded
   (They use the naming pattern of binary TLL files, but contain GlobalClone/XML text data)

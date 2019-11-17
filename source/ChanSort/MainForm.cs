@@ -302,6 +302,7 @@ namespace ChanSort.Ui
         //this.SetControlsEnabled(!this.dataRoot.IsEmpty);
         this.UpdateFavoritesEditor(this.DataRoot.SupportedFavorites);
         this.colEncrypted.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.EncryptedFlagEdit;
+        this.UpdateMenu(true);
 
         if (this.DataRoot.Warnings.Length > 0 && this.miShowWarningsAfterLoad.Checked)
           this.BeginInvoke((Action) this.ShowFileInformation);
@@ -336,6 +337,9 @@ namespace ChanSort.Ui
 
     internal bool DetectCommonFileCorruptions(string tvDataFile)
     {
+      if (!File.Exists(tvDataFile)) // a loader (like Philips) may use internal file names that don't match the one in the UI, i.e. tvDataFile might be a directory path
+        return true;
+
       var content = File.ReadAllBytes(tvDataFile);
       var isAllZero = true;
       for (int i = 0, c = content.Length; i < c; i++)
@@ -558,11 +562,11 @@ namespace ChanSort.Ui
       this.currentTvSerializer?.Dispose();
 
       serializer.DataRoot.ValidateAfterLoad();
-      this.SetFileName(tvDataFile);
+      this.SetFileName(serializer.FileName);
       this.currentPlugin = plugin;
       this.currentTvSerializer = serializer;
       this.DataRoot = serializer.DataRoot;
-      this.AddFileToMruList(this.currentTvFile);
+      this.AddFileToMruList(tvDataFile);
       this.UpdateMruMenu();
 
       return true;
@@ -740,7 +744,7 @@ namespace ChanSort.Ui
 
     private void ShowSaveFileDialog()
     {
-      var extension = Path.GetExtension(this.currentTvSerializer.FileName) ?? ".";
+      var extension = Path.GetExtension(this.currentTvFile) ?? ".";
       using (var dlg = new SaveFileDialog())
       {
         dlg.InitialDirectory = Path.GetDirectoryName(this.currentTvFile);
@@ -778,7 +782,7 @@ namespace ChanSort.Ui
         this.SaveTvDataFile();
         this.DataRoot.NeedsSaving = false;
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
-        this.UpdateMenu();
+        this.UpdateMenu(true);
       }
       catch (IOException ex)
       {
@@ -926,13 +930,16 @@ namespace ChanSort.Ui
       this.splashScreenManager1.ShowWaitForm();
       try
       {
-        // create backup file if none exists
-        if (File.Exists(currentTvFile))
+        foreach (var filePath in this.currentTvSerializer.GetDataFilePaths())
         {
-          var bakFile = currentTvFile + ".bak";
-          if (!File.Exists(bakFile))
-            File.Copy(currentTvFile, bakFile);
+          if (File.Exists(filePath))
+          {
+            var bakFile = filePath + ".bak";
+            if (!File.Exists(bakFile))
+              File.Copy(filePath, bakFile);
+          }
         }
+
         this.currentTvSerializer.Save(this.currentTvFile);
         this.DataRoot.ValidateAfterSave();
       }
@@ -1587,7 +1594,7 @@ namespace ChanSort.Ui
 
     #region UpdateMenu
 
-    private void UpdateMenu()
+    private void UpdateMenu(bool afterFileLoad = false)
     {
       var fileLoaded = this.DataRoot != null;
       var isRight = this.lastFocusedGrid == this.gviewRight;
@@ -1611,15 +1618,19 @@ namespace ChanSort.Ui
       this.btnToggleFavH.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.H) != 0 && this.subListIndex != 8;
       this.btnToggleLock.Enabled = mayEdit;
 
-      this.miReload.Enabled = fileLoaded;
-      this.miFileInformation.Enabled = fileLoaded;
-      this.miRestoreOriginal.Enabled = fileLoaded && File.Exists(this.currentTvFile + ".bak");
-      this.miSave.Enabled = fileLoaded;
-      this.miSaveAs.Enabled = fileLoaded;
-      this.miOpenReferenceFile.Enabled = fileLoaded;
-      this.miSaveReferenceFile.Enabled = fileLoaded;
-      this.miExcelExport.Enabled = fileLoaded;
-      this.miPrint.Enabled = fileLoaded;
+      if (afterFileLoad)
+      {
+        // this block may contain some time-expensive checks that only need to be done after loading a file
+        this.miReload.Enabled = fileLoaded;
+        this.miFileInformation.Enabled = fileLoaded;
+        this.miRestoreOriginal.Enabled = fileLoaded && this.GetPathOfMissingBackupFile() == null;
+        this.miSave.Enabled = fileLoaded;
+        this.miSaveAs.Enabled = fileLoaded && this.currentTvSerializer.Features.CanSaveAs;
+        this.miOpenReferenceFile.Enabled = fileLoaded;
+        this.miSaveReferenceFile.Enabled = fileLoaded;
+        this.miExcelExport.Enabled = fileLoaded;
+        this.miPrint.Enabled = fileLoaded;
+      }
 
       this.miAddChannel.Enabled = fileLoaded && isRight;
 
@@ -1666,12 +1677,32 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region GetPathOfMissingBackupFile()
+    /// <summary>
+    /// If any backup file exists, return NULL. Otherwise the name of any expected .bak file (in case the loader has multiple data files)
+    /// </summary>
+    /// <returns></returns>
+    private string GetPathOfMissingBackupFile()
+    {
+      var files = this.currentTvSerializer.GetDataFilePaths().ToList();
+      string bakFile = null;
+      foreach (var dataFilePath in files)
+      {
+        bakFile = dataFilePath + ".bak";
+        if (File.Exists(bakFile))
+          return null;
+      }
+
+      return bakFile;
+    }
+    #endregion
+
     #region RestoreBackupFile()
 
     private void RestoreBackupFile()
     {
-      var bakFile = this.currentTvFile + ".bak";
-      if (!File.Exists(bakFile))
+      var bakFile = this.GetPathOfMissingBackupFile();
+      if (bakFile != null)
       {
         XtraMessageBox.Show(this, string.Format(Resources.MainForm_miRestoreOriginal_ItemClick_NoBackup, bakFile),
           this.miRestoreOriginal.Caption,
@@ -1690,9 +1721,14 @@ namespace ChanSort.Ui
 
       try
       {
-        File.Copy(bakFile, this.currentTvFile, true);
-        var attr = File.GetAttributes(this.currentTvFile);
-        File.SetAttributes(this.currentTvFile, attr & ~FileAttributes.ReadOnly);
+        foreach (var dataFilePath in this.currentTvSerializer.GetDataFilePaths())
+        {
+          bakFile = dataFilePath + ".bak";
+          File.Copy(bakFile, dataFilePath, true);
+          var attr = File.GetAttributes(dataFilePath);
+          File.SetAttributes(dataFilePath, attr & ~FileAttributes.ReadOnly);
+        }
+
         this.currentTvSerializer.DataRoot.NeedsSaving = false;
         if (this.currentPlugin != null)
           this.LoadFiles(this.currentPlugin, this.currentTvFile);
@@ -2310,7 +2346,7 @@ namespace ChanSort.Ui
 
     private void gviewLeft_EndSorting(object sender, EventArgs e)
     {
-      TryExecute(this.UpdateMenu);
+      TryExecute(() => this.UpdateMenu());
     }
 
     #endregion

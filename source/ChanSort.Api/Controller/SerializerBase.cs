@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
@@ -27,6 +28,7 @@ namespace ChanSort.Api
       public bool CanHaveGaps { get; set; } = true;
       public bool EncryptedFlagEdit { get; set; }
       public DeleteMode DeleteMode { get; set; } = DeleteMode.NotSupported;
+      public bool CanSaveAs { get; set; } = true;
 
 
       public Favorites SupportedFavorites { get; set; } = Favorites.A | Favorites.B | Favorites.C | Favorites.D;
@@ -39,7 +41,7 @@ namespace ChanSort.Api
 
     private Encoding defaultEncoding;
 
-    public string FileName { get; set; }
+    public string FileName { get; protected set; }
     public DataRoot DataRoot { get; protected set; }
     public SupportedFeatures Features { get; } = new SupportedFeatures();
 
@@ -58,6 +60,16 @@ namespace ChanSort.Api
       get { return this.defaultEncoding; }
       set { this.defaultEncoding = value; }
     }
+
+    #region GetDataFilePaths
+    /// <summary>
+    /// returns the list of all data files that need to be copied for backup/restore
+    /// </summary>
+    public virtual IEnumerable<string> GetDataFilePaths()
+    {
+      return new List<string> { this.FileName };
+    }
+    #endregion
 
     #region GetFileInformation()
     public virtual string GetFileInformation() 
@@ -192,6 +204,5 @@ namespace ChanSort.Api
       return 0;
     }
     #endregion
-
   }
 }
