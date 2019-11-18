@@ -30,6 +30,7 @@ namespace ChanSort.Loader.PhilipsXml
     private readonly ChannelList terrChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
     private readonly ChannelList cableChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
+    private readonly ChannelList allSatChannels = new ChannelList(SignalSource.DvbS, "DVB-S all");
 
     private readonly List<FileData> fileDataList = new List<FileData>();
     //private XmlDocument doc;
@@ -48,6 +49,7 @@ namespace ChanSort.Loader.PhilipsXml
       this.DataRoot.AddChannelList(this.terrChannels);
       this.DataRoot.AddChannelList(this.cableChannels);
       this.DataRoot.AddChannelList(this.satChannels);
+      this.DataRoot.AddChannelList(this.allSatChannels);
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -80,26 +82,35 @@ namespace ChanSort.Loader.PhilipsXml
       var dataFiles = new[] { @"channellib\DVBC.xml", @"channellib\DVBT.xml", @"s2channellib\DVBS.xml", @"s2channellib\DVBSall.xml" };
 
       // support for files in a ChannelMap_xxx directory structure
+      bool isChannelMapFolderStructure = false;
       var dir = Path.GetDirectoryName(this.FileName);
       var dirName = Path.GetFileName(dir).ToLower();
       if (dirName == "channellib" || dirName == "s2channellib")
+      {
         dir = Path.GetDirectoryName(dir);
+        isChannelMapFolderStructure = true;
+      }
 
       var binFile = Path.Combine(dir, "chanLst.bin");  // the .bin file is used as a proxy for the whole directory structure
       if (File.Exists(binFile))
       {
         this.FileName = binFile;
+        isChannelMapFolderStructure = true;
+      }
+
+      if (isChannelMapFolderStructure)
+      {
         foreach (var file in dataFiles)
         {
           var fullPath = Path.GetFullPath(Path.Combine(dir, file));
           this.LoadFile(fullPath);
         }
-
-        return;
       }
-
-      // otherwise load the single file that was originally selected by the user
-      LoadFile(this.FileName);
+      else
+      {
+        // otherwise load the single file that was originally selected by the user
+        LoadFile(this.FileName);
+      }
     }
     #endregion
 
@@ -166,9 +177,9 @@ namespace ChanSort.Loader.PhilipsXml
       var setupNode = node["Setup"] ?? throw new FileLoadException("Missing Setup XML element");
       var bcastNode = node["Broadcast"] ?? throw new FileLoadException("Missing Broadcast XML element");
 
-      var fname = Path.GetFileNameWithoutExtension(this.FileName).ToLower();
+      var fname = Path.GetFileNameWithoutExtension(file.path).ToLower();
       var medium = bcastNode.GetAttribute("medium");
-      if (medium == "" && fname.Length == 4 && fname.StartsWith("dvb"))
+      if (medium == "" && fname.Length >= 4 && fname.StartsWith("dvb"))
         medium = fname;
       bool hasEncrypt = false;
 
@@ -217,6 +228,9 @@ namespace ChanSort.Loader.PhilipsXml
           break;
         case "dvbs":
           chList = this.satChannels;
+          break;
+        case "dvbsall":
+          chList = this.allSatChannels;
           break;
       }
 

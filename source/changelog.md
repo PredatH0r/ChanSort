@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2019-11-18
+- Philips: fixed file detection in some ChannelMap_xxx folder structures
+
 2019-11-17
 - Philips: Improved support for ChannelMap_xxx channel lists directory structure.
   Selecting any .xml or .bin file in the folder will now load all DVB\*.xml files from the 
