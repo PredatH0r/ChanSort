@@ -41,6 +41,9 @@ namespace ChanSort.Loader.Panasonic
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.None; // due to the chaos with binary data inside the "sname" string column, writing back a name has undesired side effects
       this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = false;
       this.Features.CanHaveGaps = false;
       this.Features.EncryptedFlagEdit = true;
       this.Features.SortedFavorites = true;

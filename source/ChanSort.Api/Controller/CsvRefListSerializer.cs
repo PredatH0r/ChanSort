@@ -31,6 +31,8 @@ namespace ChanSort.Api
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = true;
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
       this.Features.CanHaveGaps = true;
       this.Features.EncryptedFlagEdit = false;

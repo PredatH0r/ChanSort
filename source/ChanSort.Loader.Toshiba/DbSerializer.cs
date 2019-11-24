@@ -25,6 +25,9 @@ namespace ChanSort.Loader.Toshiba
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.CanSkipChannels = false;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = false; // true in Android/e-format
 
       this.DataRoot.AddChannelList(this.atvChannels);
       this.DataRoot.AddChannelList(this.dtvTvChannels);

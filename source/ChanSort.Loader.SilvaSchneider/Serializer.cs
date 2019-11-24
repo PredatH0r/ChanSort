@@ -17,6 +17,9 @@ namespace ChanSort.Loader.SilvaSchneider
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.None;
       this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.CanSkipChannels = false;
+      this.Features.CanLockChannels = false;
+      this.Features.CanHideChannels = false;
       this.Features.SortedFavorites = false;
       this.Features.SupportedFavorites = 0;
 

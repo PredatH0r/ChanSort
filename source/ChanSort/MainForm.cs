@@ -1480,7 +1480,7 @@ namespace ChanSort.Ui
       {
         if (filter.Contains("+" + col.FieldName)) // force-show without further checks
           return true;
-        if (!filter.Contains(col.FieldName)) // force-hide without further checks
+        if (filter.Contains("-" + col.FieldName) || !filter.Contains(col.FieldName)) // force-hide without further checks
           return false;
       }
       else if (col.Tag is bool originalVisible && !originalVisible)
@@ -1497,7 +1497,6 @@ namespace ChanSort.Ui
       if (col == this.colAudioPid) return (source & SignalSource.Digital) != 0;
       //if (col == this.colServiceType) return (source & SignalSource.Digital) != 0;
       if (col == this.colServiceTypeName) return (source & SignalSource.Digital) != 0;
-      if (col == this.colEncrypted) return (source & SignalSource.Digital) != 0;
       if (col == this.colTransportStreamId) return (source & SignalSource.Digital) != 0;
       if (col == this.colNetworkName) return (source & SignalSource.Digital) != 0;
       if (col == this.colNetworkOperator) return (source & SignalSource.Digital) != 0;
@@ -1505,6 +1504,9 @@ namespace ChanSort.Ui
       if (col == this.colSatellite) return (source & SignalSource.Sat) != 0;
       if (col == this.colNetworkId) return (source & SignalSource.Digital) != 0;
       if (col == this.colSymbolRate) return (source & SignalSource.Digital) != 0;
+      if (col == this.colSkip) return (source & SignalSource.Digital) != 0 && this.DataRoot.CanSkip;
+      if (col == this.colLock) return (source & SignalSource.Digital) != 0 && this.DataRoot.CanLock;
+      if (col == this.colHidden) return (source & SignalSource.Digital) != 0 && this.DataRoot.CanHide;
       if (col == this.colIndex) return col.Visible;
       if (col == this.colUid) return col.Visible;
       if (col == this.colDebug) return col.Visible;
@@ -1643,6 +1645,8 @@ namespace ChanSort.Ui
       this.miMoveDown.Visibility = visLeft;
       this.miAddChannel.Visibility = visRight;
       this.miSkipOn.Enabled = this.miSkipOff.Enabled = this.currentTvSerializer?.Features.CanSkipChannels ?? false;
+      this.miLockOn.Enabled = this.miLockOff.Enabled = this.currentTvSerializer?.Features.CanLockChannels ?? false;
+      this.miHideOn.Enabled = this.miHideOff.Enabled = this.currentTvSerializer?.Features.CanHideChannels ?? false;
 
       var isLeftGridSortedByNewProgNr = this.IsLeftGridSortedByNewProgNr;
       var sel = this.gviewLeft.GetSelectedRows();

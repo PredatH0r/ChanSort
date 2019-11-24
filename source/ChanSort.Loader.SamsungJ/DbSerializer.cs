@@ -26,6 +26,9 @@ namespace ChanSort.Loader.SamsungJ
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = true;
       this.Features.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
       this.Features.SortedFavorites = true;
       this.Features.AllowGapsInFavNumbers = false;

@@ -25,8 +25,11 @@ namespace ChanSort.Loader.GlobalClone
     public GcSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
+      this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
       this.Features.CanHaveGaps = true;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = true;
 
       this.DataRoot.AddChannelList(this.atvChannels);
       this.DataRoot.AddChannelList(this.dtvTvChannels);
@@ -272,7 +275,7 @@ namespace ChanSort.Loader.GlobalClone
           case "transport_id":
             ch.TransportStreamId = int.Parse(info.InnerText);
             break;
-          case "service_id":
+          case "service_id": // also same value in "programNo"
             ch.ServiceId = int.Parse(info.InnerText);
             break;
           case "serviceType":
@@ -320,7 +323,7 @@ namespace ChanSort.Loader.GlobalClone
               this.Features.SupportedFavorites |= (Favorites)mask;
               this.Features.SortedFavorites = true;
               if (((int)ch.Favorites & mask) != 0) // xml element holds bad index data (250) when fav is not set
-                ch.SetPosition(n + 1, int.Parse(info.InnerText));
+                ch.SetOldPosition(n + 1, int.Parse(info.InnerText));
             }
             break;
         }
@@ -379,7 +382,6 @@ namespace ChanSort.Loader.GlobalClone
     {
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        
         foreach (var channel in list.Channels)
         {
           var ch = channel as GcChannel;
@@ -425,17 +427,25 @@ namespace ChanSort.Loader.GlobalClone
                 // ?
                 break;
               case "isDisabled":
-                node.InnerText = ch.IsDeleted || ch.IsDisabled ? "1" : "0";
+                node.InnerText = ch.IsDisabled /* || ch.IsDeleted */ ? "1" : "0";
                 break;
               case "isDeleted":
                 node.InnerText = ch.IsDeleted ? "1" : "0";
                 break;
               case "isUserSelCHNo":
                 if (ch.NewProgramNr != ch.OldProgramNr)
-                  node.InnerText = "1";
+                  node.InnerText = ch.IsDeleted ? "0" : "1";
                 break;
               case "mapType":
                 mapType = node.InnerText;
+                if (int.TryParse(mapType, out int value))
+                {
+                  if (ch.IsDeleted)
+                    value |= 0x02; // all channels that have isDeleted=1 had mapType=0x03, all other channels had mapType=0x01
+                  else
+                    value &= ~0x02;
+                  node.InnerText = value.ToString();
+                }
                 break;
               case "mapAttr":
                 if (mapType == "1")
@@ -474,6 +484,9 @@ namespace ChanSort.Loader.GlobalClone
         xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n" + xml;
         xml = xml.Replace("<ATV></ATV>\r\n", "<ATV>\r\n</ATV>\r\n");
         xml = xml.Replace("<DTV></DTV>\r\n", "<DTV>\r\n</DTV>\r\n");
+        xml = xml.Replace("<hexAszTkgsMessage type=\"0\"></hexAszTkgsMessage>", "<hexAszTkgsMessage type=\"0\"> </hexAszTkgsMessage>");
+        xml = xml.Replace("<aszTkgsMessage type=\"0\"></aszTkgsMessage>", "<aszTkgsMessage type=\"0\"> </aszTkgsMessage>");
+
         if (!xml.EndsWith("\r\n"))
           xml += "\r\n";
         File.WriteAllText(tvOutputFile, xml, settings.Encoding);

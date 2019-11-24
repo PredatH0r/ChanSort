@@ -94,6 +94,8 @@ namespace ChanSort.Loader.Hisense
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanSkipChannels = false;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = true;
       this.Features.CanHaveGaps = true;
       this.Features.SortedFavorites = true;
 

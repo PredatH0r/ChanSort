@@ -65,6 +65,10 @@ namespace ChanSort.Loader.Sony
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr; // in Android/e-format, this will be changed to FlagWithPrNr
       this.Features.MixedSourceFavorites = false; // true for Android/e-format
       this.Features.SortedFavorites = false; // true for Android/e-format
+      this.Features.CanSkipChannels = false;
+      this.Features.CanLockChannels = false;
+      this.Features.CanHideChannels = false; // true in Android/e-format
+
 
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Tv, "DVB-T TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Radio, "DVB-T Radio"));
@@ -164,6 +168,7 @@ namespace ChanSort.Loader.Sony
         this.format = "e" + formatNode.InnerText;
         this.isEFormat = true;
         this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
+        this.Features.CanHideChannels = true;
         this.Features.MixedSourceFavorites = true;
         this.Features.SortedFavorites = true;
         this.mixedFavList = new ChannelList(SignalSource.All, "Favorites");

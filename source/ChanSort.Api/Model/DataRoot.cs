@@ -23,6 +23,9 @@ namespace ChanSort.Api
     public bool MixedSourceFavorites => this.loader.Features.MixedSourceFavorites;
     public bool AllowGapsInFavNumbers => this.loader.Features.AllowGapsInFavNumbers;
     public bool DeletedChannelsNeedNumbers => this.loader.Features.DeleteMode == SerializerBase.DeleteMode.FlagWithPrNr;
+    public bool CanSkip => this.loader.Features.CanSkipChannels;
+    public bool CanLock => this.loader.Features.CanLockChannels;
+    public bool CanHide => this.loader.Features.CanHideChannels;
 
     public DataRoot(SerializerBase loader)
     {

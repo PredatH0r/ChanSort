@@ -63,6 +63,9 @@ namespace ChanSort.Loader.Samsung
       this.ReadConfigurationFromIniFile();
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = true;
       this.Features.CleanUpChannelData = true;
       this.Features.EncryptedFlagEdit = true;
     }

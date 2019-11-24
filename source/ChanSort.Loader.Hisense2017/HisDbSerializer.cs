@@ -121,6 +121,8 @@ namespace ChanSort.Loader.Hisense2017
       Features.ChannelNameEdit = ChannelNameEditMode.All;
       Features.DeleteMode = DeleteMode.FlagWithPrNr;
       Features.CanSkipChannels = true;
+      Features.CanLockChannels = true;
+      Features.CanHideChannels = true;
       Features.CanHaveGaps = true;
       Features.MixedSourceFavorites = true;
       Features.SortedFavorites = true;

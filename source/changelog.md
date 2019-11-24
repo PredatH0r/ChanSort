@@ -1,6 +1,15 @@
 ChanSort Change Log 
 ===================
 
+2019-11-24
+- LG GlobalClone: Favorites were not loaded correctly into ChanSort
+- LG GlobalClone: some changes that might fix problems where the TV didn't work properly
+  with an importet list (ChanSort now modifies less data in the file)
+- Menu items for hide/unhide, skip/unskip, lock/unlock are now disabled when these features are not supported by the
+  channel list file format
+- Applying a .txt reference list (which doesn't contain information about skip/lock/hide) will no longer clear these
+  flags in the current channel list
+
 2019-11-18
 - Philips: fixed file detection in some ChannelMap_xxx folder structures
 

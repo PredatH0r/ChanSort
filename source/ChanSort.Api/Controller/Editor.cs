@@ -293,10 +293,14 @@ namespace ChanSort.Api
             chan.NewProgramNr = -1;
 
           tvChannel.SetPosition(0, newNr);
-          tvChannel.Skip = refChannel.Skip;
-          tvChannel.Lock = refChannel.Lock;
-          tvChannel.Hidden = refChannel.Hidden;
-          tvChannel.IsDeleted = refChannel.IsDeleted;
+          if (refDataRoot.CanSkip && this.DataRoot.CanSkip)
+            tvChannel.Skip = refChannel.Skip;
+          if (refDataRoot.CanLock && this.DataRoot.CanLock)
+            tvChannel.Lock = refChannel.Lock;
+          if (refDataRoot.CanHide && this.DataRoot.CanHide)
+            tvChannel.Hidden = refChannel.Hidden;
+          
+          //tvChannel.IsDeleted = refChannel.IsDeleted;
           if ((tvChannel.SignalSource & SignalSource.Analog) != 0 && !string.IsNullOrEmpty(refChannel.Name))
           {
             tvChannel.Name = refChannel.Name;

@@ -77,6 +77,9 @@ namespace ChanSort.Loader.LG
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.Analog;
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = true;
       this.Features.CanHaveGaps = true;
       this.Features.DeviceSettings = true;
       this.Features.CleanUpChannelData = true;
