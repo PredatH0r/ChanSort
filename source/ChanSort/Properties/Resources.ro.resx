@@ -261,7 +261,7 @@ sau actualizări ale firmware-ului fără a efectua o nouă scanare a canalelor.
 (Noul software din televizor ar putea să nu poată procesa datele vechi ale canalului în timpul exportului.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antenă, Cablu, Sat, IP, analog, digital, TV, radio, data</value>
+    <value>Antenă, Cablu, Sat, IP, analog, digital, TV, radio</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
     <value>Cum doriți să o gestionați atunci când un Pr # este deja luat în lista țintă?</value>

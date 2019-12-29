@@ -42,7 +42,7 @@ rem -----------------------------
 rem If you want to digitally sign the generated .exe and .dll files, 
 rem you need to have your code signing certificate installed in the Windows certificate storage
 rem -----------------------------
-set signtool="C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\signtool.exe"
+set signtool="C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64\signtool.exe"
 set oldcd=%cd%
 cd %target%
 set files=ChanSort.exe ChanSort*.dll de\ChanSort*.dll ru\ChanSort*.dll pt\ChanSort*.dll cs\ChanSort*.dll

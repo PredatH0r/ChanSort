@@ -36,8 +36,6 @@
       this.dsChannels = new System.Windows.Forms.BindingSource(this.components);
       this.gviewLeft = new DevExpress.XtraGrid.Views.Grid.GridView();
       this.colIndex1 = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colOutServiceType = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colOutSource = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutSlot = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutFav = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -46,6 +44,8 @@
       this.colOutSkip = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutHide = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutDeleted = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colOutServiceType = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colOutSource = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colUid1 = new DevExpress.XtraGrid.Columns.GridColumn();
       this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
       this.lblHotkeyLeft = new DevExpress.XtraEditors.LabelControl();
@@ -205,6 +205,7 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
+      this.miSpanish = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -216,7 +217,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).BeginInit();
       this.pnlEditControls.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).BeginInit();
       this.grpInputList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridRight)).BeginInit();
@@ -343,19 +343,6 @@
       this.colIndex1.FieldName = "RecordIndex";
       this.colIndex1.Name = "colIndex1";
       // 
-      // colOutServiceType
-      // 
-      resources.ApplyResources(this.colOutServiceType, "colOutServiceType");
-      this.colOutServiceType.FieldName = "ServiceTypeName";
-      this.colOutServiceType.Name = "colOutServiceType";
-      this.colOutServiceType.OptionsColumn.AllowEdit = false;
-      // 
-      // colOutSource
-      // 
-      resources.ApplyResources(this.colOutSource, "colOutSource");
-      this.colOutSource.FieldName = "Source";
-      this.colOutSource.Name = "colOutSource";
-      // 
       // colOutSlot
       // 
       resources.ApplyResources(this.colOutSlot, "colOutSlot");
@@ -422,6 +409,19 @@
       this.colOutDeleted.FieldName = "IsDeleted";
       this.colOutDeleted.Name = "colOutDeleted";
       // 
+      // colOutServiceType
+      // 
+      resources.ApplyResources(this.colOutServiceType, "colOutServiceType");
+      this.colOutServiceType.FieldName = "ServiceTypeName";
+      this.colOutServiceType.Name = "colOutServiceType";
+      this.colOutServiceType.OptionsColumn.AllowEdit = false;
+      // 
+      // colOutSource
+      // 
+      resources.ApplyResources(this.colOutSource, "colOutSource");
+      this.colOutSource.FieldName = "Source";
+      this.colOutSource.Name = "colOutSource";
+      // 
       // colUid1
       // 
       resources.ApplyResources(this.colUid1, "colUid1");
@@ -470,10 +470,6 @@
       this.btnToggleFavH.Name = "btnToggleFavH";
       this.btnToggleFavH.Tag = "";
       this.btnToggleFavH.Click += new System.EventHandler(this.btnToggleFav_Click);
-      // 
-      // globalImageCollection1
-      // 
-      this.globalImageCollection1.ParentControl = this;
       // 
       // btnToggleFavG
       // 
@@ -1067,9 +1063,10 @@
             this.miExplorerIntegration,
             this.miCheckUpdates,
             this.miUtf8Charset,
-            this.miCopyCsv});
+            this.miCopyCsv,
+            this.miSpanish});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 101;
+      this.barManager1.MaxItemId = 102;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1465,11 +1462,12 @@
       this.barSubItem1.ImageOptions.ImageIndex = ((int)(resources.GetObject("barSubItem1.ImageOptions.ImageIndex")));
       this.barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miEnglish),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miGerman),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miRussian),
             new DevExpress.XtraBars.LinkPersistInfo(this.miCzech),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miRomanian)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miGerman),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSpanish),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRomanian),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miRussian)});
       this.barSubItem1.Name = "barSubItem1";
       this.barSubItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
       // 
@@ -2007,6 +2005,16 @@
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
       // 
+      // miSpanish
+      // 
+      this.miSpanish.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miSpanish, "miSpanish");
+      this.miSpanish.Id = 101;
+      this.miSpanish.ImageOptions.ImageIndex = ((int)(resources.GetObject("barButtonItem1.ImageOptions.ImageIndex")));
+      this.miSpanish.Name = "miSpanish";
+      this.miSpanish.Tag = "es-ES";
+      this.miSpanish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -2036,7 +2044,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).EndInit();
       this.pnlEditControls.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).EndInit();
       this.grpInputList.ResumeLayout(false);
       this.grpInputList.PerformLayout();
@@ -2247,6 +2254,7 @@
     private DevExpress.XtraEditors.SimpleButton btnToggleFavF;
     private DevExpress.XtraBars.BarButtonItem miCopyCsv;
     private DevExpress.XtraGrid.Columns.GridColumn colOutSource;
-  }
+        private DevExpress.XtraBars.BarButtonItem miSpanish;
+    }
 }
 

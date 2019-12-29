@@ -37,10 +37,13 @@
       this.btnPreview = new DevExpress.XtraEditors.SimpleButton();
       this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
       this.spinFontSize = new DevExpress.XtraEditors.SpinEdit();
+      this.spinColumnCount = new DevExpress.XtraEditors.SpinEdit();
+      this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
       ((System.ComponentModel.ISupportInitialize)(this.rbSortByNumber.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.rbSortByName.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.fontEdit1.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.spinFontSize.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.spinColumnCount.Properties)).BeginInit();
       this.SuspendLayout();
       // 
       // labelControl1
@@ -99,10 +102,37 @@
       this.spinFontSize.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
       this.spinFontSize.Properties.Mask.ShowPlaceHolders = ((bool)(resources.GetObject("spinFontSize.Properties.Mask.ShowPlaceHolders")));
       // 
+      // spinColumnCount
+      // 
+      resources.ApplyResources(this.spinColumnCount, "spinColumnCount");
+      this.spinColumnCount.Name = "spinColumnCount";
+      this.spinColumnCount.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject("spinEdit1.Properties.Buttons"))))});
+      this.spinColumnCount.Properties.DisplayFormat.FormatString = "n0";
+      this.spinColumnCount.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+      this.spinColumnCount.Properties.Mask.ShowPlaceHolders = ((bool)(resources.GetObject("spinEdit1.Properties.Mask.ShowPlaceHolders")));
+      this.spinColumnCount.Properties.MaxValue = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+      this.spinColumnCount.Properties.MinValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+      // 
+      // labelControl3
+      // 
+      resources.ApplyResources(this.labelControl3, "labelControl3");
+      this.labelControl3.Name = "labelControl3";
+      // 
       // ReportOptionsDialog
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.spinColumnCount);
+      this.Controls.Add(this.labelControl3);
       this.Controls.Add(this.spinFontSize);
       this.Controls.Add(this.btnCancel);
       this.Controls.Add(this.btnPreview);
@@ -118,6 +148,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.rbSortByName.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.fontEdit1.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.spinFontSize.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.spinColumnCount.Properties)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -133,5 +164,7 @@
     private DevExpress.XtraEditors.SimpleButton btnPreview;
     private DevExpress.XtraEditors.SimpleButton btnCancel;
     private DevExpress.XtraEditors.SpinEdit spinFontSize;
-  }
+        private DevExpress.XtraEditors.SpinEdit spinColumnCount;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
+    }
 }

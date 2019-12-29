@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2019-12-29
+- Added Spanish translation (thanks to Marco Sánchez!)
+- Added support for Philips "ChannelMap" favorites lists (1-8)
+
 2019-11-24
 - LG GlobalClone: Favorites were not loaded correctly into ChanSort
 - LG GlobalClone: some changes that might fix problems where the TV didn't work properly

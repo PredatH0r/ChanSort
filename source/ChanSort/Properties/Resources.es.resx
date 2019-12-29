@@ -118,187 +118,170 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainForm_LoadTll_SourceTllNotFound" xml:space="preserve">
-    <value>Quell-TLL konnte nicht gefunden werden:
-'{0}'</value>
+    <value>Archivo TLL no encontrado:'{0}'</value>
   </data>
   <data name="MainForm_LoadTll_Exception" xml:space="preserve">
-    <value>An error occured while loading the TV's data file:
-{0}</value>
+    <value>Un error ha ocurrido al cargar el archivo de datos de TV:{0}</value>
   </data>
   <data name="MainForm_FileDialog_OpenFileFilter" xml:space="preserve">
-    <value>Supported Files|{0}|All Files (*.*)|*</value>
+    <value>Archivos soportados|{0}|Todos los archivos (*.*)|*</value>
   </data>
   <data name="MainForm_FileDialog_SaveFileFilter" xml:space="preserve">
-    <value>{0}-Files|*{0}|All Files (*.*)|*</value>
+    <value>{0}-Archivos|*{0}|Todos los archivos (*.*)|*</value>
   </data>
   <data name="MainForm_TryExecute_Exception" xml:space="preserve">
-    <value>An unexpected error occured:
-{0}</value>
+    <value>Ha ocurrido un error inesperado:{0}</value>
   </data>
   <data name="MainForm_SaveTllFile_Exception" xml:space="preserve">
-    <value>An error occured while writing the TV data file:
-{0}</value>
+    <value>Ha ocurrido un error al guardar el archivo de datos de TV:{0}</value>
   </data>
   <data name="MainForm_SaveTllFile_Success" xml:space="preserve">
-    <value>Sorted TV data file was created successfully.</value>
+    <value>El archivo ordenado de datos de TV ha sido creado con éxito</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Question" xml:space="preserve">
-    <value>Do you want so save your changes?</value>
+    <value>¿Desea guardar los cambios?</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Save" xml:space="preserve">
-    <value>Save changes</value>
+    <value>Guardar cambios</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
-    <value>Discard changes</value>
+    <value>Descartar cambios</value>
   </data>
   <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
-    <value>No plugin found to read/write {0} files.</value>
+    <value>No se ha encontrado un plugin para leer/escribir {0} archivos.</value>
   </data>
   <data name="MainForm_LoadFiles_IOException" xml:space="preserve">
-    <value>Error loading file</value>
+    <value>Error cargando archivo</value>
   </data>
   <data name="MainForm_LoadFiles_ValidationWarningMsg" xml:space="preserve">
-    <value>The file content shows some anomalies and is possibly corrupt.</value>
+    <value>El contenido del archivo muestra algunas anomalías y posiblemente esté corrupto.</value>
   </data>
   <data name="MainForm_LoadFiles_ValidationWarningCap" xml:space="preserve">
-    <value>Data validation</value>
+    <value>Validación de datos</value>
   </data>
   <data name="MainForm_RestoreScanOrder_Message" xml:space="preserve">
-    <value>All custom storing will be lost.
-Are you sure you want to restore the order from the channel scan?</value>
+    <value>Todo lo almacenado se perderá.¿Está seguro de restaurar el orden de la búsqueda de canales?</value>
   </data>
   <data name="MainForm_RestoreScanOrder_Caption" xml:space="preserve">
-    <value>Restore order from channel scan</value>
+    <value>Restaurar orden de la búsqueda de canales</value>
   </data>
   <data name="MainForm_LoadFiles_DupeWarningMsg" xml:space="preserve">
-    <value>The input file contains multiple records that use the same 
-program number. It is possible that the TV will not accept
-the changes made by ChanSort.
-This is typically caused by running a manual transponder scan.
-It is recommended to use a clean input file for any modifications.
-To do that, turn Hotel Mode OFF, reset the TV to 
-factory defaults, run a new blind channel scan and turn
-Hotel Mode back ON, then export a new clean TLL file.</value>
+    <value>El archivo de entrada contiene varios canales que usan el mismo número de programa. Es posible que la TV no acepte los cambios hechos por ChanSort.
+Esto está causado habitualmente por hacer una búsqueda manual de transpondedores.
+Es recomendable usar un archivo de entrada limpio para cualquier modificación.
+Para hacer esto, apague el modo Hotel, resetee la TV
+a los valores de fábrica, haga una nueva búsqueda ciega de canales,
+vuelva a encender el modo Hotel y exporte un nuevo y limpio archivo TLL.</value>
   </data>
   <data name="MainForm_btnResetChannelData_Click_Message" xml:space="preserve">
-    <value>WARNING: All analog, DVB-C/T and DVB-S channel and transponder data will be deleted.
-You will have to run a full channel scan after loading this file into your TV.
-Proceed?</value>
+    <value>ADVERTENCIA: Todos los canales y transpondedores analógicos, DVB-C/T y DVB-S serán eliminados.
+Necesitará realizar una búsqueda completa de canales tras cargar este archivo a su TV.
+¿Desea hacerlo?</value>
   </data>
   <data name="MainForm_btnResetChannelData_Click_Caption" xml:space="preserve">
-    <value>Erase all channel data</value>
+    <value>Eliminar toda los datos de canales</value>
   </data>
   <data name="MainForm_miRestoreOriginal_Message" xml:space="preserve">
-    <value>Unable to copy .bak file to {0}</value>
+    <value>No es posible copiar el archivo .bak a {0}</value>
   </data>
   <data name="MainForm_miRestoreOriginal_ItemClick_NoBackup" xml:space="preserve">
-    <value>No backup file found: {0}</value>
+    <value>No se ha encontrado el archivo de respaldo: {0}</value>
   </data>
   <data name="MainForm_miRestoreOriginal_ItemClick_Confirm" xml:space="preserve">
-    <value>You are about to restore the backup file. All changes will be lost!
-Do you want to continue?</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Donate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_donateCC_LG.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="paypal_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\paypal-button.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>Está a punto de restaurar el archivo de respaldo. ¡Todos los cambios se perderán!. ¿Desea continuar?</value>
   </data>
   <data name="MainForm_SaveFiles_ErrorMsg" xml:space="preserve">
-    <value>There was an error saving the file. Please make sure that
-- you have write permission on the file
-- the file is not open in another program
+    <value>Ha ocurrido un error guardando el archivo. Por favor asegúrese de que
+- El archivo tiene permisos de escritura
+- El archivo no esté abierto por otro programa
 
-The error message is:</value>
+El error de error es:</value>
   </data>
   <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
-    <value>File write error</value>
+    <value>Error al escribir el archivo</value>
   </data>
   <data name="UpdateCheck_NotifyAboutNewVersion_Message" xml:space="preserve">
-    <value>A newer version is available: v{0}.
-Do you want to open the download website?</value>
+    <value>Una nueva versión está disponible: v{0}. ¿Desea ir al sitio de descargas?</value>
   </data>
   <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
-    <value>New Version</value>
+    <value>Nueva versión</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_Question" xml:space="preserve">
-    <value>How would you like to edit your channel list?</value>
+    <value>¿Cómo deséa editar su lista de canales?</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
-    <value>Create new list: Start with an empty list and add channels in desired order</value>
+    <value>Crear una nueva lista: Empezar con una lista vacía y añadir canales en el orden deseado</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
-    <value>Modify current list: Start with current list and modify it as needed</value>
+    <value>Modificar la lista actual: Empezar con la lista actual y modificarla a su gusto</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
-    <value>Copy channel list: Order the channels the same way as in a reference list</value>
+    <value>Copiar la lista de canales: Ordenar los canales en el mismo orden de la lista de referencia</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
-    <value>What should happen to unsorted channels?</value>
+    <value>¿Qué hacer con los canales sin clasificar?</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Append" xml:space="preserve">
-    <value>Append unsorted channels the end of the list</value>
+    <value>Agregar los canales sin clasificar al final de la lista</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
-    <value>Delete unsorted channels from the list</value>
+    <value>Eliminar los canales sin clasificar de la lista</value>
   </data>
   <data name="MainForm_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancelar</value>
   </data>
   <data name="MainForm_LoadTvDataFile_FileNotFound_Caption" xml:space="preserve">
-    <value>File not found</value>
+    <value>Archivo no encontrado</value>
   </data>
   <data name="MainForm_LoadTvDataFile_FileNotFound_Message" xml:space="preserve">
-    <value>The file {0} does not exist.</value>
+    <value>El archivo {0} no existe.</value>
   </data>
   <data name="MainForm_ExportExcelList_Message" xml:space="preserve">
-    <value>The channel list has been copied to the clipboard
-and can be pasted into Excel or any text editor.</value>
+    <value>La lista de canales ha sido copiada al portapapeles y podrá pegarse a Excel o cualquier editor de texto.</value>
   </data>
   <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
-    <value>Your TV might not be able to work correctly when there are gaps in the channel numbers.
-Do you want the channel numbers to be rearranged consecutively?</value>
+    <value>Su TV puede no funcionar correctamente si existen huecos en la numeración de canales.
+¿Desea renumerar consecutivamente los números de canales?</value>
   </data>
   <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
-    <value>The content of the file is invalid. It has either size 0 or all its bytes have the the value 0.
-Typical causes are USB sticks with an NTFS file system (try using FAT32 instead)
-or firmware upgrades without running a new channel scan. 
-(The new software in the TV might be unable to process the old channel data during the export.)</value>
+    <value>El contenido del archivo no es válido. Su tamaño es 0 o todos su bytes tienen valos 0.
+Las causas típicas son memorias USB formateadas en NTFS (use formato FAT32)
+o bien se ha actualizado el firmware sin hacer una nueva búsqueda de canales.
+(El nuevo firmware de la TV puede ser incapáz de procesar los datos existentes de canales durante la exportación.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antenna,Cable,Sat,IP,Analog,Digital,TV,Radio</value>
+    <value>Antena,Cable,Sat,IP,Analógico,Digital,TV,Radio</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
-    <value>How do you want to handle it when a Pr# is already taken in the target list?</value>
+    <value>¿Cómo desea proceder cuando un Pr# ya exista en la lista de destino?</value>
   </data>
   <data name="ReferenceListForm_btnApply_Click_Clear" xml:space="preserve">
-    <value>Clear target list before applying reference list</value>
+    <value>Limpiar la lista de destino antes de aplicar la lista de referencia</value>
   </data>
   <data name="ReferenceListForm_btnApply_Click_Overwrite" xml:space="preserve">
-    <value>Overwrite Pr# with the channel from the reference list</value>
+    <value>Sobreescribir el Pr# con el de la lista de referencia</value>
   </data>
   <data name="ReferenceListForm_btnApply_Click_Keep" xml:space="preserve">
-    <value>Keep current channel at the Pr#</value>
+    <value>Mantener el canal actual en el Pr#</value>
   </data>
   <data name="MainForm_SwapChannels_RowCountMsg" xml:space="preserve">
-    <value>To swap channels an equal number of rows must be selected in the left and right table.</value>
+    <value>Para intercambiar canales debe seleccionar el mismo número de filas en la izquierda y derecha.</value>
   </data>
   <data name="MainForm_SwapChannels_RowCountTitle" xml:space="preserve">
-    <value>Swap Channels</value>
+    <value>Intercambiar canales</value>
   </data>
   <data name="ReferenceListForm_ShowOpenFileDialog_Title" xml:space="preserve">
-    <value>Select a reference list to import</value>
+    <value>Seleccione una lista de referencia para importar</value>
   </data>
   <data name="MainForm_ShowOpenReferenceFileDialog_Filter" xml:space="preserve">
-    <value>ChanSort Reference List|*.csv|SamToolBox Reference List|*.chl|All Reference Lists|*.csv;*.chl</value>
+    <value>Lista de referencia de ChanSort|*.csv|Lista de referencia de SamToolBox|*.chl|Todas las listas de referencia|*.csv;*.chl</value>
   </data>
   <data name="MainForm_ShowOpenReferenceFileDialog_Title" xml:space="preserve">
-    <value>Open Reference List</value>
+    <value>Abrir lista de referencia</value>
   </data>
   <data name="MainForm_LoadTll_InvalidZip" xml:space="preserve">
-    <value>The file is not a valid .zip archive.
-TVs often export corrupted files to USB sticks formatted with the NTFS file system.
-Please try exporting to a stick formatted with FAT32</value>
+    <value>El archivo no es un archivo .zip válido.
+A menudo las TV exportan archivos corruptos a memorias USB formateadas en NTFS.
+Por favor trate de exportarlo a una memoria USB con formato FAT32</value>
   </data>
 </root>

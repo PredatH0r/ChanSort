@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -49,6 +50,7 @@ namespace ChanSort.Loader.PhilipsXml
     private readonly ChannelList cableChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
     private readonly ChannelList allSatChannels = new ChannelList(SignalSource.DvbS, "DVB-S all");
+    private readonly ChannelList favChannels = new ChannelList(SignalSource.All, "Favorites");
 
     private readonly List<FileData> fileDataList = new List<FileData>();
     //private XmlDocument doc;
@@ -66,11 +68,13 @@ namespace ChanSort.Loader.PhilipsXml
       this.Features.CanHideChannels = true;
       this.Features.DeleteMode = DeleteMode.Physically;
       this.Features.CanSaveAs = false;
+      this.Features.AllowGapsInFavNumbers = false;
 
       this.DataRoot.AddChannelList(this.terrChannels);
       this.DataRoot.AddChannelList(this.cableChannels);
       this.DataRoot.AddChannelList(this.satChannels);
       this.DataRoot.AddChannelList(this.allSatChannels);
+      this.DataRoot.AddChannelList(this.favChannels);
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -81,6 +85,8 @@ namespace ChanSort.Loader.PhilipsXml
         list.VisibleColumnFieldNames.Remove("ShortName");
         list.VisibleColumnFieldNames.Remove("Provider");
       }
+
+      this.favChannels.IsMixedSourceFavoritesList = true;
     }
     #endregion
 
@@ -100,7 +106,7 @@ namespace ChanSort.Loader.PhilipsXml
       // ChannelMap_100/ChannelList/Favorite.xml
       // ChannelMap_100/ChannelList/satInfo.bin
 
-      var dataFiles = new[] { @"channellib\DVBC.xml", @"channellib\DVBT.xml", @"s2channellib\DVBS.xml", @"s2channellib\DVBSall.xml" };
+      var dataFiles = new[] { @"channellib\DVBC.xml", @"channellib\DVBT.xml", @"s2channellib\DVBS.xml", @"s2channellib\DVBSall.xml", @"Favorite.xml" };
 
       // support for files in a ChannelMap_xxx directory structure
       bool isChannelMapFolderStructure = false;
@@ -169,9 +175,8 @@ namespace ChanSort.Loader.PhilipsXml
       var root = fileData.doc.FirstChild;
       if (root is XmlDeclaration)
         root = root.NextSibling;
-      if (fail || root == null || root.LocalName != "ChannelMap")
+      if (fail || root == null || (root.LocalName != "ChannelMap" && root.LocalName != "FavoriteListMAP"))
         throw new FileLoadException("\"" + fileName + "\" is not a supported Philips XML file");
-
 
       int rowId = 0;
       ChannelList curList = null;
@@ -184,6 +189,9 @@ namespace ChanSort.Loader.PhilipsXml
               curList = this.DetectFormatAndFeatures(fileData, child);
             if (curList != null)
               this.ReadChannel(fileData, curList, child, rowId++);
+            break;
+          case "FavoriteList":
+            this.ReadFavList(child);
             break;
         }
       }
@@ -296,6 +304,7 @@ namespace ChanSort.Loader.PhilipsXml
     #region ParseChannelFormat1
     private void ParseChannelFormat1(Dictionary<string,string> data, Channel chan)
     {
+      chan.Format = 1;
       chan.RawSatellite = data.TryGet("SatelliteName");
       chan.Satellite = DecodeName(chan.RawSatellite);
       chan.OldProgramNr = ParseInt(data.TryGet("ChannelNumber"));
@@ -327,6 +336,7 @@ namespace ChanSort.Loader.PhilipsXml
     #region ParseChannelFormat2
     private void ParseChannelFormat2(Dictionary<string, string> data, Channel chan)
     {
+      chan.Format = 2;
       chan.OldProgramNr = ParseInt(data.TryGet("presetnumber"));
       chan.Name = data.TryGet("name");
       chan.RawName = chan.Name;
@@ -338,6 +348,42 @@ namespace ChanSort.Loader.PhilipsXml
       chan.TransportStreamId = ParseInt(data.TryGet("TSID"));
       chan.ServiceType = ParseInt(data.TryGet("serviceType"));
       chan.SymbolRate = ParseInt(data.TryGet("symbolrate")) / 1000;
+    }
+    #endregion
+
+    #region ReadFavList
+    private void ReadFavList(XmlNode node)
+    {
+      int index = ParseInt(node.Attributes["Index"].InnerText);
+      this.Features.SupportedFavorites |= (Favorites) (1 << (index - 1));
+      this.Features.SortedFavorites = true;
+      this.Features.MixedSourceFavorites = true;
+
+      if (this.favChannels.Count == 0)
+      {
+        foreach (var rootList in this.DataRoot.ChannelLists)
+        {
+          if (rootList.IsMixedSourceFavoritesList)
+            continue;
+          foreach (var chan in rootList.Channels)
+          {
+            favChannels.Channels.Add(chan);
+            for (int i=0; i<chan.FavIndex.Count; i++)
+              chan.SetOldPosition(i+1, -1);
+          }
+        }
+      }
+
+      foreach (XmlNode child in node.ChildNodes)
+      {
+        if (child.LocalName == "FavoriteChannel")
+        {
+          var uniqueId = ParseInt(child["UniqueID"].InnerText);
+          var favNumber = ParseInt(child["FavNumber"].InnerText);
+          var chan = this.favChannels.Channels.FirstOrDefault(ch => ch.RecordIndex == uniqueId);
+          chan?.SetOldPosition(index, favNumber + 1);
+        }
+      }
     }
     #endregion
 
@@ -405,7 +451,16 @@ namespace ChanSort.Loader.PhilipsXml
     public override void Save(string tvOutputFile)
     {
       // "Save As..." is not supported by this loader
-      foreach(var file in this.fileDataList)
+
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        if (list.IsMixedSourceFavoritesList)
+          this.UpdateFavList();
+        else
+          this.UpdateChannelList(list);
+      }
+
+      foreach (var file in this.fileDataList)
         this.SaveFile(file);
     }
 
@@ -414,15 +469,12 @@ namespace ChanSort.Loader.PhilipsXml
     #region SaveFile()
     private void SaveFile(FileData file)
     {
-      foreach (var list in this.DataRoot.ChannelLists)
-        this.UpdateChannelList(file, list);
-
       // by default .NET reformats the whole XML. These settings produce almost same format as the TV xml files use
       var xmlSettings = new XmlWriterSettings();
       xmlSettings.Encoding = this.DefaultEncoding;
       xmlSettings.CheckCharacters = false;
       xmlSettings.Indent = true;
-      xmlSettings.IndentChars = "";
+      xmlSettings.IndentChars = "  ";
       xmlSettings.NewLineHandling = NewLineHandling.None;
       xmlSettings.NewLineChars = file.newline;
       xmlSettings.OmitXmlDeclaration = false;
@@ -442,7 +494,7 @@ namespace ChanSort.Loader.PhilipsXml
     #endregion
 
     #region UpdateChannelList()
-    private void UpdateChannelList(FileData file, ChannelList list)
+    private void UpdateChannelList(ChannelList list)
     {
       foreach (var channel in list.Channels)
       {
@@ -456,9 +508,9 @@ namespace ChanSort.Loader.PhilipsXml
           continue;
         }
 
-        if (file.formatVersion == 1)
+        if (ch.Format == 1)
           this.UpdateChannelFormat1(ch);
-        else if (file.formatVersion == 2)
+        else if (ch.Format == 2)
           this.UpdateChannelFormat2(ch);
       }
     }
@@ -478,6 +530,36 @@ namespace ChanSort.Loader.PhilipsXml
       ch.SetupNode.Attributes["presetnumber"].Value = ch.NewProgramNr.ToString();
       if (ch.IsNameModified)
         ch.SetupNode.Attributes["name"].Value = ch.Name;
+    }
+    #endregion
+
+    #region UpdateFavList
+    private void UpdateFavList()
+    {
+      var favFile = this.fileDataList.FirstOrDefault(fd => Path.GetFileName(fd.path).ToLower() == "favorite.xml");
+      if (favFile == null)
+        return;
+
+      int index = 0;
+      foreach(XmlNode favListNode in favFile.doc["FavoriteListMAP"].ChildNodes)
+      {
+        ++index;
+        favListNode.InnerXml = ""; // clear all <FavoriteChannel> child elements but keep the attributes of the current node
+        foreach (var ch in favChannels.Channels.OrderBy(ch => ch.GetPosition(index)))
+        {
+          var nr = ch.GetPosition(index);
+          if (nr <= 0)
+            continue;
+          var uniqueIdNode = favFile.doc.CreateElement("UniqueID");
+          uniqueIdNode.InnerText = ch.RecordIndex.ToString();
+          var favNrNode = favFile.doc.CreateElement("FavNumber");
+          favNrNode.InnerText = (nr-1).ToString();
+          var channelNode = favFile.doc.CreateElement("FavoriteChannel");
+          channelNode.AppendChild(uniqueIdNode);
+          channelNode.AppendChild(favNrNode);
+          favListNode.AppendChild(channelNode);
+        }
+      }
     }
     #endregion
 

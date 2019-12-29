@@ -491,7 +491,7 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Antenna,Cable,Sat,IP,Analog,Digital,TV,Radio,Data.
+        ///   Looks up a localized string similar to Antenna,Cable,Sat,IP,Analog,Digital,TV,Radio.
         /// </summary>
         internal static string ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio {
             get {

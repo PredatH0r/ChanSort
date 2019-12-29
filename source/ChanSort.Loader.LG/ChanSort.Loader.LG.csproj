@@ -60,9 +60,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -127,6 +127,9 @@
     <EmbeddedResource Include="PresetProgramNrDialog.de.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PresetProgramNrDialog.es.resx">
+      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PresetProgramNrDialog.pt.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -147,6 +150,7 @@
       <LastGenOutput>Resource.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resource.es.resx" />
     <EmbeddedResource Include="Resource.pt.resx" />
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -161,6 +165,9 @@
     <EmbeddedResource Include="TvSettingsForm.de.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TvSettingsForm.es.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TvSettingsForm.pt.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>

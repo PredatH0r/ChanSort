@@ -21,6 +21,9 @@ Czech translation
 Vitor Martins Augusto:
 Portuguese translation
 
+Marco Sánchez:
+Spanish Translation
+
 PDA-User:
 Analysis of TLL file structure and extensive testing of ChanSort
 
