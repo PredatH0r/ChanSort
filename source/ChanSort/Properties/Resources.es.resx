@@ -250,7 +250,7 @@ o bien se ha actualizado el firmware sin hacer una nueva búsqueda de canales.
 (El nuevo firmware de la TV puede ser incapáz de procesar los datos existentes de canales durante la exportación.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antena,Cable,Sat,IP,Analógico,Digital,TV,Radio</value>
+    <value>Antena,Cable,Sat,IP,Analógico,Digital,TV,Radio,Data</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
     <value>¿Cómo desea proceder cuando un Pr# ya exista en la lista de destino?</value>

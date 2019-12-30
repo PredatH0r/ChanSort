@@ -1107,7 +1107,4 @@ This step can be repeated as needed.</value>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="edFile.Properties.Buttons8" xml:space="preserve">
-    <value></value>
-  </data>
 </root>

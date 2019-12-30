@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2019-12-31
+- fixed error when opening reference list dialog
+
 2019-12-29
 - Added Spanish translation (thanks to Marco Sánchez!)
 - Added support for Philips "ChannelMap" favorites lists (1-8)
