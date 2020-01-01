@@ -143,6 +143,11 @@ namespace ChanSort.Loader.Samsung
           continue;
         list.VisibleColumnFieldNames.Add("PcrPid");
         list.VisibleColumnFieldNames.Remove("AudioPid");
+        if ((list.SignalSource & SignalSource.Sat) != 0)
+        {
+          var idx = list.VisibleColumnFieldNames.IndexOf("FreqInMhz");
+          list.VisibleColumnFieldNames.Insert(idx+1, "Polarity");
+        }
       }
     }
     #endregion
@@ -500,7 +505,7 @@ namespace ChanSort.Loader.Samsung
       int count = data.Length / entrySize;
       for (int slotIndex = 0; slotIndex < count; slotIndex++)
       {
-        DigitalChannel ci = new DigitalChannel(slotIndex, source, rawChannel, frequency, c.SortedFavorites, this.serviceProviderNames);
+        DigitalChannel ci = new DigitalChannel(slotIndex, source, rawChannel, this.DataRoot, frequency, c.SortedFavorites, this.serviceProviderNames);
         if (ci.InUse)
           this.DataRoot.AddChannel(list, ci);
 
@@ -571,6 +576,7 @@ namespace ChanSort.Loader.Samsung
         Transponder transponder = new Transponder(transponderNr);
         transponder.FrequencyInMhz = (uint)(mapping.GetDword("offFrequency")/1000);
         transponder.SymbolRate = (int) (mapping.GetDword("offSymbolRate")/1000);
+        transponder.Polarity = mapping.GetByte("offPolarity") == 0 ? 'H' : 'V';
         this.DataRoot.AddTransponder(sat, transponder);
       }
     }

@@ -147,11 +147,12 @@
       this.mnuOptions = new DevExpress.XtraBars.BarSubItem();
       this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
       this.miEnglish = new DevExpress.XtraBars.BarButtonItem();
-      this.miGerman = new DevExpress.XtraBars.BarButtonItem();
-      this.miPortuguese = new DevExpress.XtraBars.BarButtonItem();
-      this.miRussian = new DevExpress.XtraBars.BarButtonItem();
       this.miCzech = new DevExpress.XtraBars.BarButtonItem();
+      this.miGerman = new DevExpress.XtraBars.BarButtonItem();
+      this.miSpanish = new DevExpress.XtraBars.BarButtonItem();
+      this.miPortuguese = new DevExpress.XtraBars.BarButtonItem();
       this.miRomanian = new DevExpress.XtraBars.BarButtonItem();
+      this.miRussian = new DevExpress.XtraBars.BarButtonItem();
       this.mnuCharset = new DevExpress.XtraBars.BarSubItem();
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miUtf8Charset = new DevExpress.XtraBars.BarButtonItem();
@@ -205,7 +206,6 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
-      this.miSpanish = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -622,6 +622,7 @@
             this.colServiceType,
             this.colServiceTypeName,
             this.colFreqInMhz,
+            this.colPolarity,
             this.colChannelOrTransponder,
             this.colSatellite,
             this.colNetworkId,
@@ -631,7 +632,6 @@
             this.colVideoPid,
             this.colAudioPid,
             this.colSymbolRate,
-            this.colPolarity,
             this.colNetworkName,
             this.colNetworkOperator,
             this.colProvider,
@@ -1482,6 +1482,16 @@
       this.miEnglish.Tag = "en";
       this.miEnglish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
+      // miCzech
+      // 
+      this.miCzech.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miCzech, "miCzech");
+      this.miCzech.Id = 95;
+      this.miCzech.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCzech.ImageOptions.ImageIndex")));
+      this.miCzech.Name = "miCzech";
+      this.miCzech.Tag = "cs-CZ";
+      this.miCzech.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
       // miGerman
       // 
       this.miGerman.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
@@ -1493,6 +1503,16 @@
       this.miGerman.Tag = "de-DE";
       this.miGerman.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
+      // miSpanish
+      // 
+      this.miSpanish.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miSpanish, "miSpanish");
+      this.miSpanish.Id = 101;
+      this.miSpanish.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSpanish.ImageOptions.ImageIndex")));
+      this.miSpanish.Name = "miSpanish";
+      this.miSpanish.Tag = "es-ES";
+      this.miSpanish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
       // miPortuguese
       // 
       this.miPortuguese.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
@@ -1503,26 +1523,6 @@
       this.miPortuguese.Tag = "pt-PT";
       this.miPortuguese.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
-      // miRussian
-      // 
-      this.miRussian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
-      resources.ApplyResources(this.miRussian, "miRussian");
-      this.miRussian.Id = 93;
-      this.miRussian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRussian.ImageOptions.ImageIndex")));
-      this.miRussian.Name = "miRussian";
-      this.miRussian.Tag = "ru-RU";
-      this.miRussian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
-      // 
-      // miCzech
-      // 
-      this.miCzech.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
-      resources.ApplyResources(this.miCzech, "miCzech");
-      this.miCzech.Id = 95;
-      this.miCzech.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCzech.ImageOptions.ImageIndex")));
-      this.miCzech.Name = "miCzech";
-      this.miCzech.Tag = "cs-CZ";
-      this.miCzech.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
-      // 
       // miRomanian
       // 
       this.miRomanian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
@@ -1532,6 +1532,16 @@
       this.miRomanian.Name = "miRomanian";
       this.miRomanian.Tag = "ro-RO";
       this.miRomanian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
+      // miRussian
+      // 
+      this.miRussian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miRussian, "miRussian");
+      this.miRussian.Id = 93;
+      this.miRussian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRussian.ImageOptions.ImageIndex")));
+      this.miRussian.Name = "miRussian";
+      this.miRussian.Tag = "ru-RU";
+      this.miRussian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // mnuCharset
       // 
@@ -2004,16 +2014,6 @@
       this.popupFavList.MenuCaption = "Select program or favorite list";
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
-      // 
-      // miSpanish
-      // 
-      this.miSpanish.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
-      resources.ApplyResources(this.miSpanish, "miSpanish");
-      this.miSpanish.Id = 101;
-      this.miSpanish.ImageOptions.ImageIndex = ((int)(resources.GetObject("barButtonItem1.ImageOptions.ImageIndex")));
-      this.miSpanish.Name = "miSpanish";
-      this.miSpanish.Tag = "es-ES";
-      this.miSpanish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // MainForm
       // 

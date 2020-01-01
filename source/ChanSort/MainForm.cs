@@ -103,7 +103,7 @@ namespace ChanSort.Ui
       View.View.Default.CreateActionBox = msg => new ActionBoxDialog(msg);
 
       var defaultColumns = new List<string>();
-      foreach (GridColumn col in this.gviewRight.Columns)
+      foreach (GridColumn col in this.gviewRight.Columns.OrderBy(c => c.VisibleIndex))
       {
         if (col.Visible)
           defaultColumns.Add(col.FieldName);
@@ -1512,7 +1512,7 @@ namespace ChanSort.Ui
       if (col == this.colDebug) return col.Visible;
       if (col == this.colSignalSource) return col.Visible;
       if (col == this.colLogicalIndex) return col.Visible;
-      if (col == this.colPolarity) return false;
+      if (col == this.colPolarity) return (source & SignalSource.Sat) != 0;
 
       return true;
     }

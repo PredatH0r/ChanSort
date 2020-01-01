@@ -114,13 +114,20 @@ namespace ChanSort.Api
           continue;
 
         // make sure that deleted channels have OldProgramNr = -1
+        bool hasPolarity = false;
         foreach (var chan in list.Channels)
         {
           if (chan.IsDeleted)
             chan.OldProgramNr = -1;
-          else if (chan.OldProgramNr < 0) // old versions of ChanSort saved -1 and without setting IsDeleted
-            chan.IsDeleted = true;
+          else
+          {
+            if (chan.OldProgramNr < 0) // old versions of ChanSort saved -1 and without setting IsDeleted
+              chan.IsDeleted = true;
+            hasPolarity |= chan.Polarity == 'H' || chan.Polarity == 'V';
+          }
         }
+        if (!hasPolarity)
+          list.VisibleColumnFieldNames.Remove("Polarity");
       }
     }
     #endregion

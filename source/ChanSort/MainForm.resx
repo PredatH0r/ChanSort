@@ -270,7 +270,7 @@
     <value>Numeric</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>499, 380</value>
+    <value>499, 374</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -291,7 +291,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 434</value>
+    <value>2, 428</value>
   </data>
   <data name="lblHotkeyLeft.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -330,7 +330,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1430, 563</value>
+    <value>1416, 557</value>
   </data>
   <data name="tabSubList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
@@ -339,7 +339,7 @@
     <value>0, 5</value>
   </data>
   <data name="pageProgNr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1419, 0</value>
+    <value>1405, 0</value>
   </data>
   <data name="pageProgNr.Text" xml:space="preserve">
     <value>Pr#</value>
@@ -357,7 +357,7 @@
     <value>0</value>
   </data>
   <data name="tabSubList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1425, 22</value>
+    <value>1411, 22</value>
   </data>
   <data name="tabSubList.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -381,7 +381,7 @@
     <value>0, 83</value>
   </data>
   <data name="grpSubList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1430, 27</value>
+    <value>1416, 27</value>
   </data>
   <data name="grpSubList.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -608,7 +608,7 @@
   <data name="miSpanish.Caption" xml:space="preserve">
     <value>Español</value>
   </data>
-  <data name="barButtonItem1.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+  <data name="miSpanish.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>44</value>
   </data>
   <data name="miPortuguese.Caption" xml:space="preserve">
@@ -795,7 +795,7 @@
     <value>0, 0</value>
   </data>
   <data name="barDockControlTop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1430, 26</value>
+    <value>1416, 26</value>
   </data>
   <data name="&gt;&gt;barDockControlTop.Name" xml:space="preserve">
     <value>barDockControlTop</value>
@@ -813,10 +813,10 @@
     <value>Bottom</value>
   </data>
   <data name="barDockControlBottom.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 563</value>
+    <value>0, 557</value>
   </data>
   <data name="barDockControlBottom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1430, 0</value>
+    <value>1416, 0</value>
   </data>
   <data name="&gt;&gt;barDockControlBottom.Name" xml:space="preserve">
     <value>barDockControlBottom</value>
@@ -837,7 +837,7 @@
     <value>0, 26</value>
   </data>
   <data name="barDockControlLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 537</value>
+    <value>0, 531</value>
   </data>
   <data name="&gt;&gt;barDockControlLeft.Name" xml:space="preserve">
     <value>barDockControlLeft</value>
@@ -855,10 +855,10 @@
     <value>Right</value>
   </data>
   <data name="barDockControlRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1430, 26</value>
+    <value>1416, 26</value>
   </data>
   <data name="barDockControlRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 537</value>
+    <value>0, 531</value>
   </data>
   <data name="&gt;&gt;barDockControlRight.Name" xml:space="preserve">
     <value>barDockControlRight</value>
@@ -1018,7 +1018,7 @@
     <value>Top, Right</value>
   </data>
   <data name="picDonate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1252, 4</value>
+    <value>1238, 4</value>
   </data>
   <data name="picDonate.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 54</value>
@@ -1045,7 +1045,7 @@
     <value>0, 33</value>
   </data>
   <data name="pageEmpty.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1240, 0</value>
+    <value>1226, 0</value>
   </data>
   <data name="pageEmpty.Text" xml:space="preserve">
     <value>No channel lists</value>
@@ -1063,7 +1063,7 @@
     <value>0</value>
   </data>
   <data name="tabChannelList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1246, 22</value>
+    <value>1232, 22</value>
   </data>
   <data name="tabChannelList.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1147,7 +1147,7 @@
     <value>0, 26</value>
   </data>
   <data name="grpTopPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1430, 57</value>
+    <value>1416, 57</value>
   </data>
   <data name="grpTopPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1264,7 +1264,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7302.28048, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7305.24811, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1704,10 +1704,22 @@
   <data name="&gt;&gt;miEnglish.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miCzech.Name" xml:space="preserve">
+    <value>miCzech</value>
+  </data>
+  <data name="&gt;&gt;miCzech.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;miGerman.Name" xml:space="preserve">
     <value>miGerman</value>
   </data>
   <data name="&gt;&gt;miGerman.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miSpanish.Name" xml:space="preserve">
+    <value>miSpanish</value>
+  </data>
+  <data name="&gt;&gt;miSpanish.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;miPortuguese.Name" xml:space="preserve">
@@ -1716,22 +1728,16 @@
   <data name="&gt;&gt;miPortuguese.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miRussian.Name" xml:space="preserve">
-    <value>miRussian</value>
-  </data>
-  <data name="&gt;&gt;miRussian.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miCzech.Name" xml:space="preserve">
-    <value>miCzech</value>
-  </data>
-  <data name="&gt;&gt;miCzech.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;miRomanian.Name" xml:space="preserve">
     <value>miRomanian</value>
   </data>
   <data name="&gt;&gt;miRomanian.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miRussian.Name" xml:space="preserve">
+    <value>miRussian</value>
+  </data>
+  <data name="&gt;&gt;miRussian.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;mnuCharset.Name" xml:space="preserve">
@@ -1944,12 +1950,6 @@
   <data name="&gt;&gt;popupFavList.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.PopupMenu, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miSpanish.Name" xml:space="preserve">
-    <value>miSpanish</value>
-  </data>
-  <data name="&gt;&gt;miSpanish.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
@@ -1957,7 +1957,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>12/29/2019 16:30:12</value>
+    <value>01/01/2020 13:48:29</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -2392,7 +2392,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>503, 453</value>
+    <value>503, 447</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2604,6 +2604,18 @@
   <data name="colFreqInMhz.Width" type="System.Int32, mscorlib">
     <value>57</value>
   </data>
+  <data name="colPolarity.Caption" xml:space="preserve">
+    <value>Polarity</value>
+  </data>
+  <data name="colPolarity.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="colPolarity.VisibleIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="colPolarity.Width" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
   <data name="colChannelOrTransponder.Caption" xml:space="preserve">
     <value>Chan/ Transp</value>
   </data>
@@ -2614,7 +2626,7 @@
     <value>True</value>
   </data>
   <data name="colChannelOrTransponder.VisibleIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="colChannelOrTransponder.Width" type="System.Int32, mscorlib">
     <value>45</value>
@@ -2626,7 +2638,7 @@
     <value>True</value>
   </data>
   <data name="colSatellite.VisibleIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="colSatellite.Width" type="System.Int32, mscorlib">
     <value>100</value>
@@ -2638,7 +2650,7 @@
     <value>True</value>
   </data>
   <data name="colNetworkId.VisibleIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="colNetworkId.Width" type="System.Int32, mscorlib">
     <value>45</value>
@@ -2653,7 +2665,7 @@
     <value>True</value>
   </data>
   <data name="colTransportStreamId.VisibleIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="colTransportStreamId.Width" type="System.Int32, mscorlib">
     <value>40</value>
@@ -2665,7 +2677,7 @@
     <value>True</value>
   </data>
   <data name="colServiceId.VisibleIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="colServiceId.Width" type="System.Int32, mscorlib">
     <value>45</value>
@@ -2680,7 +2692,7 @@
     <value>True</value>
   </data>
   <data name="colPcrPid.VisibleIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="colPcrPid.Width" type="System.Int32, mscorlib">
     <value>40</value>
@@ -2692,7 +2704,7 @@
     <value>True</value>
   </data>
   <data name="colVideoPid.VisibleIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="colVideoPid.Width" type="System.Int32, mscorlib">
     <value>40</value>
@@ -2704,7 +2716,7 @@
     <value>True</value>
   </data>
   <data name="colAudioPid.VisibleIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>19</value>
   </data>
   <data name="colAudioPid.Width" type="System.Int32, mscorlib">
     <value>40</value>
@@ -2716,15 +2728,9 @@
     <value>True</value>
   </data>
   <data name="colSymbolRate.VisibleIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="colSymbolRate.Width" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
-  <data name="colPolarity.Caption" xml:space="preserve">
-    <value>Polarity</value>
-  </data>
-  <data name="colPolarity.Width" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
   <data name="colNetworkName.Caption" xml:space="preserve">
@@ -2734,7 +2740,7 @@
     <value>True</value>
   </data>
   <data name="colNetworkName.VisibleIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>21</value>
   </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
     <value>Network Operator</value>
@@ -2743,7 +2749,7 @@
     <value>True</value>
   </data>
   <data name="colNetworkOperator.VisibleIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+    <value>22</value>
   </data>
   <data name="colProvider.Caption" xml:space="preserve">
     <value>Provider</value>
@@ -2752,7 +2758,7 @@
     <value>True</value>
   </data>
   <data name="colProvider.VisibleIndex" type="System.Int32, mscorlib">
-    <value>22</value>
+    <value>23</value>
   </data>
   <data name="colUid.Caption" xml:space="preserve">
     <value>Uid</value>
@@ -2767,7 +2773,7 @@
     <value>Signal source</value>
   </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>917, 380</value>
+    <value>903, 374</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2788,7 +2794,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 434</value>
+    <value>2, 428</value>
   </data>
   <data name="lblHotkeyRight.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2980,7 +2986,7 @@
     <value>2, 21</value>
   </data>
   <data name="panelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>917, 33</value>
+    <value>903, 33</value>
   </data>
   <data name="panelControl3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -3004,7 +3010,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>921, 453</value>
+    <value>907, 447</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -3028,7 +3034,7 @@
     <value>Panel2</value>
   </data>
   <data name="splitContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1430, 453</value>
+    <value>1416, 447</value>
   </data>
   <data name="splitContainerControl1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>

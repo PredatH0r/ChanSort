@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2020-01-01
+- fixed loading of Samsung .scm files (Samsung.ini file was missing in the release package)
+- added "polarity" information for Samsung .scm and .zip files
+
 2019-12-31
 - fixed error when opening reference list dialog
 

@@ -35,6 +35,7 @@ namespace ChanSort.Loader.SamsungJ
       {
         this.Transponder = tp;
         this.SymbolRate = tp.SymbolRate;
+        this.Polarity = tp.Polarity;
       }
 
       if ((this.SignalSource & SignalSource.Digital) != 0)
