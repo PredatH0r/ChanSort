@@ -1512,7 +1512,7 @@ namespace ChanSort.Ui
       if (col == this.colDebug) return col.Visible;
       if (col == this.colSignalSource) return col.Visible;
       if (col == this.colLogicalIndex) return col.Visible;
-      if (col == this.colPolarity) return (source & SignalSource.Sat) != 0;
+      if (col == this.colPolarity) return (source & SignalSource.Sat) != 0 || (source & SignalSource.IP) != 0;
 
       return true;
     }
@@ -1618,7 +1618,7 @@ namespace ChanSort.Ui
       this.btnToggleFavF.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.F) != 0 && this.subListIndex != 6;
       this.btnToggleFavG.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.G) != 0 && this.subListIndex != 7;
       this.btnToggleFavH.Enabled = mayEdit && (this.DataRoot.SupportedFavorites & Favorites.H) != 0 && this.subListIndex != 8;
-      this.btnToggleLock.Enabled = mayEdit;
+      this.btnToggleLock.Enabled = mayEdit && this.DataRoot.CanLock;
 
       if (afterFileLoad)
       {

@@ -270,7 +270,7 @@
     <value>Numeric</value>
   </data>
   <data name="gridLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>499, 374</value>
+    <value>499, 368</value>
   </data>
   <data name="gridLeft.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -291,7 +291,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyLeft.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 428</value>
+    <value>2, 422</value>
   </data>
   <data name="lblHotkeyLeft.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -330,7 +330,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1416, 557</value>
+    <value>1402, 551</value>
   </data>
   <data name="tabSubList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
@@ -339,7 +339,7 @@
     <value>0, 5</value>
   </data>
   <data name="pageProgNr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1405, 0</value>
+    <value>1391, 0</value>
   </data>
   <data name="pageProgNr.Text" xml:space="preserve">
     <value>Pr#</value>
@@ -357,7 +357,7 @@
     <value>0</value>
   </data>
   <data name="tabSubList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1411, 22</value>
+    <value>1397, 22</value>
   </data>
   <data name="tabSubList.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -381,7 +381,7 @@
     <value>0, 83</value>
   </data>
   <data name="grpSubList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1416, 27</value>
+    <value>1402, 27</value>
   </data>
   <data name="grpSubList.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -795,7 +795,7 @@
     <value>0, 0</value>
   </data>
   <data name="barDockControlTop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1416, 26</value>
+    <value>1402, 26</value>
   </data>
   <data name="&gt;&gt;barDockControlTop.Name" xml:space="preserve">
     <value>barDockControlTop</value>
@@ -813,10 +813,10 @@
     <value>Bottom</value>
   </data>
   <data name="barDockControlBottom.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 557</value>
+    <value>0, 551</value>
   </data>
   <data name="barDockControlBottom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1416, 0</value>
+    <value>1402, 0</value>
   </data>
   <data name="&gt;&gt;barDockControlBottom.Name" xml:space="preserve">
     <value>barDockControlBottom</value>
@@ -837,7 +837,7 @@
     <value>0, 26</value>
   </data>
   <data name="barDockControlLeft.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 531</value>
+    <value>0, 525</value>
   </data>
   <data name="&gt;&gt;barDockControlLeft.Name" xml:space="preserve">
     <value>barDockControlLeft</value>
@@ -855,10 +855,10 @@
     <value>Right</value>
   </data>
   <data name="barDockControlRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1416, 26</value>
+    <value>1402, 26</value>
   </data>
   <data name="barDockControlRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 531</value>
+    <value>0, 525</value>
   </data>
   <data name="&gt;&gt;barDockControlRight.Name" xml:space="preserve">
     <value>barDockControlRight</value>
@@ -1018,7 +1018,7 @@
     <value>Top, Right</value>
   </data>
   <data name="picDonate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1238, 4</value>
+    <value>1224, 4</value>
   </data>
   <data name="picDonate.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 54</value>
@@ -1045,7 +1045,7 @@
     <value>0, 33</value>
   </data>
   <data name="pageEmpty.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 0</value>
+    <value>1212, 0</value>
   </data>
   <data name="pageEmpty.Text" xml:space="preserve">
     <value>No channel lists</value>
@@ -1063,7 +1063,7 @@
     <value>0</value>
   </data>
   <data name="tabChannelList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 22</value>
+    <value>1218, 22</value>
   </data>
   <data name="tabChannelList.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1147,7 +1147,7 @@
     <value>0, 26</value>
   </data>
   <data name="grpTopPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1416, 57</value>
+    <value>1402, 57</value>
   </data>
   <data name="grpTopPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1264,7 +1264,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7305.24811, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7305.33710, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1374,6 +1374,12 @@
   <data name="&gt;&gt;colFreqInMhz.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;colPolarity.Name" xml:space="preserve">
+    <value>colPolarity</value>
+  </data>
+  <data name="&gt;&gt;colPolarity.Type" xml:space="preserve">
+    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;colChannelOrTransponder.Name" xml:space="preserve">
     <value>colChannelOrTransponder</value>
   </data>
@@ -1426,12 +1432,6 @@
     <value>colSymbolRate</value>
   </data>
   <data name="&gt;&gt;colSymbolRate.Type" xml:space="preserve">
-    <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;colPolarity.Name" xml:space="preserve">
-    <value>colPolarity</value>
-  </data>
-  <data name="&gt;&gt;colPolarity.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;colNetworkName.Name" xml:space="preserve">
@@ -1957,7 +1957,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>01/01/2020 13:48:29</value>
+    <value>01/01/2020 18:44:40</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -2392,7 +2392,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpOutputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>503, 447</value>
+    <value>503, 441</value>
   </data>
   <data name="grpOutputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2773,7 +2773,7 @@
     <value>Signal source</value>
   </data>
   <data name="gridRight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>903, 374</value>
+    <value>889, 368</value>
   </data>
   <data name="gridRight.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2794,7 +2794,7 @@
     <value>Bottom</value>
   </data>
   <data name="lblHotkeyRight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 428</value>
+    <value>2, 422</value>
   </data>
   <data name="lblHotkeyRight.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2986,7 +2986,7 @@
     <value>2, 21</value>
   </data>
   <data name="panelControl3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>903, 33</value>
+    <value>889, 33</value>
   </data>
   <data name="panelControl3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -3010,7 +3010,7 @@
     <value>0, 0</value>
   </data>
   <data name="grpInputList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>907, 447</value>
+    <value>893, 441</value>
   </data>
   <data name="grpInputList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -3034,7 +3034,7 @@
     <value>Panel2</value>
   </data>
   <data name="splitContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1416, 447</value>
+    <value>1402, 441</value>
   </data>
   <data name="splitContainerControl1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>

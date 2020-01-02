@@ -404,6 +404,10 @@
       <Project>{e972d8a1-2f5f-421c-ac91-cff45e5191be}</Project>
       <Name>ChanSort.Loader.LG</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj">
+      <Project>{484028b6-3aae-4f7e-a88a-76beeb70203b}</Project>
+      <Name>ChanSort.Loader.M3u</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj">
       <Project>{68da8072-3a29-4076-9f64-d66f38349585}</Project>
       <Name>ChanSort.Loader.Panasonic</Name>

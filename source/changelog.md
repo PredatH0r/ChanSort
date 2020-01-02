@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2020-01-02
+- added support for m3u lists (SAT>IP, VLC, WinAmp, ...)
+- disabled "Lock" toggle button when the list does not support parental locks
+
 2020-01-01
 - fixed loading of Samsung .scm files (Samsung.ini file was missing in the release package)
 - added "polarity" information for Samsung .scm and .zip files

@@ -74,6 +74,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Toshiba", "Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.VDR", "Test.Loader.VDR\Test.Loader.VDR.csproj", "{AED060F0-495C-494C-89C2-7A96A0FA3762}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.M3u", "ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj", "{484028B6-3AAE-4F7E-A88A-76BEEB70203B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -408,6 +410,18 @@ Global
 		{AED060F0-495C-494C-89C2-7A96A0FA3762}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AED060F0-495C-494C-89C2-7A96A0FA3762}.Release|x86.ActiveCfg = Release|x86
 		{AED060F0-495C-494C-89C2-7A96A0FA3762}.Release|x86.Build.0 = Release|x86
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Debug|x86.ActiveCfg = Debug|x86
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Debug|x86.Build.0 = Debug|x86
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Release|x86.ActiveCfg = Release|x86
+		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
