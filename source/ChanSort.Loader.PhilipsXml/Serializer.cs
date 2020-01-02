@@ -145,6 +145,8 @@ namespace ChanSort.Loader.PhilipsXml
 
     private void LoadFile(string fileName)
     {
+      if (!File.Exists(fileName))
+        return;
       bool fail = false;
       var fileData = new FileData();
       try
@@ -282,7 +284,7 @@ namespace ChanSort.Loader.PhilipsXml
           data.Add(attr.LocalName, attr.Value);
       }
 
-      if (!int.TryParse(data["UniqueID"], out var uniqueId)) // UniqueId only exists in ChannelMap_105 and later
+      if (!data.ContainsKey("UniqueID") || !int.TryParse(data["UniqueID"], out var uniqueId)) // UniqueId only exists in ChannelMap_105 and later
         uniqueId = rowId;
       var chan = new Channel(curList.SignalSource & SignalSource.MaskAdInput, rowId, uniqueId, setupNode);
       chan.OldProgramNr = -1;
