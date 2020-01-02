@@ -1,14 +1,15 @@
-﻿using ChanSort.Api;
+﻿using System.Collections.Generic;
+using ChanSort.Api;
 
 namespace ChanSort.Loader.M3u
 {
    internal class Channel : ChannelInfo
    {
-     public string Uri { get; }
+     public List<string> Lines { get; }
 
-     public Channel(int index, int progNr, string name, string uri) : base(SignalSource.IP, index, progNr, name)
+     public Channel(int index, int progNr, string name, List<string> lines) : base(SignalSource.IP, index, progNr, name)
      {
-       this.Uri = uri;
+       this.Lines = lines;
      }
    }
 }

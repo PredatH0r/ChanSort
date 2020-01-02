@@ -3,6 +3,9 @@ ChanSort Change Log
 
 2020-01-02
 - added support for m3u lists (SAT>IP, VLC, WinAmp, ...)
+- added support for Hisense H50B7700UW (and maybe others which use the same favorite list table schema)
+- fixed missing DLLs with spanish translation
+- fixed polarity display for Samsung (caused by a stale .ini file in the package)
 - disabled "Lock" toggle button when the list does not support parental locks
 
 2020-01-01
