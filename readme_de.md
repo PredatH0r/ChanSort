@@ -100,7 +100,8 @@ Die Marken nutzen .sdx Dateien (derzeit wird nur Satellitenempfang unterstützt)
 Unterstützung des channels.conf Dateiformats.  
 Die Implementation hierfür wurde vom Mitglied "TCr82" des VDR Projekts beigesteuert.
 
-**m3u (SAT>IP)**
+**m3u (SAT>IP)**  
+Unterstützt SAT>IP .m3u Dateien mit erweiterten Informationen zu Sendernamen und Programmnummern.
 
 Lizenz (GPLv3)
 ---------------

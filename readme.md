@@ -103,7 +103,7 @@ These brands use .sdx files (currently only satellite lists are supported)
 Supports the channels.conf file format.  
 Implementation for this was provided by TCr82 from the VDR project.
 
-**m3u (SAT>IP)**
+**m3u (SAT>IP)**  
 Supports SAT>IP .m3u files with extended information holding channel names and program numbers.
 
 License (GPLv3)
