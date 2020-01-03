@@ -80,7 +80,7 @@ Viera-Modelle mit svl.bin oder svl.db Dateien (die meisten Modelle seit 2011)
 **Sony**  
 Android-TV "sdb.xml" Dateien mit Versionen "FormateVer" 1.1.0 und KDL 2012/2014 mit "FormatVer" 1.0.0, 1.1.0 and 1.2.0
 
-**Philips**
+**Philips**  
 Philips verwendet unzählige unterschiedliche Dateiformate für diverse TV-Modelle.
 ChanSort unterstützt derzeit 2 Varianten von .xml-Dateien. Andere Formate werden nicht unterstützt.
 
