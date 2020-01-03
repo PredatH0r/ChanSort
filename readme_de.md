@@ -11,8 +11,8 @@ Links
 --------------
 ChanSort ist eine Windows-Anwendung, die das Sortieren von Fernsehsenderlisten erlaubt.  
 Die meisten modernen Fernseher können Senderlisten auf einen USB-Stick übertragen, den man danach am PC anschließt.
-ChanSort unterstützt diverse Dateiformate von **Philips** (neu), **Sony** (new), **ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken** (new), 
-Hisense, Samsung, LG, Panasonic, Toshiba und dem Linux VDR Projekt.
+ChanSort unterstützt diverse Dateiformate von Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba,
+Medion/Nabo/ok./PEAQ/Schaub-Lorenz/Silva-Schneider/Telefunken, Linux VDR und SAT>IP .m3u.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-de.png)
 
@@ -24,7 +24,7 @@ Funktionen
 - Nebeneinander-Ansicht von umsortierter und ursprünglicher Liste (ähnlich wie Playlist und Medienbibliothek)
 - Umbenennen und Löschen von Sendern
 - Verwalten von Favoriten, Kindersperre, Überspringen und Verstecken von Sendern
-- Benutzeroberfläche in Deutsch, Englisch und teilweise in Türkisch und Portugiesisch
+- Benutzeroberfläche in Deutsch, Englisch, Spanisch und teilweise in Türkisch, Portugiesisch und Russisch
 - Unicode-Zeichensatzunterstützung für Sendernamen (latein, kyrillisch, griechisch, ...)
 
 Manche Funktionen sind nicht bei allen TV-Modellen und Empfangsarten verfügbar (analog, digital, Sat, Kabel, ...)
@@ -39,8 +39,7 @@ Hisense ist der einzige Hersteller, der Informationen und ein Testgerät bereitst
 
 Systemvoraussetzungen
 -------------------
-- [Microsoft .NET Framework 4.0 (Full)](http://www.microsoft.com/en-us/download/details.aspx?id=17851): 
-  In Win8 enthalten, Nachinstallation bei Win7, Vista and XP SP3 erforderlich
+- [Microsoft .NET Framework 4.6 (oder neuer)](https://dotnet.microsoft.com/download/dotnet-framework)
 - [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328):
   Wird benötigt um SQLite-Senderlisten zu bearbeiten (Hisense, Panasonic, Toshiba und Samsung J-Serie)
 - USB Stick/SD-Karte zur Übertragung der Senderliste zwischen TV und PC (FAT32-Formatierung empfohlen)
@@ -48,10 +47,6 @@ Systemvoraussetzungen
 
 Unterstützte TV-Modelle 
 ---------------------
-
-**Hisense**  
-Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500  
-Besonderen Dank an Hisense für die Bereitstellung von technischen Informationen und einem Testgerät!
 
 **Samsung**  
 .scm Dateien: Serien B (2009)*, B (2013), C, D, E, F, H, J  
@@ -85,20 +80,27 @@ Viera-Modelle mit svl.bin oder svl.db Dateien (die meisten Modelle seit 2011)
 **Sony**  
 Android-TV "sdb.xml" Dateien mit Versionen "FormateVer" 1.1.0 und KDL 2012/2014 mit "FormatVer" 1.0.0, 1.1.0 and 1.2.0
 
-**ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken**  
-Die Marken nutzen .sdx Dateien (derzeit wird nur Satellitenempfang unterstützt)
+**Philips**
+Philips verwendet unzählige unterschiedliche Dateiformate für diverse TV-Modelle.
+ChanSort unterstützt derzeit 2 Varianten von .xml-Dateien. Andere Formate werden nicht unterstützt.
+
+**Hisense**  
+Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500  
+2017 Modelle mit einem servicelist.db Dateiformat  
+Besonderen Dank an Hisense für die Bereitstellung von technischen Informationen und einem Testgerät!
 
 **Toshiba**  
 Modelle, die eine .zip-Datei mit folgendem Inhalt: chmgt.db, dvbSysData.db und dvbMainData.db.  
 (z.B. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
 
-**Philips**
-Philips verwendet unzählige unterschiedliche Dateiformate für diverse TV-Modelle.
-ChanSort unterstützt derzeit 2 Varianten von .xml-Dateien. Andere Formate werden nicht unterstützt.
+**ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken**  
+Die Marken nutzen .sdx Dateien (derzeit wird nur Satellitenempfang unterstützt)
 
 **VDR (Linux Video Disk Recorder)**  
 Unterstützung des channels.conf Dateiformats.  
 Die Implementation hierfür wurde vom Mitglied "TCr82" des VDR Projekts beigesteuert.
+
+**m3u (SAT>IP)**
 
 Lizenz (GPLv3)
 ---------------

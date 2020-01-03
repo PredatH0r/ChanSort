@@ -15,13 +15,12 @@ namespace ChanSort.Loader.M3u
    */
   class Serializer : SerializerBase
   {
-    private static readonly Regex ExtInfRegex = new Regex(@"^#EXTINF:\d+,(?:(\d+)\. )?(.*)$");
-
+    private static readonly Regex ExtInfTrackName = new Regex(@"^(?:(\d+). )?(.*)$");
     private readonly ChannelList allChannels = new ChannelList(SignalSource.IP, "All");
 
     private Encoding overrideEncoding;
     private string newLine = "\r\n";
-    private string headerLine;
+    private List<string> headerLines = new List<string>();
     private List<string> trailingLines = new List<string>(); // comment and blank lines after the last URI line
 
     #region ctor()
@@ -40,7 +39,7 @@ namespace ChanSort.Loader.M3u
       base.DefaultEncoding = new UTF8Encoding(false);
       this.allChannels.VisibleColumnFieldNames = new List<string>()
       {
-        "OldPosition", "Position", "Name", "FreqInMhz", "Polarity", "SymbolRate", "VideoPid", "AudioPid", "Satellite"
+        "OldPosition", "Position", "Name", "FreqInMhz", "Polarity", "SymbolRate", "VideoPid", "AudioPid", "Satellite", "Provider"
       };
     }
     #endregion
@@ -60,17 +59,44 @@ namespace ChanSort.Loader.M3u
       this.newLine = idx >= 1 && content[idx] - 1 == '\r' ? "\r\n" : "\n";
 
       var rdr = new StreamReader(new MemoryStream(content), overrideEncoding ?? this.DefaultEncoding);
-      this.headerLine = rdr.ReadLine()?.TrimEnd();
-      if (this.headerLine == null || this.headerLine != "#EXTM3U")
+      string line = rdr.ReadLine()?.TrimEnd();
+      if (line == null || line != "#EXTM3U")
         throw new FileLoadException("Unsupported .m3u file: " + this.FileName);
+
+      this.headerLines.Add(line);
 
       // read lines until a non-comment non-empty line is found and then create a channel for the block
       int lineNr = 1;
-      string line, extInfLine = null;
+      string extInfLine = null;
+      string extGrp = null;
       var lines = new List<string>();
       while ((line = rdr.ReadLine()) != null)
       {
         ++lineNr;
+
+        // text encoding (non-standard)
+        if (line.StartsWith("#EXTENC:"))
+        {
+          this.headerLines.Add(line);
+          continue;
+        }
+
+        // playlist display title
+        if (line.StartsWith("#PLAYLIST:"))
+        {
+          this.headerLines.Add(line);
+          this.allChannels.ShortCaption = line.Substring(10);
+          continue;
+        }
+
+        // begins a named group
+        if (line.StartsWith("#EXTGRP:"))
+        {
+          extGrp = line.Substring(8);
+          continue;
+        }
+
+        // everything else is assumed to belong to the next resource/URI that will follow
         lines.Add(line);
 
         if (line.Trim() == "") 
@@ -81,7 +107,7 @@ namespace ChanSort.Loader.M3u
 
         if (!line.StartsWith("#"))
         {
-          ReadChannel(lineNr, line, extInfLine, lines);
+          ReadChannel(lineNr, line, extInfLine, extGrp, lines);
           lines = new List<string>();
           extInfLine = null;
         }
@@ -92,19 +118,24 @@ namespace ChanSort.Loader.M3u
     #endregion
 
     #region ReadChannel()
-    private void ReadChannel(int uriLineNr, string uriLine, string extInfLine, List<string> allLines)
+    private void ReadChannel(int uriLineNr, string uriLine, string extInfLine, string group, List<string> allLines)
     {
       int progNr = 0;
       string name = "";
+      int extInfTrackNameIndex = -1;
 
       if (extInfLine != null)
       {
-        var match = ExtInfRegex.Match(extInfLine);
-        if (match.Success)
+        extInfTrackNameIndex = FindExtInfTrackName(extInfLine);
+        if (extInfTrackNameIndex >= 0)
         {
-          if (!string.IsNullOrEmpty(match.Groups[2].Value))
+          name = extInfLine.Substring(extInfTrackNameIndex);
+          var match = ExtInfTrackName.Match(name);
+          if (!string.IsNullOrEmpty(match.Groups[1].Value))
+          {
             progNr = this.ParseInt(match.Groups[1].Value);
-          name = match.Groups[2].Value;
+            name = match.Groups[2].Value;
+          }
         }
       }
 
@@ -112,6 +143,8 @@ namespace ChanSort.Loader.M3u
         progNr = this.allChannels.Count + 1;
 
       var chan = new Channel(uriLineNr, progNr, name, allLines);
+      chan.ExtInfTrackNameIndex = extInfTrackNameIndex;
+      chan.Provider = group;
 
       try
       {
@@ -158,13 +191,36 @@ namespace ChanSort.Loader.M3u
     }
     #endregion
 
+    #region FindExtInfTrackName()
+    /// <summary>
+    /// parse track name from lines that may look like:
+    /// #EXTINF:&lt;length&gt;[ key="value" ...],&lt;TrackName&gt;
+    /// </summary>
+    private int FindExtInfTrackName(string extInfLine)
+    {
+      bool inQuote = false;
+      for (int i = 0, c = extInfLine.Length; i < c; i++)
+      {
+        var ch = extInfLine[i];
+        if (ch == ',' && !inQuote)
+          return i + 1;
+        if (ch == '"')
+          inQuote = !inQuote;
+      }
+
+      return -1;
+    }
+
+    #endregion
+
     #region Save()
     public override void Save(string tvOutputFile)
     {
       using var file = new StreamWriter(new FileStream(tvOutputFile, FileMode.Create), this.overrideEncoding ?? this.DefaultEncoding);
       file.NewLine = this.newLine;
 
-      file.WriteLine(this.headerLine);
+      foreach(var line in this.headerLines)
+        file.WriteLine(line);
 
       foreach (ChannelInfo channel in this.allChannels.GetChannelsByNewOrder())
       {
@@ -174,7 +230,7 @@ namespace ChanSort.Loader.M3u
           foreach (var line in chan.Lines)
           {
             if (line.StartsWith("#EXTINF:"))
-              file.WriteLine($"#EXTINF:0,{chan.NewProgramNr}. {chan.Name}");
+              file.WriteLine($"{line.Substring(0, chan.ExtInfTrackNameIndex)}{chan.NewProgramNr}. {chan.Name}");
             else
               file.WriteLine(line);
           }

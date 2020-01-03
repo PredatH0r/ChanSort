@@ -11,8 +11,8 @@ About ChanSort
 --------------
 ChanSort is a Windows application that allows you to reorder your TV's channel list.  
 Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
-ChanSort supports various file formats from **Philips** (new), **Sony** (new), **ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken** (new), 
-Hisense, Samsung, LG, Panasonic, Toshiba and the Linux VDR project.
+ChanSort supports various file formats from Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, 
+ITT/Medion/Nabo/ok./PEAQ/Schaub-Lorenz/Silva-Schneider/Telefunken, Linux VDR, **SAT>IP .m3u** (new).
 
 ![screenshot](http://beham.biz/chansort/ChanSort-en.png)
 
@@ -24,7 +24,7 @@ Features
 - Side-by-side view of new/sorted list and original/complete list (similar to playlist and library)
 - Rename or delete channels
 - Manage favorites, parental lock, channel skipping (when zapping), channel hiding
-- User interface in English, German and partially in Turkish and Portuguese
+- User interface in English, German, Spanish, and partially in Turkish, Portuguese and Russian
 - Unicode character support for channel names (Latin, Cyrillic, Greek, ...)
 
 Some features may not be available on all TV models and channel types (analog, digital, sat, cable, ...)
@@ -39,8 +39,7 @@ Hisense is the only manufacturer who provided technical information and a test d
 
 System requirements
 -------------------
-- [Microsoft .NET Framework 4.0 (Full)](http://www.microsoft.com/en-us/download/details.aspx?id=17851): 
-  included in Win8, required for Win7, Vista and XP SP3
+- [Microsoft .NET Framework 4.6 or later](https://dotnet.microsoft.com/download/dotnet-framework)
 - [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328):
   required to edit SQLite lists (Hisense, Panasonic, Toshiba and Samsung .zip format)
 - USB stick/SD-card to transfer the channel list between your TV and PC (FAT32 file system recommended)
@@ -48,11 +47,6 @@ System requirements
 
 Supported TV models 
 -------------------
-
-**Hisense**  
-2016 "Smart" models with a channel.db file, i.e. H65M5500  
-2017 models with a servicelist.db file  
-Special thanks to Hisense for supporting ChanSort with technical information and a test device!
 
 **Samsung**  
 .scm files: B (2009)*, B (2013), C, D, E, F, H, J series  
@@ -89,6 +83,15 @@ Viera models with an svl.bin or svl.db channel list (most models since 2011)
 **Sony**  
 Android-TVs "sdb.xml" files using formats "FormateVer" 1.1.0 and KDL 2012/2014 files using "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
 
+**Philips**
+Philips uses countless incompatible file formats for various TV models.
+ChanSort currently supports 2 different versions of .xml files, other formats are not supported.
+
+**Hisense**  
+2016 "Smart" models with a channel.db file, i.e. H65M5500  
+2017 models with a servicelist.db file  
+Special thanks to Hisense for supporting ChanSort with technical information and a test device!
+
 **Toshiba**  
 Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.  
 (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
@@ -96,13 +99,12 @@ Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainDat
 **ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken**  
 These brands use .sdx files (currently only satellite lists are supported)
 
-**Philips**
-Philips uses countless incompatible file formats for various TV models.
-ChanSort currently supports 2 different versions of .xml files, other formats are not supported.
-
 **VDR (Linux Video Disk Recorder)**  
 Supports the channels.conf file format.  
 Implementation for this was provided by TCr82 from the VDR project.
+
+**m3u (SAT>IP)**
+Supports SAT>IP .m3u files with extended information holding channel names and program numbers.
 
 License (GPLv3)
 ---------------

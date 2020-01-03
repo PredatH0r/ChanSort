@@ -30,7 +30,7 @@ namespace ChanSort.Api
       this.VisibleColumnFieldNames = DefaultVisibleColumns.ToList(); // create copy of default list, so it can be modified
     }
 
-    public string ShortCaption { get; }
+    public string ShortCaption { get; set; }
     public SignalSource SignalSource { get; }
     public IList<ChannelInfo> Channels { get; } = new List<ChannelInfo>();
     public int Count => Channels.Count;
