@@ -261,7 +261,7 @@ and can be pasted into Excel or any text editor.</value>
 Do you want the channel numbers to be rearranged consecutively?</value>
   </data>
   <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
-    <value>The content of the file is invalid. It has either size 0 or all its bytes have the the value 0.
+    <value>The content of the file is invalid. It has either size 0 or all its bytes have the same value.
 Typical causes are USB sticks with an NTFS file system (try using FAT32 instead)
 or firmware upgrades without running a new channel scan. 
 (The new software in the TV might be unable to process the old channel data during the export.)</value>

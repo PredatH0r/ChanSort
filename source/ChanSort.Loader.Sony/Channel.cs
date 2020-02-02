@@ -8,11 +8,11 @@ namespace ChanSort.Loader.Sony
     public readonly Dictionary<string,string> ServiceData = new Dictionary<string, string>();
     public readonly Dictionary<string,string> ProgrammeData = new Dictionary<string, string>();
 
-    internal Channel(SignalSource source, int order, int rowId)
+    internal Channel(SignalSource source, int order, int recId)
     {
       this.SignalSource = source;
       this.RecordOrder = order;
-      this.RecordIndex = rowId;
+      this.RecordIndex = recId;
     }
   }
 }

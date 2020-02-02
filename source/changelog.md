@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2020-02-02
+- fixed (hopefully): When channels were deleted from Sony lists, the TV reordered the list randomly after a reboot
+
 2020-01-02
 - added support for m3u lists (SAT>IP, VLC, WinAmp, ...)
 - added support for Hisense H50B7700UW (and maybe others which use the same favorite list table schema)

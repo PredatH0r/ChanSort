@@ -174,7 +174,7 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The content of the file is invalid. It has either size 0 or all its bytes have the the value 0.
+        ///   Looks up a localized string similar to The content of the file is invalid. It has either size 0 or all its bytes have the same value.
         ///Typical causes are USB sticks with an NTFS file system (try using FAT32 instead)
         ///or firmware upgrades without running a new channel scan. 
         ///(The new software in the TV might be unable to process the old channel data during the export.).

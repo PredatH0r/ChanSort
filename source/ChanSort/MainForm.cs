@@ -341,17 +341,18 @@ namespace ChanSort.Ui
         return true;
 
       var content = File.ReadAllBytes(tvDataFile);
-      var isAllZero = true;
+      var isAllSame = true;
+      var val = content.Length > 0 ? content[0] : 0;
       for (int i = 0, c = content.Length; i < c; i++)
       {
-        if (content[i] != 0)
+        if (content[i] != val)
         {
-          isAllZero = false;
+          isAllSame = false;
           break;
         }
       }
 
-      if (isAllZero)
+      if (isAllSame)
       {
         XtraMessageBox.Show(this,
           Resources.MainForm_LoadFiles_AllZero,
