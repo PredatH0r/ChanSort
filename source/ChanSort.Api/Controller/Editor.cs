@@ -384,10 +384,10 @@ namespace ChanSort.Api
         if (sortedFav && !this.DataRoot.AllowGapsInFavNumbers)
         {
           int i = 0;
-          foreach (var channel in favList.Channels)
+          foreach (var channel in favList.Channels.OrderBy(c => c.FavIndex[favIndex]))
           {
-            if (channel.FavIndex[i] != -1)
-              channel.FavIndex[i] = ++i;
+            if (channel.FavIndex[favIndex] != -1)
+              channel.FavIndex[favIndex] = ++i;
           }
         }
       }

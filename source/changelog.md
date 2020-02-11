@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2020-02-11B
+- fixed: removing channels from a favorite list caused incorrect reordering
+
 2020-02-11
 - Philips: show and edit customized titles of favorite lists
 - fixed non-unique numbers in mixed-source favorite lists when using "Add to Fav A" (Panasonic, Hisense, Sony, Philips)
