@@ -349,22 +349,18 @@ namespace ChanSort.Api
 
 
     #region SetFavorites()
-    public void SetFavorites(List<ChannelInfo> list, Favorites favorites, bool set)
+    public void SetFavorites(List<ChannelInfo> list, int favIndex, bool set)
     {
       bool sortedFav = this.DataRoot.SortedFavorites;
-      int favIndex = 0;
-      if (sortedFav)
-      {
-        for (int mask = (int) favorites; (mask & 1) == 0; mask >>= 1)
-          ++favIndex;
-      }
+      var favMask = (Favorites)(1 << favIndex);
+      var favList = this.DataRoot.ChannelLists.FirstOrDefault(l => l.IsMixedSourceFavoritesList) ?? this.ChannelList;
 
       if (set)
       {
         int maxPosition = 0;
         if (sortedFav)
         {
-          foreach (var channel in this.ChannelList.Channels)
+          foreach (var channel in favList.Channels)
             maxPosition = Math.Max(maxPosition, channel.FavIndex[favIndex]);
         }
 
@@ -372,7 +368,7 @@ namespace ChanSort.Api
         {
           if (sortedFav && channel.FavIndex[favIndex] == -1)
             channel.FavIndex[favIndex] = ++maxPosition;
-          channel.Favorites |= favorites;
+          channel.Favorites |= favMask;
         }
       }
       else
@@ -380,11 +376,19 @@ namespace ChanSort.Api
         foreach (var channel in list)
         {
           if (sortedFav && channel.FavIndex[favIndex] != -1)
-          {
             channel.FavIndex[favIndex] = -1;
-            // TODO close gap by pulling down higher numbers
+          channel.Favorites &= ~favMask;
+        }
+
+        // close gaps when needed
+        if (sortedFav && !this.DataRoot.AllowGapsInFavNumbers)
+        {
+          int i = 0;
+          foreach (var channel in favList.Channels)
+          {
+            if (channel.FavIndex[i] != -1)
+              channel.FavIndex[i] = ++i;
           }
-          channel.Favorites &= ~favorites;
         }
       }
     }

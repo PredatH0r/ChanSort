@@ -69,6 +69,7 @@ namespace ChanSort.Loader.PhilipsXml
       this.Features.DeleteMode = DeleteMode.Physically;
       this.Features.CanSaveAs = false;
       this.Features.AllowGapsInFavNumbers = false;
+      this.Features.CanEditFavListNames = true;
 
       this.DataRoot.AddChannelList(this.terrChannels);
       this.DataRoot.AddChannelList(this.cableChannels);
@@ -357,9 +358,12 @@ namespace ChanSort.Loader.PhilipsXml
     private void ReadFavList(XmlNode node)
     {
       int index = ParseInt(node.Attributes["Index"].InnerText);
+      string name = DecodeName(node.Attributes["Name"].InnerText);
       this.Features.SupportedFavorites |= (Favorites) (1 << (index - 1));
       this.Features.SortedFavorites = true;
       this.Features.MixedSourceFavorites = true;
+
+      this.DataRoot.SetFavListCaption(index - 1, name);
 
       if (this.favChannels.Count == 0)
       {
@@ -547,6 +551,9 @@ namespace ChanSort.Loader.PhilipsXml
       {
         ++index;
         favListNode.InnerXml = ""; // clear all <FavoriteChannel> child elements but keep the attributes of the current node
+        var attr = favListNode.Attributes?["Name"];
+        if (attr != null)
+          attr.InnerText = EncodeName(this.DataRoot.GetFavListCaption(index - 1));
         foreach (var ch in favChannels.Channels.OrderBy(ch => ch.GetPosition(index)))
         {
           var nr = ch.GetPosition(index);
@@ -572,6 +579,7 @@ namespace ChanSort.Loader.PhilipsXml
       var sb = new StringBuilder();
       foreach (var b in bytes)
         sb.Append($"0x{b:X2} 0x00 ");
+      sb.Remove(sb.Length - 1, 1);
       return sb.ToString();
     }
     #endregion

@@ -37,7 +37,7 @@ namespace ChanSort.Api
       public bool SortedFavorites { get; set; }
       public bool MixedSourceFavorites { get; set; }
       public bool AllowGapsInFavNumbers { get; set; }
-
+      public bool CanEditFavListNames { get; set; }
     }
     #endregion
 

@@ -26,6 +26,7 @@ namespace ChanSort.Api
     public bool CanSkip => this.loader.Features.CanSkipChannels;
     public bool CanLock => this.loader.Features.CanLockChannels;
     public bool CanHide => this.loader.Features.CanHideChannels;
+    public bool CanEditFavListName => this.loader.Features.CanEditFavListNames;
 
     public DataRoot(SerializerBase loader)
     {
@@ -246,5 +247,24 @@ namespace ChanSort.Api
     }
     #endregion
 
+
+    #region Get/SetFavListCaption()
+
+    private readonly Dictionary<int,string> favListCaptions = new Dictionary<int, string>();
+
+    public void SetFavListCaption(int favIndex, string caption)
+    {
+      favListCaptions[favIndex] = caption;
+    }
+
+    public string GetFavListCaption(int favIndex, bool asTabCaption = false)
+    {
+      var hasCaption = favListCaptions.TryGetValue(favIndex, out var caption);
+      if (!asTabCaption)
+        return caption;
+      var letter = (char)('A' + favIndex);
+      return  hasCaption && !string.IsNullOrEmpty(caption) ? letter + ": " + caption : "Fav " + letter;
+    }
+    #endregion
   }
 }

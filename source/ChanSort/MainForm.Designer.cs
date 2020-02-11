@@ -85,6 +85,7 @@
       this.colServiceType = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colServiceTypeName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colFreqInMhz = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colPolarity = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colChannelOrTransponder = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSatellite = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colNetworkId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -94,7 +95,6 @@
       this.colVideoPid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colAudioPid = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSymbolRate = new DevExpress.XtraGrid.Columns.GridColumn();
-      this.colPolarity = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colNetworkName = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colNetworkOperator = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colProvider = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -342,6 +342,7 @@
       resources.ApplyResources(this.colIndex1, "colIndex1");
       this.colIndex1.FieldName = "RecordIndex";
       this.colIndex1.Name = "colIndex1";
+      this.colIndex1.OptionsColumn.AllowEdit = false;
       // 
       // colOutSlot
       // 
@@ -421,6 +422,7 @@
       resources.ApplyResources(this.colOutSource, "colOutSource");
       this.colOutSource.FieldName = "Source";
       this.colOutSource.Name = "colOutSource";
+      this.colOutSource.OptionsColumn.AllowEdit = false;
       // 
       // colUid1
       // 
@@ -803,6 +805,13 @@
       this.colFreqInMhz.Name = "colFreqInMhz";
       this.colFreqInMhz.OptionsColumn.AllowEdit = false;
       // 
+      // colPolarity
+      // 
+      resources.ApplyResources(this.colPolarity, "colPolarity");
+      this.colPolarity.FieldName = "Polarity";
+      this.colPolarity.Name = "colPolarity";
+      this.colPolarity.OptionsColumn.AllowEdit = false;
+      // 
       // colChannelOrTransponder
       // 
       resources.ApplyResources(this.colChannelOrTransponder, "colChannelOrTransponder");
@@ -864,13 +873,6 @@
       this.colSymbolRate.FieldName = "SymbolRate";
       this.colSymbolRate.Name = "colSymbolRate";
       this.colSymbolRate.OptionsColumn.AllowEdit = false;
-      // 
-      // colPolarity
-      // 
-      resources.ApplyResources(this.colPolarity, "colPolarity");
-      this.colPolarity.FieldName = "Polarity";
-      this.colPolarity.Name = "colPolarity";
-      this.colPolarity.OptionsColumn.AllowEdit = false;
       // 
       // colNetworkName
       // 
@@ -1991,6 +1993,7 @@
       this.tabSubList.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.pageProgNr});
       this.tabSubList.SelectedPageChanged += new DevExpress.XtraTab.TabPageChangedEventHandler(this.tabSubList_SelectedPageChanged);
+      this.tabSubList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tabSubList_MouseUp);
       // 
       // pageProgNr
       // 

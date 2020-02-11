@@ -457,10 +457,10 @@ namespace ChanSort.Ui
       while (this.tabSubList.TabPages.Count > favCount + 1)
         this.tabSubList.TabPages.RemoveAt(this.tabSubList.TabPages.Count - 1);
       while (this.tabSubList.TabPages.Count < favCount + 1)
-      {
-        var page = this.tabSubList.TabPages.Add();
-        page.Text = "Fav " + (char) ('A' + this.tabSubList.TabPages.Count - 2);
-      }
+        this.tabSubList.TabPages.Add();
+      for (int i = 1; i < this.tabSubList.TabPages.Count; i++)
+        this.tabSubList.TabPages[i].Text = this.DataRoot.GetFavListCaption(i - 1, true);
+
       if (!this.DataRoot.SortedFavorites || this.subListIndex >= favCount)
       {
         this.tabSubList.SelectedTabPageIndex = 0;
@@ -1158,7 +1158,7 @@ namespace ChanSort.Ui
 
     private void SortSelectedChannels()
     {
-      var selectedChannels = this.GetSelectedChannels(this.gviewLeft);
+      var selectedChannels = this.GetSelectedChannels(this.gviewLeft, true);
       if (selectedChannels.Count == 0) return;
       this.gviewLeft.BeginDataUpdate();
       this.gviewRight.BeginDataUpdate();
@@ -1204,7 +1204,7 @@ namespace ChanSort.Ui
 
     private void RenumberSelectedChannels()
     {
-      var list = this.GetSelectedChannels(this.gviewLeft);
+      var list = this.GetSelectedChannels(this.gviewLeft, true);
       if (list.Count == 0) return;
       this.gviewRight.BeginDataUpdate();
       this.gviewLeft.BeginDataUpdate();
@@ -1217,14 +1217,23 @@ namespace ChanSort.Ui
 
     #region GetSelectedChannels()
 
-    private List<ChannelInfo> GetSelectedChannels(GridView gview)
+    private List<ChannelInfo> GetSelectedChannels(GridView gview, bool selectAllIfOnlyOneIsSelected = false)
     {
       var channels = new List<ChannelInfo>();
-      foreach (var rowHandle in gview.GetSelectedRows())
+      if (gview.SelectedRowsCount <= 1 && selectAllIfOnlyOneIsSelected)
       {
-        if (gview.IsDataRow(rowHandle))
-          channels.Add((ChannelInfo) gview.GetRow(rowHandle));
+        for (int rowHandle=0; rowHandle<gview.RowCount; rowHandle++)
+          channels.Add((ChannelInfo)gview.GetRow(rowHandle));
       }
+      else
+      {
+        foreach (var rowHandle in gview.GetSelectedRows())
+        {
+          if (gview.IsDataRow(rowHandle))
+            channels.Add((ChannelInfo) gview.GetRow(rowHandle));
+        }
+      }
+
       return channels;
     }
 
@@ -1532,7 +1541,7 @@ namespace ChanSort.Ui
 
       this.gviewRight.BeginDataUpdate();
       this.gviewLeft.BeginDataUpdate();
-      this.Editor.SetFavorites(list, (Favorites) (1 << idx), set);
+      this.Editor.SetFavorites(list, idx, set);
       this.gviewRight.EndDataUpdate();
       this.gviewLeft.EndDataUpdate();
     }
@@ -3311,5 +3320,27 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region tabSubList_MouseUp
+    private void tabSubList_MouseUp(object sender, MouseEventArgs e)
+    {
+      if (e.Button == MouseButtons.Right)
+      {
+        var hit = this.tabSubList.CalcHitInfo(e.Location);
+        if (hit.IsValid && hit.Page != null)
+        {
+          using var dlg = new TextInputForm();
+          dlg.StartPosition = FormStartPosition.Manual;
+          dlg.Location = this.tabSubList.PointToScreen(e.Location);
+          var favIndex = this.tabSubList.TabPages.IndexOf(hit.Page) - 1;
+          dlg.Text = this.DataRoot.GetFavListCaption(favIndex);
+          if (dlg.ShowDialog(this) == DialogResult.OK)
+          {
+            this.DataRoot.SetFavListCaption(favIndex, dlg.Text);
+            hit.Page.Text = this.DataRoot.GetFavListCaption(favIndex, true);
+          }
+        }
+      }
+    }
+    #endregion
   }
 }

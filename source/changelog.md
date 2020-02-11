@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2020-02-11
+- Philips: show and edit customized titles of favorite lists
+- fixed non-unique numbers in mixed-source favorite lists when using "Add to Fav A" (Panasonic, Hisense, Sony, Philips)
+- function to reorder channels from 1-x is now reordering all channels when only a single one was selected
+- function to sort channels by name is now reordering all channels when only a single one was selected
+
 2020-02-02
 - fixed (hopefully): When channels were deleted from Sony lists, the TV reordered the list randomly after a reboot
 
