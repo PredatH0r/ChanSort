@@ -97,6 +97,7 @@
             this.txtChannelName});
       this.bandChannelDetail.Dpi = 254F;
       this.bandChannelDetail.HeightF = 35F;
+      this.bandChannelDetail.KeepTogether = true;
       this.bandChannelDetail.MultiColumn.ColumnCount = 3;
       this.bandChannelDetail.MultiColumn.ColumnSpacing = 50F;
       this.bandChannelDetail.MultiColumn.Mode = DevExpress.XtraReports.UI.MultiColumnMode.UseColumnCount;
@@ -110,7 +111,7 @@
       this.txtNumber.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
       this.txtNumber.Name = "txtNumber";
       this.txtNumber.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-      this.txtNumber.SizeF = new System.Drawing.SizeF(111.125F, 35F);
+      this.txtNumber.SizeF = new System.Drawing.SizeF(89.95834F, 35F);
       this.txtNumber.StylePriority.UseFont = false;
       this.txtNumber.Text = "0000";
       // 
@@ -118,10 +119,10 @@
       // 
       this.txtChannelName.Dpi = 254F;
       this.txtChannelName.Font = new System.Drawing.Font("Times New Roman", 8F);
-      this.txtChannelName.LocationFloat = new DevExpress.Utils.PointFloat(111.125F, 0F);
+      this.txtChannelName.LocationFloat = new DevExpress.Utils.PointFloat(89.95834F, 0F);
       this.txtChannelName.Name = "txtChannelName";
       this.txtChannelName.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-      this.txtChannelName.SizeF = new System.Drawing.SizeF(468.3125F, 35F);
+      this.txtChannelName.SizeF = new System.Drawing.SizeF(489.4792F, 35F);
       this.txtChannelName.StylePriority.UseFont = false;
       this.txtChannelName.Text = "Empty channel list";
       // 
@@ -144,7 +145,7 @@
       this.PaperKind = System.Drawing.Printing.PaperKind.A4;
       this.ReportUnit = DevExpress.XtraReports.UI.ReportUnit.TenthsOfAMillimeter;
       this.SnapGridSize = 25F;
-      this.Version = "13.1";
+      this.Version = "19.2";
       ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 

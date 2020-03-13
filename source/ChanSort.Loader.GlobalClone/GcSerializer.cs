@@ -10,10 +10,10 @@ namespace ChanSort.Loader.GlobalClone
 {
   class GcSerializer : SerializerBase
   {
-    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.TvAndRadio, "Analog");
-    private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Tv, "DTV");
+    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT, "Analog");
+    private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.TvAndData, "DTV");
     private readonly ChannelList dtvRadioChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Radio, "Radio");
-    private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat-TV");
+    private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.TvAndData, "Sat-TV");
     private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat-Radio");
     private XmlDocument doc;
     private readonly DvbStringDecoder dvbStringDecoder = new DvbStringDecoder(Encoding.Default);
@@ -25,7 +25,11 @@ namespace ChanSort.Loader.GlobalClone
     public GcSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      //this.Features.CanDeleteChannels = false;
+      this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
+      this.Features.CanHaveGaps = true;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = true;
 
       this.DataRoot.AddChannelList(this.atvChannels);
       this.DataRoot.AddChannelList(this.dtvTvChannels);
@@ -34,12 +38,6 @@ namespace ChanSort.Loader.GlobalClone
       this.DataRoot.AddChannelList(this.satRadioChannels);
     }
     #endregion
-
-    #region DisplayName
-    public override string DisplayName => "LG GlobalClone loader";
-
-    #endregion
-
 
     #region Load()
 
@@ -50,6 +48,8 @@ namespace ChanSort.Loader.GlobalClone
       {
         this.doc = new XmlDocument();
         string textContent = File.ReadAllText(this.FileName, Encoding.UTF8);
+        if (textContent[0] != '<')
+          throw new FileLoadException("Invalid GlobalClone/XML file format. Maybe a binary xx*.TLL file?", this.FileName);
         textContent = ReplaceInvalidXmlCharacters(textContent);
         var settings = new XmlReaderSettings { CheckCharacters = false };
         using (var reader = XmlReader.Create(new StringReader(textContent), settings))
@@ -114,7 +114,7 @@ namespace ChanSort.Loader.GlobalClone
       // ask whether binary TLL file should be deleted
       var dir = Path.GetDirectoryName(this.FileName) ?? ".";
       var binTlls = Directory.GetFiles(dir, "xx" + series + "*.tll");
-      if (binTlls.Length > 0)
+      if (binTlls.Length > 0 && !(binTlls.Length == 1 && Path.GetFileName(binTlls[0]).ToLower() == Path.GetFileName(this.FileName).ToLower()))
       {
         var txt = Resources.GcSerializer_ReadModelInfo_ModelWarning;
         if (MessageBox.Show(txt, "LG GlobalClone", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
@@ -275,12 +275,12 @@ namespace ChanSort.Loader.GlobalClone
           case "transport_id":
             ch.TransportStreamId = int.Parse(info.InnerText);
             break;
-          case "service_id":
+          case "service_id": // also same value in "programNo"
             ch.ServiceId = int.Parse(info.InnerText);
             break;
           case "serviceType":
             ch.ServiceType = int.Parse(info.InnerText);
-            ch.SignalSource |= LookupData.Instance.IsRadioOrTv(ch.ServiceType);
+            ch.SignalSource |= LookupData.Instance.IsRadioTvOrData(ch.ServiceType);
             break;
           case "frequency":
             ch.FreqInMhz = int.Parse(info.InnerText);
@@ -314,6 +314,17 @@ namespace ChanSort.Loader.GlobalClone
             ch.Name = longName;
             ch.ShortName = shortName;
             hasHexName = true;
+            break;
+          default:
+            if (info.LocalName.StartsWith("favoriteIdx"))
+            {
+              int n = info.LocalName[11] - 'A';
+              var mask = 1 << n;
+              this.Features.SupportedFavorites |= (Favorites)mask;
+              this.Features.SortedFavorites = true;
+              if (((int)ch.Favorites & mask) != 0) // xml element holds bad index data (250) when fav is not set
+                ch.SetOldPosition(n + 1, int.Parse(info.InnerText));
+            }
             break;
         }
       }
@@ -371,7 +382,6 @@ namespace ChanSort.Loader.GlobalClone
     {
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        
         foreach (var channel in list.Channels)
         {
           var ch = channel as GcChannel;
@@ -417,21 +427,39 @@ namespace ChanSort.Loader.GlobalClone
                 // ?
                 break;
               case "isDisabled":
-                node.InnerText = ch.IsDeleted || ch.IsDisabled ? "1" : "0";
+                node.InnerText = ch.IsDisabled /* || ch.IsDeleted */ ? "1" : "0";
                 break;
               case "isDeleted":
                 node.InnerText = ch.IsDeleted ? "1" : "0";
                 break;
               case "isUserSelCHNo":
                 if (ch.NewProgramNr != ch.OldProgramNr)
-                  node.InnerText = "1";
+                  node.InnerText = ch.IsDeleted ? "0" : "1";
                 break;
               case "mapType":
                 mapType = node.InnerText;
+                if (int.TryParse(mapType, out int value))
+                {
+                  if (ch.IsDeleted)
+                    value |= 0x02; // all channels that have isDeleted=1 had mapType=0x03, all other channels had mapType=0x01
+                  else
+                    value &= ~0x02;
+                  node.InnerText = value.ToString();
+                }
                 break;
               case "mapAttr":
                 if (mapType == "1")
                   node.InnerText = ((int) ch.Favorites).ToString();
+                break;
+              default:
+                if (node.LocalName.StartsWith("favoriteIdx"))
+                {
+                  int n = node.LocalName[11] - 'A';
+                  var idx = ch.GetPosition(n + 1);
+                  if (idx <= 0)
+                    idx = 250; // this weird value is used by the TV when the fav is not set
+                  node.InnerText = idx.ToString();
+                }
                 break;
             }
           }
@@ -456,6 +484,9 @@ namespace ChanSort.Loader.GlobalClone
         xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n" + xml;
         xml = xml.Replace("<ATV></ATV>\r\n", "<ATV>\r\n</ATV>\r\n");
         xml = xml.Replace("<DTV></DTV>\r\n", "<DTV>\r\n</DTV>\r\n");
+        xml = xml.Replace("<hexAszTkgsMessage type=\"0\"></hexAszTkgsMessage>", "<hexAszTkgsMessage type=\"0\"> </hexAszTkgsMessage>");
+        xml = xml.Replace("<aszTkgsMessage type=\"0\"></aszTkgsMessage>", "<aszTkgsMessage type=\"0\"> </aszTkgsMessage>");
+
         if (!xml.EndsWith("\r\n"))
           xml += "\r\n";
         File.WriteAllText(tvOutputFile, xml, settings.Encoding);

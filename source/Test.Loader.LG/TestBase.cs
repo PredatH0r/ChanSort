@@ -20,10 +20,10 @@ namespace Test.Loader.LG
     protected void ExecuteTest(string modelAndBaseName)
     {
       // copy required input and assertion files
-      DeploymentItem("ChanSort.Loader.LG\\ChanSort.Loader.LG.ini");
-      DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".TLL.in");
-      DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".csv.in");
-      DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".TLL.out");
+      TestUtils.DeploymentItem("ChanSort.Loader.LG\\ChanSort.Loader.LG.ini");
+      TestUtils.DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".TLL.in");
+      TestUtils.DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".csv.in");
+      TestUtils.DeploymentItem("Test.Loader.LG\\" + modelAndBaseName + ".TLL.out");
 
       var baseName = Path.GetFileNameWithoutExtension(modelAndBaseName);
 
@@ -35,6 +35,7 @@ namespace Test.Loader.LG
 
       // verify channel name, number, favorites, ... against a reference list
       var data = serializer.DataRoot;
+      data.ValidateAfterLoad();
       data.ApplyCurrentProgramNumbers();
       AssertRefListContent(data, baseName + ".csv.in");
 
@@ -78,7 +79,7 @@ namespace Test.Loader.LG
     {
       MemoryStream mem = new MemoryStream();
       var writer = new StreamWriter(mem);
-      CsvRefListSerializer.Save(writer, dataRoot);
+      CsvRefListSerializer.Save(writer, dataRoot, false); // don't include deleted channels to maintain compatibility between new code and old test files
       writer.Flush();
       mem.Seek(0, SeekOrigin.Begin);
       var actual = new StreamReader(mem).ReadToEnd();
@@ -115,47 +116,6 @@ namespace Test.Loader.LG
     }
     #endregion
 
-    #region DeploymentItem()
-    private string baseDir;
-    private string destDir;
-
-    /// <summary>
-    /// DeploymentItemAttribute doesn't work with the combination of VS2010, ReSharper 7.1.3, Target Framework 3.5
-    /// </summary>
-    protected void DeploymentItem(string file)
-    {
-      if (this.baseDir == null)
-      {
-        this.baseDir = this.GetSolutionBaseDir();
-        this.destDir = Path.GetDirectoryName(this.GetType().Assembly.Location);
-      }
-
-      File.Copy(baseDir + "\\" + file, destDir + "\\" + Path.GetFileName(file), true);
-    }
-    #endregion
-
-    #region GetSolutionBaseDir()
-    protected string GetSolutionBaseDir()
-    {
-      var dir = Path.GetDirectoryName(this.GetType().Assembly.Location);
-      do
-      {
-        if (File.Exists(dir + "\\ChanSort.sln"))
-          return dir;
-        dir = Path.GetDirectoryName(dir);
-      } while (!string.IsNullOrEmpty(dir));
-
-      dir = Environment.CurrentDirectory;
-      do
-      {
-        if (File.Exists(dir + "\\ChanSort.sln"))
-          return dir;
-        dir = Path.GetDirectoryName(dir);
-      } while (!string.IsNullOrEmpty(dir));
-
-      throw new InvalidOperationException("Cannot determine base directory of ChanSort solution");
-    }
-    #endregion
     
     #region TearDown()
     [TestCleanup]
@@ -169,9 +129,8 @@ namespace Test.Loader.LG
     #region GenerateTestFiles()
     protected void GenerateTestFiles(string modelAndBaseName, bool moveChannels = true)
     {
-      DeploymentItem("ChanSort.Loader.LG\\ChanSort.Loader.LG.ini");
-      string solutionDir = this.GetSolutionBaseDir();
-      var testDataDir = solutionDir + "\\Test.Loader.LG\\" + Path.GetDirectoryName(modelAndBaseName);
+      TestUtils.DeploymentItem("ChanSort.Loader.LG\\ChanSort.Loader.LG.ini");
+      var testDataDir = TestUtils.GetSolutionBaseDir() + "\\Test.Loader.LG\\" + Path.GetDirectoryName(modelAndBaseName);
       var basename = Path.GetFileNameWithoutExtension(modelAndBaseName);
 
       // copy .TLL.in

@@ -52,7 +52,7 @@ namespace ChanSort.Loader.Hisense2017
     /// <summary>
     /// This list is filled with all channels/services and serves as a holder for favorite lists 1-4
     /// </summary>
-    private readonly ChannelList userFavList = new ChannelList(SignalSource.All, "Favorites");
+    private readonly ChannelList userFavList = new ChannelList(0, "Favorites");
 
     /// <summary>
     /// mapping of FavoriteList.Pid for FAV1-4 => index of the internal favorite list within userFavList (0-3)
@@ -90,7 +90,7 @@ namespace ChanSort.Loader.Hisense2017
         "OriginalNetworkId",
         "TransportStreamId",
         "ServiceId",
-        "ServiceType",
+        //"ServiceType",
         "ServiceTypeName",
         "NetworkName",
         "Satellite"
@@ -119,17 +119,16 @@ namespace ChanSort.Loader.Hisense2017
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();
 
       Features.ChannelNameEdit = ChannelNameEditMode.All;
-      Features.CanDeleteChannels = true;
+      Features.DeleteMode = DeleteMode.FlagWithPrNr;
       Features.CanSkipChannels = true;
+      Features.CanLockChannels = true;
+      Features.CanHideChannels = true;
       Features.CanHaveGaps = true;
-      DataRoot.MixedSourceFavorites = true;
-      DataRoot.SortedFavorites = true;
-      DataRoot.ShowDeletedChannels = false;
+      Features.MixedSourceFavorites = true;
+      Features.SortedFavorites = true;
     }
 
     #endregion
-
-    public override string DisplayName => "Hisense servicelist.db Loader";
 
     #region Load()
 
@@ -207,7 +206,7 @@ namespace ChanSort.Loader.Hisense2017
           }
 
           // lists for physical channel sources
-          var list = new ChannelList(SignalSource.All, name);
+          var list = new ChannelList(0, name);
           list.VisibleColumnFieldNames = ColumnNames;
           channelLists.Add(listId, list);
           if (name.StartsWith("$"))
@@ -360,10 +359,7 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
           
           int favListIdx = favListIdToFavIndex.TryGet(favListId, -1);
           if (favListIdx >= 0)
-          {
-            // NOTE: we need to set the NEW fav index here because AddChannel will use the new value to initialize the old value
-            ci.FavIndex[favListIdx] = r.GetInt32(2);
-          }
+            ci.OldFavIndex[favListIdx] = r.GetInt32(2);
 
           ci.SetOldPosition(favListIdx + 1, r.GetInt32(2)); // 0=main nr, 1-4=fav 1-4
           if (favListIdx < 0)
@@ -513,8 +509,8 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
 
           cmd.Parameters["@favId"].Value = favId;
           cmd.Parameters["@servId"].Value = ci.RecordIndex;
-          cmd.Parameters["@ch"].Value = ci.NewProgramNr <= 0 ? 9999 : ci.NewProgramNr;
-          cmd.Parameters["@del"].Value = ci.NewProgramNr <= 0 ? 1 : 0; // 1 or -1 ?
+          cmd.Parameters["@ch"].Value = ci.NewProgramNr;
+          cmd.Parameters["@del"].Value = ci.IsDeleted ? 1 : 0; // 1 or -1 ?
           // not sure if the following columns are used at all. they also exist in the Services table
           cmd.Parameters["@prot"].Value = ci.Lock ? -1 : 0;
           cmd.Parameters["@sel"].Value = ci.Skip ? 0 : -1;

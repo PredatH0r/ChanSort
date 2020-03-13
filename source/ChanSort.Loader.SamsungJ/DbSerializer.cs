@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using ChanSort.Api;
-using ICSharpCode.SharpZipLib.Zip;
 
 namespace ChanSort.Loader.SamsungJ
 {
   /// <summary>
-  /// Loader for Samsung J/K/M/Q/N/... series .zip files
+  /// Loader for Samsung J/K/M/N/R/Q series .zip files (2015 - 2019+)
   /// </summary>
   class DbSerializer : SerializerBase
   {
     private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
     private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
-    private string tempDir;
 
     private enum FileType { Unknown, SatDb, ChannelDbDvb, ChannelDbAnalog }
 
@@ -27,124 +25,82 @@ namespace ChanSort.Loader.SamsungJ
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      this.Features.CanDeleteChannels = true;
-      this.DataRoot.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
-      this.DataRoot.SortedFavorites = true;
-      this.DataRoot.AllowGapsInFavNumbers = false;
-      this.DataRoot.ShowDeletedChannels = false;
+      this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = true;
+      this.Features.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
+      this.Features.SortedFavorites = true;
+      this.Features.AllowGapsInFavNumbers = false;
     }
-    #endregion
-
-    #region DisplayName
-    public override string DisplayName => "Samsung .zip Loader";
-
     #endregion
 
 
     #region Load()
     public override void Load()
     {
-      this.UnzipDataFile();
-      if (File.Exists(tempDir + "\\sat"))
-      {
-        try
-        {
-          using (var conn = new SQLiteConnection("Data Source=" + tempDir + "\\sat"))
-          {
-            conn.Open();
-            this.ReadSatDatabase(conn);
-          }
-        }
-        catch { }
-      }
-
-      var files = Directory.GetFiles(tempDir, "*.");
-      if (files.Length == 0)
-        throw new FileLoadException("The Samsung .zip channel list archive does not contain any supported files.");
-
-      foreach (var filePath in files)
-      {
-        var filename = Path.GetFileName(filePath) ?? "";
-        if (filename.StartsWith("vconf_"))
-          continue;
-        try
-        {
-          using (var conn = new SQLiteConnection("Data Source=" + filePath))
-          {
-            FileType type;
-            conn.Open();
-            using (var cmd = conn.CreateCommand())
-            {
-              this.RepairCorruptedDatabaseImage(cmd);
-              type = this.DetectFileType(cmd);
-            }
-
-            switch (type)
-            {
-              case FileType.SatDb: break;
-              case FileType.ChannelDbAnalog:
-                ReadChannelDatabase(conn, filePath, false);
-                break;
-              case FileType.ChannelDbDvb:
-                ReadChannelDatabase(conn, filePath, true);
-                break;
-            }
-          }
-        }
-        catch
-        {
-        }
-      }
-    }
-    #endregion
-
-    #region UnzipDataFile()
-    private void UnzipDataFile()
-    {
-      this.tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()) + "\\";
-      Directory.CreateDirectory(tempDir);
-      Application.ApplicationExit += this.CleanTempFolder;
-
-      using (ZipFile zip = new ZipFile(this.FileName))
-      {
-        foreach (ZipEntry entry in zip)
-        {
-          // only expand files from the root folder to avoid pit-falls with incorrectly rezipped lists
-          // that contain the data files in a subfolder
-          if (Path.GetDirectoryName(entry.Name) == "")
-            this.Expand(zip, entry.Name);
-        }
-      }
-    }
-    #endregion
-
-    #region CleanTempFolder()
-    private void CleanTempFolder(object sender, EventArgs e)
-    {
       try
       {
-        foreach(var file in Directory.GetFiles(this.tempDir))
-          File.Delete(file);
-        Directory.Delete(this.tempDir);
+        this.UnzipFileToTempFolder();
+        if (File.Exists(this.TempPath + "\\sat"))
+        {
+          try
+          {
+            using (var conn = new SQLiteConnection("Data Source=" + this.TempPath + "\\sat"))
+            {
+              conn.Open();
+              this.ReadSatDatabase(conn);
+            }
+          }
+          catch
+          {
+          }
+        }
+
+        var files = Directory.GetFiles(this.TempPath, "*.");
+        if (files.Length == 0)
+          throw new FileLoadException("The Samsung .zip channel list archive does not contain any supported files.");
+
+        foreach (var filePath in files)
+        {
+          var filename = Path.GetFileName(filePath) ?? "";
+          if (filename.StartsWith("vconf_"))
+            continue;
+          try
+          {
+            using (var conn = new SQLiteConnection("Data Source=" + filePath))
+            {
+              FileType type;
+              conn.Open();
+              using (var cmd = conn.CreateCommand())
+              {
+                this.RepairCorruptedDatabaseImage(cmd);
+                type = this.DetectFileType(cmd);
+              }
+
+              switch (type)
+              {
+                case FileType.SatDb: break;
+                case FileType.ChannelDbAnalog:
+                  ReadChannelDatabase(conn, filePath, false);
+                  break;
+                case FileType.ChannelDbDvb:
+                  ReadChannelDatabase(conn, filePath, true);
+                  break;
+              }
+            }
+          }
+          catch
+          {
+          }
+        }
       }
-      catch { }
-    }
-    #endregion
-
-    #region Expand()
-    private void Expand(ZipFile zip, string path)
-    {
-      var entry = zip.GetEntry(path);
-      if (entry == null)
-        throw new FileLoadException("File not found inside .zip: " + path);
-
-      byte[] buffer = new byte[65536];
-      using (var input = zip.GetInputStream(entry))
-      using (var output = new FileStream(this.tempDir + Path.GetFileName(path), FileMode.Create))
+      finally
       {
-        int len;
-        while ((len = input.Read(buffer, 0, buffer.Length)) != 0)
-          output.Write(buffer, 0, len);
+        // force closing the file and releasing the locks
+        SQLiteConnection.ClearAllPools(); 
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
       }
     }
     #endregion
@@ -296,11 +252,8 @@ namespace ChanSort.Loader.SamsungJ
           // Note that we can have channels from multiple satellites in the same list, so this is a loop variable now
           var sat = tp?.Satellite;
           var channel = new DbChannel(r, fields, this.DataRoot, providers, sat, tp);
-          if (!channel.IsDeleted)
-          {
-            this.DataRoot.AddChannel(channelList, channel);
-            this.channelById.Add(channel.RecordIndex, channel);
-          }
+          this.DataRoot.AddChannel(channelList, channel);
+          this.channelById.Add(channel.RecordIndex, channel);
         }
       }
 
@@ -323,7 +276,7 @@ namespace ChanSort.Loader.SamsungJ
             signalSource = ss;
         }
       }
-      return signalSource | SignalSource.TvAndRadio;
+      return signalSource;
     }
 
     #endregion
@@ -383,7 +336,7 @@ namespace ChanSort.Loader.SamsungJ
         if (pos >= 0)
         {
           channel.Favorites |= (Favorites) (1 << fav);
-          channel.FavIndex[fav] = channel.OldFavIndex[fav] = pos + 1;
+          channel.OldFavIndex[fav] = pos + 1;
         }
       }
     }
@@ -404,28 +357,18 @@ namespace ChanSort.Loader.SamsungJ
     #region Save()
     public override void Save(string tvOutputFile)
     {
-      if (tvOutputFile != this.FileName)
+      foreach (var channelList in this.DataRoot.ChannelLists)
       {
-        File.Copy(this.FileName, tvOutputFile);
-        this.FileName = tvOutputFile;
+        var dbPath = this.dbPathByChannelList[channelList];
+        SaveChannelList(channelList, dbPath);
       }
 
-      using (var zip = new ZipFile(this.FileName))
-      {
-        zip.BeginUpdate();
+      // force closing the file and releasing the locks
+      SQLiteConnection.ClearAllPools();
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
 
-        foreach (var channelList in this.DataRoot.ChannelLists)
-        {
-          var dbPath = this.dbPathByChannelList[channelList];
-          SaveChannelList(channelList, dbPath);
-
-          var entryName = Path.GetFileName(dbPath);
-          zip.Delete(entryName);
-          zip.Add(dbPath, entryName);
-        }
-
-        zip.CommitUpdate();
-      }
+      this.ZipToOutputFile(tvOutputFile);
     }
     #endregion
 
@@ -496,6 +439,7 @@ namespace ChanSort.Loader.SamsungJ
       cmd.Prepare();
       return cmd;
     }
+
     private static SQLiteCommand PrepareUpdateFavCommand(SQLiteConnection conn)
     {
       var cmd = conn.CreateCommand();
@@ -523,27 +467,24 @@ namespace ChanSort.Loader.SamsungJ
       ChannelList channelList, bool analog = false)
     {
 
-      foreach (ChannelInfo channelInfo in channelList.Channels)
+      foreach (ChannelInfo channelInfo in channelList.Channels.ToList())
       {
         var channel = channelInfo as DbChannel;
         if (channel == null) // ignore reference list proxy channels
           continue;
 
-#if false        
-        // disabled, because channels should just be marked as deleted and not physically deleted
-
-        if (channel.NewProgramNr < 0)
+        if (channel.IsDeleted)
         {
           // delete channel from all tables that have a reference to srvId
           cmdDeleteSrv.Parameters["@id"].Value = channel.RecordIndex;
           cmdDeleteSrv.ExecuteNonQuery();
+          channelList.Channels.Remove(channelInfo);
           continue;
         }
-#endif
 
         // update channel record
         cmdUpdateSrv.Parameters["@id"].Value = channel.RecordIndex;
-        cmdUpdateSrv.Parameters["@nr"].Value = channel.IsDeleted ? -1 : channel.NewProgramNr;
+        cmdUpdateSrv.Parameters["@nr"].Value = channel.NewProgramNr;
         cmdUpdateSrv.Parameters["@lock"].Value = channel.Lock;
         cmdUpdateSrv.Parameters["@hidden"].Value = channel.Hidden;
         cmdUpdateSrv.Parameters["@numsel"].Value = !channel.Skip;
@@ -571,7 +512,7 @@ namespace ChanSort.Loader.SamsungJ
             cmdDeleteFav.ExecuteNonQuery();
           }
 
-          channel.OldFavIndex[i] = channel.FavIndex[i] = newPos;
+          channel.FavIndex[i] = newPos;
         }
       }
     }

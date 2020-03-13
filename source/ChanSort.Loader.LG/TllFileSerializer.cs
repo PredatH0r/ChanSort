@@ -76,6 +76,11 @@ namespace ChanSort.Loader.LG
     public TllFileSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.Analog;
+      this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = true;
+      this.Features.CanHaveGaps = true;
       this.Features.DeviceSettings = true;
       this.Features.CleanUpChannelData = true;
       this.SupportedTvCountryCodes = new List<string>
@@ -125,10 +130,6 @@ namespace ChanSort.Loader.LG
     #endregion
 
 
-    #region DisplayName
-    public override string DisplayName { get { return "TLL loader"; } }
-    #endregion
-
     #region Load()
 
     public override void Load()
@@ -151,9 +152,12 @@ namespace ChanSort.Loader.LG
 
       long fileSize = new FileInfo(this.FileName).Length;
       if (fileSize > MaxFileSize)
-        throw new FileLoadException(string.Format(ERR_fileTooBig, fileSize, MaxFileSize));
+        throw new FileLoadException(string.Format(ERR_fileTooBig, fileSize, MaxFileSize), this.FileName);
 
       this.fileContent = File.ReadAllBytes(this.FileName);
+      if (this.fileContent[0] == '<')
+        throw new FileLoadException("Invalid binary TLL file format. Maybe a GlobalClone/XML file?", this.FileName);
+
       int off = 0;
 
       this.ReadFileHeader(ref off);
@@ -426,7 +430,7 @@ namespace ChanSort.Loader.LG
         this.dvbsSubblockCrcOffset[i] = off;
         int subblockLength = satConfig.dvbsSubblockLength[i];
         uint fileCrc = BitConverter.ToUInt32(fileContent, off);
-        uint calcCrc = Crc32.CalcCrc32(fileContent, off + 4, subblockLength);
+        uint calcCrc = Crc32.Reversed.CalcCrc32(fileContent, off + 4, subblockLength);
         if (fileCrc != calcCrc)
           throw new FileLoadException(string.Format(ERR_wrongChecksum, fileCrc, calcCrc));
         off += 4 + subblockLength;
@@ -530,11 +534,7 @@ namespace ChanSort.Loader.LG
         else
         {
           if (ci.IsDeleted)
-          {
-            ci.OldProgramNr = -1;
-            ci.NewProgramNr = -1;
             ++this.deletedChannelsSoft;
-          }
 
           var list = this.DataRoot.GetChannelList(ci.SignalSource);
           var dupes = list.GetChannelByUid(ci.Uid);
@@ -923,10 +923,11 @@ namespace ChanSort.Loader.LG
       newDvbctChannelCount = 0;
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        int count = list.Channels.Count;
-        for (int i=0; i<count; i++)
+        foreach(var channel in list.Channels)
         {
-          ChannelInfo channel = list.Channels[i];
+          if (channel.IsProxy)
+            continue;
+
           if (channel.NewProgramNr != -1)
           {
             if ((channel.SignalSource & SignalSource.Analog) != 0)
@@ -935,32 +936,11 @@ namespace ChanSort.Loader.LG
               ++newDvbctChannelCount;
           }
 
-          if (!(channel is TllChannelBase))
-          {
-            var newChannel = this.CreateChannelFromProxy(channel);
-            if (newChannel != null)
-              list.Channels[i] = newChannel;
-          }
           channel.UpdateRawData();
         }
       }
     }
 
-    #endregion
-
-    #region CreateChannelFromProxy()
-    private ChannelInfo CreateChannelFromProxy(ChannelInfo proxy)
-    {
-      if ((proxy.SignalSource & SignalSource.Sat) != 0)
-      {
-        var mapping = this.GetDvbsChannelMapping();
-        var channel = SatChannel.CreateFromProxy(proxy, this.DataRoot, mapping, this.satConfig.dvbsChannelLength);
-        if (channel != null)
-          this.mustReorganizeDvbs = true;
-        return channel;
-      }
-      return null;
-    }
     #endregion
 
     #region ReorderActChannelsPhysically()
@@ -1008,7 +988,7 @@ namespace ChanSort.Loader.LG
     {
       for (int i = 0; i < this.dvbsSubblockCrcOffset.Length; i++)
       {
-        uint crc32 = Crc32.CalcCrc32(fileContent, this.dvbsSubblockCrcOffset[i] + 4, satConfig.dvbsSubblockLength[i]);
+        uint crc32 = Crc32.Reversed.CalcCrc32(fileContent, this.dvbsSubblockCrcOffset[i] + 4, satConfig.dvbsSubblockLength[i]);
         var bytes = BitConverter.GetBytes(crc32);
         for (int j = 0; j < bytes.Length; j++)
           fileContent[this.dvbsSubblockCrcOffset[i] + j] = bytes[j];

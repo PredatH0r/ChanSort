@@ -8,7 +8,6 @@ namespace ChanSort.Loader.Panasonic
 {
   internal class DbChannel : ChannelInfo
   {
-    internal int Bits;
     internal byte[] RawName;
 
     #region ctor()
@@ -17,6 +16,9 @@ namespace ChanSort.Loader.Panasonic
       this.RecordIndex = r.GetInt32(field["rowid"]);
       this.RecordOrder = r.GetInt32(field["major_channel"]);
       this.OldProgramNr = r.GetInt32(field["major_channel"]);
+      if (this.OldProgramNr == 1178)
+      {
+      }
       int ntype = r.GetInt32(field["ntype"]);
       if (ntype == 1)
       {
@@ -62,7 +64,7 @@ namespace ChanSort.Loader.Panasonic
         if (favIndex > 0)
         {
           this.Favorites |= (Favorites) (1 << i);
-          this.FavIndex[i] = favIndex;
+          this.OldFavIndex[i] = favIndex;
         }
       }
     }
@@ -80,7 +82,7 @@ namespace ChanSort.Loader.Panasonic
     protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, byte[] delivery)
     {
       int stype = r.GetInt32(field["stype"]);
-      this.SignalSource |= LookupData.Instance.IsRadioOrTv(stype);
+      this.SignalSource |= LookupData.Instance.IsRadioTvOrData(stype);
       this.ServiceType = stype;
 
       int freq = r.GetInt32(field["freq"]);

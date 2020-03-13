@@ -149,9 +149,11 @@ namespace ChanSort.Api
         if (ch == '\0')
         {
           // read as many bytes as necessary to get a character
-          char[] charArray = new char[1];
-          for (int byteCnt = 1; decoder.GetChars(name, i, byteCnt, charArray, 0) == 0; byteCnt++)
-            ++i;
+          char[] charArray = new char[5];
+          int byteCnt;
+          for (byteCnt = 1; decoder.GetChars(name, i, byteCnt, charArray, 0) == 0; byteCnt++)
+          {
+          }
           ch = charArray[0];
         }
         if (ch == '\0')

@@ -7,21 +7,38 @@ namespace ChanSort.Loader.Samsung
   {
     private const string _ChannelOrTransponder = "offChannelTransponder";
 
-    public DigitalChannel(int slot, SignalSource signalSource, DataMapping data,
+    public DigitalChannel(int slot, SignalSource signalSource, DataMapping data, DataRoot dataRoot,
       IDictionary<int, decimal> transpFreq, FavoritesIndexMode sortedFavorites, IDictionary<int, string> providerNames) :
       base(data, sortedFavorites)
     {
-      this.InitCommonData(slot, (SignalSource)((int)signalSource & ~(int)(SignalSource.TvAndRadio)), data);
+      this.InitCommonData(slot, signalSource & ~SignalSource.MaskTvRadioData, data);
 
-      if (!this.InUse || this.OldProgramNr == 0)
+      if (!this.InUse)
         return;
+
+      // "InUse" and "IsDeleted" are not always guessed correctly. If PrNr=0, the channel contains garbage
+      if (this.OldProgramNr == 0)
+      {
+        this.InUse = false;
+        return;
+      }
 
       this.InitDvbData(data, providerNames);
 
+      decimal freq = 0;
       int transp = data.GetByte(_ChannelOrTransponder);
-      decimal freq = transpFreq.TryGet(transp);
+      if (dataRoot.Transponder.TryGetValue(transp, out var tp))
+        this.Polarity = tp.Polarity; 
+      freq = transpFreq.TryGet(transp);
+      if (freq == 0 && tp != null)
+        freq = tp.FrequencyInMhz;
       if (freq == 0)
-        freq = LookupData.Instance.GetDvbtFrequeny(transp); // transp*8 + 106); // (106 = DVB-C; DVB-T=306?)
+      {
+        if ((this.SignalSource & SignalSource.Antenna) != 0)
+          freq = transp * 8 + 306;
+        else if ((this.SignalSource & SignalSource.Cable) != 0)
+          freq = transp * 8 + 106;
+      }
 
       this.ChannelOrTransponder = transp.ToString();
       this.FreqInMhz = freq;

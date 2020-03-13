@@ -8,7 +8,7 @@ namespace ChanSort.Api
   {
     private static readonly char[] Separators = { ';' };
 
-    private readonly ChannelList allChannels = new ChannelList(SignalSource.MaskAntennaCableSat | SignalSource.MaskAnalogDigital | SignalSource.MaskTvRadio, "All");
+    private readonly ChannelList allChannels = new ChannelList(0, "All");
 
     #region ctor()
 
@@ -16,11 +16,13 @@ namespace ChanSort.Api
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanSkipChannels = false;
-      this.Features.CanDeleteChannels = true;
+      this.Features.CanLockChannels = false;
+      this.Features.CanHideChannels = false;
+      this.Features.DeleteMode = DeleteMode.Physically;
       this.Features.CanHaveGaps = true;
       this.Features.EncryptedFlagEdit = false;
-      this.DataRoot.SortedFavorites = false;
-      this.DataRoot.SupportedFavorites = 0;
+      this.Features.SortedFavorites = false;
+      this.Features.SupportedFavorites = 0;
       this.DataRoot.AddChannelList(this.allChannels);
 
       allChannels.VisibleColumnFieldNames = new List<string>
@@ -35,8 +37,6 @@ namespace ChanSort.Api
     }
 
     #endregion
-
-    public override string DisplayName => ".txt Reference List Loader";
 
     #region Load()
 

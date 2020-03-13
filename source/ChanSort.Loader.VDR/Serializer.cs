@@ -6,7 +6,7 @@ namespace ChanSort.Loader.VDR
 {
   class Serializer : SerializerBase
   {
-    private readonly ChannelList allChannels = new ChannelList(SignalSource.DvbT | SignalSource.DvbC | SignalSource.DvbS | SignalSource.AnalogC | SignalSource.AnalogT | SignalSource.Tv | SignalSource.Radio, "All");
+    private readonly ChannelList allChannels = new ChannelList(0, "All");
 
     #region ctor()
     public Serializer(string inputFile) : base(inputFile)
@@ -14,14 +14,13 @@ namespace ChanSort.Loader.VDR
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.None;
-      this.DataRoot.SortedFavorites = false;
-      //this.DataRoot.SupportedFavorites = new Favorites();
+      this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.SortedFavorites = false;
+      //this.Features.SupportedFavorites = new Favorites();
 
       this.DataRoot.AddChannelList(this.allChannels);
     }
     #endregion
-
-    public override string DisplayName { get { return "VDR channels .conf Loader"; } }
 
     #region Load()
     public override void Load()
@@ -62,7 +61,7 @@ namespace ChanSort.Loader.VDR
             foreach (ChannelInfo channel in this.allChannels.GetChannelsByNewOrder())
             {
               // when a reference list was applied, the list may contain proxy entries for deleted channels, which must be ignored
-              if (channel is Channels vdrChannel)
+              if (channel is Channels vdrChannel && !channel.IsDeleted)
                 file.WriteLine(vdrChannel.confLine);
             }
         }

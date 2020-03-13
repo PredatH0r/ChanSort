@@ -49,9 +49,9 @@ namespace ChanSort.Api
     #region GetServiceTypeDescription()
     public string GetServiceTypeDescription(int serviceType)
     {
-      string descr;
-      this.serviceTypeDescriptions.TryGetValue(serviceType, out descr);
-      return descr;
+      if (this.serviceTypeDescriptions.TryGetValue(serviceType, out var descr))
+        return descr;
+      return serviceType.ToString();
     }
     #endregion
 
@@ -177,8 +177,8 @@ namespace ChanSort.Api
     }
     #endregion
 
-    #region IsRadioOrTv()
-    public SignalSource IsRadioOrTv(int dvbServiceType)
+    #region IsRadioTvOrData()
+    public SignalSource IsRadioTvOrData(int dvbServiceType)
     {
       switch (dvbServiceType)
       {
@@ -186,13 +186,15 @@ namespace ChanSort.Api
         case 0x11: // MPEG2-HD
         case 0x16: // H264/AVC-SD
         case 0x19: // H264/AVC-HD
-        case 0x1F: // UHD
+        case 0x1F: // UHD (future use)
+        case 0x9F: // UHD (user defined)
           return SignalSource.Tv;
         case 0x02:
         case 0x0A:
           return SignalSource.Radio;
       }
-      return 0;
+
+      return SignalSource.Data;
     }
     #endregion
 
@@ -204,7 +206,7 @@ namespace ChanSort.Api
     #endregion   
 
     #region GetDvbtFrequency()
-    public decimal GetDvbtFrequeny(int channelTransponder)
+    public decimal GetDvbtFrequency(int channelTransponder)
     {
       return channelTransponder * 8 + 306;
     }
@@ -212,12 +214,23 @@ namespace ChanSort.Api
 
     public int GetDvbcTransponder(decimal freqInMhz)
     {
-      return GetDvbtTransponder(freqInMhz) + 25; // Samsung handles it like this
+      return (int)(freqInMhz - 106) / 8;
+    }
+
+    public decimal GetDvbcFrequency(int channelTransponder)
+    {
+      return channelTransponder * 8 + 106;
     }
 
     public string GetDvbcChannelName(decimal freqInMhz)
     {
-      return dvbcChannels.TryGet((int)(freqInMhz * 1000)) ?? "";      
+      // in case the parameter is in Hz or kHz, correct it to MHz to avoid overflow errors. 2 GHz is the largest plausible frequency
+      if (freqInMhz > 2000)
+        freqInMhz /= 1000;
+      if (freqInMhz > 2000)
+        freqInMhz /= 1000;
+
+      return dvbcChannels.TryGet((int)(freqInMhz * 1000)) ?? dvbcChannels.TryGet((int)((freqInMhz-1) * 1000)) ?? "";      
     }
   }
 }

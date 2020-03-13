@@ -133,7 +133,7 @@ namespace ChanSort.Loader.Toshiba
     #region UpdateRawData()
     public override void UpdateRawData()
     {
-      Bits &= ~(BITS_FavA | BITS_FavB | BITS_FavC | BITS_FavC | BITS_FavD | BITS_Locked);
+      Bits &= ~(BITS_FavA | BITS_FavB | BITS_FavC | BITS_FavD | BITS_Locked);
       if ((this.Favorites & Favorites.A) != 0) Bits |= BITS_FavA;
       if ((this.Favorites & Favorites.B) != 0) Bits |= BITS_FavB;
       if ((this.Favorites & Favorites.C) != 0) Bits |= BITS_FavC;

@@ -6,9 +6,9 @@ using System.Text;
 using System.Windows.Forms;
 using ChanSort.Api;
 using ChanSort.Ui.Properties;
+using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraPrinting.Native;
 
 namespace ChanSort.Ui
 {
@@ -25,6 +25,16 @@ namespace ChanSort.Ui
 
       this.closeButtonText = this.btnClose.Text.Split('/');
       this.UpdateButtons();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing)
+      {
+        this.components?.Dispose();
+        this.serializer.Dispose();
+      }
+      base.Dispose(disposing);
     }
 
     #region UpdateButtons()
@@ -91,6 +101,8 @@ namespace ChanSort.Ui
     #region SetInput()
     private void SetInput(SerializerBase ser)
     {
+      this.serializer?.Dispose();
+
       this.serializer = ser;
       this.edFile.Text = serializer.FileName;
       this.rbAuto.Enabled = this.rbManual.Enabled = true;
@@ -151,7 +163,7 @@ namespace ChanSort.Ui
       list = (ChannelList) this.comboTarget.EditValue;
       this.lblTargetInfo.Text = GetInfoText(list, false);
 
-      var canApply = (cbAnalog.Checked || cbDigital.Checked) && (cbTv.Checked || cbRadio.Checked);
+      var canApply = (cbAnalog.Checked || cbDigital.Checked) && (cbTv.Checked || cbRadio.Checked || cbData.Checked);
       this.btnApply.Enabled = canApply;
     }
 
@@ -164,14 +176,14 @@ namespace ChanSort.Ui
       var src = list?.SignalSource ?? 0;
       var sb = new StringBuilder();
 
-      var sigSource = new[] {SignalSource.Antenna, SignalSource.Cable, SignalSource.Sat, SignalSource.IP, SignalSource.Analog, SignalSource.Digital, SignalSource.Tv, SignalSource.Radio};
+      var sigSource = new[] {SignalSource.Antenna, SignalSource.Cable, SignalSource.Sat, SignalSource.IP, SignalSource.Analog, SignalSource.Digital, SignalSource.Tv, SignalSource.Radio, SignalSource.Data};
       var infoText = Resources.ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio.Split(',');
-      var controls = new[] {cbAntenna, cbCable, cbSat, cbIp, cbAnalog, cbDigital, cbTv, cbRadio };
+      var controls = new[] {cbAntenna, cbCable, cbSat, cbIp, cbAnalog, cbDigital, cbTv, cbRadio, cbData };
 
       for (int i = 0, c = sigSource.Length; i < c; i++)
       {
         if ((src & sigSource[i]) != 0)
-          sb.Append(", ").Append(infoText[i]);
+          sb.Append(", ").Append(infoText[i].TrimEnd());
         else
         {
           controls[i].Checked = false;
@@ -200,7 +212,7 @@ namespace ChanSort.Ui
       }
       if (!(this.cbAnalog.Checked && (ss & SignalSource.Analog) != 0 || this.cbDigital.Checked && (ss & SignalSource.Digital) != 0))
         return false;
-      if (!(this.cbTv.Checked && (ss & SignalSource.Tv) != 0 || this.cbRadio.Checked && (ss & SignalSource.Radio) != 0))
+      if (!(this.cbTv.Checked && (ss & SignalSource.Tv) != 0 || this.cbRadio.Checked && (ss & SignalSource.Radio) != 0 || this.cbData.Checked && (ss & SignalSource.Data) != 0))
         return false;
       return true;
     }

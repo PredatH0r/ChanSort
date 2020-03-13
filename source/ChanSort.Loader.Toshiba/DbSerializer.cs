@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.IO;
-using System.Windows.Forms;
 using ChanSort.Api;
-using ICSharpCode.SharpZipLib.Zip;
 
 namespace ChanSort.Loader.Toshiba
 {
   class DbSerializer : SerializerBase
   {
-    private const string FILE_chmgt_db = "chmgt.db";
-    private const string FILE_dvbSysData_db = "dvbSysData.db";
-    private const string FILE_dvbMainData_db = "dvbMainData.db";
+    private const string FILE_chmgt_db = "\\chmgt_type001\\chmgt.db";
+    private const string FILE_dvbSysData_db = "\\dvb_type001\\dvbSysData.db";
+    private const string FILE_dvbMainData_db = "\\dvb_type001\\dvbMainData.db";
 
-    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.TvAndRadio, "Analog");
+    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT, "Analog");
     private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Tv, "DTV");
     private readonly ChannelList dtvRadioChannels = new ChannelList(SignalSource.DvbCT | SignalSource.Radio, "Radio");
     private readonly ChannelList satTvChannels = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat-TV");
     private readonly ChannelList satRadioChannels = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat-Radio");
     private readonly Dictionary<string, bool> channelInfoByUid = new Dictionary<string, bool>();
-
-    private string tempDir;
 
     #region ctor()
     public DbSerializer(string inputFile) : base(inputFile)
@@ -30,6 +24,10 @@ namespace ChanSort.Loader.Toshiba
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
+      this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.CanSkipChannels = false;
+      this.Features.CanLockChannels = true;
+      this.Features.CanHideChannels = false; // true in Android/e-format
 
       this.DataRoot.AddChannelList(this.atvChannels);
       this.DataRoot.AddChannelList(this.dtvTvChannels);
@@ -39,17 +37,12 @@ namespace ChanSort.Loader.Toshiba
     }
     #endregion
 
-    #region DisplayName
-    public override string DisplayName { get { return "Toshiba *.db Loader"; } }
-    #endregion
-
-
     #region Load()
     public override void Load()
     {
-      this.UnzipDataFile();
+      this.UnzipFileToTempFolder(); 
 
-      string sysDataConnString = "Data Source=" + tempDir + FILE_dvbSysData_db;
+      string sysDataConnString = "Data Source=" + this.TempPath + FILE_dvbSysData_db;
       using (var conn = new SQLiteConnection(sysDataConnString))
       {
         conn.Open();
@@ -61,7 +54,7 @@ namespace ChanSort.Loader.Toshiba
         }
       }
 
-      string mainDataConnString = "Data Source=" + tempDir + FILE_dvbMainData_db;
+      string mainDataConnString = "Data Source=" + this.TempPath + FILE_dvbMainData_db;
       using (var conn = new SQLiteConnection(mainDataConnString))
       {
         conn.Open();
@@ -71,7 +64,7 @@ namespace ChanSort.Loader.Toshiba
         }
       }
 
-      string channelConnString = "Data Source=" + tempDir + FILE_chmgt_db;
+      string channelConnString = "Data Source=" + this.TempPath + FILE_chmgt_db;
       using (var conn = new SQLiteConnection(channelConnString))
       {
         conn.Open();
@@ -84,54 +77,7 @@ namespace ChanSort.Loader.Toshiba
       }
     }
     #endregion
-
-    #region UnzipDataFile()
-    private void UnzipDataFile()
-    {
-      this.tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()) + "\\";
-      Directory.CreateDirectory(tempDir);
-      Application.ApplicationExit += this.CleanTempFolder;
-
-      using (ZipFile zip = new ZipFile(this.FileName))
-      {
-        this.Expand(zip, "chmgt_type001/" + FILE_chmgt_db);
-        this.Expand(zip, "dvb_type001/" + FILE_dvbSysData_db);
-        this.Expand(zip, "dvb_type001/" + FILE_dvbMainData_db);
-      }
-    }
-    #endregion
-
-    #region CleanTempFolder()
-    private void CleanTempFolder(object sender, EventArgs e)
-    {
-      try
-      {
-        foreach(var file in Directory.GetFiles(this.tempDir))
-          File.Delete(file);
-        Directory.Delete(this.tempDir);
-      }
-      catch { }
-    }
-    #endregion
-
-    #region Expand()
-    private void Expand(ZipFile zip, string path)
-    {
-      var entry = zip.GetEntry(path);
-      if (entry == null)
-        throw new FileLoadException("File not found inside .zip: " + path);
-
-      byte[] buffer = new byte[65536];
-      using (var input = zip.GetInputStream(entry))
-      using (var output = new FileStream(this.tempDir + Path.GetFileName(path), FileMode.Create))
-      {
-        int len;
-        while ((len = input.Read(buffer, 0, buffer.Length)) != 0)
-          output.Write(buffer, 0, len);
-      }
-    }
-    #endregion
-
+    
     #region RepairCorruptedDatabaseImage()
     private void RepairCorruptedDatabaseImage(SQLiteCommand cmd)
     {
@@ -291,37 +237,32 @@ namespace ChanSort.Loader.Toshiba
     #region Save()
     public override void Save(string tvOutputFile)
     {
-      if (tvOutputFile != this.FileName)
-      {
-        File.Copy(this.FileName, tvOutputFile);
-        this.FileName = tvOutputFile;
-      }
-
-      string channelConnString = "Data Source=" + this.tempDir + FILE_chmgt_db;
+      string channelConnString = "Data Source=" + this.TempPath + FILE_chmgt_db;
       using (var conn = new SQLiteConnection(channelConnString))
       {
         conn.Open();
         using (var cmd = conn.CreateCommand())
+        using (var cmd2 = conn.CreateCommand())
         {
           using (var trans = conn.BeginTransaction())
           {
-            this.WriteChannels(cmd, "EuroATVChanList", this.atvChannels, true);
-            this.WriteChannels(cmd, "EuroDTVChanList", this.dtvTvChannels);
-            this.WriteChannels(cmd, "EuroDTVChanList", this.dtvRadioChannels);
-            this.WriteChannels(cmd, "EuroSATChanList", this.satTvChannels);
-            this.WriteChannels(cmd, "EuroSATChanList", this.satRadioChannels);
+            this.WriteChannels(cmd, cmd2, "EuroATVChanList", this.atvChannels, true);
+            this.WriteChannels(cmd, cmd2, "EuroDTVChanList", this.dtvTvChannels);
+            this.WriteChannels(cmd, cmd2, "EuroDTVChanList", this.dtvRadioChannels);
+            this.WriteChannels(cmd, cmd2, "EuroSATChanList", this.satTvChannels);
+            this.WriteChannels(cmd, cmd2, "EuroSATChanList", this.satRadioChannels);
             trans.Commit();
           }
           this.RepairCorruptedDatabaseImage(cmd);
         }        
       }
 
-      this.ZipFiles();
+      this.ZipToOutputFile(tvOutputFile);
     }
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SQLiteCommand cmd, string table, ChannelList channelList, bool analog=false)
+    private void WriteChannels(SQLiteCommand cmd, SQLiteCommand cmdDelete, string table, ChannelList channelList, bool analog=false)
     {
       string sql = "update " + table + " set channel_number=@nr ";
       if (!analog)
@@ -332,30 +273,29 @@ namespace ChanSort.Loader.Toshiba
       cmd.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@Bits", DbType.Int32));
       cmd.Prepare();
+
+      cmdDelete.CommandText = "delete from " + table + " where channel_handle=@id";
+      cmdDelete.Parameters.Add(new SQLiteParameter("@id", DbType.Int32));
+
       foreach (ChannelInfo channelInfo in channelList.Channels)
       {
         var channel = channelInfo as DbChannel;
         if (channel == null) // ignore reference list proxy channels
           continue;
-        channel.UpdateRawData();
-        cmd.Parameters["@id"].Value = channel.RecordIndex;
-        cmd.Parameters["@nr"].Value = channel.NewProgramNr;
-        cmd.Parameters["@Bits"].Value = channel.Bits;
-        cmd.ExecuteNonQuery();
-      }
-    }
-    #endregion
 
-    #region ZipFiles()
-    private void ZipFiles()
-    {
-      const string entryName = "chmgt_type001/" + FILE_chmgt_db;
-      using (var zip = new ZipFile(this.FileName))
-      {
-        zip.BeginUpdate();
-        zip.Delete(entryName);
-        zip.Add(this.tempDir + "chmgt.db", entryName);
-        zip.CommitUpdate();
+        if (channel.IsDeleted)
+        {
+          cmdDelete.Parameters["@id"].Value = channel.RecordIndex;
+          cmdDelete.ExecuteNonQuery();
+        }
+        else
+        {
+          channel.UpdateRawData();
+          cmd.Parameters["@id"].Value = channel.RecordIndex;
+          cmd.Parameters["@nr"].Value = channel.NewProgramNr;
+          cmd.Parameters["@Bits"].Value = channel.Bits;
+          cmd.ExecuteNonQuery();
+        }
       }
     }
     #endregion

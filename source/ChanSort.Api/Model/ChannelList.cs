@@ -13,17 +13,24 @@ namespace ChanSort.Api
     private int duplicateUidCount;
     private int duplicateProgNrCount;
 
-    public static List<string> DefaultVisibleColumns { get; set; } // initialized by MainForm
+    public static List<string> DefaultVisibleColumns { get; set; } = new List<string>(); // initialized by MainForm
 
     public ChannelList(SignalSource source, string caption)
     {
+      if ((source & SignalSource.MaskAnalogDigital) == 0)
+        source |= SignalSource.MaskAnalogDigital;
+      if ((source & SignalSource.MaskAntennaCableSat) == 0)
+        source |= SignalSource.MaskAntennaCableSat;
+      if ((source & SignalSource.MaskTvRadioData) == 0)
+        source |= SignalSource.MaskTvRadioData;
+
       this.SignalSource = source;
       this.ShortCaption = caption;
       this.FirstProgramNumber = (source & SignalSource.Digital) != 0 ? 1 : 0;
-      this.VisibleColumnFieldNames = DefaultVisibleColumns;
+      this.VisibleColumnFieldNames = DefaultVisibleColumns.ToList(); // create copy of default list, so it can be modified
     }
 
-    public string ShortCaption { get; }
+    public string ShortCaption { get; set; }
     public SignalSource SignalSource { get; }
     public IList<ChannelInfo> Channels { get; } = new List<ChannelInfo>();
     public int Count => Channels.Count;
@@ -90,9 +97,6 @@ namespace ChanSort.Api
         }
       }
 
-      for (int i = 0; i < ci.FavIndex.Count; i++)
-        ci.OldFavIndex[i] = ci.FavIndex[i];
-
       if (!isDupeProgNr)
         this.channelByProgNr[ci.OldProgramNr] = ci;
 
@@ -148,7 +152,7 @@ namespace ChanSort.Api
     #region GetChannelsByNewOrder()
     public IList<ChannelInfo> GetChannelsByNewOrder()
     {
-        return this.Channels.OrderBy(c => c.NewProgramNr).ToList();
+      return this.Channels.OrderBy(c => c.NewProgramNr).ToList();
     }
     #endregion
 

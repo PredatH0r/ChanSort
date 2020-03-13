@@ -11,12 +11,14 @@ namespace ChanSort.Api
   [Flags]
   public enum SignalSource
   {
-    // bit 1+2: analog/digital
+    Any = 0,
+
+    // bit 0-1: analog/digital
     MaskAnalogDigital = 0x0003,
     Analog = 0x0001,
     Digital = 0x0002,
 
-    // bit 4+5+6+7+8: AvInput/Antenna/Cable/Sat/IP
+    // bit 3-7: AvInput/Antenna/Cable/Sat/IP
     MaskAntennaCableSat = 0x00F8,
     AvInput = 0x0008,
     Antenna = 0x0010,
@@ -24,14 +26,23 @@ namespace ChanSort.Api
     Sat = 0x0040,
     IP = 0x0080,
 
-    // bit 9+10: TV/Radio
-    MaskTvRadio = 0x0300,
+    MaskAdInput = MaskAnalogDigital | MaskAntennaCableSat,
+
+    // bit 8-10: TV/Radio/Data
+    MaskTvRadioData = 0x0700,
     Tv = 0x0100,
     Radio = 0x0200,
-    TvAndRadio = Tv | Radio,
+    Data = 0x0400,
+    TvAndData = Tv|Data,
 
-    // bit 13-16: Preset list selector (AstraHD+, Freesat, TivuSat, CanalDigitalSat, ... for Samsung)
-    MaskProvider = 0xFC00,
+    // bit 12-15: Preset list selector (AstraHD+, Freesat, TivuSat, CanalDigitalSat, ... for Samsung)
+    MaskProvider = 0xF000,
+    Provider0 = 0 << 12,
+    Provider1 = 1 << 12,
+    Provider2 = 2 << 12,
+    Provider3 = 3 << 12,
+    Provider4 = 4 << 12,
+
     StandardSat = 0 << 12,
     AstraHdPlus = 1 << 12,
     Freesat = 2 << 12,
@@ -39,7 +50,7 @@ namespace ChanSort.Api
     CanalDigital = 4 << 12,
     DigitalPlus = 5 << 12,
     CyfraPlus = 6 << 12,
-
+    
     StandardCable = 0 << 12,
     CablePrime = 1 << 12,
 
@@ -60,18 +71,18 @@ namespace ChanSort.Api
     DigitalPlusD = Digital + Sat + DigitalPlus,
     CyfraPlusD = Digital + Sat + CyfraPlus,
 
-    All = MaskAnalogDigital | MaskAntennaCableSat | MaskTvRadio
+    All = MaskAnalogDigital | MaskAntennaCableSat | MaskTvRadioData
   }
   #endregion
 
   [Flags]
-  public enum Favorites : byte { A = 0x01, B = 0x02, C = 0x04, D = 0x08, E = 0x10 }
+  public enum Favorites : byte { A = 0x01, B = 0x02, C = 0x04, D = 0x08, E = 0x10, F=0x20, G=0x40, H=0x80 }
 
   public enum UnsortedChannelMode
   {
     AppendInOrder=0,
     AppendAlphabetically=1,
-    MarkDeleted=2
+    Delete=2
   }
 
   [Flags]

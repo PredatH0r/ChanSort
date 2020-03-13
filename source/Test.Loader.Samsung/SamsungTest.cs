@@ -5,9 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ChanSort.Api;
 using ChanSort.Loader.Samsung;
 
-namespace Test.Loader
+namespace Test.Loader.Samsung
 {
   [TestClass]
   public class SamsungTest : LoaderTestBase
@@ -107,9 +108,9 @@ namespace Test.Loader
           key = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + Path.GetFileName(file);
           if (expectedData.TryGetValue(key, out exp))
           {
-            var analogTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogC | ChanSort.Api.SignalSource.TvAndRadio);
-            var dtvTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC | ChanSort.Api.SignalSource.TvAndRadio);
-            var satTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.TvAndRadio);
+            var analogTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogC);
+            var dtvTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC);
+            var satTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS);
             expectedData.Remove(key);
             if (exp.AnalogChannels != 0 || analogTv != null)
               Assert.AreEqual(exp.AnalogChannels, analogTv.Channels.Count, file + ": analog");
@@ -142,5 +143,105 @@ namespace Test.Loader
       return fileName.StartsWith("channel_list_") ? fileName.Substring(13, fileName.IndexOf('_', 14) - 13) : fileName;
     }
     #endregion
+
+    #region TestDeletingSatChannel
+
+    [TestMethod]
+    public void TestDeletingSatChannel()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Samsung\\TestFiles\\channel_list_T_J_ohne_smart_12.scm");
+      var plugin = new ScmSerializerPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // Pr# 122 = ORF2W HD 
+
+      var dvbs = data.GetChannelList(SignalSource.DvbS);
+      var orf2w = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2W HD");
+      Assert.AreEqual(122, orf2w.OldProgramNr);
+      Assert.AreEqual(122, orf2w.NewProgramNr);
+      Assert.IsFalse(orf2w.IsDeleted);
+
+      orf2w.NewProgramNr = -1;
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
+
+      Assert.IsTrue(orf2w.IsDeleted);
+      Assert.AreNotEqual(-1, orf2w.NewProgramNr);
+      Assert.AreEqual(0, dvbs.Channels.Count(ch => ch.NewProgramNr <= 0));
+
+
+      // save and reload
+      ser.Save(tempFile);
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+
+      dvbs = data.GetChannelList(SignalSource.DvbS);
+      orf2w = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2W HD");
+      
+      // For .scm sat-channels, there is no known "IsDeleted" flag. Instead, the "IsUsed" flag is set to false when saving a channel with IsDeleted==true
+      // When loading the file back, it can no longer be distinguished between a garbage record and a deleted record. The loader doesn't add IsUsed=false channels to the list
+      Assert.IsNull(orf2w);
+      //Assert.IsTrue(orf2w.IsDeleted);
+      //Assert.AreEqual(-1, orf2w.OldProgramNr);
+    }
+    #endregion
+
+    #region TestDeletingCableChannel
+
+    [TestMethod]
+    public void TestDeletingCableChannel()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Samsung\\TestFiles\\Samsung_upcmini_EF_12.scm");
+      var plugin = new ScmSerializerPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      // Pr# 2 = ORF 2 Wien HD 
+
+      var dvbc = data.GetChannelList(SignalSource.DvbC);
+      var orf2w = dvbc.Channels.FirstOrDefault(ch => ch.Name == "ORF 2 Wien HD");
+      Assert.IsNotNull(orf2w);
+      Assert.AreEqual(2, orf2w.OldProgramNr);
+      Assert.AreEqual(2, orf2w.NewProgramNr);
+      Assert.IsFalse(orf2w.IsDeleted);
+
+      orf2w.NewProgramNr = -1;
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
+
+      Assert.IsTrue(orf2w.IsDeleted);
+      Assert.AreNotEqual(-1, orf2w.NewProgramNr);
+      Assert.AreEqual(0, dvbc.Channels.Count(ch => ch.NewProgramNr <= 0));
+
+
+      // save and reload
+      ser.Save(tempFile);
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+
+      dvbc = data.GetChannelList(SignalSource.DvbC);
+      orf2w = dvbc.Channels.FirstOrDefault(ch => ch.Name == "ORF 2 Wien HD");
+
+      // For .scm sat-channels, there is no known "IsDeleted" flag. Instead, the "IsUsed" flag is set to false when saving a channel with IsDeleted==true
+      // When loading the file back, it can no longer be distinguished between a garbage record and a deleted record. The loader doesn't add IsUsed=false channels to the list
+      Assert.IsNotNull(orf2w);
+      Assert.IsTrue(orf2w.IsDeleted);
+      Assert.AreEqual(-1, orf2w.OldProgramNr);
+    }
+    #endregion
+
   }
 }
