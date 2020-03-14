@@ -1,4 +1,7 @@
 @echo off
+setlocal
+setlocal enabledelayedexpansion
+
 cd /d %~dp0
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
@@ -48,8 +51,15 @@ set signtool="C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64\signto
 set oldcd=%cd%
 cd %target%
 set files=ChanSort.exe ChanSort*.dll de\ChanSort*.dll ru\ChanSort*.dll pt\ChanSort*.dll cs\ChanSort*.dll es\ChanSort*.dll
-%signtool% sign /a /t "http://timestamp.comodoca.com/authenticode" %files%
+set todo=
+for %%f in (%files%) do (
+  %signtool% verify /pa "%%f" >nul 2>nul
+  if errorlevel 1 set todo=!todo! "%%f"
+)
+if "%todo%" == "" goto:skipCodeSigning
+%signtool% sign /a /t "http://timestamp.comodoca.com/authenticode" %todo%
 if errorlevel 1 goto :error
+:skipCodeSigning
 cd %oldcd%
 goto:eof
 

@@ -1,7 +1,13 @@
 ChanSort Change Log 
 ===================
 
-2020-02-11B
+2020-03-14
+- check for updates can now handle multiple updates on a specific day
+- fixed applying favorites from a reference list (it showed fav letters on the channels, but the fav lists were empty)
+- added Polish translation (thanks to Jakub Driver!)
+- potential fix for Samsung 1352.0 format, which can contain channels marked as deleted 
+
+2020-02-11 (re-upload)
 - fixed: removing channels from a favorite list caused incorrect reordering
 
 2020-02-11

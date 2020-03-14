@@ -611,6 +611,12 @@
   <data name="miSpanish.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>44</value>
   </data>
+  <data name="miPolski.Caption" xml:space="preserve">
+    <value>Polski</value>
+  </data>
+  <data name="barButtonItem1.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
   <data name="miPortuguese.Caption" xml:space="preserve">
     <value>Português</value>
   </data>
@@ -1264,7 +1270,7 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7346.35990, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7378.22467, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
@@ -1950,6 +1956,12 @@
   <data name="&gt;&gt;popupFavList.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.PopupMenu, DevExpress.XtraBars.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miPolski.Name" xml:space="preserve">
+    <value>miPolski</value>
+  </data>
+  <data name="&gt;&gt;miPolski.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
@@ -1957,7 +1969,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>02/11/2020 20:40:05</value>
+    <value>03/14/2020 12:45:31</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>

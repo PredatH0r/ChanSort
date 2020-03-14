@@ -78,7 +78,7 @@ namespace ChanSort.Ui
           dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
           dlg.FilterIndex = numberOfFilters + 1;
           dlg.CheckFileExists = true;
-          dlg.RestoreDirectory = false;
+          dlg.RestoreDirectory = true;
           dlg.Title = Resources.ReferenceListForm_ShowOpenFileDialog_Title;
           if (dlg.ShowDialog(main) != DialogResult.OK)
             return null;
@@ -106,6 +106,7 @@ namespace ChanSort.Ui
       this.serializer = ser;
       this.edFile.Text = serializer.FileName;
       this.rbAuto.Enabled = this.rbManual.Enabled = true;
+      ser.DataRoot.ApplyCurrentProgramNumbers();
 
       this.comboSource.EditValue = null;
       this.comboSource.Properties.Items.Clear();

@@ -639,4 +639,7 @@ furnizor specific, satelit sau liste de țări.</value>
   <data name="splitContainerControl1.Text" xml:space="preserve">
     <value>splitContainerControl1</value>
   </data>
+  <data name="miPolski.Caption" xml:space="preserve">
+    <value>Polski</value>
+  </data>
 </root>

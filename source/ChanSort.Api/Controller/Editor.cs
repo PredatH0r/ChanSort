@@ -331,9 +331,9 @@ namespace ChanSort.Api
           tvChannel.Favorites = refChannel.Favorites & DataRoot.SupportedFavorites;
           if (refDataRoot.SortedFavorites)
           {
-            var c = Math.Min(refChannel.FavIndex.Count, tvChannel.FavIndex.Count);
+            var c = Math.Min(refChannel.FavIndex.Count, tvChannel.OldFavIndex.Count);
             for (int i = 0; i < c; i++)
-              tvChannel.FavIndex[i] = refChannel.FavIndex[i];
+              tvChannel.FavIndex[i] = refChannel.OldFavIndex[i];
           }
           else
             this.ApplyPrNrToFavLists(tvChannel);
@@ -342,6 +342,7 @@ namespace ChanSort.Api
       else
       {
         tvChannel.Favorites = refChannel.Favorites & DataRoot.SupportedFavorites;
+        this.ApplyPrNrToFavLists(tvChannel);
       }
     }
 
@@ -417,7 +418,7 @@ namespace ChanSort.Api
       var refMask = (int)tvChannel.Favorites;
       for (int i = 0; supMask != 0; i++)
       {
-        tvChannel.FavIndex[i] = (refMask & 0x01) == 0 ? -1 : tvChannel.OldProgramNr;
+        tvChannel.FavIndex[i] = (refMask & 0x01) == 0 ? -1 : tvChannel.NewProgramNr;
         supMask >>= 1;
         refMask >>= 1;
       }

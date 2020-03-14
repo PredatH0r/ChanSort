@@ -118,183 +118,171 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainForm_LoadTll_SourceTllNotFound" xml:space="preserve">
-    <value>Quell-TLL konnte nicht gefunden werden:
-'{0}'</value>
+    <value>Quell-TLL teraz w ostatniej chwili:
+„{0}”</value>
   </data>
   <data name="MainForm_LoadTll_Exception" xml:space="preserve">
-    <value>Beim Auslesen der TLL-Datei trat ein Fehler auf:
-{0}</value>
+    <value>Wystąpił błąd podczas ładowania pliku danych telewizora:{0}</value>
   </data>
   <data name="MainForm_FileDialog_OpenFileFilter" xml:space="preserve">
-    <value>Unterstützte Dateien|{0}|Alle Dateien (*.*)|*</value>
+    <value>Obsługiwane pliki |{0}| Wszystkie pliki (*.*) |*</value>
   </data>
   <data name="MainForm_FileDialog_SaveFileFilter" xml:space="preserve">
-    <value>{0}-Dateien|*{0}|Alle Dateien (*.*)|*</value>
+    <value>{0}-Pliki |*{0}| Wszystkie pliki (*.*) |*</value>
   </data>
   <data name="MainForm_TryExecute_Exception" xml:space="preserve">
-    <value>Beim Ausführen der Aktion trat ein Programmfehler auf:
-{0}</value>
+    <value>Wystąpił nieoczekiwany błąd:{0}</value>
   </data>
   <data name="MainForm_SaveTllFile_Exception" xml:space="preserve">
-    <value>Beim Schreiben der TLL-Datei trat ein Fehler auf:
-{0}</value>
+    <value>Wystąpił błąd podczas zapisywania pliku danych TV:{0}</value>
   </data>
   <data name="MainForm_SaveTllFile_Success" xml:space="preserve">
-    <value>Die sortierte TLL-Datei wurde erfolgreich erstellt.</value>
+    <value>Pomyślnie utworzono posortowany plik danych telewizyjnych.</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Question" xml:space="preserve">
-    <value>Möchten Sie die Änderungen Speichern?</value>
+    <value>Czy chcesz więc zapisać swoje zmiany?</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Save" xml:space="preserve">
-    <value>Änderungen speichern</value>
+    <value>Zapisz zmiany</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
-    <value>Änderungen verwerfen</value>
+    <value>Odrzucać zmiany</value>
   </data>
   <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
-    <value>Es konnte kein Modul zum Lesen/Schreiben von {0}-Dateien gefunden werden.</value>
+    <value>Nie znaleziono wtyczki do odczytu/zapisu plików {0}.</value>
   </data>
   <data name="MainForm_LoadFiles_IOException" xml:space="preserve">
-    <value>Fehler beim Laden der Datei</value>
-  </data>
-  <data name="MainForm_LoadFiles_ValidationWarningCap" xml:space="preserve">
-    <value>Datenüberprüfung</value>
+    <value>Błąd ładowania pliku</value>
   </data>
   <data name="MainForm_LoadFiles_ValidationWarningMsg" xml:space="preserve">
-    <value>Die Überprüfung des Dateiinhalts fand einige Auffälligkeiten, die Senderliste ist womöglich defekt.</value>
+    <value>Zawartość pliku wykazuje pewne anomalie i prawdopodobnie jest uszkodzona.</value>
+  </data>
+  <data name="MainForm_LoadFiles_ValidationWarningCap" xml:space="preserve">
+    <value>Walidacji danych</value>
   </data>
   <data name="MainForm_RestoreScanOrder_Message" xml:space="preserve">
-    <value>Die händische Sortierung wird überschrieben.
-Wollen Sie wirklich die Reihenfolge des Sendersuchlaufs wiederherstellen?</value>
+    <value>Wszystkie niestandardowe przechowywanie zostaną utracone.
+Czy na pewno chcesz przywrócić kolejność ze skanowania kanałów?</value>
   </data>
   <data name="MainForm_RestoreScanOrder_Caption" xml:space="preserve">
-    <value>Reihenfolge des Sendersuchlaufs wiederherstellen</value>
+    <value>Przywróć kolejność ze skanowania kanałów</value>
   </data>
   <data name="MainForm_LoadFiles_DupeWarningMsg" xml:space="preserve">
-    <value>Die Eingabedatei enthält mehrere Einträge die der
-gleichen Programmnummer zugeordnet sind. Es ist möglich,
-dass das Fernsehgerät die von ChanSort durchgeführten
-Änderungen nicht akzeptiert.
-Eine typische Ursache für diese Situation ist ein 
-manueller Transponderscan.
-Es wird empfohlen, für die Bearbeitung eine saubere 
-Ausgangsdatei zu verwenden. Dazu schalten Sie zunächst
-den Hotel-Modus AUS, daraufhin können Sie die 
-Werkseinstellungen wiederherstellen und einen 
-Sender-Blindsuchlauf ausführen. Anschließend aktivieren
-Sie bitte den den Hotel-Modus wieder und exportieren
-die Senderliste erneut auf einen USB-Stick.
-</value>
+    <value>Plik wejściowy zawiera wiele rekordów, które używają tego samego
+numeru programu. Możliwe, że telewizor nie zaakceptuje
+zmian wprowadzonych przez ChanSort.
+Jest to zazwyczaj spowodowane ręcznym skanowaniem transpondera.
+Zaleca się stosowanie czystego pliku wejściowego do wszelkich modyfikacji.
+Aby to zrobić, wyłącz tryb hotelowy, zresetuj telewizor do
+ustawień fabrycznych, uruchom nowe skanowanie kanałów w ciemno i włącz
+ponownie tryb hotelowy, a następnie wyeksportuj nowy czysty plik TLL.</value>
   </data>
   <data name="MainForm_btnResetChannelData_Click_Message" xml:space="preserve">
-    <value>ACHTUNG: Alle analogen, DVB-C/T und DVB-S Sender- und Transponderdaten werden gelöscht.
-Nach dem Laden der Datei in den Fernseher ist ein vollständer Suchlauf notwendig.
-Wollen Sie fortsetzen?</value>
+    <value>OSTRZEŻENIE: Wszystkie dane kanałów analogowych, DVB-C/T i DVB-S oraz transponderów zostaną usunięte.
+Po załadowaniu tego pliku do telewizora będziesz musiał uruchomić pełne skanowanie kanałów.
+Kontynuować?</value>
   </data>
   <data name="MainForm_btnResetChannelData_Click_Caption" xml:space="preserve">
-    <value>Senderinformationen löschen</value>
+    <value>Usuń wszystkie dane kanału</value>
   </data>
   <data name="MainForm_miRestoreOriginal_Message" xml:space="preserve">
-    <value>Die .bak Datei konnte nicht nach {0} kopiert werden</value>
+    <value>Nie można skopiować pliku .bak do {0}</value>
   </data>
   <data name="MainForm_miRestoreOriginal_ItemClick_NoBackup" xml:space="preserve">
-    <value>Sicherheitskopie wurde nicht gefunden: {0}</value>
+    <value>Nie znaleziono pliku kopii zapasowej: {0}</value>
   </data>
   <data name="MainForm_miRestoreOriginal_ItemClick_Confirm" xml:space="preserve">
-    <value>Sie sind dabei die Sicherheitskopie wiederherzustellen. Sämtliche Änderungen gehen verloren!
-Möchten Sie fortfahren?</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Donate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_donateCC_LG_de.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
-    <value>Schreibfehler</value>
+    <value>Masz zamiar przywrócić plik kopii zapasowej. Wszystkie zmiany zostaną utracone! Czy chcesz kontynuować?</value>
   </data>
   <data name="MainForm_SaveFiles_ErrorMsg" xml:space="preserve">
-    <value>Beim Schreiben der Datei trat ein Fehler auf. Bitte stellen Sie sicher dass
-- Sie Schreibrechte auf die Datei besitzen
-- die Datei in keinem anderen Programm geöffnet ist
-
-Die Fehlermeldung lautet:
-</value>
+    <value>Wystąpił błąd podczas zapisywania pliku. Upewnij się, że- masz uprawnienia do zapisu pliku- plik nie jest otwarty w innym programie
+Komunikat o błędzie to:</value>
+  </data>
+  <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
+    <value>Błąd zapisu pliku</value>
   </data>
   <data name="UpdateCheck_NotifyAboutNewVersion_Message" xml:space="preserve">
-    <value>Eine neuere Version ist verfügbar: v{0}.
-Möchten Sie die Downloadseite öffnen?</value>
+    <value>Dostępna jest nowsza wersja: v{0}.Czy chcesz otworzyć stronę pobierania?</value>
   </data>
   <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
-    <value>Neue Version</value>
+    <value>Nowa wersja</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_Question" xml:space="preserve">
-    <value>Wie möchten Sie die Senderliste bearbeiten?</value>
+    <value>Jak chcesz edytować listę kanałów?</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
-    <value>Neu zusammenstellen: Mit leerer Liste beginnen und Sender in gewünschter Reihenfolge hinzufügen</value>
+    <value>Utwórz nową listę: Zacznij od pustej listy i dodaj kanały w żądanej kolejności</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
-    <value>Bestehende Liste bearbeiten: Derzeitige Senderreihenfolge übernehmen und anschließend bearbeiten</value>
+    <value>Zmodyfikuj bieżącą listę: Zacznij od bieżącej listy i zmodyfikuj ją w razie potrzeby</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
-    <value>Vorlage übernehmen: Senderreihenfolge und Favoriten aus einer Vorlagedatei übernehmen</value>
+    <value>Kopiuj listę kanałów: uporządkuj kanały w taki sam sposób, jak na liście referencyjnej</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
-    <value>Was soll mit den unsortierten Sendern geschehen?</value>
+    <value>Co powinno się stać z nieposortowanymi kanałami?</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Append" xml:space="preserve">
-    <value>Sender am Ende der Liste anhängen</value>
+    <value>Dodaj nieposortowane kanały na końcu listy</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
-    <value>Sender löschen</value>
+    <value>Usuń nieposortowane kanały z listy</value>
   </data>
   <data name="MainForm_Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Anuluj</value>
   </data>
   <data name="MainForm_LoadTvDataFile_FileNotFound_Caption" xml:space="preserve">
-    <value>Datei nicht gefunden</value>
+    <value>Nie znaleziono pliku</value>
   </data>
   <data name="MainForm_LoadTvDataFile_FileNotFound_Message" xml:space="preserve">
-    <value>Die Datei {0} konnte nicht gefunden werden.</value>
+    <value>Plik {0} nie istnieje.</value>
   </data>
   <data name="MainForm_ExportExcelList_Message" xml:space="preserve">
-    <value>Die Senderliste wurde in die Zwischenablage kopiert
-und kann nun in Excel oder einen Texteditor eingefügt werden.</value>
+    <value>Lista kanałów została skopiowana do schowka
+i można ją wkleić do Excela lub dowolnego edytora tekstu.</value>
   </data>
   <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
-    <value>Ihr TV Gerät funktioniert eventuell nicht mehr korrekt, wenn Lücken in den Programmnummer vorhanden sind.
-Sollen die Programmnummern in fortlaufende Zahlen umgeändert werden?</value>
+    <value>Twój telewizor może nie działać poprawnie, jeśli w numerach kanałów występują luki.
+Czy chcesz, aby numery kanałów były kolejno zmieniane?</value>
   </data>
   <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
-    <value>Der Inhalt der Datei ist ungültig, da sie entweder 0 Byte groß is oder ausschließlich Bytes mit dem selben Wert enthält enthält.
-Mögliche Ursachen sind USB-Sticks, die mit NTFS formatiert sind (FAT32 sollte immer funktionieren) oder ein am TV durchgeführtes Firmwareupdate, ohne einen anschließenden neuen Suchlauf. Dabei kann dann unter Umständen die neue Firmware die alten Daten nicht korrekt exportieren.</value>
+    <value>Zawartość pliku jest nieprawidłowa. Ma rozmiar 0 lub wszystkie bajty mają tę samą wartość.
+Typowe przyczyny to pamięci USB z systemem plików NTFS (zamiast tego spróbuj użyć FAT32)
+lub aktualizacje oprogramowania układowego bez uruchamiania nowego skanowania kanałów.
+(Nowe oprogramowanie w telewizorze może nie być w stanie przetworzyć danych starego kanału podczas eksportu.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antenne,Kabel,Sat,IP,Analog,Digital,TV,Radio,Daten</value>
+    <value>Antena, telewizja kablowa, satelitarna, IP, analogowa, cyfrowa, TV, radio, dane</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
-    <value>Wie soll vorgegangen werden, wenn eine Pr# bereits vergeben ist?</value>
+    <value>Jak chcesz sobie z tym poradzić, gdy Pr# jest już zajęty na liście docelowej?</value>
   </data>
   <data name="ReferenceListForm_btnApply_Click_Clear" xml:space="preserve">
-    <value>Zielliste vor der Übernahme leeren</value>
+    <value>Wyczyść listę docelową przed zastosowaniem listy referencyjnej</value>
   </data>
   <data name="ReferenceListForm_btnApply_Click_Overwrite" xml:space="preserve">
-    <value>Pr# dem Sender gemäß Vorlage zuordnen</value>
+    <value>Nadpisz Pr# kanałem z listy referencyjnej</value>
   </data>
   <data name="ReferenceListForm_btnApply_Click_Keep" xml:space="preserve">
-    <value>Pr# beim bisherigen Sender belassen</value>
+    <value>Zachowaj bieżący kanał na Pr#</value>
   </data>
   <data name="MainForm_SwapChannels_RowCountMsg" xml:space="preserve">
-    <value>Zum Tauschen von Sendern muss die gleiche Anzahl an Zeilen in der linken und rechten Tabelle ausgewählt sein.</value>
+    <value>Aby zamienić kanały, w lewej i prawej tabeli należy wybrać taką samą liczbę wierszy.</value>
   </data>
   <data name="MainForm_SwapChannels_RowCountTitle" xml:space="preserve">
-    <value>Sender Tauschen</value>
+    <value>Zamień kanały</value>
   </data>
   <data name="ReferenceListForm_ShowOpenFileDialog_Title" xml:space="preserve">
-    <value>Wählen Sie eine Vorlagedatei für die Senderreihenfolge</value>
+    <value>Wybierz listę referencyjną do zaimportowania</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Filter" xml:space="preserve">
+    <value>Lista referencyjna ChanSort|*.csv|Lista referencyjna SamToolBox|*.chl|Wszystkie listy referencyjne|*.csv;*. Chl</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Title" xml:space="preserve">
+    <value>Otwórz listę referencyjną</value>
   </data>
   <data name="MainForm_LoadTll_InvalidZip" xml:space="preserve">
-    <value>Diese Datei ist kein gültiges .zip Archiv.
-TVs exportieren oft defekte Dateien auf USB Sticks, die mit NTFS formatiert sind.
-Bitte versuchen Sie, die Senderliste auf einen Stick mit FAT32 Formatierung zu exportieren.</value>
+    <value>Plik nie jest prawidłowym archiwum .zip. Telewizory często eksportują uszkodzone pliki do pamięci USB sformatowanej w systemie plików NTFS.
+Spróbuj wyeksportować do pamięci sformatowanej za pomocą FAT32</value>
   </data>
 </root>

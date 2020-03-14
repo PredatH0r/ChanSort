@@ -205,6 +205,9 @@
     <EmbeddedResource Include="AboutForm.es.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AboutForm.pl.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AboutForm.pt.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -228,6 +231,9 @@
     <EmbeddedResource Include="ActionBox.es.resx">
       <DependentUpon>ActionBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ActionBox.pl.resx">
+      <DependentUpon>ActionBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ActionBox.pt.resx">
       <DependentUpon>ActionBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -247,6 +253,9 @@
       <DependentUpon>CharsetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CharsetForm.es.resx">
+      <DependentUpon>CharsetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharsetForm.pl.resx">
       <DependentUpon>CharsetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CharsetForm.pt.resx">
@@ -278,6 +287,9 @@
     <EmbeddedResource Include="MainForm.es.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.pl.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.pt.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -305,6 +317,9 @@
     <EmbeddedResource Include="Printing\ReportOptionsDialog.es.resx">
       <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Printing\ReportOptionsDialog.pl.resx">
+      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Printing\ReportOptionsDialog.pt.resx">
       <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -319,6 +334,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.cs.resx" />
     <EmbeddedResource Include="Properties\Resources.es.resx" />
+    <EmbeddedResource Include="Properties\Resources.pl.resx" />
     <EmbeddedResource Include="Properties\Resources.pt.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.pt.Designer.cs</LastGenOutput>
@@ -351,6 +367,9 @@
     <EmbeddedResource Include="ReferenceListForm.es.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReferenceListForm.pl.resx">
+      <DependentUpon>ReferenceListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReferenceListForm.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -367,6 +386,9 @@
       <DependentUpon>WaitForm1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaitForm1.es.resx">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitForm1.pl.resx">
       <DependentUpon>WaitForm1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaitForm1.pt.resx">

@@ -615,4 +615,7 @@
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
   </data>
+  <data name="miPolski.Caption" xml:space="preserve">
+    <value>Polski</value>
+  </data>
 </root>

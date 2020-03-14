@@ -55,8 +55,9 @@ namespace ChanSort.Ui
       if (start >= 0)
       {
         int end = response.IndexOf(".zip", start);
-        if (end == start + SearchString.Length + 10)
-          return response.Substring(start + SearchString.Length, 10);
+        int len = end - start - SearchString.Length;
+        if (len >= 10) // YYYY-MM-DD plus optional suffix for a revision
+          return response.Substring(start + SearchString.Length, len);
       }
       return string.Empty;
     }

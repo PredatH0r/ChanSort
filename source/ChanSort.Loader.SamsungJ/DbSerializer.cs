@@ -16,6 +16,7 @@ namespace ChanSort.Loader.SamsungJ
   {
     private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
     private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
+    private readonly List<string> tableNames = new List<string>();
 
     private enum FileType { Unknown, SatDb, ChannelDbDvb, ChannelDbAnalog }
 
@@ -116,16 +117,19 @@ namespace ChanSort.Loader.SamsungJ
     #region DetectFileType()
     private FileType DetectFileType(SQLiteCommand cmd)
     {
-      cmd.CommandText = "select count(1) from sqlite_master where type='table' and name in ('SAT','SAT_TP')";
-      if ((long)cmd.ExecuteScalar() == 2)
+      this.tableNames.Clear();
+      cmd.CommandText = "select name from sqlite_master where type='table'";
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
+        this.tableNames.Add(r.GetString(0).ToUpper());
+
+      if (tableNames.Contains("SAT") && tableNames.Contains("SAT_TP"))
         return FileType.SatDb;
 
-      cmd.CommandText = "select count(1) from sqlite_master where type='table' and name in ('CHNL','SRV','SRV_DVB')";
-      if ((long)cmd.ExecuteScalar() == 3)
+      if (tableNames.Contains("CHNL") && tableNames.Contains("SRV") && tableNames.Contains("SRV_DVB"))
         return FileType.ChannelDbDvb;
 
-      cmd.CommandText = "select count(1) from sqlite_master where type='table' and name in ('CHNL','SRV','SRV_ANL')";
-      if ((long)cmd.ExecuteScalar() == 3)
+      if (tableNames.Contains("CHNL") && tableNames.Contains("SRV") && tableNames.Contains("SRV_ANL"))
         return FileType.ChannelDbAnalog;
 
       return FileType.Unknown;
@@ -307,6 +311,10 @@ namespace ChanSort.Loader.SamsungJ
         sql += fieldNames[i];
       }
       sql += " from " + table + " inner join SRV on SRV.srvId="+table+".srvId inner join CHNL on CHNL.chId=SRV.chId";
+
+      if (this.tableNames.Contains("SRV_EXT_APP")) // in format 1352.0 there are duplicate "major" values in SRV and this recState seems to be the only indicator for "deleted" channels
+        sql += " inner join SRV_EXT_APP on SRV_EXT_APP.srvId=SRV.srvId and SRV_EXT_APP.recState is null";
+
       return sql;
     }
     #endregion

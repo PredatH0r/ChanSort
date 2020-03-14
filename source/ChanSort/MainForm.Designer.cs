@@ -206,6 +206,7 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
+      this.miPolski = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
@@ -1066,9 +1067,10 @@
             this.miCheckUpdates,
             this.miUtf8Charset,
             this.miCopyCsv,
-            this.miSpanish});
+            this.miSpanish,
+            this.miPolski});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 102;
+      this.barManager1.MaxItemId = 103;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1467,6 +1469,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miCzech),
             new DevExpress.XtraBars.LinkPersistInfo(this.miGerman),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSpanish),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miPolski),
             new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRomanian),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRussian)});
@@ -2018,6 +2021,16 @@
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
       // 
+      // miPolski
+      // 
+      this.miPolski.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miPolski, "miPolski");
+      this.miPolski.Id = 102;
+      this.miPolski.ImageOptions.ImageIndex = ((int)(resources.GetObject("barButtonItem1.ImageOptions.ImageIndex")));
+      this.miPolski.Name = "miPolski";
+      this.miPolski.Tag = "pl-PL";
+      this.miPolski.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -2258,6 +2271,7 @@
     private DevExpress.XtraBars.BarButtonItem miCopyCsv;
     private DevExpress.XtraGrid.Columns.GridColumn colOutSource;
         private DevExpress.XtraBars.BarButtonItem miSpanish;
+        private DevExpress.XtraBars.BarButtonItem miPolski;
     }
 }
 

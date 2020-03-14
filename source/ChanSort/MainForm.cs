@@ -380,7 +380,8 @@ namespace ChanSort.Ui
       }
       this.mnuInputSource.ClearLinks();
 
-      XtraTabPage firstNonEmpty = null;
+      XtraTabPage mostChannels = null;
+      int mostChannelsCount = 0;
       var i = 0;
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -388,8 +389,12 @@ namespace ChanSort.Ui
           continue;
         var tab = this.tabChannelList.TabPages.Add(list.Caption);
         tab.Tag = list;
-        if (firstNonEmpty == null && list.Count > 0)
-          firstNonEmpty = tab;
+        if (mostChannels == null || list.Count > mostChannelsCount)
+        {
+          mostChannels = tab;
+          mostChannelsCount = list.Count;
+        }
+
         var item = new BarButtonItem(this.barManager1, list.Caption);
         item.ItemShortcut = new BarShortcut((Keys) ((int) (Keys.Alt | Keys.D1) + i));
         item.Tag = i;
@@ -400,12 +405,12 @@ namespace ChanSort.Ui
 
       if (tabChannelList.TabPages.Count > 0)
       {
-        if (firstNonEmpty == null)
-          firstNonEmpty = tabChannelList.TabPages[0];
-        if (firstNonEmpty == this.tabChannelList.SelectedTabPage)
-          this.ShowChannelList((ChannelList) firstNonEmpty.Tag);
+        if (mostChannels == null)
+          mostChannels = tabChannelList.TabPages[0];
+        if (mostChannels == this.tabChannelList.SelectedTabPage)
+          this.ShowChannelList((ChannelList)mostChannels.Tag);
         else
-          this.tabChannelList.SelectedTabPage = firstNonEmpty;
+          this.tabChannelList.SelectedTabPage = mostChannels;
       }
       else
       {
