@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2020-03-15
+- repackaged to include Polish translation files
+
 2020-03-14
 - check for updates can now handle multiple updates on a specific day
 - fixed applying favorites from a reference list (it showed fav letters on the channels, but the fav lists were empty)
