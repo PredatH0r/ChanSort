@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2020-03-20
+- another attempt to get Samsung 1352.0 format working
+
 2020-03-15
 - repackaged to include Polish translation files
 

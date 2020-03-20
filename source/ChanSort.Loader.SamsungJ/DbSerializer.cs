@@ -18,7 +18,7 @@ namespace ChanSort.Loader.SamsungJ
     private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
     private readonly List<string> tableNames = new List<string>();
 
-    private enum FileType { Unknown, SatDb, ChannelDbDvb, ChannelDbAnalog }
+    private enum FileType { Unknown, SatDb, ChannelDbDvb, ChannelDbAnalog, ChannelDbIp }
 
     #region ctor()
     public DbSerializer(string inputFile) : base(inputFile)
@@ -32,7 +32,7 @@ namespace ChanSort.Loader.SamsungJ
       this.Features.CanHideChannels = true;
       this.Features.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
       this.Features.SortedFavorites = true;
-      this.Features.AllowGapsInFavNumbers = false;
+      this.Features.AllowGapsInFavNumbers = true;
     }
     #endregion
 
@@ -81,12 +81,12 @@ namespace ChanSort.Loader.SamsungJ
 
               switch (type)
               {
-                case FileType.SatDb: break;
-                case FileType.ChannelDbAnalog:
-                  ReadChannelDatabase(conn, filePath, false);
+                case FileType.SatDb: 
                   break;
+                case FileType.ChannelDbAnalog:
                 case FileType.ChannelDbDvb:
-                  ReadChannelDatabase(conn, filePath, true);
+                case FileType.ChannelDbIp:
+                  ReadChannelDatabase(conn, filePath, type);
                   break;
               }
             }
@@ -131,6 +131,9 @@ namespace ChanSort.Loader.SamsungJ
 
       if (tableNames.Contains("CHNL") && tableNames.Contains("SRV") && tableNames.Contains("SRV_ANL"))
         return FileType.ChannelDbAnalog;
+
+      //if (tableNames.Contains("CHNL") && tableNames.Contains("SRV") && tableNames.Contains("SRV_IP"))
+      //  return FileType.ChannelDbIp;
 
       return FileType.Unknown;
     }
@@ -194,13 +197,13 @@ namespace ChanSort.Loader.SamsungJ
 
 
     #region ReadChannelDatabase()
-    private void ReadChannelDatabase(SQLiteConnection conn, string dbPath, bool digital)
+    private void ReadChannelDatabase(SQLiteConnection conn, string dbPath, FileType fileType)
     {
       this.channelById.Clear();
       using (var cmd = conn.CreateCommand())
       {
-        var providers = digital ? this.ReadProviders(cmd) : null;
-        var channelList = this.ReadChannels(cmd, dbPath, providers, digital);
+        var providers = fileType == FileType.ChannelDbDvb ? this.ReadProviders(cmd) : null;
+        var channelList = this.ReadChannels(cmd, dbPath, providers, fileType);
         this.ReadFavorites(cmd);
         this.dbPathByChannelList.Add(channelList, dbPath);
       }
@@ -228,19 +231,19 @@ namespace ChanSort.Loader.SamsungJ
     #endregion
 
     #region ReadChannels()
-    private ChannelList ReadChannels(SQLiteCommand cmd, string dbPath, Dictionary<long, string> providers, bool digital)
+    private ChannelList ReadChannels(SQLiteCommand cmd, string dbPath, Dictionary<long, string> providers, FileType fileType)
     {
-      var signalSource = DetectSignalSource(cmd, digital);
+      var signalSource = DetectSignalSource(cmd, fileType);
 
       string name = Path.GetFileName(dbPath);
       ChannelList channelList = new ChannelList(signalSource, name);
-      string table = digital ? "SRV_DVB" : "SRV_ANL";
+      string table = fileType == FileType.ChannelDbDvb ? "SRV_DVB" : fileType == FileType.ChannelDbAnalog ? "SRV_ANL" : "SRV_IP";
       List<string> fieldNames = new List<string> { 
                             "chType", "chNum", "freq", // CHNL
-                            "SRV.srvId", "major", "progNum", "cast(srvName as blob)", "srvType", "hidden", "scrambled", "lockMode", "numSel", // SRV
+                            "SRV.srvId", "major", "progNum", "cast(srvName as blob) srvName", "srvType", "hidden", "scrambled", "lockMode", "numSel", "elim" // SRV
                             };
-      if (digital)
-        fieldNames.AddRange(new[] {"onid", "tsid", "vidPid", "provId", "cast(shrtSrvName as blob)", "lcn"}); // SRV_DVB
+      if (fileType == FileType.ChannelDbDvb)
+        fieldNames.AddRange(new[] {"onid", "tsid", "vidPid", "provId", "cast(shrtSrvName as blob) shrtSrvName", "lcn"}); // SRV_DVB
 
       var sql = this.BuildQuery(table, fieldNames);
       var fields = this.GetFieldMap(fieldNames);
@@ -248,16 +251,25 @@ namespace ChanSort.Loader.SamsungJ
       cmd.CommandText = sql;
       using (var r = cmd.ExecuteReader())
       {
+        int prevNr = 0;
         while (r.Read())
         {
+          if (r.GetInt32(fields["elim"]) != 0)
+            continue;
+
           // 171027 - ohuseyinoglu: With our change in transponder indexing, we can directly look it up by "chNum" now!
           var tp = this.DataRoot.Transponder.TryGet(r.GetInt32(1));
           // ... and get the satellite from that transponder - if set
           // Note that we can have channels from multiple satellites in the same list, so this is a loop variable now
           var sat = tp?.Satellite;
           var channel = new DbChannel(r, fields, this.DataRoot, providers, sat, tp);
+
+          if (channel.OldProgramNr == prevNr) // when there is a SRV_EXT_APP table in the database, the service with the highest ext_app "recState" takes priority
+            continue;
+
           this.DataRoot.AddChannel(channelList, channel);
           this.channelById.Add(channel.RecordIndex, channel);
+          prevNr = channel.OldProgramNr;
         }
       }
 
@@ -267,9 +279,11 @@ namespace ChanSort.Loader.SamsungJ
     #endregion
 
     #region DetectSignalSource()
-    private static SignalSource DetectSignalSource(SQLiteCommand cmd, bool digital)
+    private static SignalSource DetectSignalSource(SQLiteCommand cmd, FileType fileType)
     {
-      var signalSource = digital ? SignalSource.Digital : SignalSource.Analog;
+      if (fileType == FileType.ChannelDbIp)
+        return SignalSource.IP|SignalSource.Digital;
+      var signalSource = fileType == FileType.ChannelDbAnalog ? SignalSource.Analog : SignalSource.Digital;
       cmd.CommandText = "select distinct chType from CHNL";
       using (var r = cmd.ExecuteReader())
       {
@@ -312,8 +326,8 @@ namespace ChanSort.Loader.SamsungJ
       }
       sql += " from " + table + " inner join SRV on SRV.srvId="+table+".srvId inner join CHNL on CHNL.chId=SRV.chId";
 
-      if (this.tableNames.Contains("SRV_EXT_APP")) // in format 1352.0 there are duplicate "major" values in SRV and this recState seems to be the only indicator for "deleted" channels
-        sql += " inner join SRV_EXT_APP on SRV_EXT_APP.srvId=SRV.srvId and SRV_EXT_APP.recState is null";
+      if (this.tableNames.Contains("SRV_EXT_APP")) // in format 1352.0 there are duplicate "major" values in SRV and this recState seems to be the only difference
+        sql += " inner join SRV_EXT_APP on SRV_EXT_APP.srvId=SRV.srvId order by SRV.major, ifnull(SRV_EXT_APP.recState,0) desc";
 
       return sql;
     }
@@ -324,7 +338,11 @@ namespace ChanSort.Loader.SamsungJ
     {
       Dictionary<string, int> field = new Dictionary<string, int>();
       for (int i = 0; i < fieldNames.Count; i++)
-        field[fieldNames[i]] = i;
+      {
+        var idx = fieldNames[i].LastIndexOf(' ') + 1;
+        field[fieldNames[i].Substring(idx)] = i;
+      }
+
       return field;
     }
     #endregion
@@ -334,17 +352,18 @@ namespace ChanSort.Loader.SamsungJ
     {
       cmd.CommandText = "select srvId, fav, pos from SRV_FAV";
       var r = cmd.ExecuteReader();
+      int favPosAdjust = tableNames.Contains("SRV_EXT_APP") ? 0 : 1;
       while (r.Read())
       {
         var channel = this.channelById.TryGet(r.GetInt64(0));
         if (channel == null) 
           continue;
         int fav = r.GetInt32(1) - 1; // fav values start with 1 in the table
-        int pos = r.GetInt32(2);     // pos values start with 0
+        int pos = r.GetInt32(2) + favPosAdjust;     // pos values start with 0 or 1
         if (pos >= 0)
         {
           channel.Favorites |= (Favorites) (1 << fav);
-          channel.OldFavIndex[fav] = pos + 1;
+          channel.OldFavIndex[fav] = pos;
         }
       }
     }

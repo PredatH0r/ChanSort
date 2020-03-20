@@ -20,7 +20,7 @@ namespace ChanSort.Loader.SamsungJ
         (this.SignalSource & SignalSource.DvbC) == SignalSource.DvbC ? LookupData.Instance.GetDvbcTransponder(this.FreqInMhz).ToString() :
         (this.SignalSource & SignalSource.DvbS) == SignalSource.DvbS ? LookupData.Instance.GetAstraTransponder((int)this.FreqInMhz).ToString() :
         "";
-      this.Name = DbSerializer.ReadUtf16(r, 6);
+      this.Name = DbSerializer.ReadUtf16(r, field["srvName"]);
       this.Hidden = r.GetBoolean(field["hidden"]);
       this.Encrypted = r.GetBoolean(field["scrambled"]);
       this.Lock = r.GetBoolean(field["lockMode"]);
@@ -58,7 +58,7 @@ namespace ChanSort.Loader.SamsungJ
     #region ReadDvbData()
     protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers)
     {
-      this.ShortName = DbSerializer.ReadUtf16(r, 16);
+      this.ShortName = DbSerializer.ReadUtf16(r, field["srvName"]);
       this.RecordOrder = r.GetInt32(field["major"]);
       int serviceType = r.GetInt32(field["srvType"]);
       this.ServiceType = serviceType;
