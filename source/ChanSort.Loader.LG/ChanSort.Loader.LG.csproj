@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChanSort.Loader.LG</RootNamespace>
     <AssemblyName>ChanSort.Loader.LG</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -60,9 +60,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v19.2, Version=19.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v19.2, Version=19.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v19.2, Version=19.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -146,6 +146,9 @@
     <EmbeddedResource Include="PresetProgramNrDialog.ru.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PresetProgramNrDialog.tr.resx">
+      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Resource.cs.resx" />
     <EmbeddedResource Include="Resource.de.resx">
@@ -163,6 +166,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resource.ro.resx" />
     <EmbeddedResource Include="Resource.ru.resx" />
+    <EmbeddedResource Include="Resource.tr.resx" />
     <EmbeddedResource Include="TvSettingsForm.cs.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -187,6 +191,9 @@
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TvSettingsForm.ru.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TvSettingsForm.tr.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

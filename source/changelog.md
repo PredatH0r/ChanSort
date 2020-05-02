@@ -1,6 +1,17 @@
 ChanSort Change Log 
 ===================
 
+2020-05-02
+- added Turkish translation (thanks to Ali Haykir)
+- Philips: combined DVB-C and DVB-T into a single list with a common number domain
+- added exprimental support for Samsung "iptv" list
+- added Suiss reference lists with Astra 19.2E + Hotbird 13.0E channels
+- fixed "System.ArgumentOutOfRangeException..." when opening a file which supports mixed-source favorite lists 
+  (Sony, Philips, Hisense, ...)
+- System requirements changed: .NET Framework 4.8
+- added high-DPI support
+- added Accessibility menu options to change the UI font size
+
 2020-03-20
 - another attempt to get Samsung 1352.0 format working
 

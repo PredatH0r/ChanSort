@@ -129,9 +129,6 @@
   <data name="labelControl2.Text" xml:space="preserve">
     <value>Fuente:</value>
   </data>
-  <data name="fontEdit1.EditValue" xml:space="preserve">
-    <value>Tahoma</value>
-  </data>
   <data name="btnPreview.Text" xml:space="preserve">
     <value>Previsualizar…</value>
   </data>

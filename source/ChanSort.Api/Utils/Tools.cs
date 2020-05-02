@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace ChanSort.Api
@@ -176,6 +177,34 @@ namespace ChanSort.Api
         return false;
       return content[0] == 0xEF && content[1] == 0xBB && content[2] == 0xBF;
     }
+    #endregion
+
+    #region Scale()
+    public static int Scale(this int dist, float factor)
+    {
+      return (int)Math.Round(dist * factor);
+    }
+
+    public static Size Scale(this Size size, SizeF factor)
+    {
+      return new Size((int)Math.Round(size.Width * factor.Width), (int)Math.Round(size.Height * factor.Height));
+    }
+
+    public static SizeF Scale(this SizeF absFactor, SizeF relFactor)
+    {
+      return new SizeF(absFactor.Width * relFactor.Width, absFactor.Height * relFactor.Height);
+    }
+
+    public static int Unscale(this int dist, float factor)
+    {
+      return (int)Math.Round(dist / factor);
+    }
+
+    public static Size Unscale(this Size size, SizeF factor)
+    {
+      return new Size((int)Math.Round(size.Width / factor.Width), (int)Math.Round(size.Height / factor.Height));
+    }
+
     #endregion
   }
 }

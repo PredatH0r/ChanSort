@@ -141,9 +141,6 @@
   <data name="btnClose.Text" xml:space="preserve">
     <value>Cerrar</value>
   </data>
-  <data name="txtAuthor.Text" xml:space="preserve">
-    <value>Horst Beham</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Acerca de ChanSort</value>
   </data>

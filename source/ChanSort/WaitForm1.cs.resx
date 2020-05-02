@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,16 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Form1</value>
-  </data>
   <data name="progressPanel1.Caption" xml:space="preserve">
     <value>Chvíli strpení</value>
   </data>
   <data name="progressPanel1.Description" xml:space="preserve">
     <value>Vytváří se datový soubor televizoru...</value>
-  </data>
-  <data name="progressPanel1.Text" xml:space="preserve">
-    <value>progressPanel1</value>
   </data>
 </root>

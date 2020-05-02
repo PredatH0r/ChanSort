@@ -79,7 +79,7 @@ namespace ChanSort.Api
     /// <summary>
     /// A proxy channel is inserted into the current channel list when there was no match for a reference list channel
     /// </summary>
-    public bool IsProxy => this.RecordIndex < 0;
+    public bool IsProxy => this.RecordIndex == -1;
     
     /// <summary>
     /// arbitrary information that can be shown in a UI column to assist in analyzing a file format while coding a plugin

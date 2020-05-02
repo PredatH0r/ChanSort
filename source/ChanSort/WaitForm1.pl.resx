@@ -120,12 +120,6 @@
   <data name="progressPanel1.Description" xml:space="preserve">
     <value>Generowanie pliku danych TV ...</value>
   </data>
-  <data name="progressPanel1.Text" xml:space="preserve">
-    <value>panelPostępu1</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Formularz 1</value>
-  </data>
   <data name="progressPanel1.Caption" xml:space="preserve">
     <value>Proszę być cierpliwym</value>
   </data>

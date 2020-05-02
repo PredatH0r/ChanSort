@@ -132,8 +132,8 @@ namespace ChanSort.Loader.SamsungJ
       if (tableNames.Contains("CHNL") && tableNames.Contains("SRV") && tableNames.Contains("SRV_ANL"))
         return FileType.ChannelDbAnalog;
 
-      //if (tableNames.Contains("CHNL") && tableNames.Contains("SRV") && tableNames.Contains("SRV_IP"))
-      //  return FileType.ChannelDbIp;
+      if (tableNames.Contains("CHNL") && tableNames.Contains("SRV") && tableNames.Contains("SRV_IP"))
+        return FileType.ChannelDbIp;
 
       return FileType.Unknown;
     }
@@ -236,7 +236,7 @@ namespace ChanSort.Loader.SamsungJ
       var signalSource = DetectSignalSource(cmd, fileType);
 
       string name = Path.GetFileName(dbPath);
-      ChannelList channelList = new ChannelList(signalSource, name);
+      ChannelList channelList = this.CreateChannelList(signalSource, name);
       string table = fileType == FileType.ChannelDbDvb ? "SRV_DVB" : fileType == FileType.ChannelDbAnalog ? "SRV_ANL" : "SRV_IP";
       List<string> fieldNames = new List<string> { 
                             "chType", "chNum", "freq", // CHNL
@@ -277,6 +277,19 @@ namespace ChanSort.Loader.SamsungJ
       return channelList;
     }
     #endregion
+
+    private ChannelList CreateChannelList(SignalSource signalSource, string name)
+    {
+      var list = new ChannelList(signalSource, name);
+      if ((list.SignalSource & SignalSource.IP) != 0)
+      {
+        list.VisibleColumnFieldNames = new List<string>
+        {
+          "OldPosition", "Position", "PrNr", "Name", "Favorites", "SymbolRate"
+        };
+      }
+      return list;
+    }
 
     #region DetectSignalSource()
     private static SignalSource DetectSignalSource(SQLiteCommand cmd, FileType fileType)
