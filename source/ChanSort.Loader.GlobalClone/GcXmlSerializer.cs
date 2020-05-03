@@ -8,7 +8,7 @@ using ChanSort.Api;
 
 namespace ChanSort.Loader.GlobalClone
 {
-  class GcSerializer : SerializerBase
+  class GcXmlSerializer : SerializerBase
   {
     private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT, "Analog");
     private readonly ChannelList dtvTvChannels = new ChannelList(SignalSource.DvbCT | SignalSource.TvAndData, "DTV");
@@ -22,7 +22,7 @@ namespace ChanSort.Loader.GlobalClone
     private bool usesBinaryDataInUtf8Envelope = false;
 
     #region ctor()
-    public GcSerializer(string inputFile) : base(inputFile)
+    public GcXmlSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;

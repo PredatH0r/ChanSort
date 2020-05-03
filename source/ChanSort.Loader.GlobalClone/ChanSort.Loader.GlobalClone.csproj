@@ -71,7 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GcChannel.cs" />
-    <Compile Include="GcSerializer.cs" />
+    <Compile Include="GcJsonSerializer.cs" />
+    <Compile Include="GcXmlSerializer.cs" />
     <Compile Include="GcSerializerPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.de.Designer.cs">
