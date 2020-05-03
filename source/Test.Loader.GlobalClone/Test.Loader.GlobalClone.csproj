@@ -73,6 +73,7 @@
     <None Include="TestFiles\GlobalClone00001.TLL" />
     <None Include="TestFiles\GlobalClone00002.TLL" />
     <None Include="TestFiles\GlobalClone00003.TLL" />
+    <None Include="TestFiles\GlobalClone200-inner.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">

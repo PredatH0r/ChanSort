@@ -14,14 +14,8 @@ namespace ChanSort.Loader.GlobalClone
     {
       // files with <TLLDATA><ModelInfo><CloneVersion><MajorVersion>200</MajorVersion> .... contain all the actual channel data in JSON format inside a <legacybroadcast> element
       var content = File.ReadAllText(inputFile, Encoding.UTF8);
-      var startTag = "<legacybroadcast>";
-      var start = content.IndexOf(startTag);
-      if (start >= 0)
-      {
-        var end = content.IndexOf("</legacybroadcast>", start);
-        var json = content.Substring(start + startTag.Length, end - start - startTag.Length);
+      if (content.Contains("<legacybroadcast>"))
         return new GcJsonSerializer(inputFile, content);
-      }
 
       return new GcXmlSerializer(inputFile);
     }

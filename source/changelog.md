@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2020-05-03
+- added experimental support for LG WebOS 5.0 (e.g. OLED CX series) - NO FAV LISTS YET
+
 2020-05-02
 - added Turkish translation (thanks to Ali Haykir)
 - Philips: combined DVB-C and DVB-T into a single list with a common number domain

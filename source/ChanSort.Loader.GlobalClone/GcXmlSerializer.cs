@@ -27,6 +27,7 @@ namespace ChanSort.Loader.GlobalClone
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
       this.Features.CanHaveGaps = true;
+      this.Features.CanSaveAs = true;
       this.Features.CanSkipChannels = true;
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
@@ -207,7 +208,7 @@ namespace ChanSort.Loader.GlobalClone
         if (itemNode.LocalName != "ITEM")
           continue;
         ++i;
-        GcChannel ch = new GcChannel(analog ? SignalSource.AnalogCT | SignalSource.Tv : SignalSource.Digital, i, itemNode);
+        var ch = new GcChannel<XmlNode>(analog ? SignalSource.AnalogCT | SignalSource.Tv : SignalSource.Digital, i, itemNode);
         this.ParseChannelInfoNodes(itemNode, ch);
 
         var list = this.DataRoot.GetChannelList(ch.SignalSource);
@@ -217,7 +218,7 @@ namespace ChanSort.Loader.GlobalClone
     #endregion
 
     #region ParseChannelInfoNode()
-    private void ParseChannelInfoNodes(XmlNode itemNode, GcChannel ch, bool onlyNames = false)
+    private void ParseChannelInfoNodes(XmlNode itemNode, GcChannel<XmlNode> ch, bool onlyNames = false)
     {
       bool hasHexName = false;
       int mapType = 0;
@@ -384,13 +385,13 @@ namespace ChanSort.Loader.GlobalClone
       {
         foreach (var channel in list.Channels)
         {
-          var ch = channel as GcChannel;
+          var ch = channel as GcChannel<XmlNode>;
           if (ch == null) continue; // ignore proxy channels from reference lists
           var nameBytes = Encoding.UTF8.GetBytes(ch.Name);
           bool nameNeedsEncoding = nameBytes.Length != ch.Name.Length;
           string mapType = "";
           
-          foreach (XmlNode node in ch.XmlNode.ChildNodes)
+          foreach (XmlNode node in ch.Node.ChildNodes)
           {
             switch (node.LocalName)
             {
@@ -518,9 +519,9 @@ namespace ChanSort.Loader.GlobalClone
           continue;
         foreach (var channel in list.Channels)
         {
-          var gcChannel = channel as GcChannel;
+          var gcChannel = channel as GcChannel<XmlNode>;
           if (gcChannel != null)
-            this.ParseChannelInfoNodes(gcChannel.XmlNode, gcChannel, true);
+            this.ParseChannelInfoNodes(gcChannel.Node, gcChannel, true);
         }
       }
     }
