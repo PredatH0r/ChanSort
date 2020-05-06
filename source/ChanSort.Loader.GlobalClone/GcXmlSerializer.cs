@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using System.Xml;
 using ChanSort.Api;
+using System.Windows.Forms;
 
 namespace ChanSort.Loader.GlobalClone
 {
@@ -106,7 +106,7 @@ namespace ChanSort.Loader.GlobalClone
             {
               series = match.Groups[1].Value;
               if ((series == "LB" || series == "UB") && StringComparer.InvariantCulture.Compare(match.Groups[2].Value, "60") >= 0)
-                MessageBox.Show(Resources.GcSerializer_webOsFirmwareWarning, "LG GlobalClone", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Api.View.Default.MessageBox(Resources.GcSerializer_webOsFirmwareWarning, "LG GlobalClone", (int)MessageBoxButtons.OK, (int)MessageBoxIcon.Information);
             }
             break;
         }
@@ -118,7 +118,7 @@ namespace ChanSort.Loader.GlobalClone
       if (binTlls.Length > 0 && !(binTlls.Length == 1 && Path.GetFileName(binTlls[0]).ToLower() == Path.GetFileName(this.FileName).ToLower()))
       {
         var txt = Resources.GcSerializer_ReadModelInfo_ModelWarning;
-        if (MessageBox.Show(txt, "LG GlobalClone", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+        if (Api.View.Default.MessageBox(txt, "LG GlobalClone", (int)MessageBoxButtons.YesNo, (int)MessageBoxIcon.Information) == (int)DialogResult.Yes)
         {
           foreach (var file in binTlls)
             File.Move(file, file + "_bak");
@@ -195,6 +195,16 @@ namespace ChanSort.Loader.GlobalClone
             // TODO: US DTV_ATSC files contain such lists
             break;
         }
+      }
+
+      // when the user selects a predefined "provider" during the TV's setup, an empty list will be exported and can't be edited
+      int total = 0;
+      foreach (var list in this.DataRoot.ChannelLists)
+        total += list.Channels.Count;
+      if (total == 0)
+      {
+        Api.View.Default.MessageBox(Resources.GcSerializer_ReadChannelLists_NoChannelsMsg, Resources.GcSerializer_ReadChannelLists_NoChannelsCap, 
+          (int)MessageBoxButtons.OK, (int)MessageBoxIcon.Exclamation);
       }
     }
     #endregion

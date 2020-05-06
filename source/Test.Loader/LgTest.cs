@@ -26,9 +26,9 @@ namespace Test.Loader
       var firmwareSize = new Dictionary<int, string>();
       foreach(var file in list)
       {
-        if (file.Contains("GlobalClone") || file.Contains("CountrySettings"))
+        if (file.Contains("GlobalClone") || file.Contains("CountrySettings") || file.Contains("LV661H"))
           continue;
-        Debug.Print("Testing " + file);
+        //Debug.Print("Testing " + file);
         try
         {
           var serializer = plugin.CreateSerializer(file) as TllFileSerializer;

@@ -86,8 +86,7 @@ namespace Test.Loader.GlobalClone
       data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
       Assert.IsTrue(orf2w.IsDeleted);
-      Assert.AreNotEqual(-1, orf2w.NewProgramNr);
-      Assert.AreEqual(0, dvbs.Channels.Count(ch => ch.NewProgramNr <= 0));
+      Assert.AreEqual(0, orf2w.NewProgramNr);
 
 
       // save and reload

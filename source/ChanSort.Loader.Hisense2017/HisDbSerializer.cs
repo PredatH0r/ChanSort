@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
-using System.Windows.Forms;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Hisense2017
@@ -154,7 +153,7 @@ namespace ChanSort.Loader.Hisense2017
       }
 
       if (channelsById.Count == 0)
-        MessageBox.Show(Resources.Load_NoChannelsMsg, Resources.Load_NoChannelsCaption, MessageBoxButtons.OK);
+        Api.View.Default.MessageBox(Resources.Load_NoChannelsMsg, Resources.Load_NoChannelsCaption);
     }
 
     #endregion

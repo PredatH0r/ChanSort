@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChanSort.View
+namespace ChanSort.Api
 {
 
   public interface IActionBoxDialog : IDisposable
@@ -16,5 +16,12 @@ namespace ChanSort.View
     public static View Default { get; set; }
 
     public Func<string, IActionBoxDialog> CreateActionBox { get; set; }
+
+    public Func<string, string, int, int, int> MessageBoxImpl { get; set; }
+
+    public int MessageBox(string msg, string caption = "", int buttons = 0, int icon = 0)
+    {
+      return MessageBoxImpl(msg, caption, buttons, icon);
+    }
   }
 }

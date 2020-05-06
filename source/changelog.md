@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+TBD
+- added info screen when opening an empty LG channel list which is most likely caused by selecting a predefined list
+  during the TV setup or channel search
+- fixed: Sony KDL channel lists were not saved correctly
+- upgrade to DevExpres 20.1.3
+
 2020-05-03
 - added experimental support for LG WebOS 5.0 (e.g. OLED CX series) - NO FAV LISTS YET
 

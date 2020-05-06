@@ -100,8 +100,10 @@ namespace ChanSort.Ui
       this.miAddFromRefList.Enabled = false;
 #endif
 
-      View.View.Default = new View.View();
-      View.View.Default.CreateActionBox = msg => new ActionBoxDialog(msg);
+      // The Api.View.Default object gives loaders access to UI functions
+      Api.View.Default = new Api.View();
+      Api.View.Default.CreateActionBox = msg => new ActionBoxDialog(msg);
+      Api.View.Default.MessageBoxImpl = (msg, caption, buttons, icon) => (int)XtraMessageBox.Show(this, msg, caption, (MessageBoxButtons) buttons, (MessageBoxIcon) icon);
 
       var defaultColumns = new List<string>();
       foreach (GridColumn col in this.gviewRight.Columns.OrderBy(c => c.VisibleIndex))

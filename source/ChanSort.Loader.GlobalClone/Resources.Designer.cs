@@ -61,6 +61,29 @@ namespace ChanSort.Loader.GlobalClone {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LG predefined / empty channel list.
+        /// </summary>
+        internal static string GcSerializer_ReadChannelLists_NoChannelsCap {
+            get {
+                return ResourceManager.GetString("GcSerializer_ReadChannelLists_NoChannelsCap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This channel list does not contain any channels.
+        ///Most likely a predefined channel list was selected during the TV&apos;s setup, which cannot be edited and exports an empty list.
+        ///
+        ///Please run a new channel search on the TV and when asked for a Provider, select a neutral option (none, other, ...).
+        ///When possible, select Blind Scan and unselect Network Search to scan the whole frequency range.
+        ///.
+        /// </summary>
+        internal static string GcSerializer_ReadChannelLists_NoChannelsMsg {
+            get {
+                return ResourceManager.GetString("GcSerializer_ReadChannelLists_NoChannelsMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your TV will only import the GlobalClone file when there are no files named xx*.TLL in the same directory.
         ///Do you want ChanSort to rename the conflicting files?.
         /// </summary>

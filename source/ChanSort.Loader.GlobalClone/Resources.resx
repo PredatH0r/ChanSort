@@ -107,4 +107,15 @@ Please make sure that your webOS based TV is using a recent firmware version (LB
 Older LG firmware for webOS based TV models does not handle the import of channel lists properly and randomly reorders channels.
 (If your firmware is newer, you can ignore is message.)</value>
   </data>
+  <data name="GcSerializer_ReadChannelLists_NoChannelsCap">
+    <value>LG predefined / empty channel list</value>
+  </data>
+  <data name="GcSerializer_ReadChannelLists_NoChannelsMsg" xml:space="preserve">
+    <value>This channel list does not contain any channels.
+Most likely a predefined channel list was selected during the TV's setup, which cannot be edited and exports an empty list.
+
+Please run a new channel search on the TV and when asked for a Provider, select a neutral option (none, other, ...).
+When possible, select Blind Scan and unselect Network Search to scan the whole frequency range.
+</value>
+  </data>
 </root>

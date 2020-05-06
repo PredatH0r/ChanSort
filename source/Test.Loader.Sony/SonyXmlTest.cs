@@ -152,7 +152,7 @@ namespace Test.Loader.Sony
       data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
       Assert.IsTrue(orf2e.IsDeleted);
-      Assert.IsTrue(orf2e.NewProgramNr == 0);
+      Assert.AreEqual(0, orf2e.NewProgramNr);
 
 
       // save and reload

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ChanSort.View;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
 
 namespace ChanSort.Ui
 {
 
-  public partial class ActionBoxDialog : XtraForm, IActionBoxDialog
+  public partial class ActionBoxDialog : XtraForm, Api.IActionBoxDialog
   {
     private const int ButtonSpacing = 10;
     private const int ButtonHeight = 50;
@@ -126,7 +125,7 @@ namespace ChanSort.Ui
       AddAction(text, result, null, false);
     }
 
-    void IActionBoxDialog.ShowDialog() => this.ShowDialog();
+    void Api.IActionBoxDialog.ShowDialog() => this.ShowDialog();
 
     #endregion
   }

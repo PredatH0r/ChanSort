@@ -251,7 +251,7 @@ namespace ChanSort.Loader.Samsung
         series = validCandidates[0];
       else
       {
-        using (var dlg = View.View.Default?.CreateActionBox(""))
+        using (var dlg = Api.View.Default?.CreateActionBox(""))
         {
           if (dlg == null) // during unit testing
             return false;

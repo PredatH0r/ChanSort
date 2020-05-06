@@ -7,7 +7,6 @@ using ChanSort.Api;
 using System.Data.SQLite;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace ChanSort.Loader.Hisense
 {
@@ -168,7 +167,7 @@ namespace ChanSort.Loader.Hisense
       foreach (var list in this.channelLists)
         totalCount += list.Count;
       if (totalCount == 0)
-        MessageBox.Show(Resources.Load_NoChannelsMsg, Resources.Load_NoChannelsCaption, MessageBoxButtons.OK);
+        Api.View.Default.MessageBox(Resources.Load_NoChannelsMsg, Resources.Load_NoChannelsCaption);
     }
 
     #endregion
