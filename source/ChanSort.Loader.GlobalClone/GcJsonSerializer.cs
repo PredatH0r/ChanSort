@@ -14,8 +14,8 @@ namespace ChanSort.Loader.GlobalClone
     string xmlSuffix;
     private JObject doc;
 
-    private readonly ChannelList tvList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Tv, "TV");
-    private readonly ChannelList radioList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Radio, "Radio");
+    //private readonly ChannelList tvList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Tv, "TV");
+    //private readonly ChannelList radioList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Radio, "Radio");
 
     public GcJsonSerializer(string filename, string content) : base(filename)
     {
@@ -29,12 +29,18 @@ namespace ChanSort.Loader.GlobalClone
       this.Features.CanHideChannels = true;
       this.Features.CanSkipChannels = true;
       this.Features.CanLockChannels = true;
-      
-      this.DataRoot.AddChannelList(tvList);
-      this.DataRoot.AddChannelList(radioList);
 
-      foreach(var list in this.DataRoot.ChannelLists)
-        list.VisibleColumnFieldNames.Add("Source");
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Data, "DVB-T TV"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Radio, "DVB-T Radio"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Data, "DVB-C TV"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Radio, "DVB-C Radio"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Data, "DVB-S TV"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Radio, "DVB-S Radio"));
+      //this.DataRoot.AddChannelList(tvList);
+      //this.DataRoot.AddChannelList(radioList);
+
+      //foreach(var list in this.DataRoot.ChannelLists)
+      //  list.VisibleColumnFieldNames.Add("Source");
     }
 
 
@@ -115,14 +121,22 @@ namespace ChanSort.Loader.GlobalClone
       int i = 0;
       foreach (var node in this.doc["channelList"])
       {
-        var ch = new GcChannel<JToken>(SignalSource.All, i, node);
+        var ch = new GcChannel<JToken>(0, i, node);
         ch.PcrPid = (int) node["pcrPid"];
         ch.IsDisabled = (bool) node["disabled"];
         ch.FreqInMhz = (int) node["frequency"];
         if (ch.FreqInMhz >= 100000 && ch.FreqInMhz < 1000000) // DVBS is given in MHz, DVBC/T in kHz
           ch.FreqInMhz /= 1000;
         ch.AudioPid = (int) node["audioPid"];
+        
         ch.Source = (string) node["sourceIndex"];
+        if (ch.Source == "SATELLITE DIGITAL")
+          ch.SignalSource |= SignalSource.DvbS;
+        else if (ch.Source == "CABLE DIGITAL")
+          ch.SignalSource |= SignalSource.DvbC;
+        else if (ch.Source.Contains("DIGITAL")) // not seen yet. maybe DIGITAL ANTENNA?
+          ch.SignalSource |= SignalSource.DvbT;
+
         ch.Skip = (bool) node["skipped"];
         ch.Hidden = (bool) node["Invisible"];
         ch.IsDeleted = (bool) node["deleted"];
@@ -135,17 +149,11 @@ namespace ChanSort.Loader.GlobalClone
         ch.ShortName = shortName;
         ch.VideoPid = (int) node["videoPid"];
         var transSystem = (string) node["transSystem"];
-        if (transSystem == "DVBS")
-          ch.SignalSource |= SignalSource.DvbS;
-        else if (transSystem == "DVBC")
-          ch.SignalSource |= SignalSource.DvbC;
-        else if (transSystem == "DVBT")
-          ch.SignalSource |= SignalSource.DvbT;
         var tpId = (string) node["tpId"];
         if (tpId != null && tpId.Length == 10)
           ch.Transponder = this.DataRoot.Transponder.TryGet((int.Parse(tpId.Substring(0, 4)) << 16) + int.Parse(tpId.Substring(4))); // satId + freq, e.g. 0192126041
         ch.TransportStreamId = (int) node["TSID"];
-        ch.OldProgramNr = (int) node["majorNumber"];
+        ch.OldProgramNr = ch.IsDeleted ? -1 : (int) node["majorNumber"];
         ch.ServiceType = (int) node["serviceType"];
         ch.Lock = (bool) node["locked"];
         if (string.IsNullOrWhiteSpace(ch.Name))
@@ -154,16 +162,16 @@ namespace ChanSort.Loader.GlobalClone
         if (ch.ServiceId == 0)
           ch.ServiceId = (int) node["programNum"];
         ch.OriginalNetworkId = (int) node["ONID"];
-        ch.SignalSource = LookupData.Instance.IsRadioTvOrData(ch.ServiceType);
+        ch.SignalSource |= LookupData.Instance.IsRadioTvOrData(ch.ServiceType);
 
         if ((ch.OldProgramNr & 0x4000) != 0)
         {
           ch.OldProgramNr &= 0x3FFF;
           ch.SignalSource |= SignalSource.Radio;
-          this.DataRoot.AddChannel(this.radioList, ch);
         }
-        else
-          this.DataRoot.AddChannel(this.tvList, ch);
+        
+        var list = this.DataRoot.GetChannelList(ch.SignalSource);
+        this.DataRoot.AddChannel(list, ch);
       }
     }
     #endregion
@@ -203,7 +211,7 @@ namespace ChanSort.Loader.GlobalClone
             node["chNameBase64"] = Convert.ToBase64String(Encoding.UTF8.GetBytes(ch.Name));
           }
 
-          node["deleted"] = ch.NewProgramNr < 0;
+          node["deleted"] = ch.IsDeleted;
           node["majorNumber"] = Math.Max(ch.NewProgramNr, 0);
           node["skipped"] = ch.Skip;
           node["locked"] = ch.Lock;

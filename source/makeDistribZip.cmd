@@ -6,7 +6,7 @@ cd /d %~dp0
 set languages=cs de es pl pt ru tr
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
-set DXversion=19.2
+set DXversion=20.1
 mkdir "%target%" 2>nul
 rem del /s /q "%target%\*"
 xcopy /idy debug\ChanSort.exe* "%target%"

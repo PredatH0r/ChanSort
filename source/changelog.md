@@ -1,7 +1,8 @@
 ChanSort Change Log 
 ===================
 
-TBD
+2020-05-11
+- improved support for LG OLED series (CX) - now supports lists with multiple sources (DVB-C, DVB-S), but still no favorite lists
 - added info screen when opening an empty LG channel list which is most likely caused by selecting a predefined list
   during the TV setup or channel search
 - fixed: Sony KDL channel lists were not saved correctly
