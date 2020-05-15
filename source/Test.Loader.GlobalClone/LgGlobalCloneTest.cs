@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using ChanSort.Api;
 using ChanSort.Loader.GlobalClone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -104,6 +105,61 @@ namespace Test.Loader.GlobalClone
       Assert.AreEqual(-1, orf2w.OldProgramNr);
     }
     #endregion
+
+
+
+    #region TestGlobalClone200JsonFormat
+
+    [TestMethod]
+    public void TestGlobalClone200JsonFormat()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.GlobalClone\\TestFiles\\GlobalClone00201.TLL");
+      var orig = File.ReadAllText(tempFile, Encoding.UTF8);
+
+      var plugin = new GcSerializerPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+      var dvbs = data.GetChannelList(SignalSource.DvbS);
+
+      // swap SRF 1 HD and SRF zwei HD
+      var srf1 = dvbs.Channels.FirstOrDefault(ch => ch.Name == "SRF 1 HD");
+      var srf2 = dvbs.Channels.FirstOrDefault(ch => ch.Name == "SRF zwei HD");
+      Assert.AreEqual(1971, srf1.NewProgramNr);
+      Assert.AreEqual(1972, srf2.NewProgramNr);
+      srf1.NewProgramNr = 1972;
+      srf2.NewProgramNr = 1971;
+
+      // save and reload
+      ser.Save(tempFile);
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      dvbs = data.GetChannelList(SignalSource.DvbS);
+      srf1 = dvbs.Channels.FirstOrDefault(ch => ch.Name == "SRF 1 HD");
+      srf2 = dvbs.Channels.FirstOrDefault(ch => ch.Name == "SRF zwei HD");
+      Assert.AreEqual(1972, srf1.OldProgramNr);
+      Assert.AreEqual(1971, srf2.OldProgramNr);
+
+      // restore original program numbers and save
+      srf1.NewProgramNr = 1971;
+      srf2.NewProgramNr = 1972;
+      ser.Save(tempFile);
+
+      // undo expected changes to the file
+      var changed = File.ReadAllText(tempFile, Encoding.UTF8);
+      changed = changed.Replace("\"userEditChNumber\":true", "\"userEditChNumber\":false");
+      changed = changed.Replace("\"userSelCHNo\":true", "\"userSelCHNo\":false");
+      NUnit.Framework.Assert.AreEqual(orig, changed); // need NUnit.AreEqual to only show the actual difference and not 5MB + 5MB of data
+    }
+    #endregion
+
+
 
   }
 }

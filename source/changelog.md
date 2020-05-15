@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2020-05-15
+- fixed more issues with the LG WebOS 5.0 format
+
 2020-05-11
 - improved support for LG OLED series (CX) - now supports lists with multiple sources (DVB-C, DVB-S), but still no favorite lists
 - added info screen when opening an empty LG channel list which is most likely caused by selecting a predefined list

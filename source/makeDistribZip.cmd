@@ -24,7 +24,7 @@ mkdir "%target%\ReferenceLists" 2>nul
 xcopy /sidy ChanSort\ReferenceLists\* "%target%\ReferenceLists"
 xcopy /y ..\readme.md "%target%\readme.txt"
 xcopy /y changelog.md "%target%\changelog.txt"
-for %%f in (Utils Data DataAccess Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
+for %%f in (Utils Data Data.Desktop DataAccess Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
 call :CodeSigning
 
 cd ..

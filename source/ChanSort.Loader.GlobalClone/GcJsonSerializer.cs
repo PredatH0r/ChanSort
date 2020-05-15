@@ -212,7 +212,10 @@ namespace ChanSort.Loader.GlobalClone
           }
 
           node["deleted"] = ch.IsDeleted;
-          node["majorNumber"] = Math.Max(ch.NewProgramNr, 0);
+          var nr = Math.Max(ch.NewProgramNr, 0); // radio channels, except the deleted ones with Nr 0, have 0x4000 added to their number
+          if (nr != 0 && (ch.SignalSource & SignalSource.Radio) != 0)
+            nr |= 0x4000;
+          node["majorNumber"] = nr;
           node["skipped"] = ch.Skip;
           node["locked"] = ch.Lock;
           node["Invisible"] = ch.Hidden;
