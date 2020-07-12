@@ -86,6 +86,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\DelegateComparer.cs" />
     <Compile Include="Utils\DependencyChecker.cs" />
     <Compile Include="Utils\FileAssociation.cs" />
     <Compile Include="View\View.cs" />

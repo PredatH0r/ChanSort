@@ -200,6 +200,7 @@ namespace ChanSort.Loader.GlobalClone
     {
       foreach (var list in this.DataRoot.ChannelLists)
       {
+        int radioMask = (list.SignalSource & SignalSource.Radio) != 0 ? 0x4000 : 0;
         foreach (var chan in list.Channels)
         {
           if (!(chan is GcChannel<JToken> ch))
@@ -212,15 +213,20 @@ namespace ChanSort.Loader.GlobalClone
           }
 
           node["deleted"] = ch.IsDeleted;
-          var nr = Math.Max(ch.NewProgramNr, 0); // radio channels, except the deleted ones with Nr 0, have 0x4000 added to their number
-          if (nr != 0 && (ch.SignalSource & SignalSource.Radio) != 0)
-            nr |= 0x4000;
+          var nr = Math.Max(ch.NewProgramNr, 0); // radio channels, except the deleted ones with nr=0, have 0x4000 added to their number
+          if (nr != 0)
+            nr |= radioMask;
           node["majorNumber"] = nr;
           node["skipped"] = ch.Skip;
           node["locked"] = ch.Lock;
           node["Invisible"] = ch.Hidden;
-          node["userEditChNumber"] = true;
-          node["userSelCHNo"] = true;
+          if (ch.NewProgramNr != ch.OldProgramNr)
+          {
+            node["userEditChNumber"] = true;
+            node["userSelCHNo"] = true;
+          }
+
+          //node["disableUpdate"] = true; // experimental to prevent "DTV Auto Update" of channel numbers right after importing the list
         }
       }
     }

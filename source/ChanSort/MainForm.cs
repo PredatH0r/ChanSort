@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -27,7 +26,6 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraTab;
-using Timer = System.Windows.Forms.Timer;
 
 namespace ChanSort.Ui
 {
@@ -662,9 +660,6 @@ namespace ChanSort.Ui
 
     private void ShowChannelList(ChannelList channelList)
     {
-      if (this.CurrentChannelList != null)
-        this.SaveInputGridLayout(this.CurrentChannelList.SignalSource);
-
       this.CurrentChannelList = channelList;
       this.Editor.ChannelList = channelList;
 
@@ -1303,6 +1298,17 @@ namespace ChanSort.Ui
           break;
         }
       }
+
+      if (Config.Default.LeftGridLayout != null)
+      {
+        var xml = Config.Default.LeftGridLayout;
+        this.gviewLeft.LoadLayoutFromXml(xml);
+      }
+      if (Config.Default.RightGridLayout != null)
+      {
+        var xml = Config.Default.RightGridLayout;
+        this.gviewRight.LoadLayoutFromXml(xml);
+      }
     }
 
     #endregion
@@ -1440,20 +1446,6 @@ namespace ChanSort.Ui
 
     private void LoadInputGridLayout()
     {
-#if false
-  // code disabled because it causes unpredictable column order when working with different file formats which may of may not show columns
-
-      string newLayout;
-      var newSource = list.SignalSource;
-      if ((newSource & SignalSource.Analog) != 0)
-        newLayout = Config.Default.InputGridLayoutAnalog;
-      else if ((newSource & SignalSource.DvbS) != 0)
-        newLayout = Config.Default.InputGridLayoutDvbS; 
-      else
-        newLayout = Config.Default.InputGridLayoutDvbCT;
-      if (!string.IsNullOrEmpty(newLayout))
-        this.SetGridLayout(this.gviewRight, newLayout);
-#endif
       this.ShowGridColumns(this.gviewLeft);
       this.ShowGridColumns(this.gviewRight);
       this.ClearRightFilter();
@@ -1463,26 +1455,10 @@ namespace ChanSort.Ui
 
     #region ShowGridColumns()
 
-    private void ShowGridColumns(GridView gview)
+    private void ShowGridColumns(XGridView gview)
     {
-      var visIndex = 0;
       foreach (GridColumn col in gview.Columns)
-        col.VisibleIndex = GetGridColumnVisibility(col) ? visIndex++ : -1;
-    }
-
-    #endregion
-
-    #region SaveInputGridLayout()
-
-    private void SaveInputGridLayout(SignalSource signalSource)
-    {
-      var currentLayout = GetGridLayout(this.gviewRight);
-      if ((signalSource & SignalSource.Analog) != 0)
-        Config.Default.InputGridLayoutAnalog = currentLayout;
-      else if ((signalSource & SignalSource.DvbS) != 0)
-        Config.Default.InputGridLayoutDvbS = currentLayout;
-      else //if ((signalSource & SignalSource.DvbCT) != 0)
-        Config.Default.InputGridLayoutDvbCT = currentLayout;
+        gview.SetColumnVisibility(col, GetGridColumnVisibility(col));
     }
 
     #endregion
@@ -2698,26 +2674,16 @@ namespace ChanSort.Ui
       Config.Default.Encoding = this.defaultEncoding.WebName;
       Config.Default.Language = Thread.CurrentThread.CurrentUICulture.Name;
       Config.Default.LeftPanelWidth = this.splitContainerControl1.SplitterPosition.Unscale(this.absScaleFactor.Width);
-      Config.Default.OutputListLayout = GetGridLayout(this.gviewLeft);
-      if (this.CurrentChannelList != null)
-        SaveInputGridLayout(this.CurrentChannelList.SignalSource);
       Config.Default.ShowWarningsAfterLoading = this.miShowWarningsAfterLoad.Checked;
       Config.Default.CloseGaps = this.cbCloseGap.Checked;
       Config.Default.MruFiles.Clear();
       Config.Default.MruFiles.AddRange(this.mruFiles);
       Config.Default.ExplorerIntegration = this.miExplorerIntegration.Down;
       Config.Default.CheckForUpdates = this.miCheckUpdates.Down;
+      Config.Default.LeftGridLayout = this.gviewLeft.SaveLayoutToXml();
+      Config.Default.RightGridLayout = this.gviewRight.SaveLayoutToXml();
 
       Config.Default.Save();
-    }
-
-    private string GetGridLayout(GridView grid)
-    {
-      var stream = new MemoryStream();
-      grid.SaveLayoutToStream(stream, OptionsLayoutBase.FullLayout);
-      stream.Seek(0, SeekOrigin.Begin);
-      using (var rdr = new StreamReader(stream, Encoding.UTF8))
-        return rdr.ReadToEnd();
     }
 
     #endregion
@@ -2998,7 +2964,7 @@ namespace ChanSort.Ui
 
     #region Character set menu
 
-    private void MiUtf8Charset_ItemClick(object sender, ItemClickEventArgs e)
+    private void miUtf8Charset_ItemClick(object sender, ItemClickEventArgs e)
     {
       TryExecute(() => this.SetDefaultEncoding(Encoding.UTF8));
     }
@@ -3011,6 +2977,16 @@ namespace ChanSort.Ui
     private void miCharset_ItemClick(object sender, ItemClickEventArgs e)
     {
       TryExecute(ShowCharsetForm);
+    }
+
+    private void miUtf16BigEndian_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(() => this.SetDefaultEncoding(Encoding.BigEndianUnicode));
+    }
+
+    private void miUtf16LittleEndian_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(() => this.SetDefaultEncoding(Encoding.Unicode));
     }
 
     private void charsetForm_EncodingChanged(object sender, EncodingChangedEventArgs e)

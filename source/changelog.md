@@ -1,7 +1,20 @@
 ChanSort Change Log 
 ===================
 
-2020-05-15
+2020-07-12
+- added UTF-16 Big Endian and Little Endian options to character set menu
+- Samsung .zip loader: auto-detect UTF-16 endianness and allow to change encoding after loading to UTF-16 LE/BE
+  (some files use Little Endian format and show chinese characters when loaded with the default Big Endian format)
+- Customized column order is now preserved across file formats and input sources
+- Note about LG WebOS 5 files (e.g. CX series):
+  It is still unclear what exact firmware version and conditions are needed to properly import a channel list.
+  Users reported about varying success of an import, reaching from not possible at all, only after a factory reset, 
+  importing the same list twice or working just fine.
+  The problems is not related to ChanSort, as it can be reproduced by exporting a list to USB, swapping channels 
+  in the TV's menu and trying to loading the previously exported list back. The TV may keep the swapped channels and 
+  show inconsistencies between the channel list in the settings menu and the EPG.
+
+2020-05-15 (inofficial)
 - fixed more issues with the LG WebOS 5.0 format
 
 2020-05-11

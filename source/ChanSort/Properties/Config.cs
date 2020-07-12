@@ -37,13 +37,9 @@ namespace ChanSort.Ui.Properties
 
     public static Config Default { get; set; }
 
-    public string OutputListLayout { get; set; } = "";
     public string Language { get; set; } = "";
     public string Encoding { get; set; } = "";
     public Size WindowSize { get; set; } = new Size(0,0);
-    public string InputGridLayoutAnalog { get; set; } = "";
-    public string InputGridLayoutDvbCT { get; set; } = "";
-    public string InputGridLayoutDvbS { get; set; } = "";
     public int LeftPanelWidth { get; set; } = 0;
     public bool ShowWarningsAfterLoading { get; set; } = false;
     public bool CloseGaps { get; set; } = true;
@@ -56,17 +52,17 @@ namespace ChanSort.Ui.Properties
     public bool ExplorerIntegration { get; set; } = false;
     public bool CheckForUpdates { get; set; } = true;
     public int FontSizeDelta { get; set; }
+    public string LeftGridLayout { get; set; }
+    public string RightGridLayout { get; set; }
 
     public void Save()
     {
       var folder = Path.GetDirectoryName(ConfigFilePath);
       Directory.CreateDirectory(folder);
 
-      using (var stream = new FileStream(ConfigFilePath, FileMode.Create))
-      using (var writer = new StreamWriter(stream, System.Text.Encoding.UTF8))
-      {
-        Serializer.Serialize(writer, this);
-      }
+      using var stream = new FileStream(ConfigFilePath, FileMode.Create);
+      using var writer = new StreamWriter(stream, System.Text.Encoding.UTF8);
+      Serializer.Serialize(writer, this);
     }
   }
 }

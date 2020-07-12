@@ -17,6 +17,7 @@ namespace ChanSort.Loader.SamsungJ
     private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
     private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
     private readonly List<string> tableNames = new List<string>();
+    private Encoding encoding;
 
     private enum FileType { Unknown, SatDb, ChannelDbDvb, ChannelDbAnalog, ChannelDbIp }
 
@@ -262,7 +263,7 @@ namespace ChanSort.Loader.SamsungJ
           // ... and get the satellite from that transponder - if set
           // Note that we can have channels from multiple satellites in the same list, so this is a loop variable now
           var sat = tp?.Satellite;
-          var channel = new DbChannel(r, fields, this.DataRoot, providers, sat, tp);
+          var channel = new DbChannel(r, fields, this, providers, sat, tp);
 
           if (channel.OldProgramNr == prevNr) // when there is a SRV_EXT_APP table in the database, the service with the highest ext_app "recState" takes priority
             continue;
@@ -278,6 +279,7 @@ namespace ChanSort.Loader.SamsungJ
     }
     #endregion
 
+    #region CreateChannelList()
     private ChannelList CreateChannelList(SignalSource signalSource, string name)
     {
       var list = new ChannelList(signalSource, name);
@@ -290,6 +292,7 @@ namespace ChanSort.Loader.SamsungJ
       }
       return list;
     }
+    #endregion
 
     #region DetectSignalSource()
     private static SignalSource DetectSignalSource(SQLiteCommand cmd, FileType fileType)
@@ -383,13 +386,77 @@ namespace ChanSort.Loader.SamsungJ
     #endregion
 
     #region ReadUtf16()
-    internal static string ReadUtf16(SQLiteDataReader r, int fieldIndex)
+    internal string ReadUtf16(SQLiteDataReader r, int fieldIndex)
     {
       if (r.IsDBNull(fieldIndex))
         return null;
       byte[] nameBytes = new byte[200];
       int nameLen = (int)r.GetBytes(fieldIndex, 0, nameBytes, 0, nameBytes.Length);
-      return Encoding.BigEndianUnicode.GetString(nameBytes, 0, nameLen).Replace("\0", ""); // remove trailing \0 characters found in Samsung "_T_..." channel list
+      this.encoding ??= AutoDetectUtf16Endian(nameBytes, nameLen);
+      if (this.encoding == null)
+        return string.Empty;
+
+      return encoding.GetString(nameBytes, 0, nameLen).Replace("\0", ""); // remove trailing \0 characters found in Samsung "_T_..." channel list
+    }
+    #endregion
+
+    #region AutoDetectUtf16Endian()
+    private Encoding AutoDetectUtf16Endian(byte[] nameBytes, int nameLen)
+    {
+      if (this.DefaultEncoding is UnicodeEncoding)
+        return this.DefaultEncoding;
+
+      int evenBytesZero = 0;
+      int oddBytesZero = 0;
+      for (int i = 0; i < nameLen; i += 2)
+      {
+        if (nameBytes[i] == 0)
+          ++evenBytesZero;
+        if (nameBytes[i + 1] == 0)
+          ++oddBytesZero;
+      }
+
+      if (evenBytesZero + oddBytesZero == nameLen)
+        return null;
+
+      return evenBytesZero >= oddBytesZero ? Encoding.BigEndianUnicode : Encoding.Unicode;
+    }
+
+    #endregion
+
+    #region DefaultEncoding
+    public override Encoding DefaultEncoding
+    {
+      get => base.DefaultEncoding;
+      set
+      {
+        if (!(value is UnicodeEncoding))
+          return;
+
+        var oldEncoding = base.DefaultEncoding;
+        if (oldEncoding != null)
+        {
+          // change encoding of channel names
+          foreach (var list in this.DataRoot.ChannelLists)
+          {
+            foreach (var chan in list.Channels)
+            {
+              byte[] bytes;
+              if (chan.Name != null)
+              {
+                bytes = oldEncoding.GetBytes(chan.Name);
+                chan.Name = value.GetString(bytes);
+              }
+              if (chan.ShortName != null)
+              {
+                bytes = oldEncoding.GetBytes(chan.ShortName);
+                chan.ShortName = value.GetString(bytes);
+              }
+            }
+          }
+        }
+        base.DefaultEncoding = value;
+      }
     }
     #endregion
 
@@ -528,7 +595,7 @@ namespace ChanSort.Loader.SamsungJ
         cmdUpdateSrv.Parameters["@lock"].Value = channel.Lock;
         cmdUpdateSrv.Parameters["@hidden"].Value = channel.Hidden;
         cmdUpdateSrv.Parameters["@numsel"].Value = !channel.Skip;
-        cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? (object)DBNull.Value : Encoding.BigEndianUnicode.GetBytes(channel.Name);
+        cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? (object)DBNull.Value : encoding.GetBytes(channel.Name);
         cmdUpdateSrv.ExecuteNonQuery();
 
         // update favorites
@@ -557,6 +624,5 @@ namespace ChanSort.Loader.SamsungJ
       }
     }
     #endregion
-
   }
 }

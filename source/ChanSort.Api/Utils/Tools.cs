@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 
 namespace ChanSort.Api
@@ -206,5 +207,14 @@ namespace ChanSort.Api
     }
 
     #endregion
+
+    #region FirstNotDefault()
+    public static T FirstNotDefault<T>(params T[] values)
+    {
+      var def = default(T);
+      return values.FirstOrDefault(v => !Equals(v, def));
+    }
+    #endregion
+
   }
 }

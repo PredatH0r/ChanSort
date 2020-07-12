@@ -7,7 +7,7 @@ namespace ChanSort.Loader.SamsungJ
   internal class DbChannel : ChannelInfo
   {
     #region ctor()
-    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers, Satellite sat, Transponder tp)
+    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DbSerializer loader, Dictionary<long, string> providers, Satellite sat, Transponder tp)
     {
       var chType = r.GetInt32(field["chType"]);
       this.SignalSource = DbSerializer.ChTypeToSignalSource(chType);
@@ -20,7 +20,7 @@ namespace ChanSort.Loader.SamsungJ
         (this.SignalSource & SignalSource.DvbC) == SignalSource.DvbC ? LookupData.Instance.GetDvbcTransponder(this.FreqInMhz).ToString() :
         (this.SignalSource & SignalSource.DvbS) == SignalSource.DvbS ? LookupData.Instance.GetAstraTransponder((int)this.FreqInMhz).ToString() :
         "";
-      this.Name = DbSerializer.ReadUtf16(r, field["srvName"]);
+      this.Name = loader.ReadUtf16(r, field["srvName"]);
       this.Hidden = r.GetBoolean(field["hidden"]);
       this.Encrypted = r.GetBoolean(field["scrambled"]);
       this.Lock = r.GetBoolean(field["lockMode"]);
@@ -39,7 +39,7 @@ namespace ChanSort.Loader.SamsungJ
       }
 
       if ((this.SignalSource & SignalSource.Digital) != 0)
-        this.ReadDvbData(r, field, dataRoot, providers);
+        this.ReadDvbData(r, field, loader, providers);
       else
         this.ReadAnalogData(r, field);
 
@@ -56,9 +56,9 @@ namespace ChanSort.Loader.SamsungJ
     #endregion
 
     #region ReadDvbData()
-    protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Dictionary<long, string> providers)
+    protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DbSerializer loader, Dictionary<long, string> providers)
     {
-      this.ShortName = DbSerializer.ReadUtf16(r, field["srvName"]);
+      this.ShortName = loader.ReadUtf16(r, field["srvName"]);
       this.RecordOrder = r.GetInt32(field["major"]);
       int serviceType = r.GetInt32(field["srvType"]);
       this.ServiceType = serviceType;

@@ -32,9 +32,9 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
       this.grpOutputList = new DevExpress.XtraEditors.GroupControl();
-      this.gridLeft = new DevExpress.XtraGrid.GridControl();
+      this.gridLeft = new ChanSort.XGridControl();
       this.dsChannels = new System.Windows.Forms.BindingSource(this.components);
-      this.gviewLeft = new DevExpress.XtraGrid.Views.Grid.GridView();
+      this.gviewLeft = new ChanSort.XGridView();
       this.colIndex1 = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutSlot = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colOutName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -66,8 +66,8 @@
       this.btnUp = new DevExpress.XtraEditors.SimpleButton();
       this.btnRemoveLeft = new DevExpress.XtraEditors.SimpleButton();
       this.grpInputList = new DevExpress.XtraEditors.GroupControl();
-      this.gridRight = new DevExpress.XtraGrid.GridControl();
-      this.gviewRight = new DevExpress.XtraGrid.Views.Grid.GridView();
+      this.gridRight = new ChanSort.XGridControl();
+      this.gviewRight = new ChanSort.XGridView();
       this.colIndex = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSlotOld = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colSlotNew = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -159,6 +159,8 @@
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miUtf8Charset = new DevExpress.XtraBars.BarButtonItem();
       this.miIsoCharSets = new DevExpress.XtraBars.BarListItem();
+      this.miUtf16BigEndian = new DevExpress.XtraBars.BarButtonItem();
+      this.miUtf16LittleEndian = new DevExpress.XtraBars.BarButtonItem();
       this.miShowWarningsAfterLoad = new DevExpress.XtraBars.BarCheckItem();
       this.miAllowEditPredefinedLists = new DevExpress.XtraBars.BarButtonItem();
       this.miExplorerIntegration = new DevExpress.XtraBars.BarButtonItem();
@@ -275,6 +277,7 @@
       this.gridLeft.AllowDrop = true;
       this.gridLeft.DataSource = this.dsChannels;
       resources.ApplyResources(this.gridLeft, "gridLeft");
+      this.gridLeft.LayoutId = "MainForm.gridLeft";
       this.gridLeft.MainView = this.gviewLeft;
       this.gridLeft.Name = "gridLeft";
       this.gridLeft.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -319,6 +322,7 @@
       this.gviewLeft.OptionsCustomization.AllowQuickHideColumns = false;
       this.gviewLeft.OptionsDetail.EnableMasterViewMode = false;
       this.gviewLeft.OptionsLayout.LayoutVersion = "2";
+      this.gviewLeft.OptionsPersistence = ((ChanSort.XGridView.ColumnOptions)((ChanSort.XGridView.ColumnOptions.OrderAndVisibility | ChanSort.XGridView.ColumnOptions.SortingAndGrouping)));
       this.gviewLeft.OptionsSelection.MultiSelect = true;
       this.gviewLeft.OptionsView.ColumnAutoWidth = false;
       this.gviewLeft.OptionsView.ShowAutoFilterRow = true;
@@ -594,6 +598,7 @@
       this.gridRight.AllowDrop = true;
       this.gridRight.DataSource = this.dsChannels;
       resources.ApplyResources(this.gridRight, "gridRight");
+      this.gridRight.LayoutId = "MainForm.gridRight";
       this.gridRight.MainView = this.gviewRight;
       this.gridRight.Name = "gridRight";
       this.gridRight.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -654,6 +659,7 @@
       this.gviewRight.OptionsCustomization.AllowGroup = false;
       this.gviewRight.OptionsDetail.EnableMasterViewMode = false;
       this.gviewRight.OptionsLayout.LayoutVersion = "5";
+      this.gviewRight.OptionsPersistence = ((ChanSort.XGridView.ColumnOptions)((ChanSort.XGridView.ColumnOptions.OrderAndVisibility | ChanSort.XGridView.ColumnOptions.SortingAndGrouping)));
       this.gviewRight.OptionsSelection.MultiSelect = true;
       this.gviewRight.OptionsView.ColumnAutoWidth = false;
       this.gviewRight.OptionsView.ShowAutoFilterRow = true;
@@ -1080,9 +1086,11 @@
             this.miFontMedium,
             this.miFontLarge,
             this.miFontXLarge,
-            this.miFontXxLarge});
+            this.miFontXxLarge,
+            this.miUtf16BigEndian,
+            this.miUtf16LittleEndian});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 109;
+      this.barManager1.MaxItemId = 111;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1590,7 +1598,9 @@
       this.mnuCharset.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miCharsetForm),
             new DevExpress.XtraBars.LinkPersistInfo(this.miUtf8Charset, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miIsoCharSets)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miIsoCharSets),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miUtf16BigEndian, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miUtf16LittleEndian)});
       this.mnuCharset.Name = "mnuCharset";
       this.mnuCharset.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
       // 
@@ -1608,7 +1618,7 @@
       resources.ApplyResources(this.miUtf8Charset, "miUtf8Charset");
       this.miUtf8Charset.Id = 99;
       this.miUtf8Charset.Name = "miUtf8Charset";
-      this.miUtf8Charset.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.MiUtf8Charset_ItemClick);
+      this.miUtf8Charset.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miUtf8Charset_ItemClick);
       // 
       // miIsoCharSets
       // 
@@ -1618,6 +1628,20 @@
       this.miIsoCharSets.Name = "miIsoCharSets";
       this.miIsoCharSets.ShowNumbers = true;
       this.miIsoCharSets.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.miIsoCharSets_ListItemClick);
+      // 
+      // miUtf16BigEndian
+      // 
+      resources.ApplyResources(this.miUtf16BigEndian, "miUtf16BigEndian");
+      this.miUtf16BigEndian.Id = 109;
+      this.miUtf16BigEndian.Name = "miUtf16BigEndian";
+      this.miUtf16BigEndian.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miUtf16BigEndian_ItemClick);
+      // 
+      // miUtf16LittleEndian
+      // 
+      resources.ApplyResources(this.miUtf16LittleEndian, "miUtf16LittleEndian");
+      this.miUtf16LittleEndian.Id = 110;
+      this.miUtf16LittleEndian.Name = "miUtf16LittleEndian";
+      this.miUtf16LittleEndian.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miUtf16LittleEndian_ItemClick);
       // 
       // miShowWarningsAfterLoad
       // 
@@ -2171,8 +2195,8 @@
     #endregion
 
     private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel1;
-    private DevExpress.XtraGrid.GridControl gridRight;
-    private DevExpress.XtraGrid.Views.Grid.GridView gviewRight;
+    private XGridControl gridRight;
+    private XGridView gviewRight;
     private System.Windows.Forms.BindingSource dsChannels;
     private DevExpress.XtraGrid.Columns.GridColumn colIndex;
     private DevExpress.XtraGrid.Columns.GridColumn colSlotOld;
@@ -2183,8 +2207,8 @@
     private DevExpress.XtraEditors.SimpleButton btnRemoveLeft;
     private DevExpress.XtraEditors.GroupControl grpInputList;
     private DevExpress.XtraEditors.SimpleButton btnAdd;
-    private DevExpress.XtraGrid.GridControl gridLeft;
-    private DevExpress.XtraGrid.Views.Grid.GridView gviewLeft;
+    private XGridControl gridLeft;
+    private XGridView gviewLeft;
     private DevExpress.XtraGrid.Columns.GridColumn colOutSlot;
     private DevExpress.XtraGrid.Columns.GridColumn colOutName;
     private DevExpress.XtraEditors.SimpleButton btnDown;
@@ -2353,6 +2377,8 @@
         private DevExpress.XtraBars.BarButtonItem miFontLarge;
         private DevExpress.XtraBars.BarButtonItem miFontXLarge;
         private DevExpress.XtraBars.BarButtonItem miFontXxLarge;
-    }
+    private DevExpress.XtraBars.BarButtonItem miUtf16BigEndian;
+    private DevExpress.XtraBars.BarButtonItem miUtf16LittleEndian;
+  }
 }
 
