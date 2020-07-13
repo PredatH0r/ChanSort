@@ -4,13 +4,14 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.SamsungJ
 {
   /// <summary>
-  /// Loader for Samsung J/K/M/N/R/Q series .zip files (2015 - 2019+)
+  /// Loader for Samsung J/K/M/N/R/Q series .zip files (2015 - 2020)
   /// </summary>
   class DbSerializer : SerializerBase
   {
@@ -218,11 +219,15 @@ namespace ChanSort.Loader.SamsungJ
       try
       {
         cmd.CommandText = "select provId, cast(provName as blob) from PROV";
+        var prevEncoding = this.encoding;
+        this.encoding = Encoding.BigEndianUnicode; // while Sat and Service names might be utf16 binary data inside an utf8 envelope, the providers are always plain utf16
         using (var r = cmd.ExecuteReader())
         {
           while (r.Read())
             dict.Add(r.GetInt64(0), ReadUtf16(r, 1));
         }
+
+        this.encoding = prevEncoding;
       }
       catch
       {
@@ -392,7 +397,7 @@ namespace ChanSort.Loader.SamsungJ
         return null;
       byte[] nameBytes = new byte[200];
       int nameLen = (int)r.GetBytes(fieldIndex, 0, nameBytes, 0, nameBytes.Length);
-      this.encoding ??= AutoDetectUtf16Endian(nameBytes, nameLen);
+      this.encoding ??= AutoDetectUtf16Encoding(nameBytes, nameLen);
       if (this.encoding == null)
         return string.Empty;
 
@@ -401,23 +406,34 @@ namespace ChanSort.Loader.SamsungJ
     #endregion
 
     #region AutoDetectUtf16Endian()
-    private Encoding AutoDetectUtf16Endian(byte[] nameBytes, int nameLen)
+    private Encoding AutoDetectUtf16Encoding(byte[] nameBytes, int nameLen)
     {
       if (this.DefaultEncoding is UnicodeEncoding)
         return this.DefaultEncoding;
 
       int evenBytesZero = 0;
       int oddBytesZero = 0;
+      int bytesAbove128 = 0;
       for (int i = 0; i < nameLen; i += 2)
       {
         if (nameBytes[i] == 0)
           ++evenBytesZero;
+        if (nameBytes[i] >= 128)
+          ++bytesAbove128;
         if (nameBytes[i + 1] == 0)
           ++oddBytesZero;
+        if (nameBytes[i + 1] >= 128)
+          ++bytesAbove128;
       }
 
       if (evenBytesZero + oddBytesZero == nameLen)
         return null;
+
+      if (bytesAbove128 + 1 >= nameLen)
+      {
+        //this.Features.ChannelNameEdit = ChannelNameEditMode.None; // unclear if the encoder produces byte sequences that the TV can decode again
+        return new Utf16InsideUtf8EnvelopeEncoding();
+      }
 
       return evenBytesZero >= oddBytesZero ? Encoding.BigEndianUnicode : Encoding.Unicode;
     }
@@ -482,45 +498,44 @@ namespace ChanSort.Loader.SamsungJ
     #region SaveChannelList()
     private void SaveChannelList(ChannelList channelList, string dbPath)
     {
-      using (var conn = new SQLiteConnection("Data Source=" + dbPath))
+      using var conn = new SQLiteConnection("Data Source=" + dbPath);
+      conn.Open();
+      using var cmdUpdateSrv = PrepareUpdateCommand(conn);
+      using var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0);
+      using var cmdInsertFav = PrepareInsertFavCommand(conn);
+      using var cmdUpdateFav = PrepareUpdateFavCommand(conn);
+      using var cmdDeleteFav = PrepareDeleteFavCommand(conn);
+      using (var trans = conn.BeginTransaction())
       {
-        conn.Open();
-        using (var cmdUpdateSrv = PrepareUpdateCommand(conn))
-        using (var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0))
-        using (var cmdInsertFav = PrepareInsertFavCommand(conn))
-        using (var cmdUpdateFav = PrepareUpdateFavCommand(conn))
-        using (var cmdDeleteFav = PrepareDeleteFavCommand(conn))
-        {
-          using (var trans = conn.BeginTransaction())
-          {
-            Editor.SequentializeFavPos(channelList, 5);
-            this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
-            trans.Commit();
-          }
-          this.RepairCorruptedDatabaseImage(cmdUpdateSrv);
-        }
+        Editor.SequentializeFavPos(channelList, 5);
+        this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
+        trans.Commit();
       }
+      this.RepairCorruptedDatabaseImage(cmdUpdateSrv);
     }
 
     #endregion
 
     #region Prepare*Command()
 
-    private static SQLiteCommand PrepareUpdateCommand(SQLiteConnection conn)
+    private SQLiteCommand PrepareUpdateCommand(SQLiteConnection conn)
     {
+      var canUpdateNames = this.Features.ChannelNameEdit != ChannelNameEditMode.None;
       var cmd = conn.CreateCommand();
-      cmd.CommandText = "update SRV set major=@nr, lockMode=@lock, hideGuide=@hidden, hidden=@hidden, numSel=@numsel, srvName=cast(@srvname as varchar) where srvId=@id";
+      var updateSrvName = canUpdateNames ? ", srvName=cast(@srvname as varchar)" : "";
+      cmd.CommandText = "update SRV set major=@nr, lockMode=@lock, hideGuide=@hidden, hidden=@hidden, numSel=@numsel" + updateSrvName + "  where srvId=@id";
       cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
       cmd.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Boolean));
       cmd.Parameters.Add(new SQLiteParameter("@hidden", DbType.Boolean));
       cmd.Parameters.Add(new SQLiteParameter("@numsel", DbType.Boolean));
-      cmd.Parameters.Add(new SQLiteParameter("@srvname", DbType.Binary));
+      if (canUpdateNames)
+        cmd.Parameters.Add(new SQLiteParameter("@srvname", DbType.Binary));
       cmd.Prepare();
       return cmd;
     }
 
-    private static SQLiteCommand PrepareDeleteCommand(SQLiteConnection conn, bool digital)
+    private SQLiteCommand PrepareDeleteCommand(SQLiteConnection conn, bool digital)
     {
       var cmd = conn.CreateCommand();
       var sql = new StringBuilder();
@@ -536,7 +551,7 @@ namespace ChanSort.Loader.SamsungJ
       return cmd;
     }
 
-    private static SQLiteCommand PrepareInsertFavCommand(SQLiteConnection conn)
+    private SQLiteCommand PrepareInsertFavCommand(SQLiteConnection conn)
     {
       var cmd = conn.CreateCommand();
       cmd.CommandText = "insert into SRV_FAV (srvId, fav, pos) values (@id, @fav, @pos)";
@@ -547,7 +562,7 @@ namespace ChanSort.Loader.SamsungJ
       return cmd;
     }
 
-    private static SQLiteCommand PrepareUpdateFavCommand(SQLiteConnection conn)
+    private SQLiteCommand PrepareUpdateFavCommand(SQLiteConnection conn)
     {
       var cmd = conn.CreateCommand();
       cmd.CommandText = "update SRV_FAV set pos=@pos where srvId=@id and fav=@fav";
@@ -557,7 +572,7 @@ namespace ChanSort.Loader.SamsungJ
       cmd.Prepare();
       return cmd;
     }
-    private static SQLiteCommand PrepareDeleteFavCommand(SQLiteConnection conn)
+    private SQLiteCommand PrepareDeleteFavCommand(SQLiteConnection conn)
     {
       var cmd = conn.CreateCommand();
       cmd.CommandText = "delete from SRV_FAV where srvId=@id and fav=@fav";
@@ -573,7 +588,7 @@ namespace ChanSort.Loader.SamsungJ
     private void WriteChannels(SQLiteCommand cmdUpdateSrv, SQLiteCommand cmdDeleteSrv, SQLiteCommand cmdInsertFav, SQLiteCommand cmdUpdateFav, SQLiteCommand cmdDeleteFav, 
       ChannelList channelList, bool analog = false)
     {
-
+      bool canUpdateNames = this.Features.ChannelNameEdit != ChannelNameEditMode.None;
       foreach (ChannelInfo channelInfo in channelList.Channels.ToList())
       {
         var channel = channelInfo as DbChannel;
@@ -595,7 +610,8 @@ namespace ChanSort.Loader.SamsungJ
         cmdUpdateSrv.Parameters["@lock"].Value = channel.Lock;
         cmdUpdateSrv.Parameters["@hidden"].Value = channel.Hidden;
         cmdUpdateSrv.Parameters["@numsel"].Value = !channel.Skip;
-        cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? (object)DBNull.Value : encoding.GetBytes(channel.Name);
+        if (canUpdateNames)
+          cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? (object)DBNull.Value : encoding.GetBytes(channel.Name);
         cmdUpdateSrv.ExecuteNonQuery();
 
         // update favorites

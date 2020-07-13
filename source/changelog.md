@@ -1,6 +1,11 @@
 ChanSort Change Log 
 ===================
 
+2020-07-13
+- Samsung 1242 format: channel names were displayed as chinese letters instead of latin
+  (Names are not stored as characters in this format, but instead 16 bits of UTF16 code points are encoded as "payload"
+  inside 3 byte UTF-8 sequences)
+
 2020-07-12
 - added UTF-16 Big Endian and Little Endian options to character set menu
 - Samsung .zip loader: auto-detect UTF-16 endianness and allow to change encoding after loading to UTF-16 LE/BE

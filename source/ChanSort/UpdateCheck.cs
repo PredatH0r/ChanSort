@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Net.Security;
+﻿using System.Net;
 using System.Threading;
 using ChanSort.Ui.Properties;
 using DevExpress.XtraEditors;
@@ -40,11 +38,9 @@ namespace ChanSort.Ui
         //Change SSL checks so that all checks pass
         //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-        using (WebClient client = new WebClient())
-        {
-          client.Proxy = null; // prevent a 1min wait/timeout by a .NET bug
-          response = client.DownloadString(UpdateUrl);
-        }
+        using WebClient client = new WebClient();
+        client.Proxy = null; // prevent a 1min wait/timeout by a .NET bug
+        response = client.DownloadString(UpdateUrl);
       }
       finally
       {
