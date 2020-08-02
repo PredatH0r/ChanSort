@@ -28,8 +28,7 @@ namespace ChanSort.Loader.SamsungJ
       var utf16Le = Unicode.GetBytes(chars, charIndex, charCount);
       int o = byteIndex;
       int c = utf16Le.Length;
-      int i;
-      for (i = 0; i < c; i += 2, o += 3)
+      for (int i = 0; i < c; i += 2, o += 3)
       {
         var b0 = utf16Le[i + 0];
         var b1 = utf16Le[i + 1];

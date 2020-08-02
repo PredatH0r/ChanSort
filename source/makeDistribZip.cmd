@@ -61,7 +61,7 @@ for %%f in (%*) do (
   if errorlevel 1 set todo=!todo! "%%f"
 )
 if "%todo%" == "" goto:skipCodeSigning
-%signtool% sign /a /t "http://timestamp.comodoca.com/authenticode" %todo%
+%signtool% sign /a /t "http://timestamp.digicert.com" %todo%
 :skipCodeSigning
 goto:eof
 

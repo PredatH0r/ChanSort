@@ -128,6 +128,17 @@ namespace ChanSort.Loader.PhilipsXml
         this.FileName = binFile;
         isChannelMapFolderStructure = true;
       }
+      else if (Path.GetExtension(this.FileName).ToLower() == ".bin")
+      {
+        // older Philips models export a visible file like Repair\CM_T911_LA_CK.BIN and an invisible (hidden+system) .xml file with the same name
+        var xmlPath = Path.Combine(dir, Path.GetFileNameWithoutExtension(this.FileName) + ".xml");
+        if (File.Exists(xmlPath))
+        {
+          try { File.SetAttributes(xmlPath, FileAttributes.Archive);}
+          catch { /**/ }
+          this.FileName = xmlPath;
+        }
+      }
 
       if (isChannelMapFolderStructure)
       {

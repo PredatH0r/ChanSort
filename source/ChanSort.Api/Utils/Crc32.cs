@@ -3,8 +3,8 @@
   public class Crc32
   {
     // This implementation is MSB-first based, using left-shift operators and a polynomial of 0x04C11DB7
-    // To get the same CRC32 values that an LSB-first implementation with polynomial 0xEDB88320 would produce,
-    // all bits in the input bytes and the resulting crc need to be reversed (msb to lsb)
+    // To get the same CRC32 values that an LSB-first implementation would produce,
+    // all bits in the input bytes, the polynomial (=> 0xEDB88320) and the resulting crc need to be reversed (msb to lsb)
 
     private const uint CrcMask = 0xFFFFFFFF;
     private const uint CrcPoly = 0x04C11DB7;
@@ -29,11 +29,13 @@
       for (int i = 0; i < 256; i++)
       {
         byte v = 0;
-        for (int j = 0, m = i; j < 8; j++, m >>= 1)
+        var m = i;
+        for (int j = 0; j < 8; j++)
         {
           v <<= 1;
           if ((m & 1) != 0)
             v |= 0x01;
+          m >>= 1;
         }
 
         BitReversedBytes[i] = v;

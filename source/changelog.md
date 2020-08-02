@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2020-08-03
+- Philips: older models which export a Repair/*.BIN file can now be loaded, when there is an invisible .xml file in the same
+  directory. 
+  (Philips exports the .xml file with file attributes "hidden" and "system", which makes them invisible to Windows Explorer)
+- upgrade to DevExpress 20.1.6
+
 2020-07-13
 - Samsung 1242 format: channel names were displayed as chinese letters instead of latin
   (Names are not stored as characters in this format, but instead 16 bits of UTF16 code points are encoded as "payload"
