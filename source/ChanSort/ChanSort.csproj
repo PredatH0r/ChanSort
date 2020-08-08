@@ -484,6 +484,10 @@
       <Project>{68da8072-3a29-4076-9f64-d66f38349585}</Project>
       <Name>ChanSort.Loader.Panasonic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.PhilipsBin\ChanSort.Loader.PhilipsBin.csproj">
+      <Project>{1f52b5ec-a2f1-4e53-9e1a-4658296c5bb5}</Project>
+      <Name>ChanSort.Loader.PhilipsBin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.PhilipsXml\ChanSort.Loader.PhilipsXml.csproj">
       <Project>{d7bafd55-50f5-46c3-a76b-2193bed5358f}</Project>
       <Name>ChanSort.Loader.PhilipsXml</Name>

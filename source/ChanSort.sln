@@ -76,6 +76,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.VDR", "Test.Loa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.M3u", "ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj", "{484028B6-3AAE-4F7E-A88A-76BEEB70203B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.PhilipsBin", "ChanSort.Loader.PhilipsBin\ChanSort.Loader.PhilipsBin.csproj", "{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -422,6 +424,18 @@ Global
 		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Release|x86.ActiveCfg = Release|x86
 		{484028B6-3AAE-4F7E-A88A-76BEEB70203B}.Release|x86.Build.0 = Release|x86
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Debug|x86.ActiveCfg = Debug|x86
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Debug|x86.Build.0 = Debug|x86
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Release|x86.ActiveCfg = Release|Any CPU
+		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

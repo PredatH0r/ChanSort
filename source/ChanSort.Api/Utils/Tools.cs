@@ -31,12 +31,12 @@ namespace ChanSort.Api
 
     #region GetInt16/32()
 
-    public static int GetInt16(byte[] data, int offset, bool littleEndian)
+    public static int GetInt16(this byte[] data, int offset, bool littleEndian = true)
     {
       return littleEndian ? BitConverter.ToInt16(data, offset) : (data[offset] << 8) + data[offset + 1];
     }
 
-    public static int GetInt32(byte[] data, int offset, bool littleEndian)
+    public static int GetInt32(this byte[] data, int offset, bool littleEndian = true)
     {
       return littleEndian ? BitConverter.ToInt32(data, offset) :
         (data[offset] << 24) + (data[offset + 1] << 16) + (data[offset + 2] << 8) + data[offset + 3];
@@ -45,7 +45,7 @@ namespace ChanSort.Api
 
     #region SetInt16/32()
 
-    public static void SetInt16(byte[] data, int offset, int value, bool littleEndian = true)
+    public static void SetInt16(this byte[] data, int offset, int value, bool littleEndian = true)
     {
       if (littleEndian)
       {
@@ -59,7 +59,7 @@ namespace ChanSort.Api
       }
     }
 
-    public static void SetInt32(byte[] data, int offset, int value, bool littleEndian = true)
+    public static void SetInt32(this byte[] data, int offset, int value, bool littleEndian = true)
     {
       if (littleEndian)
       {
@@ -82,11 +82,10 @@ namespace ChanSort.Api
 
     public static void MemCopy(byte[] source, int sourceIndex, byte[] dest, int destIndex, int count)
     {
-      for (int i = 0; i < count; i++)
-        dest[destIndex + i] = source[sourceIndex + i];
+      Array.Copy(source, sourceIndex, dest, destIndex, count);
     }
 
-    public static void MemSet(byte[] data, int offset, byte value, int count)
+    public static void MemSet(this byte[] data, int offset, byte value, int count)
     {
       for (int i = 0; i < count; i++)
         data[offset++] = value;

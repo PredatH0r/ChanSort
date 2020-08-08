@@ -49,8 +49,8 @@ namespace ChanSort.Api
         this.Warnings.AppendFormat("Duplicate transponder data record for satellite #{0} with id {1}\r\n", sat?.Id, trans.Id);
         return;
       }
-      if (sat != null)
-        sat.Transponder.Add(trans.Id, trans);
+
+      sat?.Transponder.Add(trans.Id, trans);
       this.Transponder.Add(trans.Id, trans);
     }
     #endregion

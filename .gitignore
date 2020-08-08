@@ -2,3 +2,4 @@
 source/ChanSort.opensdf
 /source/.vs/
 /source/packages/
+/source/ChanSort.Loader.PhilipsBin/DllClient.cs

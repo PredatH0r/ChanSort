@@ -6,11 +6,12 @@
     // To get the same CRC32 values that an LSB-first implementation would produce,
     // all bits in the input bytes, the polynomial (=> 0xEDB88320) and the resulting crc need to be reversed (msb to lsb)
 
+    public const uint NormalPoly = 0x04C11DB7;
+    public const uint ReversedPoly = 0xEDB88320;
     private const uint CrcMask = 0xFFFFFFFF;
-    private const uint CrcPoly = 0x04C11DB7;
 
-    public static Crc32 Normal = new Crc32(true);
-    public static Crc32 Reversed = new Crc32(false);
+    public static Crc32 Normal = new Crc32(true, NormalPoly);
+    public static Crc32 Reversed = new Crc32(false, NormalPoly);
     private static readonly byte[] BitReversedBytes = new byte[256];
 
     private readonly uint[] crc32Table;
@@ -20,7 +21,6 @@
 
     static Crc32()
     {
-      InitCrc32Table();
       InitReversedBitOrderTable();
     }
 
@@ -42,11 +42,20 @@
       }
     }
 
+    #endregion
 
-    private static uint[] InitCrc32Table()
+    /// <param name="msbFirst">true for using the "left shift" most-significant-bit-first algorithm</param>
+    /// <param name="poly"></param>
+    public Crc32(bool msbFirst, uint poly)
+    {
+      this.msbFirst = msbFirst;
+      this.crc32Table = InitCrc32Table(poly);
+    }
+
+    #region InitCrc32Table()
+    private uint[] InitCrc32Table(uint poly)
     {
       var crcTable = new uint[256];
-      var poly = CrcPoly;
       for (uint i = 0; i < 256; i++)
       {
         uint r = i << 24;
@@ -64,13 +73,6 @@
       return crcTable;
     }
     #endregion
-
-    /// <param name="msbFirst">true for using the "left shift" MSB-first algorithm with polynomial 0x04C11Db7. false to use "right shift" with polynomial 0xEDB883320</param>
-    public Crc32(bool msbFirst = true)
-    {
-      this.msbFirst = msbFirst;
-      crc32Table = InitCrc32Table();
-    }
 
     #region CalcCrc32()
     public uint CalcCrc32(byte[] data, int start, int length)
