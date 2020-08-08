@@ -85,28 +85,32 @@ public struct Ph_ServiceDat
       word pid : 13;
       word unk : 3;
     } pcrPid;
-    byte unk1a;
+    byte unk1;
     struct
     {
       byte unk : 4;
       byte locked : 1;
-      byte unk2 : 3;
+      byte unk2 : 1;
+      byte isFav2 : 1;
+      byte unk3 : 1;
     } flags;
     word onid;
     word tsid;
     word sid;
     word transponderIndex;
-    word unk4;
-    word unk5;
+    word unk2;
+    word unk3;
     struct
     {
       word vpid : 13;
       word unk : 2;
       word isFav : 1;
     } vpid;
-    word unk6;
+    byte unk4;
+    byte unk5;
     word progNr;
-    word unk7;
+    byte unk6;
+    byte unk7;
     word unk8;
     word unk9;
     char channelName[32];

@@ -11,19 +11,31 @@ using ChanSort.Api;
 
 namespace ChanSort.Loader.PhilipsBin
 {
+  /*
+  s2channellib\service.dat:
+  ========================
+  All observed files have a perfectly linear next/prev table. The Philips Channel Editor also keeps that list linear and physically reorders the channel records.
+  Also, all observed channel records have progNr either equal to the physical index + 1 or to 0xffff.
+  Each channel record with progNr 0xFFFF causes a gap in the progNr sequence.
+  It is unclear:
+  - if the next/prev list MUST be kept linear 
+  - channel records MUST be physically ordered to be in-sync with the next/prev list
+  - channel records MUST be physically ordered by progNr (allowing 0xFFFF for gaps)
+  To be on the safe side, this code keeps the list linear, physically reorders the records to match the progNr.
+  Since we don't show deleted channels in the UI, we can't keep the gaps caused by them in the channel list. They will be appended at the end and the gaps closed.
   
+  When swapping satellite channels 1 and 2 with the Philips Channel Editor 6.62, it only updates a few fields and leaves the rest stale.
+  updated: SID, transponderIndex, channelName, providerName
+  This code here copyies the whole record before updating the fields
+  */
   class Serializer : SerializerBase
   {
+    private readonly IniFile ini;
+    private readonly List<string> dataFilePaths = new List<string>();
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbCT, "DVB-T");
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbCT, "DVB-C");
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
-    private readonly ChannelList favChannels = new ChannelList(SignalSource.All, "Favorites");
 
-
-    private readonly IniFile ini;
-    private byte[] dvbcData, dvbtData, dvbsData;
-
-    private readonly List<string> dataFilePaths = new List<string>();
 
     #region ctor()
     public Serializer(string inputFile) : base(inputFile)
@@ -34,6 +46,7 @@ namespace ChanSort.Loader.PhilipsBin
       this.Features.CanHideChannels = false;
       this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanSaveAs = false;
+      this.Features.CanHaveGaps = false;
       this.Features.SupportedFavorites = Favorites.A;
       this.Features.SortedFavorites = true;
       this.Features.AllowGapsInFavNumbers = false;
@@ -42,7 +55,6 @@ namespace ChanSort.Loader.PhilipsBin
       this.DataRoot.AddChannelList(this.dvbtChannels);
       this.DataRoot.AddChannelList(this.dvbcChannels);
       this.DataRoot.AddChannelList(this.satChannels);
-      //this.DataRoot.AddChannelList(this.favChannels);
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -51,15 +63,15 @@ namespace ChanSort.Loader.PhilipsBin
       }
 
       var supportedColumns = new[] {"OldPosition", "Position", "Name", "Lock"};
-      this.satChannels.VisibleColumnFieldNames.Remove("AudioPid");
-      this.satChannels.VisibleColumnFieldNames.Remove("ServiceTypeName");
-      this.satChannels.VisibleColumnFieldNames.Remove("Encrypted");
-      this.satChannels.VisibleColumnFieldNames.Remove("Hidden");
       //this.satChannels.VisibleColumnFieldNames.Clear();
       //foreach(var supportedColumn in supportedColumns)
       //  this.satChannels.VisibleColumnFieldNames.Add(supportedColumn);
 
-      this.favChannels.IsMixedSourceFavoritesList = true;
+      this.satChannels.VisibleColumnFieldNames.Remove("AudioPid");
+      this.satChannels.VisibleColumnFieldNames.Remove("ServiceTypeName");
+      this.satChannels.VisibleColumnFieldNames.Remove("Encrypted");
+      this.satChannels.VisibleColumnFieldNames.Remove("Hidden");
+
       this.ini = new IniFile("ChanSort.Loader.PhilipsBin.ini");
     }
     #endregion
@@ -74,16 +86,20 @@ namespace ChanSort.Loader.PhilipsBin
                                     + "ChannelList\\s2channellib\\service.dat");
 
       var dir = Path.GetDirectoryName(this.FileName);
-      dvbtData = LoadDvbCT(dvbtChannels, Path.Combine(dir, "channellib", "AntennaDigSrvTable"));
-      dvbcData = LoadDvbCT(dvbcChannels, Path.Combine(dir, "channellib", "CableDigSrvTable"));
+      LoadDvbCT(dvbtChannels, Path.Combine(dir, "channellib", "AntennaDigSrvTable"));
+      LoadDvbCT(dvbcChannels, Path.Combine(dir, "channellib", "CableDigSrvTable"));
 
       LoadDvbsSatellites(Path.Combine(dir, "s2channellib", "satellite.dat"));
       LoadDvbsTransponders(Path.Combine(dir, "s2channellib", "tuneinfo.dat"));
-      dvbsData = LoadDvbS(satChannels, Path.Combine(dir, "s2channellib", "service.dat"));
+      LoadDvbS(satChannels, Path.Combine(dir, "s2channellib", "service.dat"));
       LoadDvbsFavorites(Path.Combine(dir, "s2channellib", "favorite.dat"));
       var db_file_info = Path.Combine(dir, "s2channellib", "db_file_info.dat");
       if (File.Exists(db_file_info))
         this.dataFilePaths.Add(db_file_info);
+
+      // for a proper ChanSort backup/restore with .bak files, the Philips _backup.dat files must also be included
+      foreach(var file in this.dataFilePaths.ToList())
+        this.dataFilePaths.Add(file.Replace(".dat", "_backup.dat"));
     }
     #endregion
 
@@ -239,14 +255,14 @@ namespace ChanSort.Loader.PhilipsBin
     #endregion
 
     #region LoadDvbS
-    private byte[] LoadDvbS(ChannelList list, string path)
+    private void LoadDvbS(ChannelList list, string path)
     {
       if (!File.Exists(path))
-        return null;
+        return;
 
       var data = File.ReadAllBytes(path);
       if (data.Length < 4)
-        return null;
+        return;
 
       var checksum = BitConverter.ToUInt32(data, data.Length - 4);
 
@@ -315,8 +331,6 @@ namespace ChanSort.Loader.PhilipsBin
 
         this.DataRoot.AddChannel(list, ch);
       }
-
-      return data;
     }
     #endregion
 
@@ -341,12 +355,12 @@ namespace ChanSort.Loader.PhilipsBin
       if (data.Length != 4 + dataSize + 4)
         return;
 
+      this.dataFilePaths.Add(path);
+
       int firstFavIndex = BitConverter.ToInt16(data, 4);
       int favCount = BitConverter.ToInt16(data, 6);
       if (favCount > recordCount || firstFavIndex < 0 || firstFavIndex >= recordCount)
         return;
-
-      this.dataFilePaths.Add(path);
 
       var baseOffset = 8;
       for (int i = 0, curFav = firstFavIndex; i < favCount; i++)
@@ -383,33 +397,42 @@ namespace ChanSort.Loader.PhilipsBin
     #region SaveDvbsChannels
     private void SaveDvbsChannels(string path)
     {
-      byte[] deletedChannelData = { 
-        0x00, 0x00, 0x00, 0x5c, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xc2, 0x3f, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
-        0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-        0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00
-      };
+      var orig = File.ReadAllBytes(path);
+      int recordSize = BitConverter.ToInt32(orig, 4);
+      int recordCount = BitConverter.ToInt32(orig, 8);
 
-      var data = File.ReadAllBytes(path);
-      int recordSize = BitConverter.ToInt32(data, 4);
-      int recordCount = BitConverter.ToInt32(data, 8);
+      // create a new array for the modified data, copying the header and next/prev table
+      var data = new byte[orig.Length];
+      Array.Copy(orig, data, 12 + recordCount * 4);
+
+      var baseOffset = 12 + recordCount * 4;
 
       var mapping = new DataMapping(this.ini.GetSection("service.dat_entry"));
-      mapping.SetDataPtr(data, 12 + recordCount * 4);
+      mapping.SetDataPtr(data, baseOffset);
 
-      foreach (var ch in this.satChannels.Channels)
+      // copy physical records to bring them in the new order and update fields like progNr
+      // this way the linked next/prev list remains in-sync with the channel order
+      int i = 0;
+      foreach (var ch in this.satChannels.Channels.OrderBy(c => c.NewProgramNr <= 0 ? int.MaxValue : c.NewProgramNr).ThenBy(c => c.OldProgramNr))
       {
-        mapping.BaseOffset = 12 + recordCount * 4 + (int)ch.RecordIndex * recordSize;
+        mapping.BaseOffset = baseOffset + i * recordSize;
+        Array.Copy(orig, baseOffset + (int)ch.RecordIndex * recordSize, data, mapping.BaseOffset, recordSize);
         if (ch.IsDeleted)
         {
-          Array.Copy(deletedChannelData, 0, data, mapping.BaseOffset, Math.Min(deletedChannelData.Length, recordSize));
-          continue;
+          mapping.SetWord("offSid", 0xFFFF);
+          mapping.SetWord("offTransponderIndex", 0xFFFF);
+          mapping.SetWord("offProgNr", 0xFFFF);
         }
-        mapping.SetWord("offProgNr", ch.NewProgramNr);
-        mapping.SetFlag("IsFav", ch.Favorites != 0);
-        mapping.SetFlag("Locked", ch.Lock);
+        else
+        {
+          mapping.SetWord("offProgNr", ch.NewProgramNr);
+          mapping.SetFlag("IsFav", ch.Favorites != 0);
+          mapping.SetFlag("Locked", ch.Lock);
+        }
+
+        ch.RecordIndex = i++; // required so that subsequent saves don't reshuffle the records
       }
+
 
       var crc32 = ~Crc32.Reversed.CalcCrc32(data, 0, data.Length - 4);
       data.SetInt32(data.Length-4, (int)crc32);
