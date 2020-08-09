@@ -75,9 +75,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ChanSort.Loader.PhilipsBin.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="ChanSort.Loader.PhilipsBin.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

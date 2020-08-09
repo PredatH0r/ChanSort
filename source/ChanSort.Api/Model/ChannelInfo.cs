@@ -9,6 +9,7 @@ namespace ChanSort.Api
 
     private string uid;
     private string serviceTypeName;
+    private int newProgramNr;
 
     public virtual bool IsDeleted { get; set; }
     public SignalSource SignalSource { get; set; }
@@ -28,10 +29,21 @@ namespace ChanSort.Api
     /// original program number from the file, except for channels with IsDeleted==true, which will have the value -1
     /// </summary>
     public int OldProgramNr { get; set; }
+
     /// <summary>
     /// new program number or -1, if the channel isn't assigned a number or has IsDeleted==true
     /// </summary>
-    public int NewProgramNr { get; set; }
+    public int NewProgramNr
+    {
+      get => newProgramNr;
+      set
+      {
+        if (value == 0)
+        {
+        }
+        newProgramNr = value;
+      }
+    }
 
     public string Name { get; set; }
     public string ShortName { get; set; }

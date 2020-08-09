@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -72,7 +73,8 @@ namespace ChanSort.Loader.PhilipsBin
       this.satChannels.VisibleColumnFieldNames.Remove("Encrypted");
       this.satChannels.VisibleColumnFieldNames.Remove("Hidden");
 
-      this.ini = new IniFile("ChanSort.Loader.PhilipsBin.ini");
+      string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
+      this.ini = new IniFile(iniFile);
     }
     #endregion
 
@@ -287,51 +289,62 @@ namespace ChanSort.Loader.PhilipsBin
       mapping.SetDataPtr(data, 12 + recordCount * 4);
       for (int i = 0; i < recordCount; i++, mapping.BaseOffset += recordSize)
       {
-        var ch = new ChannelInfo(list.SignalSource, i, 0, null);
-
-        var progNr = mapping.GetWord("offProgNr");
-        var transponderId = mapping.GetWord("offTransponderIndex");
-        if (progNr == 0xFFFF || transponderId == 0xFFFF)
-        {
-          ch.IsDeleted = true;
-          ch.OldProgramNr = -1;
-          DataRoot.AddChannel(list, ch);
-          continue;
-        }
-
-        ch.PcrPid = mapping.GetWord("offPcrPid") & mapping.GetMask("maskPcrPid");
-        ch.Lock = mapping.GetFlag("Locked");
-        ch.OriginalNetworkId = mapping.GetWord("OffOnid"); // can be 0 in some lists
-        ch.TransportStreamId = mapping.GetWord("offTsid");
-        ch.ServiceId = mapping.GetWord("offSid");
-
-        ch.VideoPid = mapping.GetWord("offVpid") & mapping.GetMask("maskVpid");
-        //ch.Favorites = mapping.GetFlag("IsFav") ? Favorites.A : 0; // setting this here would mess up the proper order
-        ch.OldProgramNr = progNr;
-
-        dvbStringDecoder.GetChannelNames(data, mapping.BaseOffset + mapping.GetConst("offName",0), mapping.GetConst("lenName", 0), out var longName, out var shortName);
-        ch.Name = longName.TrimEnd('\0');
-        ch.ShortName = shortName.TrimEnd('\0');
-
-        dvbStringDecoder.GetChannelNames(data, mapping.BaseOffset + mapping.GetConst("offProvider", 0), mapping.GetConst("lenProvider", 0), out var provider, out _);
-        ch.Provider = provider.TrimEnd('\0');
-
-        if (this.DataRoot.Transponder.TryGetValue(transponderId, out var t))
-        {
-          ch.Transponder = t;
-          ch.FreqInMhz = t.FrequencyInMhz;
-          ch.SymbolRate = t.SymbolRate;
-          ch.SatPosition = t.Satellite?.OrbitalPosition;
-          ch.Satellite = t.Satellite?.Name;
-          if (ch.OriginalNetworkId == 0)
-            ch.OriginalNetworkId = t.OriginalNetworkId;
-          if (ch.TransportStreamId == 0)
-            ch.TransportStreamId = t.TransportStreamId;
-        }
-
+        var ch = LoadDvbsChannel(list, mapping, i, dvbStringDecoder);
         this.DataRoot.AddChannel(list, ch);
       }
     }
+    #endregion
+
+    #region LoadDvbsChannel
+    private ChannelInfo LoadDvbsChannel(ChannelList list, DataMapping mapping, int recordIndex, DvbStringDecoder dvbStringDecoder)
+    {
+      var transponderId = mapping.GetWord("offTransponderIndex");
+      var progNr = mapping.GetWord("offProgNr");
+      var ch = new ChannelInfo(list.SignalSource, recordIndex, progNr, null);
+
+      // deleted channels must be kept in the list because their records must also be physically reordered when saving the list
+      if (progNr == 0xFFFF || transponderId == 0xFFFF)
+      {
+        ch.IsDeleted = true;
+        ch.OldProgramNr = -1;
+        return ch;
+      }
+
+      // onid, tsid, pcrpid and vpid can be 0 in some lists
+      ch.PcrPid = mapping.GetWord("offPcrPid") & mapping.GetMask("maskPcrPid");
+      ch.Lock = mapping.GetFlag("Locked");
+      ch.OriginalNetworkId = mapping.GetWord("OffOnid");
+      ch.TransportStreamId = mapping.GetWord("offTsid");
+      ch.ServiceId = mapping.GetWord("offSid");
+      ch.VideoPid = mapping.GetWord("offVpid") & mapping.GetMask("maskVpid");
+      ch.Favorites = mapping.GetFlag("IsFav") ? Favorites.A : 0;
+      ch.OldProgramNr = progNr;
+
+      // the 0x1F as the first byte of the channel name is likely the DVB encoding indicator for UTF-8. So we use the DvbStringDecoder here
+      dvbStringDecoder.GetChannelNames(mapping.Data, mapping.BaseOffset + mapping.GetConst("offName", 0), mapping.GetConst("lenName", 0), out var longName, out var shortName);
+      ch.Name = longName.TrimEnd('\0');
+      ch.ShortName = shortName.TrimEnd('\0');
+
+      dvbStringDecoder.GetChannelNames(mapping.Data, mapping.BaseOffset + mapping.GetConst("offProvider", 0), mapping.GetConst("lenProvider", 0), out var provider, out _);
+      ch.Provider = provider.TrimEnd('\0');
+
+      // copy values from the satellite/transponder tables to the channel
+      if (this.DataRoot.Transponder.TryGetValue(transponderId, out var t))
+      {
+        ch.Transponder = t;
+        ch.FreqInMhz = t.FrequencyInMhz;
+        ch.SymbolRate = t.SymbolRate;
+        ch.SatPosition = t.Satellite?.OrbitalPosition;
+        ch.Satellite = t.Satellite?.Name;
+        if (t.OriginalNetworkId != 0)
+          ch.OriginalNetworkId = t.OriginalNetworkId;
+        if (t.TransportStreamId != 0)
+          ch.TransportStreamId = t.TransportStreamId;
+      }
+
+      return ch;
+    }
+
     #endregion
 
     #region LoadDvbsFavorites
