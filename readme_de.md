@@ -72,7 +72,13 @@ Listen:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-R
 
 Andere Modelle können ebenfalls funktionieren, wurden aber nicht getestet. Erfahrungsberichte im Forum sind jederzeit willkommen.
 
-Eine Anleitung zum Aufruf des geheimen Service-Menüs zur Senderlistenübertragung befindet sich in der Wiki.
+Modelle mit NetCast Betriebssytem beinhalten keine Import/Export Funktion im normalen Menü. Um das Geheimmenü aufzurufen,
+halten Sie die Settings Taste auf der Fernbedienung solange gedrückt, bis das Menü wieder verschwindet und dann drücken Sie "1105".
+Im "TV Link Loader" Menü befinden sich dann die Import/Export-Funktionen.
+
+Unterstützung für WebOS 5 ist derzeit experimentell. Benutzer berichten über Probleme beim Import, selbst wenn die Datei nicht 
+mit ChanSort bearbeitet wurden.
+Es kann notwendig sein, vor dem Import den Fernseher auf Werkseinstellungen zurückzusetzen, um seine Senderliste zu leeren.
 
 **Panasonic**  
 Viera-Modelle mit svl.bin oder svl.db Dateien (die meisten Modelle seit 2011)

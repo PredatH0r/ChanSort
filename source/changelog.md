@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2020-08-10
+- Philips: added support for models that export a Repair/ChannelList/channellib/*Table and s2channelLib/*.dat
+  folder structure, e.g. PFL4317K, PFL5507K, PFL5806K, PFL7656K
+
 2020-08-03
 - Philips: older models which export a Repair/*.BIN file can now be loaded, when there is an invisible .xml file in the same
   directory. 

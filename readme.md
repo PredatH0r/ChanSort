@@ -65,7 +65,6 @@ https://github.com/PredatH0r/ChanSort/wiki/Samsung
 
 **LG**  
 Series: CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
-and all newer models using the GlobalClone.TLL format  
 Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
 
 \*: Some devices behave erroneously due to firmware issues.  
@@ -74,8 +73,12 @@ Lists:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Ra
 
 Other models might also work, but have not been tested. If you have a .TLL file of a series not listed here, please send it to me.
 
-Instructions on how to access the hidden service-menu for transferring
-the channel list from/to USB can be found in the Wiki.
+Models with the NetCast operating system don't have the export/import function in the menu. Instead you need to press+hold the 
+settings button on the remote control until the settings disappear again, then enter 1105 and select the "TV Link Loader" menu.
+With the latest firmware for the LM series the special "service remote control" is no longer needed, "1105" works now too.
+
+Support for WebOS 5 is currently experimental. Users reported issues when importing a list back - even without modifying it with ChanSort.
+It may be neccessary to reset the TV to factory defaults to clear its channel list before a list can be imported from USB.
 
 **Panasonic**  
 Viera models with an svl.bin or svl.db channel list (most models since 2011)
@@ -85,7 +88,10 @@ Android-TVs "sdb.xml" files using formats "FormateVer" 1.1.0 and KDL 2012/2014 f
 
 **Philips**  
 Philips uses countless incompatible file formats for various TV models.
-ChanSort currently supports 2 different versions of .xml files, other formats are not supported.
+ChanSort currently supports 3 different formats:  
+- PhilipsChannelMaps\ChannelMap_xxx\channellib\DVBC.xml, DVBT.xml and s2channellib\DVBS.xml
+- Repair\CM_TPM1013E_LA_CK.xml (sometimes that file is hidden and only a .bin file is visible)
+- Repair\ChannelList\channellib\\*Table and s2channellib\\*.dat
 
 **Hisense**  
 2016 "Smart" models with a channel.db file, i.e. H65M5500  
