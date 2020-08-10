@@ -1,5 +1,9 @@
 #include "chansort.h"
 
+/***********************************************************
+ * s2channellib / DVB-S files
+ ***********************************************************/
+ 
 struct Ph_NextPrevTableEntry
 {
   word next;
@@ -134,43 +138,131 @@ public struct Ph_FavoriteDat
   dword crc32;
 };
 
+/***********************************************************
+ * channellib / antenna and cable files
+ ***********************************************************/
 
 public struct Ph_CableDigSrvTable
 {
-  byte unk1[8];
+  dword unk1;
+  dword unk2;
   dword chRecordSize;
   dword channelCount;
-  byte unk2[4];
+  dword versionCode;
   struct Ph_CableChannel
   {
     var off0 = current_offset;
     dword checksum;
-    byte unk1[110];
+    byte unk1[20];
+    dword symbolRate;
+    byte unk2[20];
+    struct 
+    {
+      word subFreq : 4;
+      word mhz : 12;
+    } freqTimes16;
+    word onid;
+    word sid;
+    word tsid;
+    byte unk3b[58];
+    word progNrMostly;
+    byte unk4[6];
     word progNr;
-    byte unk2[6];
-    word progNr2;
-    byte unk2b[16];
+    byte unk5[22];
     byte locked;
-    byte unk3[75];
+    byte isFav;
+    byte unk6[68];
     wchar_t channelName[32];
     byte unk4[chRecordSize - (current_offset - off0)];
   } Channels[channelCount];
 };
 
-public struct Ph_CablePresetTable
+public struct Ph_CableDigTSTable
 {
-  byte unk1[8];
+  dword unk1;
+  dword unk2;
   dword recordSize;
   dword recordCount;
-  byte unk2[4];
+  dword versionCode;
+  struct Ph_CableChannel
+  {
+    var off0 = current_offset;
+    dword checksum;
+    dword unk1;
+    dword unk2;
+    struct
+    {
+      dword subFreq :4;
+      dword mhz : 28;
+    } freqInMhzTimes16a;
+    dword unk3;
+    dword unk4;
+    dword unk5;
+    dword symbolRate;
+    dword unk6;
+    dword unk7;
+    struct
+    {
+      dword subFreq :4;
+      dword mhz : 28;
+    } freqInMhzTimes16b;
+    word onid;
+    word nid;
+    word tsid;
+    word unk10;
+    byte unk4[recordSize - (current_offset - off0)];
+  } Transponders[recordCount];
+};
+
+public struct Ph_CableFrqMapTable
+{
+  dword unk1;
+  dword unk2;
+  dword recordSize;
+  dword recordCount;
+  dword versionCode;
+  struct 
+  {
+    var off0 = current_offset;
+    dword checksum;
+    struct
+    {
+      dword subFreq :4;
+      dword mhz : 28;
+    } freqInMhzTimes16;
+    dword symbolRate;
+    dword unk2;
+    word onid;
+    word tsid;
+    word unk5;
+    word unk6;
+    dword unk7;
+    byte unk[recordSize - (current_offset - off0)];
+  } Transponders[recordCount];
+};
+
+public struct Ph_CablePresetTable
+{
+  dword unk1;
+  dword unk2;
+  dword recordSize;
+  dword recordCount;
+  dword versionCode;
   struct
   {
     var off0 = current_offset;
-    byte unk1[12];
-    word unk2;
+    dword checksum;
+    struct
+    {
+      dword subFreq :4;
+      dword mhz : 28;
+    } freqInMhzTimes16;
+    word progNr;
     word unk3;
     word unk4;
-    word unk5;
+    word onid;
+    word tsid;
+    word sid;
     byte unk[recordSize - (current_offset - off0)];
   } ChanPreset[recordCount];
 };
