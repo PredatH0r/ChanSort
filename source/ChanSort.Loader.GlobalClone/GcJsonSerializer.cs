@@ -30,8 +30,10 @@ namespace ChanSort.Loader.GlobalClone
       this.Features.CanSkipChannels = true;
       this.Features.CanLockChannels = true;
 
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.AnalogT  | SignalSource.Tv | SignalSource.Data, "Analog Antenna"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Data, "DVB-T TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Radio, "DVB-T Radio"));
+      this.DataRoot.AddChannelList(new ChannelList(SignalSource.AnalogC | SignalSource.Tv | SignalSource.Data, "Analog Cable"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Tv | SignalSource.Data, "DVB-C TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Radio, "DVB-C Radio"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Data, "DVB-S TV"));
@@ -122,47 +124,71 @@ namespace ChanSort.Loader.GlobalClone
       foreach (var node in this.doc["channelList"])
       {
         var ch = new GcChannel<JToken>(0, i, node);
-        ch.PcrPid = (int) node["pcrPid"];
-        ch.IsDisabled = (bool) node["disabled"];
-        ch.FreqInMhz = (int) node["frequency"];
-        if (ch.FreqInMhz >= 100000 && ch.FreqInMhz < 1000000) // DVBS is given in MHz, DVBC/T in kHz
-          ch.FreqInMhz /= 1000;
-        ch.AudioPid = (int) node["audioPid"];
-        
-        ch.Source = (string) node["sourceIndex"];
+
+        ch.Source = (string)node["sourceIndex"];
         if (ch.Source == "SATELLITE DIGITAL")
           ch.SignalSource |= SignalSource.DvbS;
         else if (ch.Source == "CABLE DIGITAL")
           ch.SignalSource |= SignalSource.DvbC;
-        else if (ch.Source.Contains("DIGITAL")) // not seen yet. maybe DIGITAL ANTENNA?
+        else if (ch.Source.Contains("ANTENNA DIGITAL"))
           ch.SignalSource |= SignalSource.DvbT;
+        else if (ch.Source.Contains("ANTENNA ANALOG"))
+          ch.SignalSource |= SignalSource.AnalogT;
+        else if (ch.Source.Contains("CABLE ANALOG"))
+          ch.SignalSource |= SignalSource.AnalogC;
+        else
+        {
+          // TODO: add some log for skipped channels
+          continue;
+        }
 
+        ch.IsDisabled = (bool) node["disabled"];
         ch.Skip = (bool) node["skipped"];
+        ch.Lock = (bool)node["locked"];
         ch.Hidden = (bool) node["Invisible"];
-        ch.IsDeleted = (bool) node["deleted"];
-        //if (int.TryParse((string) node["satelliteId"], out var satId))
-        ch.Satellite = (string) node["satelliteId"]; //this.DataRoot.Satellites.TryGet(satId);
-        ch.Encrypted = (bool) node["scrambled"];
         var nameBytes = Convert.FromBase64String((string) node["chNameBase64"]);
         dec.GetChannelNames(nameBytes, 0, nameBytes.Length, out var name, out var shortName);
         ch.Name = name;
         ch.ShortName = shortName;
-        ch.VideoPid = (int) node["videoPid"];
-        var transSystem = (string) node["transSystem"];
-        var tpId = (string) node["tpId"];
-        if (tpId != null && tpId.Length == 10)
-          ch.Transponder = this.DataRoot.Transponder.TryGet((int.Parse(tpId.Substring(0, 4)) << 16) + int.Parse(tpId.Substring(4))); // satId + freq, e.g. 0192126041
-        ch.TransportStreamId = (int) node["TSID"];
+
         ch.OldProgramNr = ch.IsDeleted ? -1 : (int) node["majorNumber"];
-        ch.ServiceType = (int) node["serviceType"];
-        ch.Lock = (bool) node["locked"];
         if (string.IsNullOrWhiteSpace(ch.Name))
           ch.Name = (string)node["channelName"];
-        ch.ServiceId = (int) node["SVCID"];
-        if (ch.ServiceId == 0)
-          ch.ServiceId = (int) node["programNum"];
-        ch.OriginalNetworkId = (int) node["ONID"];
-        ch.SignalSource |= LookupData.Instance.IsRadioTvOrData(ch.ServiceType);
+
+        ch.TransportStreamId = (int)node["TSID"];
+
+        if ((ch.SignalSource & SignalSource.Digital) != 0)
+        {
+          var transSystem = (string) node["transSystem"];
+
+          //if (int.TryParse((string) node["satelliteId"], out var satId))
+          ch.Satellite = (string) node["satelliteId"]; //this.DataRoot.Satellites.TryGet(satId);
+          ch.Encrypted = (bool) node["scrambled"];
+          ch.FreqInMhz = (int) node["frequency"];
+          if (ch.FreqInMhz >= 100000 && ch.FreqInMhz < 1000000) // DVBS is given in MHz, DVBC/T in kHz
+            ch.FreqInMhz /= 1000;
+
+          var tpId = (string) node["tpId"];
+          if (tpId != null && tpId.Length == 10)
+            ch.Transponder = this.DataRoot.Transponder.TryGet((int.Parse(tpId.Substring(0, 4)) << 16) + int.Parse(tpId.Substring(4))); // satId + freq, e.g. 0192126041
+
+          ch.IsDeleted = (bool) node["deleted"];
+          ch.PcrPid = (int) node["pcrPid"];
+          ch.AudioPid = (int) node["audioPid"];
+          ch.VideoPid = (int) node["videoPid"];
+          ch.ServiceId = (int) node["SVCID"];
+          if (ch.ServiceId == 0)
+            ch.ServiceId = (int) node["programNum"];
+          ch.ServiceType = (int) node["serviceType"];
+          ch.OriginalNetworkId = (int) node["ONID"];
+          ch.SignalSource |= LookupData.Instance.IsRadioTvOrData(ch.ServiceType);
+        }
+        else
+        {
+          ch.ChannelOrTransponder = (string) node["TSID"];
+          ch.SignalSource |= SignalSource.Tv;
+        }
+
 
         if ((ch.OldProgramNr & 0x4000) != 0)
         {

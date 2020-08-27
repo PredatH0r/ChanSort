@@ -1489,6 +1489,8 @@ namespace ChanSort.Ui
         return false;
 
       var source = list.SignalSource;
+      if (col == this.colFavorites) return this.DataRoot.SupportedFavorites != 0;
+      if (col == this.colOutFav) return this.DataRoot.SupportedFavorites != 0;
       if (col == this.colPrNr) return this.subListIndex > 0;
       if (col == this.colChannelOrTransponder) return (source & SignalSource.Sat) == 0;
       if (col == this.colShortName) return (source & SignalSource.Digital) != 0;

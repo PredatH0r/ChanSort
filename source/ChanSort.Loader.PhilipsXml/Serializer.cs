@@ -49,6 +49,7 @@ namespace ChanSort.Loader.PhilipsXml
    */
   class Serializer : SerializerBase
   {
+    private readonly ChannelList analogChannels = new ChannelList(SignalSource.DvbCT, "Analog C/T");
     private readonly ChannelList dvbctChannels = new ChannelList(SignalSource.DvbCT, "DVB-C/T");
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
     private readonly ChannelList allSatChannels = new ChannelList(SignalSource.DvbS, "DVB-S all");
@@ -73,6 +74,7 @@ namespace ChanSort.Loader.PhilipsXml
       this.Features.AllowGapsInFavNumbers = false;
       this.Features.CanEditFavListNames = true;
 
+      this.DataRoot.AddChannelList(this.analogChannels);
       this.DataRoot.AddChannelList(this.dvbctChannels);
       this.DataRoot.AddChannelList(this.satChannels);
       this.DataRoot.AddChannelList(this.allSatChannels);
@@ -89,6 +91,15 @@ namespace ChanSort.Loader.PhilipsXml
         list.VisibleColumnFieldNames.Remove("ShortName");
         list.VisibleColumnFieldNames.Remove("Provider");
       }
+
+      this.analogChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.OriginalNetworkId));
+      this.analogChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.TransportStreamId));
+      this.analogChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ServiceId));
+      this.analogChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.SymbolRate));
+      this.analogChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ChannelOrTransponder));
+      this.analogChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.NetworkName));
+      this.analogChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.NetworkOperator));
+
 
       this.favChannels.IsMixedSourceFavoritesList = true;
     }
@@ -266,6 +277,9 @@ namespace ChanSort.Loader.PhilipsXml
       ChannelList chList = null;
       switch (medium)
       {
+        case "analog":
+          chList = this.analogChannels;
+          break;
         case "dvbc":
         case "dvbt":
           chList = this.dvbctChannels;
@@ -361,7 +375,9 @@ namespace ChanSort.Loader.PhilipsXml
       chan.Name = data.TryGet("name");
       chan.RawName = chan.Name;
       chan.FreqInMhz = ParseInt(data.TryGet("frequency"));
-      if (chan.FreqInMhz > 2000)
+      //if ((chan.SignalSource & SignalSource.Analog) != 0)
+      //  chan.FreqInMhz /= 16;
+      if (chan.FreqInMhz > 1200)
         chan.FreqInMhz /= 1000;
       chan.ServiceId = ParseInt(data.TryGet("serviceID"));
       chan.OriginalNetworkId = ParseInt(data.TryGet("ONID"));
