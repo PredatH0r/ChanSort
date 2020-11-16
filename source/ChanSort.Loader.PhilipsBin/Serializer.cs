@@ -43,6 +43,8 @@ namespace ChanSort.Loader.PhilipsBin
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
+    private ChanLstBin chanLstBin;
+    private readonly StringBuilder logMessages = new StringBuilder();
 
     #region ctor()
     public Serializer(string inputFile) : base(inputFile)
@@ -95,6 +97,9 @@ namespace ChanSort.Loader.PhilipsBin
                                     + "ChannelList\\chanLst.bin\n"
                                     + "ChannelList\\channellib\\CableDigSrvTable\n"
                                     + "ChannelList\\s2channellib\\service.dat");
+
+      this.chanLstBin = new ChanLstBin();
+      this.chanLstBin.Load(this.FileName, msg => this.logMessages.AppendLine(msg));
 
       var dir = Path.GetDirectoryName(this.FileName) ?? "";
       var channellib = Path.Combine(dir, "channellib");
@@ -487,6 +492,8 @@ namespace ChanSort.Loader.PhilipsBin
       SaveDvbsChannels(Path.Combine(s2channellib, "service.dat"));
       SaveDvbsFavorites(Path.Combine(s2channellib, "favorite.dat"));
       SaveDvbsDbFileInfo(Path.Combine(s2channellib, "db_file_info.dat"));
+
+      this.chanLstBin.Save(this.FileName);
     }
 
     #endregion
@@ -651,7 +658,7 @@ namespace ChanSort.Loader.PhilipsBin
 
 
     #region FaultyCrc32
-    public uint FaultyCrc32(byte[] bytes, int start, int count)
+    public static uint FaultyCrc32(byte[] bytes, int start, int count)
     {
       var crc = 0xFFFFFFFF;
       var off = start;
@@ -672,5 +679,11 @@ namespace ChanSort.Loader.PhilipsBin
       return ~crc;
     }
     #endregion
+
+
+    public override string GetFileInformation()
+    {
+      return base.GetFileInformation() + this.logMessages.Replace("\n", "\r\n");
+    }
   }
 }

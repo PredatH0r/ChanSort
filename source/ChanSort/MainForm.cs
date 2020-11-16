@@ -210,7 +210,10 @@ namespace ChanSort.Ui
         dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
         dlg.FilterIndex = numberOfFilters + 1;
         dlg.CheckFileExists = true;
+        dlg.DereferenceLinks = true;
         dlg.RestoreDirectory = true;
+        dlg.CheckPathExists = true;
+        dlg.ValidateNames = true;
         if (dlg.ShowDialog() != DialogResult.OK)
           return;
 
@@ -232,12 +235,15 @@ namespace ChanSort.Ui
       {
         filter.Append(plugin.PluginName).Append("|").Append(plugin.FileFilter);
         filter.Append("|");
-        if (!(";" + extension + ";").Contains(";" + plugin.FileFilter + ";"))
+        foreach (var ext in plugin.FileFilter.ToLower().Split(';'))
         {
-          extension.Append(plugin.FileFilter);
-          extension.Append(";");
+          if (!(";" + extension + ";").Contains(";" + ext + ";"))
+          {
+            extension.Append(ext);
+            extension.Append(";");
+          }
+          ++numberOfFilters;
         }
-        ++numberOfFilters;
       }
       if (extension.Length > 0)
         extension.Remove(extension.Length - 1, 1);

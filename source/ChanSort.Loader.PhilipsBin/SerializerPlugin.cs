@@ -6,7 +6,7 @@ namespace ChanSort.Loader.PhilipsBin
   {
     public string DllName { get; set; }
     public string PluginName => "Philips .bin/.dat";
-    public string FileFilter => "*.bin;*.dat;*";
+    public string FileFilter => "*.bin;*.dat";
 
     public SerializerBase CreateSerializer(string inputFile)
     {

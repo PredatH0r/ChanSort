@@ -63,6 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ChanSort.Loader.PhilipsBin\ChanLstBin.cs">
+      <Link>ChanLstBin.cs</Link>
+    </Compile>
+    <Compile Include="..\ChanSort.Loader.PhilipsBin\ModbusCrc16.cs">
+      <Link>ModbusCrc16.cs</Link>
+    </Compile>
     <Compile Include="Channel.cs" />
     <Compile Include="CustomXmlWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

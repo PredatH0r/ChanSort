@@ -7,6 +7,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using ChanSort.Api;
+using ChanSort.Loader.PhilipsBin;
 
 namespace ChanSort.Loader.PhilipsXml
 {
@@ -61,6 +62,9 @@ namespace ChanSort.Loader.PhilipsXml
     //private string textContent;
     //private string newline;
     //private int formatVersion;
+    private ChanLstBin chanLstBin;
+    private readonly StringBuilder logMessages = new StringBuilder();
+
 
     #region ctor()
     public Serializer(string inputFile) : base(inputFile)
@@ -138,6 +142,8 @@ namespace ChanSort.Loader.PhilipsXml
       {
         this.FileName = binFile;
         isChannelMapFolderStructure = true;
+        this.chanLstBin = new ChanLstBin();
+        this.chanLstBin.Load(this.FileName, msg => this.logMessages.AppendLine(msg));
       }
       else if (Path.GetExtension(this.FileName).ToLower() == ".bin")
       {
@@ -158,6 +164,8 @@ namespace ChanSort.Loader.PhilipsXml
           var fullPath = Path.GetFullPath(Path.Combine(dir, file));
           this.LoadFile(fullPath);
         }
+        if (this.fileDataList.Count == 0)
+          throw new FileLoadException("No XML files found in folder structure");
       }
       else
       {
@@ -501,6 +509,7 @@ namespace ChanSort.Loader.PhilipsXml
 
       foreach (var file in this.fileDataList)
         this.SaveFile(file);
+      this.chanLstBin?.Save(this.FileName);
     }
 
     #endregion
@@ -617,6 +626,10 @@ namespace ChanSort.Loader.PhilipsXml
     }
     #endregion
 
+    public override string GetFileInformation()
+    {
+      return base.GetFileInformation() + this.logMessages.Replace("\n", "\r\n");
+    }
 
     #region class FileData
     private class FileData

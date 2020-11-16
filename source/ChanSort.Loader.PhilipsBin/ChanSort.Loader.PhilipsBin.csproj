@@ -64,7 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChanLstBin.cs" />
     <Compile Include="Channel.cs" />
+    <Compile Include="ModbusCrc16.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />
     <Compile Include="SerializerPlugin.cs" />

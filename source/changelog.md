@@ -1,6 +1,11 @@
 ChanSort Change Log 
 ===================
 
+2020-11-16
+- Philips: TV rejected modified lists because checksums inside chanLst.bin were not updated. This is now fixed.
+- LG WebOS 5: fixed handling for deleted satellite radio channels (some TVs expect majorNumber 0, others 16384)
+- "Open File Dialog" now works again when double-clicking on a shortcut to a directory (.lnk file).
+
 2020-08-27
 - LG WebOS 5: added support for lists with analog cable/antenna channels
 - Philips: added support for analog channel lists (Repair/CM_* format)

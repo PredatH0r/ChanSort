@@ -13,6 +13,7 @@ namespace ChanSort.Loader.GlobalClone
     string xmlPrefix;
     string xmlSuffix;
     private JObject doc;
+    private bool deletedRadioChannelsHaveMajorNumber0x4000 = false;
 
     //private readonly ChannelList tvList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Tv, "TV");
     //private readonly ChannelList radioList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Radio, "Radio");
@@ -124,6 +125,9 @@ namespace ChanSort.Loader.GlobalClone
       foreach (var node in this.doc["channelList"])
       {
         var ch = new GcChannel<JToken>(0, i, node);
+        var major = (int) node["majorNumber"];
+        if (major == 0x4000)
+          this.deletedRadioChannelsHaveMajorNumber0x4000 = true;
 
         ch.Source = (string)node["sourceIndex"];
         if (ch.Source == "SATELLITE DIGITAL")
@@ -146,14 +150,14 @@ namespace ChanSort.Loader.GlobalClone
         ch.Skip = (bool) node["skipped"];
         ch.Lock = (bool)node["locked"];
         ch.Hidden = (bool) node["Invisible"];
+        ch.OldProgramNr = ch.IsDeleted ? -1 : major;
         var nameBytes = Convert.FromBase64String((string) node["chNameBase64"]);
         dec.GetChannelNames(nameBytes, 0, nameBytes.Length, out var name, out var shortName);
-        ch.Name = name;
         ch.ShortName = shortName;
-
-        ch.OldProgramNr = ch.IsDeleted ? -1 : (int) node["majorNumber"];
-        if (string.IsNullOrWhiteSpace(ch.Name))
-          ch.Name = (string)node["channelName"];
+        ch.Name = name;
+        var chName = (string) node["channelName"];
+        if (!string.IsNullOrWhiteSpace(chName)) // chNameBase64 may contain special characters without proper code page ID, so we prefer the UTF8 "channelName" if available
+          ch.Name = chName;
 
         ch.TransportStreamId = (int)node["TSID"];
 
@@ -239,14 +243,14 @@ namespace ChanSort.Loader.GlobalClone
           }
 
           node["deleted"] = ch.IsDeleted;
-          var nr = Math.Max(ch.NewProgramNr, 0); // radio channels, except the deleted ones with nr=0, have 0x4000 added to their number
-          if (nr != 0)
+          var nr = Math.Max(ch.NewProgramNr, 0); // radio channels have 0x4000 added to their number. for deleted radio channels there are files with majorNumber=0 and majorNumber=0x4000
+          if (nr != 0 || this.deletedRadioChannelsHaveMajorNumber0x4000)
             nr |= radioMask;
           node["majorNumber"] = nr;
           node["skipped"] = ch.Skip;
           node["locked"] = ch.Lock;
           node["Invisible"] = ch.Hidden;
-          if (ch.NewProgramNr != ch.OldProgramNr)
+          if (ch.NewProgramNr != Math.Max(ch.OldProgramNr, 0))
           {
             node["userEditChNumber"] = true;
             node["userSelCHNo"] = true;

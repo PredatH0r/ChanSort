@@ -79,6 +79,7 @@ namespace ChanSort.Ui
           dlg.FilterIndex = numberOfFilters + 1;
           dlg.CheckFileExists = true;
           dlg.RestoreDirectory = true;
+          dlg.DereferenceLinks = true;
           dlg.Title = Resources.ReferenceListForm_ShowOpenFileDialog_Title;
           if (dlg.ShowDialog(main) != DialogResult.OK)
             return null;
