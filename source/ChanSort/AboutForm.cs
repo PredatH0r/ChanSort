@@ -11,30 +11,17 @@ namespace ChanSort.Ui
       InitializeComponent();
       this.gcPlugins.DataSource = plugins;
       
-      this.txtCredits.Text = 
-@"TCr82:
-Support for VDR's channels.conf file format
+      this.txtCredits.Text =
+@"
+Ciprian Leca: Romanian translation
+Istvan Krisko: Hungarian translation
+Jakub Driver: Polish translation
+Marco Sánchez: Spanish Translation
+Pavel Mizera: Czech translation
+Vitor Martins Augusto: Portuguese translation
+Yaşar Tuna Zorlu: Turkish Translation
 
-Pavel Mizera:
-Czech translation
-
-Vitor Martins Augusto:
-Portuguese translation
-
-Marco Sánchez:
-Spanish Translation
-
-PDA-User:
-Analysis of TLL file structure and extensive testing of ChanSort
-
-HellG:
-For writing TLLsort which was the basis for the first versions of ChanSort
-
-edank, JLevi, Oleg:
-For writing TLLview, TLLedit and edankTLL and making the source available
-
-Many more on lg-forum.com:
-For providing example TLL files, error feedback and other helpful information
+TCr82 (Github): Support for VDR's channels.conf file format
 ";
     }
 

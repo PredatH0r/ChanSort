@@ -131,6 +131,9 @@
     <EmbeddedResource Include="PresetProgramNrDialog.es.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PresetProgramNrDialog.hu.resx">
+      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PresetProgramNrDialog.pl.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -158,6 +161,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource.es.resx" />
+    <EmbeddedResource Include="Resource.hu.resx" />
     <EmbeddedResource Include="Resource.pl.resx" />
     <EmbeddedResource Include="Resource.pt.resx" />
     <EmbeddedResource Include="Resource.resx">
@@ -176,6 +180,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="TvSettingsForm.es.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TvSettingsForm.hu.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TvSettingsForm.pl.resx">

@@ -443,7 +443,7 @@ namespace ChanSort.Loader.Sony
           chan.Polarity = transp.Polarity;
           if ((signalSource & SignalSource.Cable) != 0)
             chan.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(chan.FreqInMhz);
-          if ((signalSource & SignalSource.Cable) != 0)
+          else if ((signalSource & SignalSource.Antenna) != 0)
             chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
         }
 

@@ -53,6 +53,7 @@ namespace ChanSort.Loader.PhilipsBin
 
       var modelNameLen = BitConverter.ToInt32(content, off);
       off += 4 + modelNameLen;
+      var baseDir = Path.GetDirectoryName(path);
       var relPath = "/channellib/";
       while (off < content.Length)
       {
@@ -64,7 +65,12 @@ namespace ChanSort.Loader.PhilipsBin
           relPath = fileName;
         else
         {
-          crcOffsetByRelPath[relPath + fileName] = off;
+          // normally all files after the /s2channellib/ entry are inside that folder, but "Favorite.xml" is in the main folder
+          var newPath = relPath + fileName;
+          if (!File.Exists(Path.Combine(baseDir, newPath)) && File.Exists(Path.Combine(baseDir, fileName)))
+            newPath = "/" + fileName;
+
+          crcOffsetByRelPath[newPath] = off;
           off += 2;
         }
       }

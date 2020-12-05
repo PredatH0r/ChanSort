@@ -14,6 +14,7 @@ namespace ChanSort.Loader.GlobalClone
     {
       this.SignalSource = source;
       this.Index = index;
+      this.RecordOrder = index;
       this.Node = node;
     }
     #endregion

@@ -1,6 +1,13 @@
 ChanSort Change Log 
 ===================
 
+2020-12-05
+- Philips: Fixed error saving the Favorite.xml file (effects Philips "ChannelMap_105" and later file format versions)
+- added Hungarian translation (credits to Istvan Krisko)
+- Sony XML: fixed display of wrong DVB-C cable channel/transponder number
+- LG webOS 5: unfortunately no news yet, but the insight that some "CX" models run on webOS 3.6 and others on 5.1, using
+  different file formats. 
+
 2020-11-16
 - Philips: TV rejected modified lists because checksums inside chanLst.bin were not updated. This is now fixed.
 - LG WebOS 5: fixed handling for deleted satellite radio channels (some TVs expect majorNumber 0, others 16384)

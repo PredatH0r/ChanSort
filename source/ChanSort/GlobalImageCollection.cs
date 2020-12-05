@@ -50,7 +50,9 @@ namespace ChanSort.Ui
       // rawImageCollection
       // 
       this.rawImageCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("rawImageCollection.ImageStream")));
+      this.rawImageCollection.Images.SetKeyName(47, "0047.png");
       ((System.ComponentModel.ISupportInitialize)(this.rawImageCollection)).EndInit();
+
     }
 
     #endregion

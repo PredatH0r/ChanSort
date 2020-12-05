@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainForm_LoadTll_SourceTllNotFound" xml:space="preserve">
+    <value>A TLL forrás nem található:
+'{0}'</value>
+  </data>
+  <data name="MainForm_LoadTll_Exception" xml:space="preserve">
+    <value>Hiba történt a TV adatfájl betöltésekor:
+{0}</value>
+  </data>
+  <data name="MainForm_FileDialog_OpenFileFilter" xml:space="preserve">
+    <value>Támogatott fájlok|{0}|Minden fájl (*.*)|*</value>
+  </data>
+  <data name="MainForm_FileDialog_SaveFileFilter" xml:space="preserve">
+    <value>{0}-Fájlok|*{0}|Minden fájl (*.*)|*</value>
+  </data>
+  <data name="MainForm_TryExecute_Exception" xml:space="preserve">
+    <value>Váratlan hiba történt:
+{0}</value>
+  </data>
+  <data name="MainForm_SaveTllFile_Exception" xml:space="preserve">
+    <value>Hiba történt a TV adatfájl írása közben:
+{0}</value>
+  </data>
+  <data name="MainForm_SaveTllFile_Success" xml:space="preserve">
+    <value>A rendezett TV adatfájl sikeresen létrehozva.</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Question" xml:space="preserve">
+    <value>Szeretné elmenteni a változtatásokat?</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Save" xml:space="preserve">
+    <value>Változtatások mentése</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
+    <value>Módosítások elvetése</value>
+  </data>
+  <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
+    <value>Nem található bővítmény a(z) {0} fájlok olvasására/írására.</value>
+  </data>
+  <data name="MainForm_LoadFiles_IOException" xml:space="preserve">
+    <value>Hiba történt a fájl betöltésekor</value>
+  </data>
+  <data name="MainForm_LoadFiles_ValidationWarningMsg" xml:space="preserve">
+    <value>A fájl tartalma bizonyos rendellenességeket mutat és sérült lehet.</value>
+  </data>
+  <data name="MainForm_LoadFiles_ValidationWarningCap" xml:space="preserve">
+    <value>Az adatok ellenőrzése</value>
+  </data>
+  <data name="MainForm_RestoreScanOrder_Message" xml:space="preserve">
+    <value>Minden egyéni tárolt adat elvész.
+Biztosan vissza szeretné állítani a sorrendet a csatorna szkennelésből?</value>
+  </data>
+  <data name="MainForm_RestoreScanOrder_Caption" xml:space="preserve">
+    <value>Állítsa vissza a sorrendet a csatorna szkennelésből</value>
+  </data>
+  <data name="MainForm_LoadFiles_DupeWarningMsg" xml:space="preserve">
+    <value>A bemeneti fájl több rekordot tartalmaz, amelyek ugyanazt a 
+program számot használják. Lehetséges, hogy a TV nem fogadja el
+a ChanSort által végrehajtott változtatásokat.
+Ezt általában egy kézi transzponder keresés futtatása okozza.
+Javasoljuk, hogy tiszta bemeneti fájlt használjon a módosításokhoz.
+Ehhez kapcsolja ki a Hotel módot, állítsa vissza a TV-t gyári alapállapotra, 
+futtasson egy új csatornakeresést, kapcsolja vissza a Hotel módot, 
+majd exportáljon egy új, tiszta TLL fájlt.</value>
+  </data>
+  <data name="MainForm_btnResetChannelData_Click_Message" xml:space="preserve">
+    <value>FIGYELEM: Minden analóg, DVB-C/T és DVB-S csatorna és transzponder adat törlődik.
+A fájl TV-be történő betöltése után teljes csatorna keresést kell végrehajtania.
+Folytassa?</value>
+  </data>
+  <data name="MainForm_btnResetChannelData_Click_Caption" xml:space="preserve">
+    <value>Törölje az összes csatorna adatot</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_Message" xml:space="preserve">
+    <value>A .bak fájl nem másolható ide: {0}</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_ItemClick_NoBackup" xml:space="preserve">
+    <value>Nem található biztonsági mentési fájl: {0}</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_ItemClick_Confirm" xml:space="preserve">
+    <value>Visszaállítja a biztonsági másolat fájlt. Minden változás elveszik!
+Akarja folytatni?</value>
+  </data>
+  <data name="MainForm_SaveFiles_ErrorMsg" xml:space="preserve">
+    <value>Hiba történt a fájl mentésekor. Kérjük, győződjön meg arról
+- van-e írási engedélye a fájlra
+- a fájl nincs-e megnyitva egy másik programban
+
+A hibaüzenet a következő:</value>
+  </data>
+  <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
+    <value>Fájl írási hiba</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Message" xml:space="preserve">
+    <value>Újabb verzió érhető el: v{0}.
+Meg szeretné nyitni a letöltési webhelyet?</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
+    <value>Új verzió</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_Question" xml:space="preserve">
+    <value>Hogyan szeretné szerkeszteni a csatornák listáját?</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
+    <value>Új lista létrehozása: Kezdés egy üres listával, majd csatornák hozzáadása a kívánt sorrendben</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
+    <value>Az aktuális lista módosítása: Kezdés az aktuális listával, majd szükség szerinti módosítása</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
+    <value>Csatornalista másolása: Rendezze a csatornákat ugyanúgy, mint egy referencia listában vannak</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
+    <value>Mi történjen a rendezetlen csatornákkal?</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Append" xml:space="preserve">
+    <value>Rendezés nélküli csatornákat fűzze hozzá a lista végéhez</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
+    <value>Törölje a rendezetlen csatornákat a listából</value>
+  </data>
+  <data name="MainForm_Cancel" xml:space="preserve">
+    <value>Mégse</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Caption" xml:space="preserve">
+    <value>Fájl nem található</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Message" xml:space="preserve">
+    <value>A(z) {0} fájl nem létezik.</value>
+  </data>
+  <data name="MainForm_ExportExcelList_Message" xml:space="preserve">
+    <value>A csatornalista ki lett másolva a vágólapra
+és beilleszthető az Excelbe vagy bármilyen szövegszerkesztőbe.</value>
+  </data>
+  <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
+    <value>Előfordulhat, hogy tévéje nem fog megfelelően működni, ha hiányosak a csatornaszámok.
+Szeretné, hogy a csatornaszámokat egymás után rendezzük?</value>
+  </data>
+  <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
+    <value>A fájl tartalma érvénytelen. Vagy 0 méretű, vagy az összes bájtja azonos értékű.
+A tipikus ok, ha az USB memóriakártya NTFS fájlrendszerű (próbáljon inkább FAT32-et használni), vagy rendszerfrissítés történt új csatorna keresés nélkül.
+(Előfordulhat, hogy az új szoftver a TV-ben nem tudja feldolgozni a régi csatornaadatokat az exportálás során.)</value>
+  </data>
+  <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
+    <value>Antenna,Kábel,Műhold,IP,Analóg,Digitális,TV,Rádió,Adat</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
+    <value>Hogyan szeretné kezelni, ha egy Pr# már szerepel a céllistában?</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Clear" xml:space="preserve">
+    <value>Céllista törlése a referencialista alkalmazása előtt</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Overwrite" xml:space="preserve">
+    <value>A Pr# felülírása a referencialistából származó csatornával</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Keep" xml:space="preserve">
+    <value>Tartsa az aktuális csatornát a Pr# helyen</value>
+  </data>
+  <data name="MainForm_SwapChannels_RowCountMsg" xml:space="preserve">
+    <value>Csatornák felcseréléséhez azonos számú sort kell kiválasztani a bal és a jobb táblázatban.</value>
+  </data>
+  <data name="MainForm_SwapChannels_RowCountTitle" xml:space="preserve">
+    <value>Csatornák felcserélése</value>
+  </data>
+  <data name="ReferenceListForm_ShowOpenFileDialog_Title" xml:space="preserve">
+    <value>Válasszon egy referencia listát az importáláshoz</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Filter" xml:space="preserve">
+    <value>ChanSort referencia lista|*.csv|SamToolBox referencia lista|*.chl|Minden referencia lista|*.csv;*.chl</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Title" xml:space="preserve">
+    <value>Nyissa meg a referencialistát</value>
+  </data>
+  <data name="MainForm_LoadTll_InvalidZip" xml:space="preserve">
+    <value>A fájl nem megfelelő .zip archívum.
+A tévék gyakran sérült fájlokat exportálnak az NTFS fájlrendszerrel formázott USB-meghajtókra.
+Kérjük, próbáljon meg exportálni egy FAT32 formátumú tárolóra</value>
+  </data>
+</root>

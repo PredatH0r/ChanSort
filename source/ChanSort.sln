@@ -80,6 +80,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.PhilipsBin"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.PhilipsBin", "Test.Loader.PhilipsBin\Test.Loader.PhilipsBin.csproj", "{36ED558E-576C-4D9D-A8C5-8D270A156B82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spike.LgWebOs5", "Spike.LgWebOs5\Spike.LgWebOs5.csproj", "{32EFB306-DEF8-4488-B1AE-46D5B183C373}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -450,6 +452,18 @@ Global
 		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Release|x86.ActiveCfg = Release|x86
 		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Release|x86.Build.0 = Release|x86
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Debug|x86.ActiveCfg = Debug|x86
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Debug|x86.Build.0 = Debug|x86
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Release|x86.ActiveCfg = Release|Any CPU
+		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

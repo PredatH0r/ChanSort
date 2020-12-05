@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using ChanSort.Api;
@@ -13,7 +15,6 @@ namespace ChanSort.Loader.GlobalClone
     string xmlPrefix;
     string xmlSuffix;
     private JObject doc;
-    private bool deletedRadioChannelsHaveMajorNumber0x4000 = false;
 
     //private readonly ChannelList tvList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Tv, "TV");
     //private readonly ChannelList radioList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Radio, "Radio");
@@ -124,11 +125,8 @@ namespace ChanSort.Loader.GlobalClone
       int i = 0;
       foreach (var node in this.doc["channelList"])
       {
-        var ch = new GcChannel<JToken>(0, i, node);
+        var ch = new GcChannel<JToken>(0, i++, node);
         var major = (int) node["majorNumber"];
-        if (major == 0x4000)
-          this.deletedRadioChannelsHaveMajorNumber0x4000 = true;
-
         ch.Source = (string)node["sourceIndex"];
         if (ch.Source == "SATELLITE DIGITAL")
           ch.SignalSource |= SignalSource.DvbS;
@@ -243,9 +241,7 @@ namespace ChanSort.Loader.GlobalClone
           }
 
           node["deleted"] = ch.IsDeleted;
-          var nr = Math.Max(ch.NewProgramNr, 0); // radio channels have 0x4000 added to their number. for deleted radio channels there are files with majorNumber=0 and majorNumber=0x4000
-          if (nr != 0 || this.deletedRadioChannelsHaveMajorNumber0x4000)
-            nr |= radioMask;
+          var nr = Math.Max(ch.NewProgramNr, 0) | radioMask; // radio channels have 0x4000 added to the majorNumber
           node["majorNumber"] = nr;
           node["skipped"] = ch.Skip;
           node["locked"] = ch.Lock;
@@ -259,8 +255,40 @@ namespace ChanSort.Loader.GlobalClone
           //node["disableUpdate"] = true; // experimental to prevent "DTV Auto Update" of channel numbers right after importing the list
         }
       }
+
+      // it seems that channels must also be physically ordered by majorNumber
+      //var chList = this.doc["channelList"].Value<IList>();
+      //var copy = new ArrayList(chList);
+      //var comp = new ChannelOrderComparer(this.SourceIndexOrder);
+      //copy.Sort(comp);
+      //chList.Clear();
+      //foreach (var item in copy)
+      //  chList.Add(item);
     }
     #endregion
+
+    //class ChannelOrderComparer : IComparer
+    //{
+    //  private readonly IList<string> sourceIndexOrder;
+
+    //  public ChannelOrderComparer(IList<string> sourceIndexOrder)
+    //  {
+    //    this.sourceIndexOrder = sourceIndexOrder;
+    //  }
+
+    //  public int Compare(object x, object y)
+    //  {
+    //    GcChannel<JToken> a = (GcChannel<JToken>)x;
+    //    GcChannel<JToken> b = (GcChannel<JToken>)y;
+
+    //    var i = sourceIndexOrder.IndexOf((string)a.Node["sourceIndex"]);
+    //    var j = sourceIndexOrder.IndexOf((string)b.Node["sourceIndex"]);
+    //    if (i != j)
+    //      return i < j ? -1 : +1;
+
+    //    return 0;
+    //  }
+    //}
   }
 
 }

@@ -155,6 +155,7 @@
       this.miRomanian = new DevExpress.XtraBars.BarButtonItem();
       this.miRussian = new DevExpress.XtraBars.BarButtonItem();
       this.miTurkish = new DevExpress.XtraBars.BarButtonItem();
+      this.miHungarian = new DevExpress.XtraBars.BarButtonItem();
       this.mnuCharset = new DevExpress.XtraBars.BarSubItem();
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miUtf8Charset = new DevExpress.XtraBars.BarButtonItem();
@@ -1088,9 +1089,10 @@
             this.miFontXLarge,
             this.miFontXxLarge,
             this.miUtf16BigEndian,
-            this.miUtf16LittleEndian});
+            this.miUtf16LittleEndian,
+            this.miHungarian});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 111;
+      this.barManager1.MaxItemId = 112;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1493,7 +1495,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRomanian),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRussian),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miTurkish)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miTurkish),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miHungarian)});
       this.barSubItem1.Name = "barSubItem1";
       this.barSubItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
       // 
@@ -1588,6 +1591,16 @@
       this.miTurkish.Name = "miTurkish";
       this.miTurkish.Tag = "tr-TR";
       this.miTurkish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
+      // miHungarian
+      // 
+      this.miHungarian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miHungarian, "miHungarian");
+      this.miHungarian.Id = 111;
+      this.miHungarian.ImageOptions.ImageIndex = ((int)(resources.GetObject("barButtonItem1.ImageOptions.ImageIndex")));
+      this.miHungarian.Name = "miHungarian";
+      this.miHungarian.Tag = "hu-HU";
+      this.miHungarian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // mnuCharset
       // 
@@ -2379,6 +2392,7 @@
         private DevExpress.XtraBars.BarButtonItem miFontXxLarge;
     private DevExpress.XtraBars.BarButtonItem miUtf16BigEndian;
     private DevExpress.XtraBars.BarButtonItem miUtf16LittleEndian;
+    private DevExpress.XtraBars.BarButtonItem miHungarian;
   }
 }
 
