@@ -238,5 +238,18 @@ namespace ChanSort.Loader.Panasonic
       shortName = sbShort.ToString();
     }
     #endregion
+
+    #region UpdateRawData()
+    public override void UpdateRawData()
+    {
+      if (IsNameModified)
+      {
+        var utf8 = Encoding.UTF8.GetBytes(this.Name);
+        this.RawName = new byte[utf8.Length + 1];
+        this.RawName[0] = 0x15; // DVB encoding ID for UTF8
+        Array.Copy(utf8, 0, this.RawName, 1, utf8.Length);
+      }
+    }
+    #endregion
   }
 }

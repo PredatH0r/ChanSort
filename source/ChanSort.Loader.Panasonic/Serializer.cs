@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using ChanSort.Api;
@@ -253,9 +254,11 @@ order by s.ntype,major_channel
       {
         while (r.Read())
         {
-          ChannelInfo channel = new DbChannel(r, fields, this.DataRoot, this.DefaultEncoding);
+          var channel = new DbChannel(r, fields, this.DataRoot, this.DefaultEncoding);
           if (!channel.IsDeleted)
           {
+            if (channel.RawName.Length > 0 && channel.RawName[0] == 0x15) // if there is a channel with a 0x15 encoding ID (UTF-8), we can allow editing channels
+              this.Features.ChannelNameEdit = ChannelNameEditMode.All;
             var channelList = this.DataRoot.GetChannelList(channel.SignalSource);
             this.DataRoot.AddChannel(channelList, channel);
           }
@@ -324,10 +327,11 @@ order by s.ntype,major_channel
     #region WriteChannels()
     private void WriteChannels(SQLiteCommand cmd, ChannelList channelList)
     {
-      cmd.CommandText = "update SVL set major_channel=@progNr, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
+      cmd.CommandText = "update SVL set major_channel=@progNr, sname=@sname, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
       cmd.Parameters.Clear();
       cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@progNr", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@sname", DbType.Binary));
       cmd.Parameters.Add(new SQLiteParameter("@fav1", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@fav2", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@fav3", DbType.Int32));
@@ -342,8 +346,10 @@ order by s.ntype,major_channel
           continue;
         if (channel.IsDeleted && channel.OldProgramNr >= 0)
           continue;
+        channel.UpdateRawData();
         cmd.Parameters["@rowid"].Value = channel.RecordIndex;
         cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
+        cmd.Parameters["@sname"].Value = channel.RawName;
         for (int fav = 0; fav < 4; fav++)
           cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.FavIndex[fav]);
         cmd.Parameters["@lock"].Value = channel.Lock;

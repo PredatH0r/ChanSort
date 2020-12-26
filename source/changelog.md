@@ -1,6 +1,11 @@
 ChanSort Change Log 
 ===================
 
+2020-12-26
+- LG WebOS 5: added warning that support is only experimental.
+- Panasonic: Channel name editing is now supported for svl.bin files (unless there is no indicator what encoding to use)
+- Hungarian translation: added missing files to .zip
+
 2020-12-05
 - Philips: Fixed error saving the Favorite.xml file (effects Philips "ChannelMap_105" and later file format versions)
 - added Hungarian translation (credits to Istvan Krisko)

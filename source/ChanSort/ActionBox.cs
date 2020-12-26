@@ -58,6 +58,7 @@ namespace ChanSort.Ui
       button.Left = 10;
       button.Height = ButtonHeight;
       button.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+      button.Padding = new Padding(20,button.Padding.Top, 20, button.Padding.Bottom);
       button.Tag = result;
       button.Click += button_Click;
       

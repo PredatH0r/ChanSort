@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using ChanSort.Api;
@@ -9,6 +7,11 @@ using Newtonsoft.Json.Linq;
 
 namespace ChanSort.Loader.GlobalClone
 {
+  /*
+   * LG's webOS 5 firmware has severe limitations (or bugs) regarding the import of channel lists (at the time of this writing, end of 2020).
+   * There have been a few reports about successful imports, but no conclusions about steps that guarantee success.
+   * More information can be found on https://github.com/PredatH0r/ChanSort/discussions/207
+   */
   internal class GcJsonSerializer : SerializerBase
   {
     private readonly string content;
@@ -16,14 +19,11 @@ namespace ChanSort.Loader.GlobalClone
     string xmlSuffix;
     private JObject doc;
 
-    //private readonly ChannelList tvList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Tv, "TV");
-    //private readonly ChannelList radioList = new ChannelList(SignalSource.MaskAdInput | SignalSource.Radio, "Radio");
-
     public GcJsonSerializer(string filename, string content) : base(filename)
     {
       this.content = content;
 
-      this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
+      this.Features.DeleteMode = DeleteMode.NotSupported; //.FlagWithoutPrNr; 
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.SupportedFavorites = 0;
       this.Features.CanSaveAs = true;
@@ -40,11 +40,6 @@ namespace ChanSort.Loader.GlobalClone
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Radio, "DVB-C Radio"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Data, "DVB-S TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Radio, "DVB-S Radio"));
-      //this.DataRoot.AddChannelList(tvList);
-      //this.DataRoot.AddChannelList(radioList);
-
-      //foreach(var list in this.DataRoot.ChannelLists)
-      //  list.VisibleColumnFieldNames.Add("Source");
     }
 
 
@@ -71,6 +66,32 @@ namespace ChanSort.Loader.GlobalClone
       this.doc = JObject.Parse(json);
       LoadSatellites();
       LoadChannels();
+
+      if (View.Default == null) // can't show dialog while unit-testing
+        return;
+
+      var dlg = View.Default.CreateActionBox("!!! WARNING !!!\n\n" +
+                                   "Support for LG webOS 5 channel lists is experimental only!\n" +
+                                   "There is a HIGH RISK that your TV will not import the list correctly and you need to run a new search or even reset the TV.\n" +
+                                   "Please read the information on github with steps that MAY lead to a successful import.\n" +
+                                   "Any feedback about failure or success is highly appreciated.");
+      dlg.AddAction("Read information about webOS 5 support on github.com", 1);
+      dlg.AddAction("I read the information, accept the risk and want to give it a try", 2);
+      dlg.AddAction("Cancel", 0);
+      while (true)
+      {
+        dlg.ShowDialog();
+        switch (dlg.SelectedAction)
+        {
+          case 0:
+            throw new FileLoadException("LG webOS 5 experimental support rejected");
+          case 1:
+            System.Diagnostics.Process.Start("https://github.com/PredatH0r/ChanSort/discussions/207");
+            break;
+          case 2:
+            return;
+        }
+      }
     }
 
     #region LoadSatellites()
@@ -246,49 +267,22 @@ namespace ChanSort.Loader.GlobalClone
           node["skipped"] = ch.Skip;
           node["locked"] = ch.Lock;
           node["Invisible"] = ch.Hidden;
-          if (ch.NewProgramNr != Math.Max(ch.OldProgramNr, 0))
-          {
-            node["userEditChNumber"] = true;
-            node["userSelCHNo"] = true;
-          }
 
-          //node["disableUpdate"] = true; // experimental to prevent "DTV Auto Update" of channel numbers right after importing the list
+          // the only successfully imported file was one where these flags were NOT set by ChanSort
+          // these flags do get set when changing numbers through the TV's menu, but then prevent further modifications, e.g. through an import
+          //if (ch.NewProgramNr != Math.Max(ch.OldProgramNr, 0))
+          //{
+          //  node["userEditChNumber"] = false;
+          //  node["userSelCHNo"] = false;
+          //}
+
+          //node["disableUpdate"] = true; // No-Go! This blocked the whole list and required a factory reset. Regardless of the setting, the TV showed wrong numbers.
+          
+          //node["factoryDefault"] = true; // an exported file after manually changing numbers through the TV-menu had all channels set to userEditChNumber=true, userSelCHNo=true, factoryDefault=true;
         }
       }
-
-      // it seems that channels must also be physically ordered by majorNumber
-      //var chList = this.doc["channelList"].Value<IList>();
-      //var copy = new ArrayList(chList);
-      //var comp = new ChannelOrderComparer(this.SourceIndexOrder);
-      //copy.Sort(comp);
-      //chList.Clear();
-      //foreach (var item in copy)
-      //  chList.Add(item);
     }
     #endregion
-
-    //class ChannelOrderComparer : IComparer
-    //{
-    //  private readonly IList<string> sourceIndexOrder;
-
-    //  public ChannelOrderComparer(IList<string> sourceIndexOrder)
-    //  {
-    //    this.sourceIndexOrder = sourceIndexOrder;
-    //  }
-
-    //  public int Compare(object x, object y)
-    //  {
-    //    GcChannel<JToken> a = (GcChannel<JToken>)x;
-    //    GcChannel<JToken> b = (GcChannel<JToken>)y;
-
-    //    var i = sourceIndexOrder.IndexOf((string)a.Node["sourceIndex"]);
-    //    var j = sourceIndexOrder.IndexOf((string)b.Node["sourceIndex"]);
-    //    if (i != j)
-    //      return i < j ? -1 : +1;
-
-    //    return 0;
-    //  }
-    //}
   }
 
 }
