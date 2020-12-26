@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.Drawing;
 using System.IO;
 using System.Text;
 using ChanSort.Api;
@@ -26,6 +25,8 @@ namespace ChanSort.Loader.Panasonic
     private int dbSizeOffset;
     private bool littleEndianByteOrder;
     private string charEncoding;
+    private bool explicitUtf8;
+    private bool implicitUtf8;
 
     enum CypherMode
     {
@@ -250,6 +251,7 @@ order by s.ntype,major_channel
       var fields = this.GetFieldMap(fieldNames);
 
       cmd.CommandText = sql;
+      this.implicitUtf8 = true;
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
@@ -258,12 +260,17 @@ order by s.ntype,major_channel
           if (!channel.IsDeleted)
           {
             if (channel.RawName.Length > 0 && channel.RawName[0] == 0x15) // if there is a channel with a 0x15 encoding ID (UTF-8), we can allow editing channels
-              this.Features.ChannelNameEdit = ChannelNameEditMode.All;
+              this.explicitUtf8 = true;
+            if (channel.NonAscii) // if all channels with non-ascii characters are valid UTF-8 strings, we can allow editing too
+              this.implicitUtf8 &= channel.ValidUtf8;
             var channelList = this.DataRoot.GetChannelList(channel.SignalSource);
             this.DataRoot.AddChannel(channelList, channel);
           }
         }
       }
+
+      if (this.explicitUtf8 || this.implicitUtf8)
+        this.Features.ChannelNameEdit = ChannelNameEditMode.All;
     }
     #endregion
 
@@ -346,7 +353,7 @@ order by s.ntype,major_channel
           continue;
         if (channel.IsDeleted && channel.OldProgramNr >= 0)
           continue;
-        channel.UpdateRawData();
+        channel.UpdateRawData(this.explicitUtf8, this.implicitUtf8);
         cmd.Parameters["@rowid"].Value = channel.RecordIndex;
         cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
         cmd.Parameters["@sname"].Value = channel.RawName;

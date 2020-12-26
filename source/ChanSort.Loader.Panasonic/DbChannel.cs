@@ -9,6 +9,8 @@ namespace ChanSort.Loader.Panasonic
   internal class DbChannel : ChannelInfo
   {
     internal byte[] RawName;
+    internal bool NonAscii;
+    internal bool ValidUtf8 = true;
 
     #region ctor()
     internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Encoding encoding)
@@ -157,19 +159,32 @@ namespace ChanSort.Loader.Panasonic
 
       // single byte code pages might have UTF-8 code mixed in, so we have to parse it manually
       StringBuilder sb = new StringBuilder();
+      this.NonAscii = false;
+      this.ValidUtf8 = true;
       for (int i = startOffset; i < this.RawName.Length; i+=bytesPerChar)
       {
         byte c = this.RawName[i];
         byte c2 = i + 1 < this.RawName.Length ? this.RawName[i + 1] : (byte)0;
-        if (c < 0xA0)
-          sb.Append((char)c);
+        if (c >= 0x80)
+          NonAscii = true;
+
+        if (c < 0x80)
+          sb.Append((char) c);
+        else if (c < 0xA0)
+        {
+          ValidUtf8 = false;
+          sb.Append((char) c);
+        }
         else if (bytesPerChar == 1 && c >= 0xC0 && c <= 0xDF && c2 >= 0x80 && c2 <= 0xBF) // 2 byte UTF-8
         {
           sb.Append((char)(((c & 0x1F) << 6) | (c2 & 0x3F)));
           ++i;
         }
         else
+        {
+          ValidUtf8 = false;
           sb.Append(encoding.GetString(this.RawName, i, bytesPerChar));
+        }
       }
 
       string longName, shortName;
@@ -240,14 +255,19 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region UpdateRawData()
-    public override void UpdateRawData()
+    public void UpdateRawData(bool explicitUtf8, bool implicitUtf8)
     {
       if (IsNameModified)
       {
         var utf8 = Encoding.UTF8.GetBytes(this.Name);
-        this.RawName = new byte[utf8.Length + 1];
-        this.RawName[0] = 0x15; // DVB encoding ID for UTF8
-        Array.Copy(utf8, 0, this.RawName, 1, utf8.Length);
+        if (implicitUtf8)
+          this.RawName = utf8;
+        else if (explicitUtf8)
+        {
+          this.RawName = new byte[utf8.Length + 1];
+          this.RawName[0] = 0x15; // DVB encoding ID for UTF8
+          Array.Copy(utf8, 0, this.RawName, 1, utf8.Length);
+        }
       }
     }
     #endregion

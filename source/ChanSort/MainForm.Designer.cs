@@ -1491,12 +1491,12 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miCzech),
             new DevExpress.XtraBars.LinkPersistInfo(this.miGerman),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSpanish),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miHungarian),
             new DevExpress.XtraBars.LinkPersistInfo(this.miPolski),
             new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRomanian),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRussian),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miTurkish),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miHungarian)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miTurkish)});
       this.barSubItem1.Name = "barSubItem1";
       this.barSubItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
       // 
@@ -1597,7 +1597,7 @@
       this.miHungarian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
       resources.ApplyResources(this.miHungarian, "miHungarian");
       this.miHungarian.Id = 111;
-      this.miHungarian.ImageOptions.ImageIndex = ((int)(resources.GetObject("barButtonItem1.ImageOptions.ImageIndex")));
+      this.miHungarian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miHungarian.ImageOptions.ImageIndex")));
       this.miHungarian.Name = "miHungarian";
       this.miHungarian.Tag = "hu-HU";
       this.miHungarian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);

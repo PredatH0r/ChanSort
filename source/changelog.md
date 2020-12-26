@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2020-12-26_2
+- Panasonic: channel name editing is now supported when all channels implicitly use valid utf-8 encoding
+
 2020-12-26
 - LG WebOS 5: added warning that support is only experimental.
 - Panasonic: Channel name editing is now supported for svl.bin files (unless there is no indicator what encoding to use)

@@ -279,7 +279,7 @@
     <value>gridLeft</value>
   </data>
   <data name="&gt;&gt;gridLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7644.32206, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gridLeft.Parent" xml:space="preserve">
     <value>grpOutputList</value>
@@ -615,6 +615,13 @@
   <data name="miSpanish.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>44</value>
   </data>
+  <data name="miHungarian.Caption" xml:space="preserve">
+    <value>Magyar</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="miHungarian.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
   <data name="miPolski.Caption" xml:space="preserve">
     <value>Polski</value>
     <comment>@Invariant</comment>
@@ -649,13 +656,6 @@
   </data>
   <data name="miTurkish.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>46</value>
-  </data>
-  <data name="miHungarian.Caption" xml:space="preserve">
-    <value>Magyar</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="barButtonItem1.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
-    <value>47</value>
   </data>
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Character set</value>
@@ -1229,7 +1229,7 @@
     <value>gviewLeft</value>
   </data>
   <data name="&gt;&gt;gviewLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.7644.32206, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;colIndex1.Name" xml:space="preserve">
     <value>colIndex1</value>
@@ -1313,13 +1313,13 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7644.32206, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
   </data>
   <data name="&gt;&gt;gviewRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.7644.32206, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;colIndex.Name" xml:space="preserve">
     <value>colIndex</value>
@@ -2066,7 +2066,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v20.1, Version=20.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>12/05/2020 17:57:36</value>
+    <value>12/26/2020 17:01:09</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -2891,7 +2891,7 @@
     <value>gridRight</value>
   </data>
   <data name="&gt;&gt;gridRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7644.32206, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gridRight.Parent" xml:space="preserve">
     <value>grpInputList</value>
