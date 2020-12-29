@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2020-12-29
+- update check could not distinguish between 2 program versions from the same day (kept showing "an update is available")
+
 2020-12-26_2
 - Panasonic: channel name editing is now supported when all channels implicitly use valid utf-8 encoding
 

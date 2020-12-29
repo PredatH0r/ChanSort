@@ -22,7 +22,7 @@ namespace ChanSort.Ui
       try
       {
         var newVersion = this.GetLatestVersion();
-        if (newVersion.CompareTo(MainForm.AppVersion.TrimStart('v')) > 0)
+        if (newVersion.CompareTo(MainForm.AppVersionFull.TrimStart('v')) > 0)
           this.NotifyAboutNewVersion(newVersion);
       }
       catch { }
