@@ -38,6 +38,8 @@ namespace ChanSort.Api
       public bool MixedSourceFavorites { get; set; }
       public bool AllowGapsInFavNumbers { get; set; }
       public bool CanEditFavListNames { get; set; }
+
+      public bool CanEditAudioPid { get; set; }
     }
     #endregion
 

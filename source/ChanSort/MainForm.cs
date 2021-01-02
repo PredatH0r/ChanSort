@@ -310,6 +310,7 @@ namespace ChanSort.Ui
         //this.SetControlsEnabled(!this.dataRoot.IsEmpty);
         this.UpdateFavoritesEditor(this.DataRoot.SupportedFavorites);
         this.colEncrypted.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.EncryptedFlagEdit;
+        this.colAudioPid.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.CanEditAudioPid;
         this.UpdateMenu(true);
 
         if (this.DataRoot.Warnings.Length > 0 && this.miShowWarningsAfterLoad.Checked)
@@ -1735,26 +1736,26 @@ namespace ChanSort.Ui
         return;
       }
 
-      try
+      foreach (var dataFilePath in this.currentTvSerializer.GetDataFilePaths())
       {
-        foreach (var dataFilePath in this.currentTvSerializer.GetDataFilePaths())
+        bakFile = dataFilePath + ".bak";
+        try
         {
-          bakFile = dataFilePath + ".bak";
           File.Copy(bakFile, dataFilePath, true);
           var attr = File.GetAttributes(dataFilePath);
           File.SetAttributes(dataFilePath, attr & ~FileAttributes.ReadOnly);
         }
+        catch (Exception)
+        {
+          XtraMessageBox.Show(this, string.Format(Resources.MainForm_miRestoreOriginal_Message, dataFilePath),
+            this.miRestoreOriginal.Caption,
+            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+      }
 
-        this.currentTvSerializer.DataRoot.NeedsSaving = false;
-        if (this.currentPlugin != null)
-          this.LoadFiles(this.currentPlugin, this.currentTvFile);
-      }
-      catch (Exception)
-      {
-        XtraMessageBox.Show(this, string.Format(Resources.MainForm_miRestoreOriginal_Message, this.currentTvFile),
-          this.miRestoreOriginal.Caption,
-          MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-      }
+      this.currentTvSerializer.DataRoot.NeedsSaving = false;
+      if (this.currentPlugin != null)
+        this.LoadFiles(this.currentPlugin, this.currentTvFile);
     }
 
     #endregion

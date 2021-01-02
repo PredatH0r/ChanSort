@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2021-01-02
+- Grundig: added support for dvb*_config.xml channel lists
+
 2020-12-29
 - update check could not distinguish between 2 program versions from the same day (kept showing "an update is available")
 

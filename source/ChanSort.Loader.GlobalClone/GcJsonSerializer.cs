@@ -31,6 +31,7 @@ namespace ChanSort.Loader.GlobalClone
       this.Features.CanHideChannels = true;
       this.Features.CanSkipChannels = true;
       this.Features.CanLockChannels = true;
+      this.Features.CanEditAudioPid = false;
 
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.AnalogT  | SignalSource.Tv | SignalSource.Data, "Analog Antenna"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbT | SignalSource.Tv | SignalSource.Data, "DVB-T TV"));
@@ -72,7 +73,7 @@ namespace ChanSort.Loader.GlobalClone
 
       var dlg = View.Default.CreateActionBox("!!! WARNING !!!\n\n" +
                                    "Support for LG webOS 5 channel lists is experimental only!\n" +
-                                   "There is a HIGH RISK that your TV will not import the list correctly and you need to run a new search or even reset the TV.\n" +
+                                   "There is a RISK that your TV will not import the list correctly and you need to run a new search or even reset the TV.\n" +
                                    "Please read the information on github with steps that MAY lead to a successful import.\n" +
                                    "Any feedback about failure or success is highly appreciated.");
       dlg.AddAction("Read information about webOS 5 support on github.com", 1);
@@ -267,6 +268,7 @@ namespace ChanSort.Loader.GlobalClone
           node["skipped"] = ch.Skip;
           node["locked"] = ch.Lock;
           node["Invisible"] = ch.Hidden;
+          node["audioPid"] = ch.AudioPid;
 
           // the only successfully imported file was one where these flags were NOT set by ChanSort
           // these flags do get set when changing numbers through the TV's menu, but then prevent further modifications, e.g. through an import
@@ -277,7 +279,7 @@ namespace ChanSort.Loader.GlobalClone
           //}
 
           //node["disableUpdate"] = true; // No-Go! This blocked the whole list and required a factory reset. Regardless of the setting, the TV showed wrong numbers.
-          
+
           //node["factoryDefault"] = true; // an exported file after manually changing numbers through the TV-menu had all channels set to userEditChNumber=true, userSelCHNo=true, factoryDefault=true;
         }
       }

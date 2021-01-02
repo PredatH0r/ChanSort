@@ -52,7 +52,7 @@ namespace ChanSort.Ui
       {
         int end = response.IndexOf(".zip", start);
         int len = end - start - SearchString.Length;
-        if (len >= 10) // YYYY-MM-DD plus optional suffix for a revision
+        if (len >= 10) // YYYY-MM-DD plus optional _HHmm suffix for a revision
           return response.Substring(start + SearchString.Length, len);
       }
       return string.Empty;
