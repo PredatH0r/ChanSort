@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using ChanSort.Api;
-using ChanSort.Loader.PhilipsBin;
 
-namespace ChanSort.Loader.PhilipsXml
+namespace ChanSort.Loader.Philips
 {
   /*
-    This loader supports 2 different kinds of XML files from Philips.
+    This loader supports 2 different kinds of XML files from Philips, the first in a "Repair" folder, the others in a "ChannelMap_xxx" folder
+
+    Example from Repair\CM_TPM1013E_LA_CK.xml:
+    <Channel>
+    <Setup oldpresetnumber="1" presetnumber="1" name="Das Erste" ></Setup>
+    <Broadcast medium="dvbc" frequency="410000" system="west" serviceID="1" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
+    </Channel>
+     
 
    	<Channel>
     <Setup SatelliteName="0x54 0x00 0x55 0x00 0x52 0x00 0x4B 0x00 0x53 0x00 0x41 0x00 0x54 0x00 0x20 0x00 0x34 0x00 0x32 0x00 0x45 0x00 " ChannelNumber="1" ChannelName="0x54 0x00 0xC4 0x00 0xB0 0x00 0x56 0x00 0xC4 0x00 0xB0 0x00 0x42 0x00 0x55 0x00 0x20 0x00 0x53 0x00 0x50 0x00 0x4F 0x00 0x52 0x00 " ChannelLock="0" UserModifiedName="0" LogoID="0" UserModifiedLogo="0" LogoLock="0" UserHidden="0" FavoriteNumber="0" />
@@ -38,36 +43,26 @@ namespace ChanSort.Loader.PhilipsXml
     </Channel>
 
 
-    The other file was "CM_TPM1013E_LA_CK.xml" with entries like:
-    <Channel>
-    <Setup oldpresetnumber="1" presetnumber="1" name="Das Erste" ></Setup>
-    <Broadcast medium="dvbc" frequency="410000" system="west" serviceID="1" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
-    </Channel>
-     
 
     DVB-T and DVB-C share the same number range, so they are treated as a unified logical list
 
    */
-  class Serializer : SerializerBase
+  class XmlSerializer : SerializerBase
   {
-    private readonly ChannelList analogChannels = new ChannelList(SignalSource.DvbCT, "Analog C/T");
-    private readonly ChannelList dvbctChannels = new ChannelList(SignalSource.DvbCT, "DVB-C/T");
+    private readonly ChannelList analogChannels = new ChannelList(SignalSource.AnalogCT, "Analog C/T");
+    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
+    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
     private readonly ChannelList allSatChannels = new ChannelList(SignalSource.DvbS, "DVB-S all");
     private readonly ChannelList favChannels = new ChannelList(SignalSource.All, "Favorites");
 
     private readonly List<FileData> fileDataList = new List<FileData>();
-    //private XmlDocument doc;
-    //private byte[] content;
-    //private string textContent;
-    //private string newline;
-    //private int formatVersion;
     private ChanLstBin chanLstBin;
     private readonly StringBuilder logMessages = new StringBuilder();
 
 
     #region ctor()
-    public Serializer(string inputFile) : base(inputFile)
+    public XmlSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.CanSkipChannels = false;
@@ -79,12 +74,14 @@ namespace ChanSort.Loader.PhilipsXml
       this.Features.CanEditFavListNames = true;
 
       this.DataRoot.AddChannelList(this.analogChannels);
-      this.DataRoot.AddChannelList(this.dvbctChannels);
+      this.DataRoot.AddChannelList(this.dvbtChannels);
+      this.DataRoot.AddChannelList(this.dvbcChannels);
       this.DataRoot.AddChannelList(this.satChannels);
       this.DataRoot.AddChannelList(this.allSatChannels);
       this.DataRoot.AddChannelList(this.favChannels);
 
-      this.dvbctChannels.VisibleColumnFieldNames.Add("Source");
+      this.dvbtChannels.VisibleColumnFieldNames.Add("Source");
+      this.dvbcChannels.VisibleColumnFieldNames.Add("Source");
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -289,8 +286,10 @@ namespace ChanSort.Loader.PhilipsXml
           chList = this.analogChannels;
           break;
         case "dvbc":
+          chList = this.dvbcChannels;
+          break;
         case "dvbt":
-          chList = this.dvbctChannels;
+          chList = this.dvbtChannels;
           break;
         case "dvbs":
           chList = this.satChannels;

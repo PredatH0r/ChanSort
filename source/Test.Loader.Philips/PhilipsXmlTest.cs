@@ -1,12 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using ChanSort.Api;
-using ChanSort.Loader.PhilipsXml;
+using ChanSort.Loader.Philips;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Test.Loader.PhilipsXml
+namespace Test.Loader.Philips
 {
   [TestClass]
   public class PhilipsXmlTest
@@ -15,7 +12,8 @@ namespace Test.Loader.PhilipsXml
     [TestMethod]
     public void TestFormat1SatChannelsAddedToCorrectLists()
     {
-      this.TestChannelsAddedToCorrectLists("DVBS.xml", SignalSource.DvbS, 502, 350, 152);
+      var file = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles") + "\\ChannelMap_100\\ChannelList\\chanLst.bin";
+      this.TestChannelsAddedToCorrectLists(file, SignalSource.DvbS, 502, 350, 152);
     }
     #endregion
 
@@ -23,7 +21,8 @@ namespace Test.Loader.PhilipsXml
     [TestMethod]
     public void TestFormat1CableChannelsAddedToCorrectLists()
     {
-      this.TestChannelsAddedToCorrectLists("DVBC.xml", SignalSource.DvbC, 459, 358, 101);
+      var file = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles") + "\\ChannelMap_100\\ChannelList\\chanLst.bin";
+      this.TestChannelsAddedToCorrectLists(file, SignalSource.DvbC, 459, 358, 101);
     }
     #endregion
 
@@ -32,17 +31,17 @@ namespace Test.Loader.PhilipsXml
     public void TestFormat2CableChannelsAddedToCorrectLists()
     {
       // this file format doesn't provide any information whether a channel is TV/radio/data or analog/digital. It only contains the "medium" for antenna/cable/sat
-      this.TestChannelsAddedToCorrectLists("CM_TPM1013E_LA_CK.xml", SignalSource.DvbC, 483, 0, 0);
+      var file = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles") + "\\Repair\\CM_TPM1013E_LA_CK.xml";
+      this.TestChannelsAddedToCorrectLists(file, SignalSource.DvbC, 483, 0, 0);
     }
     #endregion
 
 
     #region TestChannelsAddedToCorrectList
-    private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio)
+    private void TestChannelsAddedToCorrectLists(string filePath, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio)
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.PhilipsXml\\TestFiles\\" + fileName);
-      var plugin = new SerializerPlugin();
-      var ser = plugin.CreateSerializer(tempFile);
+      var plugin = new PhilipsLoader();
+      var ser = plugin.CreateSerializer(filePath);
       ser.Load();
 
       var root = ser.DataRoot;
@@ -62,8 +61,8 @@ namespace Test.Loader.PhilipsXml
     [TestMethod]
     public void TestDeletingChannel()
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.PhilipsXml\\TestFiles\\dvbs.xml");
-      var plugin = new SerializerPlugin();
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles") + "\\ChannelMap_100\\ChannelList\\chanLst.bin";
+      var plugin = new PhilipsLoader();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;

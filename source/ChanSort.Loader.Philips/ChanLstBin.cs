@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ChanSort.Api;
 
-namespace ChanSort.Loader.PhilipsBin
+namespace ChanSort.Loader.Philips
 {
   class ChanLstBin
   {
@@ -33,8 +34,8 @@ namespace ChanSort.Loader.PhilipsBin
 
     private byte[] content;
     private readonly Dictionary<string,int> crcOffsetByRelPath = new Dictionary<string, int>();
-    private uint versionMinor;
-    private uint versionMajor;
+    public uint VersionMinor { get; private set; }
+    public uint VersionMajor { get; private set; }
     private Action<string> log;
 
     public void Load(string path, Action<string> log)
@@ -43,9 +44,9 @@ namespace ChanSort.Loader.PhilipsBin
       this.content = File.ReadAllBytes(path);
 
       var off = 0;
-      versionMinor = BitConverter.ToUInt16(content, off);
+      VersionMinor = BitConverter.ToUInt16(content, off);
       off += 2;
-      versionMajor = BitConverter.ToUInt16(content, off);
+      VersionMajor = BitConverter.ToUInt16(content, off);
       off += 2;
 
       // skip unknown 14 bytes
@@ -93,8 +94,8 @@ namespace ChanSort.Loader.PhilipsBin
         if (!File.Exists(filePath))
           continue;
         var data = File.ReadAllBytes(filePath);
-        var length = Math.Min(data.Length, versionMajor <= 12 ? 0x6000 : 0x145A00);
-        var actualCrc = ModbusCrc16.Calc(data, 0, length);
+        var length = Math.Min(data.Length, VersionMajor <= 12 ? 0x6000 : 0x145A00);
+        var actualCrc = Crc16.Calc(data, 0, length);
         if (actualCrc != expectedCrc)
         {
           var msg = $"chanLst.bin: stored CRC for {entry.Key} is {expectedCrc:x4} but calculated {actualCrc:x4}";
@@ -116,8 +117,8 @@ namespace ChanSort.Loader.PhilipsBin
       {
         var path = baseDir + entry.Key;
         var data = File.ReadAllBytes(path);
-        var length = Math.Min(data.Length, versionMajor <= 12 ? 0x6000 : 0x145A00);
-        var crc = ModbusCrc16.Calc(data, 0, length);
+        var length = Math.Min(data.Length, VersionMajor <= 12 ? 0x6000 : 0x145A00);
+        var crc = Crc16.Calc(data, 0, length);
         var off = entry.Value;
         content[off] = (byte) crc;
         content[off + 1] = (byte) (crc >> 8);

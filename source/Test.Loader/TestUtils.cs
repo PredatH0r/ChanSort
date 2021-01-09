@@ -24,10 +24,23 @@ namespace Test.Loader
       GetExecutableDir();
 
 
-      var destFile = Path.Combine(executableDir, Path.GetFileName(file));
-      File.Copy(Path.Combine(solutionDir, file), destFile, true);
-      return destFile;
+      var src = Path.Combine(solutionDir, file);
+      var dest = Path.Combine(executableDir, Path.GetFileName(file));
+      if (Directory.Exists(src))
+        DeployRecursively(src, dest);
+      else
+        File.Copy(src, dest, true);
+      return dest;
     }
+
+    private static void DeployRecursively(string src, string dest)
+    {
+      foreach(var file in Directory.GetFiles(src))
+        File.Copy(file, Path.Combine(dest, Path.GetFileName(file)), true);
+      foreach(var subdir in Directory.GetDirectories(src))
+        DeployRecursively(subdir, Path.Combine(dest, Path.GetFileName(subdir)));
+    }
+
     #endregion
 
     #region GetSolutionBaseDir()

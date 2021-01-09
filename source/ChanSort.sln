@@ -53,8 +53,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.SilvaSchnei
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Sony", "ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj", "{70E29C6B-B926-4859-9548-23375BF1E1B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.PhilipsXml", "ChanSort.Loader.PhilipsXml\ChanSort.Loader.PhilipsXml.csproj", "{D7BAFD55-50F5-46C3-A76B-2193BED5358F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.GlobalClone", "Test.Loader.GlobalClone\Test.Loader.GlobalClone.csproj", "{AA31A65D-9437-42AE-89C8-98C7392B450D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Panasonic", "Test.Loader.Panasonic\Test.Loader.Panasonic.csproj", "{D1E4454F-DB09-402D-AD87-1E3BD17266A9}"
@@ -63,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Hisense", "Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Hisense2017", "Test.Loader.Hisense2017\Test.Loader.Hisense2017.csproj", "{8D592EB4-3BE2-4D99-8923-FA0794C729ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.PhilipsXml", "Test.Loader.PhilipsXml\Test.Loader.PhilipsXml.csproj", "{0A162099-DA92-426A-AB70-36F88F9E5DC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Philips", "Test.Loader.Philips\Test.Loader.Philips.csproj", "{0A162099-DA92-426A-AB70-36F88F9E5DC1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.SamsungJ", "Test.Loader.SamsungJ\Test.Loader.SamsungJ.csproj", "{902EA731-EBB2-4B18-BE87-256C05277B3E}"
 EndProject
@@ -77,9 +75,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.VDR", "Test.Loa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.M3u", "ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj", "{484028B6-3AAE-4F7E-A88A-76BEEB70203B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.PhilipsBin", "ChanSort.Loader.PhilipsBin\ChanSort.Loader.PhilipsBin.csproj", "{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.PhilipsBin", "Test.Loader.PhilipsBin\Test.Loader.PhilipsBin.csproj", "{36ED558E-576C-4D9D-A8C5-8D270A156B82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Philips", "ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj", "{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spike.LgWebOs5", "Spike.LgWebOs5\Spike.LgWebOs5.csproj", "{32EFB306-DEF8-4488-B1AE-46D5B183C373}"
 EndProject
@@ -287,18 +283,6 @@ Global
 		{70E29C6B-B926-4859-9548-23375BF1E1B5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{70E29C6B-B926-4859-9548-23375BF1E1B5}.Release|x86.ActiveCfg = Release|x86
 		{70E29C6B-B926-4859-9548-23375BF1E1B5}.Release|x86.Build.0 = Release|x86
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Debug|x86.ActiveCfg = Debug|x86
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Debug|x86.Build.0 = Debug|x86
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Release|x86.ActiveCfg = Release|x86
-		{D7BAFD55-50F5-46C3-A76B-2193BED5358F}.Release|x86.Build.0 = Release|x86
 		{AA31A65D-9437-42AE-89C8-98C7392B450D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA31A65D-9437-42AE-89C8-98C7392B450D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA31A65D-9437-42AE-89C8-98C7392B450D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -443,18 +427,6 @@ Global
 		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Release|x86.ActiveCfg = Release|x86
 		{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}.Release|x86.Build.0 = Release|x86
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Debug|x86.ActiveCfg = Debug|x86
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Debug|x86.Build.0 = Debug|x86
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Release|x86.ActiveCfg = Release|x86
-		{36ED558E-576C-4D9D-A8C5-8D270A156B82}.Release|x86.Build.0 = Release|x86
 		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32EFB306-DEF8-4488-B1AE-46D5B183C373}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

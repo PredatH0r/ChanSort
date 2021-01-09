@@ -6,12 +6,12 @@ using System.Reflection;
 using System.Text;
 using ChanSort.Api;
 
-namespace ChanSort.Loader.PhilipsBin
+namespace ChanSort.Loader.Philips
 {
   /*
   channellib\CableDigSrvTable:
   ===========================
-  Channels in this file are not phyiscally ordered by the program number and there is no linked list with prev/next indexes.
+  Channels in this file are not physically ordered by the program number and there is no linked list with prev/next indexes.
   When editing a channel with the Philips Channel Editor, it only updates the progNr field (and overwrites all trailing bytes of the channel name with 0x00).
   There is also the CablePresetTable file which is probably used for LCN. The Philips tool also updates the progNr in that file and uses it as is primary source
   for the progNr. I don't know if there is a direct reference from the channel to the preset, hence this code uses the combination of ONID+TSID+SID to link the two.
@@ -36,7 +36,7 @@ namespace ChanSort.Loader.PhilipsBin
   The Philips editor even saves non-linear lists, but not in any particular order.
 
   */
-  class Serializer : SerializerBase
+  class BinarySerializer : SerializerBase
   {
     private readonly IniFile ini;
     private readonly List<string> dataFilePaths = new List<string>();
@@ -47,7 +47,7 @@ namespace ChanSort.Loader.PhilipsBin
     private readonly StringBuilder logMessages = new StringBuilder();
 
     #region ctor()
-    public Serializer(string inputFile) : base(inputFile)
+    public BinarySerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.None;
       this.Features.CanSkipChannels = false;
@@ -105,20 +105,24 @@ namespace ChanSort.Loader.PhilipsBin
       var channellib = Path.Combine(dir, "channellib");
       var s2channellib = Path.Combine(dir, "s2channellib");
 
-      // channellib files for DVB-C/T
-      LoadDvbCT(dvbtChannels, Path.Combine(channellib, "AntennaDigSrvTable"));
+      // channellib files for DVB-C/T in version 1.1 and 1.2
+      LoadDvbCT(dvbtChannels, Path.Combine(channellib, "AntennaDigSrvTable"), "CableDigSrvTable_entry");
       LoadDvbCTPresets(dvbtChannels, Path.Combine(channellib, "AntennaPresetTable"));
-      LoadDvbCT(dvbcChannels, Path.Combine(channellib, "CableDigSrvTable"));
+      LoadDvbCT(dvbcChannels, Path.Combine(channellib, "CableDigSrvTable"), "CableDigSrvTable_entry");
       LoadDvbCTPresets(dvbcChannels, Path.Combine(channellib, "CablePresetTable"));
 
-      // s2channellib files for DVB-S
+      // s2channellib files for DVB-S in version 1.1 and 1.2
       LoadDvbsSatellites(Path.Combine(s2channellib, "satellite.dat"));
       LoadDvbsTransponders(Path.Combine(s2channellib, "tuneinfo.dat"));
-      LoadDvbS(satChannels, Path.Combine(s2channellib, "service.dat"));
+      LoadDvbS(satChannels, Path.Combine(s2channellib, "service.dat"), "service.dat_entry");
       LoadDvbsFavorites(Path.Combine(s2channellib, "favorite.dat"));
       var db_file_info = Path.Combine(s2channellib, "db_file_info.dat");
       if (File.Exists(db_file_info))
         this.dataFilePaths.Add(db_file_info);
+
+      // version 45
+      if (chanLstBin.VersionMajor == 45)
+        LoadDvbS(satChannels, Path.Combine(s2channellib, "SatelliteDb.bin"), "Map45_SatelliteDb_entry");
 
       // for a proper ChanSort backup/restore with .bak files, the Philips _backup.dat files must also be included
       foreach (var file in this.dataFilePaths.ToList())
@@ -159,12 +163,12 @@ namespace ChanSort.Loader.PhilipsBin
     #endregion
 
     #region LoadDvbCT
-    private void LoadDvbCT(ChannelList list, string path)
+    private void LoadDvbCT(ChannelList list, string path, string mappingName)
     {
       if (!ReadAndValidateChannellibFile(path, out var data, out var recordSize, out var recordCount)) 
         return;
 
-      var mapping = new DataMapping(this.ini.GetSection("CableDigSrvTable_entry"));
+      var mapping = new DataMapping(this.ini.GetSection(mappingName));
       mapping.SetDataPtr(data, 20);
 
       for (int i = 0; i < recordCount; i++, mapping.BaseOffset += recordSize)
@@ -340,7 +344,7 @@ namespace ChanSort.Loader.PhilipsBin
     #endregion
 
     #region LoadDvbS
-    private void LoadDvbS(ChannelList list, string path)
+    private void LoadDvbS(ChannelList list, string path, string mappingName)
     {
       if (!File.Exists(path))
         return;
@@ -349,26 +353,33 @@ namespace ChanSort.Loader.PhilipsBin
       if (data.Length < 4)
         return;
 
-      var checksum = BitConverter.ToUInt32(data, data.Length - 4);
+      if (chanLstBin.VersionMajor == 1)
+      {
+        var checksum = BitConverter.ToUInt32(data, data.Length - 4);
 
-      var crcObj = new Crc32(false, Crc32.NormalPoly);
-      var crc = ~crcObj.CalcCrc32(data, 0, data.Length - 4);
-      if (checksum != crc)
-        throw new FileLoadException("Invalid CRC32 in " + path);
+        var crcObj = new Crc32(false, Crc32.NormalPoly);
+        var crc = ~crcObj.CalcCrc32(data, 0, data.Length - 4);
+        if (checksum != crc)
+          throw new FileLoadException("Invalid CRC32 in " + path);
+      }
+
 
       int recordSize = BitConverter.ToInt32(data, 4);
       int recordCount = BitConverter.ToInt32(data, 8);
 
-      // 12 bytes header, then a "next/prev" table, then the service records, then a CRC32
-      // the "next/prev" table is a ring-list, every entry consists of 2 ushorts with the next and previous channel, wrapping around on the ends
-      if (data.Length != 12 + recordCount * 4 + recordCount * recordSize + 4)
-        throw new FileLoadException("Unsupported file content: " + path);
+      if (chanLstBin.VersionMajor == 1)
+      {
+        // 12 bytes header, then a "next/prev" table, then the service records, then a CRC32
+        // the "next/prev" table is a ring-list, every entry consists of 2 ushorts with the next and previous channel, wrapping around on the ends
+        if (data.Length != 12 + recordCount * 4 + recordCount * recordSize + 4)
+          throw new FileLoadException("Unsupported file content: " + path);
+      }
 
       this.dataFilePaths.Add(path);
 
       var dvbStringDecoder = new DvbStringDecoder(this.DefaultEncoding);
 
-      var mapping = new DataMapping(this.ini.GetSection("service.dat_entry"));
+      var mapping = new DataMapping(this.ini.GetSection(mappingName));
       mapping.SetDataPtr(data, 12 + recordCount * 4);
       for (int i = 0; i < recordCount; i++, mapping.BaseOffset += recordSize)
       {

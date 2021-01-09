@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml;
 
-namespace ChanSort.Loader.PhilipsXml
+namespace ChanSort.Loader.Philips
 {
   /// <summary>
   /// This XmlWriter replaces some characters with Char- or Entity- references the same way
