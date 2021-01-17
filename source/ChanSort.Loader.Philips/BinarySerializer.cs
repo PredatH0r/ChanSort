@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -9,6 +11,9 @@ using ChanSort.Api;
 namespace ChanSort.Loader.Philips
 {
   /*
+
+  This loader handles the file format versions 1.x (*Table and *.dat files) and version 25.x-45.x (*Db.bin files)
+
   channellib\CableDigSrvTable:
   ===========================
   Channels in this file are not physically ordered by the program number and there is no linked list with prev/next indexes.
@@ -92,37 +97,42 @@ namespace ChanSort.Loader.Philips
     #region Load()
     public override void Load()
     {
-      if (!SetFileNameToChanLstBin())
-        throw new FileLoadException("Unsupported folder structure. Required files are:\n"
-                                    + "ChannelList\\chanLst.bin\n"
-                                    + "ChannelList\\channellib\\CableDigSrvTable\n"
-                                    + "ChannelList\\s2channellib\\service.dat");
-
       this.chanLstBin = new ChanLstBin();
       this.chanLstBin.Load(this.FileName, msg => this.logMessages.AppendLine(msg));
+      this.dataFilePaths.Add(this.FileName);
+
+      if (chanLstBin.VersionMajor >= 25 && chanLstBin.VersionMajor <= 45) // need VC2010 Redist for the SQLite library
+        DepencencyChecker.AssertVc2010RedistPackageX86Installed();
 
       var dir = Path.GetDirectoryName(this.FileName) ?? "";
       var channellib = Path.Combine(dir, "channellib");
       var s2channellib = Path.Combine(dir, "s2channellib");
 
-      // channellib files for DVB-C/T in version 1.1 and 1.2
-      LoadDvbCT(dvbtChannels, Path.Combine(channellib, "AntennaDigSrvTable"), "CableDigSrvTable_entry");
-      LoadDvbCTPresets(dvbtChannels, Path.Combine(channellib, "AntennaPresetTable"));
-      LoadDvbCT(dvbcChannels, Path.Combine(channellib, "CableDigSrvTable"), "CableDigSrvTable_entry");
-      LoadDvbCTPresets(dvbcChannels, Path.Combine(channellib, "CablePresetTable"));
+      if (chanLstBin.VersionMajor <= 11)
+      {
+        LoadDvbCT(dvbtChannels, Path.Combine(channellib, "AntennaDigSrvTable"), "CableDigSrvTable_entry");
+        LoadDvbCTPresets(dvbtChannels, Path.Combine(channellib, "AntennaPresetTable"));
+        LoadDvbCT(dvbcChannels, Path.Combine(channellib, "CableDigSrvTable"), "CableDigSrvTable_entry");
+        LoadDvbCTPresets(dvbcChannels, Path.Combine(channellib, "CablePresetTable"));
 
-      // s2channellib files for DVB-S in version 1.1 and 1.2
-      LoadDvbsSatellites(Path.Combine(s2channellib, "satellite.dat"));
-      LoadDvbsTransponders(Path.Combine(s2channellib, "tuneinfo.dat"));
-      LoadDvbS(satChannels, Path.Combine(s2channellib, "service.dat"), "service.dat_entry");
-      LoadDvbsFavorites(Path.Combine(s2channellib, "favorite.dat"));
-      var db_file_info = Path.Combine(s2channellib, "db_file_info.dat");
-      if (File.Exists(db_file_info))
-        this.dataFilePaths.Add(db_file_info);
-
-      // version 45
-      if (chanLstBin.VersionMajor == 45)
-        LoadDvbS(satChannels, Path.Combine(s2channellib, "SatelliteDb.bin"), "Map45_SatelliteDb_entry");
+        LoadDvbsSatellites(Path.Combine(s2channellib, "satellite.dat"));
+        LoadDvbsTransponders(Path.Combine(s2channellib, "tuneinfo.dat"));
+        LoadDvbS(satChannels, Path.Combine(s2channellib, "service.dat"), "service.dat_entry");
+        LoadDvbsFavorites(Path.Combine(s2channellib, "favorite.dat"));
+        var db_file_info = Path.Combine(s2channellib, "db_file_info.dat");
+        if (File.Exists(db_file_info))
+          this.dataFilePaths.Add(db_file_info);
+      }
+      else if (chanLstBin.VersionMajor >= 25 && chanLstBin.VersionMajor <= 45)
+      {
+        // version 25-45
+        LoadDvbCT(dvbtChannels, Path.Combine(channellib, "TerrestrialDb.bin"), "Map45_CableDb.bin_entry");
+        LoadDvbCT(dvbcChannels, Path.Combine(channellib, "CableDb.bin"), "Map45_CableDb.bin_entry");
+        LoadDvbS(satChannels, Path.Combine(s2channellib, "SatelliteDb.bin"), "Map45_SatelliteDb.bin_entry");
+        var tvDbFile = Path.Combine(dir, "tv.db");
+        if (File.Exists(tvDbFile))
+          this.dataFilePaths.Add(tvDbFile);
+      }
 
       // for a proper ChanSort backup/restore with .bak files, the Philips _backup.dat files must also be included
       foreach (var file in this.dataFilePaths.ToList())
@@ -131,36 +141,8 @@ namespace ChanSort.Loader.Philips
           this.dataFilePaths.Add(file.Replace(".dat", "_backup.dat"));
       }
     }
-
     #endregion
 
-    #region SetFileNameToChanLstBin()
-    private bool SetFileNameToChanLstBin()
-    {
-      var dir = Path.GetDirectoryName(this.FileName) ?? "";
-      var dirName = Path.GetFileName(dir);
-      if (StringComparer.InvariantCultureIgnoreCase.Compare(dirName, "channellib") == 0 || StringComparer.InvariantCultureIgnoreCase.Compare(dirName, "s2channellib") == 0)
-      {
-        dir = Path.GetDirectoryName(dir) ?? "";
-        dirName = Path.GetFileName(dir);
-      }
-
-      if (StringComparer.InvariantCultureIgnoreCase.Compare(dirName, "ChannelList") != 0)
-        return false;
-
-      var chanLstBin = Path.Combine(dir, "chanLst.bin");
-      if (!File.Exists(chanLstBin))
-        return false;
-
-      if (!File.Exists(Path.Combine(dir, "channellib", "CableDigSrvTable")))
-        return false;
-      if (!File.Exists(Path.Combine(dir, "s2channellib", "service.dat")))
-        return false;
-
-      this.FileName = chanLstBin; // this file is used as a fixed reference point for the whole directory structure
-      return true;
-    }
-    #endregion
 
     #region LoadDvbCT
     private void LoadDvbCT(ChannelList list, string path, string mappingName)
@@ -169,7 +151,7 @@ namespace ChanSort.Loader.Philips
         return;
 
       var mapping = new DataMapping(this.ini.GetSection(mappingName));
-      mapping.SetDataPtr(data, 20);
+      mapping.SetDataPtr(data, chanLstBin.VersionMajor <= 11 ? 20 : 12);
 
       for (int i = 0; i < recordCount; i++, mapping.BaseOffset += recordSize)
       {
@@ -187,13 +169,17 @@ namespace ChanSort.Loader.Philips
         }
         string channelName = Encoding.Unicode.GetString(data, offChannelName, lenName);
 
-        var checksum = mapping.GetDword("offChecksum");
-        mapping.SetDword("offChecksum", 0);
-        var crc = FaultyCrc32(data, mapping.BaseOffset + mapping.GetConst("offChecksum", 0), recordSize);
-        if (crc != checksum)
-          throw new FileLoadException($"Invalid CRC in record {i} in {path}");
+        if (chanLstBin.VersionMajor <= 11)
+        {
+          var checksum = mapping.GetDword("offChecksum");
+          mapping.SetDword("offChecksum", 0);
+          var crc = FaultyCrc32(data, mapping.BaseOffset + mapping.GetConst("offChecksum", 0), recordSize);
+          if (crc != checksum)
+            throw new FileLoadException($"Invalid CRC in record {i} in {path}");
+        }
 
         var ch = new Channel(list.SignalSource, i, progNr, channelName);
+        ch.Id = mapping.GetWord("offId"); // only relevant for ChannelMap45
         ch.FreqInMhz = (decimal) mapping.GetWord("offFreqTimes16") / 16;
         ch.OriginalNetworkId = mapping.GetWord("offOnid");
         ch.TransportStreamId = mapping.GetWord("offTsid");
@@ -254,13 +240,27 @@ namespace ChanSort.Loader.Philips
         return false;
 
       data = File.ReadAllBytes(path);
-      if (data.Length < 20)
-        return false;
+      if (chanLstBin.VersionMajor <= 11)
+      {
+        if (data.Length < 20)
+          return false;
 
-      recordSize = BitConverter.ToInt32(data, 8);
-      recordCount = BitConverter.ToInt32(data, 12);
-      if (data.Length != 20 + recordCount * recordSize)
-        throw new FileLoadException("Unsupported file content: " + path);
+        recordSize = BitConverter.ToInt32(data, 8);
+        recordCount = BitConverter.ToInt32(data, 12);
+        if (data.Length != 20 + recordCount * recordSize)
+          throw new FileLoadException("Unsupported file content: " + path);
+      }
+      else
+      {
+        if (data.Length < 12)
+          return false;
+
+        recordSize = 156; // Map45
+        recordCount = BitConverter.ToInt32(data, 8);
+        if (data.Length != 12 + recordCount * recordSize)
+          throw new FileLoadException("Unsupported file content: " + path);
+      }
+
 
       this.dataFilePaths.Add(path);
       return true;
@@ -296,7 +296,8 @@ namespace ChanSort.Loader.Philips
         var s = new Satellite(i);
         var pos = (sbyte)data[baseOffset + 8];
         s.OrbitalPosition = pos < 0 ? -pos + "W" : pos + "E";
-        s.Name = this.DefaultEncoding.GetString(data, baseOffset + 16, 16).TrimEnd('\0');
+        s.Name = this.DefaultEncoding.GetString(data, baseOffset + 16, 16).TrimGarbage();
+
         this.DataRoot.AddSatellite(s);
       }
     }
@@ -350,10 +351,12 @@ namespace ChanSort.Loader.Philips
         return;
 
       var data = File.ReadAllBytes(path);
-      if (data.Length < 4)
+      if (data.Length < 12)
         return;
 
-      if (chanLstBin.VersionMajor == 1)
+      var version = chanLstBin.VersionMajor;
+
+      if (version <= 11)
       {
         var checksum = BitConverter.ToUInt32(data, data.Length - 4);
 
@@ -366,8 +369,10 @@ namespace ChanSort.Loader.Philips
 
       int recordSize = BitConverter.ToInt32(data, 4);
       int recordCount = BitConverter.ToInt32(data, 8);
+      if (recordSize == 0 && version != 1)
+        recordSize = recordCount == 0 ? 0 : (data.Length - 12) / recordCount;
 
-      if (chanLstBin.VersionMajor == 1)
+      if (chanLstBin.VersionMajor <= 11)
       {
         // 12 bytes header, then a "next/prev" table, then the service records, then a CRC32
         // the "next/prev" table is a ring-list, every entry consists of 2 ushorts with the next and previous channel, wrapping around on the ends
@@ -380,7 +385,7 @@ namespace ChanSort.Loader.Philips
       var dvbStringDecoder = new DvbStringDecoder(this.DefaultEncoding);
 
       var mapping = new DataMapping(this.ini.GetSection(mappingName));
-      mapping.SetDataPtr(data, 12 + recordCount * 4);
+      mapping.SetDataPtr(data, 12 + (chanLstBin.VersionMajor <= 11 ? recordCount * 4 : 0));
       for (int i = 0; i < recordCount; i++, mapping.BaseOffset += recordSize)
       {
         var ch = LoadDvbsChannel(list, mapping, i, dvbStringDecoder);
@@ -394,7 +399,7 @@ namespace ChanSort.Loader.Philips
     {
       var transponderId = mapping.GetWord("offTransponderIndex");
       var progNr = mapping.GetWord("offProgNr");
-      var ch = new ChannelInfo(list.SignalSource, recordIndex, progNr, null);
+      var ch = new Channel(list.SignalSource, recordIndex, progNr, "");
 
       // deleted channels must be kept in the list because their records must also be physically reordered when saving the list
       if (progNr == 0xFFFF || transponderId == 0xFFFF)
@@ -413,14 +418,24 @@ namespace ChanSort.Loader.Philips
       ch.VideoPid = mapping.GetWord("offVpid") & mapping.GetMask("maskVpid");
       ch.Favorites = mapping.GetFlag("IsFav") ? Favorites.A : 0;
       ch.OldProgramNr = progNr;
+      ch.Id = mapping.GetWord("offId"); // relevant for ChannelMap45
 
-      // the 0x1F as the first byte of the channel name is likely the DVB encoding indicator for UTF-8. So we use the DvbStringDecoder here
-      dvbStringDecoder.GetChannelNames(mapping.Data, mapping.BaseOffset + mapping.GetConst("offName", 0), mapping.GetConst("lenName", 0), out var longName, out var shortName);
-      ch.Name = longName.TrimEnd('\0');
-      ch.ShortName = shortName.TrimEnd('\0');
+      if (chanLstBin.VersionMajor <= 11)
+      {
+        // the 0x1F as the first byte of the channel name is likely the DVB encoding indicator for UTF-8. So we use the DvbStringDecoder here
+        dvbStringDecoder.GetChannelNames(mapping.Data, mapping.BaseOffset + mapping.GetConst("offName", 0), mapping.GetConst("lenName", 0), out var longName, out var shortName);
+        ch.Name = longName;
+        ch.ShortName = shortName;
+      }
+      else
+      {
+        ch.Name = Encoding.Unicode.GetString(mapping.Data, mapping.BaseOffset + mapping.GetConst("offName", 0), mapping.GetConst("lenName", 0)).TrimEnd('\0');
+        ch.FreqInMhz = mapping.GetWord("offFreq");
+        ch.SymbolRate = (int)(mapping.GetDword("offSymbolRate") / 1000);
+      }
 
       dvbStringDecoder.GetChannelNames(mapping.Data, mapping.BaseOffset + mapping.GetConst("offProvider", 0), mapping.GetConst("lenProvider", 0), out var provider, out _);
-      ch.Provider = provider.TrimEnd('\0');
+      ch.Provider = provider;
 
       // copy values from the satellite/transponder tables to the channel
       if (this.DataRoot.Transponder.TryGetValue(transponderId, out var t))
@@ -495,14 +510,25 @@ namespace ChanSort.Loader.Philips
       var channellib = Path.Combine(dir, "channellib");
       var s2channellib = Path.Combine(dir, "s2channellib");
 
-      SaveDvbCTChannels(this.dvbtChannels, Path.Combine(channellib, "AntennaDigSrvTable"));
-      SaveDvbCTPresets(this.dvbtChannels, Path.Combine(channellib, "AntennaPresetTable"));
-      SaveDvbCTChannels(this.dvbcChannels, Path.Combine(channellib, "CableDigSrvTable"));
-      SaveDvbCTPresets(this.dvbcChannels, Path.Combine(channellib, "CablePresetTable"));
+      if (chanLstBin.VersionMajor <= 11)
+      {
+        SaveDvbCTChannels(this.dvbtChannels, Path.Combine(channellib, "AntennaDigSrvTable"));
+        SaveDvbCTPresets(this.dvbtChannels, Path.Combine(channellib, "AntennaPresetTable"));
+        SaveDvbCTChannels(this.dvbcChannels, Path.Combine(channellib, "CableDigSrvTable"));
+        SaveDvbCTPresets(this.dvbcChannels, Path.Combine(channellib, "CablePresetTable"));
 
-      SaveDvbsChannels(Path.Combine(s2channellib, "service.dat"));
-      SaveDvbsFavorites(Path.Combine(s2channellib, "favorite.dat"));
-      SaveDvbsDbFileInfo(Path.Combine(s2channellib, "db_file_info.dat"));
+        SaveDvbsChannels(Path.Combine(s2channellib, "service.dat"));
+        SaveDvbsFavorites(Path.Combine(s2channellib, "favorite.dat"));
+        SaveDvbsDbFileInfo(Path.Combine(s2channellib, "db_file_info.dat"));
+      }
+      else if (chanLstBin.VersionMajor >= 25 && chanLstBin.VersionMajor <= 45)
+      {
+        SaveDvbCTChannels(this.dvbtChannels, Path.Combine(channellib, "TerrestrialDb.bin"));
+        SaveDvbCTChannels(this.dvbcChannels, Path.Combine(channellib, "CableDb.bin"));
+        SaveDvbsChannels(Path.Combine(s2channellib, "SatelliteDb.bin"));
+
+        UpdateChannelMap45TvDb();
+      }
 
       this.chanLstBin.Save(this.FileName);
     }
@@ -515,18 +541,38 @@ namespace ChanSort.Loader.Philips
       if (!ReadAndValidateChannellibFile(path, out var data, out var recordSize, out _))
         return;
 
-      var mapping = new DataMapping(this.ini.GetSection("CableDigSrvTable_entry"));
-      mapping.SetDataPtr(data, 20);
+      int baseOffset;
+      DataMapping mapping;
+
+      if (chanLstBin.VersionMajor <= 11)
+      {
+        mapping = new DataMapping(this.ini.GetSection("CableDigSrvTable_entry"));
+        baseOffset = 20;
+      }
+      else
+      {
+        mapping = new DataMapping(this.ini.GetSection("Map45_CableDb.bin_entry"));
+        baseOffset = 12;
+      }
+      mapping.SetDataPtr(data, baseOffset);
       foreach (var ch in list.Channels)
       {
-        mapping.BaseOffset = 20 + (int)ch.RecordIndex * recordSize;
+        if (ch.IsProxy) continue;
+        mapping.BaseOffset = baseOffset + (int)ch.RecordIndex * recordSize;
         mapping.SetWord("offProgNr", ch.NewProgramNr);
         mapping.SetByte("offLocked", ch.Lock ? 1 : 0);
         mapping.SetByte("offIsFav", ch.Favorites == 0 ? 0 : 1);
 
-        mapping.SetDword("offChecksum", 0);
-        var crc = FaultyCrc32(data, mapping.BaseOffset, recordSize);
-        mapping.SetDword("offChecksum", crc);
+        if (chanLstBin.VersionMajor <= 11)
+        {
+          mapping.SetDword("offChecksum", 0);
+          var crc = FaultyCrc32(data, mapping.BaseOffset, recordSize);
+          mapping.SetDword("offChecksum", crc);
+        }
+        else if (chanLstBin.VersionMajor >= 25 && chanLstBin.VersionMajor <= 45)
+        {
+          mapping.SetWord("offServiceEdit", 1);
+        }
       }
 
       File.WriteAllBytes(path, data);
@@ -564,16 +610,32 @@ namespace ChanSort.Loader.Philips
     private void SaveDvbsChannels(string path)
     {
       var orig = File.ReadAllBytes(path);
-      int recordSize = BitConverter.ToInt32(orig, 4);
-      int recordCount = BitConverter.ToInt32(orig, 8);
-
+      
       // create a new array for the modified data, copying the header and next/prev table
       var data = new byte[orig.Length];
-      Array.Copy(orig, data, 12 + recordCount * 4);
 
-      var baseOffset = 12 + recordCount * 4;
+      int recordCount = BitConverter.ToInt32(orig, 8);
+      int recordSize;
+      int baseOffset;
+      DataMapping mapping;
 
-      var mapping = new DataMapping(this.ini.GetSection("service.dat_entry"));
+      if (chanLstBin.VersionMajor <= 11)
+      {
+        recordSize = BitConverter.ToInt32(orig, 4);
+        baseOffset = 12 + recordCount * 4;
+        mapping = new DataMapping(this.ini.GetSection("service.dat_entry"));
+      }
+      else
+      {
+        recordSize = recordCount == 0 ? 0 : (orig.Length - 12) / recordCount;
+        baseOffset = 12;
+        mapping = new DataMapping(this.ini.GetSection("Map45_SatelliteDb.bin_entry"));
+      }
+
+      if (recordCount == 0)
+        return;
+
+      Array.Copy(orig, data, baseOffset);
       mapping.SetDataPtr(data, baseOffset);
 
       // copy physical records to bring them in the new order and update fields like progNr
@@ -594,18 +656,22 @@ namespace ChanSort.Loader.Philips
           mapping.SetWord("offProgNr", ch.NewProgramNr);
           mapping.SetFlag("IsFav", ch.Favorites != 0);
           mapping.SetFlag("Locked", ch.Lock);
+          mapping.SetWord("offServiceEdit", 1);
         }
 
         ch.RecordIndex = i++; // required so that subsequent saves don't reshuffle the records
       }
 
+      if (chanLstBin.VersionMajor <= 11)
+      {
+        var crc32 = ~Crc32.Reversed.CalcCrc32(data, 0, data.Length - 4);
+        data.SetInt32(data.Length - 4, (int) crc32);
 
-      var crc32 = ~Crc32.Reversed.CalcCrc32(data, 0, data.Length - 4);
-      data.SetInt32(data.Length-4, (int)crc32);
+        var backupFile = path.Replace(".dat", "_backup.dat");
+        File.WriteAllBytes(backupFile, data);
+      }
+
       File.WriteAllBytes(path, data);
-
-      var backupFile = path.Replace(".dat", "_backup.dat");
-      File.WriteAllBytes(backupFile, data);
     }
     #endregion
 
@@ -664,6 +730,47 @@ namespace ChanSort.Loader.Philips
 
       var backupFile = path.Replace(".dat", "_backup.dat");
       File.WriteAllBytes(backupFile, data);
+    }
+    #endregion
+
+    #region UpdateChannelMap45TvDb()
+    private void UpdateChannelMap45TvDb()
+    {
+      var tvDb = Path.Combine(Path.GetDirectoryName(this.FileName) ?? "", "tv.db");
+      if (!File.Exists(tvDb))
+        return;
+
+      using var conn = new SQLiteConnection($"Data Source={tvDb}");
+      conn.Open();
+      using var trans = conn.BeginTransaction();
+      using var cmd = conn.CreateCommand();
+      cmd.CommandText = "update channels set display_number=@prNum, display_name=@name, browsable=@browsable, locked=@locked where _id=@id";
+      cmd.Parameters.Clear();
+      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@prNum", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@name", DbType.String));
+      cmd.Parameters.Add(new SQLiteParameter("@browsable", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@locked", DbType.Int32));
+      cmd.Prepare();
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        foreach (var chan in list.Channels)
+        {
+          if (!(chan is Channel ch))
+            continue;
+          cmd.Parameters["@id"].Value = ch.Id;
+          cmd.Parameters["@prNum"].Value = ch.NewProgramNr;
+          cmd.Parameters["@name"].Value = ch.Name;
+          cmd.Parameters["@browsable"].Value = ch.Skip ? 0 : 1;
+          cmd.Parameters["@locked"].Value = ch.Lock ? 1 : 0;
+
+          var res = cmd.ExecuteNonQuery();
+          if (res == 0)
+            this.logMessages.AppendFormat($"Could not update record with id {ch.Id} in tv.db service table");
+        }
+      }
+      trans.Commit();
+      conn.Close();
     }
     #endregion
 

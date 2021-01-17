@@ -54,7 +54,7 @@ namespace ChanSort.Loader.Philips
 
       var modelNameLen = BitConverter.ToInt32(content, off);
       off += 4 + modelNameLen;
-      var baseDir = Path.GetDirectoryName(path);
+      var baseDir = Path.GetDirectoryName(path) ?? "";
       var relPath = "/channellib/";
       while (off < content.Length)
       {
@@ -67,6 +67,7 @@ namespace ChanSort.Loader.Philips
         else
         {
           // normally all files after the /s2channellib/ entry are inside that folder, but "Favorite.xml" is in the main folder
+          // in ChannelMap45 there is also tv.db and list.db in the main folder
           var newPath = relPath + fileName;
           if (!File.Exists(Path.Combine(baseDir, newPath)) && File.Exists(Path.Combine(baseDir, fileName)))
             newPath = "/" + fileName;
@@ -92,9 +93,18 @@ namespace ChanSort.Loader.Philips
 
         var filePath = baseDir + entry.Key;
         if (!File.Exists(filePath))
+        {
+          errors += $"\nchanLst.bin: file not found in directory structure: {entry.Key}";
           continue;
+        }
+
         var data = File.ReadAllBytes(filePath);
-        var length = Math.Min(data.Length, VersionMajor <= 12 ? 0x6000 : 0x145A00);
+        var length = data.Length;
+        if (VersionMajor < 12 && length > 0x6000)
+          length = 0x6000; // there might be another cap at 0x013FA000 + 0x6000 in some versions
+        //if (length > 0x0140000)
+        //  length = 0x0140000;
+
         var actualCrc = Crc16.Calc(data, 0, length);
         if (actualCrc != expectedCrc)
         {
@@ -104,10 +114,7 @@ namespace ChanSort.Loader.Philips
       }
 
       if (errors != "")
-      {
-        this.log.Invoke(errors);
-        //throw new FileLoadException(errors);
-      }
+        this.log?.Invoke(errors);
     }
 
     public void Save(string chanLstBinPath)
@@ -117,7 +124,9 @@ namespace ChanSort.Loader.Philips
       {
         var path = baseDir + entry.Key;
         var data = File.ReadAllBytes(path);
-        var length = Math.Min(data.Length, VersionMajor <= 12 ? 0x6000 : 0x145A00);
+        var length = data.Length;
+        if (VersionMajor < 12 && length > 0x6000)
+          length = 0x6000; // there might be another cap at 0x013FA000 + 0x6000 in some versions
         var crc = Crc16.Calc(data, 0, length);
         var off = entry.Value;
         content[off] = (byte) crc;

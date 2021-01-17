@@ -506,7 +506,7 @@
       <Project>{68da8072-3a29-4076-9f64-d66f38349585}</Project>
       <Name>ChanSort.Loader.Panasonic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.PhilipsBin\ChanSort.Loader.Philips.csproj">
+    <ProjectReference Include="..\ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj">
       <Project>{1f52b5ec-a2f1-4e53-9e1a-4658296c5bb5}</Project>
       <Name>ChanSort.Loader.Philips</Name>
     </ProjectReference>
@@ -568,6 +568,9 @@
     <Content Include="ChanSort.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="ReferenceLists\it_hotbird130E_tivusat_EasyHD_&amp;_FTA.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="ReferenceLists\BE_Telenet_CI+_Module.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -590,9 +593,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ReferenceLists\gb_astra282E_sky.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ReferenceLists\it_hotbird130E_tivusat.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ReferenceLists\ru_eutelsat36E_tricolor.txt">

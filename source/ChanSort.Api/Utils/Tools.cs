@@ -215,5 +215,14 @@ namespace ChanSort.Api
     }
     #endregion
 
+    public static string TrimGarbage(this string input)
+    {
+      if (input == null) return null;
+      var i = input.IndexOf('\0');
+      if (i >= 0)
+        return input.Substring(0, i);
+      return input;
+    }
+
   }
 }

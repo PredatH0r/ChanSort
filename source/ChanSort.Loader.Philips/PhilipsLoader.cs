@@ -29,7 +29,7 @@ namespace ChanSort.Loader.Philips
      * e.g. 32PFL5806K/02, 42PFL7656K/02
      *
      * version 1.2
-     * same as version 1.1
+     * same as version 1.1 for most parts, but different tuneinfo.dat format
      * e.g. 32PFL5507K/12, 42PFL4317K/12, 32PFL5507K/12
      *
      * version 11.1
@@ -112,10 +112,10 @@ namespace ChanSort.Loader.Philips
 
       if (majorVersion == 0 || majorVersion >= 100 && majorVersion <= 110)
         return new XmlSerializer(inputFile);
-      if (majorVersion == 1)
+      if (majorVersion == 1 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
         return new BinarySerializer(inputFile);
 
-      throw new FileLoadException($"Selected file must be either chanLst.bin or CM_*.xml/.bin");
+      throw new FileLoadException($"Philips ChannelMap format version {majorVersion} is not supported.");
     }
   }
 }

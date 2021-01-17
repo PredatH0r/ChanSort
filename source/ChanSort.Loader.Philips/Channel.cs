@@ -7,6 +7,7 @@ namespace ChanSort.Loader.Philips
   {
     public Channel(SignalSource source, long index, int oldProgNr, string name) : base(source, index, oldProgNr, name)
     {
+      this.RecordOrder = (int)index;
     }
 
     internal Channel(SignalSource source, int order, int rowId, XmlNode setupNode)
@@ -27,6 +28,7 @@ namespace ChanSort.Loader.Philips
     public string RawName;
     public string RawSatellite;
     public int Format;
+    public int Id; // links entries in the ChannelMap45/*Db.bin files with the entries in the tv.db channels table
 
   }
 }

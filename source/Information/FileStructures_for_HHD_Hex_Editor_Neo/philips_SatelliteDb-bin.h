@@ -3,6 +3,42 @@
 /***********************************************************
  * Philips ChannelMap_45 format
  ***********************************************************/
+
+public struct Ph_ChannelMap45_CableDbBin
+{
+  dword majorVersion;
+  dword minorVersion;
+  dword recordCount;
+  struct
+  {
+    var off0 = current_offset;
+    dword id;
+    dword freq;
+    dword number;
+    dword analogUid;
+    dword onid;
+    dword tsid;
+    dword sid;
+    dword symRate;
+    dword logoNr;
+    dword scrambleStat;
+    dword locked;
+    dword modulation;
+    dword unk1;
+    dword serviceType;
+    dword systemHideMaybe;
+    dword isUserModifiedLogo;
+    dword serviceEdit;
+    dword streamPriorityMaybe;
+    dword unk2;
+    word unk3TransponderRelated;
+    word unk4TransponderRelated;
+	byte unk3[8];
+    wchar_t name[32+1];
+
+    byte unk[156 - (current_offset - off0)];
+  } Channels[recordCount];
+};
  
 
 public struct Ph_ChannelMap45_SatelliteDbBin

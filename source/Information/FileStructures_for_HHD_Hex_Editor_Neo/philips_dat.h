@@ -45,7 +45,7 @@ public struct Ph_SatelliteDat
   dword crc32;
 };
 
-public struct Ph_TuneinfoDat
+public struct Ph_TuneinfoDat_1_0
 {
   word unk1;
   word unk2;
@@ -66,7 +66,36 @@ public struct Ph_TuneinfoDat
     byte unk2[9];
     word tsid;
     word onid;
-    word unk3;
+	byte unk3[2];
+    char networkName[32];
+    word unk4;
+    byte unk[recordSize - (current_offset - off0)];
+  } Transponders[recordCount];
+  dword crc32;
+};
+
+public struct Ph_TuneinfoDat_1_2
+{
+  word unk1;
+  word unk2;
+  dword recordSize;
+  dword recordCount;
+  Ph_NextPrevTableEntry NextPrevTable[recordCount];
+  struct
+  {
+    var off0 = current_offset;
+    word symbolRate;
+    word freqInMhz;
+    word unk1;
+    struct
+    {
+      byte unk : 4;
+      byte satIndex: 4;
+    } u1a;
+    byte unk2[9];
+    word tsid;
+    word onid;
+	byte unk3[6];
     char networkName[32];
     word unk4;
     byte unk[recordSize - (current_offset - off0)];
@@ -136,6 +165,37 @@ public struct Ph_FavoriteDat
     short next;
   } Table[dataSize/4-1];
   dword crc32;
+};
+
+public struct Ph_SatelliteDigSrvTable_11
+{
+  dword version;
+  dword unk2;
+  dword chRecordSize;
+  dword channelCount;
+  dword versionCode;
+  struct Ph_CableChannel
+  {
+    var off0 = current_offset;
+    dword checksum;
+    byte unk1[16];
+    dword symbolRate;
+    byte unk2[16];
+    dword freq;
+    word onid;
+    word sid;
+    word tsid;
+    byte unk3b[58];
+    word progNrMostly;
+    byte unk4[6];
+    word progNr;
+    byte unk5[22];
+    byte locked;
+    byte isFav;
+    byte unk6[68];
+    wchar_t channelName[32];
+    byte unk4[chRecordSize - (current_offset - off0)];
+  } Channels[channelCount];
 };
 
 /***********************************************************

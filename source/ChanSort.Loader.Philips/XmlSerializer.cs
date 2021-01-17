@@ -245,6 +245,12 @@ namespace ChanSort.Loader.Philips
         medium = fname;
       bool hasEncrypt = false;
 
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        list.VisibleColumnFieldNames.Remove("ServiceType");
+        list.VisibleColumnFieldNames.Add("ServiceTypeName");
+      }
+
       if (setupNode.HasAttribute("ChannelName"))
       {
         file.formatVersion = 1;
@@ -271,7 +277,6 @@ namespace ChanSort.Loader.Philips
           list.VisibleColumnFieldNames.Remove("Favorites");
           list.VisibleColumnFieldNames.Remove("Lock");
           list.VisibleColumnFieldNames.Remove("Hidden");
-          list.VisibleColumnFieldNames.Remove("ServiceType");
           list.VisibleColumnFieldNames.Remove("ServiceTypeName");
           list.VisibleColumnFieldNames.Remove("Encrypted");
         }
@@ -354,11 +359,9 @@ namespace ChanSort.Loader.Philips
       chan.TransportStreamId = ParseInt(data.TryGet("Tsid"));
       chan.ServiceId = ParseInt(data.TryGet("Sid"));
       chan.FreqInMhz = ParseInt(data.TryGet("Frequency")); ;
-      if (chan.FreqInMhz > 2000)
+      if (chan.FreqInMhz > 2000 && (chan.SignalSource & SignalSource.Sat) == 0)
         chan.FreqInMhz /= 1000;
-      if (chan.FreqInMhz > 2000)
-        chan.FreqInMhz /= 1000;
-      chan.ServiceType = ParseInt(data.TryGet("ServiceType"));
+      chan.ServiceTypeName = ParseInt(data.TryGet("ServiceType")) == 1 ? "TV" : "Radio";
       var decoderType = data.TryGet("DecoderType");
       if (decoderType == "1")
         chan.Source = "DVB-T";
@@ -366,6 +369,8 @@ namespace ChanSort.Loader.Philips
         chan.Source = "DVB-C";
       chan.SignalSource |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType);
       chan.SymbolRate = ParseInt(data.TryGet("SymbolRate"));
+      if (chan.SymbolRate > 100000) // DVB-S stores values in kSym, DVB-C stores it in Sym, DVB-T stores 0
+        chan.SymbolRate /= 1000;
       if (data.TryGetValue("Polarization", out var pol))
         chan.Polarity = pol == "0" ? 'H' : 'V';
       chan.Hidden |= data.TryGet("SystemHidden") == "1";
@@ -382,9 +387,9 @@ namespace ChanSort.Loader.Philips
       chan.Name = data.TryGet("name");
       chan.RawName = chan.Name;
       chan.FreqInMhz = ParseInt(data.TryGet("frequency"));
-      //if ((chan.SignalSource & SignalSource.Analog) != 0)
+      //if ((chan.SignalSource & SignalSource.Analog) != 0) // analog channels have some really strange values (e.g. 00080 - 60512) that I can't convert to a plausible freq range (48-856 MHz)
       //  chan.FreqInMhz /= 16;
-      if (chan.FreqInMhz > 1200)
+      if (chan.FreqInMhz > 1200 && (chan.SignalSource & SignalSource.Sat) == 0)
         chan.FreqInMhz /= 1000;
       chan.ServiceId = ParseInt(data.TryGet("serviceID"));
       chan.OriginalNetworkId = ParseInt(data.TryGet("ONID"));
@@ -444,42 +449,12 @@ namespace ChanSort.Loader.Philips
 
       foreach (var part in hexParts)
       {
-        if (part == "" || part == "0x00")
+        if (part == "")
           continue;
         buffer.WriteByte((byte)ParseInt(part));
       }
 
-      return this.DefaultEncoding.GetString(buffer.GetBuffer(), 0, (int)buffer.Length);
-    }
-    #endregion
-
-    #region DefaultEncoding
-    public override Encoding DefaultEncoding
-    {
-      get => base.DefaultEncoding;
-      set
-      {
-        if (value == this.DefaultEncoding)
-          return;
-        base.DefaultEncoding = value;
-        this.ChangeEncoding();
-      }
-    }
-    #endregion
-
-    #region ChangeEncoding
-    private void ChangeEncoding()
-    {
-      foreach (var list in this.DataRoot.ChannelLists)
-      {
-        foreach (var channel in list.Channels)
-        {
-          if (!(channel is Channel ch))
-            continue;
-          ch.Name = this.DecodeName(ch.RawName);
-          ch.Satellite = this.DecodeName(ch.RawSatellite);
-        }
-      }
+      return Encoding.Unicode.GetString(buffer.GetBuffer(), 0, (int) buffer.Length).TrimEnd('\x0');
     }
     #endregion
 
@@ -518,7 +493,7 @@ namespace ChanSort.Loader.Philips
     {
       // by default .NET reformats the whole XML. These settings produce almost same format as the TV xml files use
       var xmlSettings = new XmlWriterSettings();
-      xmlSettings.Encoding = this.DefaultEncoding;
+      xmlSettings.Encoding = new UTF8Encoding(false);
       xmlSettings.CheckCharacters = false;
       xmlSettings.Indent = true;
       xmlSettings.IndentChars = "  ";
@@ -616,10 +591,10 @@ namespace ChanSort.Loader.Philips
     #region EncodeName
     private string EncodeName(string name)
     {
-      var bytes = this.DefaultEncoding.GetBytes(name);
+      var bytes = Encoding.Unicode.GetBytes(name);
       var sb = new StringBuilder();
       foreach (var b in bytes)
-        sb.Append($"0x{b:X2} 0x00 ");
+        sb.Append($"0x{b:X2} ");
       sb.Remove(sb.Length - 1, 1);
       return sb.ToString();
     }

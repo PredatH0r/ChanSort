@@ -90,7 +90,15 @@ namespace ChanSort.Api
     public Encoding DefaultEncoding { get; set; }
 
     #region GetChannelNames()
+
     public void GetChannelNames(byte[] name, int off, int len, out string longName, out string shortName)
+    {
+      this.GetChannelNamesCore(name, off, len, out longName, out shortName);
+      longName = longName.TrimGarbage();
+      shortName = shortName.TrimGarbage();
+    }
+
+    private void GetChannelNamesCore(byte[] name, int off, int len, out string longName, out string shortName)
     {
       longName = "";
       shortName = "";

@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2021-01-17
+- Philips: added support for ChannelMap_45 format
+- Philips: fixed display of symbol rate and frequency (off by factor 1000 depending of list and DVB source)
+- Philips: fixed special characters in channel names (e.g. german umlauts)
+- Philips: "ServiceType" now only shows "TV" or "Radio". There is no information about HD/SD in the file.
+
 2021-01-02
 - Grundig: added support for dvb*_config.xml channel lists
 
