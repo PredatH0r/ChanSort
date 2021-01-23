@@ -534,7 +534,8 @@ namespace ChanSort.Ui
         catch (Exception ex)
         {
           serializer?.Dispose();
-          errorMsgs.AppendLine($"{plugin.DllName} ({plugin.PluginName}): {ex}\n\n");
+          var errMsg = ex is FileLoadException ? ex.Message : ex.ToString(); // FileLoadExceptions are normal when a Loader does not support a file. No stack trace needed
+          errorMsgs.AppendLine($"{plugin.DllName} ({plugin.PluginName}): {errMsg}\n\n");
           if (ex is ArgumentException)
           {
             var msg = ex.ToString();

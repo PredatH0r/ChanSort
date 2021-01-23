@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2021-01-23
+- Toshiba: added support for settingsDB.db lists
+
 2021-01-17
 - Philips: added support for ChannelMap_45 format
 - Philips: fixed display of symbol rate and frequency (off by factor 1000 depending of list and DVB source)

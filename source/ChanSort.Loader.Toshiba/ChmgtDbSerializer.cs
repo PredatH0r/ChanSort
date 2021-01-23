@@ -5,7 +5,7 @@ using ChanSort.Api;
 
 namespace ChanSort.Loader.Toshiba
 {
-  class DbSerializer : SerializerBase
+  class ChmgtDbSerializer : SerializerBase
   {
     private const string FILE_chmgt_db = "\\chmgt_type001\\chmgt.db";
     private const string FILE_dvbSysData_db = "\\dvb_type001\\dvbSysData.db";
@@ -19,7 +19,7 @@ namespace ChanSort.Loader.Toshiba
     private readonly Dictionary<string, bool> channelInfoByUid = new Dictionary<string, bool>();
 
     #region ctor()
-    public DbSerializer(string inputFile) : base(inputFile)
+    public ChmgtDbSerializer(string inputFile) : base(inputFile)
     {
       DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
 

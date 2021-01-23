@@ -34,7 +34,7 @@ namespace Test.Loader.Toshiba
     private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTv, int expectedRadio, int dataProgramSid = 0, string dataProgramName = null)
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Toshiba\\TestFiles\\" + fileName);
-      var plugin = new DbSerializerPlugin();
+      var plugin = new ToshibaPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
 
@@ -72,7 +72,7 @@ namespace Test.Loader.Toshiba
     public void TestDeletingChannel()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Toshiba\\TestFiles\\Toshiba-SL863G.zip");
-      var plugin = new DbSerializerPlugin();
+      var plugin = new ToshibaPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;
