@@ -73,15 +73,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channel.cs" />
+    <Compile Include="ChannelDb\Channel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HisDbSerializer.cs" />
-    <Compile Include="HisDbSerializerPlugin.cs" />
+    <Compile Include="ChannelDb\ChannelDbSerializer.cs" />
     <Compile Include="Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ServicelistDb\ServicelistDbSerializer.cs" />
+    <Compile Include="HisensePlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ChanSort.Loader.Hisense.ini">
@@ -109,6 +110,7 @@
     <EmbeddedResource Include="Resources.ro.resx" />
     <EmbeddedResource Include="Resources.tr.resx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

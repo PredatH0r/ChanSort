@@ -68,7 +68,7 @@
     <Compile Include="Channel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />
-    <Compile Include="SerializerPlugin.cs" />
+    <Compile Include="M3uPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">

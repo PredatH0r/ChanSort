@@ -70,7 +70,7 @@ namespace ChanSort.Loader.Grundig
         this.LoadFile(fullPath);
       }
       if (this.fileDataList.Count == 0)
-        throw new FileLoadException("No XML files found in folder structure");
+        throw new FileLoadException("No dvb*_config.xml files found in folder structure");
     }
     #endregion
 

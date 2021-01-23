@@ -40,7 +40,7 @@ namespace Test.Loader.Philips
     #region TestChannelsAddedToCorrectList
     private void TestChannelsAddedToCorrectLists(string filePath, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio)
     {
-      var plugin = new PhilipsLoader();
+      var plugin = new PhilipsPlugin();
       var ser = plugin.CreateSerializer(filePath);
       ser.Load();
 
@@ -62,7 +62,7 @@ namespace Test.Loader.Philips
     public void TestDeletingChannel()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles") + "\\ChannelMap_100\\ChannelList\\chanLst.bin";
-      var plugin = new PhilipsLoader();
+      var plugin = new PhilipsPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;

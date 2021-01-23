@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.13.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.13.0\build\NUnit.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -15,6 +16,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,9 +58,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DLL\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.13.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.13.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -70,33 +72,40 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CS\TestCS.cs" />
-    <Compile Include="DM\TestDM.cs" />
-    <Compile Include="LA\TestLA.cs" />
-    <Compile Include="LD\TestLD.cs" />
-    <Compile Include="LE\TestLE.cs" />
-    <Compile Include="LK\TestLK.cs" />
-    <Compile Include="LM\TestLM.cs" />
-    <Compile Include="LN\TestLN.cs" />
-    <Compile Include="LP\TestLP.cs" />
-    <Compile Include="LS\TestLS.cs" />
-    <Compile Include="LT\TestLT.cs" />
-    <Compile Include="LV\TestLV.cs" />
-    <Compile Include="LW\TestLW.cs" />
-    <Compile Include="LX\TestLX.cs" />
-    <Compile Include="PM\TestPM.cs" />
-    <Compile Include="PN\TestPN.cs" />
-    <Compile Include="PT\TestPT.cs" />
-    <Compile Include="TestBase.cs" />
-    <Compile Include="LH\TestLH.cs" />
+    <Compile Include="Binary\CS\TestCS.cs" />
+    <Compile Include="Binary\DM\TestDM.cs" />
+    <Compile Include="Binary\LA\TestLA.cs" />
+    <Compile Include="Binary\LD\TestLD.cs" />
+    <Compile Include="Binary\LE\TestLE.cs" />
+    <Compile Include="Binary\LK\TestLK.cs" />
+    <Compile Include="Binary\LM\TestLM.cs" />
+    <Compile Include="Binary\LN\TestLN.cs" />
+    <Compile Include="Binary\LP\TestLP.cs" />
+    <Compile Include="Binary\LS\TestLS.cs" />
+    <Compile Include="Binary\LT\TestLT.cs" />
+    <Compile Include="Binary\LV\TestLV.cs" />
+    <Compile Include="Binary\LW\TestLW.cs" />
+    <Compile Include="Binary\LX\TestLX.cs" />
+    <Compile Include="Binary\PM\TestPM.cs" />
+    <Compile Include="Binary\PN\TestPN.cs" />
+    <Compile Include="Binary\PT\TestPT.cs" />
+    <Compile Include="GlobalClone\LgGlobalCloneTest.cs" />
+    <Compile Include="Binary\TestBase.cs" />
+    <Compile Include="Binary\LH\TestLH.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DvbsCleanup\TestDvbsCleanup.cs" />
+    <Compile Include="Binary\DvbsCleanup\TestDvbsCleanup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="LH\xxLH3000-ZA00002.TLL.in">
+    <None Include="Binary\LH\xxLH3000-ZA00002.TLL.in">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="GlobalClone\GlobalClone00001.TLL" />
+    <None Include="GlobalClone\GlobalClone00002.TLL" />
+    <None Include="GlobalClone\GlobalClone00003.TLL" />
+    <None Include="GlobalClone\GlobalClone00201.TLL" />
+    <None Include="GlobalClone\GlobalClone200-inner.json" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
@@ -115,7 +124,14 @@
   <ItemGroup>
     <Content Include="GlobalClone.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.3.13.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.0\build\NUnit.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

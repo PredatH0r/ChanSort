@@ -482,14 +482,6 @@
       <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
       <Name>ChanSort.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.GlobalClone\ChanSort.Loader.GlobalClone.csproj">
-      <Project>{5361c8cb-f737-4709-af8c-e1f0456f3c5b}</Project>
-      <Name>ChanSort.Loader.GlobalClone</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Hisense2017\ChanSort.Loader.Hisense2017.csproj">
-      <Project>{9282e1db-cd1f-400a-aca1-17e0c4562acf}</Project>
-      <Name>ChanSort.Loader.Hisense2017</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj">
       <Project>{d093e7ee-d3ad-4e7b-af82-c6918ca017fb}</Project>
       <Name>ChanSort.Loader.Hisense</Name>
@@ -510,17 +502,9 @@
       <Project>{1f52b5ec-a2f1-4e53-9e1a-4658296c5bb5}</Project>
       <Name>ChanSort.Loader.Philips</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.SamsungJ\ChanSort.Loader.SamsungJ.csproj">
-      <Project>{33897002-0537-49a4-b963-a18d17311b3d}</Project>
-      <Name>ChanSort.Loader.SamsungJ</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj">
       <Project>{a1c9a98d-368a-44e8-9b7f-7eaca46c9ec5}</Project>
       <Name>ChanSort.Loader.Samsung</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.SilvaSchneider\ChanSort.Loader.SilvaSchneider.csproj">
-      <Project>{e6279ff8-362a-41e6-ac0d-d0861d43f01c}</Project>
-      <Name>ChanSort.Loader.SilvaSchneider</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj">
       <Project>{70e29c6b-b926-4859-9548-23375bf1e1b5}</Project>

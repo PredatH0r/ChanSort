@@ -32,7 +32,7 @@ namespace Test.Loader.Panasonic
     private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio)
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Panasonic\\TestFiles\\" + fileName);
-      var plugin = new SerializerPlugin();
+      var plugin = new PanasonicPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
 
@@ -55,7 +55,7 @@ namespace Test.Loader.Panasonic
     public void TestDeletingChannel()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Panasonic\\TestFiles\\svl-sat.db");
-      var plugin = new SerializerPlugin();
+      var plugin = new PanasonicPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;

@@ -13,7 +13,7 @@ namespace Test.Loader.Philips
     {
       var baseDir = Path.GetDirectoryName(this.GetType().Assembly.Location);
       var baseFile = Path.Combine(baseDir, "TestFiles1\\Repair\\ChannelList\\chanLst.bin");
-      var plugin = new ChanSort.Loader.Philips.PhilipsLoader();
+      var plugin = new ChanSort.Loader.Philips.PhilipsPlugin();
       var loader = plugin.CreateSerializer(baseFile);
       loader.Load();
 

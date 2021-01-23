@@ -6,7 +6,7 @@ namespace ChanSort.Loader.Toshiba
   public class ToshibaPlugin : ISerializerPlugin
   {
     public string DllName { get; set; }
-    public string PluginName => "Toshiba";
+    public string PluginName => "Toshiba (*.zip, settingsDB.db)";
     public string FileFilter => "*.zip;*.db";
 
     public SerializerBase CreateSerializer(string inputFile)

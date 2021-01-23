@@ -71,7 +71,7 @@
     <Compile Include="CustomXmlWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BinarySerializer.cs" />
-    <Compile Include="PhilipsLoader.cs" />
+    <Compile Include="PhilipsPlugin.cs" />
     <Compile Include="XmlSerializer.cs" />
   </ItemGroup>
   <ItemGroup>

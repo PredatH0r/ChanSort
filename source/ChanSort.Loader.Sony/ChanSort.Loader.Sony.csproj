@@ -66,7 +66,7 @@
     <Compile Include="Channel.cs" />
     <Compile Include="CustomXmlWriter.cs" />
     <Compile Include="Serializer.cs" />
-    <Compile Include="SerializerPlugin.cs" />
+    <Compile Include="SonyPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -56,7 +56,7 @@ namespace Test.Loader.Sony
     private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio, int dataProgramSid = 0, string dataProgramName = null)
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\" + fileName);
-      var plugin = new SerializerPlugin();
+      var plugin = new SonyPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
 
@@ -85,7 +85,7 @@ namespace Test.Loader.Sony
     public void TestAndroidDeletingChannel()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\android_sdb-sat.xml");
-      var plugin = new SerializerPlugin();
+      var plugin = new SonyPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;
@@ -132,7 +132,7 @@ namespace Test.Loader.Sony
     public void TestKdlDeletingChannel()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\kdl_sdb-cable-sat.xml");
-      var plugin = new SerializerPlugin();
+      var plugin = new SonyPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;

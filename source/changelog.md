@@ -3,6 +3,7 @@ ChanSort Change Log
 
 2021-01-23
 - Toshiba: added support for settingsDB.db lists
+- SatcoDX (*.sdx format used by ITT, Telefunken, Silva-Schneider, ...): minor bug fixes
 
 2021-01-17
 - Philips: added support for ChannelMap_45 format
