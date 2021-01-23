@@ -81,7 +81,7 @@ namespace ChanSort.Loader.GlobalClone
         switch (dlg.SelectedAction)
         {
           case 0:
-            throw new FileLoadException("LG webOS 5 experimental support rejected");
+            throw new FileLoadException(ChanSort.Loader.LG.Resource.LG_BlindscanInfo_Rejected);
           case 1:
             System.Diagnostics.Process.Start("https://github.com/PredatH0r/ChanSort/discussions/207");
             break;

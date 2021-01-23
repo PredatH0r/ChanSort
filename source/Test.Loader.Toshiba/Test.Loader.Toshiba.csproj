@@ -68,11 +68,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ToshibasSettingsDbTest.cs" />
     <Compile Include="ToshibaChmgtDbTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestFiles\settingsDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="TestFiles\Toshiba-SL863G.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

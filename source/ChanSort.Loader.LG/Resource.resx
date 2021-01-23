@@ -147,12 +147,13 @@ Older LG firmware for webOS based TV models does not handle the import of channe
   </data>
   <data name="LG_BlindscanInfo" xml:space="preserve">
     <value>!!! ATTENTION !!!
+
 LG channel lists can ONLY be imported back into the TV, when special options were selected during the TV's channel search process:
 - Provider: MUST be None/Other (do NOT select your cable provider or Astra 19.2E)
 - Blindscan: MUST be selected
 - Network search: optional (can be selected)
 
-Your TV will show a broken list if these steps are not followed!</value>
+Your TV will not process the list correctly if these steps are not followed!</value>
   </data>
   <data name="LG_BlindscanInfo_OpenWebpage" xml:space="preserve">
     <value>Read information about webOS 5 support on github.com</value>
@@ -162,5 +163,8 @@ Your TV will show a broken list if these steps are not followed!</value>
   </data>
   <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="LG_BlindscanInfo_Rejected" xml:space="preserve">
+    <value>Loading process was canceled</value>
   </data>
 </root>

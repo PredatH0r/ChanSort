@@ -145,4 +145,20 @@ Bitte stellen Sie sicher, dass auf Ihrem webOS basierenden Gerät eine aktuelle 
   <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="LG_BlindscanInfo_OpenWebpage" xml:space="preserve">
+    <value>Webseite mit Infos zu webOS Unterstützung öffnen</value>
+  </data>
+  <data name="LG_BlindscanInfo" xml:space="preserve">
+    <value>!!! ACHTUNG !!!
+
+LG Senderlisten können NUR DANN vom Fernseher eingelesen werden, wenn bestimmte Optionen bei der Sendersuche gewählt wurden:
+- Anbieter: MUSS "Keiner" gewählt werden
+- Blindsuche: MUSS ausgewählt sein
+- Netzwerksuche: kann ausgewählt werden
+
+Ihr Fernseher wird die Senderliste nicht korrekt verarbeiten, wenn diese Schritte nicht befolgt wurden!</value>
+  </data>
+  <data name="LG_BlindscanInfo_Rejected" xml:space="preserve">
+    <value>Ladevorgang wurde abgebrochen</value>
+  </data>
 </root>

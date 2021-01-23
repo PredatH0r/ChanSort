@@ -102,12 +102,13 @@ namespace ChanSort.Loader.LG {
         
         /// <summary>
         ///   Looks up a localized string similar to !!! ATTENTION !!!
+        ///
         ///LG channel lists can ONLY be imported back into the TV, when special options were selected during the TV&apos;s channel search process:
         ///- Provider: MUST be None/Other (do NOT select your cable provider or Astra 19.2E)
         ///- Blindscan: MUST be selected
         ///- Network search: optional (can be selected)
         ///
-        ///Your TV will show a broken list if these steps are not followed!.
+        ///Your TV will not process the list correctly if these steps are not followed!.
         /// </summary>
         internal static string LG_BlindscanInfo {
             get {
@@ -139,6 +140,15 @@ namespace ChanSort.Loader.LG {
         internal static string LG_BlindscanInfo_OpenWebpage {
             get {
                 return ResourceManager.GetString("LG_BlindscanInfo_OpenWebpage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading process was canceled.
+        /// </summary>
+        internal static string LG_BlindscanInfo_Rejected {
+            get {
+                return ResourceManager.GetString("LG_BlindscanInfo_Rejected", resourceCulture);
             }
         }
         
