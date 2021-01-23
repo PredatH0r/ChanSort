@@ -129,4 +129,17 @@
   <data name="TllFileSerializer_ERR_dupeChannel" xml:space="preserve">
     <value>Kanał #{0} (Pr# {1}) został usunięty, ponieważ jest duplikatem kanału #{2} (Pr# {3}): {4}</value>
   </data>
+  <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
+    <value>Telewizor zaimportuje plik GlobalClone tylko wtedy, gdy w tym samym katalogu nie ma plików o nazwie xx* .TLL.
+Czy chcesz, aby ChanSort zmienił nazwę plików powodujących konflikt?</value>
+  </data>
+  <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
+    <value>UWAGA:
+Upewnij się, że telewizor z systemem webOS korzysta z najnowszej wersji oprogramowania układowego (LB600 i nowsze: 4.41.32, UB: 4.51.44).
+Starsze oprogramowanie LG dla modeli telewizorów opartych na webOS nie obsługuje importu list kanałów i losowo zmienia kolejność kanałów.
+(Jeśli oprogramowanie układowe jest nowsze, możesz zignorować wiadomość.)</value>
+  </data>
+  <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
 </root>

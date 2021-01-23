@@ -129,4 +129,20 @@
   <data name="TllFileSerializer_ERR_dupeChannel" xml:space="preserve">
     <value>Sender #{0} (Pr# {1}) wurde gelöscht da er ein Duplikat von Sender #{2} (Pr# {3}) ist: {4}</value>
   </data>
+  <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
+    <value>Ihr TV Gerät importiert die GlobalClone Datei nur dann, wenn keine Dateien mit Namen xx*.TLL auf dem USB-Stick sind.
+Soll ChanSort die störenden Dateien jetzt umbenennen?</value>
+  </data>
+  <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
+    <value>HINWEIS:
+Bitte stellen Sie sicher, dass auf Ihrem webOS basierenden Gerät eine aktuelle Firmware installiert ist (LB600 und höher: 4.41.32, UB: 4.51.44).
+Ältere Versionen können Senderlisten nicht korrekt einlesen und verändern diese willkürlich im laufenden Betrieb.
+(Sie können diese Meldung ignorieren, wenn Ihre Firmwareversion aktueller ist.)</value>
+  </data>
+  <data name="LG_BlindscanInfo_Continue" xml:space="preserve">
+    <value>Ich habe die Sendersuche wie oben beschrieben durchgeführt</value>
+  </data>
+  <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
 </root>

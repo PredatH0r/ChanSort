@@ -71,14 +71,10 @@ namespace ChanSort.Loader.GlobalClone
       if (View.Default == null) // can't show dialog while unit-testing
         return;
 
-      var dlg = View.Default.CreateActionBox("!!! WARNING !!!\n\n" +
-                                   "Support for LG webOS 5 channel lists is experimental only!\n" +
-                                   "There is a RISK that your TV will not import the list correctly and you need to run a new search or even reset the TV.\n" +
-                                   "Please read the information on github with steps that MAY lead to a successful import.\n" +
-                                   "Any feedback about failure or success is highly appreciated.");
-      dlg.AddAction("Read information about webOS 5 support on github.com", 1);
-      dlg.AddAction("I read the information, accept the risk and want to give it a try", 2);
-      dlg.AddAction("Cancel", 0);
+      var dlg = View.Default.CreateActionBox(ChanSort.Loader.LG.Resource.LG_BlindscanInfo);
+      dlg.AddAction(ChanSort.Loader.LG.Resource.LG_BlindscanInfo_OpenWebpage, 1);
+      dlg.AddAction(ChanSort.Loader.LG.Resource.LG_BlindscanInfo_Continue, 2);
+      dlg.AddAction(ChanSort.Loader.LG.Resource.LG_BlindscanInfo_Cancel, 0);
       while (true)
       {
         dlg.ShowDialog();

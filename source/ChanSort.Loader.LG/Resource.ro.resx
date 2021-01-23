@@ -129,4 +129,17 @@
   <data name="TllFileSerializer_ERR_dupeChannel" xml:space="preserve">
     <value>Canalul # {0} (Pr # {1}) a fost șters deoarece este un duplicat al canalului # {2} (Pr # {3}): {4}</value>
   </data>
+  <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
+    <value>Televizorul dvs. va importa numai fișierul GlobalClone atunci când nu există fișiere numite xx * .TLL în același director.
+Vrei ca ChanSort să redenumească fișierele în conflict?</value>
+  </data>
+  <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
+    <value>ATENŢIE:
+Asigurați-vă că televizorul bazat pe webOS utilizează o versiune recentă de firmware (LB600 și mai mare: 4.41.32, UB: 4.51.44).
+Firmware-ul LG mai vechi pentru modelele TV bazate pe webOS nu gestionează importul listelor de canale în mod corespunzător și redirecționează aleatoriu canalele.
+(Dacă firmware-ul este mai nou, puteți ignora mesajul.)</value>
+  </data>
+  <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
+    <value>Anulare</value>
+  </data>
 </root>

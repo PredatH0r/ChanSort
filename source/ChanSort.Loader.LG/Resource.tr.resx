@@ -129,4 +129,17 @@
   <data name="TllFileSerializer_ERR_dupeChannel" xml:space="preserve">
     <value>Kanal #{0} (Pr# {1}),  #{2} (Pr# {3}) kanalının bir kopyası olduğu için silindi: {4}</value>
   </data>
+  <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
+    <value>TV'niz yalnızca aynı dizinde xx * .TLL adında dosya olmadığında GlobalClone dosyasını içe aktarır.
+ChanSort'un çakışan dosyaları yeniden adlandırmasını istiyor musunuz?</value>
+  </data>
+  <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
+    <value>DİKKAT:
+Lütfen webOS tabanlı TV'nizin aşağıdaki ürün yazılım sürümünü kullandığından emin olun (LB600 ve üstü: 4.41.32, UB: 4.51.44).
+WebOS tabanlı TV modelleri için eski LG ürün yazılımı, kanal listelerinin içe aktarılmasını düzgün bir şekilde gerçekleştirmez ve kanalları yeniden sıralar.
+(Ürün yazılımınız daha yeniyse, mesajı görmezden gelebilirsiniz.)</value>
+  </data>
+  <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
+    <value>Vazgeç</value>
+  </data>
 </root>

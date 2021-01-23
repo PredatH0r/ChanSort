@@ -129,4 +129,16 @@
   <data name="TllFileSerializer_ERR_dupeChannel" xml:space="preserve">
     <value>A(z) {0} (Pr# {1}) csatornát törölték, mert ez a(z) {2} (Pr# {3}) csatorna másolata: {4}</value>
   </data>
+  <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
+    <value>A tévé csak akkor importálja a GlobalClone fájlt, ha ugyanabban a könyvtárban nincsenek xx*.TLL nevű fájlok.
+Szeretné, hogy a ChanSort átnevezze a problémás fájlokat?</value>
+  </data>
+  <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
+    <value>FIGYELEM:
+Győződjön meg arról, hogy webOS alapú tévéje legújabb firmware verziót használ (LB600 és újabb: 4.41.32, UB: 4.51.44).
+A régebbi LG firmware webOS alapú TV-modelleknél nem kezeli megfelelően a csatornák listájának importálását és véletlenszerűen rendezi át a csatornákat</value>
+  </data>
+  <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
+    <value>Mégse</value>
+  </data>
 </root>
