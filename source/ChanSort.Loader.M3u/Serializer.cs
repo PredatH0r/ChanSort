@@ -9,8 +9,8 @@ using ChanSort.Api;
 namespace ChanSort.Loader.M3u
 {
   /*
-   * This serializer reads .m3u files that are used for SAT>IP lists. Some hardware SAT>IP servers use this format as well as VNC.
-   * There is no official standard for .m3u and files may have a UTF-8 BOM or not, may be encoded in UTF-8 or a locale specific encoding and my have different new-line sequences.
+   * This serializer reads .m3u files that are used for SAT>IP lists. Some hardware SAT>IP servers use this format as well as VLC.
+   * There is no official standard for .m3u and files may have a UTF-8 BOM or not, may be encoded in UTF-8 or a locale specific and my have different new-line sequences.
    * This loader attempts to maintain the original file as much as possible, including comment lines that are not directly understood by ChanSort.
    */
   class Serializer : SerializerBase
@@ -39,7 +39,7 @@ namespace ChanSort.Loader.M3u
       base.DefaultEncoding = new UTF8Encoding(false);
       this.allChannels.VisibleColumnFieldNames = new List<string>()
       {
-        "OldPosition", "Position", "Name", "FreqInMhz", "Polarity", "SymbolRate", "VideoPid", "AudioPid", "Satellite", "Provider"
+        "+OldPosition", "+Position", "+Name", "+FreqInMhz", "+Polarity", "+SymbolRate", "+VideoPid", "+AudioPid", "+Satellite", "+Provider"
       };
     }
     #endregion
@@ -56,7 +56,7 @@ namespace ChanSort.Loader.M3u
 
       // detect line separator
       int idx = Array.IndexOf(content, '\n');
-      this.newLine = idx >= 1 && content[idx] - 1 == '\r' ? "\r\n" : "\n";
+      this.newLine = idx >= 1 && content[idx-1] == '\r' ? "\r\n" : "\n";
 
       var rdr = new StreamReader(new MemoryStream(content), overrideEncoding ?? this.DefaultEncoding);
       string line = rdr.ReadLine()?.TrimEnd();
@@ -143,6 +143,7 @@ namespace ChanSort.Loader.M3u
         progNr = this.allChannels.Count + 1;
 
       var chan = new Channel(uriLineNr, progNr, name, allLines);
+      chan.Uid = uriLine;
       chan.ExtInfTrackNameIndex = extInfTrackNameIndex;
       chan.Provider = group;
 

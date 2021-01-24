@@ -207,14 +207,18 @@ namespace ChanSort.Ui
       var ss = ch.SignalSource;
       if (source)
       {
-        if (
-          !(this.cbAntenna.Checked && (ss & SignalSource.Antenna) != 0 || this.cbCable.Checked && (ss & SignalSource.Cable) != 0 || this.cbSat.Checked && (ss & SignalSource.Sat) != 0 ||
+        if ((ss & SignalSource.MaskAntennaCableSat) != 0 && 
+            !(this.cbAntenna.Checked && (ss & SignalSource.Antenna) != 0 || this.cbCable.Checked && (ss & SignalSource.Cable) != 0 || this.cbSat.Checked && (ss & SignalSource.Sat) != 0 ||
             this.cbIp.Checked && (ss & SignalSource.IP) != 0))
           return false;
       }
-      if (!(this.cbAnalog.Checked && (ss & SignalSource.Analog) != 0 || this.cbDigital.Checked && (ss & SignalSource.Digital) != 0))
+
+      if ((ss & SignalSource.MaskAnalogDigital) != 0 &&
+        !(this.cbAnalog.Checked && (ss & SignalSource.Analog) != 0 || this.cbDigital.Checked && (ss & SignalSource.Digital) != 0))
         return false;
-      if (!(this.cbTv.Checked && (ss & SignalSource.Tv) != 0 || this.cbRadio.Checked && (ss & SignalSource.Radio) != 0 || this.cbData.Checked && (ss & SignalSource.Data) != 0))
+
+      if ((ss & SignalSource.MaskTvRadioData) != 0 &&
+        !(this.cbTv.Checked && (ss & SignalSource.Tv) != 0 || this.cbRadio.Checked && (ss & SignalSource.Radio) != 0 || this.cbData.Checked && (ss & SignalSource.Data) != 0))
         return false;
       return true;
     }

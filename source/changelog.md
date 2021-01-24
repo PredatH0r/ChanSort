@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2021-01-24
+- fixed issues with applying reference lists (especially .m3u)
+
 2021-01-23
 - Toshiba: added support for settingsDB.db lists
 - SatcoDX (*.sdx format used by ITT, Telefunken, Silva-Schneider, ...): minor bug fixes

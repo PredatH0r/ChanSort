@@ -36,7 +36,7 @@ namespace Test.Loader.Samsung.Zip
     #region TestChannelsAddedToCorrectList
     private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio, int dataProgramSid = 0, string dataProgramName = null)
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.SamsungJ\\TestFiles\\" + fileName);
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Samsung\\Zip\\TestFiles\\" + fileName);
       var plugin = new SamsungPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
@@ -64,7 +64,7 @@ namespace Test.Loader.Samsung.Zip
     [TestMethod]
     public void TestDeletingChannel()
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.SamsungJ\\TestFiles\\Channel_list_T-KTSUDEUC-1007.3.zip");
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Samsung\\Zip\\TestFiles\\Channel_list_T-KTSUDEUC-1007.3.zip");
       var plugin = new SamsungPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();

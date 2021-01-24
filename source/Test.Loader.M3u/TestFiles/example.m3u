@@ -1,0 +1,14 @@
+#EXTM3U
+#EXTINF:0 group-title="Streams",Russia Today
+https://rt-news-gd.secure2.footprint.net/1103.m3u8
+#EXTINF:0,RBK
+http://e3.online.video.rbc.ru/online2/rbctv_576p/index.m3u8
+#EXTINF:0 tvg-id="brodilo",Brodilo TV
+http://brodilo.tv/channel.php
+#EXTINF:0,Youtube Live
+https://youtu.be/9Auq9mYxFEE,live
+
+#EXTINF:0,MKV
+http://jell.yfish.us/media/jellyfish-3-mbps-hd-h264.mkv
+#EXTINF:0,MP4
+http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4

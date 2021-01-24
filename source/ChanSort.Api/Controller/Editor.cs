@@ -233,6 +233,8 @@ namespace ChanSort.Api
       foreach (var channel in tvList.Channels)
       {
         var key = DvbKey(channel.OriginalNetworkId, channel.TransportStreamId, channel.ServiceId);
+        if (key == 0)
+          continue;
         var list = onidTsidSid.TryGet(key);
         if (list == null)
         {
@@ -248,14 +250,13 @@ namespace ChanSort.Api
         if (!(chanFilter?.Invoke(refChannel, true) ?? true))
           continue;
 
-        var tvChannels = tvList.GetChannelByUid(refChannel.Uid);
+        var tvChannels = refChannel.Uid == "0-0-0" ? null : tvList.GetChannelByUid(refChannel.Uid);
 
         // try to find matching channels based on ONID+TSID+SID
-        if (tvChannels.Count == 0)
+        if ((tvChannels?.Count ?? 0) == 0)
         {
           var key = DvbKey(refChannel.OriginalNetworkId, refChannel.TransportStreamId, refChannel.ServiceId);
-          List<ChannelInfo> candidates;
-          if (key != 0 && onidTsidSid.TryGetValue(key, out candidates))
+          if (key != 0 && onidTsidSid.TryGetValue(key, out var candidates))
           {
             tvChannels = candidates;
 
@@ -270,7 +271,7 @@ namespace ChanSort.Api
         }
 
         // try to find matching channels by name
-        if (tvChannels.Count == 0 && !string.IsNullOrWhiteSpace(refChannel.Name))
+        if ((tvChannels?.Count ?? 0) == 0 && !string.IsNullOrWhiteSpace(refChannel.Name))
           tvChannels = tvList.GetChannelByName(refChannel.Name).ToList();
 
         // get the first unassigned channel from the candidates (e.g. when matching by non-unique names), or fall back to the first matching channel (e.g. by unique ID)

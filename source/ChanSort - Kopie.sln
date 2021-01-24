@@ -67,8 +67,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spike.LgWebOs5", "Spike.LgW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Grundig", "ChanSort.Loader.Grundig\ChanSort.Loader.Grundig.csproj", "{4D5AF0A3-1B96-42C8-910D-0C4852EA22F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.M3u", "Test.Loader.M3u\Test.Loader.M3u.csproj", "{052692BF-D782-4888-B34D-89D6B1379340}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -367,18 +365,6 @@ Global
 		{4D5AF0A3-1B96-42C8-910D-0C4852EA22F4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4D5AF0A3-1B96-42C8-910D-0C4852EA22F4}.Release|x86.ActiveCfg = Release|Any CPU
 		{4D5AF0A3-1B96-42C8-910D-0C4852EA22F4}.Release|x86.Build.0 = Release|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Debug|x86.ActiveCfg = Debug|x86
-		{052692BF-D782-4888-B34D-89D6B1379340}.Debug|x86.Build.0 = Debug|x86
-		{052692BF-D782-4888-B34D-89D6B1379340}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Release|Any CPU.Build.0 = Release|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Release|x86.ActiveCfg = Release|Any CPU
-		{052692BF-D782-4888-B34D-89D6B1379340}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
