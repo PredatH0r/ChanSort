@@ -1,6 +1,11 @@
 ChanSort Change Log 
 ===================
 
+2021-01-31
+- Philips ChannelMap_45: fixed bug writting "channel edited" indicator to the wrong location inside the file
+- Philips ChannelMap_45: fixed display of wrong frequency
+- Philips ChannelMap_45: added support for favorite lists
+
 2021-01-24
 - fixed issues with applying reference lists (especially .m3u)
 

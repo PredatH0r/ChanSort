@@ -50,6 +50,9 @@ namespace ChanSort.Loader.Philips
     private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
     private ChanLstBin chanLstBin;
     private readonly StringBuilder logMessages = new StringBuilder();
+    private readonly List<int> favListIndexToId = new();
+    private readonly Dictionary<int, int> favListIdToIndex = new();
+    private readonly ChannelList favChannels = new ChannelList(SignalSource.All, "Favorites");
 
     #region ctor()
     public BinarySerializer(string inputFile) : base(inputFile)
@@ -69,6 +72,8 @@ namespace ChanSort.Loader.Philips
       this.DataRoot.AddChannelList(this.dvbtChannels);
       this.DataRoot.AddChannelList(this.dvbcChannels);
       this.DataRoot.AddChannelList(this.satChannels);
+      this.DataRoot.AddChannelList(this.favChannels);
+      this.favChannels.IsMixedSourceFavoritesList = true;
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -131,7 +136,17 @@ namespace ChanSort.Loader.Philips
         LoadDvbS(satChannels, Path.Combine(s2channellib, "SatelliteDb.bin"), "Map45_SatelliteDb.bin_entry");
         var tvDbFile = Path.Combine(dir, "tv.db");
         if (File.Exists(tvDbFile))
+        {
           this.dataFilePaths.Add(tvDbFile);
+          this.LoadMap45Channels(tvDbFile);
+        }
+
+        var listDbFile = Path.Combine(dir, "list.db");
+        if (File.Exists(listDbFile))
+        {
+          this.dataFilePaths.Add(listDbFile);
+          this.LoadMap45Favorites(listDbFile);
+        }
       }
 
       // for a proper ChanSort backup/restore with .bak files, the Philips _backup.dat files must also be included
@@ -430,7 +445,7 @@ namespace ChanSort.Loader.Philips
       else
       {
         ch.Name = Encoding.Unicode.GetString(mapping.Data, mapping.BaseOffset + mapping.GetConst("offName", 0), mapping.GetConst("lenName", 0)).TrimEnd('\0');
-        ch.FreqInMhz = mapping.GetWord("offFreq");
+        ch.FreqInMhz = (decimal)mapping.GetDword("offFreq") / 1000;
         ch.SymbolRate = (int)(mapping.GetDword("offSymbolRate") / 1000);
       }
 
@@ -493,6 +508,114 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
+    #region LoadMap45Channels
+    private void LoadMap45Channels(string tvDb)
+    {
+      // the only purpose of this method is to validate if numbers in the SatelliteDb.bin file are the same as in the list.db file
+      // differences are written to the log which can be viewed under File / File information
+
+      var channelsById = new Dictionary<int, Channel>();
+      foreach (var chanList in this.DataRoot.ChannelLists)
+      {
+        if (chanList.IsMixedSourceFavoritesList)
+          continue;
+        foreach (var chan in chanList.Channels)
+        {
+          if (!(chan is Channel ch))
+            continue;
+          channelsById[ch.Id] = ch;
+        }
+      }
+
+      using var conn = new SQLiteConnection($"Data Source={tvDb}");
+      conn.Open();
+      using var cmd = conn.CreateCommand();
+      cmd.CommandText = "select _id, display_number, display_name, original_network_id, transport_stream_id, service_id from channels";
+      var r = cmd.ExecuteReader();
+      while (r.Read())
+      {
+        if (r.IsDBNull(1))
+          continue;
+        var prNr = r.GetString(1);
+        if (!int.TryParse(prNr, out var nr))
+          continue;
+
+        var id = r.GetInt32(0);
+        if (!channelsById.TryGetValue(id, out var ch))
+        {
+          this.logMessages.AppendLine($"Could not find channel with id {id} in tv.db");
+          continue;
+        }
+
+        if (ch.OldProgramNr != nr)
+          this.logMessages.AppendFormat($"channel with id {id}: prNum {ch.OldProgramNr} in bin file and {r.GetInt32(1)} in tv.db");
+        if (ch.Name != r.GetString(2))
+          this.logMessages.AppendFormat($"channel with id {id}: Name {ch.OriginalNetworkId} in bin file and {r.GetInt32(2)} in tv.db");
+        if (ch.OriginalNetworkId != r.GetInt32(3))
+          this.logMessages.AppendFormat($"channel with id {id}: ONID {ch.OriginalNetworkId} in bin file and {r.GetInt32(3)} in tv.db");
+        if (ch.TransportStreamId != r.GetInt32(4))
+          this.logMessages.AppendFormat($"channel with id {id}: TSID {ch.TransportStreamId} in bin file and {r.GetInt32(4)} in tv.db");
+        if (ch.ServiceId != r.GetInt32(5))
+          this.logMessages.AppendFormat($"channel with id {id}: SID {ch.ServiceId} in bin file and {r.GetInt32(5)} in tv.db");
+      }
+    }
+    #endregion
+
+    #region LoadMap45Favorites
+    private void LoadMap45Favorites(string listDb)
+    {
+      foreach (var chanList in this.DataRoot.ChannelLists)
+      {
+        if (chanList.IsMixedSourceFavoritesList)
+          continue;
+        foreach (var chan in chanList.Channels)
+        {
+          chan.Source = chanList.ShortCaption;
+          this.favChannels.AddChannel(chan);
+        }
+      }
+      this.Features.MixedSourceFavorites = true;
+      this.Features.AllowGapsInFavNumbers = false;
+
+
+      using var conn = new SQLiteConnection($"Data Source={listDb}");
+      conn.Open();
+      using var cmd = conn.CreateCommand();
+      cmd.CommandText = "select list_id, list_name from List";
+      using (var r = cmd.ExecuteReader())
+      {
+        int i = 0;
+        while (r.Read() && i < ChannelInfo.MAX_FAV_LISTS)
+        {
+          this.favListIndexToId.Add(r.GetInt32(0));
+          this.favListIdToIndex.Add(r.GetInt32(0), i);
+          this.DataRoot.SetFavListCaption(i, r.GetString(1));
+          this.Features.SupportedFavorites |= (Favorites) (1 << i);
+          i++;
+        }
+      }
+
+      for (int listIndex = 0; listIndex < this.favListIndexToId.Count; listIndex++)
+      {
+        cmd.CommandText = $"select channel_id from FavoriteChannels where fav_list_id={favListIndexToId[listIndex]} order by rank";
+        using var r = cmd.ExecuteReader();
+        int seq = 0;
+        while (r.Read())
+        {
+          var channelId = r.GetInt32(0);
+          var chan = this.favChannels.Channels.FirstOrDefault(c => ((Channel)c).Id == channelId);
+          if (chan == null)
+          {
+            this.logMessages.AppendLine($"Could not find favorite channel with id {channelId}");
+            continue;
+          }
+
+          chan.SetOldPosition(listIndex + 1, ++seq);
+        }
+      }
+    }
+    #endregion
+
 
     #region GetDataFilePaths
 
@@ -528,6 +651,7 @@ namespace ChanSort.Loader.Philips
         SaveDvbsChannels(Path.Combine(s2channellib, "SatelliteDb.bin"));
 
         UpdateChannelMap45TvDb();
+        UpdateChannelMap45ListDb();
       }
 
       this.chanLstBin.Save(this.FileName);
@@ -641,7 +765,10 @@ namespace ChanSort.Loader.Philips
       // copy physical records to bring them in the new order and update fields like progNr
       // this way the linked next/prev list remains in-sync with the channel order
       int i = 0;
-      foreach (var ch in this.satChannels.Channels.OrderBy(c => c.NewProgramNr <= 0 ? int.MaxValue : c.NewProgramNr).ThenBy(c => c.OldProgramNr))
+      var channels = chanLstBin.VersionMajor < 25
+        ? this.satChannels.Channels.OrderBy(c => c.NewProgramNr <= 0 ? int.MaxValue : c.NewProgramNr).ThenBy(c => c.OldProgramNr)
+        : this.satChannels.Channels.OrderBy(c => c.RecordIndex);
+      foreach (var ch in channels)
       {
         mapping.BaseOffset = baseOffset + i * recordSize;
         Array.Copy(orig, baseOffset + (int)ch.RecordIndex * recordSize, data, mapping.BaseOffset, recordSize);
@@ -656,6 +783,8 @@ namespace ChanSort.Loader.Philips
           mapping.SetWord("offProgNr", ch.NewProgramNr);
           mapping.SetFlag("IsFav", ch.Favorites != 0);
           mapping.SetFlag("Locked", ch.Lock);
+          if(mapping.GetWord("offWrongServiceEdit") == 1) // ChanSort versions before 2021-01-31 accidentally set a byte at the wrong offset
+            mapping.SetWord("offWrongServiceEdit", 0);
           mapping.SetWord("offServiceEdit", 1);
         }
 
@@ -747,7 +876,7 @@ namespace ChanSort.Loader.Philips
       cmd.CommandText = "update channels set display_number=@prNum, display_name=@name, browsable=@browsable, locked=@locked where _id=@id";
       cmd.Parameters.Clear();
       cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@prNum", DbType.Int32));
+      cmd.Parameters.Add(new SQLiteParameter("@prNum", DbType.String));
       cmd.Parameters.Add(new SQLiteParameter("@name", DbType.String));
       cmd.Parameters.Add(new SQLiteParameter("@browsable", DbType.Int32));
       cmd.Parameters.Add(new SQLiteParameter("@locked", DbType.Int32));
@@ -759,7 +888,7 @@ namespace ChanSort.Loader.Philips
           if (!(chan is Channel ch))
             continue;
           cmd.Parameters["@id"].Value = ch.Id;
-          cmd.Parameters["@prNum"].Value = ch.NewProgramNr;
+          cmd.Parameters["@prNum"].Value = ch.NewProgramNr.ToString();
           cmd.Parameters["@name"].Value = ch.Name;
           cmd.Parameters["@browsable"].Value = ch.Skip ? 0 : 1;
           cmd.Parameters["@locked"].Value = ch.Lock ? 1 : 0;
@@ -769,6 +898,49 @@ namespace ChanSort.Loader.Philips
             this.logMessages.AppendFormat($"Could not update record with id {ch.Id} in tv.db service table");
         }
       }
+      trans.Commit();
+      conn.Close();
+    }
+    #endregion
+
+    #region UpdateChannelMap45ListDb()
+    private void UpdateChannelMap45ListDb()
+    {
+      var listDb = Path.Combine(Path.GetDirectoryName(this.FileName) ?? "", "list.db");
+      if (!File.Exists(listDb))
+        return;
+
+      using var conn = new SQLiteConnection($"Data Source={listDb}");
+      conn.Open();
+      using var trans = conn.BeginTransaction();
+      using var cmd = conn.CreateCommand();
+      for (int favListIndex = 0; favListIndex < this.favListIndexToId.Count; favListIndex++)
+      {
+        var favListId = favListIndexToId[favListIndex];
+        cmd.CommandText = $"delete from FavoriteChannels where fav_list_id={favListId}";
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = "insert into FavoriteChannels(fav_list_id, channel_id, rank) values (@listId,@channelId,@rank)";
+        cmd.Parameters.Clear();
+        cmd.Parameters.Add(new SQLiteParameter("@listId", DbType.Int32));
+        cmd.Parameters.Add(new SQLiteParameter("@channelId", DbType.Int32));
+        cmd.Parameters.Add(new SQLiteParameter("@rank", DbType.Double));
+        cmd.Prepare();
+        foreach (var chan in favChannels.Channels)
+        {
+          if (!(chan is Channel ch))
+            continue;
+          var rank = chan.GetPosition(favListIndex + 1);
+          if (rank <= 0)
+            continue;
+
+          cmd.Parameters["@listId"].Value = favListId;
+          cmd.Parameters["@channelId"].Value = ch.Id;
+          cmd.Parameters["@rank"].Value = (double) rank;
+          cmd.ExecuteNonQuery();
+        }
+      }
+
       trans.Commit();
       conn.Close();
     }
