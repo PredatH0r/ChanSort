@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2021-02-05
+- Philips ChannelMap_100 and later: keeping original indentation in XML files 
+  and original number of bytes for hex-encoded Unicode names (channel name, fav list names)
+- Philips ChannelMap_110: setting the "UserReorderChannel" flag in the file to 1
+- Philips ChannelMap_45: fixed error when channel names did not match between tv.db and Cable/Terrestrial/SatelliteDb.bin
+
 2021-01-31
 - Philips ChannelMap_45: fixed bug writting "channel edited" indicator to the wrong location inside the file
 - Philips ChannelMap_45: fixed display of wrong frequency

@@ -550,7 +550,7 @@ namespace ChanSort.Loader.Philips
         if (ch.OldProgramNr != nr)
           this.logMessages.AppendFormat($"channel with id {id}: prNum {ch.OldProgramNr} in bin file and {r.GetInt32(1)} in tv.db");
         if (ch.Name != r.GetString(2))
-          this.logMessages.AppendFormat($"channel with id {id}: Name {ch.OriginalNetworkId} in bin file and {r.GetInt32(2)} in tv.db");
+          this.logMessages.AppendFormat($"channel with id {id}: Name {ch.Name} in bin file and {r.GetString(2)} in tv.db");
         if (ch.OriginalNetworkId != r.GetInt32(3))
           this.logMessages.AppendFormat($"channel with id {id}: ONID {ch.OriginalNetworkId} in bin file and {r.GetInt32(3)} in tv.db");
         if (ch.TransportStreamId != r.GetInt32(4))

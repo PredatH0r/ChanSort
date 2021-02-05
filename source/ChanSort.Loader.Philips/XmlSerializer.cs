@@ -10,7 +10,7 @@ using ChanSort.Api;
 namespace ChanSort.Loader.Philips
 {
   /*
-    This loader supports 2 different kinds of XML files from Philips, the first in a "Repair" folder, the others in a "ChannelMap_xxx" folder
+    This loader supports 2 different kinds of XML files from Philips, the first in a "Repair" folder, the others in a "ChannelMap_100" (or later) folder
 
     Example from Repair\CM_TPM1013E_LA_CK.xml:
     <Channel>
@@ -187,6 +187,7 @@ namespace ChanSort.Loader.Philips
         fileData.content = File.ReadAllBytes(fileName);
         fileData.textContent = Encoding.UTF8.GetString(fileData.content);
         fileData.newline = fileData.textContent.Contains("\r\n") ? "\r\n" : "\n";
+        fileData.indent = fileData.textContent.Contains("  <") ? "  " : "";
 
         var settings = new XmlReaderSettings
         {
@@ -361,7 +362,14 @@ namespace ChanSort.Loader.Philips
       chan.FreqInMhz = ParseInt(data.TryGet("Frequency")); ;
       if (chan.FreqInMhz > 2000 && (chan.SignalSource & SignalSource.Sat) == 0)
         chan.FreqInMhz /= 1000;
-      chan.ServiceTypeName = ParseInt(data.TryGet("ServiceType")) == 1 ? "TV" : "Radio";
+      
+      var st = ParseInt(data.TryGet("ServiceType"));
+      chan.ServiceTypeName = st == 1 ? "TV" : "Radio";
+      if (st == 1)
+        chan.SignalSource |= SignalSource.Tv;
+      else
+        chan.SignalSource |= SignalSource.Radio;
+
       var decoderType = data.TryGet("DecoderType");
       if (decoderType == "1")
         chan.Source = "DVB-T";
@@ -375,7 +383,7 @@ namespace ChanSort.Loader.Philips
         chan.Polarity = pol == "0" ? 'H' : 'V';
       chan.Hidden |= data.TryGet("SystemHidden") == "1";
 
-      chan.Encrypted = data.TryGet("Scrambled") == "1"; // doesn't exist in all format versions
+      chan.Encrypted = data.TryGet("Scrambled") == "1"; // introduced in ChannelMap_105 format
     }
     #endregion
 
@@ -496,7 +504,7 @@ namespace ChanSort.Loader.Philips
       xmlSettings.Encoding = new UTF8Encoding(false);
       xmlSettings.CheckCharacters = false;
       xmlSettings.Indent = true;
-      xmlSettings.IndentChars = "  ";
+      xmlSettings.IndentChars = file.indent;
       xmlSettings.NewLineHandling = NewLineHandling.None;
       xmlSettings.NewLineChars = file.newline;
       xmlSettings.OmitXmlDeclaration = false;
@@ -542,8 +550,18 @@ namespace ChanSort.Loader.Philips
     private void UpdateChannelFormat1(Channel ch)
     {
       ch.SetupNode.Attributes["ChannelNumber"].Value = ch.NewProgramNr.ToString();
+      var attr = ch.SetupNode.Attributes["UserReorderChannel"]; // introduced with format 110
+      if (attr != null)
+        attr.InnerText = "1";
+
       if (ch.IsNameModified)
-        ch.SetupNode.Attributes["ChannelName"].Value = EncodeName(ch.Name);
+      {
+        ch.SetupNode.Attributes["ChannelName"].InnerText = EncodeName(ch.Name, (ch.SetupNode.Attributes["ChannelName"].InnerText.Length + 1) / 5);
+        attr = ch.SetupNode.Attributes["UserModifiedName"];
+        if (attr != null)
+          attr.InnerText = "1";
+      }
+
       ch.SetupNode.Attributes["FavoriteNumber"].Value = Math.Max(ch.FavIndex[0], 0).ToString();
     }
 
@@ -569,7 +587,12 @@ namespace ChanSort.Loader.Philips
         favListNode.InnerXml = ""; // clear all <FavoriteChannel> child elements but keep the attributes of the current node
         var attr = favListNode.Attributes?["Name"];
         if (attr != null)
-          attr.InnerText = EncodeName(this.DataRoot.GetFavListCaption(index - 1));
+          attr.InnerText = EncodeName(this.DataRoot.GetFavListCaption(index - 1), (attr.InnerText.Length + 1)/5);
+        
+        attr = favListNode.Attributes?["Version"];
+        if (attr != null && int.TryParse(attr.Value, out var version))
+          attr.InnerText = (version + 1).ToString();
+
         foreach (var ch in favChannels.Channels.OrderBy(ch => ch.GetPosition(index)))
         {
           var nr = ch.GetPosition(index);
@@ -589,13 +612,17 @@ namespace ChanSort.Loader.Philips
     #endregion
 
     #region EncodeName
-    private string EncodeName(string name)
+    private string EncodeName(string name, int numBytes)
     {
       var bytes = Encoding.Unicode.GetBytes(name);
       var sb = new StringBuilder();
-      foreach (var b in bytes)
+      for (int i = 0; i < numBytes - 2; i++)
+      {
+        var b = i < bytes.Length ? bytes[i] : 0;
         sb.Append($"0x{b:X2} ");
-      sb.Remove(sb.Length - 1, 1);
+      }
+
+      sb.AppendLine("0x00 0x00"); // always add an end-of-string
       return sb.ToString();
     }
     #endregion
@@ -613,6 +640,7 @@ namespace ChanSort.Loader.Philips
       public byte[] content;
       public string textContent;
       public string newline;
+      public string indent;
       public int formatVersion;
     }
     #endregion
