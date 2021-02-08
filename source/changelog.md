@@ -1,6 +1,15 @@
 ChanSort Change Log 
 ===================
 
+2021-02-08
+- Philips: lists with a chanLst.bin file show information about file format version and TV model under File / Information
+- Philips ChannelMap_45: fixed handling of favorite lists (allow up to 8 lists, empty ones get removed automatically)
+- Philips ChannelMap_45: no longer prompting to reorder channels sequentially (to close gaps). 
+  (This feature caused DVB-C/T list to only contain odd numbers and DVB-S to contain only even numbers, when both exist)
+- Philips ChannelMap_45: added display for service type (TV/radio), encryption, sat frequency polarity
+- Philips ChannelMap_45: fixed display of DVB-C/T frequency
+- Philips Repair\chanLst.bin (1.x): fixed sat frequency display for transponders with vertical polarity
+
 2021-02-05
 - Philips ChannelMap_100 and later: keeping original indentation in XML files 
   and original number of bytes for hex-encoded Unicode names (channel name, fav list names)

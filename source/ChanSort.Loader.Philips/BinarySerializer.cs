@@ -12,7 +12,7 @@ namespace ChanSort.Loader.Philips
 {
   /*
 
-  This loader handles the file format versions 1.x (*Table and *.dat files) and version 25.x-45.x (*Db.bin files)
+  This loader handles the file format versions 1.x (*Table and *.dat files) and version 25.x-45.x (*Db.bin files + tv.db and list.db)
 
   channellib\CableDigSrvTable:
   ===========================
@@ -45,9 +45,15 @@ namespace ChanSort.Loader.Philips
   {
     private readonly IniFile ini;
     private readonly List<string> dataFilePaths = new List<string>();
+    // lists for old binary formats <= 11.x
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
-    private readonly ChannelList satChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
+    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
+    // lists for binary format >= 25.x
+    private readonly ChannelList antChannels = new ChannelList(SignalSource.Antenna, "Antenna");
+    private readonly ChannelList cabChannels = new ChannelList(SignalSource.Cable, "Cable");
+    private readonly ChannelList satChannels = new ChannelList(SignalSource.Sat, "Satellite");
+
     private ChanLstBin chanLstBin;
     private readonly StringBuilder logMessages = new StringBuilder();
     private readonly List<int> favListIndexToId = new();
@@ -64,35 +70,10 @@ namespace ChanSort.Loader.Philips
       this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanSaveAs = false;
       this.Features.CanHaveGaps = false;
-      this.Features.SupportedFavorites = Favorites.A;
+      this.Features.SupportedFavorites = Favorites.A; // Map45 format will change this
       this.Features.SortedFavorites = false; // satellite favorites are stored in a separate file that may support independent sorting, but DVB C/T only have a flag
       this.Features.AllowGapsInFavNumbers = false;
       this.Features.CanEditFavListNames = false;
-
-      this.DataRoot.AddChannelList(this.dvbtChannels);
-      this.DataRoot.AddChannelList(this.dvbcChannels);
-      this.DataRoot.AddChannelList(this.satChannels);
-      this.DataRoot.AddChannelList(this.favChannels);
-      this.favChannels.IsMixedSourceFavoritesList = true;
-
-      foreach (var list in this.DataRoot.ChannelLists)
-      {
-        list.VisibleColumnFieldNames.Remove("Skip");
-        list.VisibleColumnFieldNames.Remove("ShortName");
-        list.VisibleColumnFieldNames.Remove("ServiceTypeName");
-        list.VisibleColumnFieldNames.Remove("Hidden");
-        list.VisibleColumnFieldNames.Remove("AudioPid");
-        list.VisibleColumnFieldNames.Remove("Encrypted");
-      }
-
-      foreach (var list in new[] {dvbcChannels, dvbtChannels})
-      {
-        list.VisibleColumnFieldNames.Remove("PcrPid");
-        list.VisibleColumnFieldNames.Remove("VideoPid");
-        list.VisibleColumnFieldNames.Remove("AudioPid");
-        list.VisibleColumnFieldNames.Remove("ChannelOrTransponder");
-        list.VisibleColumnFieldNames.Remove("Provider");
-      }
 
       string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
       this.ini = new IniFile(iniFile);
@@ -115,6 +96,10 @@ namespace ChanSort.Loader.Philips
 
       if (chanLstBin.VersionMajor <= 11)
       {
+        this.DataRoot.AddChannelList(this.dvbtChannels);
+        this.DataRoot.AddChannelList(this.dvbcChannels);
+        this.DataRoot.AddChannelList(this.dvbsChannels);
+
         LoadDvbCT(dvbtChannels, Path.Combine(channellib, "AntennaDigSrvTable"), "CableDigSrvTable_entry");
         LoadDvbCTPresets(dvbtChannels, Path.Combine(channellib, "AntennaPresetTable"));
         LoadDvbCT(dvbcChannels, Path.Combine(channellib, "CableDigSrvTable"), "CableDigSrvTable_entry");
@@ -122,7 +107,7 @@ namespace ChanSort.Loader.Philips
 
         LoadDvbsSatellites(Path.Combine(s2channellib, "satellite.dat"));
         LoadDvbsTransponders(Path.Combine(s2channellib, "tuneinfo.dat"));
-        LoadDvbS(satChannels, Path.Combine(s2channellib, "service.dat"), "service.dat_entry");
+        LoadDvbS(dvbsChannels, Path.Combine(s2channellib, "service.dat"), "service.dat_entry");
         LoadDvbsFavorites(Path.Combine(s2channellib, "favorite.dat"));
         var db_file_info = Path.Combine(s2channellib, "db_file_info.dat");
         if (File.Exists(db_file_info))
@@ -131,9 +116,18 @@ namespace ChanSort.Loader.Philips
       else if (chanLstBin.VersionMajor >= 25 && chanLstBin.VersionMajor <= 45)
       {
         // version 25-45
-        LoadDvbCT(dvbtChannels, Path.Combine(channellib, "TerrestrialDb.bin"), "Map45_CableDb.bin_entry");
-        LoadDvbCT(dvbcChannels, Path.Combine(channellib, "CableDb.bin"), "Map45_CableDb.bin_entry");
+        this.favChannels.IsMixedSourceFavoritesList = true;
+        this.Features.CanHaveGaps = true;
+
+        this.DataRoot.AddChannelList(this.antChannels);
+        this.DataRoot.AddChannelList(this.cabChannels);
+        this.DataRoot.AddChannelList(this.satChannels);
+        this.DataRoot.AddChannelList(this.favChannels);
+
+        LoadDvbCT(antChannels, Path.Combine(channellib, "TerrestrialDb.bin"), "Map45_CableDb.bin_entry");
+        LoadDvbCT(cabChannels, Path.Combine(channellib, "CableDb.bin"), "Map45_CableDb.bin_entry");
         LoadDvbS(satChannels, Path.Combine(s2channellib, "SatelliteDb.bin"), "Map45_SatelliteDb.bin_entry");
+        
         var tvDbFile = Path.Combine(dir, "tv.db");
         if (File.Exists(tvDbFile))
         {
@@ -147,6 +141,14 @@ namespace ChanSort.Loader.Philips
           this.dataFilePaths.Add(listDbFile);
           this.LoadMap45Favorites(listDbFile);
         }
+
+        foreach(var list in this.DataRoot.ChannelLists)
+          list.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Encrypted));
+        satChannels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Polarity));
+      }
+      else
+      {
+        throw new FileLoadException("Only Philips channel list format version 1.x and 25-45 are supported by this loader");
       }
 
       // for a proper ChanSort backup/restore with .bak files, the Philips _backup.dat files must also be included
@@ -155,6 +157,28 @@ namespace ChanSort.Loader.Philips
         if (file.Contains(".dat"))
           this.dataFilePaths.Add(file.Replace(".dat", "_backup.dat"));
       }
+
+      dvbsChannels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Polarity));
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        list.VisibleColumnFieldNames.Remove("Skip");
+        list.VisibleColumnFieldNames.Remove("ShortName");
+        if (chanLstBin.VersionMajor <= 11)
+          list.VisibleColumnFieldNames.Remove("ServiceTypeName");
+        list.VisibleColumnFieldNames.Remove("Hidden");
+        list.VisibleColumnFieldNames.Remove("AudioPid");
+        list.VisibleColumnFieldNames.Remove("Encrypted");
+      }
+
+      foreach (var list in new[] { dvbcChannels, dvbtChannels, antChannels, cabChannels, satChannels })
+      {
+        list.VisibleColumnFieldNames.Remove("PcrPid");
+        list.VisibleColumnFieldNames.Remove("VideoPid");
+        list.VisibleColumnFieldNames.Remove("AudioPid");
+        list.VisibleColumnFieldNames.Remove("ChannelOrTransponder");
+        list.VisibleColumnFieldNames.Remove("Provider");
+      }
+
     }
     #endregion
 
@@ -193,9 +217,27 @@ namespace ChanSort.Loader.Philips
             throw new FileLoadException($"Invalid CRC in record {i} in {path}");
         }
 
-        var ch = new Channel(list.SignalSource, i, progNr, channelName);
+        var ch = new Channel(list.SignalSource & SignalSource.MaskAntennaCableSat, i, progNr, channelName);
         ch.Id = mapping.GetWord("offId"); // only relevant for ChannelMap45
-        ch.FreqInMhz = (decimal) mapping.GetWord("offFreqTimes16") / 16;
+        if (chanLstBin.VersionMajor <= 11)
+          ch.FreqInMhz = (decimal) mapping.GetWord("offFreqTimes16") / 16;
+        else
+        {
+          ch.FreqInMhz = mapping.GetDword("offFreq") / 1000;
+          ch.Encrypted = mapping.GetDword("offEncrypted") != 0;
+          ch.SignalSource |= mapping.GetDword("offIsDigital") == 0 ? SignalSource.Analog : SignalSource.Digital;
+          if (mapping.GetDword("offServiceType") == 2)
+          {
+            ch.SignalSource |= SignalSource.Radio;
+            ch.ServiceTypeName = "Radio";
+          }
+          else
+          {
+            ch.SignalSource |= SignalSource.Tv;
+            ch.ServiceTypeName = "TV";
+          }
+        }
+
         ch.OriginalNetworkId = mapping.GetWord("offOnid");
         ch.TransportStreamId = mapping.GetWord("offTsid");
         ch.ServiceId = mapping.GetWord("offSid");
@@ -204,6 +246,7 @@ namespace ChanSort.Loader.Philips
         ch.Favorites = mapping.GetByte("offIsFav") != 0 ? Favorites.A : 0;
         if (ch.Favorites != 0)
           ch.OldFavIndex[0] = ch.OldProgramNr;
+
         this.DataRoot.AddChannel(list, ch);
       }
     }
@@ -349,7 +392,8 @@ namespace ChanSort.Loader.Philips
 
         var t = new Transponder(i);
         t.SymbolRate = symRate;
-        t.FrequencyInMhz = BitConverter.ToUInt16(data, baseOffset + 2);
+        t.FrequencyInMhz = BitConverter.ToUInt16(data, baseOffset + 2) & 0x3FFF;
+        t.Polarity = (BitConverter.ToUInt16(data, baseOffset + 2) & 0x4000) != 0 ? 'V' : 'H';
         var satIndex = data[baseOffset + 6] >> 4; // guesswork
         t.Satellite = DataRoot.Satellites.TryGet(satIndex);
         t.TransportStreamId = tsid;
@@ -414,7 +458,7 @@ namespace ChanSort.Loader.Philips
     {
       var transponderId = mapping.GetWord("offTransponderIndex");
       var progNr = mapping.GetWord("offProgNr");
-      var ch = new Channel(list.SignalSource, recordIndex, progNr, "");
+      var ch = new Channel(list.SignalSource & SignalSource.MaskAntennaCableSat, recordIndex, progNr, "");
 
       // deleted channels must be kept in the list because their records must also be physically reordered when saving the list
       if (progNr == 0xFFFF || transponderId == 0xFFFF)
@@ -427,7 +471,7 @@ namespace ChanSort.Loader.Philips
       // onid, tsid, pcrpid and vpid can be 0 in some lists
       ch.PcrPid = mapping.GetWord("offPcrPid") & mapping.GetMask("maskPcrPid");
       ch.Lock = mapping.GetFlag("Locked");
-      ch.OriginalNetworkId = mapping.GetWord("OffOnid");
+      ch.OriginalNetworkId = mapping.GetWord("offOnid");
       ch.TransportStreamId = mapping.GetWord("offTsid");
       ch.ServiceId = mapping.GetWord("offSid");
       ch.VideoPid = mapping.GetWord("offVpid") & mapping.GetMask("maskVpid");
@@ -444,9 +488,24 @@ namespace ChanSort.Loader.Philips
       }
       else
       {
+        ch.SignalSource |= mapping.GetWord("offIsDigital") == 0 ? SignalSource.Analog : SignalSource.Digital;
         ch.Name = Encoding.Unicode.GetString(mapping.Data, mapping.BaseOffset + mapping.GetConst("offName", 0), mapping.GetConst("lenName", 0)).TrimEnd('\0');
         ch.FreqInMhz = (decimal)mapping.GetDword("offFreq") / 1000;
+        ch.Encrypted = mapping.GetDword("offEncrypted") != 0;
+        ch.Polarity = mapping.GetDword("offPolarity") == 0 ? 'H' : 'V';
         ch.SymbolRate = (int)(mapping.GetDword("offSymbolRate") / 1000);
+        if (mapping.GetDword("offServiceType") == 2)
+        {
+          ch.SignalSource |= SignalSource.Radio;
+          ch.ServiceTypeName = "Radio";
+        }
+        else
+        {
+          ch.SignalSource |= SignalSource.Tv;
+          ch.ServiceTypeName = "TV";
+        }
+        ch.AddDebug((byte)mapping.GetDword("offUnk1"));
+        ch.AddDebug((byte)mapping.GetDword("offUnk2"));
       }
 
       dvbStringDecoder.GetChannelNames(mapping.Data, mapping.BaseOffset + mapping.GetConst("offProvider", 0), mapping.GetConst("lenProvider", 0), out var provider, out _);
@@ -457,6 +516,7 @@ namespace ChanSort.Loader.Philips
       {
         ch.Transponder = t;
         ch.FreqInMhz = t.FrequencyInMhz;
+        ch.Polarity = t.Polarity;
         ch.SymbolRate = t.SymbolRate;
         ch.SatPosition = t.Satellite?.OrbitalPosition;
         ch.Satellite = t.Satellite?.Name;
@@ -502,7 +562,7 @@ namespace ChanSort.Loader.Philips
       var baseOffset = 8;
       for (int i = 0, curFav = firstFavIndex; i < favCount; i++)
       {
-        this.satChannels.Channels[curFav].SetOldPosition(1, i + 1);
+        this.dvbsChannels.Channels[curFav].SetOldPosition(1, i + 1);
         curFav = BitConverter.ToInt16(data, baseOffset + curFav * 4 + 2);
       }
     }
@@ -530,7 +590,7 @@ namespace ChanSort.Loader.Philips
       using var conn = new SQLiteConnection($"Data Source={tvDb}");
       conn.Open();
       using var cmd = conn.CreateCommand();
-      cmd.CommandText = "select _id, display_number, display_name, original_network_id, transport_stream_id, service_id from channels";
+      cmd.CommandText = "select _id, display_number, display_name, original_network_id, transport_stream_id, service_id, service_type from channels";
       var r = cmd.ExecuteReader();
       while (r.Read())
       {
@@ -548,15 +608,28 @@ namespace ChanSort.Loader.Philips
         }
 
         if (ch.OldProgramNr != nr)
-          this.logMessages.AppendFormat($"channel with id {id}: prNum {ch.OldProgramNr} in bin file and {r.GetInt32(1)} in tv.db");
+          this.logMessages.AppendLine($"channel with id {id}: prNum {ch.OldProgramNr} in bin file and {r.GetInt32(1)} in tv.db");
         if (ch.Name != r.GetString(2))
-          this.logMessages.AppendFormat($"channel with id {id}: Name {ch.Name} in bin file and {r.GetString(2)} in tv.db");
+          this.logMessages.AppendLine($"channel with id {id}: Name {ch.Name} in bin file and {r.GetString(2)} in tv.db");
         if (ch.OriginalNetworkId != r.GetInt32(3))
-          this.logMessages.AppendFormat($"channel with id {id}: ONID {ch.OriginalNetworkId} in bin file and {r.GetInt32(3)} in tv.db");
+          this.logMessages.AppendLine($"channel with id {id}: ONID {ch.OriginalNetworkId} in bin file and {r.GetInt32(3)} in tv.db");
         if (ch.TransportStreamId != r.GetInt32(4))
-          this.logMessages.AppendFormat($"channel with id {id}: TSID {ch.TransportStreamId} in bin file and {r.GetInt32(4)} in tv.db");
+          this.logMessages.AppendLine($"channel with id {id}: TSID {ch.TransportStreamId} in bin file and {r.GetInt32(4)} in tv.db");
         if (ch.ServiceId != r.GetInt32(5))
-          this.logMessages.AppendFormat($"channel with id {id}: SID {ch.ServiceId} in bin file and {r.GetInt32(5)} in tv.db");
+          this.logMessages.AppendLine($"channel with id {id}: SID {ch.ServiceId} in bin file and {r.GetInt32(5)} in tv.db");
+
+        var stype = r.GetString(6);
+        if (stype == "SERVICE_TYPE_AUDIO")
+        {
+          if ((ch.SignalSource & SignalSource.Radio) == 0)
+            this.logMessages.AppendLine($"channel with id {id}: service type TV in bin file and RADIO in tv.db");
+        }
+        else // if (stype == "SERVICE_TYPE_AUDIO_VIDEO" || stype == "SERVICE_TYPE_OTHER") // Sky option channels are OTHER
+        {
+          if ((ch.SignalSource & SignalSource.Tv) == 0)
+            this.logMessages.AppendLine($"channel with id {id}: service type RADIO in bin file and TV in tv.db");
+        }
+
       }
     }
     #endregion
@@ -582,6 +655,8 @@ namespace ChanSort.Loader.Philips
       conn.Open();
       using var cmd = conn.CreateCommand();
       cmd.CommandText = "select list_id, list_name from List";
+      this.Features.SupportedFavorites = 0;
+      this.Features.SortedFavorites = true;
       using (var r = cmd.ExecuteReader())
       {
         int i = 0;
@@ -592,6 +667,14 @@ namespace ChanSort.Loader.Philips
           this.DataRoot.SetFavListCaption(i, r.GetString(1));
           this.Features.SupportedFavorites |= (Favorites) (1 << i);
           i++;
+        }
+
+        for (; i < 8; i++)
+        {
+          this.favListIndexToId.Add(-i-1);
+          this.favListIdToIndex.Add(-i-1, i);
+          this.DataRoot.SetFavListCaption(i, "Fav " + (i+1));
+          this.Features.SupportedFavorites |= (Favorites)(1 << i);
         }
       }
 
@@ -640,15 +723,15 @@ namespace ChanSort.Loader.Philips
         SaveDvbCTChannels(this.dvbcChannels, Path.Combine(channellib, "CableDigSrvTable"));
         SaveDvbCTPresets(this.dvbcChannels, Path.Combine(channellib, "CablePresetTable"));
 
-        SaveDvbsChannels(Path.Combine(s2channellib, "service.dat"));
+        SaveDvbsChannels(this.dvbsChannels, Path.Combine(s2channellib, "service.dat"));
         SaveDvbsFavorites(Path.Combine(s2channellib, "favorite.dat"));
         SaveDvbsDbFileInfo(Path.Combine(s2channellib, "db_file_info.dat"));
       }
       else if (chanLstBin.VersionMajor >= 25 && chanLstBin.VersionMajor <= 45)
       {
-        SaveDvbCTChannels(this.dvbtChannels, Path.Combine(channellib, "TerrestrialDb.bin"));
-        SaveDvbCTChannels(this.dvbcChannels, Path.Combine(channellib, "CableDb.bin"));
-        SaveDvbsChannels(Path.Combine(s2channellib, "SatelliteDb.bin"));
+        SaveDvbCTChannels(this.antChannels, Path.Combine(channellib, "TerrestrialDb.bin"));
+        SaveDvbCTChannels(this.cabChannels, Path.Combine(channellib, "CableDb.bin"));
+        SaveDvbsChannels(this.satChannels, Path.Combine(s2channellib, "SatelliteDb.bin"));
 
         UpdateChannelMap45TvDb();
         UpdateChannelMap45ListDb();
@@ -731,7 +814,7 @@ namespace ChanSort.Loader.Philips
     #endregion
 
     #region SaveDvbsChannels
-    private void SaveDvbsChannels(string path)
+    private void SaveDvbsChannels(ChannelList list, string path)
     {
       var orig = File.ReadAllBytes(path);
       
@@ -766,8 +849,8 @@ namespace ChanSort.Loader.Philips
       // this way the linked next/prev list remains in-sync with the channel order
       int i = 0;
       var channels = chanLstBin.VersionMajor < 25
-        ? this.satChannels.Channels.OrderBy(c => c.NewProgramNr <= 0 ? int.MaxValue : c.NewProgramNr).ThenBy(c => c.OldProgramNr)
-        : this.satChannels.Channels.OrderBy(c => c.RecordIndex);
+        ? list.Channels.OrderBy(c => c.NewProgramNr <= 0 ? int.MaxValue : c.NewProgramNr).ThenBy(c => c.OldProgramNr)
+        : list.Channels.OrderBy(c => c.RecordIndex);
       foreach (var ch in channels)
       {
         mapping.BaseOffset = baseOffset + i * recordSize;
@@ -813,7 +896,7 @@ namespace ChanSort.Loader.Philips
       var recordSize = 4;
       var recordCount = (dataSize - 4) / recordSize;
 
-      var favList = this.satChannels.Channels.Where(c => c.FavIndex[0] != -1).OrderBy(c => c.FavIndex[0]).ToList();
+      var favList = this.dvbsChannels.Channels.Where(c => c.FavIndex[0] != -1).OrderBy(c => c.FavIndex[0]).ToList();
       var favCount = favList.Count;
       var firstFavIndex = favCount == 0 ? -1 : (int)favList[0].RecordIndex;
       data.SetInt16(4, firstFavIndex);
@@ -917,7 +1000,26 @@ namespace ChanSort.Loader.Philips
       for (int favListIndex = 0; favListIndex < this.favListIndexToId.Count; favListIndex++)
       {
         var favListId = favListIndexToId[favListIndex];
-        cmd.CommandText = $"delete from FavoriteChannels where fav_list_id={favListId}";
+        string sqlInsertOrUpdateList;
+        if (favListId >= 0)
+        {
+          cmd.CommandText = $"delete from FavoriteChannels where fav_list_id={favListId}";
+          cmd.ExecuteNonQuery();
+          sqlInsertOrUpdateList = "update List set list_name=@name where list_id=@id";
+        }
+        else
+        {
+          favListId = favListIndexToId.Count == 0 ? 1 : favListIndexToId.Max() + 1;
+          favListIndexToId[favListIndex] = favListId;
+          favListIdToIndex[favListId] = favListIndex;
+          sqlInsertOrUpdateList = "insert into List (list_id, list_name) values (@id,@name)";
+        }
+
+        cmd.CommandText = sqlInsertOrUpdateList;
+        cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int16));
+        cmd.Parameters.Add(new SQLiteParameter("@name", DbType.String));
+        cmd.Parameters["@id"].Value = favListId;
+        cmd.Parameters["@name"].Value = DataRoot.GetFavListCaption(favListIndex);
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = "insert into FavoriteChannels(fav_list_id, channel_id, rank) values (@listId,@channelId,@rank)";
@@ -940,6 +1042,11 @@ namespace ChanSort.Loader.Philips
           cmd.ExecuteNonQuery();
         }
       }
+
+      // delete empty fav lists
+      cmd.Parameters.Clear();
+      cmd.CommandText = "delete from List where list_id not in (select fav_list_id from FavoriteChannels)";
+      cmd.ExecuteNonQuery();
 
       trans.Commit();
       conn.Close();

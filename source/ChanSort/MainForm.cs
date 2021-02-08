@@ -882,6 +882,8 @@ namespace ChanSort.Ui
       var wasRenumbered = false;
       foreach (var list in this.DataRoot.ChannelLists)
       {
+        if (list.IsMixedSourceFavoritesList)
+          continue;
         var chNr = 1;
         foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr))
         {

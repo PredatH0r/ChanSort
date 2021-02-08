@@ -112,7 +112,10 @@ namespace ChanSort.Api
       foreach (var list in this.ChannelLists)
       {
         if (list.IsMixedSourceFavoritesList)
+        {
+          loader.Features.SortedFavorites = true; // all mixed source favorite lists must support ordering
           continue;
+        }
 
         // make sure that deleted channels have OldProgramNr = -1
         bool hasPolarity = false;

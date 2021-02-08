@@ -36,6 +36,8 @@ namespace ChanSort.Loader.Philips
     private readonly Dictionary<string,int> crcOffsetByRelPath = new Dictionary<string, int>();
     public uint VersionMinor { get; private set; }
     public uint VersionMajor { get; private set; }
+    public string ModelName { get; private set; }
+
     private Action<string> log;
 
     public void Load(string path, Action<string> log)
@@ -53,7 +55,14 @@ namespace ChanSort.Loader.Philips
       off += 14;
 
       var modelNameLen = BitConverter.ToInt32(content, off);
-      off += 4 + modelNameLen;
+      off += 4;
+
+      if (modelNameLen >= 1)
+        this.ModelName = Encoding.ASCII.GetString(content, off, modelNameLen-1);
+      off += modelNameLen;
+
+      log?.Invoke($"Philips TV model: {this.ModelName}\nFile format version: {VersionMajor}.{VersionMinor}\n\n");
+
       var baseDir = Path.GetDirectoryName(path) ?? "";
       var relPath = "/channellib/";
       while (off < content.Length)

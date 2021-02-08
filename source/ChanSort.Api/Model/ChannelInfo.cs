@@ -158,7 +158,7 @@ namespace ChanSort.Api
       {
         if (this.uid == null)
         {
-          if ((this.SignalSource & SignalSource.MaskAnalogDigital) == SignalSource.Analog)
+          if ((this.SignalSource & SignalSource.Analog) != 0)
             this.uid = "A-0-" + (int) (this.FreqInMhz*20) + "-0";
           else
           {
