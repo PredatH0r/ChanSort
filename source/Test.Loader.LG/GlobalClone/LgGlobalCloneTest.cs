@@ -5,7 +5,7 @@ using ChanSort.Api;
 using ChanSort.Loader.LG;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Test.Loader.LG.GlobalClone
+namespace Test.Loader.LG
 {
   [TestClass]
   public class LgGlobalCloneTest
@@ -38,7 +38,7 @@ namespace Test.Loader.LG.GlobalClone
     #region TestChannelsAddedToCorrectList
     private void ChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTv, int expectedRadio, int dataProgramSid, string dataProgramName)
     {
-      var testFile = TestUtils.DeploymentItem("Test.Loader.GlobalClone\\TestFiles\\" + fileName);
+      var testFile = TestUtils.DeploymentItem("Test.Loader.LG\\GlobalClone\\" + fileName);
       var plugin = new LgPlugin();
       var ser = plugin.CreateSerializer(testFile);
       ser.Load();
@@ -65,7 +65,7 @@ namespace Test.Loader.LG.GlobalClone
     [TestMethod]
     public void TestDeletingChannel()
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.GlobalClone\\TestFiles\\GlobalClone00001.TLL");
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.LG\\GlobalClone\\GlobalClone00001.TLL");
       var plugin = new LgPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
@@ -111,7 +111,7 @@ namespace Test.Loader.LG.GlobalClone
     [TestMethod]
     public void TestGlobalClone200JsonFormat()
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.GlobalClone\\TestFiles\\GlobalClone00201.TLL");
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.LG\\GlobalClone\\GlobalClone00201.TLL");
       var orig = File.ReadAllText(tempFile, Encoding.UTF8);
 
       var plugin = new LgPlugin();

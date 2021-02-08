@@ -29,7 +29,7 @@ namespace Test.Loader.Hisense.ServicelistDb
     #region TestChannelsAddedToCorrectList
     private void TestChannelsAddedToCorrectLists(string fileName, string listCaption, int expectedTotal, int expectedTv, int expectedRadio)
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense2017\\TestFiles\\" + fileName);
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ServicelistDb\\TestFiles\\" + fileName);
       var plugin = new HisensePlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
@@ -51,7 +51,7 @@ namespace Test.Loader.Hisense.ServicelistDb
     [TestMethod]
     public void TestDeletingChannel()
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense2017\\TestFiles\\servicelist.db");
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ServicelistDb\\TestFiles\\servicelist.db");
       var plugin = new HisensePlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
