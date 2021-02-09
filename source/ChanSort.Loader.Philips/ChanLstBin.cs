@@ -123,7 +123,29 @@ namespace ChanSort.Loader.Philips
       }
 
       if (errors != "")
+      {
         this.log?.Invoke(errors);
+
+        if (View.Default != null) // can't show dialog while unit-testing
+        {
+
+          var dlg = View.Default.CreateActionBox(Resources.WarningChecksumErrorMsg);
+          dlg.AddAction(Resources.WarningChechsumErrorIgnore, 1);
+          dlg.AddAction(Resources.Cancel, 0);
+          dlg.ShowDialog();
+          switch (dlg.SelectedAction)
+          {
+            case 0:
+              throw new FileLoadException("Aborted due to checksum errors");
+          }
+        }
+      }
+
+      var info = Resources.InfoRestartAfterImport;
+      if (this.VersionMajor >= 25 && this.VersionMajor <= 45)
+        info += "\n" + Resources.InfoIgnoreImportError;
+
+      View.Default?.MessageBox(info, "Philips");
     }
 
     public void Save(string chanLstBinPath)

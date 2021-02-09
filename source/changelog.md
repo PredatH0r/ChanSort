@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2021-02-09
+- Sony: fixed incorrect checksum error for Android based TVs which use CR+LF as line separators (normally only LF is used)
+- Philips: show info that it may be necessary to unplug and reboot the TV after the import
+- Philips ChannelMap_45: show info when there are checksum errors, which indicate that TV's internal list is broken
+  and a rescan is required in order to properly export/import the list.
+
 2021-02-08
 - Philips: lists with a chanLst.bin file show information about file format version and TV model under File / Information
 - Philips ChannelMap_45: fixed handling of favorite lists (allow up to 8 lists, empty ones get removed automatically)

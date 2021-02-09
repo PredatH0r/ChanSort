@@ -526,23 +526,20 @@ namespace ChanSort.Loader.Sony
       int start;
       int end;
 
-      if (this.isEFormat)
+      // files with CRLF as line separator will calculate the checksum as if the line separator was just LF
+      // files in the e-format include a trailing LF after </SdbXml> in the checksum
+
+      if (this.newline == "\n")
       {
-        // files with the typo-element "<FormateVer>1.1.0</FormateVer>" differ from the other formats:
-        // - "\n" after the closing <SdbXml> Tag is included in the checksum,
-        // - the file's bytes are used as-is for the calculation, without CRLF conversion
         start = FindMarker(data, "<SdbXml>");
-        end = FindMarker(data, "</SdbXml>") + 10; // including the \n at the end
+        end = FindMarker(data, "</SdbXml>") + 9 + (isEFormat ? 1 : 0); // e-Format includes the \n at the end
       }
       else
       {
         start = dataAsText.IndexOf("<SdbXml>", StringComparison.Ordinal);
-        end = dataAsText.IndexOf("</SdbXml>", StringComparison.Ordinal) + 9;
-        // the TV calculates the checksum with just LF as newline character, so we need to replace CRLF first
+        end = dataAsText.IndexOf("</SdbXml>", StringComparison.Ordinal) + 9 + (isEFormat ? 2 : 0); // e-Format with CRLF separator includes the newline in the checksum
         var text = dataAsText.Substring(start, end - start);
-        if (this.newline == "\r\n")
-          text = text.Replace("\r\n", "\n");
-
+        text = text.Replace("\r\n", "\n");
         data = Encoding.UTF8.GetBytes(text);
         start = 0;
         end = data.Length;
