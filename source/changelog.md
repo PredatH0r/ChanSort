@@ -3,34 +3,35 @@ ChanSort Change Log
 
 2021-02-17
 - Panasonic: fixed error reading lists with channels that refer to non-existing transponders
-- Philips ChannelMap_45: incrementing fav list version number when saving and setting the last_watched_channel_id to
+- Philips ChannelMap\_45: incrementing fav list version number when saving and setting the last\_watched\_channel\_id to
   the first channel in the fav list (ensuring that the channel is actually present in the list)
+- UI: added search button (because it is not obvious that the top row of the table is a search/filter row)
 
 2021-02-09
 - Sony: fixed incorrect checksum error for Android based TVs which use CR+LF as line separators (normally only LF is used)
 - Philips: show info that it may be necessary to unplug and reboot the TV after the import
-- Philips ChannelMap_45: show info when there are checksum errors, which indicate that TV's internal list is broken
+- Philips ChannelMap\_45: show info when there are checksum errors, which indicate that TV's internal list is broken
   and a rescan is required in order to properly export/import the list.
 
 2021-02-08
 - Philips: lists with a chanLst.bin file show information about file format version and TV model under File / Information
-- Philips ChannelMap_45: fixed handling of favorite lists (allow up to 8 lists, empty ones get removed automatically)
-- Philips ChannelMap_45: no longer prompting to reorder channels sequentially (to close gaps). 
+- Philips ChannelMap\_45: fixed handling of favorite lists (allow up to 8 lists, empty ones get removed automatically)
+- Philips ChannelMap\_45: no longer prompting to reorder channels sequentially (to close gaps). 
   (This feature caused DVB-C/T list to only contain odd numbers and DVB-S to contain only even numbers, when both exist)
-- Philips ChannelMap_45: added display for service type (TV/radio), encryption, sat frequency polarity
-- Philips ChannelMap_45: fixed display of DVB-C/T frequency
+- Philips ChannelMap\_45: added display for service type (TV/radio), encryption, sat frequency polarity
+- Philips ChannelMap\_45: fixed display of DVB-C/T frequency
 - Philips Repair\chanLst.bin (1.x): fixed sat frequency display for transponders with vertical polarity
 
 2021-02-05
 - Philips ChannelMap_100 and later: keeping original indentation in XML files 
   and original number of bytes for hex-encoded Unicode names (channel name, fav list names)
 - Philips ChannelMap_110: setting the "UserReorderChannel" flag in the file to 1
-- Philips ChannelMap_45: fixed error when channel names did not match between tv.db and Cable/Terrestrial/SatelliteDb.bin
+- Philips ChannelMap\_45: fixed error when channel names did not match between tv.db and Cable/Terrestrial/SatelliteDb.bin
 
 2021-01-31
-- Philips ChannelMap_45: fixed bug writting "channel edited" indicator to the wrong location inside the file
-- Philips ChannelMap_45: fixed display of wrong frequency
-- Philips ChannelMap_45: added support for favorite lists
+- Philips ChannelMap\_45: fixed bug writting "channel edited" indicator to the wrong location inside the file
+- Philips ChannelMap\_45: fixed display of wrong frequency
+- Philips ChannelMap\_45: added support for favorite lists
 
 2021-01-24
 - fixed issues with applying reference lists (especially .m3u)
@@ -40,7 +41,7 @@ ChanSort Change Log
 - SatcoDX (*.sdx format used by ITT, Telefunken, Silva-Schneider, ...): minor bug fixes
 
 2021-01-17
-- Philips: added support for ChannelMap_45 format
+- Philips: added support for ChannelMap\_45 format
 - Philips: fixed display of symbol rate and frequency (off by factor 1000 depending of list and DVB source)
 - Philips: fixed special characters in channel names (e.g. german umlauts)
 - Philips: "ServiceType" now only shows "TV" or "Radio". There is no information about HD/SD in the file.

@@ -3297,6 +3297,16 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region btnSearch_Click
+    private void btnSearch_Click(object sender, EventArgs e)
+    {
+      this.gviewRight.FocusedRowHandle = GridControl.AutoFilterRowHandle;
+      this.gviewRight.FocusedColumn = colName;
+      this.gridRight.Focus();
+      this.gviewRight.ShowEditor();
+    }
+    #endregion
+
     #region btnRemoveLeft_Click, btnRemoveRight_Click
 
     private void btnRemoveLeft_Click(object sender, EventArgs e)

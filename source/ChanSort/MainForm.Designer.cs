@@ -104,6 +104,7 @@
       this.colDebug = new DevExpress.XtraGrid.Columns.GridColumn();
       this.lblHotkeyRight = new DevExpress.XtraEditors.LabelControl();
       this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
+      this.btnSearch = new DevExpress.XtraEditors.SimpleButton();
       this.lblPredefinedList = new DevExpress.XtraEditors.LabelControl();
       this.btnRemoveRight = new DevExpress.XtraEditors.SimpleButton();
       this.btnAddAll = new DevExpress.XtraEditors.SimpleButton();
@@ -150,12 +151,12 @@
       this.miCzech = new DevExpress.XtraBars.BarButtonItem();
       this.miGerman = new DevExpress.XtraBars.BarButtonItem();
       this.miSpanish = new DevExpress.XtraBars.BarButtonItem();
+      this.miHungarian = new DevExpress.XtraBars.BarButtonItem();
       this.miPolski = new DevExpress.XtraBars.BarButtonItem();
       this.miPortuguese = new DevExpress.XtraBars.BarButtonItem();
       this.miRomanian = new DevExpress.XtraBars.BarButtonItem();
       this.miRussian = new DevExpress.XtraBars.BarButtonItem();
       this.miTurkish = new DevExpress.XtraBars.BarButtonItem();
-      this.miHungarian = new DevExpress.XtraBars.BarButtonItem();
       this.mnuCharset = new DevExpress.XtraBars.BarSubItem();
       this.miCharsetForm = new DevExpress.XtraBars.BarButtonItem();
       this.miUtf8Charset = new DevExpress.XtraBars.BarButtonItem();
@@ -944,6 +945,7 @@
       // 
       // panelControl3
       // 
+      this.panelControl3.Controls.Add(this.btnSearch);
       this.panelControl3.Controls.Add(this.lblPredefinedList);
       this.panelControl3.Controls.Add(this.btnRemoveRight);
       this.panelControl3.Controls.Add(this.btnAddAll);
@@ -951,6 +953,16 @@
       this.panelControl3.Controls.Add(this.btnAdd);
       resources.ApplyResources(this.panelControl3, "panelControl3");
       this.panelControl3.Name = "panelControl3";
+      // 
+      // btnSearch
+      // 
+      resources.ApplyResources(this.btnSearch, "btnSearch");
+      this.btnSearch.Appearance.FontStyleDelta = ((System.Drawing.FontStyle)(resources.GetObject("btnSearch.Appearance.FontStyleDelta")));
+      this.btnSearch.Appearance.Options.UseFont = true;
+      this.btnSearch.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnSearch.ImageOptions.ImageIndex")));
+      this.btnSearch.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnSearch.Name = "btnSearch";
+      this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
       // 
       // lblPredefinedList
       // 
@@ -1542,6 +1554,16 @@
       this.miSpanish.Tag = "es-ES";
       this.miSpanish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
+      // miHungarian
+      // 
+      this.miHungarian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miHungarian, "miHungarian");
+      this.miHungarian.Id = 111;
+      this.miHungarian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miHungarian.ImageOptions.ImageIndex")));
+      this.miHungarian.Name = "miHungarian";
+      this.miHungarian.Tag = "hu-HU";
+      this.miHungarian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
       // miPolski
       // 
       this.miPolski.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
@@ -1591,16 +1613,6 @@
       this.miTurkish.Name = "miTurkish";
       this.miTurkish.Tag = "tr-TR";
       this.miTurkish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
-      // 
-      // miHungarian
-      // 
-      this.miHungarian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
-      resources.ApplyResources(this.miHungarian, "miHungarian");
-      this.miHungarian.Id = 111;
-      this.miHungarian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miHungarian.ImageOptions.ImageIndex")));
-      this.miHungarian.Name = "miHungarian";
-      this.miHungarian.Tag = "hu-HU";
-      this.miHungarian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // mnuCharset
       // 
@@ -2393,6 +2405,7 @@
     private DevExpress.XtraBars.BarButtonItem miUtf16BigEndian;
     private DevExpress.XtraBars.BarButtonItem miUtf16LittleEndian;
     private DevExpress.XtraBars.BarButtonItem miHungarian;
+    private DevExpress.XtraEditors.SimpleButton btnSearch;
   }
 }
 

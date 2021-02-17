@@ -279,7 +279,7 @@
     <value>gridLeft</value>
   </data>
   <data name="&gt;&gt;gridLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7718.18008, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gridLeft.Parent" xml:space="preserve">
     <value>grpOutputList</value>
@@ -489,7 +489,7 @@
     <value>&amp;Add channels</value>
   </data>
   <data name="miAddChannel.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
-    <value>40</value>
+    <value>39</value>
   </data>
   <data name="miRemove.Caption" xml:space="preserve">
     <value>&amp;Remove channels</value>
@@ -1229,7 +1229,7 @@
     <value>gviewLeft</value>
   </data>
   <data name="&gt;&gt;gviewLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.7718.18008, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;colIndex1.Name" xml:space="preserve">
     <value>colIndex1</value>
@@ -1313,13 +1313,13 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7718.18008, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
   </data>
   <data name="&gt;&gt;gviewRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.7718.18008, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;colIndex.Name" xml:space="preserve">
     <value>colIndex</value>
@@ -1771,6 +1771,12 @@
   <data name="&gt;&gt;miSpanish.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v20.1, Version=20.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miHungarian.Name" xml:space="preserve">
+    <value>miHungarian</value>
+  </data>
+  <data name="&gt;&gt;miHungarian.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v20.1, Version=20.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;miPolski.Name" xml:space="preserve">
     <value>miPolski</value>
   </data>
@@ -1799,12 +1805,6 @@
     <value>miTurkish</value>
   </data>
   <data name="&gt;&gt;miTurkish.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v20.1, Version=20.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="&gt;&gt;miHungarian.Name" xml:space="preserve">
-    <value>miHungarian</value>
-  </data>
-  <data name="&gt;&gt;miHungarian.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v20.1, Version=20.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;mnuCharset.Name" xml:space="preserve">
@@ -2066,7 +2066,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v20.1, Version=20.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>12/26/2020 17:01:09</value>
+    <value>02/17/2021 10:00:22</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -2891,7 +2891,7 @@
     <value>gridRight</value>
   </data>
   <data name="&gt;&gt;gridRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7665.29929, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7718.18008, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gridRight.Parent" xml:space="preserve">
     <value>grpInputList</value>
@@ -2929,11 +2929,44 @@
   <data name="&gt;&gt;lblHotkeyRight.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="btnSearch.AccessibleDescription" xml:space="preserve">
+    <value>Search for a channel</value>
+  </data>
+  <data name="btnSearch.Appearance.FontStyleDelta" type="System.Drawing.FontStyle, System.Drawing">
+    <value>Strikeout</value>
+  </data>
+  <data name="btnSearch.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="btnSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>270, 5</value>
+  </data>
+  <data name="btnSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="btnSearch.ToolTip" xml:space="preserve">
+    <value>Search channel by name</value>
+  </data>
+  <data name="&gt;&gt;btnSearch.Name" xml:space="preserve">
+    <value>btnSearch</value>
+  </data>
+  <data name="&gt;&gt;btnSearch.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v20.1, Version=20.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;btnSearch.Parent" xml:space="preserve">
+    <value>panelControl3</value>
+  </data>
+  <data name="&gt;&gt;btnSearch.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="lblPredefinedList.Appearance.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 12pt, style=Bold</value>
   </data>
   <data name="lblPredefinedList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 7</value>
+    <value>419, 5</value>
   </data>
   <data name="lblPredefinedList.Size" type="System.Drawing.Size, System.Drawing">
     <value>372, 19</value>
@@ -2960,7 +2993,7 @@
     <value>panelControl3</value>
   </data>
   <data name="&gt;&gt;lblPredefinedList.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="btnRemoveRight.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -2990,7 +3023,7 @@
     <value>panelControl3</value>
   </data>
   <data name="&gt;&gt;btnRemoveRight.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
     <value>Append all currently unsorted channels at the end of the list</value>
@@ -3020,7 +3053,7 @@
     <value>panelControl3</value>
   </data>
   <data name="&gt;&gt;btnAddAll.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="btnClearRightFilter.AccessibleDescription" xml:space="preserve">
     <value>Remove channel filter criteria from complete channel list</value>
@@ -3056,7 +3089,7 @@
     <value>panelControl3</value>
   </data>
   <data name="&gt;&gt;btnClearRightFilter.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="btnAdd.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>39</value>
@@ -3086,7 +3119,7 @@
     <value>panelControl3</value>
   </data>
   <data name="&gt;&gt;btnAdd.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="panelControl3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
