@@ -1,6 +1,11 @@
 ChanSort Change Log 
 ===================
 
+2021-02-17
+- Panasonic: fixed error reading lists with channels that refer to non-existing transponders
+- Philips ChannelMap_45: incrementing fav list version number when saving and setting the last_watched_channel_id to
+  the first channel in the fav list (ensuring that the channel is actually present in the list)
+
 2021-02-09
 - Sony: fixed incorrect checksum error for Android based TVs which use CR+LF as line separators (normally only LF is used)
 - Philips: show info that it may be necessary to unplug and reboot the TV after the import

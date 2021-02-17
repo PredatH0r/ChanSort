@@ -40,8 +40,11 @@ namespace ChanSort.Loader.Panasonic
         this.SignalSource |= SignalSource.SatIP;
 
       byte[] buffer = new byte[1000];
-      var len = r.GetBytes(field["delivery"], 0, buffer, 0, 1000);
-      this.AddDebug(buffer, 0, (int) len);
+      if (!r.IsDBNull(field["delivery"]))
+      {
+        var len = r.GetBytes(field["delivery"], 0, buffer, 0, 1000);
+        this.AddDebug(buffer, 0, (int) len);
+      }
 
       this.Skip = r.GetInt32(field["skip"]) != 0;
       this.Encrypted = r.GetInt32(field["free_CA_mode"]) != 0;
@@ -87,7 +90,7 @@ namespace ChanSort.Loader.Panasonic
       this.SignalSource |= LookupData.Instance.IsRadioTvOrData(stype);
       this.ServiceType = stype;
 
-      int freq = r.GetInt32(field["freq"]);
+      int freq = r.IsDBNull(field["freq"]) ? 0 : r.GetInt32(field["freq"]);
       if ((this.SignalSource & SignalSource.Sat) != 0)
       {
 // ReSharper disable PossibleLossOfFraction

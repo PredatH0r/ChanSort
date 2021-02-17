@@ -1005,14 +1005,14 @@ namespace ChanSort.Loader.Philips
         {
           cmd.CommandText = $"delete from FavoriteChannels where fav_list_id={favListId}";
           cmd.ExecuteNonQuery();
-          sqlInsertOrUpdateList = "update List set list_name=@name where list_id=@id";
+          sqlInsertOrUpdateList = "update List set list_name=@name, list_version=list_version+1 where list_id=@id";
         }
         else
         {
           favListId = favListIndexToId.Count == 0 ? 1 : favListIndexToId.Max() + 1;
           favListIndexToId[favListIndex] = favListId;
           favListIdToIndex[favListId] = favListIndex;
-          sqlInsertOrUpdateList = "insert into List (list_id, list_name) values (@id,@name)";
+          sqlInsertOrUpdateList = "insert into List (list_id, list_name, list_version) values (@id,@name,1)";
         }
 
         cmd.CommandText = sqlInsertOrUpdateList;
@@ -1046,6 +1046,10 @@ namespace ChanSort.Loader.Philips
       // delete empty fav lists
       cmd.Parameters.Clear();
       cmd.CommandText = "delete from List where list_id not in (select fav_list_id from FavoriteChannels)";
+      cmd.ExecuteNonQuery();
+
+      // make sure the last_watched_channel_id is valid in the list
+      cmd.CommandText = "update List set last_watched_channel_id=(select min(channel_id) from FavoriteChannels f where f.fav_list_id=List.list_id)";
       cmd.ExecuteNonQuery();
 
       trans.Commit();
