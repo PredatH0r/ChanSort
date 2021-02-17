@@ -556,7 +556,7 @@ namespace ChanSort.Loader.Philips
 
       if (ch.IsNameModified)
       {
-        ch.SetupNode.Attributes["ChannelName"].InnerText = EncodeName(ch.Name, (ch.SetupNode.Attributes["ChannelName"].InnerText.Length + 1) / 5);
+        ch.SetupNode.Attributes["ChannelName"].InnerText = EncodeName(ch.Name, (ch.SetupNode.Attributes["ChannelName"].InnerText.Length + 1) / 5, true);
         attr = ch.SetupNode.Attributes["UserModifiedName"];
         if (attr != null)
           attr.InnerText = "1";
@@ -587,7 +587,7 @@ namespace ChanSort.Loader.Philips
         favListNode.InnerXml = ""; // clear all <FavoriteChannel> child elements but keep the attributes of the current node
         var attr = favListNode.Attributes?["Name"];
         if (attr != null)
-          attr.InnerText = EncodeName(this.DataRoot.GetFavListCaption(index - 1), (attr.InnerText.Length + 1)/5);
+          attr.InnerText = EncodeName(this.DataRoot.GetFavListCaption(index - 1), (attr.InnerText.Length + 1)/5, false);
         
         attr = favListNode.Attributes?["Version"];
         if (attr != null && int.TryParse(attr.Value, out var version))
@@ -612,17 +612,18 @@ namespace ChanSort.Loader.Philips
     #endregion
 
     #region EncodeName
-    private string EncodeName(string name, int numBytes)
+    private string EncodeName(string name, int numBytes, bool upperCaseHexDigits)
     {
       var bytes = Encoding.Unicode.GetBytes(name);
       var sb = new StringBuilder();
+      var pattern = upperCaseHexDigits ? "0x{0:X2} " : "0x{0:x2} ";
       for (int i = 0; i < numBytes - 2; i++)
       {
         var b = i < bytes.Length ? bytes[i] : 0;
-        sb.Append($"0x{b:X2} ");
+        sb.AppendFormat(pattern, b);
       }
 
-      sb.AppendLine("0x00 0x00"); // always add an end-of-string
+      sb.Append("0x00 0x00"); // always add an end-of-string
       return sb.ToString();
     }
     #endregion

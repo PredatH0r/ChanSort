@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2021-02-17_2
+- Philips ChannelMap\_105 and 110: fixed broken favorites.xml file and DVB\*.xml when channels were renamed
+
 2021-02-17
 - Panasonic: fixed error reading lists with channels that refer to non-existing transponders
 - Philips ChannelMap\_45: incrementing fav list version number when saving and setting the last\_watched\_channel\_id to
