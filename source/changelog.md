@@ -1,6 +1,14 @@
 ChanSort Change Log 
 ===================
 
+2021-02-24
+- Philips ChannelMap\_45: TV did not remember last selected favorite list when first fav list was created by ChanSort.
+- Philips ChannelMap\_100 and later: "Channel" XML elements inside the DVB\*.xml files are now reordered by program nr.
+- Philips ChannelMap\_105 and 110: fixed saving favorite lists (keeping FavoriteNumber="0" in DVB\*.xml and only 
+  setting the numbers in Favorites.xml)
+- m3u: keep original end-of-line characters (CRLF or LF)
+- m3u: detect whether channel names are prefixed with a program number or not, and save the file in the same way.
+
 2021-02-17_2
 - Philips ChannelMap\_105 and 110: fixed broken favorites.xml file and DVB\*.xml when channels were renamed
 

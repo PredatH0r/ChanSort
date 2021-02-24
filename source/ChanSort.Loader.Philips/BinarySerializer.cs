@@ -56,9 +56,9 @@ namespace ChanSort.Loader.Philips
 
     private ChanLstBin chanLstBin;
     private readonly StringBuilder logMessages = new StringBuilder();
-    private readonly List<int> favListIndexToId = new();
-    private readonly Dictionary<int, int> favListIdToIndex = new();
     private readonly ChannelList favChannels = new ChannelList(SignalSource.All, "Favorites");
+    private const int FavListCount = 8;
+    private bool mustFixFavListIds;
 
     #region ctor()
     public BinarySerializer(string inputFile) : base(inputFile)
@@ -647,40 +647,45 @@ namespace ChanSort.Loader.Philips
           this.favChannels.AddChannel(chan);
         }
       }
+      this.Features.SupportedFavorites = (Favorites)0xFF;
+      this.Features.SortedFavorites = true;
       this.Features.MixedSourceFavorites = true;
       this.Features.AllowGapsInFavNumbers = false;
 
-
       using var conn = new SQLiteConnection($"Data Source={listDb}");
       conn.Open();
+
+      // older versions of ChanSort wrote invalid "list_id" values starting at 0 instead of 1 and going past 8.
+      // if everything is in the range of 1-8, this code keeps the current ids. otherwise it remaps them to 1-8.
       using var cmd = conn.CreateCommand();
-      cmd.CommandText = "select list_id, list_name from List";
-      this.Features.SupportedFavorites = 0;
-      this.Features.SortedFavorites = true;
+      cmd.CommandText = "select min(list_id), max(list_id) from List";
       using (var r = cmd.ExecuteReader())
       {
-        int i = 0;
-        while (r.Read() && i < ChannelInfo.MAX_FAV_LISTS)
-        {
-          this.favListIndexToId.Add(r.GetInt32(0));
-          this.favListIdToIndex.Add(r.GetInt32(0), i);
-          this.DataRoot.SetFavListCaption(i, r.GetString(1));
-          this.Features.SupportedFavorites |= (Favorites) (1 << i);
-          i++;
-        }
+        r.Read();
+        mustFixFavListIds = !r.IsDBNull(0) && (r.GetInt16(0) < 1 || r.GetInt16(1) > 8);
+        if (mustFixFavListIds)
+          logMessages.AppendLine("invalid list_id values in list.db will be corrected");
+      }
 
-        for (; i < 8; i++)
+      cmd.CommandText = "select list_id, list_name from List order by list_id";
+      var listIds = new List<int>();
+      using (var r = cmd.ExecuteReader())
+      {
+        var listIndex = 0;
+        while (r.Read())
         {
-          this.favListIndexToId.Add(-i-1);
-          this.favListIdToIndex.Add(-i-1, i);
-          this.DataRoot.SetFavListCaption(i, "Fav " + (i+1));
-          this.Features.SupportedFavorites |= (Favorites)(1 << i);
+          var listId = r.GetInt16(0);
+          listIds.Add(listId);
+          if (!this.mustFixFavListIds)
+            listIndex = listId - 1;
+          this.DataRoot.SetFavListCaption(listIndex, r.GetString(1));
+          ++listIndex;
         }
       }
 
-      for (int listIndex = 0; listIndex < this.favListIndexToId.Count; listIndex++)
+      for (int listIndex = 0; listIndex < listIds.Count; listIndex++)
       {
-        cmd.CommandText = $"select channel_id from FavoriteChannels where fav_list_id={favListIndexToId[listIndex]} order by rank";
+        cmd.CommandText = $"select channel_id from FavoriteChannels where fav_list_id={listIds[listIndex]} order by rank";
         using var r = cmd.ExecuteReader();
         int seq = 0;
         while (r.Read())
@@ -997,29 +1002,30 @@ namespace ChanSort.Loader.Philips
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();
-      for (int favListIndex = 0; favListIndex < this.favListIndexToId.Count; favListIndex++)
+      cmd.CommandText = "delete from FavoriteChannels";
+      cmd.ExecuteNonQuery();
+      if (this.mustFixFavListIds)
       {
-        var favListId = favListIndexToId[favListIndex];
-        string sqlInsertOrUpdateList;
-        if (favListId >= 0)
-        {
-          cmd.CommandText = $"delete from FavoriteChannels where fav_list_id={favListId}";
-          cmd.ExecuteNonQuery();
-          sqlInsertOrUpdateList = "update List set list_name=@name, list_version=list_version+1 where list_id=@id";
-        }
-        else
-        {
-          favListId = favListIndexToId.Count == 0 ? 1 : favListIndexToId.Max() + 1;
-          favListIndexToId[favListIndex] = favListId;
-          favListIdToIndex[favListId] = favListIndex;
-          sqlInsertOrUpdateList = "insert into List (list_id, list_name, list_version) values (@id,@name,1)";
-        }
+        cmd.CommandText = "delete from List";
+        cmd.ExecuteNonQuery();
+      }
 
-        cmd.CommandText = sqlInsertOrUpdateList;
+      var incFavList = (ini.GetSection("Map" + chanLstBin.VersionMajor)?.GetBool("incrementFavListVersion", true) ?? true)
+        ? ", list_version=list_version+1"
+        : "";
+
+      for (int favListIndex = 0; favListIndex < FavListCount; favListIndex++)
+      {
+        var favListId = favListIndex + 1;
+        cmd.CommandText = $"select count(1) from List where list_id={favListId}";
+        cmd.CommandText = (long) cmd.ExecuteScalar() == 0 ? 
+          "insert into List (list_id, list_name, list_version) values (@id,@name,1)" : 
+          "update List set list_name=@name" + incFavList + " where list_id=@id";
+
         cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int16));
         cmd.Parameters.Add(new SQLiteParameter("@name", DbType.String));
         cmd.Parameters["@id"].Value = favListId;
-        cmd.Parameters["@name"].Value = DataRoot.GetFavListCaption(favListIndex);
+        cmd.Parameters["@name"].Value = DataRoot.GetFavListCaption(favListIndex) ?? "Fav " + (favListIndex + 1);
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = "insert into FavoriteChannels(fav_list_id, channel_id, rank) values (@listId,@channelId,@rank)";
@@ -1049,7 +1055,7 @@ namespace ChanSort.Loader.Philips
       cmd.ExecuteNonQuery();
 
       // make sure the last_watched_channel_id is valid in the list
-      cmd.CommandText = "update List set last_watched_channel_id=(select min(channel_id) from FavoriteChannels f where f.fav_list_id=List.list_id)";
+      cmd.CommandText = @"update List set last_watched_channel_id=(select channel_id from FavoriteChannels f where f.fav_list_id=List.list_id order by rank limit 1) where last_watched_channel_id not in (select channel_id from FavoriteChannels f where f.fav_list_id=List.list_id)";
       cmd.ExecuteNonQuery();
 
       trans.Commit();

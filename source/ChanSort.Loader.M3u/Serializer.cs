@@ -20,6 +20,7 @@ namespace ChanSort.Loader.M3u
 
     private Encoding overrideEncoding;
     private string newLine = "\r\n";
+    private bool allChannelsPrefixedWithProgNr = true;
     private List<string> headerLines = new List<string>();
     private List<string> trailingLines = new List<string>(); // comment and blank lines after the last URI line
 
@@ -55,7 +56,7 @@ namespace ChanSort.Loader.M3u
         overrideEncoding = new UTF8Encoding(false);
 
       // detect line separator
-      int idx = Array.IndexOf(content, '\n');
+      int idx = Array.IndexOf(content, (byte)'\n');
       this.newLine = idx >= 1 && content[idx-1] == '\r' ? "\r\n" : "\n";
 
       var rdr = new StreamReader(new MemoryStream(content), overrideEncoding ?? this.DefaultEncoding);
@@ -126,6 +127,7 @@ namespace ChanSort.Loader.M3u
 
       if (extInfLine != null)
       {
+        bool extInfContainsProgNr = false;
         extInfTrackNameIndex = FindExtInfTrackName(extInfLine);
         if (extInfTrackNameIndex >= 0)
         {
@@ -135,9 +137,12 @@ namespace ChanSort.Loader.M3u
           {
             progNr = this.ParseInt(match.Groups[1].Value);
             name = match.Groups[2].Value;
+            extInfContainsProgNr = true;
           }
         }
+        this.allChannelsPrefixedWithProgNr &= extInfContainsProgNr;
       }
+
 
       if (progNr == 0)
         progNr = this.allChannels.Count + 1;
@@ -231,7 +236,10 @@ namespace ChanSort.Loader.M3u
           foreach (var line in chan.Lines)
           {
             if (line.StartsWith("#EXTINF:"))
-              file.WriteLine($"{line.Substring(0, chan.ExtInfTrackNameIndex)}{chan.NewProgramNr}. {chan.Name}");
+            {
+              var progNrPrefix = this.allChannelsPrefixedWithProgNr ? chan.NewProgramNr + ". " : "";
+              file.WriteLine($"{line.Substring(0, chan.ExtInfTrackNameIndex)}{progNrPrefix}{chan.Name}");
+            }
             else
               file.WriteLine(line);
           }

@@ -90,6 +90,20 @@ namespace ChanSort.Api
       }
       #endregion
 
+      #region GetBool()
+      public bool GetBool(string key, bool defaultValue = false)
+      {
+        var val = GetString(key)?.ToLowerInvariant();
+        if (val == null)
+          return defaultValue;
+        if (val == "false" || val == "off" || val == "no" || val == "0")
+          return false;
+        if (val == "true" || val == "on" || val == "yes" || val == "1")
+          return true;
+        return defaultValue;
+      }
+      #endregion
+
       #region ParseNumber()
       private int ParseNumber(string value)
       {

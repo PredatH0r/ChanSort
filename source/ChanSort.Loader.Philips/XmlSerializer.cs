@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -59,6 +60,7 @@ namespace ChanSort.Loader.Philips
     private readonly List<FileData> fileDataList = new List<FileData>();
     private ChanLstBin chanLstBin;
     private readonly StringBuilder logMessages = new StringBuilder();
+    private readonly IniFile ini;
 
 
     #region ctor()
@@ -103,6 +105,9 @@ namespace ChanSort.Loader.Philips
 
 
       this.favChannels.IsMixedSourceFavoritesList = true;
+
+      string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
+      this.ini = new IniFile(iniFile);
     }
     #endregion
 
@@ -490,42 +495,23 @@ namespace ChanSort.Loader.Philips
       }
 
       foreach (var file in this.fileDataList)
+      {
+        if (Path.GetFileName(file.path).ToLowerInvariant().StartsWith("dvb"))
+          this.ReorderNodes(file);
         this.SaveFile(file);
+      }
+
       this.chanLstBin?.Save(this.FileName);
     }
 
     #endregion
 
-    #region SaveFile()
-    private void SaveFile(FileData file)
-    {
-      // by default .NET reformats the whole XML. These settings produce almost same format as the TV xml files use
-      var xmlSettings = new XmlWriterSettings();
-      xmlSettings.Encoding = new UTF8Encoding(false);
-      xmlSettings.CheckCharacters = false;
-      xmlSettings.Indent = true;
-      xmlSettings.IndentChars = file.indent;
-      xmlSettings.NewLineHandling = NewLineHandling.None;
-      xmlSettings.NewLineChars = file.newline;
-      xmlSettings.OmitXmlDeclaration = false;
-
-      string xml;
-      using (var sw = new StringWriter())
-      using (var w = new CustomXmlWriter(sw, xmlSettings, false))
-      {
-        file.doc.WriteTo(w);
-        w.Flush();
-        xml = sw.ToString();
-      }
-
-      var enc = new UTF8Encoding(false, false);
-      File.WriteAllText(file.path, xml, enc);
-    }
-    #endregion
-
     #region UpdateChannelList()
     private void UpdateChannelList(ChannelList list)
     {
+      var sec = ini.GetSection("Map" + (this.chanLstBin?.VersionMajor ?? 0));
+      var setFavoriteNumber = sec?.GetBool("setFavoriteNumber", false) ?? false;
+
       foreach (var channel in list.Channels)
       {
         var ch = channel as Channel;
@@ -539,7 +525,7 @@ namespace ChanSort.Loader.Philips
         }
 
         if (ch.Format == 1)
-          this.UpdateChannelFormat1(ch);
+          this.UpdateChannelFormat1(ch, setFavoriteNumber);
         else if (ch.Format == 2)
           this.UpdateChannelFormat2(ch);
       }
@@ -547,22 +533,28 @@ namespace ChanSort.Loader.Philips
     #endregion
 
     #region UpdateChannelFormat1 and 2
-    private void UpdateChannelFormat1(Channel ch)
+    private void UpdateChannelFormat1(Channel ch, bool setFavoriteNumber)
     {
       ch.SetupNode.Attributes["ChannelNumber"].Value = ch.NewProgramNr.ToString();
-      var attr = ch.SetupNode.Attributes["UserReorderChannel"]; // introduced with format 110
-      if (attr != null)
-        attr.InnerText = "1";
 
       if (ch.IsNameModified)
       {
         ch.SetupNode.Attributes["ChannelName"].InnerText = EncodeName(ch.Name, (ch.SetupNode.Attributes["ChannelName"].InnerText.Length + 1) / 5, true);
-        attr = ch.SetupNode.Attributes["UserModifiedName"];
+        var attr = ch.SetupNode.Attributes["UserModifiedName"];
         if (attr != null)
           attr.InnerText = "1";
       }
 
-      ch.SetupNode.Attributes["FavoriteNumber"].Value = Math.Max(ch.FavIndex[0], 0).ToString();
+      // ChannelMap_100 supports a single fav list and stores the favorite number directly here in the channel.
+      // ChannelMap_105 and later always store the value 0 in the channel and instead use a separate Favorites.xml file.
+      ch.SetupNode.Attributes["FavoriteNumber"].Value = setFavoriteNumber ? Math.Max(ch.FavIndex[0], 0).ToString() : "0";
+
+      if (ch.OldProgramNr != ch.NewProgramNr)
+      {
+        var attr = ch.SetupNode.Attributes["UserReorderChannel"]; // introduced with format 110, but not always present
+        if (attr != null)
+          attr.InnerText = "1";
+      }
     }
 
     private void UpdateChannelFormat2(Channel ch)
@@ -588,10 +580,14 @@ namespace ChanSort.Loader.Philips
         var attr = favListNode.Attributes?["Name"];
         if (attr != null)
           attr.InnerText = EncodeName(this.DataRoot.GetFavListCaption(index - 1), (attr.InnerText.Length + 1)/5, false);
-        
-        attr = favListNode.Attributes?["Version"];
-        if (attr != null && int.TryParse(attr.Value, out var version))
-          attr.InnerText = (version + 1).ToString();
+
+        // increment fav list version, unless disabled in .ini file
+        if (chanLstBin != null && (ini.GetSection("Map" + chanLstBin.VersionMajor)?.GetBool("incrementFavListVersion", true) ?? true))
+        {
+          attr = favListNode.Attributes?["Version"];
+          if (attr != null && int.TryParse(attr.Value, out var version))
+            attr.InnerText = (version + 1).ToString();
+        }
 
         foreach (var ch in favChannels.Channels.OrderBy(ch => ch.GetPosition(index)))
         {
@@ -625,6 +621,61 @@ namespace ChanSort.Loader.Philips
 
       sb.Append("0x00 0x00"); // always add an end-of-string
       return sb.ToString();
+    }
+    #endregion
+
+    #region ReorderNodes
+    private void ReorderNodes(FileData file)
+    {
+      if (file.formatVersion != 1)
+        return;
+
+      var nodes = file.doc.DocumentElement.GetElementsByTagName("Channel");
+      var list = new List<XmlElement>();
+      foreach(var node in nodes)
+        list.Add((XmlElement)node);
+      foreach (var node in list)
+        file.doc.DocumentElement.RemoveChild(node);
+      foreach(var node in list.OrderBy(elem => int.Parse(elem["Setup"].Attributes["ChannelNumber"].InnerText)))
+        file.doc.DocumentElement.AppendChild(node);
+    }
+    #endregion
+
+    #region SaveFile()
+    private void SaveFile(FileData file)
+    {
+      // by default .NET reformats the whole XML. These settings produce almost same format as the TV xml files use
+      var xmlSettings = new XmlWriterSettings();
+      xmlSettings.Encoding = new UTF8Encoding(false);
+      xmlSettings.CheckCharacters = false;
+      xmlSettings.Indent = true;
+      xmlSettings.IndentChars = file.indent;
+      xmlSettings.NewLineHandling = NewLineHandling.None;
+      xmlSettings.NewLineChars = file.newline;
+      xmlSettings.OmitXmlDeclaration = true;
+
+      string xml;
+      using (var sw = new StringWriter())
+      {
+        // write unmodified XML declaration (the DVB*.xml files use a different one than the Favorite.xml file)
+        var i = file.textContent.IndexOf("?>");
+        if (i >= 0)
+          sw.Write(file.textContent.Substring(0, i + 2 + file.newline.Length));
+
+        using (var w = new CustomXmlWriter(sw, xmlSettings, false))
+        {
+          file.doc.WriteTo(w);
+          w.Flush();
+          xml = sw.ToString();
+        }
+      }
+
+      // append trailing newline, if the original file had one
+      if (file.textContent.EndsWith(file.newline) && !xml.EndsWith(file.newline))
+        xml += file.newline;
+
+      var enc = new UTF8Encoding(false, false);
+      File.WriteAllText(file.path, xml, enc);
     }
     #endregion
 
