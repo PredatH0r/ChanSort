@@ -12,6 +12,8 @@ namespace ChanSort.Api
     private int insertProgramNr = 1;
     private int duplicateUidCount;
     private int duplicateProgNrCount;
+    public int FavListCount { get; set; }
+
 
     public static List<string> DefaultVisibleColumns { get; set; } = new List<string>(); // initialized by MainForm
 

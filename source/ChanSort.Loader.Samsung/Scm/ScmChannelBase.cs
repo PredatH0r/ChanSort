@@ -94,7 +94,7 @@ namespace ChanSort.Loader.Samsung.Scm
         else if (sortedFavorites != FavoritesIndexMode.Boolean && favValue != -1)
           fav |= mask;
         if (sortedFavorites == FavoritesIndexMode.IndividuallySorted)
-          this.OldFavIndex[favIndex] = favValue;
+          this.SetOldPosition(1+favIndex, favValue);
         mask <<= 1;
         ++favIndex;
       }

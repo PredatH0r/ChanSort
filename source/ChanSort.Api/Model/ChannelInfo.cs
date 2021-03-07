@@ -5,8 +5,6 @@ namespace ChanSort.Api
 {
   public class ChannelInfo
   {
-    public const int MAX_FAV_LISTS = 16;
-
     private string uid;
     private string serviceTypeName;
     private int newProgramNr;
@@ -106,13 +104,8 @@ namespace ChanSort.Api
     {
       this.OldProgramNr = -1;
       this.NewProgramNr = -1;
-      this.FavIndex = new List<int>(MAX_FAV_LISTS);
-      this.OldFavIndex = new List<int>(MAX_FAV_LISTS);
-      for (int i = 0; i < MAX_FAV_LISTS; i++)
-      {
-        this.FavIndex.Add(-1);
-        this.OldFavIndex.Add(-1);
-      }
+      this.FavIndex = new List<int>();
+      this.OldFavIndex = new List<int>();
       this.Name = "";
       this.ShortName = "";
     }
@@ -315,7 +308,7 @@ namespace ChanSort.Api
     /// </summary>
     public int GetPosition(int subListIndex)
     {
-      return subListIndex == 0 ? this.NewProgramNr : this.FavIndex[subListIndex - 1];
+      return subListIndex < 0 ? -1 : subListIndex == 0 ? this.NewProgramNr : subListIndex - 1 < this.FavIndex.Count ? this.FavIndex[subListIndex - 1] : -1;
     }
 
     /// <summary>
@@ -323,7 +316,7 @@ namespace ChanSort.Api
     /// </summary>
     public int GetOldPosition(int subListIndex)
     {
-      return subListIndex == 0 ? this.OldProgramNr : this.OldFavIndex[subListIndex - 1];
+      return subListIndex < 0 ? -1 : subListIndex == 0 ? this.OldProgramNr : subListIndex - 1 < this.OldFavIndex.Count ? this.OldFavIndex[subListIndex - 1] : -1;
     }
 
     /// <summary>
@@ -331,10 +324,14 @@ namespace ChanSort.Api
     /// </summary>
     public void SetPosition(int subListIndex, int newPos)
     {
+      if (subListIndex < 0) 
+        return;
       if (subListIndex == 0)
         this.NewProgramNr = newPos;
       else
       {
+        for (int i=this.FavIndex.Count; i<=subListIndex;i++)
+          this.FavIndex.Add(-1);
         this.FavIndex[subListIndex - 1] = newPos;
         int mask = 1 << (subListIndex - 1);
         if (newPos == -1)
@@ -349,10 +346,16 @@ namespace ChanSort.Api
     /// </summary>
     public void SetOldPosition(int subListIndex, int oldPos)
     {
+      if (subListIndex < 0)
+        return;
       if (subListIndex == 0)
         this.OldProgramNr = oldPos;
       else
+      {
+        for (int i = this.OldFavIndex.Count; i <= subListIndex; i++)
+          this.OldFavIndex.Add(-1);
         this.OldFavIndex[subListIndex - 1] = oldPos;
+      }
     }
 
     /// <summary>
@@ -363,7 +366,11 @@ namespace ChanSort.Api
       if (subListIndex == 0)
         this.NewProgramNr += delta;
       else
-        this.FavIndex[subListIndex - 1] += delta;      
+      {
+        for (int i = this.FavIndex.Count; i <= subListIndex; i++)
+          this.FavIndex.Add(-1);
+        this.FavIndex[subListIndex - 1] += delta;
+      }
     }
     #endregion
   }

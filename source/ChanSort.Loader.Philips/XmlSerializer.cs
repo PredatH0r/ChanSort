@@ -360,7 +360,7 @@ namespace ChanSort.Loader.Philips
       chan.Lock = data.TryGet("ChannelLock") == "1";
       chan.Hidden = data.TryGet("UserHidden") == "1";
       var fav = ParseInt(data.TryGet("FavoriteNumber"));
-      chan.OldFavIndex[0] = fav == 0 ? -1 : fav;
+      chan.SetOldPosition(1, fav == 0 ? -1 : fav);
       chan.OriginalNetworkId = ParseInt(data.TryGet("Onid"));
       chan.TransportStreamId = ParseInt(data.TryGet("Tsid"));
       chan.ServiceId = ParseInt(data.TryGet("Sid"));

@@ -18,6 +18,18 @@ namespace ChanSort.Ui
     private SerializerBase serializer;
     private readonly string[] closeButtonText;
 
+    class MixedSourceList
+    {
+      public ChannelList ChannelList { get; }
+      public int FavIndex { get; }
+
+      public MixedSourceList(ChannelList list, int favIndex)
+      {
+        ChannelList = list;
+        FavIndex = favIndex;
+      }
+    }
+
     public ReferenceListForm(MainForm main)
     {
       this.main = main;
@@ -113,7 +125,13 @@ namespace ChanSort.Ui
       this.comboSource.Properties.Items.Clear();
       foreach (var list in serializer.DataRoot.ChannelLists)
       {
-        if (!list.IsMixedSourceFavoritesList && list.Channels.Count > 0)
+        if (list.Channels.Count == 0)
+          continue;
+        if (list.IsMixedSourceFavoritesList)
+        {
+          this.comboSource.Properties.Items.Add(new MixedSourceList(list, i))
+        }
+        else
           this.comboSource.Properties.Items.Add(list);
       }
 

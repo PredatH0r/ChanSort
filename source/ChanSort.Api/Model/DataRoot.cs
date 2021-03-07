@@ -17,7 +17,6 @@ namespace ChanSort.Api
     public bool IsEmpty => this.channelLists.Count == 0;
     public bool NeedsSaving { get; set; }
 
-
     public Favorites SupportedFavorites => this.loader.Features.SupportedFavorites;
     public bool SortedFavorites => this.loader.Features.SortedFavorites;
     public bool MixedSourceFavorites => this.loader.Features.MixedSourceFavorites;
@@ -111,6 +110,12 @@ namespace ChanSort.Api
     {
       foreach (var list in this.ChannelLists)
       {
+        if (list.FavListCount == 0)
+        {
+          for (ulong m = (ulong) this.loader.Features.SupportedFavorites; m != 0; m >>= 1)
+            ++list.FavListCount;
+        }
+
         if (list.IsMixedSourceFavoritesList)
         {
           loader.Features.SortedFavorites = true; // all mixed source favorite lists must support ordering
@@ -142,7 +147,7 @@ namespace ChanSort.Api
       int c = 0;
       if (this.MixedSourceFavorites || this.SortedFavorites)
       {
-        for (int m = (int) this.SupportedFavorites; m != 0; m >>= 1)
+        for (ulong m = (ulong) this.SupportedFavorites; m != 0; m >>= 1)
           ++c;
       }
 
@@ -265,7 +270,7 @@ namespace ChanSort.Api
       var hasCaption = favListCaptions.TryGetValue(favIndex, out var caption);
       if (!asTabCaption)
         return caption;
-      var letter = (char)('A' + favIndex);
+      var letter = favIndex < 26 ? ((char)('A' + favIndex)).ToString() : (favIndex + 1).ToString();
       return  hasCaption && !string.IsNullOrEmpty(caption) ? letter + ": " + caption : "Fav " + letter;
     }
     #endregion

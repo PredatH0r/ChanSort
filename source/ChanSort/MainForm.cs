@@ -244,8 +244,8 @@ namespace ChanSort.Ui
             extension.Append(ext);
             extension.Append(";");
           }
-          ++numberOfFilters;
         }
+        ++numberOfFilters;
       }
       if (extension.Length > 0)
         extension.Remove(extension.Length - 1, 1);

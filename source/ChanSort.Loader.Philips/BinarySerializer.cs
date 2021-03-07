@@ -245,7 +245,7 @@ namespace ChanSort.Loader.Philips
         ch.Lock = mapping.GetByte("offLocked") != 0;
         ch.Favorites = mapping.GetByte("offIsFav") != 0 ? Favorites.A : 0;
         if (ch.Favorites != 0)
-          ch.OldFavIndex[0] = ch.OldProgramNr;
+          ch.SetOldPosition(1, ch.OldProgramNr);
 
         this.DataRoot.AddChannel(list, ch);
       }

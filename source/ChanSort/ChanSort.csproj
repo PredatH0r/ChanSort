@@ -482,6 +482,14 @@
       <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
       <Name>ChanSort.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Enigma2\ChanSort.Loader.Enigma2.csproj">
+      <Project>{4ad7f77e-617c-4741-82ae-e7a41c85ee4d}</Project>
+      <Name>ChanSort.Loader.Enigma2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Grundig\ChanSort.Loader.Grundig.csproj">
+      <Project>{4d5af0a3-1b96-42c8-910d-0c4852ea22f4}</Project>
+      <Name>ChanSort.Loader.Grundig</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj">
       <Project>{d093e7ee-d3ad-4e7b-af82-c6918ca017fb}</Project>
       <Name>ChanSort.Loader.Hisense</Name>
@@ -505,6 +513,10 @@
     <ProjectReference Include="..\ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj">
       <Project>{a1c9a98d-368a-44e8-9b7f-7eaca46c9ec5}</Project>
       <Name>ChanSort.Loader.Samsung</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.SatcoDX\ChanSort.Loader.SatcoDX.csproj">
+      <Project>{e6279ff8-362a-41e6-ac0d-d0861d43f01c}</Project>
+      <Name>ChanSort.Loader.SatcoDX</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj">
       <Project>{70e29c6b-b926-4859-9548-23375bf1e1b5}</Project>

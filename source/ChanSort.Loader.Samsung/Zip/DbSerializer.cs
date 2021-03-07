@@ -616,8 +616,8 @@ namespace ChanSort.Loader.Samsung.Zip
         // update favorites
         for (int i=0, mask=1; i<5; i++, mask <<= 1)
         {
-          int oldPos = channel.OldFavIndex[i];
-          int newPos = ((int)channel.Favorites & mask) != 0 ? channel.FavIndex[i] : -1;
+          int oldPos = channel.GetOldPosition(1+i);
+          int newPos = ((int)channel.Favorites & mask) != 0 ? channel.GetPosition(1+i) : -1;
 
           if (newPos >= 0)
           {
