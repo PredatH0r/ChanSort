@@ -18,16 +18,21 @@ namespace ChanSort.Ui
     private SerializerBase serializer;
     private readonly string[] closeButtonText;
 
-    class MixedSourceList
+    class ListOption
     {
+      private DataRoot root;
       public ChannelList ChannelList { get; }
-      public int FavIndex { get; }
+      public int PosIndex { get; }
 
-      public MixedSourceList(ChannelList list, int favIndex)
+      public string Caption { get; }
+      public ListOption(ChannelList list, int posIndex, string caption)
       {
         ChannelList = list;
-        FavIndex = favIndex;
+        PosIndex = posIndex;
+        Caption = caption;
       }
+
+      public override string ToString() => Caption;
     }
 
     public ReferenceListForm(MainForm main)
@@ -129,21 +134,29 @@ namespace ChanSort.Ui
           continue;
         if (list.IsMixedSourceFavoritesList)
         {
-          this.comboSource.Properties.Items.Add(new MixedSourceList(list, i))
+          for (int i = 0; i <= list.FavListCount; i++)
+            this.comboSource.Properties.Items.Add(new ListOption(list, i, list + (i==0 ? "" : " - " + serializer.DataRoot.GetFavListCaption(i-1))));
         }
         else
-          this.comboSource.Properties.Items.Add(list);
+          this.comboSource.Properties.Items.Add(new ListOption(list, 0, list.Caption));
       }
 
       this.comboTarget.EditValue = null;
       this.comboTarget.Properties.Items.Clear();
       foreach (var list in main.DataRoot.ChannelLists)
       {
-        if (!list.IsMixedSourceFavoritesList && list.Channels.Count > 0)
+        if (list.Channels.Count == 0)
+          continue;
+        if (list.IsMixedSourceFavoritesList)
         {
-          this.comboTarget.Properties.Items.Add(list);
+          for (int i = 0; i <= list.FavListCount; i++)
+            this.comboTarget.Properties.Items.Add(new ListOption(list, i, list + (i==0 ? "" : " - " + main.DataRoot.GetFavListCaption(i-1))));
+        }
+        else
+        {
+          this.comboTarget.Properties.Items.Add(new ListOption(list, 0, list.Caption));
           if (main.CurrentChannelList == list)
-            this.comboTarget.SelectedItem = list;
+            this.comboTarget.SelectedIndex = this.comboTarget.Properties.Items.Count-1;
         }
       }
 
@@ -178,9 +191,9 @@ namespace ChanSort.Ui
           checkEdit.Checked = checkEdit.Enabled = true;
       }
 
-      var list = (ChannelList) this.comboSource.EditValue;
+      var list = (ListOption) this.comboSource.EditValue;
       this.lblSourceInfo.Text = GetInfoText(list, true);
-      list = (ChannelList) this.comboTarget.EditValue;
+      list = (ListOption) this.comboTarget.EditValue;
       this.lblTargetInfo.Text = GetInfoText(list, false);
 
       var canApply = (cbAnalog.Checked || cbDigital.Checked) && (cbTv.Checked || cbRadio.Checked || cbData.Checked);
@@ -191,8 +204,9 @@ namespace ChanSort.Ui
 
     #region GetInfoText()
 
-    private string GetInfoText(ChannelList list, bool source)
+    private string GetInfoText(ListOption option, bool source)
     {
+      var list = option?.ChannelList;
       var src = list?.SignalSource ?? 0;
       var sb = new StringBuilder();
 
@@ -277,14 +291,14 @@ namespace ChanSort.Ui
       UpdateInfoTextAndOptions();
 
       // auto-select a compatible source list
-      var list = (ChannelList)this.comboTarget.EditValue;
+      var list = ((ListOption)this.comboTarget.EditValue)?.ChannelList;
       if (list != null)
       {
         this.comboSource.SelectedIndex = -1;
         var src = list.SignalSource;
-        foreach (ChannelList sourceList in this.comboSource.Properties.Items)
+        foreach (ListOption sourceList in this.comboSource.Properties.Items)
         {
-          if ((sourceList.SignalSource & src) == src)
+          if ((sourceList.ChannelList.SignalSource & src) == src)
           {
             this.comboSource.SelectedItem = sourceList;
             break;
@@ -299,7 +313,7 @@ namespace ChanSort.Ui
     private void comboSource_EditValueChanged(object sender, EventArgs e)
     {
       UpdateInfoTextAndOptions();
-      var list = (ChannelList)this.comboSource.EditValue;
+      var list = ((ListOption)this.comboSource.EditValue)?.ChannelList;
       this.comboPrNr.Text = list == null || list.Count == 0 ? "1" : list.Channels.Min(ch => Math.Max(ch.OldProgramNr, 1)).ToString();
     }
 
@@ -309,14 +323,14 @@ namespace ChanSort.Ui
 
     private void btnApply_Click(object sender, EventArgs e)
     {
-      var src = (ChannelList) this.comboSource.EditValue;
-      var target = (ChannelList) this.comboTarget.EditValue;
+      var src = (ListOption) this.comboSource.EditValue;
+      var target = (ListOption) this.comboTarget.EditValue;
       int offset;
       if (int.TryParse(this.comboPrNr.Text, out offset))
-        offset -= src.Channels.Min(ch => Math.Max(ch.OldProgramNr, 1));
+        offset -= src.ChannelList.Channels.Min(ch => Math.Max(ch.OldProgramNr, 1));
 
       bool overwrite = true;
-      if (target.GetChannelsByNewOrder().Any(ch => ch.NewProgramNr != -1))
+      if (target.ChannelList.GetChannelsByNewOrder().Any(ch => ch.NewProgramNr != -1))
       {
         using (var dlg = new ActionBoxDialog(Resources.ReferenceListForm_btnApply_ConflictHandling))
         {
@@ -327,7 +341,7 @@ namespace ChanSort.Ui
           switch (dlg.ShowDialog(this))
           {
             case DialogResult.OK:
-              target.Channels.ForEach(ch => ch.NewProgramNr = -1);
+              target.ChannelList.Channels.ForEach(ch => ch.NewProgramNr = -1);
               break;
             case DialogResult.Yes:
               //overwrite = true;
@@ -341,7 +355,7 @@ namespace ChanSort.Ui
         }
       }
 
-      main.Editor.ApplyReferenceList(this.serializer.DataRoot, src, target, false, offset, FilterChannel, overwrite, this.cbConsecutive.Checked);
+      main.Editor.ApplyReferenceList(this.serializer.DataRoot, src.ChannelList, target.ChannelList, false, offset, FilterChannel, overwrite, this.cbConsecutive.Checked);
       main.RefreshGrids();
     }
 

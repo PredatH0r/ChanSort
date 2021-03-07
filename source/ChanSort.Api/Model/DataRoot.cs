@@ -267,6 +267,8 @@ namespace ChanSort.Api
 
     public string GetFavListCaption(int favIndex, bool asTabCaption = false)
     {
+      if (favIndex < 0)
+        return "";
       var hasCaption = favListCaptions.TryGetValue(favIndex, out var caption);
       if (!asTabCaption)
         return caption;

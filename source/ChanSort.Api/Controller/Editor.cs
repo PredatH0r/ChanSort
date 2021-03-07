@@ -415,8 +415,8 @@ namespace ChanSort.Api
     /// <param name="tvChannel"></param>
     private void ApplyPrNrToFavLists(ChannelInfo tvChannel)
     {
-      var supMask = (int)this.DataRoot.SupportedFavorites;
-      var refMask = (int)tvChannel.Favorites;
+      var supMask = (ulong)this.DataRoot.SupportedFavorites;
+      var refMask = (ulong)tvChannel.Favorites;
       for (int i = 0; supMask != 0; i++)
       {
         tvChannel.FavIndex[i] = (refMask & 0x01) == 0 ? -1 : tvChannel.NewProgramNr;

@@ -443,10 +443,12 @@ namespace ChanSort.Ui
       this.repositoryItemCheckedComboBoxEdit2.Items.Clear();
       var regex = "[";
       var favCount = 0;
-      for (var favMask = (uint)favorites; (favMask & 1) != 0; favMask >>= 1)
+      for (var favMask = (ulong)favorites; (favMask & 1) != 0; favMask >>= 1)
       {
         var c = (char) ('A' + favCount);
         ++favCount;
+        if (favCount >= 26)
+          continue;
         this.repositoryItemCheckedComboBoxEdit1.Items.Add(c);
         this.repositoryItemCheckedComboBoxEdit2.Items.Add(c);
 
@@ -467,13 +469,15 @@ namespace ChanSort.Ui
       regex += "]*";
       this.repositoryItemCheckedComboBoxEdit1.Mask.EditMask = regex;
       this.repositoryItemCheckedComboBoxEdit2.Mask.EditMask = regex;
-
+      
+      this.tabSubList.BeginUpdate();
       while (this.tabSubList.TabPages.Count > favCount + 1)
         this.tabSubList.TabPages.RemoveAt(this.tabSubList.TabPages.Count - 1);
       while (this.tabSubList.TabPages.Count < favCount + 1)
         this.tabSubList.TabPages.Add();
       for (int i = 1; i < this.tabSubList.TabPages.Count; i++)
         this.tabSubList.TabPages[i].Text = this.DataRoot.GetFavListCaption(i - 1, true);
+      this.tabSubList.EndUpdate();
 
       if (!this.DataRoot.SortedFavorites || this.subListIndex >= favCount)
       {
@@ -1926,8 +1930,14 @@ namespace ChanSort.Ui
 
       var sb = new StringBuilder();
       int i = 0;
-      for (var mask = (int)fav; mask != 0; mask >>= 1)
+      for (var mask = (ulong)fav; mask != 0; mask >>= 1)
       {
+        if (i >= 26)
+        {
+          sb.Append("+");
+          break;
+        }
+
         if ((mask & 1) != 0)
           sb.Append((char)('A' + i));
         ++i;

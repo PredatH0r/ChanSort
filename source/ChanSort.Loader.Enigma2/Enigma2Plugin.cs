@@ -6,7 +6,7 @@ namespace ChanSort.Loader.Enigma2
   {
     public string DllName { get; set; }
     public string PluginName => "Enigma2 (Linux Receiver)";
-    public string FileFilter => "bouquets.*";
+    public string FileFilter => "lamedb";
 
     public SerializerBase CreateSerializer(string inputFile)
     {

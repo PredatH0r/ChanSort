@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Enigma2
@@ -17,8 +18,7 @@ namespace ChanSort.Loader.Enigma2
   {
     private static readonly Encoding utf8WithoutBom = new UTF8Encoding(false);
 
-    private ChannelList tv = new ChannelList(SignalSource.Digital | SignalSource.Tv, "TV");
-    private ChannelList radio = new ChannelList(SignalSource.Digital | SignalSource.Radio, "Radio");
+    private ChannelList channels = new ChannelList(SignalSource.Digital, "All Channels");
 
     private readonly List<string> favListFileNames = new();
     private readonly Dictionary<string, Transponder> transponderByLamedbId = new();
@@ -43,10 +43,8 @@ namespace ChanSort.Loader.Enigma2
       this.Features.SupportedFavorites = 0; // dynamically added
       this.Features.CanSaveAs = false;
 
-      this.tv.IsMixedSourceFavoritesList = true;
-      this.DataRoot.AddChannelList(this.tv);
-      this.radio.IsMixedSourceFavoritesList = true;
-      this.DataRoot.AddChannelList(this.radio);
+      this.channels.IsMixedSourceFavoritesList = true;
+      this.DataRoot.AddChannelList(this.channels);
 
       // hide columns for fields that don't exist in Silva-Schneider channel list
       foreach (var list in this.DataRoot.ChannelLists)
@@ -73,11 +71,28 @@ namespace ChanSort.Loader.Enigma2
       this.decoder = new DvbStringDecoder(this.DefaultEncoding);
       this.LoadLamedb();
 
-      int favId = 0;
-      foreach(var file in Directory.GetFiles(Path.GetDirectoryName(this.FileName), "userbouquet.*"))
-        this.LoadBouquet(file, ref favId);
-    }
+      int favIndex = 0;
 
+      // load all userbouquet files listed in bouquets.tv
+      var path = Path.Combine(Path.GetDirectoryName(this.FileName), "bouquets.tv");
+      if (File.Exists(path))
+        LoadBouquets(path, ref favIndex);
+
+      // load all userbouquet files listed in bouquets.radio
+      path = Path.Combine(Path.GetDirectoryName(this.FileName), "bouquets.radio");
+      if (File.Exists(path))
+        LoadBouquets(path, ref favIndex);
+
+      // load all unlisted userbouquet files
+      foreach (var file in Directory.GetFiles(Path.GetDirectoryName(this.FileName), "userbouquet.*"))
+      {
+        var ext = Path.GetExtension(file);
+        if (ext != ".tv" && ext != ".radio") // ignore .del, .bak and other irrelevant files
+          continue;
+        if (!this.favListFileNames.Contains(file))
+          this.LoadUserBouquet(file, ref favIndex);
+      }
+    }
     #endregion
 
     #region LoadLamedb()
@@ -213,20 +228,33 @@ namespace ChanSort.Loader.Enigma2
         }
       }
 
-      this.DataRoot.AddChannel(this.tv, ch);
+      //var list = (ch.SignalSource & SignalSource.Radio) != 0 ? this.radio : this.tv;
+      var list = this.channels;
+      this.DataRoot.AddChannel(list, ch);
       this.channelsByBouquetId[$"{ch.DvbNamespace}:{ch.OriginalNetworkId}:{ch.TransportStreamId}:{ch.ServiceId}"] = ch;
     }
     #endregion
 
-    #region LoadBoquet
-    private void LoadBouquet(string file, ref int favIndex)
+    #region LoadBouquets
+    private void LoadBouquets(string file, ref int favIndex)
     {
-      ChannelList list;
-      if (file.EndsWith(".tv"))
-        list = this.tv;
-      else if (file.EndsWith(".radio"))
-        list = this.radio;
-      else
+      var regex = new Regex(".*FROM BOUQUET \"(.*?)\".*");
+      foreach (var line in File.ReadAllLines(file))
+      {
+        var match = regex.Match(line);
+        if (match.Success)
+        {
+          var path = Path.Combine(Path.GetDirectoryName(file), match.Groups[1].Value);
+          LoadUserBouquet(path, ref favIndex);
+        }
+      }
+    }
+    #endregion
+
+    #region LoadUserBoquet
+    private void LoadUserBouquet(string file, ref int favIndex)
+    {
+      if (!File.Exists(file))
         return;
 
       using var r = new StreamReader(File.OpenRead(file), utf8WithoutBom);
@@ -238,7 +266,6 @@ namespace ChanSort.Loader.Enigma2
       }
       
       this.DataRoot.SetFavListCaption(favIndex, line.Substring(6));
-      this.Features.SupportedFavorites = (Favorites)((int)this.Features.SupportedFavorites<<1)|Favorites.A;
 
       int lineNr = 0;
       int progNr = 0;
@@ -289,7 +316,9 @@ namespace ChanSort.Loader.Enigma2
         ch.SetOldPosition(1+favIndex, ++progNr);
       }
 
+
       this.favListFileNames.Add(file);
+      this.Features.SupportedFavorites = (Favorites)((ulong)this.Features.SupportedFavorites << 1) | Favorites.A;
       ++favIndex;
     }
     #endregion
@@ -338,7 +367,7 @@ namespace ChanSort.Loader.Enigma2
         var file = this.favListFileNames[favIndex];
         using var w = new StreamWriter(File.OpenWrite(file), utf8WithoutBom);
         w.WriteLine($"#NAME {this.DataRoot.GetFavListCaption(favIndex)}");
-        foreach (var ch in this.tv.Channels.OrderBy(c => c.GetPosition(favIndex+1)))
+        foreach (var ch in this.channels.Channels.OrderBy(c => c.GetPosition(favIndex+1)))
         {
           if (!(ch is Channel c) || c.GetPosition(favIndex + 1) < 0)
             continue;
