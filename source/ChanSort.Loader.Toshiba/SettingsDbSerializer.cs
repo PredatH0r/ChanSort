@@ -19,6 +19,8 @@ namespace ChanSort.Loader.Toshiba
   {
     private readonly ChannelList channels = new ChannelList(SignalSource.All, "All");
 
+    private readonly HashSet<string> tableNames = new();
+
     #region ctor()
     public SettingsDbSerializer(string inputFile) : base(inputFile)
     {
@@ -32,6 +34,15 @@ namespace ChanSort.Loader.Toshiba
       this.Features.SupportedFavorites = 0;
 
       this.DataRoot.AddChannelList(this.channels);
+      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Lock));
+      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Skip));
+      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Hidden));
+      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
+      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.PcrPid));
+      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.VideoPid));
+      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
+      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Satellite));
+      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ShortName));
     }
     #endregion
 
@@ -63,12 +74,19 @@ namespace ChanSort.Loader.Toshiba
       string sysDataConnString = "Data Source=" + this.FileName;
       using var conn = new SQLiteConnection(sysDataConnString);
       conn.Open();
+      
       using var cmd = conn.CreateCommand();
 
       this.RepairCorruptedDatabaseImage(cmd);
 
-      cmd.CommandText = "SELECT count(1) FROM sqlite_master WHERE type = 'table' and name='EASISerTable'";
-      if (Convert.ToInt32(cmd.ExecuteScalar()) != 1)
+      cmd.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table'";
+      using (var r = cmd.ExecuteReader())
+      {
+        while (r.Read())
+          this.tableNames.Add(r.GetString(0).ToLowerInvariant());
+      }
+
+      if (!this.tableNames.Contains("easisertable"))
         throw new FileLoadException("File doesn't contain the expected tables");
 
       this.ReadSatellites(cmd);
@@ -135,23 +153,27 @@ namespace ChanSort.Loader.Toshiba
     {
       int ixE = 0;
       int ixD = 3;
-      int ixA = 8;
-      int ixT = 9;
+      int ixA = 9;
       int ixDC = 10;
+      int ixT = 12;
 
-      cmd.CommandText = @"
+      var hasTADTunerDataTable = this.tableNames.Contains("tadtunerdatatable");
+      string analogTunerFields = hasTADTunerDataTable ? ",t.frequency_in_multiples_of_10Hz" : "";
+      string analogTunerTable = hasTADTunerDataTable ? " left outer join TADTunerDataTable t on t.channel=ac.channel_no" : "";
+      cmd.CommandText = $@"
 select 
   e.m_handle, e.m_rsn, e.m_name_serialized, 
-  d.m_onid, d.m_tsid, d.m_id, d.m_type, d.m_name_serialized,
+  d.m_onid, d.m_tsid, d.m_id, d.m_type, d.m_name_serialized, d.m_provider_serialized,
   a.m_name_serialized,
-  t.frequency_in_multiples_of_10Hz,
-  dc.frequency
+  dc.frequency, dc.symbol_rate
+  {analogTunerFields}
 from EASISerTable e 
 left outer join DVBSerTable d on d.m_handle=e.m_handle
 left outer join AnalogSerTable a on a.m_handle=e.m_handle
 left outer join ChanDataTable dc on dc.handle=d.m_channel_no
 left outer join ChanDataTable ac on ac.handle=a.m_channel_no
-left outer join TADTunerDataTable t on t.channel=ac.channel_no";
+{analogTunerTable}";
+
       using var r = cmd.ExecuteReader();
       while (r.Read())
       {
@@ -166,12 +188,16 @@ left outer join TADTunerDataTable t on t.channel=ac.channel_no";
           channel.OriginalNetworkId = r.GetInt32(ixD + 0) & 0x1FFF;
           channel.TransportStreamId = r.GetInt32(ixD + 1) & 0x1FFF;
           channel.ServiceId = r.GetInt32(ixD + 2) & 0x1FFF;
-          channel.ServiceType = r.GetInt32(ixD + 3);
+          channel.ServiceType = r.GetInt32(ixD + 3) & 0x1FFF;
+          channel.Provider = r.GetString(ixD + 5);
           channel.FreqInMhz = (decimal) r.GetInt32(ixDC + 0) / 1000;
+          channel.SymbolRate = r.GetInt32(ixDC + 1);
+          if (channel.FreqInMhz > 10000)
+            channel.FreqInMhz = (int) channel.FreqInMhz;
         }
 
         // analog
-        if (!r.IsDBNull(ixA + 0))
+        if (!r.IsDBNull(ixA + 0) && hasTADTunerDataTable)
         {
           channel.FreqInMhz = (decimal) r.GetInt32(ixT + 0) / 100000;
         }

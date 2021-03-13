@@ -208,7 +208,7 @@ namespace ChanSort.Api
           log.AppendFormat("Skipped reference list {0}\r\n", refList.ShortCaption);
           continue;
         }
-        ApplyReferenceList(refDataRoot, refList, tvList, true);
+        ApplyReferenceList(refDataRoot, refList, -1, tvList, -1, true);
       }
     }
 
@@ -225,7 +225,7 @@ namespace ChanSort.Api
     /// </param>
     /// <param name="overwrite">controls whether Pr# will be reassigned to the reference channel when they are already in-use in the TV list</param>
     /// <param name="consecutive">when true, consecutive numbers will be used instead of the Pr# in the reference list when applying the order</param>
-    public void ApplyReferenceList(DataRoot refDataRoot, ChannelList refList, ChannelList tvList, bool addProxyChannels = true, int positionOffset = 0, Func<ChannelInfo, bool, bool> chanFilter = null, bool overwrite = true, bool consecutive = false)
+    public void ApplyReferenceList(DataRoot refDataRoot, ChannelList refList, int refListPosIndex, ChannelList tvList, int tvListPosIndex, bool addProxyChannels = true, int positionOffset = 0, Func<ChannelInfo, bool, bool> chanFilter = null, bool overwrite = true, bool consecutive = false)
     {
       // create Hashtable for exact channel lookup
       // the UID of a TV channel list contains a source-indicator (Analog, Cable, Sat), which may be undefined in the reference list)
@@ -245,39 +245,12 @@ namespace ChanSort.Api
       }
 
       var incNr = 1 + positionOffset;
-      foreach (var refChannel in refList.Channels.OrderBy(ch => ch.OldProgramNr))
+      foreach (var refChannel in refList.Channels.OrderBy(ch => ch.GetOldPosition(refListPosIndex)))
       {
         if (!(chanFilter?.Invoke(refChannel, true) ?? true))
           continue;
 
-        var tvChannels = refChannel.Uid == "0-0-0" ? null : tvList.GetChannelByUid(refChannel.Uid);
-
-        // try to find matching channels based on ONID+TSID+SID
-        if ((tvChannels?.Count ?? 0) == 0)
-        {
-          var key = DvbKey(refChannel.OriginalNetworkId, refChannel.TransportStreamId, refChannel.ServiceId);
-          if (key != 0 && onidTsidSid.TryGetValue(key, out var candidates))
-          {
-            tvChannels = candidates;
-
-            // narrow the list down further when a transponder is also provided (i.e. the same TV channel can be received on multiple DVB-T frequencies)
-            if (tvChannels.Count > 1 && !string.IsNullOrEmpty(refChannel.ChannelOrTransponder))
-            {
-              candidates = tvChannels.Where(ch => ch.ChannelOrTransponder == refChannel.ChannelOrTransponder).ToList();
-              if (candidates.Count > 0)
-                tvChannels = candidates;
-            }
-          }
-        }
-
-        // try to find matching channels by name
-        if ((tvChannels?.Count ?? 0) == 0 && !string.IsNullOrWhiteSpace(refChannel.Name))
-          tvChannels = tvList.GetChannelByName(refChannel.Name).ToList();
-
-        // get the first unassigned channel from the candidates (e.g. when matching by non-unique names), or fall back to the first matching channel (e.g. by unique ID)
-        ChannelInfo tvChannel = tvChannels.FirstOrDefault(c => c.GetPosition(0) == -1);
-        if (tvChannel == null && tvChannels.Count > 0)
-          tvChannel = tvChannels[0];
+        var tvChannel = FindChannel(tvList, refChannel, onidTsidSid);
 
         if (tvChannel != null)
         {
@@ -293,7 +266,7 @@ namespace ChanSort.Api
           foreach (var chan in curChans)
             chan.NewProgramNr = -1;
 
-          tvChannel.SetPosition(0, newNr);
+          tvChannel.SetPosition(tvListPosIndex, newNr);
           if (refDataRoot.CanSkip && this.DataRoot.CanSkip)
             tvChannel.Skip = refChannel.Skip;
           if (refDataRoot.CanLock && this.DataRoot.CanLock)
@@ -308,7 +281,8 @@ namespace ChanSort.Api
             tvChannel.IsNameModified = true;
           }
 
-          ApplyFavorites(refDataRoot, refChannel, tvChannel);
+          if (tvListPosIndex == -1)
+            ApplyFavorites(refDataRoot, refChannel, tvChannel);
         }
         else if (addProxyChannels)
         {
@@ -316,6 +290,39 @@ namespace ChanSort.Api
           tvList.AddChannel(tvChannel);
         }
       }
+    }
+
+    private ChannelInfo FindChannel(ChannelList tvList, ChannelInfo refChannel, Dictionary<long, List<ChannelInfo>> onidTsidSid)
+    {
+      var tvChannels = refChannel.Uid == "0-0-0" ? null : tvList.GetChannelByUid(refChannel.Uid);
+
+      // try to find matching channels based on ONID+TSID+SID
+      if ((tvChannels?.Count ?? 0) == 0)
+      {
+        var key = DvbKey(refChannel.OriginalNetworkId, refChannel.TransportStreamId, refChannel.ServiceId);
+        if (key != 0 && onidTsidSid.TryGetValue(key, out var candidates))
+        {
+          tvChannels = candidates;
+
+          // narrow the list down further when a transponder is also provided (i.e. the same TV channel can be received on multiple DVB-T frequencies)
+          if (tvChannels.Count > 1 && !string.IsNullOrEmpty(refChannel.ChannelOrTransponder))
+          {
+            candidates = tvChannels.Where(ch => ch.ChannelOrTransponder == refChannel.ChannelOrTransponder).ToList();
+            if (candidates.Count > 0)
+              tvChannels = candidates;
+          }
+        }
+      }
+
+      // try to find matching channels by name
+      if ((tvChannels?.Count ?? 0) == 0 && !string.IsNullOrWhiteSpace(refChannel.Name))
+        tvChannels = tvList.GetChannelByName(refChannel.Name).ToList();
+
+      // get the first unassigned channel from the candidates (e.g. when matching by non-unique names), or fall back to the first matching channel (e.g. by unique ID)
+      ChannelInfo tvChannel = tvChannels.FirstOrDefault(c => c.GetPosition(0) == -1);
+      if (tvChannel == null && tvChannels.Count > 0)
+        tvChannel = tvChannels[0];
+      return tvChannel;
     }
 
     long DvbKey(int onid, int tsid, int sid)
@@ -332,9 +339,9 @@ namespace ChanSort.Api
           tvChannel.Favorites = refChannel.Favorites & DataRoot.SupportedFavorites;
           if (refDataRoot.SortedFavorites)
           {
-            var c = Math.Min(refChannel.FavIndex.Count, tvChannel.OldFavIndex.Count);
+            var c = Math.Min(refDataRoot.FavListCount, this.DataRoot.FavListCount);
             for (int i = 0; i < c; i++)
-              tvChannel.FavIndex[i] = refChannel.OldFavIndex[i];
+              tvChannel.SetPosition(i+1, refChannel.GetOldPosition(i+1));
           }
           else
             this.ApplyPrNrToFavLists(tvChannel);
@@ -363,13 +370,13 @@ namespace ChanSort.Api
         if (sortedFav)
         {
           foreach (var channel in favList.Channels)
-            maxPosition = Math.Max(maxPosition, channel.FavIndex[favIndex]);
+            maxPosition = Math.Max(maxPosition, channel.GetPosition(favIndex+1));
         }
 
         foreach (var channel in list)
         {
-          if (sortedFav && channel.FavIndex[favIndex] == -1)
-            channel.FavIndex[favIndex] = ++maxPosition;
+          if (sortedFav && channel.GetPosition(favIndex+1) == -1)
+            channel.SetPosition(favIndex+1,++maxPosition);
           channel.Favorites |= favMask;
         }
       }
@@ -377,8 +384,8 @@ namespace ChanSort.Api
       {
         foreach (var channel in list)
         {
-          if (sortedFav && channel.FavIndex[favIndex] != -1)
-            channel.FavIndex[favIndex] = -1;
+          if (sortedFav && channel.GetPosition(favIndex+1) != -1)
+            channel.SetPosition(favIndex+1, -1);
           channel.Favorites &= ~favMask;
         }
 
@@ -386,10 +393,10 @@ namespace ChanSort.Api
         if (sortedFav && !this.DataRoot.AllowGapsInFavNumbers)
         {
           int i = 0;
-          foreach (var channel in favList.Channels.OrderBy(c => c.FavIndex[favIndex]))
+          foreach (var channel in favList.Channels.OrderBy(c => c.GetPosition(favIndex + 1)))
           {
-            if (channel.FavIndex[favIndex] != -1)
-              channel.FavIndex[favIndex] = ++i;
+            if (channel.GetPosition(favIndex+1) != -1)
+              channel.SetPosition(favIndex+1, ++i);
           }
         }
       }
@@ -419,7 +426,7 @@ namespace ChanSort.Api
       var refMask = (ulong)tvChannel.Favorites;
       for (int i = 0; supMask != 0; i++)
       {
-        tvChannel.FavIndex[i] = (refMask & 0x01) == 0 ? -1 : tvChannel.NewProgramNr;
+        tvChannel.SetPosition(i+1, (refMask & 0x01) == 0 ? -1 : tvChannel.NewProgramNr);
         supMask >>= 1;
         refMask >>= 1;
       }
@@ -439,13 +446,13 @@ namespace ChanSort.Api
       bool changed = false;
       for (int fav = 0; fav < favCount; fav++)
       {
-        var list = channelList.Channels.Where(c => c.FavIndex[fav] >= 0).OrderBy(c => c.FavIndex[fav]).ToList();
+        var list = channelList.Channels.Where(c => c.GetPosition(fav+1) >= 0).OrderBy(c => c.GetPosition(fav+1)).ToList();
         int i = 1;
         foreach (var channel in list)
         {
-          if (channel.FavIndex[fav] != i)
+          if (channel.GetPosition(fav+1) != i)
           {
-            channel.FavIndex[fav] = ++i;
+            channel.SetPosition(fav+1, ++i);
             changed = true;
           }
         }

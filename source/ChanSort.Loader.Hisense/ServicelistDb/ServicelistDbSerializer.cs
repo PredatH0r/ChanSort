@@ -358,7 +358,7 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
           
           int favListIdx = favListIdToFavIndex.TryGet(favListId, -1);
           if (favListIdx >= 0)
-            ci.OldFavIndex[favListIdx] = r.GetInt32(2);
+            ci.SetOldPosition(favListIdx+1, r.GetInt32(2));
 
           ci.SetOldPosition(favListIdx + 1, r.GetInt32(2)); // 0=main nr, 1-4=fav 1-4
           if (favListIdx < 0)

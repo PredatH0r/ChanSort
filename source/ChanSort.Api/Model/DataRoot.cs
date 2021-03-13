@@ -27,6 +27,8 @@ namespace ChanSort.Api
     public bool CanHide => this.loader.Features.CanHideChannels;
     public bool CanEditFavListName => this.loader.Features.CanEditFavListNames;
 
+    public int FavListCount { get; private set; }
+
     public DataRoot(SerializerBase loader)
     {
       this.loader = loader;
@@ -108,14 +110,12 @@ namespace ChanSort.Api
     #region ValidateAfterLoad()
     public virtual void ValidateAfterLoad()
     {
+      this.FavListCount = 0;
+      for (ulong m = (ulong)this.loader.Features.SupportedFavorites; m != 0; m >>= 1)
+        ++this.FavListCount;
+
       foreach (var list in this.ChannelLists)
       {
-        if (list.FavListCount == 0)
-        {
-          for (ulong m = (ulong) this.loader.Features.SupportedFavorites; m != 0; m >>= 1)
-            ++list.FavListCount;
-        }
-
         if (list.IsMixedSourceFavoritesList)
         {
           loader.Features.SortedFavorites = true; // all mixed source favorite lists must support ordering
@@ -144,18 +144,11 @@ namespace ChanSort.Api
     #region ApplyCurrentProgramNumbers()
     public void ApplyCurrentProgramNumbers()
     {
-      int c = 0;
-      if (this.MixedSourceFavorites || this.SortedFavorites)
-      {
-        for (ulong m = (ulong) this.SupportedFavorites; m != 0; m >>= 1)
-          ++c;
-      }
-
       foreach (var list in this.ChannelLists)
       {
         foreach (var channel in list.Channels)
         {
-          for (int i = 0; i <= c; i++)
+          for (int i = 0; i <= this.FavListCount; i++)
             channel.SetPosition(i, channel.GetOldPosition(i));
         }
       }
@@ -247,9 +240,8 @@ namespace ChanSort.Api
               chan.NewProgramNr = -1;
           }
 
-          chan.OldProgramNr = chan.NewProgramNr;
-          chan.OldFavIndex.Clear();
-          chan.OldFavIndex.AddRange(chan.FavIndex);
+          for (int j=0; j<=this.FavListCount; j++)
+            chan.SetOldPosition(j, chan.GetPosition(j));
         }
       }
     }

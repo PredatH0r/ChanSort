@@ -1,6 +1,13 @@
 ChanSort Change Log 
 ===================
 
+2021-03-13 (alpha)
+- Enigma2 lamedb / bouquets support for Linux based Set-Top-Boxes (Dreambox, VU+, Octagon, ...)
+- Toshiba settingsDB.db: support for lists without analog tuner data (missing TADTunerDataTable)
+- Grunding: failed to load lists where the <Digital> element did not contain a <channels> child element
+- W.I.P: reworking the reference list system so that a given flat list of channels can be applied to the 
+  main channel numbers or a particular favorite list.
+
 2021-02-24
 - Philips ChannelMap\_45: TV did not remember last selected favorite list when first fav list was created by ChanSort.
 - Philips ChannelMap\_100 and later: "Channel" XML elements inside the DVB\*.xml files are now reordered by program nr.

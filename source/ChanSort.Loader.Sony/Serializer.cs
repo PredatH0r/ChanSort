@@ -358,7 +358,7 @@ namespace ChanSort.Loader.Sony
           for (int j = 0; j < 4 && j < favNumbers.Length; j++)
           {
             if (int.TryParse(favNumbers[j], out var favNr) && favNr > 0)
-              chan.OldFavIndex[j] = favNr;
+              chan.SetOldPosition(j+1, favNr);
           }
         }
         var muxId = int.Parse(svcData["MuxID"][i]) + idAdjustment;
@@ -752,7 +752,7 @@ namespace ChanSort.Loader.Sony
         {
           var vals = value.Split(' ');
           for (int i = 0; i < 4; i++)
-            vals[i] = ch.FavIndex[i] <= 0 ? "0" : ch.FavIndex[i].ToString();
+            vals[i] = ch.GetPosition(i+1) <= 0 ? "0" : ch.GetPosition(i+1).ToString();
           return string.Join(" ", vals);
         }
       }

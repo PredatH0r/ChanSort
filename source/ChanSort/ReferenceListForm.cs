@@ -20,7 +20,6 @@ namespace ChanSort.Ui
 
     class ListOption
     {
-      private DataRoot root;
       public ChannelList ChannelList { get; }
       public int PosIndex { get; }
 
@@ -125,6 +124,7 @@ namespace ChanSort.Ui
       this.edFile.Text = serializer.FileName;
       this.rbAuto.Enabled = this.rbManual.Enabled = true;
       ser.DataRoot.ApplyCurrentProgramNumbers();
+      ser.DataRoot.ValidateAfterLoad();
 
       this.comboSource.EditValue = null;
       this.comboSource.Properties.Items.Clear();
@@ -132,13 +132,12 @@ namespace ChanSort.Ui
       {
         if (list.Channels.Count == 0)
           continue;
-        if (list.IsMixedSourceFavoritesList)
-        {
-          for (int i = 0; i <= list.FavListCount; i++)
-            this.comboSource.Properties.Items.Add(new ListOption(list, i, list + (i==0 ? "" : " - " + serializer.DataRoot.GetFavListCaption(i-1))));
-        }
-        else
+
+        if (!list.IsMixedSourceFavoritesList)
           this.comboSource.Properties.Items.Add(new ListOption(list, 0, list.Caption));
+
+        for (int i = 1; i <= serializer.DataRoot.FavListCount; i++)
+          this.comboSource.Properties.Items.Add(new ListOption(list, i, list + " - " + serializer.DataRoot.GetFavListCaption(i-1)));
       }
 
       this.comboTarget.EditValue = null;
@@ -149,7 +148,7 @@ namespace ChanSort.Ui
           continue;
         if (list.IsMixedSourceFavoritesList)
         {
-          for (int i = 0; i <= list.FavListCount; i++)
+          for (int i = 0; i <= main.DataRoot.FavListCount; i++)
             this.comboTarget.Properties.Items.Add(new ListOption(list, i, list + (i==0 ? "" : " - " + main.DataRoot.GetFavListCaption(i-1))));
         }
         else
@@ -341,7 +340,7 @@ namespace ChanSort.Ui
           switch (dlg.ShowDialog(this))
           {
             case DialogResult.OK:
-              target.ChannelList.Channels.ForEach(ch => ch.NewProgramNr = -1);
+              target.ChannelList.Channels.ForEach(ch => ch.SetPosition(target.PosIndex, -1));
               break;
             case DialogResult.Yes:
               //overwrite = true;
@@ -355,7 +354,7 @@ namespace ChanSort.Ui
         }
       }
 
-      main.Editor.ApplyReferenceList(this.serializer.DataRoot, src.ChannelList, target.ChannelList, false, offset, FilterChannel, overwrite, this.cbConsecutive.Checked);
+      main.Editor.ApplyReferenceList(this.serializer.DataRoot, src.ChannelList, src.PosIndex, target.ChannelList, target.PosIndex, false, offset, FilterChannel, overwrite, this.cbConsecutive.Checked);
       main.RefreshGrids();
     }
 

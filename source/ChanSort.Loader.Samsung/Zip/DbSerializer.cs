@@ -383,7 +383,7 @@ namespace ChanSort.Loader.Samsung.Zip
         if (pos >= 0)
         {
           channel.Favorites |= (Favorites) (1 << fav);
-          channel.OldFavIndex[fav] = pos;
+          channel.SetOldPosition(fav+1, pos);
         }
       }
     }
@@ -634,7 +634,7 @@ namespace ChanSort.Loader.Samsung.Zip
             cmdDeleteFav.ExecuteNonQuery();
           }
 
-          channel.FavIndex[i] = newPos;
+          channel.SetPosition(i+1, newPos);
         }
       }
     }

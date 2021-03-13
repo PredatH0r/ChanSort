@@ -194,7 +194,10 @@ namespace ChanSort.Loader.Grundig
           return;
       }
 
-      foreach (XmlNode networkNode in digital["channels"].ChildNodes)
+      var channels = digital["channels"];
+      if (channels == null)
+        return;
+      foreach (XmlNode networkNode in channels.ChildNodes)
       {
         if (networkNode.LocalName != "network")
           continue;
@@ -361,7 +364,7 @@ namespace ChanSort.Loader.Grundig
       if (ch.IsNameModified)
         att["name"].Value = ch.Name;
       for (int i=1; i<=4; i++)
-        att["f"+i].Value = Math.Max(0, ch.FavIndex[i-1]).ToString(); // convert -1 to 0
+        att["f"+i].Value = Math.Max(0, ch.GetPosition(i)).ToString(); // convert -1 to 0
       att["skp"].InnerText = ch.Skip ? "1" : "0";
       att["lck"].InnerText = ch.Lock ? "1" : "0";
       if ((ch.SignalSource & SignalSource.Digital) != 0)

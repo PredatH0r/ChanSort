@@ -442,7 +442,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
           var id = ((long) r.GetInt32(0) << 32) | (uint) r.GetInt32(1);
           var ci = this.channelsById.TryGet(id);
           if (ci != null)
-            ci.OldFavIndex[i - 1] = r.GetInt32(2);
+            ci.SetOldPosition(i, r.GetInt32(2));
         }
       }
     }
@@ -608,7 +608,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
     {
       for (int i = 0; i < 4; i++)
       {
-        if (ci.FavIndex[i] <= 0)
+        if (ci.GetPosition(i+1) <= 0)
         {
           cmd.CommandText = $"delete from fav_{i + 1} where ui2_svc_id={ci.RecordIndex >> 32} and ui2_svc_rec_id={ci.RecordIndex & 0xFFFFFFFF}";
           cmd.ExecuteNonQuery();
@@ -621,7 +621,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
           cmd.Parameters.Add("@name", DbType.String);
           cmd.Parameters.Add("@svcid", DbType.Int32);
           cmd.Parameters.Add("@recid", DbType.Int32);
-          cmd.Parameters["@chnr"].Value = ci.FavIndex[i].ToString();
+          cmd.Parameters["@chnr"].Value = ci.GetPosition(i+1).ToString();
           cmd.Parameters["@name"].Value = ci.Name;
           cmd.Parameters["@svcid"].Value = ci.RecordIndex >> 32;
           cmd.Parameters["@recid"].Value = ci.RecordIndex & 0xFFFF;
@@ -640,7 +640,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
     {
       for (int i = 0; i < 4; i++)
       {
-        if (ci.FavIndex[i] <= 0)
+        if (ci.GetPosition(i+1) <= 0)
           continue;
 
         cmd.CommandText = $"insert into fav_{i + 1} (sortId, channelId, svlId, channelName, svlRecId, nwMask) values (@chnr,@chanid,@svcid,@name,@recid,@nwmask)";
@@ -651,7 +651,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
         cmd.Parameters.Add("@name", DbType.String);
         cmd.Parameters.Add("@recid", DbType.Int32);
         cmd.Parameters.Add("@nwmask", DbType.Int32);
-        cmd.Parameters["@chnr"].Value = ci.FavIndex[i];
+        cmd.Parameters["@chnr"].Value = ci.GetPosition(i+1);
         cmd.Parameters["@chanid"].Value = ci.ChannelId;
         cmd.Parameters["@name"].Value = ci.Name;
         cmd.Parameters["@svcid"].Value = ci.RecordIndex >> 32;

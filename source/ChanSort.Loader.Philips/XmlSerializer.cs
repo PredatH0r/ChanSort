@@ -432,7 +432,7 @@ namespace ChanSort.Loader.Philips
           foreach (var chan in rootList.Channels)
           {
             favChannels.Channels.Add(chan);
-            for (int i=0; i<chan.FavIndex.Count; i++)
+            for (int i=0; i<this.DataRoot.FavListCount; i++)
               chan.SetOldPosition(i+1, -1);
           }
         }
@@ -547,7 +547,7 @@ namespace ChanSort.Loader.Philips
 
       // ChannelMap_100 supports a single fav list and stores the favorite number directly here in the channel.
       // ChannelMap_105 and later always store the value 0 in the channel and instead use a separate Favorites.xml file.
-      ch.SetupNode.Attributes["FavoriteNumber"].Value = setFavoriteNumber ? Math.Max(ch.FavIndex[0], 0).ToString() : "0";
+      ch.SetupNode.Attributes["FavoriteNumber"].Value = setFavoriteNumber ? Math.Max(ch.GetPosition(1), 0).ToString() : "0";
 
       if (ch.OldProgramNr != ch.NewProgramNr)
       {

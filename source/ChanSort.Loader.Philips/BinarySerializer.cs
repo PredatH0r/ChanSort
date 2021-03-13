@@ -901,7 +901,7 @@ namespace ChanSort.Loader.Philips
       var recordSize = 4;
       var recordCount = (dataSize - 4) / recordSize;
 
-      var favList = this.dvbsChannels.Channels.Where(c => c.FavIndex[0] != -1).OrderBy(c => c.FavIndex[0]).ToList();
+      var favList = this.dvbsChannels.Channels.Where(c => c.GetPosition(1) != -1).OrderBy(c => c.GetPosition(1)).ToList();
       var favCount = favList.Count;
       var firstFavIndex = favCount == 0 ? -1 : (int)favList[0].RecordIndex;
       data.SetInt16(4, firstFavIndex);

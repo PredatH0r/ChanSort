@@ -39,7 +39,7 @@ namespace Test.Loader.M3u
       ed.DataRoot = ser.DataRoot;
       ed.ChannelList = lists[0];
       //ed.ApplyReferenceList(refSer.DataRoot);
-      ed.ApplyReferenceList(refSer.DataRoot, refSer.DataRoot.ChannelLists.First(), lists[0], false, 0, null, true, false);
+      ed.ApplyReferenceList(refSer.DataRoot, refSer.DataRoot.ChannelLists.First(), 0, lists[0], 0,false, 0, null, true, false);
 
       Assert.AreEqual(1, chans[5].NewProgramNr);
       Assert.AreEqual(2, chans[4].NewProgramNr);

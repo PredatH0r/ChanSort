@@ -358,7 +358,7 @@ order by s.ntype,major_channel
         cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
         cmd.Parameters["@sname"].Value = channel.RawName;
         for (int fav = 0; fav < 4; fav++)
-          cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.FavIndex[fav]);
+          cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.GetPosition(fav+1));
         cmd.Parameters["@lock"].Value = channel.Lock;
         cmd.Parameters["@skip"].Value = channel.Skip;
         cmd.ExecuteNonQuery();

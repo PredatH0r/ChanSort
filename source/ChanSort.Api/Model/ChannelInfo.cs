@@ -72,11 +72,11 @@ namespace ChanSort.Api
     /// <summary>
     /// current number of the channel in the various favorite lists (if individual sorting is supported)
     /// </summary>
-    public List<int> FavIndex { get; }
+    private List<int> FavIndex { get; }
     /// <summary>
     /// original number of the channel in the various favorite lists (if individual sorting is supported)
     /// </summary>
-    public List<int> OldFavIndex { get; }
+    private List<int> OldFavIndex { get; }
 
     /// <summary>
     /// predefined LCN (logical channel number) assigned by TV firmware or cable/sat operator
@@ -330,7 +330,7 @@ namespace ChanSort.Api
         this.NewProgramNr = newPos;
       else
       {
-        for (int i=this.FavIndex.Count; i<=subListIndex;i++)
+        for (int i = this.FavIndex.Count; i < subListIndex; i++)
           this.FavIndex.Add(-1);
         this.FavIndex[subListIndex - 1] = newPos;
         int mask = 1 << (subListIndex - 1);
@@ -352,7 +352,7 @@ namespace ChanSort.Api
         this.OldProgramNr = oldPos;
       else
       {
-        for (int i = this.OldFavIndex.Count; i <= subListIndex; i++)
+        for (int i = this.OldFavIndex.Count; i < subListIndex; i++)
           this.OldFavIndex.Add(-1);
         this.OldFavIndex[subListIndex - 1] = oldPos;
       }

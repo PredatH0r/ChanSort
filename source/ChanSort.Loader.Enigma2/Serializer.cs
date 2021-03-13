@@ -84,14 +84,14 @@ namespace ChanSort.Loader.Enigma2
         LoadBouquets(path, ref favIndex);
 
       // load all unlisted userbouquet files
-      foreach (var file in Directory.GetFiles(Path.GetDirectoryName(this.FileName), "userbouquet.*"))
-      {
-        var ext = Path.GetExtension(file);
-        if (ext != ".tv" && ext != ".radio") // ignore .del, .bak and other irrelevant files
-          continue;
-        if (!this.favListFileNames.Contains(file))
-          this.LoadUserBouquet(file, ref favIndex);
-      }
+      //foreach (var file in Directory.GetFiles(Path.GetDirectoryName(this.FileName), "userbouquet.*"))
+      //{
+      //  var ext = Path.GetExtension(file);
+      //  if (ext != ".tv" && ext != ".radio") // ignore .del, .bak and other irrelevant files
+      //    continue;
+      //  if (!this.favListFileNames.Contains(file))
+      //    this.LoadUserBouquet(file, ref favIndex);
+      //}
     }
     #endregion
 
@@ -188,7 +188,6 @@ namespace ChanSort.Loader.Enigma2
       ch.RecordIndex = chanId;
       ch.RecordOrder = chanId;
       ch.OldProgramNr = ++chanId;
-      ch.NewProgramNr = chanId;
       ch.IsDeleted = false;
       ch.ServiceId = FromHex(parts[0]);
       ch.DvbNamespace = FromHex(parts[1]);
@@ -254,7 +253,7 @@ namespace ChanSort.Loader.Enigma2
     #region LoadUserBoquet
     private void LoadUserBouquet(string file, ref int favIndex)
     {
-      if (!File.Exists(file))
+      if (!File.Exists(file) || this.favListFileNames.Contains(file))
         return;
 
       using var r = new StreamReader(File.OpenRead(file), utf8WithoutBom);

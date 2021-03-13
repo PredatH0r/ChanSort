@@ -88,9 +88,9 @@ namespace Test.Loader.Philips
       var ch8 = list.Channels.FirstOrDefault(ch => ch.RecordIndex == 8);
       Assert.IsTrue(ch8.IsDeleted);
 
-      Assert.AreEqual(1, ch4.OldFavIndex[0]);
-      Assert.AreEqual(2, ch7.OldFavIndex[0]);
-      Assert.AreEqual(3, ch3.OldFavIndex[0]);
+      Assert.AreEqual(1, ch4.GetOldPosition(1));
+      Assert.AreEqual(2, ch7.GetOldPosition(1));
+      Assert.AreEqual(3, ch3.GetOldPosition(1));
     }
 
   }

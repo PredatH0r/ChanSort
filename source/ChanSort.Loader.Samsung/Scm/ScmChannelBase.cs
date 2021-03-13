@@ -188,7 +188,7 @@ namespace ChanSort.Loader.Samsung.Scm
         if (this.sortedFavorites == FavoritesIndexMode.Boolean) // D series
           favValue = (fav & mask) != 0 ? 1 : 0; // D series
         else if (this.sortedFavorites == FavoritesIndexMode.IndividuallySorted) // E series (and some F models with early firmware)
-          favValue = (fav & mask) != 0 ? this.FavIndex[favIndex] : -1;
+          favValue = (fav & mask) != 0 ? this.GetPosition(favIndex+1) : -1;
         else
           favValue = (fav & mask) != 0 ? this.NewProgramNr : -1; // F series (newer models/firmware), H series
           

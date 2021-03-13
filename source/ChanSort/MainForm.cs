@@ -479,7 +479,7 @@ namespace ChanSort.Ui
         this.tabSubList.TabPages[i].Text = this.DataRoot.GetFavListCaption(i - 1, true);
       this.tabSubList.EndUpdate();
 
-      if (!this.DataRoot.SortedFavorites || this.subListIndex >= favCount)
+      if (!this.DataRoot.SortedFavorites || this.subListIndex > favCount)
       {
         this.tabSubList.SelectedTabPageIndex = 0;
         this.subListIndex = 0;
