@@ -5,10 +5,12 @@ namespace ChanSort.Api
 {
   public class ChannelInfo
   {
+    private const int MaxFavListsWithFlags = 8;
+
     private string uid;
     private string serviceTypeName;
     private int newProgramNr;
-
+    
     public virtual bool IsDeleted { get; set; }
     public SignalSource SignalSource { get; set; }
     public string Source { get; set; }
@@ -65,6 +67,10 @@ namespace ChanSort.Api
     public string SatPosition { get; set; }
     public Transponder Transponder { get; set; }
     
+    /// <summary>
+    /// Defines whether favorite lists have individual ordering (FavIndex, OldFavIndex) or if they use the main channel number (Favorites bitmask)
+    /// </summary>
+    public FavoritesMode FavMode { get; set; } 
     /// <summary>
     /// Bitmask in which favorite lists the channel is included
     /// </summary>
@@ -304,59 +310,67 @@ namespace ChanSort.Api
     #region GetPosition(), SetPosition(), ChangePosition()
 
     /// <summary>
-    /// Gets the new channel number in the main channel list (index=0) or the various favorite lists (1-x)
+    /// Gets the new channel number in the main channel list (index=0) or the various favorite lists (1..x)
     /// </summary>
-    public int GetPosition(int subListIndex)
-    {
-      return subListIndex < 0 ? -1 : subListIndex == 0 ? this.NewProgramNr : subListIndex - 1 < this.FavIndex.Count ? this.FavIndex[subListIndex - 1] : -1;
-    }
+    public int GetPosition(int subListIndex) => this.GetNewOrOldPosition(subListIndex, this.NewProgramNr, this.FavIndex);
 
     /// <summary>
-    /// Gets the original channel number in the main channel list (index=0) or the various favorite lists (1-x)
+    /// Gets the original channel number in the main channel list (index=0) or the various favorite lists (1..x)
     /// </summary>
-    public int GetOldPosition(int subListIndex)
-    {
-      return subListIndex < 0 ? -1 : subListIndex == 0 ? this.OldProgramNr : subListIndex - 1 < this.OldFavIndex.Count ? this.OldFavIndex[subListIndex - 1] : -1;
-    }
+    public int GetOldPosition(int subListIndex) => this.GetNewOrOldPosition(subListIndex, this.OldProgramNr, this.OldFavIndex);
 
-    /// <summary>
-    /// Sets the new channel number in the main channel list (index=0) or the various favorite lists (1-x)
-    /// </summary>
-    public void SetPosition(int subListIndex, int newPos)
+    private int GetNewOrOldPosition(int subListIndex, int progNr, List<int> fav)
     {
-      if (subListIndex < 0) 
-        return;
+      if (subListIndex < 0)
+        return -1;
       if (subListIndex == 0)
-        this.NewProgramNr = newPos;
-      else
-      {
-        for (int i = this.FavIndex.Count; i < subListIndex; i++)
-          this.FavIndex.Add(-1);
-        this.FavIndex[subListIndex - 1] = newPos;
-        int mask = 1 << (subListIndex - 1);
-        if (newPos == -1)
-          this.Favorites &= (Favorites)~mask;
-        else
-          this.Favorites |= (Favorites)mask;
-      }
+        return progNr;
+      if (this.FavMode == FavoritesMode.None)
+        return -1;
+      if (this.FavMode == FavoritesMode.Flags)
+        return subListIndex > MaxFavListsWithFlags ? -1 : ((uint)this.Favorites & (1 << (subListIndex - 1))) == 0 ? 0 : progNr;
+      if (subListIndex - 1 >= fav.Count)
+        return -1;
+      return fav[subListIndex - 1];
     }
 
+
     /// <summary>
-    /// Sets the original channel number in the main channel list (index=0) or the various favorite lists (1-x)
+    /// Sets the new channel number in the main channel list (index=0) or the various favorite lists (1..x)
     /// </summary>
-    public void SetOldPosition(int subListIndex, int oldPos)
+    public void SetPosition(int subListIndex, int newPos) => this.SetNewOrOldPosition(subListIndex, newPos, n => this.NewProgramNr=n, this.FavIndex, f => this.Favorites = f);
+
+    /// <summary>
+    /// Sets the original channel number in the main channel list (index=0) or the various favorite lists (1..x)
+    /// </summary>
+    public void SetOldPosition(int subListIndex, int oldPos) => this.SetNewOrOldPosition(subListIndex, oldPos, n => this.OldProgramNr = n, this.OldFavIndex, null);
+
+    private void SetNewOrOldPosition(int subListIndex, int newPos, Action<int> setMainPosition, List<int> fav, Action<Favorites> setFavFlags)
     {
       if (subListIndex < 0)
         return;
       if (subListIndex == 0)
-        this.OldProgramNr = oldPos;
-      else
+        setMainPosition(newPos);
+      else if (this.FavMode != FavoritesMode.None)
       {
-        for (int i = this.OldFavIndex.Count; i < subListIndex; i++)
-          this.OldFavIndex.Add(-1);
-        this.OldFavIndex[subListIndex - 1] = oldPos;
+        if (this.FavMode != FavoritesMode.Flags)
+        {
+          for (int i = fav.Count; i < subListIndex; i++)
+            fav.Add(-1);
+          fav[subListIndex - 1] = newPos;
+        }
+
+        if (setFavFlags != null && subListIndex <= MaxFavListsWithFlags)
+        {
+          int mask = 1 << (subListIndex - 1);
+          if (newPos == -1)
+            this.Favorites &= (Favorites) ~mask;
+          else
+            this.Favorites |= (Favorites) mask;
+        }
       }
     }
+
 
     /// <summary>
     /// Internal helper method to adjust the main or favorite program number by a delta value
@@ -365,13 +379,19 @@ namespace ChanSort.Api
     {
       if (subListIndex == 0)
         this.NewProgramNr += delta;
-      else
+      else if (this.FavMode != FavoritesMode.None)
       {
-        for (int i = this.FavIndex.Count; i <= subListIndex; i++)
+        for (int i = this.FavIndex.Count; i < subListIndex; i++)
           this.FavIndex.Add(-1);
         this.FavIndex[subListIndex - 1] += delta;
       }
     }
     #endregion
+
+    public void ResetFavorites()
+    {
+      this.FavIndex.Clear();
+      this.Favorites = 0;
+    }
   }
 }

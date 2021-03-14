@@ -172,5 +172,24 @@ namespace Test.Loader.Sony
     }
     #endregion
 
+
+    #region TestChannelAndFavListEditing_Android
+    [TestMethod]
+    public void TestChannelAndFavListEditing_Android()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\android_sdb-sat.xml");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new SonyPlugin());
+    }
+    #endregion
+
+    #region TestChannelAndFavListEditing_KDL
+    [TestMethod]
+    public void TestChannelAndFavListEditing_KDL()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\kdl_sdb-cable-sat.xml");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new SonyPlugin());
+    }
+    #endregion
+
   }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using ChanSort.Api;
+using ChanSort.Loader.Philips;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test.Loader.Philips
@@ -92,6 +92,15 @@ namespace Test.Loader.Philips
       Assert.AreEqual(2, ch7.GetOldPosition(1));
       Assert.AreEqual(3, ch3.GetOldPosition(1));
     }
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles2\\Repair\\ChannelList") + "\\chanLst.bin";
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new PhilipsPlugin());
+    }
+    #endregion
 
   }
 }

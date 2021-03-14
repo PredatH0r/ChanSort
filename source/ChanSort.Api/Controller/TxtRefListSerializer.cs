@@ -21,8 +21,7 @@ namespace ChanSort.Api
       this.Features.DeleteMode = DeleteMode.Physically;
       this.Features.CanHaveGaps = true;
       this.Features.EncryptedFlagEdit = false;
-      this.Features.SortedFavorites = false;
-      this.Features.SupportedFavorites = 0;
+      this.Features.FavoritesMode = FavoritesMode.None;
       this.DataRoot.AddChannelList(this.allChannels);
 
       allChannels.VisibleColumnFieldNames = new List<string>

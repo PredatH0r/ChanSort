@@ -30,9 +30,8 @@ namespace ChanSort.Loader.Grundig
       this.Features.CanSaveAs = false;
       this.Features.AllowGapsInFavNumbers = false;
       this.Features.CanEditFavListNames = false;
-      this.Features.SortedFavorites = true;
-      this.Features.MixedSourceFavorites = false;
-      this.Features.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D;
+      this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+      this.Features.MaxFavoriteLists = 4;
 
 
       this.DataRoot.AddChannelList(this.terrChannels);

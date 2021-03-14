@@ -101,5 +101,24 @@ namespace Test.Loader.Philips
     }
     #endregion
 
+
+    #region TestChannelAndFavListEditing_100
+    [TestMethod]
+    public void TestChannelAndFavListEditing_100()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles\\ChannelMap_100\\ChannelList") + "\\chanLst.bin";
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new PhilipsPlugin());
+    }
+    #endregion
+
+    #region TestChannelAndFavListEditing_Legacy
+    [TestMethod]
+    public void TestChannelAndFavListEditing_Legacy()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles\\Repair") + "\\CM_TPM1013E_LA_CK.xml";
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new PhilipsPlugin());
+    }
+    #endregion
+
   }
 }

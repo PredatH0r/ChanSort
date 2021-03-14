@@ -81,5 +81,14 @@ namespace Test.Loader.VDR
     }
     #endregion
 
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.VDR\\TestFiles\\channels.conf");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new VdrPlugin());
+    }
+    #endregion
   }
 }

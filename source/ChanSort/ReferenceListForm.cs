@@ -83,29 +83,26 @@ namespace ChanSort.Ui
     {
       try
       {
-        string supportedExtensions;
-        int numberOfFilters;
-        var filter = main.GetTvDataFileFilter(out supportedExtensions, out numberOfFilters);
+        var filter = main.GetTvDataFileFilter(out var supportedExtensions, out var numberOfFilters);
 
-        using (var dlg = new OpenFileDialog())
-        {
-          dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) ?? ".", "ReferenceLists");
-          dlg.AddExtension = true;
-          dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
-          dlg.FilterIndex = numberOfFilters + 1;
-          dlg.CheckFileExists = true;
-          dlg.RestoreDirectory = true;
-          dlg.DereferenceLinks = true;
-          dlg.Title = Resources.ReferenceListForm_ShowOpenFileDialog_Title;
-          if (dlg.ShowDialog(main) != DialogResult.OK)
-            return null;
+        using var dlg = new OpenFileDialog();
+        dlg.InitialDirectory = Config.Default.ReferenceListFolder ?? Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) ?? ".", "ReferenceLists");
+        dlg.AddExtension = true;
+        dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
+        dlg.FilterIndex = numberOfFilters + 1;
+        dlg.CheckFileExists = true;
+        dlg.RestoreDirectory = true;
+        dlg.DereferenceLinks = true;
+        dlg.Title = Resources.ReferenceListForm_ShowOpenFileDialog_Title;
+        if (dlg.ShowDialog(main) != DialogResult.OK)
+          return null;
 
-          if (main.DetectCommonFileCorruptions(dlg.FileName))
-            return null;
+        Config.Default.ReferenceListFolder = Path.GetDirectoryName(dlg.FileName);
+        if (main.DetectCommonFileCorruptions(dlg.FileName))
+          return null;
 
-          ISerializerPlugin hint = dlg.FilterIndex <= main.Plugins.Count ? main.Plugins[dlg.FilterIndex - 1] : null;
-          return main.GetSerializerForFile(dlg.FileName, ref hint);
-        }
+        ISerializerPlugin hint = dlg.FilterIndex <= main.Plugins.Count ? main.Plugins[dlg.FilterIndex - 1] : null;
+        return main.GetSerializerForFile(dlg.FileName, ref hint);
       }
       catch
       {
@@ -126,20 +123,24 @@ namespace ChanSort.Ui
       ser.DataRoot.ApplyCurrentProgramNumbers();
       ser.DataRoot.ValidateAfterLoad();
 
+      // fill source first, so that when a target is selected later, the event handler can pick the best source
       this.comboSource.EditValue = null;
       this.comboSource.Properties.Items.Clear();
       foreach (var list in serializer.DataRoot.ChannelLists)
       {
         if (list.Channels.Count == 0)
           continue;
-
         if (!list.IsMixedSourceFavoritesList)
-          this.comboSource.Properties.Items.Add(new ListOption(list, 0, list.Caption));
+          this.comboSource.Properties.Items.Add(new ListOption(list, 0, list.ShortCaption));
 
-        for (int i = 1; i <= serializer.DataRoot.FavListCount; i++)
-          this.comboSource.Properties.Items.Add(new ListOption(list, i, list + " - " + serializer.DataRoot.GetFavListCaption(i-1)));
+        if (!serializer.DataRoot.MixedSourceFavorites || list.IsMixedSourceFavoritesList)
+        {
+          for (int i = 1; i <= serializer.DataRoot.FavListCount; i++)
+            this.comboSource.Properties.Items.Add(new ListOption(list, i, list.ShortCaption + " - " + serializer.DataRoot.GetFavListCaption(i - 1, true)));
+        }
       }
 
+      // select target
       this.comboTarget.EditValue = null;
       this.comboTarget.Properties.Items.Clear();
       foreach (var list in main.DataRoot.ChannelLists)
@@ -148,26 +149,27 @@ namespace ChanSort.Ui
           continue;
         if (list.IsMixedSourceFavoritesList)
         {
-          for (int i = 0; i <= main.DataRoot.FavListCount; i++)
-            this.comboTarget.Properties.Items.Add(new ListOption(list, i, list + (i==0 ? "" : " - " + main.DataRoot.GetFavListCaption(i-1))));
+          for (int i = 1; i <= main.DataRoot.FavListCount; i++)
+            this.comboTarget.Properties.Items.Add(new ListOption(list, i, list.ShortCaption + (i == 0 ? "" : " - " + main.DataRoot.GetFavListCaption(i - 1, true))));
         }
         else
         {
-          this.comboTarget.Properties.Items.Add(new ListOption(list, 0, list.Caption));
+          this.comboTarget.Properties.Items.Add(new ListOption(list, 0, list.ShortCaption));
           if (main.CurrentChannelList == list)
-            this.comboTarget.SelectedIndex = this.comboTarget.Properties.Items.Count-1;
+            this.comboTarget.SelectedIndex = this.comboTarget.Properties.Items.Count - 1;
         }
       }
-
       if (this.comboTarget.SelectedIndex < 0 && this.comboTarget.Properties.Items.Count > 0)
         this.comboTarget.SelectedIndex = 0;
+
 
       // detect whether auto-sorting is possible
       this.rbAuto.Enabled = true;
       foreach (var list in main.DataRoot.ChannelLists)
       {
-        if (!list.IsMixedSourceFavoritesList)
-          this.rbAuto.Enabled &= (serializer.DataRoot.GetChannelList(list.SignalSource)?.SignalSource ?? 0) == list.SignalSource;
+        if (list.Channels.Count == 0 || list.IsMixedSourceFavoritesList)
+          continue;
+        this.rbAuto.Enabled &= (serializer.DataRoot.GetChannelList(list.SignalSource)?.SignalSource ?? 0) == list.SignalSource;
       }
       if (this.rbAuto.Enabled)
         this.rbAuto.Checked = true;
@@ -329,7 +331,7 @@ namespace ChanSort.Ui
         offset -= src.ChannelList.Channels.Min(ch => Math.Max(ch.OldProgramNr, 1));
 
       bool overwrite = true;
-      if (target.ChannelList.GetChannelsByNewOrder().Any(ch => ch.NewProgramNr != -1))
+      if (target.ChannelList.GetChannelsByNewOrder().Any(ch => ch.GetPosition(target.PosIndex) != -1))
       {
         using (var dlg = new ActionBoxDialog(Resources.ReferenceListForm_btnApply_ConflictHandling))
         {

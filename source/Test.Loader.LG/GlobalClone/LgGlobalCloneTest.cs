@@ -156,5 +156,15 @@ namespace Test.Loader.LG
       NUnit.Framework.Assert.AreEqual(orig, changed); // need NUnit.AreEqual to only show the actual difference and not 5MB + 5MB of data
     }
     #endregion
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.LG\\GlobalClone\\GlobalClone00001.TLL");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new LgPlugin());
+    }
+    #endregion
+
   }
 }

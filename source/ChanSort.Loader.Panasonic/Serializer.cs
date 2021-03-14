@@ -48,7 +48,7 @@ namespace ChanSort.Loader.Panasonic
       this.Features.CanHideChannels = false;
       this.Features.CanHaveGaps = false;
       this.Features.EncryptedFlagEdit = true;
-      this.Features.SortedFavorites = true;
+      this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
       
       this.DataRoot.AddChannelList(this.avbtChannels);
       this.DataRoot.AddChannelList(this.avbcChannels);

@@ -83,6 +83,8 @@ namespace ChanSort.Loader.LG.Binary
       this.Features.CanHaveGaps = true;
       this.Features.DeviceSettings = true;
       this.Features.CleanUpChannelData = true;
+      this.Features.FavoritesMode = FavoritesMode.Flags;
+      this.Features.MaxFavoriteLists = 4;
       this.SupportedTvCountryCodes = new List<string>
                                        {
                                          "___ (None)", "AUT (Austria)", "BEL (Belgium)", "CHE (Switzerland)", 

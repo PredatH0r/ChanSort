@@ -104,5 +104,14 @@ namespace Test.Loader.Samsung.Zip
     }
     #endregion
 
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Samsung\\Zip\\TestFiles\\Channel_list_T-KTMDEUC-1132.6.zip");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new SamsungPlugin());
+    }
+    #endregion
   }
 }

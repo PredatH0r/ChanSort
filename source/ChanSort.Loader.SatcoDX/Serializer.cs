@@ -20,8 +20,7 @@ namespace ChanSort.Loader.SatcoDX
       this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = false;
       this.Features.CanHideChannels = false;
-      this.Features.SortedFavorites = false;
-      this.Features.SupportedFavorites = 0;
+      this.Features.FavoritesMode = FavoritesMode.None;
 
       this.DataRoot.AddChannelList(this.allChannels);
 

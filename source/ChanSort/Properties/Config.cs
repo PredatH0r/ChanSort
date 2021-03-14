@@ -45,6 +45,7 @@ namespace ChanSort.Ui.Properties
     public bool CloseGaps { get; set; } = true;
     [XmlArray("MruFiles")]
     public List<string> MruFiles { get; set; } = new List<string>();
+    public string ReferenceListFolder { get; set; }
     public string PrintFontName { get; set; } = "Segoe UI";
     public decimal PrintFontSize { get; set; } = 12;
     public bool PrintSortByName { get; set; } = false;

@@ -21,6 +21,9 @@ namespace ChanSort.Api
 
     public class SupportedFeatures
     {
+      private FavoritesMode favoritesMode;
+      private int maxFavoriteLists = 4;
+
       public ChannelNameEditMode ChannelNameEdit { get; set; }
       public bool CleanUpChannelData { get; set; }
       public bool DeviceSettings { get; set; }
@@ -33,9 +36,31 @@ namespace ChanSort.Api
       public bool CanSaveAs { get; set; } = true;
 
 
-      public Favorites SupportedFavorites { get; set; } = Favorites.A | Favorites.B | Favorites.C | Favorites.D;
-      public bool SortedFavorites { get; set; }
-      public bool MixedSourceFavorites { get; set; }
+      public FavoritesMode FavoritesMode
+      {
+        get => this.favoritesMode;
+        set
+        {
+          this.favoritesMode = value;
+          if (value == FavoritesMode.None)
+            this.MaxFavoriteLists = 0;
+        }
+      }
+
+      public int MaxFavoriteLists
+      {
+        get => this.maxFavoriteLists;
+        set
+        {
+          if (value == this.maxFavoriteLists)
+            return;
+          this.maxFavoriteLists = value;
+          this.SupportedFavorites = 0;
+          for (int i = 0; i < value; i++)
+            this.SupportedFavorites = (Favorites) (((ulong) this.SupportedFavorites << 1) | 1);
+        }
+      }
+      public Favorites SupportedFavorites { get; private set; } = Favorites.A | Favorites.B | Favorites.C | Favorites.D;
       public bool AllowGapsInFavNumbers { get; set; }
       public bool CanEditFavListNames { get; set; }
 

@@ -29,9 +29,9 @@ namespace ChanSort.Loader.Samsung.Scm
     public readonly int hdplusChannelLength;
     public readonly int avbtFineTuneLength;
     public readonly int dvbtFineTuneLength;
-    public readonly Favorites supportedFavorites;
     public readonly int ptcLength;
     public readonly int serviceProviderLength;
+    public readonly int numFavorites;
     public readonly FavoritesIndexMode SortedFavorites;
     public readonly int cyfraPlusChannelSize;
 
@@ -49,11 +49,7 @@ namespace ChanSort.Loader.Samsung.Scm
       this.avbtFineTuneLength = iniSection.GetInt("FineTune");
       this.dvbtFineTuneLength = iniSection.GetInt("FineTune_Digital");
       this.serviceProviderLength = iniSection.GetInt("ServiceProvider", 108);
-      int numFavorites = iniSection.GetInt("Favorites");
-      int mask = 0;
-      for (int i = 0; i < numFavorites; i++)
-        mask = (mask << 1) | 1;
-      this.supportedFavorites = (Favorites)mask;
+      this.numFavorites = iniSection.GetInt("Favorites");
       this.SortedFavorites = (FavoritesIndexMode)iniSection.GetInt("SortedFavorites");
     }
   }

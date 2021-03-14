@@ -33,12 +33,15 @@ namespace ChanSort.Api
     public string ShortCaption { get; set; }
     public SignalSource SignalSource { get; }
     public IList<ChannelInfo> Channels { get; } = new List<ChannelInfo>();
+    public int MaxFavLists { get; set; }
+
     public int Count => Channels.Count;
     public int DuplicateUidCount => duplicateUidCount;
     public int DuplicateProgNrCount => duplicateProgNrCount;
     public bool ReadOnly { get; set; }
     public int MaxChannelNameLength { get; set; }
     public int PresetProgramNrCount { get; private set; }
+
     public IList<string> VisibleColumnFieldNames;
 
     /// <summary>

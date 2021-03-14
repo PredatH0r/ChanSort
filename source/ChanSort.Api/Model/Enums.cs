@@ -75,16 +75,32 @@ namespace ChanSort.Api
   }
   #endregion
 
+  #region enum Favorites
   [Flags]
-  public enum Favorites : long { A = 0x01, B = 0x02, C = 0x04, D = 0x08, E = 0x10, F=0x20, G=0x40, H=0x80 }
+  public enum Favorites : byte { A = 0x01, B = 0x02, C = 0x04, D = 0x08, E = 0x10, F=0x20, G=0x40, H=0x80 }
+  #endregion
 
+  #region enum FavoritesMode
+  public enum FavoritesMode
+  {
+    NotInitialized = 0,
+    None = 1,
+    Flags = 2,
+    OrderedPerSource = 3,
+    MixedSource = 4
+  }
+  #endregion
+
+  #region enum UnsortedChannelMode
   public enum UnsortedChannelMode
   {
     AppendInOrder=0,
     AppendAlphabetically=1,
     Delete=2
   }
+  #endregion
 
+  #region ChannelNameEditMode
   [Flags]
   public enum ChannelNameEditMode
   {
@@ -93,4 +109,5 @@ namespace ChanSort.Api
     Digital = 0x02,
     All = Analog|Digital
   }
+  #endregion
 }

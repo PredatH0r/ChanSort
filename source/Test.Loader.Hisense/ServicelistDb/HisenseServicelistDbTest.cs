@@ -93,5 +93,14 @@ namespace Test.Loader.Hisense.ServicelistDb
     }
     #endregion
 
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ServicelistDb\\TestFiles\\" + "servicelist.db");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new HisensePlugin());
+    }
+    #endregion
+
   }
 }

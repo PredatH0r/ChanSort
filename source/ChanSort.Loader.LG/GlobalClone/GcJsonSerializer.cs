@@ -25,7 +25,7 @@ namespace ChanSort.Loader.GlobalClone
 
       this.Features.DeleteMode = DeleteMode.NotSupported; //.FlagWithoutPrNr; 
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
-      this.Features.SupportedFavorites = 0;
+      this.Features.FavoritesMode = FavoritesMode.None;
       this.Features.CanSaveAs = true;
       this.Features.CanHaveGaps = true;
       this.Features.CanHideChannels = true;

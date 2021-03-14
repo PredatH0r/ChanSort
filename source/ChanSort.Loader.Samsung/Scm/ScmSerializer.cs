@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Reflection;
 using System.Linq;
 using System.Text;
@@ -8,7 +7,7 @@ using ChanSort.Api;
 
 namespace ChanSort.Loader.Samsung.Scm
 {
-  internal class ScmSerializer : SerializerBase
+  public class ScmSerializer : SerializerBase
   {
     private readonly Dictionary<string, ModelConstants> modelConstants = new Dictionary<string, ModelConstants>();
     private readonly MappingPool<DataMapping> analogMappings = new MappingPool<DataMapping>("Analog");
@@ -111,8 +110,8 @@ namespace ChanSort.Loader.Samsung.Scm
       this.UnzipFileToTempFolder();
       
       DetectModelConstants(this.TempPath);
-      Features.SupportedFavorites = c.supportedFavorites;
-      Features.SortedFavorites = c.SortedFavorites == FavoritesIndexMode.IndividuallySorted;
+      Features.FavoritesMode = c.SortedFavorites == FavoritesIndexMode.IndividuallySorted ? FavoritesMode.OrderedPerSource : FavoritesMode.Flags;
+      Features.MaxFavoriteLists = c.numFavorites;
 
       ReadAnalogFineTuning(this.TempPath);
       ReadAnalogChannels(this.TempPath, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);

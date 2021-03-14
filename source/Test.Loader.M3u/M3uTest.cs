@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Linq;
 using ChanSort.Api;
+using ChanSort.Loader.M3u;
 
 namespace Test.Loader.M3u
 {
@@ -14,7 +14,7 @@ namespace Test.Loader.M3u
       var m3uFile = TestUtils.DeploymentItem("Test.Loader.M3u\\TestFiles\\example.m3u");
       var refFile = TestUtils.DeploymentItem("Test.Loader.M3u\\TestFiles\\example-ref.txt");
 
-      var loader = new ChanSort.Loader.M3u.M3uPlugin();
+      var loader = new M3uPlugin();
       var ser = loader.CreateSerializer(m3uFile);
       ser.Load();
       Assert.IsNotNull(ser);
@@ -44,5 +44,15 @@ namespace Test.Loader.M3u
       Assert.AreEqual(1, chans[5].NewProgramNr);
       Assert.AreEqual(2, chans[4].NewProgramNr);
     }
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.M3u\\TestFiles\\example.m3u");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new M3uPlugin());
+    }
+    #endregion
+
   }
 }

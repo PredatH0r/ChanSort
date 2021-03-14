@@ -69,7 +69,7 @@ namespace ChanSort.Loader.Panasonic
         if (favIndex > 0)
         {
           this.Favorites |= (Favorites) (1 << i);
-          this.SetOldPosition(i, favIndex);
+          this.SetOldPosition(i+1, favIndex);
         }
       }
     }

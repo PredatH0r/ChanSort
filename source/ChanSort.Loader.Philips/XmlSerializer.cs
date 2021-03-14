@@ -260,8 +260,8 @@ namespace ChanSort.Loader.Philips
       if (setupNode.HasAttribute("ChannelName"))
       {
         file.formatVersion = 1;
-        this.Features.SupportedFavorites = Favorites.A;
-        this.Features.SortedFavorites = true;
+        this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+        this.Features.MaxFavoriteLists = 1;
 
         var dtype = bcastNode.GetAttribute("DecoderType");
         if (dtype == "1")
@@ -276,8 +276,7 @@ namespace ChanSort.Loader.Philips
       else if (setupNode.HasAttribute("name"))
       {
         file.formatVersion = 2;
-        this.Features.SupportedFavorites = 0;
-        this.Features.SortedFavorites = false;
+        this.Features.FavoritesMode = FavoritesMode.None;
         foreach (var list in this.DataRoot.ChannelLists)
         {
           list.VisibleColumnFieldNames.Remove("Favorites");
@@ -417,9 +416,8 @@ namespace ChanSort.Loader.Philips
     {
       int index = ParseInt(node.Attributes["Index"].InnerText);
       string name = DecodeName(node.Attributes["Name"].InnerText);
-      this.Features.SupportedFavorites |= (Favorites) (1 << (index - 1));
-      this.Features.SortedFavorites = true;
-      this.Features.MixedSourceFavorites = true;
+      this.Features.FavoritesMode = FavoritesMode.MixedSource;
+      this.Features.MaxFavoriteLists = Math.Max(this.Features.MaxFavoriteLists, index);
 
       this.DataRoot.SetFavListCaption(index - 1, name);
 

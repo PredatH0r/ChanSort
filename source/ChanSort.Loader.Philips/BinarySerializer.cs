@@ -70,8 +70,8 @@ namespace ChanSort.Loader.Philips
       this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanSaveAs = false;
       this.Features.CanHaveGaps = false;
-      this.Features.SupportedFavorites = Favorites.A; // Map45 format will change this
-      this.Features.SortedFavorites = false; // satellite favorites are stored in a separate file that may support independent sorting, but DVB C/T only have a flag
+      this.Features.FavoritesMode = FavoritesMode.Flags; // satellite favorites are stored in a separate file that may support independent sorting, but DVB C/T only have a flag
+      this.Features.MaxFavoriteLists = 1; // Map45 format will change this
       this.Features.AllowGapsInFavNumbers = false;
       this.Features.CanEditFavListNames = false;
 
@@ -647,9 +647,9 @@ namespace ChanSort.Loader.Philips
           this.favChannels.AddChannel(chan);
         }
       }
-      this.Features.SupportedFavorites = (Favorites)0xFF;
-      this.Features.SortedFavorites = true;
-      this.Features.MixedSourceFavorites = true;
+
+      this.Features.FavoritesMode = FavoritesMode.MixedSource;
+      this.Features.MaxFavoriteLists = 8;
       this.Features.AllowGapsInFavNumbers = false;
 
       using var conn = new SQLiteConnection($"Data Source={listDb}");

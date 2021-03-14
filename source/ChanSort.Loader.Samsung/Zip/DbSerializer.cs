@@ -31,8 +31,8 @@ namespace ChanSort.Loader.Samsung.Zip
       this.Features.CanSkipChannels = true;
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
-      this.Features.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E;
-      this.Features.SortedFavorites = true;
+      this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+      this.Features.MaxFavoriteLists = 5;
       this.Features.AllowGapsInFavNumbers = true;
     }
     #endregion

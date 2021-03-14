@@ -31,7 +31,7 @@ namespace ChanSort.Loader.Toshiba
       this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = false;
       this.Features.CanHideChannels = false;
-      this.Features.SupportedFavorites = 0;
+      this.Features.FavoritesMode = FavoritesMode.None;
 
       this.DataRoot.AddChannelList(this.channels);
       channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Lock));

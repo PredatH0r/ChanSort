@@ -12,7 +12,7 @@ using ChanSort.Loader.Samsung.Scm;
 namespace Test.Loader.Samsung.Scm
 {
   [TestClass]
-  public class SamsungTest : LoaderTestBase
+  public class SamsungScmTest : LoaderTestBase
   {
     #region InitExpectedSamsungData()
     private Dictionary<string, ExpectedData> InitExpectedSamsungData()
@@ -241,6 +241,15 @@ namespace Test.Loader.Samsung.Scm
       Assert.IsNotNull(orf2w);
       Assert.IsTrue(orf2w.IsDeleted);
       Assert.AreEqual(-1, orf2w.OldProgramNr);
+    }
+    #endregion
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Samsung\\Scm\\TestFiles\\Channel_list_T_J_ohne_smart_12.scm");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new SamsungPlugin());
     }
     #endregion
 

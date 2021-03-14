@@ -29,8 +29,7 @@ namespace ChanSort.Loader.M3u
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.Physically;
-      this.Features.SortedFavorites = false;
-      this.Features.SupportedFavorites = 0;
+      this.Features.FavoritesMode = FavoritesMode.None;
       this.Features.CanLockChannels = false;
       this.Features.CanSkipChannels = false;
       this.Features.CanHideChannels = false;

@@ -119,7 +119,7 @@ namespace ChanSort.Loader.GlobalClone
       if (binTlls.Length > 0 && !(binTlls.Length == 1 && Path.GetFileName(binTlls[0]).ToLower() == Path.GetFileName(this.FileName).ToLower()))
       {
         var txt = Resource.GcSerializer_ReadModelInfo_ModelWarning;
-        if (Api.View.Default.MessageBox(txt, "LG GlobalClone", (int)MessageBoxButtons.YesNo, (int)MessageBoxIcon.Information) == (int)DialogResult.Yes)
+        if (Api.View.Default != null && Api.View.Default.MessageBox(txt, "LG GlobalClone", (int)MessageBoxButtons.YesNo, (int)MessageBoxIcon.Information) == (int)DialogResult.Yes)
         {
           foreach (var file in binTlls)
             File.Move(file, file + "_bak");
@@ -332,8 +332,8 @@ namespace ChanSort.Loader.GlobalClone
             {
               int n = info.LocalName[11] - 'A';
               var mask = 1 << n;
-              this.Features.SupportedFavorites |= (Favorites)mask;
-              this.Features.SortedFavorites = true;
+              this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+              this.Features.MaxFavoriteLists = Math.Max(this.Features.MaxFavoriteLists, n);
               if (((int)ch.Favorites & mask) != 0) // xml element holds bad index data (250) when fav is not set
                 ch.SetOldPosition(n + 1, int.Parse(info.InnerText));
             }

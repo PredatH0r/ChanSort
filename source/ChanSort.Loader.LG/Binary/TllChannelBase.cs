@@ -51,14 +51,13 @@ namespace ChanSort.Loader.LG.Binary
       this.ParseNames();
 
       this.Favorites = (Favorites)((data.GetByte(_Favorites2) & 0x3C) >> 2);
+      if (this.Favorites != 0)
+      { }
       this.Lock = data.GetFlag(_Lock);
       this.Skip = data.GetFlag(_Skip);
       this.Hidden = data.GetFlag(_Hide);
       this.Encrypted = data.GetFlag(_Encrypted);
       this.IsDeleted = data.GetFlag(_Deleted);
-      if (IsDeleted) // allow setting a breakpoint
-      {
-      }
     }
     #endregion
 

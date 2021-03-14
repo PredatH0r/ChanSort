@@ -88,5 +88,13 @@ namespace Test.Loader.SatcoDX
     }
     #endregion
 
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.SatcoDX\\TestFiles\\silva_schneider.sdx");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new SatcoDxPlugin());
+    }
+    #endregion
   }
 }

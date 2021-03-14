@@ -38,9 +38,8 @@ namespace ChanSort.Loader.Enigma2
       this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = false;
       this.Features.CanHideChannels = false;
-      this.Features.MixedSourceFavorites = true;
-      this.Features.SortedFavorites = true;
-      this.Features.SupportedFavorites = 0; // dynamically added
+      this.Features.FavoritesMode = FavoritesMode.MixedSource;
+      this.Features.MaxFavoriteLists = 0; // dynamically added
       this.Features.CanSaveAs = false;
 
       this.channels.IsMixedSourceFavoritesList = true;
@@ -188,6 +187,7 @@ namespace ChanSort.Loader.Enigma2
       ch.RecordIndex = chanId;
       ch.RecordOrder = chanId;
       ch.OldProgramNr = ++chanId;
+      ch.NewProgramNr = ch.OldProgramNr; // won't be set automatically because this is a mixed-source favorites list
       ch.IsDeleted = false;
       ch.ServiceId = FromHex(parts[0]);
       ch.DvbNamespace = FromHex(parts[1]);
@@ -317,7 +317,7 @@ namespace ChanSort.Loader.Enigma2
 
 
       this.favListFileNames.Add(file);
-      this.Features.SupportedFavorites = (Favorites)((ulong)this.Features.SupportedFavorites << 1) | Favorites.A;
+      ++this.Features.MaxFavoriteLists;
       ++favIndex;
     }
     #endregion
@@ -364,7 +364,7 @@ namespace ChanSort.Loader.Enigma2
       for (int favIndex = 0; favIndex < this.favListFileNames.Count; favIndex++)
       {
         var file = this.favListFileNames[favIndex];
-        using var w = new StreamWriter(File.OpenWrite(file), utf8WithoutBom);
+        using var w = new StreamWriter(File.Create(file), utf8WithoutBom);
         w.WriteLine($"#NAME {this.DataRoot.GetFavListCaption(favIndex)}");
         foreach (var ch in this.channels.Channels.OrderBy(c => c.GetPosition(favIndex+1)))
         {

@@ -123,8 +123,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
       Features.CanLockChannels = true;
       Features.CanHideChannels = true;
       Features.CanHaveGaps = true;
-      Features.MixedSourceFavorites = true;
-      Features.SortedFavorites = true;
+      Features.FavoritesMode = FavoritesMode.MixedSource;
     }
 
     #endregion

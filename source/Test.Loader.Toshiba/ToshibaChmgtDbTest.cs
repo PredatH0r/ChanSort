@@ -110,5 +110,14 @@ namespace Test.Loader.Toshiba
     }
     #endregion
 
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Toshiba\\TestFiles\\Toshiba-SL863G.zip");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new ToshibaPlugin());
+    }
+    #endregion
+
   }
 }

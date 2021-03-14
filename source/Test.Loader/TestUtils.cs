@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Test.Loader
 {
@@ -35,6 +31,7 @@ namespace Test.Loader
 
     private static void DeployRecursively(string src, string dest)
     {
+      Directory.CreateDirectory(dest);
       foreach(var file in Directory.GetFiles(src))
         File.Copy(file, Path.Combine(dest, Path.GetFileName(file)), true);
       foreach(var subdir in Directory.GetDirectories(src))

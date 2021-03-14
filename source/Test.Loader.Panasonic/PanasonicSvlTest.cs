@@ -94,5 +94,15 @@ namespace Test.Loader.Panasonic
     }
     #endregion
 
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Panasonic\\TestFiles\\svl-sat.db");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new PanasonicPlugin());
+    }
+    #endregion
+
   }
 }

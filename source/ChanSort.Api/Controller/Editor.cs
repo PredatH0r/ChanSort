@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ChanSort.Api
@@ -217,7 +218,9 @@ namespace ChanSort.Api
     /// </summary>
     /// <param name="refDataRoot">object representing the whole reference list file</param>
     /// <param name="refList">the particular ChannelList to take the order from</param>
+    /// <param name="refListPosIndex">the sublist index in the reference list that should be applied (0=main channel number, 1=fav1, ...)</param>
     /// <param name="tvList">the particular ChannelList to apply the order to</param>
+    /// <param name="tvListPosIndex">the sublist index in the target list that should be changed (-1=main and all favs, 0=main channel number, 1=fav1, ...)</param>
     /// <param name="addProxyChannels">if true, a placeholder channel will be created in the tvList if there is no matching TV channel for a reference channel</param>
     /// <param name="positionOffset">can be used to shift the Pr# of the reference list so avoid conflicts with already assigned Pr# in the TV list</param>
     /// <param name="chanFilter">a function which is called for each channel in the reference list (with 2nd parameter=true) and TV list (2nd parameter=false) to determine if the channel is part of the reordering
@@ -230,6 +233,7 @@ namespace ChanSort.Api
       // create Hashtable for exact channel lookup
       // the UID of a TV channel list contains a source-indicator (Analog, Cable, Sat), which may be undefined in the reference list)
       var onidTsidSid = new Dictionary<long, List<ChannelInfo>>();
+      var chansByNewNr = new Dictionary<int, List<ChannelInfo>>();
       foreach (var channel in tvList.Channels)
       {
         var key = DvbKey(channel.OriginalNetworkId, channel.TransportStreamId, channel.ServiceId);
@@ -242,10 +246,20 @@ namespace ChanSort.Api
           onidTsidSid.Add(key, list);
         }
         list.Add(channel);
+
+        //if (!chansByNewNr.TryGetValue(channel.NewProgramNr, out var chans))
+        //{
+        //  chans = new List<ChannelInfo>();
+        //  chansByNewNr[channel.NewProgramNr] = chans;
+        //}
+        //chans.Add(channel);
       }
 
       var incNr = 1 + positionOffset;
-      foreach (var refChannel in refList.Channels.OrderBy(ch => ch.GetOldPosition(refListPosIndex)))
+      var refPos = refListPosIndex < 0 || !refDataRoot.SortedFavorites ? 0 : refListPosIndex;
+      var refChannels = refList.Channels.OrderBy(ch => ch.GetOldPosition(refPos)).ToList();
+      var newPos = Math.Max(0, tvListPosIndex);
+      foreach (var refChannel in refChannels)
       {
         if (!(chanFilter?.Invoke(refChannel, true) ?? true))
           continue;
@@ -257,16 +271,24 @@ namespace ChanSort.Api
           if (!(chanFilter?.Invoke(tvChannel, false) ?? true))
             continue;
 
-          var newNr = consecutive ? incNr++ : refChannel.OldProgramNr + positionOffset;
+          var newNr = consecutive ? incNr++ : refChannel.GetOldPosition(refPos) + positionOffset;
 
           // handle conflicts when the number is already in-use
-          var curChans = tvList.GetChannelByNewProgNr(newNr);
-          if (!overwrite && curChans.Any())
-            continue;
-          foreach (var chan in curChans)
-            chan.NewProgramNr = -1;
+          if (chansByNewNr.TryGetValue(newNr, out var curChans))
+          {
+            if (!overwrite)
+              continue;
+            foreach (var chan in curChans)
+              chan.SetPosition(newPos, -1);
+          }
+          else
+          {
+            curChans = new List<ChannelInfo>();
+            chansByNewNr[newNr] = curChans;
+          }
+          curChans.Add(tvChannel);
 
-          tvChannel.SetPosition(tvListPosIndex, newNr);
+          tvChannel.SetPosition(newPos, newNr);
           if (refDataRoot.CanSkip && this.DataRoot.CanSkip)
             tvChannel.Skip = refChannel.Skip;
           if (refDataRoot.CanLock && this.DataRoot.CanLock)
@@ -358,7 +380,7 @@ namespace ChanSort.Api
 
 
     #region SetFavorites()
-    public void SetFavorites(List<ChannelInfo> list, int favIndex, bool set)
+    public void SetFavorites(IList<ChannelInfo> list, int favIndex, bool set)
     {
       bool sortedFav = this.DataRoot.SortedFavorites;
       var favMask = (Favorites)(1 << favIndex);
@@ -422,12 +444,10 @@ namespace ChanSort.Api
     /// <param name="tvChannel"></param>
     private void ApplyPrNrToFavLists(ChannelInfo tvChannel)
     {
-      var supMask = (ulong)this.DataRoot.SupportedFavorites;
       var refMask = (ulong)tvChannel.Favorites;
-      for (int i = 0; supMask != 0; i++)
+      for (int i = 0; i < this.DataRoot.FavListCount; i++)
       {
         tvChannel.SetPosition(i+1, (refMask & 0x01) == 0 ? -1 : tvChannel.NewProgramNr);
-        supMask >>= 1;
         refMask >>= 1;
       }
     }

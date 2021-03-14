@@ -71,7 +71,7 @@
   <ItemGroup>
     <Compile Include="Scm\FileFormatDetectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scm\SamsungTest.cs" />
+    <Compile Include="Scm\SamsungScmTest.cs" />
     <Compile Include="Zip\SamsungZipTest.cs" />
   </ItemGroup>
   <ItemGroup>

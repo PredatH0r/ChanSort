@@ -99,5 +99,15 @@ namespace Test.Loader.Toshiba
     }
     #endregion
 
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Toshiba\\TestFiles\\settingsDB.db");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new ToshibaPlugin());
+    }
+    #endregion
+
   }
 }

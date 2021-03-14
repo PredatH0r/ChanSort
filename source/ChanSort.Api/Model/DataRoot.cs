@@ -17,9 +17,10 @@ namespace ChanSort.Api
     public bool IsEmpty => this.channelLists.Count == 0;
     public bool NeedsSaving { get; set; }
 
+    public FavoritesMode FavoritesMode => this.loader.Features.FavoritesMode;
     public Favorites SupportedFavorites => this.loader.Features.SupportedFavorites;
-    public bool SortedFavorites => this.loader.Features.SortedFavorites;
-    public bool MixedSourceFavorites => this.loader.Features.MixedSourceFavorites;
+    public bool SortedFavorites => this.loader.Features.FavoritesMode >= FavoritesMode.OrderedPerSource;
+    public bool MixedSourceFavorites => this.loader.Features.FavoritesMode == FavoritesMode.MixedSource;
     public bool AllowGapsInFavNumbers => this.loader.Features.AllowGapsInFavNumbers;
     public bool DeletedChannelsNeedNumbers => this.loader.Features.DeleteMode == SerializerBase.DeleteMode.FlagWithPrNr;
     public bool CanSkip => this.loader.Features.CanSkipChannels;
@@ -67,7 +68,6 @@ namespace ChanSort.Api
     public virtual void AddChannelList(ChannelList list)
     {
       this.channelLists.Add(list);
-      this.loader.Features.MixedSourceFavorites |= list.IsMixedSourceFavoritesList;
     }
     #endregion
 
@@ -110,22 +110,23 @@ namespace ChanSort.Api
     #region ValidateAfterLoad()
     public virtual void ValidateAfterLoad()
     {
-      this.FavListCount = 0;
-      for (ulong m = (ulong)this.loader.Features.SupportedFavorites; m != 0; m >>= 1)
-        ++this.FavListCount;
+      this.FavListCount = this.loader.Features.MaxFavoriteLists;
+
+      var favMode = this.FavoritesMode;
+      if (this.ChannelLists.Any(l => l.IsMixedSourceFavoritesList))
+        favMode = loader.Features.FavoritesMode = FavoritesMode.MixedSource;
 
       foreach (var list in this.ChannelLists)
       {
         if (list.IsMixedSourceFavoritesList)
-        {
-          loader.Features.SortedFavorites = true; // all mixed source favorite lists must support ordering
           continue;
-        }
 
         // make sure that deleted channels have OldProgramNr = -1
         bool hasPolarity = false;
         foreach (var chan in list.Channels)
         {
+          chan.FavMode = favMode; // required so that channels know how to handle favorites (as bitmasks or as indices)
+
           if (chan.IsDeleted)
             chan.OldProgramNr = -1;
           else
@@ -144,12 +145,19 @@ namespace ChanSort.Api
     #region ApplyCurrentProgramNumbers()
     public void ApplyCurrentProgramNumbers()
     {
+      // prevent setting OldPosition to -1 in lists that don't support sorted favorites, because it would clear the Favorites flags
+      int maxPos = this.SortedFavorites ? this.FavListCount : 0;
       foreach (var list in this.ChannelLists)
       {
         foreach (var channel in list.Channels)
         {
-          for (int i = 0; i <= this.FavListCount; i++)
-            channel.SetPosition(i, channel.GetOldPosition(i));
+          if (!list.IsMixedSourceFavoritesList)
+            channel.NewProgramNr = channel.OldProgramNr;
+          if (!this.MixedSourceFavorites || list.IsMixedSourceFavoritesList)
+          {
+            for (int i = 1; i <= maxPos; i++)
+              channel.SetPosition(i, channel.GetOldPosition(i));
+          }
         }
       }
     }

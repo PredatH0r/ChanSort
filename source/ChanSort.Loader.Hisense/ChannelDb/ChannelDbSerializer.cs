@@ -98,7 +98,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
       this.Features.CanHaveGaps = true;
-      this.Features.SortedFavorites = true;
+      this.Features.FavoritesMode = FavoritesMode.MixedSource;
 
       channelLists.Add(new ChannelList(SignalSource.Antenna, "Antenna"));
       channelLists.Add(new ChannelList(SignalSource.Cable, "Cable"));

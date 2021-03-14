@@ -75,8 +75,7 @@ namespace ChanSort.Loader.Sony
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr; // in Android/e-format, this will be changed to FlagWithPrNr
-      this.Features.MixedSourceFavorites = false; // true for Android/e-format
-      this.Features.SortedFavorites = false; // true for Android/e-format
+      this.Features.FavoritesMode = FavoritesMode.Flags; // MixedSource for Android/e-format
       this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = false;
       this.Features.CanHideChannels = false; // true in Android/e-format
@@ -181,8 +180,7 @@ namespace ChanSort.Loader.Sony
         this.isEFormat = true;
         this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
         this.Features.CanHideChannels = true;
-        this.Features.MixedSourceFavorites = true;
-        this.Features.SortedFavorites = true;
+        this.Features.FavoritesMode = FavoritesMode.MixedSource;
         this.mixedFavList = new ChannelList(SignalSource.All, "Favorites");
         this.mixedFavList.IsMixedSourceFavoritesList = true;
         this.DataRoot.AddChannelList(this.mixedFavList);

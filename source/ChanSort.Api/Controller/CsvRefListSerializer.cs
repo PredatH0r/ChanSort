@@ -36,8 +36,8 @@ namespace ChanSort.Api
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
       this.Features.CanHaveGaps = true;
       this.Features.EncryptedFlagEdit = false;
-      this.Features.SortedFavorites = false;
-      this.Features.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E | Favorites.F | Favorites.G | Favorites.H;
+      this.Features.FavoritesMode = FavoritesMode.Flags;
+      this.Features.MaxFavoriteLists = 8;
     }
 
     #endregion

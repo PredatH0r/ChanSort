@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using ChanSort.Api;
 using ChanSort.Loader.LG;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -81,6 +82,18 @@ namespace Test.Loader.LG.Binary
       Assert.IsTrue(orf2.IsDeleted);
       Assert.AreEqual(-1, orf2.OldProgramNr);
       Assert.AreEqual(-1, orf2.NewProgramNr);
+    }
+    #endregion
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var inFile = TestUtils.DeploymentItem("Test.Loader.LG\\Binary\\LM\\xxLM620S-ZE00001.TLL.in");
+      var tllFile = inFile.Replace(".in", ".tll");
+      File.Delete(tllFile);
+      File.Move(inFile, tllFile);
+      RoundtripTest.TestChannelAndFavListEditing(tllFile, new LgPlugin());
     }
     #endregion
 

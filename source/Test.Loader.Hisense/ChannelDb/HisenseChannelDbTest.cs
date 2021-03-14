@@ -95,5 +95,13 @@ namespace Test.Loader.Hisense.ChannelDb
     }
     #endregion
 
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ChannelDb\\TestFiles\\" + "channel.db");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new HisensePlugin());
+    }
+    #endregion
   }
 }

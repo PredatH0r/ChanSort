@@ -201,27 +201,22 @@ namespace ChanSort.Ui
 
     private void ShowOpenFileDialog()
     {
-      string supportedExtensions;
-      int numberOfFilters;
-      var filter = GetTvDataFileFilter(out supportedExtensions, out numberOfFilters);
+      var filter = GetTvDataFileFilter(out var supportedExtensions, out var numberOfFilters);
 
-      using (var dlg = new OpenFileDialog())
-      {
-        dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
-        dlg.AddExtension = true;
-        dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
-        dlg.FilterIndex = numberOfFilters + 1;
-        dlg.CheckFileExists = true;
-        dlg.DereferenceLinks = true;
-        dlg.RestoreDirectory = true;
-        dlg.CheckPathExists = true;
-        dlg.ValidateNames = true;
-        if (dlg.ShowDialog() != DialogResult.OK)
-          return;
-
-        var plugin = dlg.FilterIndex <= this.Plugins.Count ? this.Plugins[dlg.FilterIndex - 1] : null;
-        this.LoadFiles(plugin, dlg.FileName);
-      }
+      using var dlg = new OpenFileDialog();
+      dlg.InitialDirectory = this.mruFiles.Count > 0 ? Path.GetDirectoryName(this.mruFiles[0]) : Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+      dlg.AddExtension = true;
+      dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
+      dlg.FilterIndex = numberOfFilters + 1;
+      dlg.CheckFileExists = true;
+      dlg.DereferenceLinks = true;
+      dlg.RestoreDirectory = true;
+      dlg.CheckPathExists = true;
+      dlg.ValidateNames = true;
+      if (dlg.ShowDialog() != DialogResult.OK)
+        return;
+      var plugin = dlg.FilterIndex <= this.Plugins.Count ? this.Plugins[dlg.FilterIndex - 1] : null;
+      this.LoadFiles(plugin, dlg.FileName);
     }
 
     #endregion

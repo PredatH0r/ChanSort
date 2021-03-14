@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using ChanSort.Api;
+using ChanSort.Loader.Philips;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test.Loader.Philips
@@ -32,5 +33,15 @@ namespace Test.Loader.Philips
       Assert.AreEqual(46102, ch0.ServiceId);
       Assert.AreEqual(6900, ch0.SymbolRate);
     }
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles1\\Repair\\ChannelList") + "\\chanLst.bin";
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new PhilipsPlugin(), true, 3);
+    }
+    #endregion
+
   }
 }
