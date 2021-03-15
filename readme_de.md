@@ -11,8 +11,9 @@ Links
 --------------
 ChanSort ist eine Windows-Anwendung, die das Sortieren von Fernsehsenderlisten erlaubt.  
 Die meisten modernen Fernseher können Senderlisten auf einen USB-Stick übertragen, den man danach am PC anschließt.
-ChanSort unterstützt diverse Dateiformate von Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba,
-Medion/Nabo/ok./PEAQ/Schaub-Lorenz/Silva-Schneider/Telefunken, Linux VDR und SAT>IP .m3u.
+ChanSort unterstützt diverse Dateiformate von Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,  
+SatcoDX (verwendet von Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),  
+Linux VDR, SAT>IP .m3u und Enigma2 basierende Linux TV-Boxen.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-de.png)
 
@@ -37,13 +38,16 @@ Es besteht die Möglichkeit von unerwarteten Nebeneffekten oder Schaden am Gerät 
 
 Hisense ist der einzige Hersteller, der Informationen und ein Testgerät bereitstellten.
 
+
 Systemvoraussetzungen
 -------------------
-- [Microsoft .NET Framework 4.6 (oder neuer)](https://dotnet.microsoft.com/download/dotnet-framework)
+- [Microsoft .NET Framework 4.8 (oder neuer)](https://dotnet.microsoft.com/download/dotnet-framework)
+  (Unter Linux wird Winetricks mit einem 32bit wineprefix benötigt, wo das "dotnet48" Paket installiert ist)
 - [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328):
   Wird benötigt um SQLite-Senderlisten zu bearbeiten (Hisense, Panasonic, Toshiba und Samsung J-Serie)
 - USB Stick/SD-Karte zur Übertragung der Senderliste zwischen TV und PC (FAT32-Formatierung empfohlen)
 - Einige TV-Modelle von LG erfordern eine spezielle Service-Fernbedienung zum Aufruf der Export/Import-Funktionen (Details in der Wiki)
+
 
 Unterstützte TV-Modelle 
 ---------------------
@@ -51,34 +55,30 @@ Unterstützte TV-Modelle
 **Samsung**  
 .scm Dateien: Serien B (2009)*, B (2013), C, D, E, F, H, J  
 .zip Dateien: Serien H, J, K, M, N, Q, R  
-Listen:  Air analog, Air digital, Cable analog, Cable digital, 
-		Cable Prime, Sat digital, Astra HD+, Freesat, TivuSat,
-		Canal Digital Sat, Digital+, Cyfra+
 
 \*: Das "clone.bin"-Format ist nicht unterstützt. Im "*.scm"-Format
 der 2009 B-series werden in der "Air Analog"-Liste nicht alle Bearbeitungsfunktionen
 unterstützt, da keine entsprechenden Testdateien vorhanden ist.
 
-Eine Anleitung zum Übertragen der Liste auf/von USB befindet sich auf:
-http://www.ullrich.es/job/sendersortierung/senderlisten-samsung-tv-exportieren-importieren/
+Eine Anleitung zum Transfer der Senderliste befindet sich hier:
+https://github.com/PredatH0r/ChanSort/wiki/Samsung
 
 **LG**  
-Serien: CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
-Listen:  Analog TV, DTV (DVB-C, DVB-T), Radio (DVB-C/T), Sat-DTV (DVB-S2), Sat-Radio (DVB-S2)
+Serien basierend auf Netcast OS, die eine xx\*.TLL-Datei exportieren:  
+  CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
+Serien basierend auf webOS 2-5, die eine GlobalClone00001.TLL-Datei exportieren
 
 \*: Einige Geräte verhalten sich fehlerhaft aufgrund Probleme in deren Firmware.  
 +: Siehe Systemanforderungen für die LM-Serie. xxLM640T kann aufgrund von Firmwaremängeln nicht unterstützt werden.  
 \#: Nur Satellitensender werden unterstützt.
 
-Andere Modelle können ebenfalls funktionieren, wurden aber nicht getestet. Erfahrungsberichte im Forum sind jederzeit willkommen.
-
 Modelle mit NetCast Betriebssytem beinhalten keine Import/Export Funktion im normalen Menü. Um das Geheimmenü aufzurufen,
 halten Sie die Settings Taste auf der Fernbedienung solange gedrückt, bis das Menü wieder verschwindet und dann drücken Sie "1105".
 Im "TV Link Loader" Menü befinden sich dann die Import/Export-Funktionen.
 
-Unterstützung für WebOS 5 ist derzeit experimentell. Benutzer berichten über Probleme beim Import, selbst wenn die Datei nicht 
-mit ChanSort bearbeitet wurden.
-Es kann notwendig sein, vor dem Import den Fernseher auf Werkseinstellungen zurückzusetzen, um seine Senderliste zu leeren.
+WICHTIG: Es ist NOTWENDIG bei der Sendersuche spezielle Optionen auszuwählen. Wenn ein Anbieter / Land / Satellit bei der Suche
+ausgewählt wird, erhält man eine vorsortierte Liste und der TV verhält sich nach einem Export+Import fehlerhaft.
+Wählen Sie immer "Keiner / Anderer / Alle" aus bzw. "Blindsuche", und nie einen Kabelanbieter oder "Astra 19.2 Liste".
 
 **Panasonic**  
 Viera-Modelle mit svl.bin oder svl.db Dateien (die meisten Modelle seit 2011)
@@ -88,7 +88,10 @@ Android-TV "sdb.xml" Dateien mit Versionen "FormateVer" 1.1.0 und KDL 2012/2014 
 
 **Philips**  
 Philips verwendet unzählige unterschiedliche Dateiformate für diverse TV-Modelle.
-ChanSort unterstützt derzeit 2 Varianten von .xml-Dateien. Andere Formate werden nicht unterstützt.
+ChanSort unterstützt derzeit folgende Formate:
+- PhilipsChannelMaps\ChannelMap_45, 100, 105 und 110
+- Repair\ChannelList\channellib\\*Table and s2channellib\\*.dat
+- Repair\CM_TPM1013E_LA_CK.xml (diese Datei ist oft verstekt und nur eine .bin Datei sichtbar)
 
 **Hisense**  
 Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500  
@@ -97,10 +100,14 @@ Besonderen Dank an Hisense für die Bereitstellung von technischen Informationen 
 
 **Toshiba**  
 Modelle, die eine .zip-Datei mit folgendem Inhalt: chmgt.db, dvbSysData.db und dvbMainData.db.  
-(z.B. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)
+(z.B. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)  
+Modelle mit einer settingsDB.db Datei
 
-**ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken**  
-Die Marken nutzen .sdx Dateien (derzeit wird nur Satellitenempfang unterstützt)
+**Grundig**
+Modelle die Dateien mit Namen dvb\*_config.xml exportieren.
+
+**SatcoDX (OEM für ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)**  
+Mehrere Marken nutzen die gleiche Hardware für DVB-S und exportieren .sdx Dateien
 
 **VDR (Linux Video Disk Recorder)**  
 Unterstützung des channels.conf Dateiformats.  
@@ -108,6 +115,10 @@ Die Implementation hierfür wurde vom Mitglied "TCr82" des VDR Projekts beigesteu
 
 **m3u (SAT>IP)**  
 Unterstützt SAT>IP .m3u Dateien mit erweiterten Informationen zu Sendernamen und Programmnummern.
+
+**Enigma2 (Dreambox, VU+ und viele andere Linux basierende Empfänger)**
+Erfordert eine lokale Kopie der Dateien "lamedb", "bouquets.\*" and "userbouquet.\*" aus /etc/Enigma2/.  
+
 
 Lizenz (GPLv3)
 ---------------
