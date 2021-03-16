@@ -12,7 +12,7 @@ About ChanSort
 ChanSort is a Windows application that allows you to reorder your TV's channel list.  
 Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
 ChanSort supports various file formats from Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,  
-SatcoDX (used by ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),  
+Sharp, Dyon, Blaupunkt, SatcoDX (used by ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),  
 Linux VDR, SAT>IP .m3u and Enimgma2 based Linux boxes.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-en.png)
@@ -38,8 +38,8 @@ There is a chance of unwanted side-effects or even damage to your TV, as reporte
 
 Hisense is the only manufacturer who provided technical information and a test device.
 
-Syste
-m requirements
+
+System requirements
 -------------------
 - [Microsoft .NET Framework 4.8 or later](https://dotnet.microsoft.com/download/dotnet-framework)
   (When running under Linux, you need Winetricks, select a 32bit wineprefix and install the "dotnet48" package)
@@ -94,6 +94,7 @@ ChanSort currently supports the formats:
 - Repair\CM_TPM1013E_LA_CK.xml (sometimes that file is hidden and only a .bin file is visible)
 
 **Hisense**  
+Some older models like LTDN40D50TS use the same .csv files as Sharp. See "Sharp" for instructions.
 2016 "Smart" models with a channel.db file, i.e. H65M5500  
 2017 models with a servicelist.db file  
 Special thanks to Hisense for supporting ChanSort with technical information and a test device!
@@ -108,6 +109,22 @@ Models that export files named dvb\*_config.xml.
 
 **SatcoDX (OEM for ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)**  
 Various brands use the same hardware for DVB-S, which exports .sdx files 
+
+**Sharp (and some models from Dyon, Blaupunkt, Hisense, Changhong, alphatronics, JTC Genesis)**
+Some of these TV share similar hardware and can export/import a .csv file allowing to change the channel order.  
+Blaupunkt B40A148TCSFHD, B32B133T2CSHD, ...  
+Changhong LED32E2200ST2, ...  
+Dyon Live 22 Pro, Live 24 Pro, ENTER 32 Pro X, ...  
+Hisense LTDN40D50TS, ...  
+Sharp LC-xxCFE4142E, LC-xxCFF6002E, LC-xxFI5542E, LC-xxFG5242E, LC-xxUI7552E, LC-xxUI7652E, xxBJ1E, xxBJ3E, xxBJ5E, ...  
+
+Depending on the actual TV the import/export function can be part of the regular user menu, a hotel menu or a service menu
+and the exported files may be different. Some models like Sharp Aquos xxBJ1E have a sub menu for exporting. You need to 
+export all 4 type of files for the import to work.  
+To access the secret hotel / service menus, there are several possible key combinations on the remote control:  
+hotel menu: MENU 7906 / MENU 4588
+service menu: MENU 1147 / MENU 11471147 / SOURCE 2580 
+Do not make any changes in the service menu, as this could damage your TV. Only use the import/export functions.
 
 **VDR (Linux Video Disk Recorder)**  
 Supports the channels.conf file format.  

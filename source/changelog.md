@@ -1,9 +1,9 @@
 ChanSort Change Log 
 ===================
 
-2021-03-15 (alpha)
-- Enigma2: added support for Linux based Set-Top-Boxes (Dreambox, VU+, Octagon, ...) using lamedb and bouquets
+2021-03-16
 - Sharp, Dyon, Blaupunkt, ...: added support for DVBS_Program.csv and \*DVBS_CHANNEL_TABLE.csv files
+- Enigma2: added support for Linux based Set-Top-Boxes (Dreambox, VU+, Octagon, ...) using lamedb and bouquets
 - Toshiba settingsDB.db: support for lists without analog tuner data (missing TADTunerDataTable)
 - Grunding: failed to load lists where the <Digital> element did not contain a <channels> child element
 - refrence lists can now be applied to main channel numbers (as before) or to a specific favorite list (new)

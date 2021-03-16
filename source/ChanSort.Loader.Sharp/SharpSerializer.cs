@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using ChanSort.Api;
@@ -34,7 +35,6 @@ namespace ChanSort.Loader.Sharp
   {
     private enum FormatVersion
     {
-      Unknown = 0,
       Hisense3Columns = 1,
       Sharp5Columns = 2,
       Sharp7Columns = 3,
@@ -44,6 +44,7 @@ namespace ChanSort.Loader.Sharp
     private readonly ChannelList dvbsChannels = new ChannelList(0, "DVB-S");
     private Encoding encoding;
     private FormatVersion formatVersion;
+    private string[] cols;
     private string[] lines;
 
 
@@ -56,6 +57,7 @@ namespace ChanSort.Loader.Sharp
       this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = false;
       this.Features.CanHideChannels = false;
+      this.Features.CanHaveGaps = false;
       this.Features.FavoritesMode = FavoritesMode.None;
 
       this.DataRoot.AddChannelList(this.dvbsChannels);
@@ -73,8 +75,6 @@ namespace ChanSort.Loader.Sharp
 
       this.formatVersion = DetectFormatVersion();
       this.AdjustVisibleColumns();
-
-      var cols = lines[2].ToLowerInvariant().Split(',');
 
       for (int i=3; i<this.lines.Length; i++)
       {
@@ -194,7 +194,7 @@ namespace ChanSort.Loader.Sharp
             return FormatVersion.Sharp7Columns;
 
           // fallback for formats with more information, as long as they contain the required columns
-          var cols = lines[2].ToLowerInvariant().Split(',');
+          this.cols = lines[2].ToLowerInvariant().Split(',');
           var dict = new HashSet<string>();
           foreach (var col in cols)
             dict.Add(col);
@@ -257,12 +257,29 @@ namespace ChanSort.Loader.Sharp
       for (int i=0; i<3; i++)
         file.WriteLine(this.lines[i]);
 
+      // index of fields in the extended FormatVersion.Sharp51Columns
+      var ixChannelNumber = Array.IndexOf(this.cols, "channel number");
+      var ixProgramIndex = ixChannelNumber < 0 ? -1 : Array.IndexOf(this.cols, "program index");
+
       foreach (var channel in this.dvbsChannels.GetChannelsByNewOrder())
       {
         // when a reference list was applied, the list may contain proxy entries for deleted channels, which must be ignored
         if (channel.IsProxy || channel.IsDeleted)
           continue;
-        file.WriteLine(this.lines[channel.RecordIndex]);
+
+        var line = this.lines[channel.RecordIndex];
+        if (ixProgramIndex >= 0)
+        {
+          // this extended format would only change the zapping order unless the "Channel Number" and "Channel Index" fields are updated too
+          var fields = this.lines[channel.RecordIndex].Split(',');
+          fields[ixChannelNumber] = fields[ixProgramIndex] = channel.NewProgramNr.ToString();
+          line = string.Join(",", fields);
+        }
+        else
+        {
+          // the older formats require the "Channel Number" to be unchanged and update it internally during the import based on the order of the lines
+        }
+        file.WriteLine(line);
       }
 
       file.WriteLine("[E]");

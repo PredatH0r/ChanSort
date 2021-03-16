@@ -12,7 +12,7 @@ Links
 ChanSort ist eine Windows-Anwendung, die das Sortieren von Fernsehsenderlisten erlaubt.  
 Die meisten modernen Fernseher können Senderlisten auf einen USB-Stick übertragen, den man danach am PC anschließt.
 ChanSort unterstützt diverse Dateiformate von Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,  
-SatcoDX (verwendet von Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),  
+Sharp, Dyon, Blaupunkt, SatcoDX (verwendet von Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),  
 Linux VDR, SAT>IP .m3u und Enigma2 basierende Linux TV-Boxen.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-de.png)
@@ -94,6 +94,7 @@ ChanSort unterstützt derzeit folgende Formate:
 - Repair\CM_TPM1013E_LA_CK.xml (diese Datei ist oft verstekt und nur eine .bin Datei sichtbar)
 
 **Hisense**  
+Einige ältere Modelle wie LTDN40D50TS verwenden die gleichen .csv Dateien wie Sharp. Siehe "Sharp" für eine Anleitung.
 Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500  
 2017 Modelle mit einem servicelist.db Dateiformat  
 Besonderen Dank an Hisense für die Bereitstellung von technischen Informationen und einem Testgerät!
@@ -108,6 +109,22 @@ Modelle die Dateien mit Namen dvb\*_config.xml exportieren.
 
 **SatcoDX (OEM für ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)**  
 Mehrere Marken nutzen die gleiche Hardware für DVB-S und exportieren .sdx Dateien
+
+**Sharp (and some models from Dyon, Blaupunkt, Hisense, Changhong, alphatronics, JTC Genesis)**
+Einige dieser TVs verwenden ähnliche Hardware und können .csv Dateien exportieren/importieren, um die Reihenfolge zu ändern.
+Blaupunkt B40A148TCSFHD, B32B133T2CSHD, ...  
+Changhong LED32E2200ST2, ...  
+Dyon Live 22 Pro, Live 24 Pro, ENTER 32 Pro X, ...  
+Hisense LTDN40D50TS, ...  
+Sharp LC-xxCFE4142E, LC-xxCFF6002E, LC-xxFI5542E, LC-xxFG5242E, LC-xxUI7552E, LC-xxUI7652E, xxBJ1E, xxBJ3E, xxBJ5E, ...  
+
+Abhängig vom konkreten TV-Modell kann die Import/Export-Funktion Teil des normalen Menüs, eines Hotel-Menüs oder Service-Menüs sein
+und die exportieren Dateien unterschiedlich sein. Einige Modelle wie Sharp Aquos xxBJ1E haben ein Untermenü für den Export. Hier
+sind alle 4 Typen von Dateien für einen Import nötig.
+Um in das geheime Hotel- / Service-Menü zu gelangen, gibt es verschiedene Tastenkombinationen auf der Fernbedienung:
+Hotelmenu: MENU 7906 / MENU 4588
+Servicemenu: MENU 1147 / MENU 11471147 / SOURCE 2580 
+Ändern Sie keine Werte im Servicemenü, die könnte den Fernseher beschädigen. Nutzen Sie nur die Import/Export-Funktionen
 
 **VDR (Linux Video Disk Recorder)**  
 Unterstützung des channels.conf Dateiformats.  
