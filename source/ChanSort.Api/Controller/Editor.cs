@@ -264,7 +264,7 @@ namespace ChanSort.Api
         if (!(chanFilter?.Invoke(refChannel, true) ?? true))
           continue;
 
-        var tvChannel = FindChannel(tvList, refChannel, onidTsidSid);
+        var tvChannel = FindChannel(tvList, tvListPosIndex, refChannel, onidTsidSid);
 
         if (tvChannel != null)
         {
@@ -314,37 +314,63 @@ namespace ChanSort.Api
       }
     }
 
-    private ChannelInfo FindChannel(ChannelList tvList, ChannelInfo refChannel, Dictionary<long, List<ChannelInfo>> onidTsidSid)
+    private ChannelInfo FindChannel(ChannelList tvList, int subListIndex, ChannelInfo refChannel, Dictionary<long, List<ChannelInfo>> onidTsidSid)
     {
-      var tvChannels = refChannel.Uid == "0-0-0" ? null : tvList.GetChannelByUid(refChannel.Uid);
+      List<ChannelInfo> candidates;
 
-      // try to find matching channels based on ONID+TSID+SID
-      if ((tvChannels?.Count ?? 0) == 0)
+      // try to find matching channels based on UID or ONID+TSID+SID+Transponder
+      var channels = refChannel.Uid == "0-0-0" ? new List<ChannelInfo>() : tvList.GetChannelByUid(refChannel.Uid).ToList();
+      if (channels.Count == 0)
       {
         var key = DvbKey(refChannel.OriginalNetworkId, refChannel.TransportStreamId, refChannel.ServiceId);
-        if (key != 0 && onidTsidSid.TryGetValue(key, out var candidates))
-        {
-          tvChannels = candidates;
+        if (key != 0 && onidTsidSid.TryGetValue(key, out candidates))
+          channels = candidates;
 
-          // narrow the list down further when a transponder is also provided (i.e. the same TV channel can be received on multiple DVB-T frequencies)
-          if (tvChannels.Count > 1 && !string.IsNullOrEmpty(refChannel.ChannelOrTransponder))
-          {
-            candidates = tvChannels.Where(ch => ch.ChannelOrTransponder == refChannel.ChannelOrTransponder).ToList();
-            if (candidates.Count > 0)
-              tvChannels = candidates;
-          }
+        // narrow the list down further when a transponder is also provided (i.e. the same channel can be received on multiple DVB-T frequencies)
+        if (channels.Count > 1 && !string.IsNullOrEmpty(refChannel.ChannelOrTransponder))
+        {
+          candidates = channels.Where(ch => ch.ChannelOrTransponder == refChannel.ChannelOrTransponder).ToList();
+          if (candidates.Count > 0)
+            channels = candidates;
         }
       }
+      var channel = channels.FirstOrDefault(c => c.GetPosition(subListIndex) == -1);
+      if (channel != null)
+        return channel;
+
 
       // try to find matching channels by name
-      if ((tvChannels?.Count ?? 0) == 0 && !string.IsNullOrWhiteSpace(refChannel.Name))
-        tvChannels = tvList.GetChannelByName(refChannel.Name).ToList();
+      channels = tvList.GetChannelByName(refChannel.Name).Where(c => c.GetPosition(subListIndex) == -1).ToList();
 
-      // get the first unassigned channel from the candidates (e.g. when matching by non-unique names), or fall back to the first matching channel (e.g. by unique ID)
-      ChannelInfo tvChannel = tvChannels.FirstOrDefault(c => c.GetPosition(0) == -1);
-      if (tvChannel == null && tvChannels.Count > 0)
-        tvChannel = tvChannels[0];
-      return tvChannel;
+      // if the reference list has information about a service type (tv/radio/data), then only consider channels matching it (or lacking service type information)
+      var serviceType = refChannel.SignalSource & SignalSource.MaskTvRadioData;
+      if (serviceType != 0)
+      {
+        channels = channels.Where(ch =>
+        {
+          var m = ch.SignalSource & SignalSource.MaskTvRadioData;
+          return m == 0 || m == serviceType;
+        }).ToList();
+      }
+
+      if (channels.Count == 0)
+        return null;
+
+      if (channels.Count > 1)
+      {
+        // exact upper/lowercase matching (often there are channels like "DISCOVERY" and "Discovery")
+        candidates = channels.Where(c => c.Name == refChannel.Name).ToList();
+        if (candidates.Count > 0)
+          channels = candidates;
+      }
+      if (channels.Count > 1)
+      {
+        // prefer unencrypted channels
+        candidates = channels.Where(c => c.Encrypted.HasValue && c.Encrypted.Value == false).ToList();
+        if (candidates.Count > 0)
+          channels = candidates;
+      }
+      return channels[0];
     }
 
     long DvbKey(int onid, int tsid, int sid)

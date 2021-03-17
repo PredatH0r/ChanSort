@@ -72,6 +72,8 @@ namespace ChanSort.Loader.Sharp
       var content = File.ReadAllBytes(this.FileName);
       this.encoding = Tools.IsUtf8(content) ? new UTF8Encoding(false) : Encoding.GetEncoding(1252);
       this.lines = this.encoding.GetString(content).Replace("\r", "").Split('\n');
+      if (lines.Length > 2)
+        this.cols = lines[2].ToLowerInvariant().Split(',');
 
       this.formatVersion = DetectFormatVersion();
       this.AdjustVisibleColumns();
@@ -194,7 +196,6 @@ namespace ChanSort.Loader.Sharp
             return FormatVersion.Sharp7Columns;
 
           // fallback for formats with more information, as long as they contain the required columns
-          this.cols = lines[2].ToLowerInvariant().Split(',');
           var dict = new HashSet<string>();
           foreach (var col in cols)
             dict.Add(col);
