@@ -3,7 +3,7 @@ ChanSort Change Log
 
 2021-03-17
 - improved reference list channel matching: if multiple channels match the same name, then the candidates are narrowed
-  down by service type (TV/radio/data - if known), case sensitivity (upper/lowercase), encryption (unencrypted first)
+  down by service type (TV/radio/data - if known), case sensitivity (upper/lowercase), encryption (unencrypted first
 
 2021-03-16
 - Sharp, Dyon, Blaupunkt, ...: added support for DVBS_Program.csv and \*DVBS_CHANNEL_TABLE.csv files

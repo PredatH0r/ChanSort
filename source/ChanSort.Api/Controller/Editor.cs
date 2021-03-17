@@ -246,13 +246,6 @@ namespace ChanSort.Api
           onidTsidSid.Add(key, list);
         }
         list.Add(channel);
-
-        //if (!chansByNewNr.TryGetValue(channel.NewProgramNr, out var chans))
-        //{
-        //  chans = new List<ChannelInfo>();
-        //  chansByNewNr[channel.NewProgramNr] = chans;
-        //}
-        //chans.Add(channel);
       }
 
       var incNr = 1 + positionOffset;
@@ -264,7 +257,7 @@ namespace ChanSort.Api
         if (!(chanFilter?.Invoke(refChannel, true) ?? true))
           continue;
 
-        var tvChannel = FindChannel(tvList, tvListPosIndex, refChannel, onidTsidSid);
+        var tvChannel = FindChannel(tvList, newPos, refChannel, onidTsidSid);
 
         if (tvChannel != null)
         {
