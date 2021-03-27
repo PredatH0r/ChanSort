@@ -223,6 +223,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="TestFiles\silva_schneider.sdx" />
+    <None Include="TestFiles\telefunken105.sdx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">

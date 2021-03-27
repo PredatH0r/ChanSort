@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2021-03-27
+- SatcoDX (.sdx): fixed handling of format version 105, which contains trailing data after the last channel
+- SatcoDX: changing the character set in the menu now instantly corrects channel names with non-ASCII characters
+
 2021-03-17
 - improved reference list channel matching: if multiple channels match the same name, then the candidates are narrowed
   down by service type (TV/radio/data - if known), case sensitivity (upper/lowercase), encryption (unencrypted first

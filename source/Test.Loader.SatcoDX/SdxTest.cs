@@ -12,13 +12,27 @@ namespace Test.Loader.SatcoDX
     [TestMethod]
     public void TestSatChannelsAddedToCorrectLists()
     {
-      this.TestChannelsAddedToCorrectLists("silva_schneider.sdx", SignalSource.DvbS, 1108, 948, 160);
+      var list = this.TestChannelsAddedToCorrectLists("silva_schneider.sdx", SignalSource.DvbS, 1108, 948, 160);
+      
+      // Test encoding as CP1252
+      Assert.AreEqual("SAT.1 Gold Österreic", list.Channels[9].Name);
+    }
+    #endregion
+
+    #region TestFormatVersion105UtfEncoding
+    [TestMethod]
+    public void TestFormatVersion105UtfEncoding()
+    {
+      var list = this.TestChannelsAddedToCorrectLists("telefunken105.sdx", SignalSource.DvbS, 737, 650, 87);
+
+      // Test encoding as UTF-8
+      Assert.AreEqual("WDR HD Köln", list.Channels[5].Name);
     }
     #endregion
 
 
     #region TestChannelsAddedToCorrectList
-    private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio, int dataProgramSid = 0, string dataProgramName = null)
+    private ChannelList TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio, int dataProgramSid = 0, string dataProgramName = null)
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.SatcoDX\\TestFiles\\" + fileName);
       var plugin = new SatcoDxPlugin();
@@ -40,6 +54,8 @@ namespace Test.Loader.SatcoDX
         Assert.IsNotNull(chan);
         Assert.AreEqual(dataProgramName, chan.Name);
       }
+
+      return list;
     }
     #endregion
 

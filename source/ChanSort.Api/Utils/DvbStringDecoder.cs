@@ -156,12 +156,12 @@ namespace ChanSort.Api
         }
         if (ch == '\0')
         {
-          // read as many bytes as necessary to get a character
+          // read as many bytes as necessary to get a character. Note that the decoder keeps internal state of all previously unprocessed bytes
           char[] charArray = new char[5];
-          int byteCnt;
-          for (byteCnt = 1; decoder.GetChars(name, i, byteCnt, charArray, 0) == 0; byteCnt++)
-          {
-          }
+          while (c < len && decoder.GetChars(name, i++, 1, charArray, 0) == 0)
+            c++;
+          if (c >= len)
+            break;
           ch = charArray[0];
         }
         if (ch == '\0')

@@ -10,6 +10,7 @@ namespace ChanSort.Loader.SatcoDX
     private readonly ChannelList allChannels = new ChannelList(0, "All");
 
     private byte[] content;
+    private int trailingDataPos;
 
     #region ctor()
 
@@ -51,7 +52,7 @@ namespace ChanSort.Loader.SatcoDX
       var pos = 0;
       content = File.ReadAllBytes(this.FileName);
       int prevPos = 0, nextPos;
-      while (prevPos < content.Length && (nextPos = Array.FindIndex(content, prevPos, ch => ch == (byte)'\n')) >= 0)
+      while (prevPos < content.Length && content[prevPos] != 0 && (nextPos = Array.FindIndex(content, prevPos, ch => ch == (byte)'\n')) >= 0)
       {
         if (nextPos - prevPos == 0)
           continue;
@@ -61,6 +62,9 @@ namespace ChanSort.Loader.SatcoDX
         pos++;
         prevPos = nextPos + 1;
       }
+
+      // SATCODX105 files contain a \0 character to mark the end, followed by an arbitrary number or spaces (or whatever data). We'll preserve it as-is.
+      this.trailingDataPos = prevPos;
     }
 
     #endregion
@@ -85,9 +89,35 @@ namespace ChanSort.Loader.SatcoDX
           if (channel is Channel realChannel)
             file.Write(this.content, realChannel.FileOffset, realChannel.Length + 1);
         }
+
+        file.Write(this.content, this.trailingDataPos, this.content.Length - this.trailingDataPos);
       }
     }
 
+    #endregion
+
+
+    #region DefaultEncoding
+
+    /// SATCODX103 files can contain channel names with unspecified implicit encoding, so we support reparsing based on a user selected default code page
+
+    public override Encoding DefaultEncoding
+    {
+      get => base.DefaultEncoding;
+      set
+      {
+        if (value == this.DefaultEncoding)
+          return;
+        base.DefaultEncoding = value;
+
+        var decoder = new DvbStringDecoder(value);
+        foreach (var chan in this.allChannels.Channels)
+        {
+          if (chan is Channel ch)
+            ch.ParseName(decoder);
+        }
+      }
+    }
     #endregion
 
     #region GetFileInformation()
