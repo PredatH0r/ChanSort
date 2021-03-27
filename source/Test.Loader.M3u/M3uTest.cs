@@ -38,6 +38,11 @@ namespace Test.Loader.M3u
       var ed = new Editor();
       ed.DataRoot = ser.DataRoot;
       ed.ChannelList = lists[0];
+
+      // reset the order so we can apply a reference list
+      foreach (var chan in lists[0].Channels)
+        chan.NewProgramNr = -1;
+
       //ed.ApplyReferenceList(refSer.DataRoot);
       ed.ApplyReferenceList(refSer.DataRoot, refSer.DataRoot.ChannelLists.First(), 0, lists[0], 0,false, 0, null, true, false);
 
