@@ -27,6 +27,7 @@ Funktionen
 - Verwalten von Favoriten, Kindersperre, Überspringen und Verstecken von Sendern
 - Benutzeroberfläche in Deutsch, Englisch, Spanisch und teilweise in Türkisch, Portugiesisch und Russisch
 - Unicode-Zeichensatzunterstützung für Sendernamen (latein, kyrillisch, griechisch, ...)
+
 NICHT unterstützt:
 - Hinzufügen von neuen Transpondern oder Sendern
 - Ändern von Tuner-Einstellungen von Sendern (ONID, TSID, SID, Frequenz, APID, VPID, ...)
