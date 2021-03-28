@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using ChanSort.Api;
@@ -43,7 +44,7 @@ namespace ChanSort.Loader.GlobalClone
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Radio, "DVB-S Radio"));
     }
 
-
+    #region Load()
     public override void Load()
     {
       var startTag = "<legacybroadcast>";
@@ -57,6 +58,7 @@ namespace ChanSort.Loader.GlobalClone
         if (end >= 0)
         {
           json = content.Substring(start + startTag.Length, end - start - startTag.Length);
+          json = UnescapeXml(json);
           this.xmlSuffix = content.Substring(end);
         }
       }
@@ -90,6 +92,63 @@ namespace ChanSort.Loader.GlobalClone
         }
       }
     }
+    #endregion
+
+    #region UnescapeXml()
+    private string UnescapeXml(string json)
+    {
+      var sb = new StringBuilder(json.Length);
+      int i=0,j=0;
+      for (i = json.IndexOf('&', j); i != -1; i = json.IndexOf('&', j))
+      {
+        sb.Append(json, j, i - j);
+        j = json.IndexOf(';', i);
+        var entity = json.Substring(i + 1, j - i - 1);
+        switch (entity)
+        {
+          case "amp": sb.Append("&"); break;
+          case "lt": sb.Append("<"); break;
+          case "gt": sb.Append(">"); break;
+          default:
+            if (entity.StartsWith("#x"))
+              sb.Append((char) int.Parse("0x" + entity.Substring(2), NumberStyles.AllowHexSpecifier));
+            else if (entity.StartsWith("#"))
+              sb.Append((char) int.Parse(entity.Substring(1)));
+            else
+              sb.Append("&").Append(entity).Append(";");
+            break;
+        }
+
+        ++j;
+      }
+
+      sb.Append(json, j, json.Length - j);
+      return sb.ToString();
+    }
+    #endregion
+
+    #region EscapeXml()
+    private string EscapeXml(string json)
+    {
+      var sb = new StringBuilder(json.Length);
+      foreach (var c in json)
+      {
+        switch (c)
+        {
+          case '&': sb.Append("&amp;"); break;
+          case '<': sb.Append("&lt;"); break;
+          case '>': sb.Append("&gt;"); break;
+          default:
+            if (c < 32 && !char.IsWhiteSpace(c))
+              sb.Append($"&#x{(int) c:x4}");
+            else
+              sb.Append(c);
+            break;
+        }
+      }
+      return sb.ToString();
+    }
+    #endregion
 
     #region LoadSatellites()
     private void LoadSatellites()
@@ -193,9 +252,9 @@ namespace ChanSort.Loader.GlobalClone
             ch.Transponder = this.DataRoot.Transponder.TryGet((int.Parse(tpId.Substring(0, 4)) << 16) + int.Parse(tpId.Substring(4))); // satId + freq, e.g. 0192126041
 
           ch.IsDeleted = (bool) node["deleted"];
-          ch.PcrPid = (int) node["pcrPid"];
-          ch.AudioPid = (int) node["audioPid"];
-          ch.VideoPid = (int) node["videoPid"];
+          ch.PcrPid = (int) node["pcrPid"] & 0x3FF;
+          ch.AudioPid = (int) node["audioPid"] & 0x3FF;
+          ch.VideoPid = (int) node["videoPid"] & 0x3FF;
           ch.ServiceId = (int) node["SVCID"];
           if (ch.ServiceId == 0)
             ch.ServiceId = (int) node["programNum"];
@@ -229,14 +288,18 @@ namespace ChanSort.Loader.GlobalClone
     {
       this.UpdateJsonDoc();
 
+      var sb = new StringBuilder();
+      sb.Append(xmlPrefix);
+
       using var sw = new StringWriter();
-      sw.Write(xmlPrefix);
       var jw = new JsonTextWriter(sw);
       {
         doc.WriteTo(jw);
       }
-      sw.Write(xmlSuffix);
-      File.WriteAllText(tvOutputFile, sw.ToString());
+      var json = EscapeXml(sw.ToString());
+      sb.Append(json);
+      sb.Append(xmlSuffix);
+      File.WriteAllText(tvOutputFile, sb.ToString());
       this.FileName = tvOutputFile;
     }
     #endregion
