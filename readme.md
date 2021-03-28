@@ -27,6 +27,9 @@ Features
 - Manage favorites, parental lock, channel skipping (when zapping), channel hiding
 - User interface in English, German, Spanish, and partially in Turkish, Portuguese and Russian
 - Unicode character support for channel names (Latin, Cyrillic, Greek, ...)
+NOT supported:
+- adding new transponders or channels
+- changing tuner related properties of channels (ONID, TSID, SID, frequency, APID, VPID, ...)
 
 Some features may not be available on all TV models and channel types (analog, digital, sat, cable, ...)
 
