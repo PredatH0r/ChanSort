@@ -57,7 +57,7 @@ Unterstützte TV-Modelle
 
 \*: Das "clone.bin"-Format ist nicht unterstützt. Im "*.scm"-Format
 der 2009 B-series werden in der "Air Analog"-Liste nicht alle Bearbeitungsfunktionen
-unterstützt, da keine entsprechenden Testdateien vorhanden ist.
+unterstützt.
 
 Eine Anleitung zum Transfer der Senderliste befindet sich hier:
 https://github.com/PredatH0r/ChanSort/wiki/Samsung
@@ -80,10 +80,13 @@ ausgewählt wird, erhält man eine vorsortierte Liste und der TV verhält sich nach
 Wählen Sie immer "Keiner / Anderer / Alle" aus bzw. "Blindsuche", und nie einen Kabelanbieter oder "Astra 19.2 Liste".
 
 **Panasonic**  
-Viera-Modelle mit svl.bin oder svl.db Dateien (die meisten Modelle seit 2011)
+Die meisten Viera-Modelle seit 2011 mit Senderlisten im Format
+- svl.bin
+- svl.db
 
 **Sony**  
-Android-TV "sdb.xml" Dateien mit Versionen "FormateVer" 1.1.0 und KDL 2012/2014 mit "FormatVer" 1.0.0, 1.1.0 and 1.2.0
+- Android-TV "sdb.xml" Dateien mit Version "FormateVer" 1.1.0
+- KDL 2012/2014 "sdb.xml" mit "FormatVer" 1.0.0, 1.1.0 and 1.2.0
 
 **Philips**  
 Philips verwendet unzählige unterschiedliche Dateiformate für diverse TV-Modelle.
@@ -103,14 +106,14 @@ Besonderen Dank an Hisense für die Bereitstellung von technischen Informationen 
 (z.B. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)  
 - Modelle mit einer settingsDB.db Datei
 
-**Grundig**
+**Grundig**  
 Modelle die Dateien mit Namen dvb\*_config.xml exportieren.
 
 **SatcoDX (OEM für ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)**  
 Mehrere Marken nutzen die gleiche Hardware für DVB-S und exportieren .sdx Dateien
 
 **Sharp (and some models from Dyon, Blaupunkt, Hisense, Changhong, alphatronics, JTC Genesis)**
-Einige dieser TVs verwenden ähnliche Hardware und können .csv Dateien exportieren/importieren, um die Reihenfolge zu ändern.
+Einige dieser TVs verwenden ähnliche Hardware und können .csv Dateien exportieren/importieren, um die Reihenfolge zu ändern.  
 Blaupunkt B40A148TCSFHD, B32B133T2CSHD, ...  
 Changhong LED32E2200ST2, ...  
 Dyon Live 22 Pro, Live 24 Pro, ENTER 32 Pro X, ...  

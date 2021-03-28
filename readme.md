@@ -80,10 +80,13 @@ satellite specific list, it will be pre-ordered and your TV will behave erratic 
 Always select "none / other / all" and never your cable TV provider or something like "Astra 19.2E list" and blindscan.
 
 **Panasonic**  
-Viera models with an svl.bin or svl.db channel list (most models since 2011)
+Most Viera models since 2011 with a channel list formats
+- svl.bin 
+- svl.db 
 
 **Sony**  
-Android-TVs "sdb.xml" files using formats "FormateVer" 1.1.0 and KDL 2012/2014 files using "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
+- Android-TVs "sdb.xml" files using format "FormateVer" 1.1.0
+- KDL 2012/2014 "sdb.xml" files using "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
 
 **Philips**  
 Philips uses countless incompatible file formats for various TV models.
@@ -103,7 +106,7 @@ Special thanks to Hisense for supporting ChanSort with technical information and
 (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)  
 - Models with a settingsDB.db file
 
-**Grundig**
+**Grundig**  
 Models that export files named dvb\*_config.xml.
 
 **SatcoDX (OEM for ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)**  
