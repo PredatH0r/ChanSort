@@ -124,7 +124,7 @@ sind alle 4 Typen von Dateien für einen Import nötig.
 Um in das geheime Hotel- / Service-Menü zu gelangen, gibt es verschiedene Tastenkombinationen auf der Fernbedienung:  
 Hotelmenu: MENU 7906 / MENU 4588  
 Servicemenu: MENU 1147 / MENU 11471147 / SOURCE 2580  
-Ändern Sie keine Werte im Servicemenü, die könnte den Fernseher beschädigen. Nutzen Sie nur die Import/Export-Funktionen.
+Ändern Sie keine Werte im Servicemenü, dies könnte den Fernseher beschädigen. Nutzen Sie nur die Import/Export-Funktionen.
 
 **VDR (Linux Video Disk Recorder)**  
 Unterstützung des channels.conf Dateiformats.  
