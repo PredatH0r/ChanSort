@@ -120,11 +120,11 @@ Sharp LC-xxCFE4142E, LC-xxCFF6002E, LC-xxFI5542E, LC-xxFG5242E, LC-xxUI7552E, LC
 
 Abhängig vom konkreten TV-Modell kann die Import/Export-Funktion Teil des normalen Menüs, eines Hotel-Menüs oder Service-Menüs sein
 und die exportieren Dateien unterschiedlich sein. Einige Modelle wie Sharp Aquos xxBJ1E haben ein Untermenü für den Export. Hier
-sind alle 4 Typen von Dateien für einen Import nötig.
-Um in das geheime Hotel- / Service-Menü zu gelangen, gibt es verschiedene Tastenkombinationen auf der Fernbedienung:
-Hotelmenu: MENU 7906 / MENU 4588
-Servicemenu: MENU 1147 / MENU 11471147 / SOURCE 2580 
-Ändern Sie keine Werte im Servicemenü, die könnte den Fernseher beschädigen. Nutzen Sie nur die Import/Export-Funktionen
+sind alle 4 Typen von Dateien für einen Import nötig.  
+Um in das geheime Hotel- / Service-Menü zu gelangen, gibt es verschiedene Tastenkombinationen auf der Fernbedienung:  
+Hotelmenu: MENU 7906 / MENU 4588  
+Servicemenu: MENU 1147 / MENU 11471147 / SOURCE 2580  
+Ändern Sie keine Werte im Servicemenü, die könnte den Fernseher beschädigen. Nutzen Sie nur die Import/Export-Funktionen.
 
 **VDR (Linux Video Disk Recorder)**  
 Unterstützung des channels.conf Dateiformats.  

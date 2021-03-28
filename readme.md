@@ -119,11 +119,11 @@ Hisense LTDN40D50TS, ...
 Sharp LC-xxCFE4142E, LC-xxCFF6002E, LC-xxFI5542E, LC-xxFG5242E, LC-xxUI7552E, LC-xxUI7652E, xxBJ1E, xxBJ3E, xxBJ5E, ...  
 
 Depending on the actual TV the import/export function can be part of the regular user menu, a hotel menu or a service menu
-and the exported files may be different. Some models like Sharp Aquos xxBJ1E have a sub menu for exporting. You need to 
+and the exported files may be different. Some models like Sharp Aquos xxBJ1E have a sub menu for exporting. You need to
 export all 4 type of files for the import to work.  
 To access the secret hotel / service menus, there are several possible key combinations on the remote control:  
-hotel menu: MENU 7906 / MENU 4588
-service menu: MENU 1147 / MENU 11471147 / SOURCE 2580 
+hotel menu: MENU 7906 / MENU 4588  
+service menu: MENU 1147 / MENU 11471147 / SOURCE 2580  
 Do not make any changes in the service menu, as this could damage your TV. Only use the import/export functions.
 
 **VDR (Linux Video Disk Recorder)**  
