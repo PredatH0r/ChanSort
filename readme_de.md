@@ -13,7 +13,7 @@ ChanSort ist eine Windows-Anwendung, die das Sortieren von Fernsehsenderlisten e
 Die meisten modernen Fernseher können Senderlisten auf einen USB-Stick übertragen, den man danach am PC anschließt.  
 ChanSort unterstützt diverse Dateiformate von Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,
 Sharp, Dyon, Blaupunkt, SatcoDX (verwendet von Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),
-Linux VDR, SAT>IP .m3u und Enigma2 basierende Linux TV-Boxen.
+Linux VDR, SAT>IP .m3u und Enigma2 basierender Linux TV-Boxen.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-de.png)
 
@@ -41,20 +41,19 @@ Hisense ist der einzige Hersteller, der Informationen und ein Testgerät bereitst
 
 Systemvoraussetzungen
 -------------------
-- [Microsoft .NET Framework 4.8 (oder neuer)](https://dotnet.microsoft.com/download/dotnet-framework)
+- [Microsoft .NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework)  
   (Unter Linux wird Winetricks mit einem 32bit wineprefix benötigt, wo das "dotnet48" Paket installiert ist)
-- [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328):
+- [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328)  
   Wird benötigt um SQLite-Senderlisten zu bearbeiten (Hisense, Panasonic, Toshiba und Samsung J-Serie)
 - USB Stick/SD-Karte zur Übertragung der Senderliste zwischen TV und PC (FAT32-Formatierung empfohlen)
-- Einige TV-Modelle von LG erfordern eine spezielle Service-Fernbedienung zum Aufruf der Export/Import-Funktionen (Details in der Wiki)
 
 
 Unterstützte TV-Modelle 
 ---------------------
 
 **Samsung**  
-.scm Dateien: Serien B (2009)*, B (2013), C, D, E, F, H, J  
-.zip Dateien: Serien H, J, K, M, N, Q, R  
+- .scm Dateien: Serien B (2009)*, B (2013), C, D, E, F, H, J  
+- .zip Dateien: Serien H, J, K, M, N, Q, R  
 
 \*: Das "clone.bin"-Format ist nicht unterstützt. Im "*.scm"-Format
 der 2009 B-series werden in der "Air Analog"-Liste nicht alle Bearbeitungsfunktionen
@@ -64,9 +63,9 @@ Eine Anleitung zum Transfer der Senderliste befindet sich hier:
 https://github.com/PredatH0r/ChanSort/wiki/Samsung
 
 **LG**  
-Serien basierend auf Netcast OS, die eine xx\*.TLL-Datei exportieren:  
+- Serien basierend auf Netcast OS, die eine xx\*.TLL-Datei exportieren:  
   CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
-Serien basierend auf webOS 2-5, die eine GlobalClone00001.TLL-Datei exportieren
+- Serien basierend auf webOS 2-5, die eine GlobalClone00001.TLL-Datei exportieren
 
 \*: Einige Geräte verhalten sich fehlerhaft aufgrund Probleme in deren Firmware.  
 +: Siehe Systemanforderungen für die LM-Serie. xxLM640T kann aufgrund von Firmwaremängeln nicht unterstützt werden.  
@@ -94,15 +93,15 @@ ChanSort unterstützt derzeit folgende Formate:
 - Repair\CM_TPM1013E_LA_CK.xml (diese Datei ist oft verstekt und nur eine .bin Datei sichtbar)
 
 **Hisense**  
-Einige ältere Modelle wie LTDN40D50TS verwenden die gleichen .csv Dateien wie Sharp. Siehe "Sharp" für eine Anleitung.
-Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500  
-2017 Modelle mit einem servicelist.db Dateiformat  
+- Einige ältere Modelle wie LTDN40D50TS verwenden die gleichen .csv Dateien wie Sharp. Siehe "Sharp" für eine Anleitung.
+- Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500  
+- 2017 Modelle mit einem servicelist.db Dateiformat  
 Besonderen Dank an Hisense für die Bereitstellung von technischen Informationen und einem Testgerät!
 
 **Toshiba**  
-Modelle, die eine .zip-Datei mit folgendem Inhalt: chmgt.db, dvbSysData.db und dvbMainData.db.  
+- Modelle, die eine .zip-Datei mit folgendem Inhalt: chmgt.db, dvbSysData.db und dvbMainData.db.  
 (z.B. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)  
-Modelle mit einer settingsDB.db Datei
+- Modelle mit einer settingsDB.db Datei
 
 **Grundig**
 Modelle die Dateien mit Namen dvb\*_config.xml exportieren.

@@ -41,20 +41,19 @@ Hisense is the only manufacturer who provided technical information and a test d
 
 System requirements
 -------------------
-- [Microsoft .NET Framework 4.8 or later](https://dotnet.microsoft.com/download/dotnet-framework)
+- [Microsoft .NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework)  
   (When running under Linux, you need Winetricks, select a 32bit wineprefix and install the "dotnet48" package)
-- [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328):
+- [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328)  
   required to edit SQLite lists (Hisense, Panasonic, Toshiba and Samsung .zip format)
 - USB stick/SD-card to transfer the channel list between your TV and PC (FAT32 file system recommended)
-- Some LG models require a special service remote control to access the import/export functions (see Wiki for details)
 
 
 Supported TV models 
 -------------------
 
 **Samsung**  
-.scm files: B (2009)*, B (2013), C, D, E, F, H, J series  
-.zip files (Tizen OS): H, J, K, M, N and Q, R series  
+- .scm files: B (2009)*, B (2013), C, D, E, F, H, J series  
+- .zip files (Tizen OS): H, J, K, M, N and Q, R series  
 
 \*: The "clone.bin" format is not supported. In the "*.scm" format
 the "Air Analog"-list of the 2009 B-series doesn't support all 
@@ -64,9 +63,9 @@ Instructions for transferring the channel list can be found on:
 https://github.com/PredatH0r/ChanSort/wiki/Samsung
 
 **LG**  
-Series based on NetCast OS exporting a xx\*.TLL file:  
+- Series based on NetCast OS exporting a xx\*.TLL file:  
   CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
-Series based on webOS 2-5 exporting a GlobalClone00001.TLL file
+- Series based on webOS 2-5 exporting a GlobalClone00001.TLL file
 
 \*: Some devices behave erroneously due to firmware issues.  
 +: See system requirements for LM-series. xxLM640T is not supported due to its firmware limitations.  
@@ -94,15 +93,15 @@ ChanSort currently supports the formats:
 - Repair\CM_TPM1013E_LA_CK.xml (sometimes that file is hidden and only a .bin file is visible)
 
 **Hisense**  
-Some older models like LTDN40D50TS use the same .csv files as Sharp. See "Sharp" for instructions.
-2016 "Smart" models with a channel.db file, i.e. H65M5500  
-2017 models with a servicelist.db file  
+- Some older models like LTDN40D50TS use the same .csv files as Sharp. See "Sharp" for instructions.
+- 2016 "Smart" models with a channel.db file, i.e. H65M5500  
+- 2017 models with a servicelist.db file  
 Special thanks to Hisense for supporting ChanSort with technical information and a test device!
 
 **Toshiba**  
-Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.  
+- Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.  
 (e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)  
-Models with a settingsDB.db file
+- Models with a settingsDB.db file
 
 **Grundig**
 Models that export files named dvb\*_config.xml.
