@@ -92,13 +92,14 @@ Most Viera models since 2011 with a channel list formats
 Philips uses countless incompatible file formats for various TV models.
 ChanSort currently supports the formats:  
 - PhilipsChannelMaps\ChannelMap_45, 100, 105 and 110
-- Repair\ChannelList\channellib\\*Table and s2channellib\\*.dat
+- Repair\ChannelList\channellib\\\*Table and s2channellib\\\*.dat
 - Repair\CM_TPM1013E_LA_CK.xml (sometimes that file is hidden and only a .bin file is visible)
 
 **Hisense**  
 - Some older models like LTDN40D50TS use the same .csv files as Sharp. See "Sharp" for instructions.
 - 2016 "Smart" models with a channel.db file, i.e. H65M5500  
-- 2017 models with a servicelist.db file  
+- 2017 models with a servicelist.db file
+
 Special thanks to Hisense for supporting ChanSort with technical information and a test device!
 
 **Toshiba**  
@@ -112,8 +113,12 @@ Models that export files named dvb\*_config.xml.
 **SatcoDX (OEM for ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)**  
 Various brands use the same hardware for DVB-S, which exports .sdx files 
 
-**Sharp (and some models from Dyon, Blaupunkt, Hisense, Changhong, alphatronics, JTC Genesis)**
-Some of these TV share similar hardware and can export/import a .csv file allowing to change the channel order.  
+**Sharp (and some models from Dyon, Blaupunkt, Hisense, Changhong, alphatronics, JTC Genesis)**  
+Some of these TV share similar hardware and can export/import a .csv file allowing to change the channel order:  
+- DVBS_Program.csv (alongside cvt_database.dat)
+- DVBS_CHANNEL_TABLE.csv (alongside dtv_cmdb\*.bin)
+- MS\*_DVBS_CHANNEL_TABLE.csv (alongside MS\*.HOTELMODE_TABLE.json)
+  
 Blaupunkt B40A148TCSFHD, B32B133T2CSHD, ...  
 Changhong LED32E2200ST2, ...  
 Dyon Live 22 Pro, Live 24 Pro, ENTER 32 Pro X, ...  
