@@ -121,7 +121,7 @@ Mehrere Marken nutzen die gleiche Hardware für DVB-S und exportieren .sdx Dateie
 Einige dieser TVs verwenden ähnliche Hardware und können .csv Dateien exportieren/importieren, um die Reihenfolge zu ändern:  
 - DVBS_Program.csv (mit cvt_database.dat)
 - DVBS_CHANNEL_TABLE.csv (mit dtv_cmdb\*.bin)
-- MS\*_DVBS_CHANNEL_TABLE.csv (mit MS\*.HOTELMODE_TABLE.json)
+- MS\*_DVBS_CHANNEL_TABLE.csv (mit MS\*_HOTELMODE_TABLE.json)
 
 Blaupunkt B40A148TCSFHD, B32B133T2CSHD, ...  
 Changhong LED32E2200ST2, ...  
