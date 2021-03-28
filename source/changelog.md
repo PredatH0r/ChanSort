@@ -1,10 +1,9 @@
 ChanSort Change Log 
 ===================
 
-2021-03-27_2005
+2021-03-28_1809
 - LG webOS 5: fixed handling of channels with an ampersand (&) character showing as "&amp;" and not matching
   a text-only reference list.
-
 
 2021-03-27
 - SatcoDX (.sdx): fixed handling of format version 105, which contains trailing data after the last channel
