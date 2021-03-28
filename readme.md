@@ -11,8 +11,8 @@ About ChanSort
 --------------
 ChanSort is a Windows application that allows you to reorder your TV's channel list.  
 Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
-ChanSort supports various file formats from Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,  
-Sharp, Dyon, Blaupunkt, SatcoDX (used by ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),  
+ChanSort supports various file formats from Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,
+Sharp, Dyon, Blaupunkt, SatcoDX (used by ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),
 Linux VDR, SAT>IP .m3u and Enimgma2 based Linux boxes.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-en.png)
