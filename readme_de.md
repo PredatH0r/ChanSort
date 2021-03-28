@@ -133,7 +133,7 @@ Die Implementation hierfür wurde vom Mitglied "TCr82" des VDR Projekts beigesteu
 **m3u (SAT>IP)**  
 Unterstützt SAT>IP .m3u Dateien mit erweiterten Informationen zu Sendernamen und Programmnummern.
 
-**Enigma2 (Dreambox, VU+ und viele andere Linux basierende Empfänger)**
+**Enigma2 (Dreambox, VU+ und viele andere Linux basierende Empfänger)**  
 Erfordert eine lokale Kopie der Dateien "lamedb", "bouquets.\*" and "userbouquet.\*" aus /etc/Enigma2/.  
 
 
