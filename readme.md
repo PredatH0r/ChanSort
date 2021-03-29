@@ -112,7 +112,8 @@ Special thanks to Hisense for supporting ChanSort with technical information and
 - Models with a settingsDB.db file
 
 **Grundig**  
-Models that export files named dvb\*_config.xml.
+- Models that export files named dvb\*_config.xml.
+- Models that export a cvt_database.dat file, e.g. 24 GHB 5944: see "Sharp" below
 
 **SatcoDX (OEM for ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)**  
 Various brands use the same hardware for DVB-S, which exports .sdx files 
@@ -128,6 +129,7 @@ Changhong LED32E2200ST2, ...
 Dyon Live 22 Pro, Live 24 Pro, ENTER 32 Pro X, ...  
 Hisense LTDN40D50TS, ...  
 Sharp LC-xxCFE4142E, LC-xxCFF6002E, LC-xxFI5542E, LC-xxFG5242E, LC-xxUI7552E, LC-xxUI7652E, xxBJ1E, xxBJ3E, xxBJ5E, ...  
+Grundig 24 GHB 5944  
 
 Depending on the actual TV the import/export function can be part of the regular user menu, a hotel menu or a service menu
 and the exported files may be different. Some models like Sharp Aquos xxBJ1E have a sub menu for exporting. You need to
