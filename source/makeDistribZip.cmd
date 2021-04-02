@@ -6,7 +6,7 @@ cd /d %~dp0
 set languages=cs de es hu pl pt ru tr
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
-set DXversion=20.1
+set DXversion=20.2
 mkdir "%target%" 2>nul
 rem del /s /q "%target%\*"
 xcopy /idy debug\ChanSort.exe* "%target%"
@@ -18,7 +18,7 @@ xcopy /idy DLL\* "%target%"
 del "%target%\*nunit*.dll"
 for %%l in (%languages%) do (
   mkdir "%target%\%%l" 2>nul
-  xcopy /sidy debug\%%l "%target%\%%l"
+  xcopy /sidy debug\%%l\ChanSort.* "%target%\%%l"
 )
 mkdir "%target%\ReferenceLists" 2>nul
 xcopy /sidy ChanSort\ReferenceLists\* "%target%\ReferenceLists"
