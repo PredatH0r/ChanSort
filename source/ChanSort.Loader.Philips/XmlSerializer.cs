@@ -183,6 +183,15 @@ namespace ChanSort.Loader.Philips
     {
       if (!File.Exists(fileName))
         return;
+
+      // skip read-only files (like hidden read-only DVBSall.xml on a Philips 24PFS5535 from 2020 (along with)
+      var info = new FileInfo(fileName);
+      if ((info.Attributes & FileAttributes.ReadOnly) != 0)
+      {
+        this.logMessages.AppendLine($"Skipping read-only file {fileName}");
+        return;
+      }
+
       bool fail = false;
       var fileData = new FileData();
       try

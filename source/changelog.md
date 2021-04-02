@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2021-04-02
+- Philips: skip read-only files when loading the list, so they don't cause errors when the list is saved (e.g. DVBSall.xml)
+
 2021-03-28_1809
 - LG webOS 5: fixed handling of channels with an ampersand (&) character showing as "&amp;" and not matching
   a text-only reference list.
