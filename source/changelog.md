@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2021-04-02_1734:
+- Philips: another fix for lists with missing s2channellib\\DVBSall.xml file
+
 2021-04-02
 - Philips: skip read-only files when loading the list, so they don't cause errors when the list is saved (e.g. DVBSall.xml)
 

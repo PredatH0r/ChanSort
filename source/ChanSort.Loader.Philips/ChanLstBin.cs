@@ -154,6 +154,8 @@ namespace ChanSort.Loader.Philips
       foreach (var entry in crcOffsetByRelPath)
       {
         var path = baseDir + entry.Key;
+        if (!File.Exists(path))
+          continue; 
         var data = File.ReadAllBytes(path);
         var length = data.Length;
         if (VersionMajor < 12 && length > 0x6000)
