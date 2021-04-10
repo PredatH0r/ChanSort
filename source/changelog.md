@@ -1,7 +1,10 @@
 ChanSort Change Log 
 ===================
 
-2021-04-02_1734:
+2021-04-10
+- Samsung .zip: Support for files that contain an empty SRV_EXT_APP table, which caused the whole list to show up empty.
+
+2021-04-02_1734
 - Philips: another fix for lists with missing s2channellib\\DVBSall.xml file
 
 2021-04-02

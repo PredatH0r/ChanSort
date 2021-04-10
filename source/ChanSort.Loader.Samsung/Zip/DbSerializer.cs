@@ -347,7 +347,7 @@ namespace ChanSort.Loader.Samsung.Zip
       sql += " from " + table + " inner join SRV on SRV.srvId="+table+".srvId inner join CHNL on CHNL.chId=SRV.chId";
 
       if (this.tableNames.Contains("SRV_EXT_APP")) // in format 1352.0 there are duplicate "major" values in SRV and this recState seems to be the only difference
-        sql += " inner join SRV_EXT_APP on SRV_EXT_APP.srvId=SRV.srvId order by SRV.major, ifnull(SRV_EXT_APP.recState,0) desc";
+        sql += " left outer join SRV_EXT_APP on SRV_EXT_APP.srvId=SRV.srvId order by SRV.major, ifnull(SRV_EXT_APP.recState,0) desc";
 
       return sql;
     }
