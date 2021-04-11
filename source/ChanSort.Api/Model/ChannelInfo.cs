@@ -146,6 +146,24 @@ namespace ChanSort.Api
     #endregion
 
     #region Uid
+
+    public static string GetUid(SignalSource signalSource, decimal freqInMhz, int onid, int tsid, int sid, string channelOrTransponder)
+    {
+      if ((signalSource & SignalSource.Analog) != 0)
+        return "A-0-" + (int)(freqInMhz * 20) + "-0";
+      if ((signalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Sat)
+        return "S" + /*this.SatPosition + */ "-" + onid + "-" + tsid + "-" + sid;
+      if ((signalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Antenna || (signalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Cable)
+      {
+        // ChannelOrTransponder is needed for DVB-T where the same ONID+TSID+SID can be received from 2 different radio transmitters, but on different frequencies/channels
+        if (string.IsNullOrEmpty(channelOrTransponder))
+          channelOrTransponder = ((signalSource & SignalSource.Antenna) != 0 ? LookupData.Instance.GetDvbtTransponder(freqInMhz) : LookupData.Instance.GetDvbcTransponder(freqInMhz)).ToString();
+        return "C-" + onid + "-" + tsid + "-" + sid + "-" + channelOrTransponder;
+      }
+      
+      return onid + "-" + tsid + "-" + sid;
+    }
+
     /// <summary>
     /// The Uid is the preferred way of matching channels between the current channel list and a reference list.
     /// The basic format of this string was taken from a command line tool "TllSort" for LG TVs but then expanded beyond that
@@ -153,28 +171,8 @@ namespace ChanSort.Api
     /// </summary>
     public string Uid
     {
-      get
-      {
-        if (this.uid == null)
-        {
-          if ((this.SignalSource & SignalSource.Analog) != 0)
-            this.uid = "A-0-" + (int) (this.FreqInMhz*20) + "-0";
-          else
-          {
-            if ((this.SignalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Sat)
-              this.uid = "S" + /*this.SatPosition + */ "-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
-            else if ((this.SignalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Antenna || (this.SignalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Cable)
-            {
-              // ChannelOrTransponder is needed for DVB-T where the same ONID+TSID+SID can be received from 2 different radio transmitters, but on different frequencies/channels
-              this.uid = "C-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId + "-" + this.ChannelOrTransponder;
-            }
-            else
-              this.uid = this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
-          }
-        }
-        return this.uid;
-      }
-      set { this.uid = value; }
+      get => this.uid ??= GetUid(this.SignalSource, this.FreqInMhz, this.OriginalNetworkId, this.TransportStreamId, this.ServiceId, this.ChannelOrTransponder);
+      set => this.uid = value;
     }
     #endregion
 

@@ -39,9 +39,20 @@ namespace ChanSort.Loader.Philips
      * PhilipsChannelMaps\ChannelMap_11\ChannelList\s2channellib\Satellite*Table (new here)
      * e.g. 55PFL8008S/12
      *
+     * version 30.1
+     * PhilipsChannelMaps\ChannelMap_30\ChannelList\chanLst.bin
+     * PhilipsChannelMaps\ChannelMap_30\ChannelList\list.db (for each of the input sources Sat/Cable/Terr 4 separate fav lists)
+     * PhilipsChannelMaps\ChannelMap_30\ChannelList\tv.db (contains channels from all sources)
+     * PhilipsChannelMaps\ChannelMap_30\ChannelList\channellib\*ChannelMaps.db (separate files for Cable and Terrestrial)
+     * PhilipsChannelMaps\ChannelMap_30\ChannelList\channellib\*Db.bin (separate files for Cable and Terrestrial)
+     * PhilipsChannelMaps\ChannelMap_30\ChannelList\s2channellib\SatelliteChannelMaps.db
+     * PhilipsChannelMaps\ChannelMap_30\ChannelList\s2channellib\SatelliteDb.bin
+     * e.g. 40PUK6400/12
+     *
      * version 45.1
      * PhilipsChannelMaps\ChannelMap_45\ChannelList\chanLst.bin
-     * PhilipsChannelMaps\ChannelMap_45\ChannelList\list.db (SQLite database including all channels - maybe just for EPG?)
+     * PhilipsChannelMaps\ChannelMap_45\ChannelList\list.db (favorite lists for all sources)
+     * PhilipsChannelMaps\ChannelMap_45\ChannelList\tv.db (SQLite database including all channels - maybe just for EPG?)
      * PhilipsChannelMaps\ChannelMap_45\ChannelList\channelLib\*Db.bin
      * PhilipsChannelMaps\ChannelMap_45\ChannelList\s2channellib\*Db.bin
      * e.g. 65PUS7601/12, 55PUS6581/12, 43PUS6401/12, 55PUS8601/12
@@ -112,7 +123,7 @@ namespace ChanSort.Loader.Philips
 
       if (majorVersion == 0 || majorVersion >= 100 && majorVersion <= 110)
         return new XmlSerializer(inputFile);
-      if (majorVersion == 1 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
+      if (majorVersion == 1 || majorVersion == 30 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
         return new BinarySerializer(inputFile);
 
       throw new FileLoadException($"Philips ChannelMap format version {majorVersion} is not supported.");

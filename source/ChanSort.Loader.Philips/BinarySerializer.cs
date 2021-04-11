@@ -12,7 +12,9 @@ namespace ChanSort.Loader.Philips
 {
   /*
 
-  This loader handles the file format versions 1.x (*Table and *.dat files) and version 25.x-45.x (*Db.bin files + tv.db and list.db)
+  This loader handles the file format versions 1.x (*Table and *.dat files), version 25.x-45.x (*Db.bin files + tv.db and list.db)
+  Version 30.x and 45.x were tested, version 25 is untested due to the lack of any sample files. Based on what I read online, the files are pretty much the 
+  same as with Format 45.
 
   channellib\CableDigSrvTable:
   ===========================
@@ -40,6 +42,10 @@ namespace ChanSort.Loader.Philips
   The favorite.dat file stores favorites as linked list which may support independent ordering from the main channel list.
   The Philips editor even saves non-linear lists, but not in any particular order.
 
+  channellib\CableChannelMaps.db
+  ==============================
+  Used in format version 30 (not 45) as a 3rd file containing program numbers. SQLite database containing tables "AnalogTable" and "DigSrvTable".
+
   */
   class BinarySerializer : SerializerBase
   {
@@ -59,6 +65,9 @@ namespace ChanSort.Loader.Philips
     private readonly ChannelList favChannels = new ChannelList(SignalSource.All, "Favorites");
     private const int FavListCount = 8;
     private bool mustFixFavListIds;
+
+    private readonly Dictionary<int, Channel> channelsById = new();
+
 
     #region ctor()
     public BinarySerializer(string inputFile) : base(inputFile)
@@ -80,7 +89,9 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    #region Load()
+    // loading
+
+    #region Load
     public override void Load()
     {
       this.chanLstBin = new ChanLstBin();
@@ -116,33 +127,46 @@ namespace ChanSort.Loader.Philips
       else if (chanLstBin.VersionMajor >= 25 && chanLstBin.VersionMajor <= 45)
       {
         // version 25-45
-        this.favChannels.IsMixedSourceFavoritesList = true;
         this.Features.CanHaveGaps = true;
 
         this.DataRoot.AddChannelList(this.antChannels);
         this.DataRoot.AddChannelList(this.cabChannels);
         this.DataRoot.AddChannelList(this.satChannels);
-        this.DataRoot.AddChannelList(this.favChannels);
+
+        // version 45 supports mixed source favorites, version 30 (and probably 25) have separate fav lists per input source
+        if (chanLstBin.VersionMajor == 45)
+        {
+          this.favChannels.IsMixedSourceFavoritesList = true;
+          this.DataRoot.AddChannelList(this.favChannels);
+        }
 
         LoadDvbCT(antChannels, Path.Combine(channellib, "TerrestrialDb.bin"), "Map45_CableDb.bin_entry");
         LoadDvbCT(cabChannels, Path.Combine(channellib, "CableDb.bin"), "Map45_CableDb.bin_entry");
         LoadDvbS(satChannels, Path.Combine(s2channellib, "SatelliteDb.bin"), "Map45_SatelliteDb.bin_entry");
-        
+
         var tvDbFile = Path.Combine(dir, "tv.db");
         if (File.Exists(tvDbFile))
         {
           this.dataFilePaths.Add(tvDbFile);
-          this.LoadMap45Channels(tvDbFile);
+          this.LoadTvDb(tvDbFile);
         }
 
+        LoadMap30ChannelMapsDb(antChannels, Path.Combine(channellib, "TerrestrialChannelMaps.db"));
+        LoadMap30ChannelMapsDb(cabChannels, Path.Combine(channellib, "CableChannelMaps.db"));
+        LoadMap30ChannelMapsDb(satChannels, Path.Combine(s2channellib, "SatelliteChannelMaps.db"));
+
+        // favorites in "list.db" have different schema depending on version
         var listDbFile = Path.Combine(dir, "list.db");
         if (File.Exists(listDbFile))
         {
+          if (chanLstBin.VersionMajor == 30)
+            this.LoadMap30Favorites(listDbFile);
+          else if (chanLstBin.VersionMajor == 45)
+            this.LoadMap45Favorites(listDbFile);
           this.dataFilePaths.Add(listDbFile);
-          this.LoadMap45Favorites(listDbFile);
         }
 
-        foreach(var list in this.DataRoot.ChannelLists)
+        foreach (var list in this.DataRoot.ChannelLists)
           list.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Encrypted));
         satChannels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Polarity));
       }
@@ -181,8 +205,7 @@ namespace ChanSort.Loader.Philips
 
     }
     #endregion
-
-
+    
     #region LoadDvbCT
     private void LoadDvbCT(ChannelList list, string path, string mappingName)
     {
@@ -326,7 +349,7 @@ namespace ChanSort.Loader.Philips
 
     #endregion
 
-    #region LoadDvbsSatellites()
+    #region LoadDvbsSatellites
     private void LoadDvbsSatellites(string path)
     {
       if (!File.Exists(path))
@@ -568,13 +591,75 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    #region LoadMap45Channels
-    private void LoadMap45Channels(string tvDb)
+    #region LoadMap30ChannelMapsDb
+    private void LoadMap30ChannelMapsDb(ChannelList list, string dbPath)
     {
-      // the only purpose of this method is to validate if numbers in the SatelliteDb.bin file are the same as in the list.db file
-      // differences are written to the log which can be viewed under File / File information
+      // map30 format keeps channel numbers in 3 redundant locations: tv.db, a .bin file and a *ChannelMaps.db file
+      // here we read the ChannelMaps.db file, compare the data with the .bin file and keep a reference to the records for later update
+      if (!File.Exists(dbPath))
+        return;
+      this.dataFilePaths.Add(dbPath);
+      
+      using var conn = new SQLiteConnection($"Data Source={dbPath}");
+      conn.Open();
+      using var cmd = conn.CreateCommand();
 
-      var channelsById = new Dictionary<int, Channel>();
+      var queries = new[]
+      {
+        new Tuple<SignalSource,string,string>(SignalSource.Analog | (list.SignalSource & SignalSource.MaskAntennaCableSat), "AnalogTable", 
+          "select Dbindex, Frequency, 0, 0, 0, ChannelName, PresetNumber from AnalogTable order by Dbindex"),
+        new Tuple<SignalSource,string,string>(SignalSource.Digital  | (list.SignalSource & SignalSource.MaskAntennaCableSat), "DigSrvTable", 
+          "select Dbindex, Frequency, OriginalNetworkId, Tsid, ServiceId, ChannelName, PresetNumber from DigSrvTable order by Dbindex")
+      };
+
+      foreach (var entry in queries)
+      {
+        var source = entry.Item1;
+        var table = entry.Item2;
+        var query = entry.Item3;
+
+        // not all files contain an AnalogTable table
+        cmd.CommandText = $"select count(1) from sqlite_master where type='table' and name='{table}'";
+        if ((long) cmd.ExecuteScalar() == 0)
+          continue;
+
+        cmd.CommandText = query;
+        using var r = cmd.ExecuteReader();
+        while (r.Read())
+        {
+          var idx = r.GetInt32(0);
+          var freq = (decimal) r.GetInt32(1) / 1000;
+          var onid = r.GetInt32(2);
+          var tsid = r.GetInt32(3);
+          var sid = r.GetInt32(4);
+          var name = r.GetString(5);
+          var prnr = r.GetInt32(6);
+
+          var uid = ChannelInfo.GetUid(source, freq, onid, tsid, sid, null);
+          var chans = list.GetChannelByUid(uid);
+          if (chans == null || chans.Count == 0)
+            this.logMessages.AppendLine($"{dbPath}: {table} entry with Dbindex={idx} has no corresponding channel in *.bin files");
+          else
+          {
+            var ch = (Channel) chans[0];
+            ch.Map30ChannelMapsDbindex = idx;
+            if (ch.Name != name)
+              this.logMessages.AppendLine($"{dbPath}: {table} entry with Dbindex={idx} has name {name}, in .bin file it is {ch.Name}");
+            if (ch.OldProgramNr != prnr)
+              this.logMessages.AppendLine($"{dbPath}: {table} entry with Dbindex={idx} has PresetNumber {prnr}, in .bin file it is {ch.OldProgramNr}");
+          }
+        }
+      }
+    }
+    #endregion
+
+    #region LoadTvDb
+    private void LoadTvDb(string tvDb)
+    {
+      // the only purpose of this method is to validate if numbers in the the tv.db file are the same as in CableDb.bin/Terrestrial.bin/SatelliteDb.bin
+      // differences are written to the log which can be viewed under File / File information
+      // The tv.db file exists in formats 30 and 45 (and unconfirmed in 25 too)
+
       foreach (var chanList in this.DataRoot.ChannelLists)
       {
         if (chanList.IsMixedSourceFavoritesList)
@@ -634,6 +719,58 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
+    #region LoadMap30Favorites
+    private void LoadMap30Favorites(string listDb)
+    {
+      // The "list.db" file in format 30 contains tables TList1-4, CList1-4 and SList1-4 for 4 favorite favorite lists for cable, satellite and terrestrial
+      // It also contains a table "List" with 12 entries holding names for the 3*4 favorite lists and SatFrequency and TCFrequency for satellite/terrestrial/cable frequencies
+      // The list.db:xListN.channel_id field references the tv.db:channels._id field
+
+      if (!File.Exists(listDb) || this.channelsById.Count == 0)
+        return;
+
+      this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+      this.Features.MaxFavoriteLists = 4;
+
+      using var conn = new SQLiteConnection($"Data Source={listDb}");
+      conn.Open();
+      using var cmd = conn.CreateCommand();
+      
+      // read favorite list names - disabled because currently ChanSort does not support different names for Fav1-4 based on input source
+      //cmd.CommandText = "select list_id, list_name from List order by list_id";
+      //using (var r = cmd.ExecuteReader())
+      //{
+      //  while (r.Read())
+      //  {
+      //    var id = r.GetInt32(0);
+      //    var name = r.GetString(1);
+      //    this.DataRoot.SetFavListCaption(id - 1, name);
+      //  }
+      //}
+
+      // read favorite channels
+      for (int listIdx=0; listIdx<12; listIdx++)
+      {
+        var table = "TCS"[listIdx / 4] + "List" + (listIdx % 4 + 1); // TList1-4, CList1-4, SList1-4
+        cmd.CommandText = $"select count(1) from sqlite_master where type='table' and name='{table}'";
+        if ((long) cmd.ExecuteScalar() == 0)
+          continue;
+
+        cmd.CommandText = $"select _id, channel_id from {table} order by rank";
+        using var r = cmd.ExecuteReader();
+        int order = 0;
+        while (r.Read())
+        {
+          int channelId = r.GetInt32(1);
+          if (this.channelsById.TryGetValue(channelId, out var ch))
+            ch.SetOldPosition(1 + listIdx%4, ++order);
+          else
+            this.logMessages.AppendLine($"list.db: {table} _id {r.GetInt32(0)} references non-existing channel with channel_id {channelId}");
+        }
+      }
+    }
+    #endregion
+
     #region LoadMap45Favorites
     private void LoadMap45Favorites(string listDb)
     {
@@ -689,7 +826,7 @@ namespace ChanSort.Loader.Philips
         using var r = cmd.ExecuteReader();
         int seq = 0;
         while (r.Read())
-        {
+        { 
           var channelId = r.GetInt32(0);
           var chan = this.favChannels.Channels.FirstOrDefault(c => ((Channel)c).Id == channelId);
           if (chan == null)
@@ -704,15 +841,7 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-
-    #region GetDataFilePaths
-
-    /// <summary>
-    /// List of files for backup/restore
-    /// </summary>
-    public override IEnumerable<string> GetDataFilePaths() => this.dataFilePaths;
-    #endregion
-
+    // saving
 
     #region Save()
     public override void Save(string tvOutputFile)
@@ -738,8 +867,18 @@ namespace ChanSort.Loader.Philips
         SaveDvbCTChannels(this.cabChannels, Path.Combine(channellib, "CableDb.bin"));
         SaveDvbsChannels(this.satChannels, Path.Combine(s2channellib, "SatelliteDb.bin"));
 
-        UpdateChannelMap45TvDb();
-        UpdateChannelMap45ListDb();
+        SaveMap30ChannelMapsDb(this.antChannels, Path.Combine(channellib, "TerrestrialChannelMaps.db"));
+        SaveMap30ChannelMapsDb(this.cabChannels, Path.Combine(channellib, "CableChannelMaps.db"));
+        SaveMap30ChannelMapsDb(this.satChannels, Path.Combine(s2channellib, "SatelliteChannelMaps.db"));
+
+        SaveTvDb();
+
+        // favorite lists have different DB schema depending on version
+        var listDb = Path.Combine(dir, "list.db");
+        if (chanLstBin.VersionMajor == 30)
+          SaveMap30Favorites(listDb);
+        else if (chanLstBin.VersionMajor == 45)
+          SaveMap45Favorites(listDb);
       }
 
       this.chanLstBin.Save(this.FileName);
@@ -950,8 +1089,48 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    #region UpdateChannelMap45TvDb()
-    private void UpdateChannelMap45TvDb()
+    #region SaveMap30ChannelMapsDb
+    private void SaveMap30ChannelMapsDb(ChannelList list, string dbPath)
+    {
+      // map30 format keeps channel numbers in 3 redundant locations: tv.db, a .bin file and a *ChannelMaps.db file
+      // here we save the ChannelMaps.db file
+      if (!File.Exists(dbPath))
+        return;
+
+      using var conn = new SQLiteConnection($"Data Source={dbPath}");
+      conn.Open();
+      using var trans = conn.BeginTransaction();
+      using var cmd = conn.CreateCommand();
+
+      var tables = new[] {"AnalogTable", "DigSrvTable"};
+      foreach (var table in tables)
+      {
+        // not all files contain an AnalogTable table
+        cmd.CommandText = $"select count(1) from sqlite_master where type='table' and name='{table}'";
+        if ((long)cmd.ExecuteScalar() == 0)
+          continue;
+
+        cmd.CommandText = $"update {table} set PresetNumber = @prNum where Dbindex = @dbindex";
+        cmd.Parameters.Add("@prNum", DbType.String);
+        cmd.Parameters.Add("@dbindex", DbType.Int32);
+        foreach(var channel in list.Channels)
+        {
+          if (!(channel is Channel ch) || ch.Map30ChannelMapsDbindex < 0)
+            continue;
+          cmd.Parameters["@dbindex"].Value = ch.Map30ChannelMapsDbindex;
+          cmd.Parameters["@prNum"].Value = ch.NewProgramNr.ToString();
+          cmd.ExecuteNonQuery();
+        }
+      }
+      trans.Commit();
+    }
+    #endregion
+
+    #region SaveTvDb
+    /// <summary>
+    /// The "tv.db" file was reported to exist as early as in ChannelMap_25 format and has been seen in formats 30 and 45 too
+    /// </summary>
+    private void SaveTvDb()
     {
       var tvDb = Path.Combine(Path.GetDirectoryName(this.FileName) ?? "", "tv.db");
       if (!File.Exists(tvDb))
@@ -991,10 +1170,62 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    #region UpdateChannelMap45ListDb()
-    private void UpdateChannelMap45ListDb()
+    #region SaveMap30Favorites
+
+    private void SaveMap30Favorites(string listDb)
     {
-      var listDb = Path.Combine(Path.GetDirectoryName(this.FileName) ?? "", "list.db");
+      if (!File.Exists(listDb) || this.channelsById.Count == 0)
+        return;
+
+      using var conn = new SQLiteConnection($"Data Source={listDb}");
+      conn.Open();
+      using var cmd = conn.CreateCommand();
+      using var trans = conn.BeginTransaction();
+
+      // TODO change data model so we can support different fav list names in each list and not require same name for Fav1-4 in each input source; then save the names in the "List" table
+
+      // save favorite channels
+      for (int listIdx = 0; listIdx < 12; listIdx++)
+      {
+        var table = "TCS"[listIdx / 4] + "List" + (listIdx % 4 + 1); // TList1-4, CList1-4, SList1-4
+        cmd.CommandText = $"select count(1) from sqlite_master where type='table' and name='{table}'";
+        if ((long)cmd.ExecuteScalar() == 0)
+          continue;
+
+        cmd.CommandText = $"delete from {table}";
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = $"insert into {table} (_id, channel_id, rank) values (@id, @channelId, @rank)";
+        cmd.Parameters.Add("@id", DbType.Int32);
+        cmd.Parameters.Add("@channelId", DbType.Int32);
+        cmd.Parameters.Add("@rank", DbType.Int32);
+
+        int order = 0;
+        var list = listIdx < 4 ? this.antChannels : listIdx < 8 ? this.cabChannels : this.satChannels;
+        foreach (var channel in list.Channels)
+        {
+          if (!(channel is Channel ch))
+            continue;
+
+          var favPos = ch.GetPosition(1 + listIdx % 4);
+          if (favPos < 0)
+            continue;
+
+          ++order;
+          cmd.Parameters["@id"].Value = order;
+          cmd.Parameters["@channelId"].Value = ch.Id;
+          cmd.Parameters["@rank"].Value = order - 1;
+          cmd.ExecuteNonQuery();
+        }
+      }
+
+      trans.Commit();
+    }
+    #endregion
+
+    #region SaveMap45Favorites
+    private void SaveMap45Favorites(string listDb)
+    {
       if (!File.Exists(listDb))
         return;
 
@@ -1063,8 +1294,12 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
+    // common
 
     #region FaultyCrc32
+    /// <summary>
+    /// Philips uses a broken CRC32 implementation, so we can't use the ChanSort.Api.Utils.Crc32 code
+    /// </summary>
     public static uint FaultyCrc32(byte[] bytes, int start, int count)
     {
       var crc = 0xFFFFFFFF;
@@ -1088,9 +1323,21 @@ namespace ChanSort.Loader.Philips
     #endregion
 
 
+    // framework support methods
+
+    #region GetDataFilePaths
+
+    /// <summary>
+    /// List of files for backup/restore
+    /// </summary>
+    public override IEnumerable<string> GetDataFilePaths() => this.dataFilePaths;
+    #endregion
+
+    #region GetFileInformation
     public override string GetFileInformation()
     {
       return base.GetFileInformation() + this.logMessages.Replace("\n", "\r\n");
     }
+    #endregion
   }
 }
