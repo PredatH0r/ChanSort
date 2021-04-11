@@ -136,7 +136,7 @@ namespace ChanSort.Ui
         if (!serializer.DataRoot.MixedSourceFavorites || list.IsMixedSourceFavoritesList)
         {
           for (int i = 1; i <= serializer.DataRoot.FavListCount; i++)
-            this.comboSource.Properties.Items.Add(new ListOption(list, i, list.ShortCaption + " - " + serializer.DataRoot.GetFavListCaption(i - 1, true)));
+            this.comboSource.Properties.Items.Add(new ListOption(list, i, list.ShortCaption + " - " + list.GetFavListCaption(i - 1, true)));
         }
       }
 
@@ -150,7 +150,7 @@ namespace ChanSort.Ui
         if (list.IsMixedSourceFavoritesList)
         {
           for (int i = 1; i <= main.DataRoot.FavListCount; i++)
-            this.comboTarget.Properties.Items.Add(new ListOption(list, i, list.ShortCaption + (i == 0 ? "" : " - " + main.DataRoot.GetFavListCaption(i - 1, true))));
+            this.comboTarget.Properties.Items.Add(new ListOption(list, i, list.ShortCaption + (i == 0 ? "" : " - " + list.GetFavListCaption(i - 1, true))));
         }
         else
         {

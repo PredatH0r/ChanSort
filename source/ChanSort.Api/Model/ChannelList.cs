@@ -33,7 +33,6 @@ namespace ChanSort.Api
     public string ShortCaption { get; set; }
     public SignalSource SignalSource { get; }
     public IList<ChannelInfo> Channels { get; } = new List<ChannelInfo>();
-    public int MaxFavLists { get; set; }
 
     public int Count => Channels.Count;
     public int DuplicateUidCount => duplicateUidCount;
@@ -124,8 +123,7 @@ namespace ChanSort.Api
     #region GetChannelByUid()
     public IList<ChannelInfo> GetChannelByUid(string uid)
     {
-      IList<ChannelInfo> channel;
-      this.channelByUid.TryGetValue(uid, out channel);
+      this.channelByUid.TryGetValue(uid, out var channel);
       return channel ?? new List<ChannelInfo>(0);
     }
     #endregion
@@ -174,5 +172,28 @@ namespace ChanSort.Api
         this.channelByProgNr.Remove(channel.OldProgramNr);
     }
     #endregion
+
+
+    #region Get/SetFavListCaption()
+
+    private readonly Dictionary<int, string> favListCaptions = new Dictionary<int, string>();
+
+    public void SetFavListCaption(int favIndex, string caption)
+    {
+      favListCaptions[favIndex] = caption;
+    }
+
+    public string GetFavListCaption(int favIndex, bool asTabCaption = false)
+    {
+      if (favIndex < 0)
+        return "";
+      var hasCaption = favListCaptions.TryGetValue(favIndex, out var caption);
+      if (!asTabCaption)
+        return caption;
+      var letter = favIndex < 26 ? ((char)('A' + favIndex)).ToString() : (favIndex + 1).ToString();
+      return hasCaption && !string.IsNullOrEmpty(caption) ? letter + ": " + caption : "Fav " + letter;
+    }
+    #endregion
+
   }
 }

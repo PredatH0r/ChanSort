@@ -254,27 +254,5 @@ namespace ChanSort.Api
       }
     }
     #endregion
-
-
-    #region Get/SetFavListCaption()
-
-    private readonly Dictionary<int,string> favListCaptions = new Dictionary<int, string>();
-
-    public void SetFavListCaption(int favIndex, string caption)
-    {
-      favListCaptions[favIndex] = caption;
-    }
-
-    public string GetFavListCaption(int favIndex, bool asTabCaption = false)
-    {
-      if (favIndex < 0)
-        return "";
-      var hasCaption = favListCaptions.TryGetValue(favIndex, out var caption);
-      if (!asTabCaption)
-        return caption;
-      var letter = favIndex < 26 ? ((char)('A' + favIndex)).ToString() : (favIndex + 1).ToString();
-      return  hasCaption && !string.IsNullOrEmpty(caption) ? letter + ": " + caption : "Fav " + letter;
-    }
-    #endregion
   }
 }

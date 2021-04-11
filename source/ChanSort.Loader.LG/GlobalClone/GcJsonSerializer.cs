@@ -252,9 +252,9 @@ namespace ChanSort.Loader.GlobalClone
             ch.Transponder = this.DataRoot.Transponder.TryGet((int.Parse(tpId.Substring(0, 4)) << 16) + int.Parse(tpId.Substring(4))); // satId + freq, e.g. 0192126041
 
           ch.IsDeleted = (bool) node["deleted"];
-          ch.PcrPid = (int) node["pcrPid"] & 0x3FF;
-          ch.AudioPid = (int) node["audioPid"] & 0x3FF;
-          ch.VideoPid = (int) node["videoPid"] & 0x3FF;
+          ch.PcrPid = (int) node["pcrPid"] & 0x1FFF;
+          ch.AudioPid = (int) node["audioPid"] & 0x1FFF;
+          ch.VideoPid = (int) node["videoPid"] & 0x1FFF;
           ch.ServiceId = (int) node["SVCID"];
           if (ch.ServiceId == 0)
             ch.ServiceId = (int) node["programNum"];
@@ -327,7 +327,8 @@ namespace ChanSort.Loader.GlobalClone
           node["skipped"] = ch.Skip;
           node["locked"] = ch.Lock;
           node["Invisible"] = ch.Hidden;
-          node["audioPid"] = ch.AudioPid;
+          if (this.Features.CanEditAudioPid)
+            node["audioPid"] = ((int)node["audioPid"] & ~0x1FFF) | ch.AudioPid;
 
           // the only successfully imported file was one where these flags were NOT set by ChanSort
           // these flags do get set when changing numbers through the TV's menu, but then prevent further modifications, e.g. through an import

@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2021-04-11
+- Philips: added support for ChannelMap\_30 format
+- LG Web OS 5: fixed a bug that wrote wrong values for "audioPid" to the file (which had no effect on the TV's operation)
+
 2021-04-10
 - Samsung .zip: Support for files that contain an empty SRV_EXT_APP table, which caused the whole list to show up empty.
 

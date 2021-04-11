@@ -471,7 +471,7 @@ namespace ChanSort.Ui
       while (this.tabSubList.TabPages.Count < favCount + 1)
         this.tabSubList.TabPages.Add();
       for (int i = 1; i < this.tabSubList.TabPages.Count; i++)
-        this.tabSubList.TabPages[i].Text = this.DataRoot.GetFavListCaption(i - 1, true);
+        this.tabSubList.TabPages[i].Text = this.CurrentChannelList?.GetFavListCaption(i - 1, true);
       this.tabSubList.EndUpdate();
 
       if (!this.DataRoot.SortedFavorites || this.subListIndex > favCount)
@@ -724,6 +724,7 @@ namespace ChanSort.Ui
 
       this.UpdateInsertSlotNumber();
       this.UpdateMenu();
+      this.UpdateFavoritesEditor(this.DataRoot.SupportedFavorites); // this will update the tabs with the (custom) names of the Fav lists
 
       this.mnuFavList.Enabled = this.grpSubList.Visible;
       if (!this.grpSubList.Visible)
@@ -3392,6 +3393,9 @@ namespace ChanSort.Ui
     {
       if (e.Button == MouseButtons.Right)
       {
+        var list = this.CurrentChannelList;
+        if (list == null)
+          return;
         var hit = this.tabSubList.CalcHitInfo(e.Location);
         if (hit.IsValid && hit.Page != null)
         {
@@ -3399,11 +3403,11 @@ namespace ChanSort.Ui
           dlg.StartPosition = FormStartPosition.Manual;
           dlg.Location = this.tabSubList.PointToScreen(e.Location);
           var favIndex = this.tabSubList.TabPages.IndexOf(hit.Page) - 1;
-          dlg.Text = this.DataRoot.GetFavListCaption(favIndex);
+          dlg.Text = list.GetFavListCaption(favIndex);
           if (dlg.ShowDialog(this) == DialogResult.OK)
           {
-            this.DataRoot.SetFavListCaption(favIndex, dlg.Text);
-            hit.Page.Text = this.DataRoot.GetFavListCaption(favIndex, true);
+            list.SetFavListCaption(favIndex, dlg.Text);
+            hit.Page.Text = list.GetFavListCaption(favIndex, true);
           }
         }
       }

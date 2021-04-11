@@ -735,18 +735,19 @@ namespace ChanSort.Loader.Philips
       using var conn = new SQLiteConnection($"Data Source={listDb}");
       conn.Open();
       using var cmd = conn.CreateCommand();
-      
-      // read favorite list names - disabled because currently ChanSort does not support different names for Fav1-4 based on input source
-      //cmd.CommandText = "select list_id, list_name from List order by list_id";
-      //using (var r = cmd.ExecuteReader())
-      //{
-      //  while (r.Read())
-      //  {
-      //    var id = r.GetInt32(0);
-      //    var name = r.GetString(1);
-      //    this.DataRoot.SetFavListCaption(id - 1, name);
-      //  }
-      //}
+
+      // read favorite list names
+      cmd.CommandText = "select list_id, list_name from List order by list_id";
+      using (var r = cmd.ExecuteReader())
+      {
+        while (r.Read())
+        {
+          var id = r.GetInt32(0);
+          var name = r.GetString(1);
+          var list = id <= 4 ? this.antChannels : id <= 8 ? this.cabChannels : this.satChannels;
+          list.SetFavListCaption((id - 1)%4, name);
+        }
+      }
 
       // read favorite channels
       for (int listIdx=0; listIdx<12; listIdx++)
@@ -815,7 +816,7 @@ namespace ChanSort.Loader.Philips
           listIds.Add(listId);
           if (!this.mustFixFavListIds)
             listIndex = listId - 1;
-          this.DataRoot.SetFavListCaption(listIndex, r.GetString(1));
+          this.favChannels.SetFavListCaption(listIndex, r.GetString(1));
           ++listIndex;
         }
       }
@@ -1182,7 +1183,6 @@ namespace ChanSort.Loader.Philips
       using var cmd = conn.CreateCommand();
       using var trans = conn.BeginTransaction();
 
-      // TODO change data model so we can support different fav list names in each list and not require same name for Fav1-4 in each input source; then save the names in the "List" table
 
       // save favorite channels
       for (int listIdx = 0; listIdx < 12; listIdx++)
@@ -1192,7 +1192,21 @@ namespace ChanSort.Loader.Philips
         if ((long)cmd.ExecuteScalar() == 0)
           continue;
 
+        var incFavList = (ini.GetSection("Map" + chanLstBin.VersionMajor)?.GetBool("incrementFavListVersion", true) ?? true)
+          ? ", list_version=list_version+1"
+          : "";
+
+        var list = listIdx < 4 ? this.antChannels : listIdx < 8 ? this.cabChannels : this.satChannels;
+        cmd.CommandText = "update List set list_name=@name" + incFavList + " where list_id=@listId";
+        cmd.Parameters.Add("@listId", DbType.Int32);
+        cmd.Parameters.Add("@name", DbType.String);
+        cmd.Parameters["@listId"].Value = listIdx + 1;
+        cmd.Parameters["@name"].Value = list.GetFavListCaption(listIdx % 4, false);
+        cmd.ExecuteNonQuery();
+
+
         cmd.CommandText = $"delete from {table}";
+        cmd.Parameters.Clear();
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = $"insert into {table} (_id, channel_id, rank) values (@id, @channelId, @rank)";
@@ -1201,7 +1215,6 @@ namespace ChanSort.Loader.Philips
         cmd.Parameters.Add("@rank", DbType.Int32);
 
         int order = 0;
-        var list = listIdx < 4 ? this.antChannels : listIdx < 8 ? this.cabChannels : this.satChannels;
         foreach (var channel in list.Channels)
         {
           if (!(channel is Channel ch))
@@ -1256,7 +1269,7 @@ namespace ChanSort.Loader.Philips
         cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int16));
         cmd.Parameters.Add(new SQLiteParameter("@name", DbType.String));
         cmd.Parameters["@id"].Value = favListId;
-        cmd.Parameters["@name"].Value = DataRoot.GetFavListCaption(favListIndex) ?? "Fav " + (favListIndex + 1);
+        cmd.Parameters["@name"].Value = this.favChannels.GetFavListCaption(favListIndex) ?? "Fav " + (favListIndex + 1);
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = "insert into FavoriteChannels(fav_list_id, channel_id, rank) values (@listId,@channelId,@rank)";

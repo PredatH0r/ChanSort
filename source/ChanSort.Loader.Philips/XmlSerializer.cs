@@ -428,7 +428,7 @@ namespace ChanSort.Loader.Philips
       this.Features.FavoritesMode = FavoritesMode.MixedSource;
       this.Features.MaxFavoriteLists = Math.Max(this.Features.MaxFavoriteLists, index);
 
-      this.DataRoot.SetFavListCaption(index - 1, name);
+      this.favChannels.SetFavListCaption(index - 1, name);
 
       if (this.favChannels.Count == 0)
       {
@@ -586,7 +586,7 @@ namespace ChanSort.Loader.Philips
         favListNode.InnerXml = ""; // clear all <FavoriteChannel> child elements but keep the attributes of the current node
         var attr = favListNode.Attributes?["Name"];
         if (attr != null)
-          attr.InnerText = EncodeName(this.DataRoot.GetFavListCaption(index - 1), (attr.InnerText.Length + 1)/5, false);
+          attr.InnerText = EncodeName(this.favChannels.GetFavListCaption(index - 1), (attr.InnerText.Length + 1)/5, false);
 
         // increment fav list version, unless disabled in .ini file
         if (chanLstBin != null && (ini.GetSection("Map" + chanLstBin.VersionMajor)?.GetBool("incrementFavListVersion", true) ?? true))

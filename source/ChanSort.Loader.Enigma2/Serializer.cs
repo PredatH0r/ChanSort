@@ -264,7 +264,7 @@ namespace ChanSort.Loader.Enigma2
         return;
       }
       
-      this.DataRoot.SetFavListCaption(favIndex, line.Substring(6));
+      this.channels.SetFavListCaption(favIndex, line.Substring(6));
 
       int lineNr = 0;
       int progNr = 0;
@@ -365,7 +365,7 @@ namespace ChanSort.Loader.Enigma2
       {
         var file = this.favListFileNames[favIndex];
         using var w = new StreamWriter(File.Create(file), utf8WithoutBom);
-        w.WriteLine($"#NAME {this.DataRoot.GetFavListCaption(favIndex)}");
+        w.WriteLine($"#NAME {this.channels.GetFavListCaption(favIndex)}");
         foreach (var ch in this.channels.Channels.OrderBy(c => c.GetPosition(favIndex+1)))
         {
           if (!(ch is Channel c) || c.GetPosition(favIndex + 1) < 0)
