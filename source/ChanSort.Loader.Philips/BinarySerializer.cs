@@ -1227,7 +1227,7 @@ namespace ChanSort.Loader.Philips
           ++order;
           cmd.Parameters["@id"].Value = order;
           cmd.Parameters["@channelId"].Value = ch.Id;
-          cmd.Parameters["@rank"].Value = order - 1;
+          cmd.Parameters["@rank"].Value = favPos;
           cmd.ExecuteNonQuery();
         }
       }
