@@ -201,7 +201,14 @@ namespace ChanSort.Loader.Philips
         fileData.content = File.ReadAllBytes(fileName);
         fileData.textContent = Encoding.UTF8.GetString(fileData.content);
         fileData.newline = fileData.textContent.Contains("\r\n") ? "\r\n" : "\n";
-        fileData.indent = fileData.textContent.Contains("  <") ? "  " : "";
+
+        // indentation can be 0, 2 or 4 spaces
+        var idx1 = fileData.textContent.IndexOf("<Channel>");
+        var idx0 = fileData.textContent.LastIndexOf("\n", idx1+1);
+        if (idx0 >= 0 && idx1 >= 0)
+          fileData.indent = fileData.textContent.Substring(idx0 + 1, idx1 - idx0 - 1);
+        else
+          fileData.indent = fileData.textContent.Contains("  <") ? "  " : "";
 
         var settings = new XmlReaderSettings
         {

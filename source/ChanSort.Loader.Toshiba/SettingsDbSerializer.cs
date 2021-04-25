@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
+﻿using System.Collections.Generic;
 using System.IO;
+using Microsoft.Data.Sqlite;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Toshiba
@@ -59,7 +57,7 @@ namespace ChanSort.Loader.Toshiba
 
     private string GetBackupFilePath()
     {
-      var dir = Path.GetDirectoryName(this.FileName);
+      var dir = Path.GetDirectoryName(this.FileName) ?? ".";
       var name = Path.GetFileNameWithoutExtension(this.FileName);
       var ext = Path.GetExtension(this.FileName);
       var backupFile = Path.Combine(dir, name + "Backup" + ext);
@@ -72,7 +70,7 @@ namespace ChanSort.Loader.Toshiba
     public override void Load()
     {
       string sysDataConnString = "Data Source=" + this.FileName;
-      using var conn = new SQLiteConnection(sysDataConnString);
+      using var conn = new SqliteConnection(sysDataConnString);
       conn.Open();
       
       using var cmd = conn.CreateCommand();
@@ -96,7 +94,7 @@ namespace ChanSort.Loader.Toshiba
     #endregion
     
     #region RepairCorruptedDatabaseImage()
-    private void RepairCorruptedDatabaseImage(SQLiteCommand cmd)
+    private void RepairCorruptedDatabaseImage(SqliteCommand cmd)
     {
       cmd.CommandText = "REINDEX";
       cmd.ExecuteNonQuery();
@@ -104,7 +102,7 @@ namespace ChanSort.Loader.Toshiba
     #endregion
 
     #region ReadSatellites()
-    private void ReadSatellites(SQLiteCommand cmd)
+    private void ReadSatellites(SqliteCommand cmd)
     {
       cmd.CommandText = "select m_id, m_name_serialized, m_orbital_position from SatTable";
       using var r = cmd.ExecuteReader();
@@ -126,7 +124,7 @@ namespace ChanSort.Loader.Toshiba
     #endregion
 
     #region ReadTransponders()
-    private void ReadTransponders(SQLiteCommand cmd)
+    private void ReadTransponders(SqliteCommand cmd)
     {
       cmd.CommandText = "select m_id, m_satellite_id, m_frequency, m_polarisation, m_symbol_rate from SatTxTable";
       using var r = cmd.ExecuteReader();
@@ -139,7 +137,7 @@ namespace ChanSort.Loader.Toshiba
         if (this.DataRoot.Transponder.TryGet(id) != null)
           continue;
         Transponder tp = new Transponder(id);
-        tp.FrequencyInMhz = (decimal)freq;
+        tp.FrequencyInMhz = freq;
         tp.Polarity = r.GetInt32(3) == 0 ? 'H' : 'V';
         tp.Satellite = this.DataRoot.Satellites.TryGet(satId);
         tp.SymbolRate = r.GetInt32(4);
@@ -149,7 +147,7 @@ namespace ChanSort.Loader.Toshiba
     #endregion
 
     #region ReadChannels()
-    private void ReadChannels(SQLiteCommand cmd)
+    private void ReadChannels(SqliteCommand cmd)
     {
       int ixE = 0;
       int ixD = 3;
@@ -219,15 +217,16 @@ left outer join ChanDataTable ac on ac.handle=a.m_channel_no
       }
 
       string channelConnString = "Data Source=" + this.FileName;
-      using var conn = new SQLiteConnection(channelConnString);
+      using var conn = new SqliteConnection(channelConnString);
       conn.Open();
+      using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();
       using var cmd2 = conn.CreateCommand();
-      using var trans = conn.BeginTransaction();
 
       this.WriteChannels(cmd, cmd2, this.channels);
       trans.Commit();
 
+      cmd.Transaction = null;
       this.RepairCorruptedDatabaseImage(cmd);
       conn.Close();
 
@@ -238,12 +237,12 @@ left outer join ChanDataTable ac on ac.handle=a.m_channel_no
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SQLiteCommand cmd, SQLiteCommand cmdDelete, ChannelList channelList)
+    private void WriteChannels(SqliteCommand cmd, SqliteCommand cmdDelete, ChannelList channelList)
     {
       cmd.CommandText = "update EASISerTable set m_rsn=@nr, m_name_serialized=@name where m_handle=@handle";
-      cmd.Parameters.Add(new SQLiteParameter("@handle", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@name", DbType.String));
+      cmd.Parameters.Add("@handle", SqliteType.Integer);
+      cmd.Parameters.Add("@nr", SqliteType.Integer);
+      cmd.Parameters.Add("@name", SqliteType.Text);
       cmd.Prepare();
 
       cmdDelete.CommandText = @"
@@ -251,7 +250,8 @@ delete from EASISerTable where m_handle=@handle;
 delete from DVBSerTable where m_handle=@handle; 
 delete from AnalogSerTable where m_handle=@handle;
 ";
-      cmdDelete.Parameters.Add(new SQLiteParameter("@handle", DbType.Int32));
+      cmdDelete.Parameters.Add("@handle", SqliteType.Integer);
+      cmdDelete.Prepare();
 
       foreach (ChannelInfo channel in channelList.Channels)
       {

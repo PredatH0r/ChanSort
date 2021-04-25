@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Data.SQLite;
+using System.Data;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Samsung.Zip
@@ -7,7 +7,7 @@ namespace ChanSort.Loader.Samsung.Zip
   internal class DbChannel : ChannelInfo
   {
     #region ctor()
-    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DbSerializer loader, Dictionary<long, string> providers, Satellite sat, Transponder tp)
+    internal DbChannel(IDataReader r, IDictionary<string, int> field, DbSerializer loader, Dictionary<long, string> providers, Satellite sat, Transponder tp)
     {
       var chType = r.GetInt32(field["chType"]);
       this.SignalSource = DbSerializer.ChTypeToSignalSource(chType);
@@ -49,14 +49,14 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region ReadAnalogData()
-    private void ReadAnalogData(SQLiteDataReader r, IDictionary<string, int> field)
+    private void ReadAnalogData(IDataReader r, IDictionary<string, int> field)
     {
       
     }
     #endregion
 
     #region ReadDvbData()
-    protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DbSerializer loader, Dictionary<long, string> providers)
+    protected void ReadDvbData(IDataReader r, IDictionary<string, int> field, DbSerializer loader, Dictionary<long, string> providers)
     {
       this.ShortName = loader.ReadUtf16(r, field["srvName"]);
       this.RecordOrder = r.GetInt32(field["major"]);

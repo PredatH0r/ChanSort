@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.Data.Sqlite;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Philips
@@ -600,7 +599,7 @@ namespace ChanSort.Loader.Philips
         return;
       this.dataFilePaths.Add(dbPath);
       
-      using var conn = new SQLiteConnection($"Data Source={dbPath}");
+      using var conn = new SqliteConnection($"Data Source={dbPath}");
       conn.Open();
       using var cmd = conn.CreateCommand();
 
@@ -672,7 +671,7 @@ namespace ChanSort.Loader.Philips
         }
       }
 
-      using var conn = new SQLiteConnection($"Data Source={tvDb}");
+      using var conn = new SqliteConnection($"Data Source={tvDb}");
       conn.Open();
       using var cmd = conn.CreateCommand();
       cmd.CommandText = "select _id, display_number, display_name, original_network_id, transport_stream_id, service_id, service_type from channels";
@@ -693,7 +692,7 @@ namespace ChanSort.Loader.Philips
         }
 
         if (ch.OldProgramNr != nr)
-          this.logMessages.AppendLine($"channel with id {id}: prNum {ch.OldProgramNr} in bin file and {r.GetInt32(1)} in tv.db");
+          this.logMessages.AppendLine($"channel with id {id}: prNum {ch.OldProgramNr} in bin file and {r.GetString(1)} in tv.db");
         if (ch.Name != r.GetString(2))
           this.logMessages.AppendLine($"channel with id {id}: Name {ch.Name} in bin file and {r.GetString(2)} in tv.db");
         if (ch.OriginalNetworkId != r.GetInt32(3))
@@ -732,7 +731,7 @@ namespace ChanSort.Loader.Philips
       this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
       this.Features.MaxFavoriteLists = 4;
 
-      using var conn = new SQLiteConnection($"Data Source={listDb}");
+      using var conn = new SqliteConnection($"Data Source={listDb}");
       conn.Open();
       using var cmd = conn.CreateCommand();
 
@@ -790,7 +789,7 @@ namespace ChanSort.Loader.Philips
       this.Features.MaxFavoriteLists = 8;
       this.Features.AllowGapsInFavNumbers = false;
 
-      using var conn = new SQLiteConnection($"Data Source={listDb}");
+      using var conn = new SqliteConnection($"Data Source={listDb}");
       conn.Open();
 
       // older versions of ChanSort wrote invalid "list_id" values starting at 0 instead of 1 and going past 8.
@@ -1098,7 +1097,7 @@ namespace ChanSort.Loader.Philips
       if (!File.Exists(dbPath))
         return;
 
-      using var conn = new SQLiteConnection($"Data Source={dbPath}");
+      using var conn = new SqliteConnection($"Data Source={dbPath}");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();
@@ -1112,8 +1111,8 @@ namespace ChanSort.Loader.Philips
           continue;
 
         cmd.CommandText = $"update {table} set PresetNumber = @prNum where Dbindex = @dbindex";
-        cmd.Parameters.Add("@prNum", DbType.String);
-        cmd.Parameters.Add("@dbindex", DbType.Int32);
+        cmd.Parameters.Add("@prNum", SqliteType.Text);
+        cmd.Parameters.Add("@dbindex", SqliteType.Integer);
         foreach(var channel in list.Channels)
         {
           if (!(channel is Channel ch) || ch.Map30ChannelMapsDbindex < 0)
@@ -1137,17 +1136,17 @@ namespace ChanSort.Loader.Philips
       if (!File.Exists(tvDb))
         return;
 
-      using var conn = new SQLiteConnection($"Data Source={tvDb}");
+      using var conn = new SqliteConnection($"Data Source={tvDb}");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();
       cmd.CommandText = "update channels set display_number=@prNum, display_name=@name, browsable=@browsable, locked=@locked where _id=@id";
       cmd.Parameters.Clear();
-      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@prNum", DbType.String));
-      cmd.Parameters.Add(new SQLiteParameter("@name", DbType.String));
-      cmd.Parameters.Add(new SQLiteParameter("@browsable", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@locked", DbType.Int32));
+      cmd.Parameters.Add("@id", SqliteType.Integer);
+      cmd.Parameters.Add("@prNum", SqliteType.Text);
+      cmd.Parameters.Add("@name", SqliteType.Text);
+      cmd.Parameters.Add("@browsable", SqliteType.Integer);
+      cmd.Parameters.Add("@locked", SqliteType.Integer);
       cmd.Prepare();
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -1178,7 +1177,7 @@ namespace ChanSort.Loader.Philips
       if (!File.Exists(listDb) || this.channelsById.Count == 0)
         return;
 
-      using var conn = new SQLiteConnection($"Data Source={listDb}");
+      using var conn = new SqliteConnection($"Data Source={listDb}");
       conn.Open();
       using var cmd = conn.CreateCommand();
       using var trans = conn.BeginTransaction();
@@ -1198,8 +1197,8 @@ namespace ChanSort.Loader.Philips
 
         var list = listIdx < 4 ? this.antChannels : listIdx < 8 ? this.cabChannels : this.satChannels;
         cmd.CommandText = "update List set list_name=@name" + incFavList + " where list_id=@listId";
-        cmd.Parameters.Add("@listId", DbType.Int32);
-        cmd.Parameters.Add("@name", DbType.String);
+        cmd.Parameters.Add("@listId", SqliteType.Integer);
+        cmd.Parameters.Add("@name", SqliteType.Text);
         cmd.Parameters["@listId"].Value = listIdx + 1;
         cmd.Parameters["@name"].Value = list.GetFavListCaption(listIdx % 4, false);
         cmd.ExecuteNonQuery();
@@ -1210,9 +1209,9 @@ namespace ChanSort.Loader.Philips
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = $"insert into {table} (_id, channel_id, rank) values (@id, @channelId, @rank)";
-        cmd.Parameters.Add("@id", DbType.Int32);
-        cmd.Parameters.Add("@channelId", DbType.Int32);
-        cmd.Parameters.Add("@rank", DbType.Int32);
+        cmd.Parameters.Add("@id", SqliteType.Integer);
+        cmd.Parameters.Add("@channelId", SqliteType.Integer);
+        cmd.Parameters.Add("@rank", SqliteType.Integer);
 
         int order = 0;
         foreach (var channel in list.Channels)
@@ -1242,7 +1241,7 @@ namespace ChanSort.Loader.Philips
       if (!File.Exists(listDb))
         return;
 
-      using var conn = new SQLiteConnection($"Data Source={listDb}");
+      using var conn = new SqliteConnection($"Data Source={listDb}");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();
@@ -1266,17 +1265,17 @@ namespace ChanSort.Loader.Philips
           "insert into List (list_id, list_name, list_version) values (@id,@name,1)" : 
           "update List set list_name=@name" + incFavList + " where list_id=@id";
 
-        cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int16));
-        cmd.Parameters.Add(new SQLiteParameter("@name", DbType.String));
+        cmd.Parameters.Add("@id", SqliteType.Integer);
+        cmd.Parameters.Add("@name", SqliteType.Text);
         cmd.Parameters["@id"].Value = favListId;
         cmd.Parameters["@name"].Value = this.favChannels.GetFavListCaption(favListIndex) ?? "Fav " + (favListIndex + 1);
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = "insert into FavoriteChannels(fav_list_id, channel_id, rank) values (@listId,@channelId,@rank)";
         cmd.Parameters.Clear();
-        cmd.Parameters.Add(new SQLiteParameter("@listId", DbType.Int32));
-        cmd.Parameters.Add(new SQLiteParameter("@channelId", DbType.Int32));
-        cmd.Parameters.Add(new SQLiteParameter("@rank", DbType.Double));
+        cmd.Parameters.Add("@listId", SqliteType.Integer);
+        cmd.Parameters.Add("@channelId", SqliteType.Integer);
+        cmd.Parameters.Add("@rank", SqliteType.Real);
         cmd.Prepare();
         foreach (var chan in favChannels.Channels)
         {

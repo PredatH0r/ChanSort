@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Data.SQLite;
+using System.Data;
 using System.Text;
 using ChanSort.Api;
 
@@ -18,7 +18,7 @@ namespace ChanSort.Loader.Toshiba
     internal int Bits;
 
     #region ctor()
-    internal DbChannel(SignalSource source, SQLiteDataReader r, IDictionary<string, int> field, 
+    internal DbChannel(SignalSource source, IDataReader r, IDictionary<string, int> field, 
       DataRoot dataRoot, IDictionary<string,bool> encryptionInfo)
     {
       this.SignalSource = source;
@@ -48,7 +48,7 @@ namespace ChanSort.Loader.Toshiba
     #endregion
 
     #region ReadAnalogData()
-    private void ReadAnalogData(SQLiteDataReader r, IDictionary<string, int> field)
+    private void ReadAnalogData(IDataReader r, IDictionary<string, int> field)
     {
       this.Name = r.GetString(field["channel_label"]);
       this.FreqInMhz = (decimal)r.GetInt32(field["frequency"]) / 1000000;
@@ -56,7 +56,7 @@ namespace ChanSort.Loader.Toshiba
     #endregion
 
     #region ReadDvbData()
-    protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, 
+    protected void ReadDvbData(IDataReader r, IDictionary<string, int> field, DataRoot dataRoot, 
       IDictionary<string, bool> encryptionInfo)
     {
       string longName, shortName;

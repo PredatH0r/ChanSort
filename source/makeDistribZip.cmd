@@ -13,6 +13,16 @@ xcopy /idy debug\ChanSort.exe* "%target%"
 xcopy /idy debug\ChanSort.*.dll "%target%"
 xcopy /idy debug\ChanSort.ico "%target%"
 xcopy /idy debug\ChanSort.*.ini "%target%"
+
+xcopy /idy debug\Microsoft.Data.Sqlite.dll "%target%"
+xcopy /idy debug\SQLitePCLRaw.*.dll "%target%"
+xcopy /idy debug\System.Memory.dll "%target%"
+xcopy /idy debug\System.Runtime.CompilerServices.Unsafe.dll "%target%"
+mkdir "%target%\runtimes" 2>nul
+xcopy /sidy debug\runtimes\* "%target%\runtimes"
+
+
+xcopy /idy debug\Newtonsoft.Json.dll "%target%"
 xcopy /idy debug\Lookup.csv "%target%"
 xcopy /idy DLL\* "%target%"
 del "%target%\*nunit*.dll"
@@ -42,12 +52,18 @@ rem -----------------------------
 rem If you want to digitally sign the generated .exe and .dll files, 
 rem you need to have your code signing certificate installed in the Windows certificate storage
 rem -----------------------------
-set signtool="C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64\signtool.exe"
-if not exist %signtool% (
-  echo can't find signtool: %signtool%
-  pause
-  goto:eof
+for /d %%f in ("C:\Program Files (x86)\Windows Kits\10\bin\10.*") do (
+  set nq=%%f
+  set nq=!nq:"=!
+  set signtool="!nq!\x86\signtool.exe"
+  if exist !signtool! goto foundSigntool
 )
+
+echo "can't find signtool.exe"
+pause
+goto:eof
+:foundSigntool
+
 set oldcd=%cd%
 cd %target%
 call :signBatch ChanSort.exe ChanSort*.dll

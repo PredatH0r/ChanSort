@@ -2,15 +2,57 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
 using System.IO;
 using ChanSort.Api;
+using Microsoft.Data.Sqlite;
 
 namespace ChanSort.Loader.Hisense.ServicelistDb
 {
   public class ServicelistDbSerializer : SerializerBase
   {
+    /// <summary>
+    ///   Fields of the ChannelInfo that will be shown in the UI
+    /// </summary>
+    private static readonly List<string> ColumnNames = new()
+    {
+      "OldPosition",
+      "Position",
+      "Source",
+      "NewProgramNr",
+      "Name",
+      "ShortName",
+      "Favorites",
+      "Skip",
+      "Lock",
+      "Hidden",
+      "Encrypted",
+      "FreqInMhz",
+      "OriginalNetworkId",
+      "TransportStreamId",
+      "ServiceId",
+      //"ServiceType",
+      "ServiceTypeName",
+      "NetworkName",
+      "Satellite"
+//        "SymbolRate"
+    };
+
+    /// <summary>
+    ///   mapping of FavoriteList.Pid => ChannelList.
+    ///   This dict does not include real user favorite lists (FAV1-FAV4).
+    /// </summary>
+    private readonly Dictionary<int, ChannelList> channelLists = new();
+
+    /// <summary>
+    ///   mapping of Service.Pid => ChannelInfo
+    /// </summary>
+    private readonly Dictionary<long, ChannelInfo> channelsById = new();
+
+    /// <summary>
+    ///   mapping of FavoriteList.Pid for FAV1-4 => index of the internal favorite list within userFavList (0-3)
+    ///   Pids that don't belong to the FAV1-4 are not included in this dictionary.
+    /// </summary>
+    private readonly Dictionary<int, int> favListIdToFavIndex = new();
     /*
      * The 2017 Hisense / Loewe data model for channel lists is a bit different than all other supported models and need some workarounds to be supported.
      * It is based on a flat "Services" table which doesn't hold program numbers and a FavoritesList/FavoritesItem table to assign numbers
@@ -33,83 +75,24 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
      */
 
     /// <summary>
-    /// list of all table names in the database
+    ///   list of all table names in the database
     /// </summary>
-    private readonly List<string> tableNames = new List<string>();
+    private readonly List<string> tableNames = new();
 
     /// <summary>
-    /// mapping of Service.Pid => ChannelInfo
+    ///   This list is filled with all channels/services and serves as a holder for favorite lists 1-4
     /// </summary>
-    private readonly Dictionary<long, ChannelInfo> channelsById = new Dictionary<long, ChannelInfo>();
+    private readonly ChannelList userFavList = new(0, "Favorites");
 
     /// <summary>
-    /// mapping of FavoriteList.Pid => ChannelList. 
-    /// This dict does not include real user favorite lists (FAV1-FAV4).
-    /// </summary>
-    private readonly Dictionary<int, ChannelList> channelLists = new Dictionary<int, ChannelList>();
-    
-    /// <summary>
-    /// This list is filled with all channels/services and serves as a holder for favorite lists 1-4
-    /// </summary>
-    private readonly ChannelList userFavList = new ChannelList(0, "Favorites");
-
-    /// <summary>
-    /// mapping of FavoriteList.Pid for FAV1-4 => index of the internal favorite list within userFavList (0-3)
-    /// Pids that don't belong to the FAV1-4 are not included in this dictionary.
-    /// </summary>
-    private readonly Dictionary<int,int> favListIdToFavIndex = new Dictionary<int, int>();
-
-    /// <summary>
-    /// FavoriteList.Pid of the $all list
+    ///   FavoriteList.Pid of the $all list
     /// </summary>
     private int pidAll;
 
     /// <summary>
-    /// FavoriteList.Pid of the $av list
+    ///   FavoriteList.Pid of the $av list
     /// </summary>
     private int pidAv;
-
-    /// <summary>
-    /// Fields of the ChannelInfo that will be shown in the UI
-    /// </summary>
-    private static readonly List<string> ColumnNames = new List<string>
-      {
-        "OldPosition",
-        "Position",
-        "Source",
-        "NewProgramNr",
-        "Name",
-        "ShortName",
-        "Favorites",
-        "Skip",
-        "Lock",
-        "Hidden",
-        "Encrypted",
-        "FreqInMhz",
-        "OriginalNetworkId",
-        "TransportStreamId",
-        "ServiceId",
-        //"ServiceType",
-        "ServiceTypeName",
-        "NetworkName",
-        "Satellite"
-//        "SymbolRate"
-      };
-
-    #region class HisTransponder
-    /// <summary>
-    /// This class holds information from the Tuner table
-    /// </summary>
-    public class HisTransponder : Transponder
-    {
-      public SignalSource SignalSource { get; set; }
-      public string Source { get; set; }
-
-      public HisTransponder(int id) : base(id)
-      {
-      }
-    }
-    #endregion
 
     #region ctor()
 
@@ -132,7 +115,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
 
     public override void Load()
     {
-      using (var conn = new SQLiteConnection("Data Source=" + FileName))
+      using (var conn = new SqliteConnection("Data Source=" + FileName))
       {
         conn.Open();
         using (var cmd = conn.CreateCommand())
@@ -152,14 +135,14 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
       }
 
       if (channelsById.Count == 0)
-        Api.View.Default.MessageBox(Resources.Load_NoChannelsMsg, Resources.Load_NoChannelsCaption);
+        View.Default.MessageBox(Resources.Load_NoChannelsMsg, Resources.Load_NoChannelsCaption);
     }
 
     #endregion
 
     #region RepairCorruptedDatabaseImage()
 
-    private void RepairCorruptedDatabaseImage(SQLiteCommand cmd)
+    private void RepairCorruptedDatabaseImage(SqliteCommand cmd)
     {
       cmd.CommandText = "REINDEX";
       cmd.ExecuteNonQuery();
@@ -169,7 +152,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
 
     #region LoadTableNames()
 
-    private void LoadTableNames(SQLiteCommand cmd)
+    private void LoadTableNames(SqliteCommand cmd)
     {
       cmd.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table' order by name";
       using (var r = cmd.ExecuteReader())
@@ -182,20 +165,25 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
     #endregion
 
     #region LoadLists()
-    private void LoadLists(SQLiteCommand cmd)
+
+    private void LoadLists(SqliteCommand cmd)
     {
       cmd.CommandText = "select Pid, Name from FavoriteList";
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
         {
-          int listId = r.GetInt32(0);
-          string name = r.GetString(1);
+          var listId = r.GetInt32(0);
+          var name = r.GetString(1);
 
           if (name == "$all")
+          {
             pidAll = listId;
+          }
           else if (name == "$av")
+          {
             pidAv = listId;
+          }
           else if (name.StartsWith("FAV"))
           {
             // all real user favorite lists are using the "userFavList"
@@ -220,66 +208,12 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
       channelLists.Add(0, userFavList);
       DataRoot.AddChannelList(userFavList);
     }
-    #endregion
-
-    #region LoadTunerData()
-
-    private void LoadTunerData(SQLiteCommand cmd)
-    {
-      List<Tuple<string,SignalSource,string>> inputs = new List<Tuple<string, SignalSource, string>>
-      {
-        Tuple.Create("C", SignalSource.DvbC, "symbolrate"),
-        Tuple.Create("C2", SignalSource.DvbC, "bandwidth"),
-        Tuple.Create("S", SignalSource.DvbS, "symbolrate"),
-        Tuple.Create("S2", SignalSource.DvbS, "symbolrate"),
-        Tuple.Create("T", SignalSource.DvbT, "bandwidth"),
-        Tuple.Create("T2", SignalSource.DvbT, "bandwidth"),
-      };
-
-      foreach (var input in inputs)
-      {
-        var table = input.Item1;
-        var symrate = input.Item3;
-        LoadTunerData(cmd, "DVB" + table + "Tuner", ", Frequency," + symrate, (t, r, i0) =>
-        {
-          t.Source = "DVB-" + input.Item1;
-          t.SignalSource = input.Item2;
-          t.FrequencyInMhz = (decimal) r.GetInt32(i0 + 0) / 1000;
-          t.SymbolRate = r.GetInt32(i0 + 1);
-        });
-      }
-    }
-
-    private void LoadTunerData(SQLiteCommand cmd, string joinTable, string joinFields, Action<HisTransponder, SQLiteDataReader, int> enhanceTransponderInfo)
-    {
-      if (!tableNames.Contains(joinTable.ToLower()))
-        return;
-
-      cmd.CommandText = $"select tuner.tunerid, oid, tid, satellite {joinFields} "
-                        + $" from tuner inner join {joinTable} on {joinTable}.tunerid=tuner.tunerid";
-
-      using (var r = cmd.ExecuteReader())
-      {
-        while (r.Read())
-        {
-          var id = r.GetInt32(0);
-          var trans = new HisTransponder(id);
-          trans.OriginalNetworkId = r.GetInt32(1);
-          trans.TransportStreamId = r.GetInt32(2);
-          trans.Satellite = DataRoot.Satellites.TryGet(r.GetInt32(3));
-
-          enhanceTransponderInfo(trans, r, 4);
-
-          DataRoot.AddTransponder(trans.Satellite, trans);
-        }
-      }
-    }
 
     #endregion
 
     #region LoadServiceData()
 
-    private void LoadServiceData(SQLiteCommand cmd)
+    private void LoadServiceData(SqliteCommand cmd)
     {
       cmd.CommandText = @"
 select s.pid, s.type, anls.Frequency, digs.TunerId, digs.Sid, Name, ShortName, Encrypted, Visible, Selectable, ParentalLock, MediaType
@@ -294,7 +228,9 @@ left outer join DVBService digs on digs.ServiceId=s.Pid
         {
           ChannelInfo ci = null;
           if (!r.IsDBNull(2)) // AnalogService
+          {
             ci = new ChannelInfo(SignalSource.Analog, r.GetInt32(0), -1, r.GetString(5));
+          }
           else if (!r.IsDBNull(3)) // DvbService
           {
             var trans = (HisTransponder) DataRoot.Transponder.TryGet(r.GetInt32(3));
@@ -322,7 +258,9 @@ left outer join DVBService digs on digs.ServiceId=s.Pid
               ci.ServiceTypeName = "Radio";
             }
             else
+            {
               ci.ServiceTypeName = mediaType.ToString();
+            }
           }
           else if (r.GetInt32(1) == 0) // A/V input
           {
@@ -335,11 +273,12 @@ left outer join DVBService digs on digs.ServiceId=s.Pid
         }
       }
     }
+
     #endregion
 
     #region LoadFavorites()
 
-    private void LoadFavorites(SQLiteCommand cmd)
+    private void LoadFavorites(SqliteCommand cmd)
     {
       cmd.CommandText = @"
 select fi.FavoriteId, fi.ServiceId, fi.ChannelNum, fi.Selectable, fi.Visible, fi.isDeleted, fi.Protected, l.Lcn 
@@ -350,14 +289,14 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
       {
         while (r.Read())
         {
-          int favListId = r.GetInt32(0);
+          var favListId = r.GetInt32(0);
           var ci = channelsById.TryGet(r.GetInt32(1));
           if (ci == null)
             continue;
-          
-          int favListIdx = favListIdToFavIndex.TryGet(favListId, -1);
+
+          var favListIdx = favListIdToFavIndex.TryGet(favListId, -1);
           if (favListIdx >= 0)
-            ci.SetOldPosition(favListIdx+1, r.GetInt32(2));
+            ci.SetOldPosition(favListIdx + 1, r.GetInt32(2));
 
           ci.SetOldPosition(favListIdx + 1, r.GetInt32(2)); // 0=main nr, 1-4=fav 1-4
           if (favListIdx < 0)
@@ -388,9 +327,10 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
         }
       }
 
-      foreach(var ci in channelsById.Values)
+      foreach (var ci in channelsById.Values)
         DataRoot.AddChannel(userFavList, ci);
     }
+
     #endregion
 
     // Saving ====================================
@@ -402,7 +342,7 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
       if (tvOutputFile != FileName)
         File.Copy(FileName, tvOutputFile, true);
 
-      using (var conn = new SQLiteConnection("Data Source=" + tvOutputFile))
+      using (var conn = new SqliteConnection("Data Source=" + tvOutputFile))
       {
         conn.Open();
         using (var trans = conn.BeginTransaction())
@@ -429,11 +369,12 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
         }
       }
     }
+
     #endregion
 
     #region ResetLcn()
 
-    private void ResetLcn(SQLiteCommand cmd)
+    private void ResetLcn(SqliteCommand cmd)
     {
       cmd.CommandText = "delete from Lcn where FavoriteId<>" + pidAv;
       cmd.ExecuteNonQuery();
@@ -442,20 +383,22 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
     #endregion
 
     #region UpdateServices()
-    private void UpdateServices(SQLiteCommand cmd)
+
+    private void UpdateServices(SqliteCommand cmd)
     {
-      cmd.CommandText = "update Service set Name=@name, ShortName=@sname, ParentalLock=@lock, Visible=@vis, Selectable=@sel, FavTag=@fav1, FavTag2=@fav1, FavTag3=@fav3, FavTag4=@fav4 where Pid=@servId";
+      cmd.CommandText =
+        "update Service set Name=@name, ShortName=@sname, ParentalLock=@lock, Visible=@vis, Selectable=@sel, FavTag=@fav1, FavTag2=@fav1, FavTag3=@fav3, FavTag4=@fav4 where Pid=@servId";
       cmd.Parameters.Clear();
-      cmd.Parameters.Add("@servId", DbType.Int32);
-      cmd.Parameters.Add("@name", DbType.String);
-      cmd.Parameters.Add("@sname", DbType.String);
-      cmd.Parameters.Add("@lock", DbType.Int32);
-      cmd.Parameters.Add("@vis", DbType.Int32);
-      cmd.Parameters.Add("@sel", DbType.Int32);
-      cmd.Parameters.Add("@fav1", DbType.Int32);
-      cmd.Parameters.Add("@fav2", DbType.Int32);
-      cmd.Parameters.Add("@fav3", DbType.Int32);
-      cmd.Parameters.Add("@fav4", DbType.Int32);
+      cmd.Parameters.Add("@servId", SqliteType.Integer);
+      cmd.Parameters.Add("@name", SqliteType.Text);
+      cmd.Parameters.Add("@sname", SqliteType.Text);
+      cmd.Parameters.Add("@lock", SqliteType.Integer);
+      cmd.Parameters.Add("@vis", SqliteType.Integer);
+      cmd.Parameters.Add("@sel", SqliteType.Integer);
+      cmd.Parameters.Add("@fav1", SqliteType.Integer);
+      cmd.Parameters.Add("@fav2", SqliteType.Integer);
+      cmd.Parameters.Add("@fav3", SqliteType.Integer);
+      cmd.Parameters.Add("@fav4", SqliteType.Integer);
       cmd.Prepare();
 
       foreach (var ci in channelsById.Values)
@@ -473,20 +416,22 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
         cmd.ExecuteNonQuery();
       }
     }
+
     #endregion
 
     #region UpdatePhysicalChannelLists()
-    private void UpdatePhysicalChannelLists(SQLiteCommand cmd)
+
+    private void UpdatePhysicalChannelLists(SqliteCommand cmd)
     {
       cmd.CommandText = "update FavoriteItem set ChannelNum=@ch, isDeleted=@del, Protected=@prot, Selectable=@sel, Visible=@vis where FavoriteId=@favId and ServiceId=@servId";
       cmd.Parameters.Clear();
-      cmd.Parameters.Add("@favId", DbType.Int32);
-      cmd.Parameters.Add("@servId", DbType.Int32);
-      cmd.Parameters.Add("@ch", DbType.Int32);
-      cmd.Parameters.Add("@del", DbType.Int32);
-      cmd.Parameters.Add("@prot", DbType.Int32);
-      cmd.Parameters.Add("@sel", DbType.Int32);
-      cmd.Parameters.Add("@vis", DbType.Int32);
+      cmd.Parameters.Add("@favId", SqliteType.Integer);
+      cmd.Parameters.Add("@servId", SqliteType.Integer);
+      cmd.Parameters.Add("@ch", SqliteType.Integer);
+      cmd.Parameters.Add("@del", SqliteType.Integer);
+      cmd.Parameters.Add("@prot", SqliteType.Integer);
+      cmd.Parameters.Add("@sel", SqliteType.Integer);
+      cmd.Parameters.Add("@vis", SqliteType.Integer);
       cmd.Prepare();
 
       foreach (var entry in channelLists)
@@ -524,10 +469,12 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
         }
       }
     }
+
     #endregion
 
     #region UpdateUserFavoriteLists()
-    private void UpdateUserFavoriteLists(SQLiteCommand cmd)
+
+    private void UpdateUserFavoriteLists(SqliteCommand cmd)
     {
       // delete all FavoriteItem records that belong to the FAV1-4 lists
       cmd.Parameters.Clear();
@@ -536,9 +483,9 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
 
       // (re-)insert the user's new favorites
       cmd.CommandText = "insert into FavoriteItem (FavoriteId, ServiceId, ChannelNum) values (@favId, @servId, @ch)";
-      cmd.Parameters.Add("@favId", DbType.Int32);
-      cmd.Parameters.Add("@servId", DbType.Int32);
-      cmd.Parameters.Add("@ch", DbType.Int32);
+      cmd.Parameters.Add("@favId", SqliteType.Integer);
+      cmd.Parameters.Add("@servId", SqliteType.Integer);
+      cmd.Parameters.Add("@ch", SqliteType.Integer);
       foreach (var entry in favListIdToFavIndex)
       {
         var favIndex = entry.Value;
@@ -561,5 +508,76 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
 
     #endregion
 
+    #region class HisTransponder
+
+    /// <summary>
+    ///   This class holds information from the Tuner table
+    /// </summary>
+    public class HisTransponder : Transponder
+    {
+      public HisTransponder(int id) : base(id)
+      {
+      }
+
+      public SignalSource SignalSource { get; set; }
+      public string Source { get; set; }
+    }
+
+    #endregion
+
+    #region LoadTunerData()
+
+    private void LoadTunerData(SqliteCommand cmd)
+    {
+      var inputs = new List<Tuple<string, SignalSource, string>>
+      {
+        Tuple.Create("C", SignalSource.DvbC, "symbolrate"),
+        Tuple.Create("C2", SignalSource.DvbC, "bandwidth"),
+        Tuple.Create("S", SignalSource.DvbS, "symbolrate"),
+        Tuple.Create("S2", SignalSource.DvbS, "symbolrate"),
+        Tuple.Create("T", SignalSource.DvbT, "bandwidth"),
+        Tuple.Create("T2", SignalSource.DvbT, "bandwidth")
+      };
+
+      foreach (var input in inputs)
+      {
+        var table = input.Item1;
+        var symrate = input.Item3;
+        LoadTunerData(cmd, "DVB" + table + "Tuner", ", Frequency," + symrate, (t, r, i0) =>
+        {
+          t.Source = "DVB-" + input.Item1;
+          t.SignalSource = input.Item2;
+          t.FrequencyInMhz = (decimal) r.GetInt32(i0 + 0) / 1000;
+          t.SymbolRate = r.GetInt32(i0 + 1);
+        });
+      }
+    }
+
+    private void LoadTunerData(SqliteCommand cmd, string joinTable, string joinFields, Action<HisTransponder, SqliteDataReader, int> enhanceTransponderInfo)
+    {
+      if (!tableNames.Contains(joinTable.ToLower()))
+        return;
+
+      cmd.CommandText = $"select tuner.tunerid, oid, tid, satellite {joinFields} "
+                        + $" from tuner inner join {joinTable} on {joinTable}.tunerid=tuner.tunerid";
+
+      using (var r = cmd.ExecuteReader())
+      {
+        while (r.Read())
+        {
+          var id = r.GetInt32(0);
+          var trans = new HisTransponder(id);
+          trans.OriginalNetworkId = r.GetInt32(1);
+          trans.TransportStreamId = r.GetInt32(2);
+          trans.Satellite = DataRoot.Satellites.TryGet(r.GetInt32(3));
+
+          enhanceTransponderInfo(trans, r, 4);
+
+          DataRoot.AddTransponder(trans.Satellite, trans);
+        }
+      }
+    }
+
+    #endregion
   }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
 using System.IO;
 using System.Text;
+using Microsoft.Data.Sqlite;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Panasonic
@@ -76,7 +76,7 @@ namespace ChanSort.Loader.Panasonic
       this.CreateDummySatellites();
 
       string channelConnString = "Data Source=" + this.workFile;
-      using (var conn = new SQLiteConnection(channelConnString))
+      using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();
         using (var cmd = conn.CreateCommand())
@@ -219,7 +219,7 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region InitCharacterEncoding()
-    private void InitCharacterEncoding(SQLiteCommand cmd)
+    private void InitCharacterEncoding(SqliteCommand cmd)
     {
       cmd.CommandText = "PRAGMA encoding";
       this.charEncoding = cmd.ExecuteScalar() as string;
@@ -227,7 +227,7 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region RepairCorruptedDatabaseImage()
-    private void RepairCorruptedDatabaseImage(SQLiteCommand cmd)
+    private void RepairCorruptedDatabaseImage(SqliteCommand cmd)
     {
       cmd.CommandText = "REINDEX";
       cmd.ExecuteNonQuery();
@@ -235,7 +235,7 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region ReadChannels()
-    private void ReadChannels(SQLiteCommand cmd)
+    private void ReadChannels(SqliteCommand cmd)
     {
       string[] fieldNames = { "rowid", "major_channel", "physical_ch","sname", "freq", "skip", "running_status","free_CA_mode","child_lock",
                             "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "ya_svcid", "delivery" };
@@ -307,13 +307,14 @@ order by s.ntype,major_channel
       this.FileName = tvOutputFile;
 
       string channelConnString = "Data Source=" + this.workFile;
-      using (var conn = new SQLiteConnection(channelConnString))
+      using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();
         using (var cmd = conn.CreateCommand())
         {
           using (var trans = conn.BeginTransaction())
           {
+            cmd.Transaction = trans;
             this.WriteChannels(cmd, this.avbtChannels);
             this.WriteChannels(cmd, this.avbcChannels);
             this.WriteChannels(cmd, this.dvbtChannels);
@@ -323,6 +324,8 @@ order by s.ntype,major_channel
             this.WriteChannels(cmd, this.freesatChannels);
             trans.Commit();
           }
+
+          cmd.Transaction = null;
           this.RepairCorruptedDatabaseImage(cmd);
         }
       }
@@ -332,19 +335,19 @@ order by s.ntype,major_channel
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SQLiteCommand cmd, ChannelList channelList)
+    private void WriteChannels(SqliteCommand cmd, ChannelList channelList)
     {
       cmd.CommandText = "update SVL set major_channel=@progNr, sname=@sname, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
       cmd.Parameters.Clear();
-      cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@progNr", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@sname", DbType.Binary));
-      cmd.Parameters.Add(new SQLiteParameter("@fav1", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@fav2", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@fav3", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@fav4", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@skip", DbType.Int32));
+      cmd.Parameters.Add("@rowid", SqliteType.Integer);
+      cmd.Parameters.Add("@progNr", SqliteType.Integer);
+      cmd.Parameters.Add("@sname", SqliteType.Blob);
+      cmd.Parameters.Add("@fav1", SqliteType.Integer);
+      cmd.Parameters.Add("@fav2", SqliteType.Integer);
+      cmd.Parameters.Add("@fav3", SqliteType.Integer);
+      cmd.Parameters.Add("@fav4", SqliteType.Integer);
+      cmd.Parameters.Add("@lock", SqliteType.Integer);
+      cmd.Parameters.Add("@skip", SqliteType.Integer);
       cmd.Prepare();
       foreach (ChannelInfo channelInfo in channelList.Channels)
       {
@@ -367,7 +370,7 @@ order by s.ntype,major_channel
       // delete unassigned channels
       cmd.CommandText = "delete from SVL where rowid=@rowid";
       cmd.Parameters.Clear();
-      cmd.Parameters.Add(new SQLiteParameter("@rowid", DbType.Int32));
+      cmd.Parameters.Add(new SqliteParameter("@rowid", DbType.Int32));
       foreach (ChannelInfo channel in channelList.Channels)
       {
         if (channel.IsDeleted && channel.OldProgramNr >= 0)

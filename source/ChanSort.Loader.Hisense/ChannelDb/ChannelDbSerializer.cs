@@ -2,11 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
-using ChanSort.Api;
-using System.Data.SQLite;
 using System.IO;
 using System.Text.RegularExpressions;
+using Microsoft.Data.Sqlite;
+using ChanSort.Api;
 
 namespace ChanSort.Loader.Hisense.ChannelDb
 {
@@ -79,12 +78,12 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     #endregion
 
-    private readonly List<ChannelList> channelLists = new List<ChannelList>();
-    private readonly Dictionary<long, Channel> channelsById = new Dictionary<long, Channel>();
+    private readonly List<ChannelList> channelLists = new ();
+    private readonly Dictionary<long, Channel> channelsById = new ();
     private List<string> tableNames;
 
     // the fav_1 - fav_4 tables in channel.db of a H50B7700UW has different column names and a primary key/unique constraint which requires specific handling
-    private bool hasCamelCaseFavSchema = false;
+    private bool hasCamelCaseFavSchema;
 
     #region ctor()
 
@@ -145,36 +144,34 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     public override void Load()
     {
-      using (var conn = new SQLiteConnection("Data Source=" + this.FileName))
+      using (var conn = new SqliteConnection("Data Source=" + this.FileName))
       {
         conn.Open();
-        using (var cmd = conn.CreateCommand())
-        {
-          this.RepairCorruptedDatabaseImage(cmd);
-          this.LoadTableNames(cmd);
+        using var cmd = conn.CreateCommand();
+        this.RepairCorruptedDatabaseImage(cmd);
+        this.LoadTableNames(cmd);
 
-          if (!tableNames.Contains("svl_1") && !tableNames.Contains("svl_2") && !tableNames.Contains("svl_3"))
-            throw new FileLoadException("File doesn't contain svl_* tables");
+        if (!tableNames.Contains("svl_1") && !tableNames.Contains("svl_2") && !tableNames.Contains("svl_3"))
+          throw new FileLoadException("File doesn't contain svl_* tables");
 
-          this.LoadSatelliteData(cmd);
-          this.LoadTslData(cmd);
-          this.LoadSvlData(cmd);
-          this.LoadFavorites(cmd);
-        }
+        this.LoadSatelliteData(cmd);
+        this.LoadTslData(cmd);
+        this.LoadSvlData(cmd);
+        this.LoadFavorites(cmd);
       }
 
       int totalCount = 0;
       foreach (var list in this.channelLists)
         totalCount += list.Count;
       if (totalCount == 0)
-        Api.View.Default.MessageBox(Resources.Load_NoChannelsMsg, Resources.Load_NoChannelsCaption);
+        View.Default.MessageBox(Resources.Load_NoChannelsMsg, Resources.Load_NoChannelsCaption);
     }
 
     #endregion
 
     #region RepairCorruptedDatabaseImage()
 
-    private void RepairCorruptedDatabaseImage(SQLiteCommand cmd)
+    private void RepairCorruptedDatabaseImage(SqliteCommand cmd)
     {
       cmd.CommandText = "REINDEX";
       cmd.ExecuteNonQuery();
@@ -184,22 +181,20 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     #region LoadTableNames()
 
-    private void LoadTableNames(SQLiteCommand cmd)
+    private void LoadTableNames(SqliteCommand cmd)
     {
       this.tableNames = new List<string>();
       cmd.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table' order by name";
-      using (var r = cmd.ExecuteReader())
-      {
-        while (r.Read())
-          tableNames.Add(r.GetString(0));
-      }
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
+        tableNames.Add(r.GetString(0));
     }
 
     #endregion
 
     #region LoadSatelliteData()
 
-    private void LoadSatelliteData(SQLiteCommand cmd)
+    private void LoadSatelliteData(SqliteCommand cmd)
     {
       var regex = new Regex(@"^satl_\d$");
       foreach (var tableName in this.tableNames)
@@ -207,16 +202,14 @@ namespace ChanSort.Loader.Hisense.ChannelDb
         if (!regex.IsMatch(tableName))
           continue;
         cmd.CommandText = "select satl_rec_id, i2_orb_pos, ac_sat_name from " + tableName;
-        using (var r = cmd.ExecuteReader())
+        using var r = cmd.ExecuteReader();
+        while (r.Read())
         {
-          while (r.Read())
-          {
-            var sat = new Satellite(r.GetInt32(0));
-            var pos = r.GetInt32(1);
-            sat.OrbitalPosition = $"{(decimal) Math.Abs(pos) / 10:n1}{(pos < 0 ? 'W' : 'E')}";
-            sat.Name = r.GetString(2);
-            this.DataRoot.AddSatellite(sat);
-          }
+          var sat = new Satellite(r.GetInt32(0));
+          var pos = r.GetInt32(1);
+          sat.OrbitalPosition = $"{(decimal) Math.Abs(pos) / 10:n1}{(pos < 0 ? 'W' : 'E')}";
+          sat.Name = r.GetString(2);
+          this.DataRoot.AddSatellite(sat);
         }
       }
     }
@@ -225,7 +218,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     #region LoadTslData()
 
-    private void LoadTslData(SQLiteCommand cmd)
+    private void LoadTslData(SqliteCommand cmd)
     {
       var regex = new Regex(@"^tsl_(\d)$");
       foreach (var table in this.tableNames)
@@ -273,8 +266,8 @@ namespace ChanSort.Loader.Hisense.ChannelDb
       }
     }
 
-    private void LoadTslData(SQLiteCommand cmd, int tableNr, string joinTable, string joinFields,
-      Action<Transponder, SQLiteDataReader, int> enhanceTransponderInfo)
+    private void LoadTslData(SqliteCommand cmd, int tableNr, string joinTable, string joinFields,
+      Action<Transponder, SqliteDataReader, int> enhanceTransponderInfo)
     {
       if (!this.tableNames.Contains(joinTable.Replace("#", tableNr.ToString())))
         return;
@@ -283,20 +276,20 @@ namespace ChanSort.Loader.Hisense.ChannelDb
         $"select tsl_#.tsl_rec_id, `t_desc.on_id`, `t_desc.ts_id`, `t_ref.satl_rec_id`, `t_desc.e_bcst_medium` {joinFields} "
         + $" from tsl_# inner join {joinTable} on {joinTable}.tsl_rec_id=tsl_#.tsl_rec_id";
       cmd.CommandText = cmd.CommandText.Replace("#", tableNr.ToString());
-      using (var r = cmd.ExecuteReader())
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
       {
-        while (r.Read())
+        int id = (tableNr << 16) | r.GetInt32(0);
+        var trans = new Transponder(id)
         {
-          int id = (tableNr << 16) | r.GetInt32(0);
-          var trans = new Transponder(id);
-          trans.OriginalNetworkId = r.GetInt32(1);
-          trans.TransportStreamId = r.GetInt32(2);
-          trans.Satellite = this.DataRoot.Satellites.TryGet(r.GetInt32(3));
+          OriginalNetworkId = r.GetInt32(1), 
+          TransportStreamId = r.GetInt32(2), 
+          Satellite = this.DataRoot.Satellites.TryGet(r.GetInt32(3))
+        };
 
-          enhanceTransponderInfo(trans, r, 5);
+        enhanceTransponderInfo(trans, r, 5);
 
-          this.DataRoot.AddTransponder(trans.Satellite, trans);
-        }
+        this.DataRoot.AddTransponder(trans.Satellite, trans);
       }
     }
 
@@ -304,7 +297,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     #region LoadSvlData()
 
-    private void LoadSvlData(SQLiteCommand cmd)
+    private void LoadSvlData(SqliteCommand cmd)
     {
       var regex = new Regex(@"^svl_(\d)$");
       foreach (var table in this.tableNames)
@@ -319,7 +312,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
           return;
         }
 
-        this.LoadSvlData(cmd, x, "svl_#_data_analog", "", (ci, r, i0) => { });
+        this.LoadSvlData(cmd, x, "svl_#_data_analog", "", (_, _, _) => { });
         this.LoadSvlData(cmd, x, "svl_#_data_dvb", ", b_free_ca_mode, s_svc_name, sdt_service_type, cur_lcn",
           (ci, r, i0) =>
           {
@@ -345,8 +338,8 @@ namespace ChanSort.Loader.Hisense.ChannelDb
       }
     }
 
-    private void LoadSvlData(SQLiteCommand cmd, int tableNr, string joinTable, string joinFields,
-      Action<ChannelInfo, SQLiteDataReader, int> enhanceChannelInfo)
+    private void LoadSvlData(SqliteCommand cmd, int tableNr, string joinTable, string joinFields,
+      Action<ChannelInfo, SqliteDataReader, int> enhanceChannelInfo)
     {
       if (!this.tableNames.Contains(joinTable.Replace("#", tableNr.ToString())))
         return;
@@ -355,57 +348,55 @@ namespace ChanSort.Loader.Hisense.ChannelDb
         $"select svl_#.svl_rec_id, channel_id, svl_#.tsl_id, svl_#.tsl_rec_id, e_serv_type, ac_name, nw_mask, prog_id, `t_desc.e_bcst_medium` {joinFields}"
         + $" from svl_# inner join {joinTable} on {joinTable}.svl_rec_id=svl_#.svl_rec_id inner join tsl_# on tsl_#.tsl_rec_id=svl_#.tsl_rec_id";
       cmd.CommandText = cmd.CommandText.Replace("#", tableNr.ToString());
-      using (var r = cmd.ExecuteReader())
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
       {
-        while (r.Read())
+        var id = ((long) tableNr << 32) | (uint) r.GetInt32(0);
+        var prNr = (int) ((uint) r.GetInt32(1)) >> 18;
+        var trans = this.DataRoot.Transponder.TryGet((r.GetInt32(2) << 16) | r.GetInt32(3));
+        var stype = (ServiceType) r.GetInt32(4);
+        var name = r.GetString(5);
+        var nwMask = (NwMask) r.GetInt32(6);
+        var sid = r.GetInt32(7);
+        var bmedium = (BroadcastMedium) r.GetInt32(8);
+
+        var ssource = DetermineSignalSource(bmedium, stype);
+        var ci = new Channel(ssource, id, prNr, name);
+        if (trans != null)
         {
-          var id = ((long) tableNr << 32) | (uint) r.GetInt32(0);
-          var prNr = (int) ((uint) r.GetInt32(1)) >> 18;
-          var trans = this.DataRoot.Transponder.TryGet((r.GetInt32(2) << 16) | r.GetInt32(3));
-          var stype = (ServiceType) r.GetInt32(4);
-          var name = r.GetString(5);
-          var nwMask = (NwMask) r.GetInt32(6);
-          var sid = r.GetInt32(7);
-          var bmedium = (BroadcastMedium) r.GetInt32(8);
-
-          var ssource = DetermineSignalSource(bmedium, stype);
-          var ci = new Channel(ssource, id, prNr, name);
-          if (trans != null)
-          {
-            ci.Transponder = trans;
-            ci.OriginalNetworkId = trans.OriginalNetworkId;
-            ci.TransportStreamId = trans.TransportStreamId;
-            ci.SymbolRate = trans.SymbolRate;
-            ci.FreqInMhz = trans.FrequencyInMhz;
-            ci.Satellite = trans.Satellite?.ToString();
-          }
-
-          ci.ServiceId = sid;
-          ci.ChannelId = r.GetInt32(1);
-          ci.NwMask = (int)nwMask;
-
-          //ci.Skip = (nwMask & NwMask.Active) == 0;
-          ci.Lock = (nwMask & NwMask.Lock) != 0;
-          ci.Hidden = (nwMask & NwMask.Visible) == 0;
-          ci.Favorites |= (Favorites) ((int) (nwMask & (NwMask.Fav1 | NwMask.Fav2 | NwMask.Fav3 | NwMask.Fav4)) >> 4);
-
-          if (stype == ServiceType.Radio)
-            ci.ServiceTypeName = "Radio";
-          else if (stype == ServiceType.Tv)
-            ci.ServiceTypeName = "TV";
-          else if (stype == ServiceType.App)
-            ci.ServiceTypeName = "Data";
-
-          enhanceChannelInfo(ci, r, 9);
-
-          var list = this.channelLists[tableNr - 1];
-          ci.Source = list.ShortCaption;
-          this.DataRoot.AddChannel(list, ci);
-
-          // add the channel to all favorites lists
-          this.DataRoot.AddChannel(this.channelLists[6], ci);
-          this.channelsById[ci.RecordIndex] = ci;
+          ci.Transponder = trans;
+          ci.OriginalNetworkId = trans.OriginalNetworkId;
+          ci.TransportStreamId = trans.TransportStreamId;
+          ci.SymbolRate = trans.SymbolRate;
+          ci.FreqInMhz = trans.FrequencyInMhz;
+          ci.Satellite = trans.Satellite?.ToString();
         }
+
+        ci.ServiceId = sid;
+        ci.ChannelId = r.GetInt32(1);
+        ci.NwMask = (int)nwMask;
+
+        //ci.Skip = (nwMask & NwMask.Active) == 0;
+        ci.Lock = (nwMask & NwMask.Lock) != 0;
+        ci.Hidden = (nwMask & NwMask.Visible) == 0;
+        ci.Favorites |= (Favorites) ((int) (nwMask & (NwMask.Fav1 | NwMask.Fav2 | NwMask.Fav3 | NwMask.Fav4)) >> 4);
+
+        if (stype == ServiceType.Radio)
+          ci.ServiceTypeName = "Radio";
+        else if (stype == ServiceType.Tv)
+          ci.ServiceTypeName = "TV";
+        else if (stype == ServiceType.App)
+          ci.ServiceTypeName = "Data";
+
+        enhanceChannelInfo(ci, r, 9);
+
+        var list = this.channelLists[tableNr - 1];
+        ci.Source = list.ShortCaption;
+        this.DataRoot.AddChannel(list, ci);
+
+        // add the channel to all favorites lists
+        this.DataRoot.AddChannel(this.channelLists[6], ci);
+        this.channelsById[ci.RecordIndex] = ci;
       }
     }
 
@@ -413,7 +404,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     #region LoadFavorites()
 
-    private void LoadFavorites(SQLiteCommand cmd)
+    private void LoadFavorites(SqliteCommand cmd)
     {
       // detect schema used by fav_x tables
       if (tableNames.Contains("fav_1"))
@@ -483,7 +474,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
       if (tvOutputFile != this.FileName)
         File.Copy(this.FileName, tvOutputFile, true);
 
-      using var conn = new SQLiteConnection("Data Source=" + tvOutputFile);
+      using var conn = new SqliteConnection("Data Source=" + tvOutputFile);
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();
@@ -527,7 +518,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     #region CreateFavTables()
 
-    private void CreateFavTables(SQLiteCommand cmd)
+    private void CreateFavTables(SqliteCommand cmd)
     {
       for (int i = 1; i <= 4; i++)
       {
@@ -546,7 +537,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     #region ResetLcn()
 
-    private void ResetLcn(SQLiteCommand cmd)
+    private void ResetLcn(SqliteCommand cmd)
     {
       var regex = new Regex(@"^svl_\d_data_dvb$");
       foreach (var table in this.tableNames)
@@ -562,7 +553,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     #region UpdateChannel()
 
-    private void UpdateChannel(SQLiteCommand cmd, Channel ci)
+    private void UpdateChannel(SqliteCommand cmd, Channel ci)
     {
       if (ci == null || ci.IsProxy)
         return;
@@ -583,10 +574,10 @@ namespace ChanSort.Loader.Hisense.ChannelDb
                         $", nw_mask=@nwMask" +
                         $" where svl_rec_id=@id";
       cmd.Parameters.Clear();
-      cmd.Parameters.Add("@id", DbType.Int32);
-      cmd.Parameters.Add("@chnr", DbType.Int32);
-      cmd.Parameters.Add("@name", DbType.String);
-      cmd.Parameters.Add("@nwMask", DbType.Int32);
+      cmd.Parameters.Add("@id", SqliteType.Integer);
+      cmd.Parameters.Add("@chnr", SqliteType.Integer);
+      cmd.Parameters.Add("@name", SqliteType.Text);
+      cmd.Parameters.Add("@nwMask", SqliteType.Integer);
       cmd.Parameters["@id"].Value = id;
       cmd.Parameters["@chnr"].Value = ci.NewProgramNr;
       cmd.Parameters["@name"].Value = ci.Name;
@@ -604,7 +595,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
     #endregion
 
     #region UpdateFavoritesWithUnderlinedColumnNames()
-    private void UpdateFavoritesWithUnderlinedColumnNames(SQLiteCommand cmd, ChannelInfo ci)
+    private void UpdateFavoritesWithUnderlinedColumnNames(SqliteCommand cmd, ChannelInfo ci)
     {
       for (int i = 0; i < 4; i++)
       {
@@ -617,10 +608,10 @@ namespace ChanSort.Loader.Hisense.ChannelDb
         {
           cmd.CommandText = $"update fav_{i + 1} set user_defined_ch_num=@chnr, user_defined_ch_name=@name where ui2_svc_id=@svcid and ui2_svc_rec_id=@recid";
           cmd.Parameters.Clear();
-          cmd.Parameters.Add("@chnr", DbType.String); // for some reason this is a VARCHAR in the database
-          cmd.Parameters.Add("@name", DbType.String);
-          cmd.Parameters.Add("@svcid", DbType.Int32);
-          cmd.Parameters.Add("@recid", DbType.Int32);
+          cmd.Parameters.Add("@chnr", SqliteType.Text); // for some reason this is a VARCHAR in the database
+          cmd.Parameters.Add("@name", SqliteType.Text);
+          cmd.Parameters.Add("@svcid", SqliteType.Integer);
+          cmd.Parameters.Add("@recid", SqliteType.Integer);
           cmd.Parameters["@chnr"].Value = ci.GetPosition(i+1).ToString();
           cmd.Parameters["@name"].Value = ci.Name;
           cmd.Parameters["@svcid"].Value = ci.RecordIndex >> 32;
@@ -636,7 +627,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
     #endregion
 
     #region UpdateFavoritesWithCamelCaseColumnNames()
-    private void UpdateFavoritesWithCamelCaseColumnNames(SQLiteCommand cmd, Channel ci)
+    private void UpdateFavoritesWithCamelCaseColumnNames(SqliteCommand cmd, Channel ci)
     {
       for (int i = 0; i < 4; i++)
       {
@@ -645,12 +636,12 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
         cmd.CommandText = $"insert into fav_{i + 1} (sortId, channelId, svlId, channelName, svlRecId, nwMask) values (@chnr,@chanid,@svcid,@name,@recid,@nwmask)";
         cmd.Parameters.Clear();
-        cmd.Parameters.Add("@chnr", DbType.Int32);
-        cmd.Parameters.Add("@chanid", DbType.Int32);
-        cmd.Parameters.Add("@svcid", DbType.Int32);
-        cmd.Parameters.Add("@name", DbType.String);
-        cmd.Parameters.Add("@recid", DbType.Int32);
-        cmd.Parameters.Add("@nwmask", DbType.Int32);
+        cmd.Parameters.Add("@chnr", SqliteType.Integer);
+        cmd.Parameters.Add("@chanid", SqliteType.Integer);
+        cmd.Parameters.Add("@svcid", SqliteType.Integer);
+        cmd.Parameters.Add("@name", SqliteType.Text);
+        cmd.Parameters.Add("@recid", SqliteType.Integer);
+        cmd.Parameters.Add("@nwmask", SqliteType.Integer);
         cmd.Parameters["@chnr"].Value = ci.GetPosition(i+1);
         cmd.Parameters["@chanid"].Value = ci.ChannelId;
         cmd.Parameters["@name"].Value = ci.Name;

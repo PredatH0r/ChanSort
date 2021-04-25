@@ -103,7 +103,7 @@ namespace ChanSort.Loader.Philips
         var filePath = baseDir + entry.Key;
         if (!File.Exists(filePath))
         {
-          errors += $"\nchanLst.bin: file not found in directory structure: {entry.Key}";
+          this.log?.Invoke($"\nchanLst.bin: file not found in directory structure: {entry.Key}");
           continue;
         }
 

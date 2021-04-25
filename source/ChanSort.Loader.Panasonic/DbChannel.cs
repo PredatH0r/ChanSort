@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Text;
+using System.Data;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Panasonic
@@ -13,7 +13,7 @@ namespace ChanSort.Loader.Panasonic
     internal bool ValidUtf8 = true;
 
     #region ctor()
-    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Encoding encoding)
+    internal DbChannel(IDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Encoding encoding)
     {
       this.RecordIndex = r.GetInt32(field["rowid"]);
       this.RecordOrder = r.GetInt32(field["major_channel"]);
@@ -61,7 +61,7 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region ParseFavorites
-    private void ParseFavorites(SQLiteDataReader r, IDictionary<string, int> field)
+    private void ParseFavorites(IDataReader r, IDictionary<string, int> field)
     {
       for (int i = 0; i < 4; i++)
       {
@@ -76,7 +76,7 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region ReadAnalogData()
-    private void ReadAnalogData(SQLiteDataReader r, IDictionary<string, int> field)
+    private void ReadAnalogData(IDataReader r, IDictionary<string, int> field)
     {
       this.FreqInMhz = r.IsDBNull(field["freq"]) ? 0 : (decimal)r.GetInt32(field["freq"]) / 1000;
       this.ChannelOrTransponder = Tools.GetAnalogChannelNumber((int)this.FreqInMhz);
@@ -84,7 +84,7 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region ReadDvbData()
-    protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, byte[] delivery)
+    protected void ReadDvbData(IDataReader r, IDictionary<string, int> field, DataRoot dataRoot, byte[] delivery)
     {
       int stype = r.GetInt32(field["stype"]);
       this.SignalSource |= LookupData.Instance.IsRadioTvOrData(stype);
@@ -129,7 +129,7 @@ namespace ChanSort.Loader.Panasonic
     /// <summary>
     /// Character encoding is a mess here. Code pages mixed with UTF-8 and raw data
     /// </summary>
-    private void ReadNamesWithEncodingDetection(SQLiteDataReader r, IDictionary<string, int> field, Encoding encoding)
+    private void ReadNamesWithEncodingDetection(IDataReader r, IDictionary<string, int> field, Encoding encoding)
     {
       byte[] buffer = new byte[100];
       int len = (int)r.GetBytes(field["sname"], 0, buffer, 0, buffer.Length);

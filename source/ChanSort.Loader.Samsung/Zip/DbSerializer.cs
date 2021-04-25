@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.Data.Sqlite;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Samsung.Zip
@@ -48,7 +48,7 @@ namespace ChanSort.Loader.Samsung.Zip
         {
           try
           {
-            using (var conn = new SQLiteConnection("Data Source=" + this.TempPath + "\\sat"))
+            using (var conn = new SqliteConnection("Data Source=" + this.TempPath + "\\sat"))
             {
               conn.Open();
               this.ReadSatDatabase(conn);
@@ -70,7 +70,7 @@ namespace ChanSort.Loader.Samsung.Zip
             continue;
           try
           {
-            using (var conn = new SQLiteConnection("Data Source=" + filePath))
+            using (var conn = new SqliteConnection("Data Source=" + filePath))
             {
               FileType type;
               conn.Open();
@@ -100,7 +100,7 @@ namespace ChanSort.Loader.Samsung.Zip
       finally
       {
         // force closing the file and releasing the locks
-        SQLiteConnection.ClearAllPools(); 
+        //SqliteConnection.ClearAllPools(); 
         GC.Collect();
         GC.WaitForPendingFinalizers();
       }
@@ -108,7 +108,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region RepairCorruptedDatabaseImage()
-    private void RepairCorruptedDatabaseImage(SQLiteCommand cmd)
+    private void RepairCorruptedDatabaseImage(IDbCommand cmd)
     {
       cmd.CommandText = "REINDEX";
       cmd.ExecuteNonQuery();
@@ -116,7 +116,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region DetectFileType()
-    private FileType DetectFileType(SQLiteCommand cmd)
+    private FileType DetectFileType(IDbCommand cmd)
     {
       this.tableNames.Clear();
       cmd.CommandText = "select name from sqlite_master where type='table'";
@@ -141,7 +141,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region ReadSatDatabase()
-    private void ReadSatDatabase(SQLiteConnection conn)
+    private void ReadSatDatabase(SqliteConnection conn)
     {
       using (var cmd = conn.CreateCommand())
       {
@@ -153,7 +153,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region ReadSatellites()
-    private void ReadSatellites(SQLiteCommand cmd)
+    private void ReadSatellites(IDbCommand cmd)
     {
       cmd.CommandText = "select distinct satId, cast(satName as blob), satPos, satDir from SAT";
       using (var r = cmd.ExecuteReader())
@@ -174,7 +174,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region ReadTransponders()
-    private void ReadTransponders(SQLiteCommand cmd)
+    private void ReadTransponders(IDbCommand cmd)
     {
       cmd.CommandText = "select satId, tpFreq, tpPol, tpSr, tpId from SAT_TP";
       using (var r = cmd.ExecuteReader())
@@ -198,7 +198,7 @@ namespace ChanSort.Loader.Samsung.Zip
 
 
     #region ReadChannelDatabase()
-    private void ReadChannelDatabase(SQLiteConnection conn, string dbPath, FileType fileType)
+    private void ReadChannelDatabase(SqliteConnection conn, string dbPath, FileType fileType)
     {
       this.channelById.Clear();
       using (var cmd = conn.CreateCommand())
@@ -212,7 +212,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region ReadProviders()
-    private Dictionary<long, string> ReadProviders(SQLiteCommand cmd)
+    private Dictionary<long, string> ReadProviders(IDbCommand cmd)
     {
       var dict = new Dictionary<long, string>();
       try
@@ -236,7 +236,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region ReadChannels()
-    private ChannelList ReadChannels(SQLiteCommand cmd, string dbPath, Dictionary<long, string> providers, FileType fileType)
+    private ChannelList ReadChannels(IDbCommand cmd, string dbPath, Dictionary<long, string> providers, FileType fileType)
     {
       var signalSource = DetectSignalSource(cmd, fileType);
 
@@ -299,7 +299,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region DetectSignalSource()
-    private static SignalSource DetectSignalSource(SQLiteCommand cmd, FileType fileType)
+    private static SignalSource DetectSignalSource(IDbCommand cmd, FileType fileType)
     {
       if (fileType == FileType.ChannelDbIp)
         return SignalSource.IP|SignalSource.Digital;
@@ -368,7 +368,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region ReadFavorites()
-    private void ReadFavorites(SQLiteCommand cmd)
+    private void ReadFavorites(IDbCommand cmd)
     {
       cmd.CommandText = "select srvId, fav, pos from SRV_FAV";
       var r = cmd.ExecuteReader();
@@ -390,12 +390,23 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region ReadUtf16()
-    internal string ReadUtf16(SQLiteDataReader r, int fieldIndex)
+    internal string ReadUtf16(IDataReader r, int fieldIndex)
     {
       if (r.IsDBNull(fieldIndex))
         return null;
       byte[] nameBytes = new byte[200];
-      int nameLen = (int)r.GetBytes(fieldIndex, 0, nameBytes, 0, nameBytes.Length);
+      
+      // Microsoft.Data.SqlDataReader (and the underlying native DLLs) are bugged and throw a memory access violation when using r.GetBytes(...)
+      // nameLen = (int)r.GetBytes(fieldIndex, 0, nameBytes, 0, nameBytes.Length);
+      
+      int nameLen = 0; 
+      var obj = r.GetValue(fieldIndex);
+      if (obj is byte[] buffer)
+      {
+        nameBytes = buffer;
+        nameLen = buffer.Length;
+      }
+
       this.encoding ??= AutoDetectUtf16Encoding(nameBytes, nameLen);
       if (this.encoding == null)
         return string.Empty;
@@ -486,7 +497,7 @@ namespace ChanSort.Loader.Samsung.Zip
       }
 
       // force closing the file and releasing the locks
-      SQLiteConnection.ClearAllPools();
+      //SqliteConnection.ClearAllPools();
       GC.Collect();
       GC.WaitForPendingFinalizers();
 
@@ -497,44 +508,46 @@ namespace ChanSort.Loader.Samsung.Zip
     #region SaveChannelList()
     private void SaveChannelList(ChannelList channelList, string dbPath)
     {
-      using var conn = new SQLiteConnection("Data Source=" + dbPath);
+      using var conn = new SqliteConnection("Data Source=" + dbPath);
       conn.Open();
-      using var cmdUpdateSrv = PrepareUpdateCommand(conn);
-      using var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0);
-      using var cmdInsertFav = PrepareInsertFavCommand(conn);
-      using var cmdUpdateFav = PrepareUpdateFavCommand(conn);
-      using var cmdDeleteFav = PrepareDeleteFavCommand(conn);
       using (var trans = conn.BeginTransaction())
       {
+        using var cmdUpdateSrv = PrepareUpdateCommand(conn);
+        using var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0);
+        using var cmdInsertFav = PrepareInsertFavCommand(conn);
+        using var cmdUpdateFav = PrepareUpdateFavCommand(conn);
+        using var cmdDeleteFav = PrepareDeleteFavCommand(conn);
         Editor.SequentializeFavPos(channelList, 5);
         this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
         trans.Commit();
       }
-      this.RepairCorruptedDatabaseImage(cmdUpdateSrv);
+
+      using var cmd = conn.CreateCommand();
+      this.RepairCorruptedDatabaseImage(cmd);
     }
 
     #endregion
 
     #region Prepare*Command()
 
-    private SQLiteCommand PrepareUpdateCommand(SQLiteConnection conn)
+    private SqliteCommand PrepareUpdateCommand(SqliteConnection conn)
     {
       var canUpdateNames = this.Features.ChannelNameEdit != ChannelNameEditMode.None;
       var cmd = conn.CreateCommand();
       var updateSrvName = canUpdateNames ? ", srvName=cast(@srvname as varchar)" : "";
       cmd.CommandText = "update SRV set major=@nr, lockMode=@lock, hideGuide=@hidden, hidden=@hidden, numSel=@numsel" + updateSrvName + "  where srvId=@id";
-      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmd.Parameters.Add(new SQLiteParameter("@nr", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@lock", DbType.Boolean));
-      cmd.Parameters.Add(new SQLiteParameter("@hidden", DbType.Boolean));
-      cmd.Parameters.Add(new SQLiteParameter("@numsel", DbType.Boolean));
+      cmd.Parameters.Add("@id", SqliteType.Integer);
+      cmd.Parameters.Add("@nr", SqliteType.Integer);
+      cmd.Parameters.Add("@lock", SqliteType.Integer);
+      cmd.Parameters.Add("@hidden", SqliteType.Integer);
+      cmd.Parameters.Add("@numsel", SqliteType.Integer);
       if (canUpdateNames)
-        cmd.Parameters.Add(new SQLiteParameter("@srvname", DbType.Binary));
+        cmd.Parameters.Add("@srvname", SqliteType.Blob);
       cmd.Prepare();
       return cmd;
     }
 
-    private SQLiteCommand PrepareDeleteCommand(SQLiteConnection conn, bool digital)
+    private SqliteCommand PrepareDeleteCommand(SqliteConnection conn, bool digital)
     {
       var cmd = conn.CreateCommand();
       var sql = new StringBuilder();
@@ -545,38 +558,38 @@ namespace ChanSort.Loader.Samsung.Zip
           sql.AppendLine($"; delete from {r.GetString(0)} where srvId=@id");
       }
       cmd.CommandText = sql.ToString();
-      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
+      cmd.Parameters.Add("@id", SqliteType.Integer);
       cmd.Prepare();
       return cmd;
     }
 
-    private SQLiteCommand PrepareInsertFavCommand(SQLiteConnection conn)
+    private SqliteCommand PrepareInsertFavCommand(SqliteConnection conn)
     {
       var cmd = conn.CreateCommand();
       cmd.CommandText = "insert into SRV_FAV (srvId, fav, pos) values (@id, @fav, @pos)";
-      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmd.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
+      cmd.Parameters.Add("@id", SqliteType.Integer);
+      cmd.Parameters.Add("@fav", SqliteType.Integer);
+      cmd.Parameters.Add("@pos", SqliteType.Integer);
       cmd.Prepare();
       return cmd;
     }
 
-    private SQLiteCommand PrepareUpdateFavCommand(SQLiteConnection conn)
+    private SqliteCommand PrepareUpdateFavCommand(SqliteConnection conn)
     {
       var cmd = conn.CreateCommand();
       cmd.CommandText = "update SRV_FAV set pos=@pos where srvId=@id and fav=@fav";
-      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmd.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
-      cmd.Parameters.Add(new SQLiteParameter("@pos", DbType.Int32));
+      cmd.Parameters.Add("@id", SqliteType.Integer);
+      cmd.Parameters.Add("@fav", SqliteType.Integer);
+      cmd.Parameters.Add("@pos", SqliteType.Integer);
       cmd.Prepare();
       return cmd;
     }
-    private SQLiteCommand PrepareDeleteFavCommand(SQLiteConnection conn)
+    private SqliteCommand PrepareDeleteFavCommand(SqliteConnection conn)
     {
       var cmd = conn.CreateCommand();
       cmd.CommandText = "delete from SRV_FAV where srvId=@id and fav=@fav";
-      cmd.Parameters.Add(new SQLiteParameter("@id", DbType.Int64));
-      cmd.Parameters.Add(new SQLiteParameter("@fav", DbType.Int32));
+      cmd.Parameters.Add("@id", SqliteType.Integer);
+      cmd.Parameters.Add("@fav", SqliteType.Integer);
       cmd.Prepare();
       return cmd;
     }
@@ -584,7 +597,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SQLiteCommand cmdUpdateSrv, SQLiteCommand cmdDeleteSrv, SQLiteCommand cmdInsertFav, SQLiteCommand cmdUpdateFav, SQLiteCommand cmdDeleteFav, 
+    private void WriteChannels(SqliteCommand cmdUpdateSrv, SqliteCommand cmdDeleteSrv, SqliteCommand cmdInsertFav, SqliteCommand cmdUpdateFav, SqliteCommand cmdDeleteFav, 
       ChannelList channelList, bool analog = false)
     {
       bool canUpdateNames = this.Features.ChannelNameEdit != ChannelNameEditMode.None;

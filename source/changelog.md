@@ -1,6 +1,13 @@
 ChanSort Change Log 
 ===================
 
+2021-04-25
+- removed dependency on Visual C++ 2010 Redistributable Package (x86):
+  Hisense, Panasonic, Philips, Samsung and Toshiba channel list use SQLite database files, which ChanSort accessed
+  through a 3rd party ADO.NET data provider, which depended on this package. Now a different ADO.NET provider is used.
+- Philips DVB\*.xml: maintain same indentation as original file (can be 0, 2 or 4 spaces) for easier before/after diff
+- Philips ChannelMap\_30-45: fixed a bug that caused the list not to load when certain error messages were logged
+
 2021-04-11_1900
 - Philips ChannelMap\_30: fixed bug that caused favorite lists to be in wrong order
 
