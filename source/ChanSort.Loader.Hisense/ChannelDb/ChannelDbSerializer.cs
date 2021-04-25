@@ -89,8 +89,6 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     public ChannelDbSerializer(string inputFile) : base(inputFile)
     {
-      DepencencyChecker.AssertVc2010RedistPackageX86Installed();
-
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanSkipChannels = false;

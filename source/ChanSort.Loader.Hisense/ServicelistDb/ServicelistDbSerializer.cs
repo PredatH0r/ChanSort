@@ -98,8 +98,6 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
 
     public ServicelistDbSerializer(string inputFile) : base(inputFile)
     {
-      DepencencyChecker.AssertVc2010RedistPackageX86Installed();
-
       Features.ChannelNameEdit = ChannelNameEditMode.All;
       Features.DeleteMode = DeleteMode.FlagWithPrNr;
       Features.CanSkipChannels = true;

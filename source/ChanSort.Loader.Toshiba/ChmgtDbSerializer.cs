@@ -21,8 +21,6 @@ namespace ChanSort.Loader.Toshiba
 
     public ChmgtDbSerializer(string inputFile) : base(inputFile)
     {
-      DepencencyChecker.AssertVc2010RedistPackageX86Installed();
-
       Features.ChannelNameEdit = ChannelNameEditMode.All;
       Features.DeleteMode = DeleteMode.Physically;
       Features.CanSkipChannels = false;

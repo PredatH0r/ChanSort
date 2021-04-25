@@ -39,8 +39,6 @@ namespace ChanSort.Loader.Panasonic
     #region ctor()
     public Serializer(string inputFile) : base(inputFile)
     {
-      DepencencyChecker.AssertVc2010RedistPackageX86Installed();      
-
       this.Features.ChannelNameEdit = ChannelNameEditMode.None; // due to the chaos with binary data inside the "sname" string column, writing back a name has undesired side effects
       this.Features.DeleteMode = DeleteMode.Physically;
       this.Features.CanSkipChannels = true;

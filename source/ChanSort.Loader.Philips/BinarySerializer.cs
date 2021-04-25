@@ -97,9 +97,6 @@ namespace ChanSort.Loader.Philips
       this.chanLstBin.Load(this.FileName, msg => this.logMessages.AppendLine(msg));
       this.dataFilePaths.Add(this.FileName);
 
-      if (chanLstBin.VersionMajor >= 25 && chanLstBin.VersionMajor <= 45) // need VC2010 Redist for the SQLite library
-        DepencencyChecker.AssertVc2010RedistPackageX86Installed();
-
       var dir = Path.GetDirectoryName(this.FileName) ?? "";
       var channellib = Path.Combine(dir, "channellib");
       var s2channellib = Path.Combine(dir, "s2channellib");

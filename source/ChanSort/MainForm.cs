@@ -141,23 +141,6 @@ namespace ChanSort.Ui
 
     private void InitAppAfterMainWindowWasShown()
     {
-      if (!DepencencyChecker.IsVc2010RedistPackageX86Installed())
-      {
-        if (XtraMessageBox.Show(this,
-              "Some channel list file formats can only be read when the\n" +
-              "Microsoft Visual C++ 2010 Redistributable Package (x86) is installed.\n" +
-              "\nDo you want to open the download page and quit ChanSort?",
-              "ChanSort",
-              MessageBoxButtons.YesNo,
-              MessageBoxIcon.Question,
-              MessageBoxDefaultButton.Button1) == DialogResult.Yes)
-        {
-          System.Diagnostics.Process.Start("https://www.microsoft.com/en-us/download/details.aspx?id=5555");
-          Application.Exit();
-          return;
-        }
-      }
-
       if (Config.Default.CheckForUpdates)
         this.BeginInvoke((Action) UpdateCheck.CheckForNewVersion);
     }
