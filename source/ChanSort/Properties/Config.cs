@@ -56,14 +56,26 @@ namespace ChanSort.Ui.Properties
     public string LeftGridLayout { get; set; }
     public string RightGridLayout { get; set; }
 
+    private bool allowSave = true;
+
     public void Save()
     {
+      if (!allowSave)
+        return;
+
       var folder = Path.GetDirectoryName(ConfigFilePath);
       Directory.CreateDirectory(folder);
 
       using var stream = new FileStream(ConfigFilePath, FileMode.Create);
       using var writer = new StreamWriter(stream, System.Text.Encoding.UTF8);
       Serializer.Serialize(writer, this);
+    }
+
+    public void Reset()
+    {
+      if (File.Exists(ConfigFilePath))
+        File.Delete(ConfigFilePath);
+      allowSave = false;
     }
   }
 }

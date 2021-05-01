@@ -217,7 +217,12 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
+      this.miResetAndRestart = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
+      this.splitContainerControl1.Panel1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel2)).BeginInit();
+      this.splitContainerControl1.Panel2.SuspendLayout();
       this.splitContainerControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).BeginInit();
       this.grpOutputList.SuspendLayout();
@@ -259,8 +264,14 @@
       // 
       resources.ApplyResources(this.splitContainerControl1, "splitContainerControl1");
       this.splitContainerControl1.Name = "splitContainerControl1";
+      // 
+      // splitContainerControl1.Panel1
+      // 
       this.splitContainerControl1.Panel1.Controls.Add(this.grpOutputList);
       resources.ApplyResources(this.splitContainerControl1.Panel1, "splitContainerControl1.Panel1");
+      // 
+      // splitContainerControl1.Panel2
+      // 
       this.splitContainerControl1.Panel2.Controls.Add(this.grpInputList);
       resources.ApplyResources(this.splitContainerControl1.Panel2, "splitContainerControl1.Panel2");
       this.splitContainerControl1.SplitterPosition = 503;
@@ -1102,9 +1113,10 @@
             this.miFontXxLarge,
             this.miUtf16BigEndian,
             this.miUtf16LittleEndian,
-            this.miHungarian});
+            this.miHungarian,
+            this.miResetAndRestart});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 112;
+      this.barManager1.MaxItemId = 113;
       this.barManager1.ShowFullMenus = true;
       // 
       // bar1
@@ -1489,7 +1501,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miShowWarningsAfterLoad),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAllowEditPredefinedLists),
             new DevExpress.XtraBars.LinkPersistInfo(this.miExplorerIntegration),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miCheckUpdates)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miCheckUpdates),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miResetAndRestart)});
       this.mnuOptions.Name = "mnuOptions";
       // 
       // barSubItem1
@@ -2155,6 +2168,13 @@
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
       // 
+      // miResetAndRestart
+      // 
+      resources.ApplyResources(this.miResetAndRestart, "miResetAndRestart");
+      this.miResetAndRestart.Id = 112;
+      this.miResetAndRestart.Name = "miResetAndRestart";
+      this.miResetAndRestart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miResetAndRestart_ItemClick);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -2172,6 +2192,10 @@
       this.Load += new System.EventHandler(this.MainForm_Load);
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
       this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).EndInit();
+      this.splitContainerControl1.Panel1.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel2)).EndInit();
+      this.splitContainerControl1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
       this.splitContainerControl1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.grpOutputList)).EndInit();
@@ -2406,6 +2430,7 @@
     private DevExpress.XtraBars.BarButtonItem miUtf16LittleEndian;
     private DevExpress.XtraBars.BarButtonItem miHungarian;
     private DevExpress.XtraEditors.SimpleButton btnSearch;
+    private DevExpress.XtraBars.BarButtonItem miResetAndRestart;
   }
 }
 

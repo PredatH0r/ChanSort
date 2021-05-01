@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2021-05-01
+- added "Settings / Reset to defaults and restart" function to delete the stored customized settings in case something
+  went wrong (like massively oversized column widths)
+- Philips ChannelMap\_30: fixed error when trying to save this type of list
+- Upgraded to DevExpress WinForms 20.2.7 user interface library
+
 2021-04-25
 - removed dependency on Visual C++ 2010 Redistributable Package (x86):
   Hisense, Panasonic, Philips, Samsung and Toshiba channel list use SQLite database files, which ChanSort accessed

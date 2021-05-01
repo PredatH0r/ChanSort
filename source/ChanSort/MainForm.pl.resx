@@ -418,13 +418,13 @@
     <value>±H</value>
   </data>
   <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
-    <value>Przełącz ulubione G.</value>
+    <value>Przełącz ulubione G</value>
   </data>
   <data name="btnToggleFavG.Text" xml:space="preserve">
     <value>±G</value>
   </data>
   <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
-    <value>Przełącz ulubione F.</value>
+    <value>Przełącz ulubione F</value>
   </data>
   <data name="btnToggleFavF.Text" xml:space="preserve">
     <value>±F</value>

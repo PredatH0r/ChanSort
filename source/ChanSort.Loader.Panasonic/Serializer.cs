@@ -308,24 +308,19 @@ order by s.ntype,major_channel
       using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();
-        using (var cmd = conn.CreateCommand())
-        {
-          using (var trans = conn.BeginTransaction())
-          {
-            cmd.Transaction = trans;
-            this.WriteChannels(cmd, this.avbtChannels);
-            this.WriteChannels(cmd, this.avbcChannels);
-            this.WriteChannels(cmd, this.dvbtChannels);
-            this.WriteChannels(cmd, this.dvbcChannels);
-            this.WriteChannels(cmd, this.dvbsChannels);
-            this.WriteChannels(cmd, this.satipChannels);
-            this.WriteChannels(cmd, this.freesatChannels);
-            trans.Commit();
-          }
+        using var trans = conn.BeginTransaction();
+        using var cmd = conn.CreateCommand();
+        this.WriteChannels(cmd, this.avbtChannels);
+        this.WriteChannels(cmd, this.avbcChannels);
+        this.WriteChannels(cmd, this.dvbtChannels);
+        this.WriteChannels(cmd, this.dvbcChannels);
+        this.WriteChannels(cmd, this.dvbsChannels);
+        this.WriteChannels(cmd, this.satipChannels);
+        this.WriteChannels(cmd, this.freesatChannels);
+        trans.Commit();
 
-          cmd.Transaction = null;
-          this.RepairCorruptedDatabaseImage(cmd);
-        }
+        cmd.Transaction = null;
+        this.RepairCorruptedDatabaseImage(cmd);
       }
 
       this.WriteCypheredFile();

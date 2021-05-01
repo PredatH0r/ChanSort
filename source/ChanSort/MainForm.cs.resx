@@ -603,4 +603,13 @@
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
   </data>
+  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
+    <value>Přepnout oblíbené F</value>
+  </data>
+  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
+    <value>Přepnout oblíbené G</value>
+  </data>
+  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
+    <value>Přepnout oblíbené H</value>
+  </data>
 </root>

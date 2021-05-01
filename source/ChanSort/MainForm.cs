@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -2965,6 +2966,8 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region Settings menu
+
     #region Character set menu
 
     private void miUtf8Charset_ItemClick(object sender, ItemClickEventArgs e)
@@ -3022,6 +3025,19 @@ namespace ChanSort.Ui
         HandleException(ex);
       }
     }
+
+    #endregion
+
+    #region miResetAndRestart_ItemClick
+    private void miResetAndRestart_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      if (!this.PromptSaveAndContinue())
+        return;
+      Config.Default.Reset();
+      Process.Start(Application.ExecutablePath);
+      Application.Exit();
+    }
+    #endregion
 
     #endregion
 

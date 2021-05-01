@@ -340,31 +340,26 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
       if (tvOutputFile != FileName)
         File.Copy(FileName, tvOutputFile, true);
 
-      using (var conn = new SqliteConnection("Data Source=" + tvOutputFile))
+      using var conn = new SqliteConnection("Data Source=" + tvOutputFile);
+      conn.Open();
+      using var trans = conn.BeginTransaction();
+      using var cmd = conn.CreateCommand();
+      try
       {
-        conn.Open();
-        using (var trans = conn.BeginTransaction())
-        using (var cmd = conn.CreateCommand())
-        {
-          cmd.Transaction = trans;
-          try
-          {
 #if !LOCK_LCN_LISTS
             ResetLcn(cmd);
 #endif
-            UpdateServices(cmd);
-            UpdatePhysicalChannelLists(cmd);
-            UpdateUserFavoriteLists(cmd);
+        UpdateServices(cmd);
+        UpdatePhysicalChannelLists(cmd);
+        UpdateUserFavoriteLists(cmd);
 
-            trans.Commit();
-            FileName = tvOutputFile;
-          }
-          catch
-          {
-            trans.Rollback();
-            throw;
-          }
-        }
+        trans.Commit();
+        FileName = tvOutputFile;
+      }
+      catch
+      {
+        trans.Rollback();
+        throw;
       }
     }
 

@@ -621,4 +621,13 @@ furnizor specific, satelit sau liste de țări.</value>
   <data name="splitContainerControl1.Text" xml:space="preserve">
     <value>splitContainerControl1</value>
   </data>
+  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
+    <value>Comutați pe Favorite F</value>
+  </data>
+  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
+    <value>Comutați pe Favorite G</value>
+  </data>
+  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
+    <value>Comutați pe Favorite H</value>
+  </data>
 </root>

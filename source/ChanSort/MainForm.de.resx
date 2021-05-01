@@ -556,7 +556,7 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   <data name="lblHotkeyLeft.Size" type="System.Drawing.Size, System.Drawing">
     <value>333, 17</value>
   </data>
-  <assembly alias="DevExpress.XtraBars.v20.2" name="DevExpress.XtraBars.v20.2, Version=20.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.XtraBars.v20.2" name="DevExpress.XtraBars.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v20.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxNS4yLCBWZXJzaW9uPTE1
@@ -642,5 +642,44 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   </data>
   <data name="miCopyCsv.Caption" xml:space="preserve">
     <value>Liste in Zwischenablage kopieren</value>
+  </data>
+  <data name="btnSearch.ToolTip" xml:space="preserve">
+    <value>Nach Sendernamen suchen</value>
+  </data>
+  <data name="btnSearch.AccessibleDescription" xml:space="preserve">
+    <value>Nach Sender über Name suchen</value>
+  </data>
+  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
+    <value>Favorit F umschalten</value>
+  </data>
+  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
+    <value>Favorit G umschalten</value>
+  </data>
+  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
+    <value>Favorit H umschalten</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio PID</value>
+  </data>
+  <data name="colOutSource.Caption" xml:space="preserve">
+    <value>Eingang</value>
+  </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>Service ID</value>
+  </data>
+  <data name="colTransportStreamId.Caption" xml:space="preserve">
+    <value>TS ID</value>
+  </data>
+  <data name="colVideoPid.Caption" xml:space="preserve">
+    <value>Video PID</value>
+  </data>
+  <data name="grpSubList.Text" xml:space="preserve">
+    <value>Unterliste</value>
+  </data>
+  <data name="miResetAndRestart.Caption" xml:space="preserve">
+    <value>Einstellungen zurücksetzen und neu starten</value>
+  </data>
+  <data name="miResetAndRestart.Hint" xml:space="preserve">
+    <value>Löscht alle Benutzereinstellungen und startet das Programm neu</value>
   </data>
 </root>

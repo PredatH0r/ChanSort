@@ -1176,9 +1176,8 @@ namespace ChanSort.Loader.Philips
 
       using var conn = new SqliteConnection($"Data Source={listDb}");
       conn.Open();
-      using var cmd = conn.CreateCommand();
       using var trans = conn.BeginTransaction();
-
+      using var cmd = conn.CreateCommand();
 
       // save favorite channels
       for (int listIdx = 0; listIdx < 12; listIdx++)
