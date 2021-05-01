@@ -1297,13 +1297,25 @@ namespace ChanSort.Ui
 
       if (Config.Default.LeftGridLayout != null)
       {
+        this.gridLeft.ForceInitialize();
         var xml = Config.Default.LeftGridLayout;
         this.gviewLeft.LoadLayoutFromXml(xml);
+        if (Config.Default.ScaleFactor.Width != 0)
+        {
+          foreach (GridColumn col in this.gviewLeft.Columns)
+            col.Width = (int) (col.Width / Config.Default.ScaleFactor.Width);
+        }
       }
       if (Config.Default.RightGridLayout != null)
       {
+        this.gridRight.ForceInitialize();
         var xml = Config.Default.RightGridLayout;
         this.gviewRight.LoadLayoutFromXml(xml);
+        if (Config.Default.ScaleFactor.Width != 0)
+        {
+          foreach (GridColumn col in this.gviewRight.Columns)
+            col.Width = (int)(col.Width / Config.Default.ScaleFactor.Width);
+        }
       }
     }
 
@@ -1928,9 +1940,9 @@ namespace ChanSort.Ui
 
     // UI events
 
-    #region MainForm_Load
+    #region MainForm_Shown
 
-    private void MainForm_Load(object sender, EventArgs e)
+    private void MainForm_Shown(object sender, EventArgs e)
     {
       this.TryExecute(this.LoadSettings);
       this.TryExecute(this.InitAppAfterMainWindowWasShown);
@@ -2686,6 +2698,7 @@ namespace ChanSort.Ui
       Config.Default.CheckForUpdates = this.miCheckUpdates.Down;
       Config.Default.LeftGridLayout = this.gviewLeft.SaveLayoutToXml();
       Config.Default.RightGridLayout = this.gviewRight.SaveLayoutToXml();
+      Config.Default.ScaleFactor = this.absScaleFactor;
 
       Config.Default.Save();
     }

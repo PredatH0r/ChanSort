@@ -55,6 +55,7 @@ namespace ChanSort.Ui.Properties
     public int FontSizeDelta { get; set; }
     public string LeftGridLayout { get; set; }
     public string RightGridLayout { get; set; }
+    public SizeF ScaleFactor { get; set; }
 
     private bool allowSave = true;
 

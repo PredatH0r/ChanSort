@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+2021-05-01_1615
+- fixed issue with high-res displays / Windows display scaling other than 100% aka 96dpi, that caused columns to
+  become wider every time the program was started.
+
 2021-05-01
 - added "Settings / Reset to defaults and restart" function to delete the stored customized settings in case something
   went wrong (like massively oversized column widths)
