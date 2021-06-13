@@ -1270,7 +1270,7 @@ namespace ChanSort.Ui
 
       var width = Config.Default.LeftPanelWidth;
       if (width > 0)
-        this.splitContainerControl1.SplitterPosition = width; // set unscaled value because the whole Form will be scaled later
+        this.splitContainerControl1.SplitterPosition = (int)(width * this.absScaleFactor.Width); // set unscaled value because the whole Form will be scaled later
       this.SelectLanguageMenuItem();
 
       //this.SetGridLayout(this.gviewLeft, Config.Default.OutputListLayout);
@@ -1314,7 +1314,7 @@ namespace ChanSort.Ui
         if (Config.Default.ScaleFactor.Width != 0)
         {
           foreach (GridColumn col in this.gviewRight.Columns)
-            col.Width = (int)(col.Width / Config.Default.ScaleFactor.Width);
+            col.Width = (int) (col.Width / Config.Default.ScaleFactor.Width);
         }
       }
     }
@@ -2003,18 +2003,28 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region OnDpiChanged, OnScaleControl
+    #region OnDpiChanged, ScaleControl
     protected override void OnDpiChanged(DpiChangedEventArgs e)
     {
-      GlobalImageCollection.Scale((float)e.DeviceDpiNew / e.DeviceDpiOld, true);
+      var fact = (float) e.DeviceDpiNew / e.DeviceDpiOld;
+      this.absScaleFactor = absScaleFactor.Scale(new SizeF(fact, fact));
+      this.SuspendRedraw();
+      this.bar1.Visible = false;
+      GlobalImageCollection.Scale((float)e.DeviceDpiNew / 96f, false);
+      this.bar1.Visible = true;
       base.OnDpiChanged(e);
+      this.ResumeRedraw();
     }
 
-    protected override void OnScaleControl()
+    protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
     {
-      this.absScaleFactor = absScaleFactor.Scale(this.AutoScaleFactor);
-      GlobalImageCollection.Scale(this.AutoScaleFactor.Height, true);
-      base.OnScaleControl();
+      this.absScaleFactor = absScaleFactor.Scale(factor);
+      this.SuspendRedraw();
+      base.ScaleControl(factor, specified);
+      this.bar1.Visible = false;
+      GlobalImageCollection.Scale(absScaleFactor.Height, false);
+      this.bar1.Visible = true;
+      this.ResumeRedraw();
     }
 
     #endregion

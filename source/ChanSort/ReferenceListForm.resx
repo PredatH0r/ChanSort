@@ -135,7 +135,7 @@
     <value>labelControl1</value>
   </data>
   <data name="&gt;&gt;labelControl1.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl1.Parent" xml:space="preserve">
     <value>groupControl1</value>
@@ -153,8 +153,8 @@
   <data name="edFile.Location" type="System.Drawing.Point, System.Drawing">
     <value>132, 36</value>
   </data>
-  <assembly alias="DevExpress.Utils.v20.2" name="DevExpress.Utils.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="edFile.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v20.2">
+  <assembly alias="DevExpress.Utils.v21.1" name="DevExpress.Utils.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="edFile.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v21.1">
     <value>Ellipsis</value>
   </data>
   <data name="edFile.Properties.Buttons1" xml:space="preserve">
@@ -181,7 +181,7 @@
   <data name="edFile.Properties.Buttons8" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="edFile.Properties.Buttons9" type="DevExpress.Utils.ToolTipAnchor, DevExpress.Utils.v20.2">
+  <data name="edFile.Properties.Buttons9" type="DevExpress.Utils.ToolTipAnchor, DevExpress.Utils.v21.1">
     <value>Default</value>
   </data>
   <data name="edFile.Size" type="System.Drawing.Size, System.Drawing">
@@ -194,7 +194,7 @@
     <value>edFile</value>
   </data>
   <data name="&gt;&gt;edFile.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.ButtonEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.ButtonEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;edFile.Parent" xml:space="preserve">
     <value>groupControl1</value>
@@ -202,8 +202,8 @@
   <data name="&gt;&gt;edFile.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <assembly alias="DevExpress.XtraEditors.v20.2" name="DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="labelControl2.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v20.2">
+  <assembly alias="DevExpress.XtraEditors.v21.1" name="DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="labelControl2.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v21.1">
     <value>Vertical</value>
   </data>
   <data name="labelControl2.Location" type="System.Drawing.Point, System.Drawing">
@@ -224,7 +224,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>labelControl2</value>
   </data>
   <data name="&gt;&gt;labelControl2.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl2.Parent" xml:space="preserve">
     <value>groupControl1</value>
@@ -251,7 +251,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>rbAuto</value>
   </data>
   <data name="&gt;&gt;rbAuto.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;rbAuto.Parent" xml:space="preserve">
     <value>groupControl2</value>
@@ -278,7 +278,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>rbManual</value>
   </data>
   <data name="&gt;&gt;rbManual.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;rbManual.Parent" xml:space="preserve">
     <value>groupControl2</value>
@@ -302,7 +302,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>labelControl3</value>
   </data>
   <data name="&gt;&gt;labelControl3.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl3.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -313,7 +313,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   <data name="comboSource.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 33</value>
   </data>
-  <data name="comboSource.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v20.2">
+  <data name="comboSource.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v21.1">
     <value>Combo</value>
   </data>
   <data name="comboSource.Size" type="System.Drawing.Size, System.Drawing">
@@ -326,7 +326,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>comboSource</value>
   </data>
   <data name="&gt;&gt;comboSource.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;comboSource.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -337,7 +337,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   <data name="comboTarget.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 7</value>
   </data>
-  <data name="comboTarget.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v20.2">
+  <data name="comboTarget.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v21.1">
     <value>Combo</value>
   </data>
   <data name="comboTarget.Size" type="System.Drawing.Size, System.Drawing">
@@ -350,7 +350,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>comboTarget</value>
   </data>
   <data name="&gt;&gt;comboTarget.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;comboTarget.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -374,7 +374,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>labelControl4</value>
   </data>
   <data name="&gt;&gt;labelControl4.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl4.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -398,7 +398,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbTv</value>
   </data>
   <data name="&gt;&gt;cbTv.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbTv.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -422,7 +422,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbRadio</value>
   </data>
   <data name="&gt;&gt;cbRadio.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbRadio.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -446,7 +446,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>labelControl5</value>
   </data>
   <data name="&gt;&gt;labelControl5.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl5.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -454,7 +454,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   <data name="&gt;&gt;labelControl5.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
-  <data name="labelControl6.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v20.2">
+  <data name="labelControl6.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v21.1">
     <value>Vertical</value>
   </data>
   <data name="labelControl6.Location" type="System.Drawing.Point, System.Drawing">
@@ -473,7 +473,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>labelControl6</value>
   </data>
   <data name="&gt;&gt;labelControl6.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl6.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -487,7 +487,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   <data name="comboPrNr.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 134</value>
   </data>
-  <data name="comboPrNr.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v20.2">
+  <data name="comboPrNr.Properties.Buttons" type="DevExpress.XtraEditors.Controls.ButtonPredefines, DevExpress.Utils.v21.1">
     <value>Combo</value>
   </data>
   <data name="comboPrNr.Properties.Items" xml:space="preserve">
@@ -521,7 +521,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>comboPrNr</value>
   </data>
   <data name="&gt;&gt;comboPrNr.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;comboPrNr.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -548,7 +548,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbData</value>
   </data>
   <data name="&gt;&gt;cbData.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbData.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -572,7 +572,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbConsecutive</value>
   </data>
   <data name="&gt;&gt;cbConsecutive.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbConsecutive.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -596,7 +596,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbIp</value>
   </data>
   <data name="&gt;&gt;cbIp.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbIp.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -620,7 +620,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbSat</value>
   </data>
   <data name="&gt;&gt;cbSat.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbSat.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -644,7 +644,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>labelControl11</value>
   </data>
   <data name="&gt;&gt;labelControl11.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl11.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -668,7 +668,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbAntenna</value>
   </data>
   <data name="&gt;&gt;cbAntenna.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbAntenna.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -692,7 +692,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbCable</value>
   </data>
   <data name="&gt;&gt;cbCable.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbCable.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -716,7 +716,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>labelControl9</value>
   </data>
   <data name="&gt;&gt;labelControl9.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl9.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -740,7 +740,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbAnalog</value>
   </data>
   <data name="&gt;&gt;cbAnalog.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbAnalog.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -764,7 +764,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>cbDigital</value>
   </data>
   <data name="&gt;&gt;cbDigital.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;cbDigital.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -788,7 +788,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>lblTargetInfo</value>
   </data>
   <data name="&gt;&gt;lblTargetInfo.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;lblTargetInfo.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -812,7 +812,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>lblSourceInfo</value>
   </data>
   <data name="&gt;&gt;lblSourceInfo.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;lblSourceInfo.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -836,7 +836,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>labelControl7</value>
   </data>
   <data name="&gt;&gt;labelControl7.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl7.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -863,7 +863,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>btnApply</value>
   </data>
   <data name="&gt;&gt;btnApply.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;btnApply.Parent" xml:space="preserve">
     <value>grpManual</value>
@@ -890,7 +890,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>grpManual</value>
   </data>
   <data name="&gt;&gt;grpManual.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;grpManual.Parent" xml:space="preserve">
     <value>groupControl2</value>
@@ -917,7 +917,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>btnOk</value>
   </data>
   <data name="&gt;&gt;btnOk.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
     <value>$this</value>
@@ -944,7 +944,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>btnClose</value>
   </data>
   <data name="&gt;&gt;btnClose.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;btnClose.Parent" xml:space="preserve">
     <value>$this</value>
@@ -971,7 +971,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>linkWiki</value>
   </data>
   <data name="&gt;&gt;linkWiki.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.HyperlinkLabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.HyperlinkLabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;linkWiki.Parent" xml:space="preserve">
     <value>groupControl1</value>
@@ -995,7 +995,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>groupControl1</value>
   </data>
   <data name="&gt;&gt;groupControl1.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;groupControl1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1006,7 +1006,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   <data name="groupControl2.AppearanceCaption.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 12pt</value>
   </data>
-  <data name="labelControl10.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v20.2">
+  <data name="labelControl10.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v21.1">
     <value>Vertical</value>
   </data>
   <data name="labelControl10.Location" type="System.Drawing.Point, System.Drawing">
@@ -1026,7 +1026,7 @@ This step can be repeated as needed.</value>
     <value>labelControl10</value>
   </data>
   <data name="&gt;&gt;labelControl10.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl10.Parent" xml:space="preserve">
     <value>groupControl2</value>
@@ -1034,7 +1034,7 @@ This step can be repeated as needed.</value>
   <data name="&gt;&gt;labelControl10.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="labelControl8.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v20.2">
+  <data name="labelControl8.AutoSizeMode" type="DevExpress.XtraEditors.LabelAutoSizeMode, DevExpress.XtraEditors.v21.1">
     <value>Vertical</value>
   </data>
   <data name="labelControl8.Location" type="System.Drawing.Point, System.Drawing">
@@ -1054,7 +1054,7 @@ This step can be repeated as needed.</value>
     <value>labelControl8</value>
   </data>
   <data name="&gt;&gt;labelControl8.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;labelControl8.Parent" xml:space="preserve">
     <value>groupControl2</value>
@@ -1078,7 +1078,7 @@ This step can be repeated as needed.</value>
     <value>groupControl2</value>
   </data>
   <data name="&gt;&gt;groupControl2.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;groupControl2.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1105,6 +1105,6 @@ This step can be repeated as needed.</value>
     <value>ReferenceListForm</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v21.1, Version=21.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
 </root>

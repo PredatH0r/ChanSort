@@ -167,6 +167,7 @@
       this.miAllowEditPredefinedLists = new DevExpress.XtraBars.BarButtonItem();
       this.miExplorerIntegration = new DevExpress.XtraBars.BarButtonItem();
       this.miCheckUpdates = new DevExpress.XtraBars.BarButtonItem();
+      this.miResetAndRestart = new DevExpress.XtraBars.BarButtonItem();
       this.mnuAccessibility = new DevExpress.XtraBars.BarSubItem();
       this.mnuGotoChannelList = new DevExpress.XtraBars.BarSubItem();
       this.mnuInputSource = new DevExpress.XtraBars.BarLinkContainerItem();
@@ -217,7 +218,6 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
-      this.miResetAndRestart = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
       this.splitContainerControl1.Panel1.SuspendLayout();
@@ -1712,6 +1712,13 @@
       this.miCheckUpdates.Name = "miCheckUpdates";
       this.miCheckUpdates.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCheckUpdates_ItemClick);
       // 
+      // miResetAndRestart
+      // 
+      resources.ApplyResources(this.miResetAndRestart, "miResetAndRestart");
+      this.miResetAndRestart.Id = 112;
+      this.miResetAndRestart.Name = "miResetAndRestart";
+      this.miResetAndRestart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miResetAndRestart_ItemClick);
+      // 
       // mnuAccessibility
       // 
       resources.ApplyResources(this.mnuAccessibility, "mnuAccessibility");
@@ -1869,7 +1876,6 @@
       // 
       this.miFontSmall.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
       resources.ApplyResources(this.miFontSmall, "miFontSmall");
-      this.miFontSmall.Down = true;
       this.miFontSmall.Id = 104;
       this.miFontSmall.Name = "miFontSmall";
       this.miFontSmall.Tag = 0;
@@ -2167,13 +2173,6 @@
       this.popupFavList.MenuCaption = "Select program or favorite list";
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
-      // 
-      // miResetAndRestart
-      // 
-      resources.ApplyResources(this.miResetAndRestart, "miResetAndRestart");
-      this.miResetAndRestart.Id = 112;
-      this.miResetAndRestart.Name = "miResetAndRestart";
-      this.miResetAndRestart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miResetAndRestart_ItemClick);
       // 
       // MainForm
       // 

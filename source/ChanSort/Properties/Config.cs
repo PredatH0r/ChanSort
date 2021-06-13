@@ -55,6 +55,11 @@ namespace ChanSort.Ui.Properties
     public int FontSizeDelta { get; set; }
     public string LeftGridLayout { get; set; }
     public string RightGridLayout { get; set; }
+    
+    /// <summary>
+    /// The LeftGridLayout and RightGridLayout contain Width values which are scaled to this ScaleFactor.
+    /// The WindowSize, LeftPanelWidth and other properties are already at a neutral 96dpi/100% scale
+    /// </summary>
     public SizeF ScaleFactor { get; set; }
 
     private bool allowSave = true;

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 using DevExpress.Utils;
+using DevExpress.Utils.Diagnostics;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 
@@ -21,16 +23,23 @@ namespace ChanSort.Ui
       if (Thread.CurrentThread.CurrentUICulture.TextInfo.OEMCodePage <= 1)
         Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
-      Application.EnableVisualStyles();
-      Application.SetCompatibleTextRenderingDefault(false);
-
       AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
       Application.ThreadException += Application_ThreadException;
       Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-      DevExpress.Skins.SkinManager.EnableFormSkins();
-      WindowsFormsSettings.AllowDpiScale = true;
-      WindowsFormsSettings.AllowAutoScale = DefaultBoolean.True;
+
+      //WindowsFormsSettings.AllowDpiScale = true;
+      //WindowsFormsSettings.AllowAutoScale = DefaultBoolean.True;
+      WindowsFormsSettings.SetPerMonitorDpiAware();
+      //WindowsFormsSettings.ForceDirectXPaint();
+      WindowsFormsSettings.EnableFormSkins();
+      //WindowsFormsSettings.ForcePaintApiDiagnostics(PaintApiDiagnosticsLevel.Default);
       BarAndDockingController.Default.PropertiesBar.ScaleIcons = false;
+      WindowsFormsSettings.DefaultFont = new Font("Tahoma", 8.25f);
+      //DevExpress.Skins.SkinManager.EnableFormSkins();
+
+      Application.EnableVisualStyles();
+      Application.SetCompatibleTextRenderingDefault(false);
+
       do
       {
         ChangeLanguage = false;

@@ -312,7 +312,7 @@ namespace ChanSort.Api
       List<ChannelInfo> candidates;
 
       // try to find matching channels based on UID or ONID+TSID+SID+Transponder
-      var channels = refChannel.Uid == "0-0-0" ? new List<ChannelInfo>() : tvList.GetChannelByUid(refChannel.Uid).ToList();
+      var channels = refChannel.Uid.EndsWith("0-0-0") ? new List<ChannelInfo>() : tvList.GetChannelByUid(refChannel.Uid).ToList();
       if (channels.Count == 0)
       {
         var key = DvbKey(refChannel.OriginalNetworkId, refChannel.TransportStreamId, refChannel.ServiceId);
@@ -327,10 +327,22 @@ namespace ChanSort.Api
             channels = candidates;
         }
       }
-      var channel = channels.FirstOrDefault(c => c.GetPosition(subListIndex) == -1);
-      if (channel != null)
-        return channel;
+      
 
+      candidates = channels.Where(c => c.GetPosition(subListIndex) == -1).ToList();
+      if (candidates.Count > 0)
+      {
+        channels = candidates;
+        if (channels.Count > 1)
+        {
+          candidates = channels.Where(ch => ch.IsDeleted == false).ToList();
+          if (candidates.Count > 0)
+            channels = candidates;
+        }
+
+        if (channels.Count > 0)
+          return channels[0];
+      }
 
       // try to find matching channels by name
       channels = tvList.GetChannelByName(refChannel.Name).Where(c => c.GetPosition(subListIndex) == -1).ToList();
