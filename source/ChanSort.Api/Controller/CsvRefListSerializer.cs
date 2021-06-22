@@ -36,8 +36,8 @@ namespace ChanSort.Api
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
       this.Features.CanHaveGaps = true;
       this.Features.EncryptedFlagEdit = false;
-      this.Features.SortedFavorites = false;
-      this.Features.SupportedFavorites = Favorites.A | Favorites.B | Favorites.C | Favorites.D | Favorites.E | Favorites.F | Favorites.G | Favorites.H;
+      this.Features.FavoritesMode = FavoritesMode.Flags;
+      this.Features.MaxFavoriteLists = 8;
     }
 
     #endregion
@@ -49,11 +49,18 @@ namespace ChanSort.Api
       using (var stream = new StreamReader(this.FileName))
       {
         var lineNr = 0;
-        var line = "";
+        
+        var line = stream.ReadLine();
+        if (line != null && line.StartsWith("--------") && line.Contains(" Program Data!--------"))
+          throw new FileLoadException("ignoring .csv file with Sharp/Dyon/Blaupunkt/Hisense header line");
+
         try
         {
-          while ((line = stream.ReadLine()) != null)
+          while (line != null)
+          {
             this.ReadChannel(line, ++lineNr);
+            line = stream.ReadLine();
+          }
         }
         catch (Exception ex)
         {

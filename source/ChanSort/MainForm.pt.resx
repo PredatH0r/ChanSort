@@ -62,9 +62,9 @@
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <assembly alias="DevExpress.Data.v19.2" name="DevExpress.Data.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <assembly alias="DevExpress.XtraEditors.v19.2" name="DevExpress.XtraEditors.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <assembly alias="DevExpress.Utils.v19.2" name="DevExpress.Utils.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.Data.v20.2" name="DevExpress.Data.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.XtraEditors.v20.2" name="DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.Utils.v20.2" name="DevExpress.Utils.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="colOutSlot.Caption" xml:space="preserve">
     <value>Novo Pos</value>
   </data>
@@ -329,8 +329,8 @@
   <data name="colOutServiceType.Caption" xml:space="preserve">
     <value>Tipo serviço</value>
   </data>
-  <assembly alias="DevExpress.XtraBars.v19.2" name="DevExpress.XtraBars.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v19.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <assembly alias="DevExpress.XtraBars.v20.2" name="DevExpress.XtraBars.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v20.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
         LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
@@ -340,7 +340,7 @@
         Xxl+0wEL
 </value>
   </data>
-  <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v19.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v20.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
         LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
@@ -350,7 +350,7 @@
         KphCYAEL
 </value>
   </data>
-  <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v19.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v20.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
         LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
@@ -360,7 +360,7 @@
         ZMgcwAEL
 </value>
   </data>
-  <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v19.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v20.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYxMi4yLCBWZXJzaW9uPTEy
         LjIuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA

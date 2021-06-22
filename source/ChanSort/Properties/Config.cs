@@ -37,35 +37,46 @@ namespace ChanSort.Ui.Properties
 
     public static Config Default { get; set; }
 
-    public string OutputListLayout { get; set; } = "";
     public string Language { get; set; } = "";
     public string Encoding { get; set; } = "";
     public Size WindowSize { get; set; } = new Size(0,0);
-    public string InputGridLayoutAnalog { get; set; } = "";
-    public string InputGridLayoutDvbCT { get; set; } = "";
-    public string InputGridLayoutDvbS { get; set; } = "";
     public int LeftPanelWidth { get; set; } = 0;
     public bool ShowWarningsAfterLoading { get; set; } = false;
     public bool CloseGaps { get; set; } = true;
     [XmlArray("MruFiles")]
     public List<string> MruFiles { get; set; } = new List<string>();
+    public string ReferenceListFolder { get; set; }
     public string PrintFontName { get; set; } = "Segoe UI";
     public decimal PrintFontSize { get; set; } = 12;
     public bool PrintSortByName { get; set; } = false;
     public int PrintColumnCount { get; set; } = 2;
     public bool ExplorerIntegration { get; set; } = false;
     public bool CheckForUpdates { get; set; } = true;
+    public int FontSizeDelta { get; set; }
+    public string LeftGridLayout { get; set; }
+    public string RightGridLayout { get; set; }
+    public SizeF ScaleFactor { get; set; }
+
+    private bool allowSave = true;
 
     public void Save()
     {
+      if (!allowSave)
+        return;
+
       var folder = Path.GetDirectoryName(ConfigFilePath);
       Directory.CreateDirectory(folder);
 
-      using (var stream = new FileStream(ConfigFilePath, FileMode.Create))
-      using (var writer = new StreamWriter(stream, System.Text.Encoding.UTF8))
-      {
-        Serializer.Serialize(writer, this);
-      }
+      using var stream = new FileStream(ConfigFilePath, FileMode.Create);
+      using var writer = new StreamWriter(stream, System.Text.Encoding.UTF8);
+      Serializer.Serialize(writer, this);
+    }
+
+    public void Reset()
+    {
+      if (File.Exists(ConfigFilePath))
+        File.Delete(ConfigFilePath);
+      allowSave = false;
     }
   }
 }

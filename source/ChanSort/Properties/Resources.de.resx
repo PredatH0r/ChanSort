@@ -265,7 +265,7 @@ und kann nun in Excel oder einen Texteditor eingefügt werden.</value>
 Sollen die Programmnummern in fortlaufende Zahlen umgeändert werden?</value>
   </data>
   <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
-    <value>Der Inhalt der Datei ist ungültig, da sie entweder 0 Byte groß is oder ausschließlich Nullwerte enthält.
+    <value>Der Inhalt der Datei ist ungültig, da sie entweder 0 Byte groß is oder ausschließlich Bytes mit dem selben Wert enthält enthält.
 Mögliche Ursachen sind USB-Sticks, die mit NTFS formatiert sind (FAT32 sollte immer funktionieren) oder ein am TV durchgeführtes Firmwareupdate, ohne einen anschließenden neuen Suchlauf. Dabei kann dann unter Umständen die neue Firmware die alten Daten nicht korrekt exportieren.</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">

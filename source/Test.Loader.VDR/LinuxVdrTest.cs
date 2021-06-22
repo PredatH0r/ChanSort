@@ -20,7 +20,7 @@ namespace Test.Loader.VDR
     private void TestChannelsAddedToCorrectLists(string fileName, int expectedTotal, int expectedTv, int expectedRadio)
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.VDR\\TestFiles\\channels.conf");
-      var plugin = new SerializerPlugin();
+      var plugin = new VdrPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
 
@@ -43,7 +43,7 @@ namespace Test.Loader.VDR
     public void TestDeletingChannel()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.VDR\\TestFiles\\channels.conf");
-      var plugin = new SerializerPlugin();
+      var plugin = new VdrPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;
@@ -81,5 +81,14 @@ namespace Test.Loader.VDR
     }
     #endregion
 
+
+    #region TestChannelAndFavListEditing
+    [TestMethod]
+    public void TestChannelAndFavListEditing()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.VDR\\TestFiles\\channels.conf");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new VdrPlugin());
+    }
+    #endregion
   }
 }

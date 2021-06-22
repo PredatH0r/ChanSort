@@ -267,24 +267,6 @@
   <data name="barSubItem1.Caption" xml:space="preserve">
     <value>&amp;Limba</value>
   </data>
-  <data name="miEnglish.Caption" xml:space="preserve">
-    <value>&amp;Engleză</value>
-  </data>
-  <data name="miGerman.Caption" xml:space="preserve">
-    <value>&amp;Deutsch</value>
-  </data>
-  <data name="miPortuguese.Caption" xml:space="preserve">
-    <value>Português</value>
-  </data>
-  <data name="miRussian.Caption" xml:space="preserve">
-    <value>русский</value>
-  </data>
-  <data name="miCzech.Caption" xml:space="preserve">
-    <value>Česky</value>
-  </data>
-  <data name="miRomână.Caption" xml:space="preserve">
-    <value>Română</value>
-  </data>
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Set de caractere</value>
   </data>
@@ -638,5 +620,14 @@ furnizor specific, satelit sau liste de țări.</value>
   </data>
   <data name="splitContainerControl1.Text" xml:space="preserve">
     <value>splitContainerControl1</value>
+  </data>
+  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
+    <value>Comutați pe Favorite F</value>
+  </data>
+  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
+    <value>Comutați pe Favorite G</value>
+  </data>
+  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
+    <value>Comutați pe Favorite H</value>
   </data>
 </root>

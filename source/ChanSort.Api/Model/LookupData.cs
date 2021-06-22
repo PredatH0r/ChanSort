@@ -230,7 +230,12 @@ namespace ChanSort.Api
       if (freqInMhz > 2000)
         freqInMhz /= 1000;
 
-      return dvbcChannels.TryGet((int)(freqInMhz * 1000)) ?? dvbcChannels.TryGet((int)((freqInMhz-1) * 1000)) ?? "";      
+      return dvbcChannels.TryGet((int)(freqInMhz * 1000)) 
+             ?? dvbcChannels.TryGet((int)((freqInMhz - 1) * 1000))
+             ?? dvbcChannels.TryGet((int)((freqInMhz - 2) * 1000)) 
+             ?? dvbcChannels.TryGet((int)((freqInMhz + 1) * 1000))
+             ?? dvbcChannels.TryGet((int)((freqInMhz + 2) * 1000))
+             ?? "";      
     }
   }
 }

@@ -1,0 +1,669 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="colIndex1.Caption" xml:space="preserve">
+    <value>Pr. index</value>
+  </data>
+  <data name="colOutSlot.Caption" xml:space="preserve">
+    <value>Új poz.</value>
+  </data>
+  <data name="colOutSlot.ToolTip" xml:space="preserve">
+    <value>Új programszám</value>
+  </data>
+  <data name="colOutName.Caption" xml:space="preserve">
+    <value>Csatorna név</value>
+  </data>
+  <data name="colOutFav.Caption" xml:space="preserve">
+    <value>Kedvencek</value>
+  </data>
+  <data name="colOutLock.Caption" xml:space="preserve">
+    <value>Zár</value>
+  </data>
+  <data name="colOutLock.ToolTip" xml:space="preserve">
+    <value>Szülői zár</value>
+  </data>
+  <data name="colOutSkip.Caption" xml:space="preserve">
+    <value>Kihagy</value>
+  </data>
+  <data name="colOutHide.Caption" xml:space="preserve">
+    <value>Elrejt</value>
+  </data>
+  <data name="colOutDeleted.Caption" xml:space="preserve">
+    <value>Törölt</value>
+  </data>
+  <data name="colOutServiceType.Caption" xml:space="preserve">
+    <value>Szolgáltatás típus</value>
+  </data>
+  <data name="colOutSource.Caption" xml:space="preserve">
+    <value>Forrás</value>
+  </data>
+  <data name="colUid1.Caption" xml:space="preserve">
+    <value>UID</value>
+  </data>
+  <data name="lblHotkeyLeft.Text" xml:space="preserve">
+    <value>F3: Szűrő | F4: Lista | -: moz.fel | +: moz.le | Del: töröl</value>
+  </data>
+  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
+    <value>Kedvenc H kapcsoló</value>
+  </data>
+  <data name="pageProgNr.Text" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="grpSubList.Text" xml:space="preserve">
+    <value>Allista</value>
+  </data>
+  <data name="miFile.Caption" xml:space="preserve">
+    <value>&amp;Fájl</value>
+  </data>
+  <data name="miOpen.Caption" xml:space="preserve">
+    <value>TV adatfájl &amp;megnyitása ...</value>
+  </data>
+  <data name="miReload.Caption" xml:space="preserve">
+    <value>&amp;Újratöltés</value>
+  </data>
+  <data name="miRestoreOriginal.Caption" xml:space="preserve">
+    <value>Mentés visszaállítás</value>
+  </data>
+  <data name="miFileInformation.Caption" xml:space="preserve">
+    <value>Fájl &amp;információ...</value>
+  </data>
+  <data name="miSave.Caption" xml:space="preserve">
+    <value>&amp;Mentés</value>
+  </data>
+  <data name="miSaveAs.Caption" xml:space="preserve">
+    <value>Mentés m&amp;ásként</value>
+  </data>
+  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
+    <value>Rendezés alkalmazása referencia listából...</value>
+  </data>
+  <data name="miAddFromRefList.Caption" xml:space="preserve">
+    <value>Csatornák hozzáadása referencia listából...</value>
+  </data>
+  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
+    <value>Referencia lista mentése...</value>
+  </data>
+  <data name="miExcelExport.Caption" xml:space="preserve">
+    <value>Exportálás excel listába...</value>
+  </data>
+  <data name="miPrint.Caption" xml:space="preserve">
+    <value>&amp;Nyomtatás...</value>
+  </data>
+  <data name="miQuit.Caption" xml:space="preserve">
+    <value>&amp;Kilépés</value>
+  </data>
+  <data name="miRecentFiles.Caption" xml:space="preserve">
+    <value>Legutóbbi fájlok</value>
+  </data>
+  <data name="miEdit.Caption" xml:space="preserve">
+    <value>&amp;Szerkesztés</value>
+  </data>
+  <data name="miAddChannel.Caption" xml:space="preserve">
+    <value>Csatornák &amp;hozzáadása</value>
+  </data>
+  <data name="miRemove.Caption" xml:space="preserve">
+    <value>Csatornák &amp;eltávolítása</value>
+  </data>
+  <data name="miRenameChannel.Caption" xml:space="preserve">
+    <value>Csatornák átnevezése</value>
+  </data>
+  <data name="mnuFavSet.Caption" xml:space="preserve">
+    <value>Hozzáadás a &amp;kedvencekhez</value>
+  </data>
+  <data name="mnuFavUnset.Caption" xml:space="preserve">
+    <value>Eltávolítás a kedvencekből</value>
+  </data>
+  <data name="miLockOn.Caption" xml:space="preserve">
+    <value>Csatorna &amp;zárolás: be</value>
+  </data>
+  <data name="miLockOff.Caption" xml:space="preserve">
+    <value>Csatorna zárolás: ki</value>
+  </data>
+  <data name="miSkipOn.Caption" xml:space="preserve">
+    <value>Csatorna &amp;átugrása: be</value>
+  </data>
+  <data name="miSkipOff.Caption" xml:space="preserve">
+    <value>Csatorna átugrása: ki</value>
+  </data>
+  <data name="miHideOn.Caption" xml:space="preserve">
+    <value>Csatorna &amp;elrejtése: be</value>
+  </data>
+  <data name="miHideOff.Caption" xml:space="preserve">
+    <value>Csatorna elrejtése: ki</value>
+  </data>
+  <data name="miRenum.Caption" xml:space="preserve">
+    <value>Csatornák &amp;átszámozása</value>
+  </data>
+  <data name="miSort.Caption" xml:space="preserve">
+    <value>Csatornák &amp;rendezése ABC szerint</value>
+  </data>
+  <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
+    <value>Kedvencek átszámozása Pr# szerint</value>
+  </data>
+  <data name="miRenumFavByPrNr.Hint" xml:space="preserve">
+    <value>Ugyanazt a Pr# kódot használja az összes csatorna és a kedvenc listában</value>
+  </data>
+  <data name="miCopyCsv.Caption" xml:space="preserve">
+    <value>Lista másolása vágólapra</value>
+  </data>
+  <data name="barSubItem2.Caption" xml:space="preserve">
+    <value>TV készülék</value>
+  </data>
+  <data name="miTvSettings.Caption" xml:space="preserve">
+    <value>Készülék beállítások...</value>
+  </data>
+  <data name="miCleanupChannels.Caption" xml:space="preserve">
+    <value>Csatorna adatok tisztítása</value>
+  </data>
+  <data name="miCleanupChannels.Hint" xml:space="preserve">
+    <value>A csatorna rekordok újraszervezése és az ismétlések eltávolítása</value>
+  </data>
+  <data name="mnuOptions.Caption" xml:space="preserve">
+    <value>&amp;Beállítások</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>&amp;Nyelv</value>
+  </data>
+  <data name="mnuCharset.Caption" xml:space="preserve">
+    <value>&amp;Karakterkészlet</value>
+  </data>
+  <data name="miCharsetForm.Caption" xml:space="preserve">
+    <value>Az &amp;összes karakter készlet...</value>
+  </data>
+  <data name="miUtf8Charset.Caption" xml:space="preserve">
+    <value>UTF-8 (Unicode)</value>
+  </data>
+  <data name="miIsoCharSets.Caption" xml:space="preserve">
+    <value>ISO karakter készlet</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
+    <value>Figyelmeztetések megjelenítése a fájl betöltése után</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
+    <value>A figyelmeztetések automatikus megjelenítése a fájl megnyitása után</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Caption" xml:space="preserve">
+    <value>Előre definiált listák szerkesztésének engedélyezése (VESZÉLYES)</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Hint" xml:space="preserve">
+    <value>Előfordulhat, hogy tévéje hibásan működik, ha szerkeszt egy listát előre definiált csatornaszámokkal</value>
+  </data>
+  <data name="miExplorerIntegration.Caption" xml:space="preserve">
+    <value>Windows intéző integráció</value>
+  </data>
+  <data name="miCheckUpdates.Caption" xml:space="preserve">
+    <value>Frissítések keresése</value>
+  </data>
+  <data name="mnuAccessibility.Caption" xml:space="preserve">
+    <value>&amp;Kisegítő lehetőségek</value>
+  </data>
+  <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
+    <value>Megnyit egy almenüt a bemeneti forrás kiválasztásához. Ez a menü közvetlenül aktiválható az F1 gombbal</value>
+  </data>
+  <data name="mnuGotoChannelList.Caption" xml:space="preserve">
+    <value>Beviteli &amp;forrás kiválasztása</value>
+  </data>
+  <data name="mnuInputSource.Caption" xml:space="preserve">
+    <value>mnuInputSource</value>
+  </data>
+  <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
+    <value>Megnyit egy almenüt a kedvencek listájának kiválasztásához. Ez a menü közvetlenül aktiválható a Shift+F1 gombbal</value>
+  </data>
+  <data name="mnuGotoFavList.Caption" xml:space="preserve">
+    <value>Válasszon program/kedvencek listát</value>
+  </data>
+  <data name="mnuFavList.Caption" xml:space="preserve">
+    <value>mnuFavList</value>
+  </data>
+  <data name="miSelectFavList0.Caption" xml:space="preserve">
+    <value>Program lista</value>
+  </data>
+  <data name="miSelectFavListA.Caption" xml:space="preserve">
+    <value>Kedvenc A</value>
+  </data>
+  <data name="miSelectFavListB.Caption" xml:space="preserve">
+    <value>Kedvenc B</value>
+  </data>
+  <data name="miSelectFavListC.Caption" xml:space="preserve">
+    <value>Kedvenc C</value>
+  </data>
+  <data name="miSelectFavListD.Caption" xml:space="preserve">
+    <value>Kedvenc D</value>
+  </data>
+  <data name="miSelectFavListE.Caption" xml:space="preserve">
+    <value>Kedvenc E</value>
+  </data>
+  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+    <value>&amp;Bal lista szűrő</value>
+  </data>
+  <data name="miGotoLeftList.Caption" xml:space="preserve">
+    <value>Bal lista</value>
+  </data>
+  <data name="miRightListFilter.Caption" xml:space="preserve">
+    <value>&amp;Jobb lista szűrő</value>
+  </data>
+  <data name="miGotoRightList.Caption" xml:space="preserve">
+    <value>Jobb lista</value>
+  </data>
+  <data name="mnuHelp.Caption" xml:space="preserve">
+    <value>&amp;Súgó</value>
+  </data>
+  <data name="miWiki.Caption" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="miOpenWebsite.Caption" xml:space="preserve">
+    <value>ChanSort weboldala...</value>
+  </data>
+  <data name="miAbout.Caption" xml:space="preserve">
+    <value>ChanSort &amp;névjegye...</value>
+  </data>
+  <data name="bar1.Text" xml:space="preserve">
+    <value>Eszközök</value>
+  </data>
+  <data name="miMoveUp.Caption" xml:space="preserve">
+    <value>Mozgat fel</value>
+  </data>
+  <data name="miMoveDown.Caption" xml:space="preserve">
+    <value>Mozgat le</value>
+  </data>
+  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
+    <value>felcserél</value>
+  </data>
+  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
+    <value>mögé</value>
+  </data>
+  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
+    <value>elé</value>
+  </data>
+  <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
+    <value>Csatorna áthelyezés/törlés esetén szüntesse meg a rést</value>
+  </data>
+  <data name="cbCloseGap.ToolTip" xml:space="preserve">
+    <value>Aktiválva, az aktuális csatornát követő összes csatorna automatikusan újraszámozódik</value>
+  </data>
+  <data name="lblInsertMode.Text" xml:space="preserve">
+    <value>Beszúrás mód:</value>
+  </data>
+  <data name="pageEmpty.Text" xml:space="preserve">
+    <value>Nincs csatornalista</value>
+  </data>
+  <data name="lblSetProgramNr.Text" xml:space="preserve">
+    <value>Pozíció beállítása:</value>
+  </data>
+  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
+    <value>Programszám a beszúrás és beállítás műveletekhez</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
+    <value>\d{1,4}</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - TV csatornalista szerkesztő</value>
+  </data>
+  <data name="btnToggleFavH.Text" xml:space="preserve">
+    <value>±H</value>
+  </data>
+  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
+    <value>Kedvenc G kapcsoló</value>
+  </data>
+  <data name="btnToggleFavG.Text" xml:space="preserve">
+    <value>±G</value>
+  </data>
+  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
+    <value>Kedvenc F kapcsoló</value>
+  </data>
+  <data name="btnToggleFavF.Text" xml:space="preserve">
+    <value>±F</value>
+  </data>
+  <data name="btnToggleLock.Text" xml:space="preserve">
+    <value>Szülői zár kapcsoló</value>
+  </data>
+  <data name="btnToggleLock.ToolTip" xml:space="preserve">
+    <value>Szülői zár</value>
+  </data>
+  <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
+    <value>Kedvenc E kapcsoló</value>
+  </data>
+  <data name="btnToggleFavE.Text" xml:space="preserve">
+    <value>±E</value>
+  </data>
+  <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
+    <value>Kedvenc D kapcsoló</value>
+  </data>
+  <data name="btnToggleFavD.Text" xml:space="preserve">
+    <value>±D</value>
+  </data>
+  <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
+    <value>Kedvenc C kapcsoló</value>
+  </data>
+  <data name="btnToggleFavC.Text" xml:space="preserve">
+    <value>±C</value>
+  </data>
+  <data name="btnToggleFavB.AccessibleDescription" xml:space="preserve">
+    <value>Kedvenc B kapcsoló</value>
+  </data>
+  <data name="btnToggleFavB.Text" xml:space="preserve">
+    <value>±B</value>
+  </data>
+  <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
+    <value>Kedvenc A kapcsoló</value>
+  </data>
+  <data name="btnToggleFavA.Text" xml:space="preserve">
+    <value>±A</value>
+  </data>
+  <data name="btnClearLeftFilter.AccessibleDescription" xml:space="preserve">
+    <value>Távolítsa el a csatornaszűrő feltételeket a rendezett csatornák listájáról</value>
+  </data>
+  <data name="btnClearLeftFilter.Text" xml:space="preserve">
+    <value>Szűrő</value>
+  </data>
+  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
+    <value>Szűrő visszaállítása</value>
+  </data>
+  <data name="btnRenum.Text" xml:space="preserve">
+    <value>A kiválasztott csatornák újraszámozása sorrendben</value>
+  </data>
+  <data name="btnRenum.ToolTip" xml:space="preserve">
+    <value>A kiválasztott csatornák újraszámozása</value>
+  </data>
+  <data name="btnDown.Text" xml:space="preserve">
+    <value>Mozgassa a kijelölt csatornát lefelé</value>
+  </data>
+  <data name="btnDown.ToolTip" xml:space="preserve">
+    <value>Mozgassa a kijelölt csatornát lefelé</value>
+  </data>
+  <data name="btnUp.Text" xml:space="preserve">
+    <value>Mozgassa a kijelölt csatornát felfelé</value>
+  </data>
+  <data name="btnUp.ToolTip" xml:space="preserve">
+    <value>Mozgassa a kijelölt csatornát felfelé</value>
+  </data>
+  <data name="btnRemoveLeft.Text" xml:space="preserve">
+    <value>Távolítsa el a kijelölt csatornákat a rendezett listából</value>
+  </data>
+  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
+    <value>Távolítsa el a kijelölt csatornákat</value>
+  </data>
+  <data name="grpOutputList.Text" xml:space="preserve">
+    <value>Rendezett csatornák</value>
+  </data>
+  <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="colIndex.Caption" xml:space="preserve">
+    <value>Pr. index</value>
+  </data>
+  <data name="colSlotOld.Caption" xml:space="preserve">
+    <value>Régi poz.</value>
+  </data>
+  <data name="colSlotOld.ToolTip" xml:space="preserve">
+    <value>Régi pozíció</value>
+  </data>
+  <data name="colSlotNew.Caption" xml:space="preserve">
+    <value>Új poz.</value>
+  </data>
+  <data name="colSlotNew.ToolTip" xml:space="preserve">
+    <value>Új pozíció</value>
+  </data>
+  <data name="colSource.Caption" xml:space="preserve">
+    <value>Forrás</value>
+  </data>
+  <data name="colPrNr.Caption" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="colName.Caption" xml:space="preserve">
+    <value>Csatorna név</value>
+  </data>
+  <data name="colShortName.Caption" xml:space="preserve">
+    <value>Rövid név</value>
+  </data>
+  <data name="colFavorites.Caption" xml:space="preserve">
+    <value>Kedvencek</value>
+  </data>
+  <data name="colLock.Caption" xml:space="preserve">
+    <value>Zárolt</value>
+  </data>
+  <data name="colSkip.Caption" xml:space="preserve">
+    <value>Kihagy</value>
+  </data>
+  <data name="colHidden.Caption" xml:space="preserve">
+    <value>Elrejt</value>
+  </data>
+  <data name="colDeleted.Caption" xml:space="preserve">
+    <value>Törölt</value>
+  </data>
+  <data name="colEncrypted.Caption" xml:space="preserve">
+    <value>Kód</value>
+  </data>
+  <data name="colEncrypted.ToolTip" xml:space="preserve">
+    <value>Kódolt</value>
+  </data>
+  <data name="colServiceType.Caption" xml:space="preserve">
+    <value>Szolgáltatás típus azonosító</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Szolgáltatás típus</value>
+  </data>
+  <data name="colFreqInMhz.Caption" xml:space="preserve">
+    <value>Frekvencia (MHz)</value>
+  </data>
+  <data name="colPolarity.Caption" xml:space="preserve">
+    <value>Polaritás</value>
+  </data>
+  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
+    <value>Csat/Transzp</value>
+  </data>
+  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
+    <value>Csatorna vagy transzponder száma</value>
+  </data>
+  <data name="colSatellite.Caption" xml:space="preserve">
+    <value>Műhold</value>
+  </data>
+  <data name="colNetworkId.Caption" xml:space="preserve">
+    <value>Hálózat (ONID)</value>
+  </data>
+  <data name="colTransportStreamId.Caption" xml:space="preserve">
+    <value>TS ID</value>
+  </data>
+  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
+    <value>Transport Stream ID</value>
+  </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>Service ID</value>
+  </data>
+  <data name="colPcrPid.Caption" xml:space="preserve">
+    <value>PCR PID</value>
+  </data>
+  <data name="colPcrPid.ToolTip" xml:space="preserve">
+    <value>Program Clock Reference Packet-ID</value>
+  </data>
+  <data name="colVideoPid.Caption" xml:space="preserve">
+    <value>Video PID</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio PID</value>
+  </data>
+  <data name="colSymbolRate.Caption" xml:space="preserve">
+    <value>Symbol rate</value>
+  </data>
+  <data name="colNetworkName.Caption" xml:space="preserve">
+    <value>Hálózat név</value>
+  </data>
+  <data name="colNetworkOperator.Caption" xml:space="preserve">
+    <value>Hálózat operátor</value>
+  </data>
+  <data name="colProvider.Caption" xml:space="preserve">
+    <value>Szolgáltató</value>
+  </data>
+  <data name="colUid.Caption" xml:space="preserve">
+    <value>Uid</value>
+  </data>
+  <data name="colLogicalIndex.Caption" xml:space="preserve">
+    <value>Sorrend</value>
+  </data>
+  <data name="colSignalSource.Caption" xml:space="preserve">
+    <value>Jelforrás</value>
+  </data>
+  <data name="lblHotkeyRight.Text" xml:space="preserve">
+    <value>F5: Szűrő | F6: Lista | Enter: hozzáad</value>
+  </data>
+  <data name="lblPredefinedList.Text" xml:space="preserve">
+    <value>Ez egy előre definiált lista és nem szerkeszthető.</value>
+  </data>
+  <data name="lblPredefinedList.ToolTip" xml:space="preserve">
+    <value>A tévé beállítása során kiválasztott egy előre definiált csatornalistát. Egy ilyen lista módosítása a tévé hibás működését okozhatja. Kérjük, futtasson egy teljes csatornás keresést a tévéjén és ne válasszon konkrét szolgáltatót, műholdas vagy országlistát.</value>
+  </data>
+  <data name="btnRemoveRight.Text" xml:space="preserve">
+    <value>Távolítsa el a kijelölt csatornákat a rendezett listáról</value>
+  </data>
+  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
+    <value>Távolítsa el a kijelölt csatornákat a rendezett listáról</value>
+  </data>
+  <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
+    <value>#N/A</value>
+  </data>
+  <data name="btnAddAll.Text" xml:space="preserve">
+    <value>&lt;&lt; Hozzáad mind</value>
+  </data>
+  <data name="btnAddAll.ToolTip" xml:space="preserve">
+    <value>Fűzze hozzá az összes jelenleg nem rendezett csatornát a lista végéhez</value>
+  </data>
+  <data name="btnClearRightFilter.AccessibleDescription" xml:space="preserve">
+    <value>Távolítsa el a csatornaszűrő feltételeket a teljes csatornalistáról</value>
+  </data>
+  <data name="btnClearRightFilter.Text" xml:space="preserve">
+    <value>Szűrő</value>
+  </data>
+  <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
+    <value>Szűrő alaphelyzetre</value>
+  </data>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>Adja hozzá a kiválasztott csatornákat a rendezett listához</value>
+  </data>
+  <data name="btnAdd.ToolTip" xml:space="preserve">
+    <value>Kijelölt csatornák hozzáadása a rendezett listához</value>
+  </data>
+  <data name="grpInputList.Text" xml:space="preserve">
+    <value>Eredeti csatornák</value>
+  </data>
+  <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
+    <value>Panel2</value>
+  </data>
+  <data name="splitContainerControl1.Text" xml:space="preserve">
+    <value>splitContainerControl1</value>
+  </data>
+</root>

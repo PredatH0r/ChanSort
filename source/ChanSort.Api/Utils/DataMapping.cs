@@ -37,6 +37,30 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region GetMask()
+    public int GetMask(string key)
+    {
+      var list = settings.GetIntList(key);
+      if (list != null && list.Length > 0)
+        return list[0];
+      list = settings.GetIntList("mask" + key);
+      if (list != null && list.Length > 0)
+        return list[0];
+      return -1;
+    }
+    #endregion
+
+    #region GetConst()
+    public int GetConst(string key, int defaultValue)
+    {
+      var list = settings.GetIntList(key);
+      if (list != null && list.Length > 0)
+        return list[0];
+      return defaultValue;
+    }
+    #endregion
+
+
     public IniFile.Section Settings { get { return this.settings; } }
 
 

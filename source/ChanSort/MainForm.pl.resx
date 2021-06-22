@@ -1,0 +1,669 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="colIndex1.Caption" xml:space="preserve">
+    <value>Pr. indeks</value>
+  </data>
+  <data name="colOutSlot.Caption" xml:space="preserve">
+    <value>Nowa pozycja</value>
+  </data>
+  <data name="colOutSlot.ToolTip" xml:space="preserve">
+    <value>Nowy numer programu</value>
+  </data>
+  <data name="colOutName.Caption" xml:space="preserve">
+    <value>Nazwa kanału</value>
+  </data>
+  <data name="colOutFav.Caption" xml:space="preserve">
+    <value>Ulubione</value>
+  </data>
+  <data name="colOutLock.Caption" xml:space="preserve">
+    <value>Zablokować</value>
+  </data>
+  <data name="colOutLock.ToolTip" xml:space="preserve">
+    <value>Blokada rodzicielska</value>
+  </data>
+  <data name="colOutSkip.Caption" xml:space="preserve">
+    <value>Pominąć</value>
+  </data>
+  <data name="colOutHide.Caption" xml:space="preserve">
+    <value>Ukryć</value>
+  </data>
+  <data name="colOutDeleted.Caption" xml:space="preserve">
+    <value>Usunięte</value>
+  </data>
+  <data name="colOutServiceType.Caption" xml:space="preserve">
+    <value>Rodzaj usługi</value>
+  </data>
+  <data name="colOutSource.Caption" xml:space="preserve">
+    <value>Źródło</value>
+  </data>
+  <data name="colUid1.Caption" xml:space="preserve">
+    <value>UID</value>
+  </data>
+  <data name="lblHotkeyLeft.Text" xml:space="preserve">
+    <value>F3: Filtr | F4: Lista | -: przejście w górę | +: przejście w dół | Del: usuń</value>
+  </data>
+  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
+    <value>Przełącz Ulubione H</value>
+  </data>
+  <data name="pageProgNr.Text" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="grpSubList.Text" xml:space="preserve">
+    <value>Sub List</value>
+  </data>
+  <data name="miFile.Caption" xml:space="preserve">
+    <value>&amp;Plik</value>
+  </data>
+  <data name="miOpen.Caption" xml:space="preserve">
+    <value>&amp;Otwórz plik danych TV...</value>
+  </data>
+  <data name="miReload.Caption" xml:space="preserve">
+    <value>&amp;Przeładować</value>
+  </data>
+  <data name="miRestoreOriginal.Caption" xml:space="preserve">
+    <value>Przywracania kopii zapasowej</value>
+  </data>
+  <data name="miFileInformation.Caption" xml:space="preserve">
+    <value>Plik &amp;informacje...</value>
+  </data>
+  <data name="miSave.Caption" xml:space="preserve">
+    <value>&amp;Zapisać</value>
+  </data>
+  <data name="miSaveAs.Caption" xml:space="preserve">
+    <value>Zapisz &amp;jako...</value>
+  </data>
+  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
+    <value>Złóż zamówienie z listy referencyjnej ...</value>
+  </data>
+  <data name="miAddFromRefList.Caption" xml:space="preserve">
+    <value>Dodaj kanały z listy referencyjnej ...</value>
+  </data>
+  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
+    <value>Zapisz listę referencyjną ...</value>
+  </data>
+  <data name="miExcelExport.Caption" xml:space="preserve">
+    <value>Eksportuj listę do Excela ...</value>
+  </data>
+  <data name="miPrint.Caption" xml:space="preserve">
+    <value>&amp;Wydrukować...</value>
+  </data>
+  <data name="miQuit.Caption" xml:space="preserve">
+    <value>&amp;Porzucić</value>
+  </data>
+  <data name="miRecentFiles.Caption" xml:space="preserve">
+    <value>Ostatnie pliki</value>
+  </data>
+  <data name="miEdit.Caption" xml:space="preserve">
+    <value>&amp;Edytować</value>
+  </data>
+  <data name="miAddChannel.Caption" xml:space="preserve">
+    <value>&amp;Dodaj kanały</value>
+  </data>
+  <data name="miRemove.Caption" xml:space="preserve">
+    <value>&amp;Usuń kanały</value>
+  </data>
+  <data name="miRenameChannel.Caption" xml:space="preserve">
+    <value>Zmień nazwę kanału</value>
+  </data>
+  <data name="mnuFavSet.Caption" xml:space="preserve">
+    <value>Dodaj do ulubionych</value>
+  </data>
+  <data name="mnuFavUnset.Caption" xml:space="preserve">
+    <value>Usuń z ulubionych</value>
+  </data>
+  <data name="miLockOn.Caption" xml:space="preserve">
+    <value>&amp;Zablokuj kanał: włączony</value>
+  </data>
+  <data name="miLockOff.Caption" xml:space="preserve">
+    <value>Zablokuj kanał: wyłączony</value>
+  </data>
+  <data name="miSkipOn.Caption" xml:space="preserve">
+    <value>&amp;Pomiń kanał: włączony</value>
+  </data>
+  <data name="miSkipOff.Caption" xml:space="preserve">
+    <value>Pomiń kanał: wyłączony</value>
+  </data>
+  <data name="miHideOn.Caption" xml:space="preserve">
+    <value>&amp;Ukryj kanał: włączony</value>
+  </data>
+  <data name="miHideOff.Caption" xml:space="preserve">
+    <value>Ukryj kanał: wyłączony</value>
+  </data>
+  <data name="miRenum.Caption" xml:space="preserve">
+    <value>Ponownie &amp; numeruj kanały</value>
+  </data>
+  <data name="miSort.Caption" xml:space="preserve">
+    <value>Kanały Sor &amp; t alfabetycznie</value>
+  </data>
+  <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
+    <value>Zmień numerację ulubionych według Pr#</value>
+  </data>
+  <data name="miRenumFavByPrNr.Hint" xml:space="preserve">
+    <value>Używa tego samego Pr# na wszystkich listach kanałów i ulubionych</value>
+  </data>
+  <data name="miCopyCsv.Caption" xml:space="preserve">
+    <value>Skopiuj listę do schowka</value>
+  </data>
+  <data name="barSubItem2.Caption" xml:space="preserve">
+    <value>Telewizor</value>
+  </data>
+  <data name="miTvSettings.Caption" xml:space="preserve">
+    <value>Ustawienie urządzenia...</value>
+  </data>
+  <data name="miCleanupChannels.Caption" xml:space="preserve">
+    <value>Dane kanału oczyszczania</value>
+  </data>
+  <data name="miCleanupChannels.Hint" xml:space="preserve">
+    <value>Reorganizuj rekordy kanału i usuwaj duplikaty</value>
+  </data>
+  <data name="mnuOptions.Caption" xml:space="preserve">
+    <value>&amp;Ustawienia</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>&amp;Język</value>
+  </data>
+  <data name="mnuCharset.Caption" xml:space="preserve">
+    <value>&amp;Zestaw znaków</value>
+  </data>
+  <data name="miCharsetForm.Caption" xml:space="preserve">
+    <value>Wszystkie i zestawy znaków ...</value>
+  </data>
+  <data name="miUtf8Charset.Caption" xml:space="preserve">
+    <value>UTF-8 (Unicode)</value>
+  </data>
+  <data name="miIsoCharSets.Caption" xml:space="preserve">
+    <value>Zestawy znaków ISO</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
+    <value>Pokaż ostrzeżenia po załadowaniu pliku</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
+    <value>Automatycznie wyświetlaj wszelkie ostrzeżenia po otwarciu pliku</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Caption" xml:space="preserve">
+    <value>Zezwalaj na edycję predefiniowanych list (NIEBEZPIECZNE)</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Hint" xml:space="preserve">
+    <value>Telewizor może działać nieprawidłowo podczas edytowania listy ze wstępnie zdefiniowanymi numerami kanałów</value>
+  </data>
+  <data name="miExplorerIntegration.Caption" xml:space="preserve">
+    <value>Integracja z Windows Explorer</value>
+  </data>
+  <data name="miCheckUpdates.Caption" xml:space="preserve">
+    <value>Sprawdź aktualizacje</value>
+  </data>
+  <data name="mnuAccessibility.Caption" xml:space="preserve">
+    <value>&amp;Dostępność</value>
+  </data>
+  <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
+    <value>Otwiera podmenu wyboru źródła wejściowego. To menu można aktywować bezpośrednio przyciskiem F1</value>
+  </data>
+  <data name="mnuGotoChannelList.Caption" xml:space="preserve">
+    <value>Wybierz i wprowadź źródło</value>
+  </data>
+  <data name="mnuInputSource.Caption" xml:space="preserve">
+    <value>mnuInputSource</value>
+  </data>
+  <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
+    <value>Otwiera podmenu dla programu wyboru listy ulubionych. To menu można aktywować bezpośrednio za pomocą klawiszy Shift + F1</value>
+  </data>
+  <data name="mnuGotoFavList.Caption" xml:space="preserve">
+    <value>Wybierz program/&amp;listę ulubionych</value>
+  </data>
+  <data name="mnuFavList.Caption" xml:space="preserve">
+    <value>menuListaUlubionych</value>
+  </data>
+  <data name="miSelectFavList0.Caption" xml:space="preserve">
+    <value>Lista programów</value>
+  </data>
+  <data name="miSelectFavListA.Caption" xml:space="preserve">
+    <value>Ulubione A</value>
+  </data>
+  <data name="miSelectFavListB.Caption" xml:space="preserve">
+    <value>Ulubione B</value>
+  </data>
+  <data name="miSelectFavListC.Caption" xml:space="preserve">
+    <value>Ulubione C</value>
+  </data>
+  <data name="miSelectFavListD.Caption" xml:space="preserve">
+    <value>Ulubione D</value>
+  </data>
+  <data name="miSelectFavListE.Caption" xml:space="preserve">
+    <value>Ulubione E</value>
+  </data>
+  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+    <value>&amp;Filtr listy po lewej stronie</value>
+  </data>
+  <data name="miGotoLeftList.Caption" xml:space="preserve">
+    <value>Lewa lista</value>
+  </data>
+  <data name="miRightListFilter.Caption" xml:space="preserve">
+    <value>&amp;Filtr prawej listy</value>
+  </data>
+  <data name="miGotoRightList.Caption" xml:space="preserve">
+    <value>Właściwa lista</value>
+  </data>
+  <data name="mnuHelp.Caption" xml:space="preserve">
+    <value>&amp;Wsparcie</value>
+  </data>
+  <data name="miWiki.Caption" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="miOpenWebsite.Caption" xml:space="preserve">
+    <value>Strona internetowa ChanSort...</value>
+  </data>
+  <data name="miAbout.Caption" xml:space="preserve">
+    <value>&amp;O ChanSort...</value>
+  </data>
+  <data name="bar1.Text" xml:space="preserve">
+    <value>Przybory</value>
+  </data>
+  <data name="miMoveUp.Caption" xml:space="preserve">
+    <value>Przejdź w górę</value>
+  </data>
+  <data name="miMoveDown.Caption" xml:space="preserve">
+    <value>Zejdź w dół</value>
+  </data>
+  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
+    <value>zamiana</value>
+  </data>
+  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
+    <value>po</value>
+  </data>
+  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
+    <value>przed</value>
+  </data>
+  <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
+    <value>Zamknij odstęp podczas przenoszenia/usuwania kanału</value>
+  </data>
+  <data name="cbCloseGap.ToolTip" xml:space="preserve">
+    <value>Gdy aktywne, wszystkie kanały po bieżącym zostaną automatycznie ponumerowane</value>
+  </data>
+  <data name="lblInsertMode.Text" xml:space="preserve">
+    <value>Tryb wstawiania:</value>
+  </data>
+  <data name="pageEmpty.Text" xml:space="preserve">
+    <value>Brak list kanałów</value>
+  </data>
+  <data name="lblSetProgramNr.Text" xml:space="preserve">
+    <value>Ustaw Poz:</value>
+  </data>
+  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
+    <value>Numer programu dla operacji wstawiania i ustawiania</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
+    <value>\d{1,4}</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - Edytor list kanałów telewizyjnych</value>
+  </data>
+  <data name="btnToggleFavH.Text" xml:space="preserve">
+    <value>±H</value>
+  </data>
+  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
+    <value>Przełącz ulubione G</value>
+  </data>
+  <data name="btnToggleFavG.Text" xml:space="preserve">
+    <value>±G</value>
+  </data>
+  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
+    <value>Przełącz ulubione F</value>
+  </data>
+  <data name="btnToggleFavF.Text" xml:space="preserve">
+    <value>±F</value>
+  </data>
+  <data name="btnToggleLock.Text" xml:space="preserve">
+    <value>Włącz blokadę rodzicielską</value>
+  </data>
+  <data name="btnToggleLock.ToolTip" xml:space="preserve">
+    <value>Blokada rodzicielska</value>
+  </data>
+  <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
+    <value>Przełącz ulubione E</value>
+  </data>
+  <data name="btnToggleFavE.Text" xml:space="preserve">
+    <value>±E</value>
+  </data>
+  <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
+    <value>Przełącz ulubione D</value>
+  </data>
+  <data name="btnToggleFavD.Text" xml:space="preserve">
+    <value>±D</value>
+  </data>
+  <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
+    <value>Przełącz ulubione C</value>
+  </data>
+  <data name="btnToggleFavC.Text" xml:space="preserve">
+    <value>±C</value>
+  </data>
+  <data name="btnToggleFavB.AccessibleDescription" xml:space="preserve">
+    <value>Przełącz ulubione B</value>
+  </data>
+  <data name="btnToggleFavB.Text" xml:space="preserve">
+    <value>±B</value>
+  </data>
+  <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
+    <value>Przełącz ulubione A</value>
+  </data>
+  <data name="btnToggleFavA.Text" xml:space="preserve">
+    <value>±A</value>
+  </data>
+  <data name="btnClearLeftFilter.AccessibleDescription" xml:space="preserve">
+    <value>Usuń kryteria filtrowania kanałów z posortowanej listy kanałów</value>
+  </data>
+  <data name="btnClearLeftFilter.Text" xml:space="preserve">
+    <value>Filtr</value>
+  </data>
+  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
+    <value>Zresetuj filtr</value>
+  </data>
+  <data name="btnRenum.Text" xml:space="preserve">
+    <value>Ponownie numeruj wybrane kanały</value>
+  </data>
+  <data name="btnRenum.ToolTip" xml:space="preserve">
+    <value>Zmień numerację wybranych kanałów</value>
+  </data>
+  <data name="btnDown.Text" xml:space="preserve">
+    <value>Przenieś wybrany kanał w dół</value>
+  </data>
+  <data name="btnDown.ToolTip" xml:space="preserve">
+    <value>Przenieś wybrane kanały w dół</value>
+  </data>
+  <data name="btnUp.Text" xml:space="preserve">
+    <value>Przenieś wybrany kanał w górę</value>
+  </data>
+  <data name="btnUp.ToolTip" xml:space="preserve">
+    <value>Przenieś wybrane kanały w górę</value>
+  </data>
+  <data name="btnRemoveLeft.Text" xml:space="preserve">
+    <value>Usuń wybrane kanały z posortowanej listy</value>
+  </data>
+  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
+    <value>Usuń wybrane kanały</value>
+  </data>
+  <data name="grpOutputList.Text" xml:space="preserve">
+    <value>Posortowane kanały</value>
+  </data>
+  <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="colIndex.Caption" xml:space="preserve">
+    <value>Pr. indeks</value>
+  </data>
+  <data name="colSlotOld.Caption" xml:space="preserve">
+    <value>Stary</value>
+  </data>
+  <data name="colSlotOld.ToolTip" xml:space="preserve">
+    <value>Stary numer programu</value>
+  </data>
+  <data name="colSlotNew.Caption" xml:space="preserve">
+    <value>Nowa pozycja</value>
+  </data>
+  <data name="colSlotNew.ToolTip" xml:space="preserve">
+    <value>Nowa pozycja</value>
+  </data>
+  <data name="colSource.Caption" xml:space="preserve">
+    <value>Źródło</value>
+  </data>
+  <data name="colPrNr.Caption" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="colName.Caption" xml:space="preserve">
+    <value>Nazwa kanału</value>
+  </data>
+  <data name="colShortName.Caption" xml:space="preserve">
+    <value>Krótka nazwa</value>
+  </data>
+  <data name="colFavorites.Caption" xml:space="preserve">
+    <value>Ulubione</value>
+  </data>
+  <data name="colLock.Caption" xml:space="preserve">
+    <value>Zablokowany</value>
+  </data>
+  <data name="colSkip.Caption" xml:space="preserve">
+    <value>Pominąć</value>
+  </data>
+  <data name="colHidden.Caption" xml:space="preserve">
+    <value>Ukryć</value>
+  </data>
+  <data name="colDeleted.Caption" xml:space="preserve">
+    <value>Usunięte</value>
+  </data>
+  <data name="colEncrypted.Caption" xml:space="preserve">
+    <value>Szyfrowane</value>
+  </data>
+  <data name="colEncrypted.ToolTip" xml:space="preserve">
+    <value>Szyfrowane</value>
+  </data>
+  <data name="colServiceType.Caption" xml:space="preserve">
+    <value>Identyfikator typu usługi</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Rodzaj usługi</value>
+  </data>
+  <data name="colFreqInMhz.Caption" xml:space="preserve">
+    <value>Częstotliwość (MHz)</value>
+  </data>
+  <data name="colPolarity.Caption" xml:space="preserve">
+    <value>Polaryzacja</value>
+  </data>
+  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
+    <value>Kanał/ Transponder</value>
+  </data>
+  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
+    <value>Numer kanału lub transpondera</value>
+  </data>
+  <data name="colSatellite.Caption" xml:space="preserve">
+    <value>Satelita</value>
+  </data>
+  <data name="colNetworkId.Caption" xml:space="preserve">
+    <value>Sieć (ONID)</value>
+  </data>
+  <data name="colTransportStreamId.Caption" xml:space="preserve">
+    <value>TS ID</value>
+  </data>
+  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
+    <value>Identyfikator strumienia transportowego</value>
+  </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>ID usługi</value>
+  </data>
+  <data name="colPcrPid.Caption" xml:space="preserve">
+    <value>PCR PID</value>
+  </data>
+  <data name="colPcrPid.ToolTip" xml:space="preserve">
+    <value>Numer referencyjny pakietu programu</value>
+  </data>
+  <data name="colVideoPid.Caption" xml:space="preserve">
+    <value>Wideo PID</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio PID</value>
+  </data>
+  <data name="colSymbolRate.Caption" xml:space="preserve">
+    <value>Szybkość transferu</value>
+  </data>
+  <data name="colNetworkName.Caption" xml:space="preserve">
+    <value>Nazwa sieci</value>
+  </data>
+  <data name="colNetworkOperator.Caption" xml:space="preserve">
+    <value>Operator sieci</value>
+  </data>
+  <data name="colProvider.Caption" xml:space="preserve">
+    <value>Dostawca</value>
+  </data>
+  <data name="colUid.Caption" xml:space="preserve">
+    <value>Uid</value>
+  </data>
+  <data name="colLogicalIndex.Caption" xml:space="preserve">
+    <value>Zamówienie</value>
+  </data>
+  <data name="colSignalSource.Caption" xml:space="preserve">
+    <value>Źródło sygnału</value>
+  </data>
+  <data name="lblHotkeyRight.Text" xml:space="preserve">
+    <value>F5: Filtr | F6: lista | Wpisz: dodaj</value>
+  </data>
+  <data name="lblPredefinedList.Text" xml:space="preserve">
+    <value>Jest to wstępnie zdefiniowana lista, której nie można edytować.</value>
+  </data>
+  <data name="lblPredefinedList.ToolTip" xml:space="preserve">
+    <value>Podczas konfiguracji telewizora wybrałeś predefiniowaną listę kanałów. Modyfikacja takiej listy może spowodować nieprawidłowe działanie telewizora. Przeprowadź pełne skanowanie kanałów na telewizorze i nie wybieraj żadnego konkretnego dostawcy, satelity ani listy krajów.</value>
+  </data>
+  <data name="btnRemoveRight.Text" xml:space="preserve">
+    <value>Usuń wybrane kanały z posortowanej listy</value>
+  </data>
+  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
+    <value>Usuń wybrane kanały z posortowanej listy</value>
+  </data>
+  <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
+    <value>Dołącz wszystkie aktualnie nieposortowane kanały na końcu listy</value>
+  </data>
+  <data name="btnAddAll.Text" xml:space="preserve">
+    <value>&lt;&lt; Dodaj wszystko</value>
+  </data>
+  <data name="btnAddAll.ToolTip" xml:space="preserve">
+    <value>Dołącz wszystkie aktualnie nieposortowane kanały na końcu listy</value>
+  </data>
+  <data name="btnClearRightFilter.AccessibleDescription" xml:space="preserve">
+    <value>Usuń kryteria filtrowania kanałów z pełnej listy kanałów</value>
+  </data>
+  <data name="btnClearRightFilter.Text" xml:space="preserve">
+    <value>Filtr</value>
+  </data>
+  <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
+    <value>Zresetuj filtr</value>
+  </data>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>Dodaj wybrane kanały do ​​posortowanej listy</value>
+  </data>
+  <data name="btnAdd.ToolTip" xml:space="preserve">
+    <value>Dodaj wybrane kanały do ​​posortowanej listy</value>
+  </data>
+  <data name="grpInputList.Text" xml:space="preserve">
+    <value>Oryginalne kanały</value>
+  </data>
+  <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
+    <value>Panel 2</value>
+  </data>
+  <data name="splitContainerControl1.Text" xml:space="preserve">
+    <value>splitContainerControl1</value>
+  </data>
+</root>

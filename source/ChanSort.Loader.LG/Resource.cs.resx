@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -128,5 +128,17 @@
   </data>
   <data name="TllFileSerializerPlugin_ERR_modelUnknown" xml:space="preserve">
     <value>Obsah souboru neodpovídá žádnému podporovanému modelu</value>
+  </data>
+  <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
+    <value>Váš televizor bude schopen importovat soubor GlobalClone pouze v případě, že se ve stejném adresáři nenachází žádné soubory s názvem xx*.TLL.
+Chcete, aby ChanSort konfliktní soubory přejmenoval?</value>
+  </data>
+  <data name="GcSerializer_webOsFirmwareWarning" xml:space="preserve">
+    <value>POZOR:
+Zkontrolujte, zda váš televizor se systémem webOS používá nejnovější verzi firmwaru (LB600 a vyšší: 4.41.32, UB: 4.51.44).
+Starší verze firmwaru LG pro modely televizorů se systémem webOS nedokáže správně importovat seznam kanálů a náhodně mění pořadí kanálů.</value>
+  </data>
+  <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
+    <value>Storno</value>
   </data>
 </root>

@@ -17,16 +17,18 @@ namespace ChanSort.Api
     public bool IsEmpty => this.channelLists.Count == 0;
     public bool NeedsSaving { get; set; }
 
-
+    public FavoritesMode FavoritesMode => this.loader.Features.FavoritesMode;
     public Favorites SupportedFavorites => this.loader.Features.SupportedFavorites;
-    public bool SortedFavorites => this.loader.Features.SortedFavorites;
-    public bool MixedSourceFavorites => this.loader.Features.MixedSourceFavorites;
+    public bool SortedFavorites => this.loader.Features.FavoritesMode >= FavoritesMode.OrderedPerSource;
+    public bool MixedSourceFavorites => this.loader.Features.FavoritesMode == FavoritesMode.MixedSource;
     public bool AllowGapsInFavNumbers => this.loader.Features.AllowGapsInFavNumbers;
     public bool DeletedChannelsNeedNumbers => this.loader.Features.DeleteMode == SerializerBase.DeleteMode.FlagWithPrNr;
     public bool CanSkip => this.loader.Features.CanSkipChannels;
     public bool CanLock => this.loader.Features.CanLockChannels;
     public bool CanHide => this.loader.Features.CanHideChannels;
     public bool CanEditFavListName => this.loader.Features.CanEditFavListNames;
+
+    public int FavListCount { get; private set; }
 
     public DataRoot(SerializerBase loader)
     {
@@ -49,8 +51,8 @@ namespace ChanSort.Api
         this.Warnings.AppendFormat("Duplicate transponder data record for satellite #{0} with id {1}\r\n", sat?.Id, trans.Id);
         return;
       }
-      if (sat != null)
-        sat.Transponder.Add(trans.Id, trans);
+
+      sat?.Transponder.Add(trans.Id, trans);
       this.Transponder.Add(trans.Id, trans);
     }
     #endregion
@@ -66,7 +68,6 @@ namespace ChanSort.Api
     public virtual void AddChannelList(ChannelList list)
     {
       this.channelLists.Add(list);
-      this.loader.Features.MixedSourceFavorites |= list.IsMixedSourceFavoritesList;
     }
     #endregion
 
@@ -109,6 +110,12 @@ namespace ChanSort.Api
     #region ValidateAfterLoad()
     public virtual void ValidateAfterLoad()
     {
+      this.FavListCount = this.loader.Features.MaxFavoriteLists;
+
+      var favMode = this.FavoritesMode;
+      if (this.ChannelLists.Any(l => l.IsMixedSourceFavoritesList))
+        favMode = loader.Features.FavoritesMode = FavoritesMode.MixedSource;
+
       foreach (var list in this.ChannelLists)
       {
         if (list.IsMixedSourceFavoritesList)
@@ -118,6 +125,8 @@ namespace ChanSort.Api
         bool hasPolarity = false;
         foreach (var chan in list.Channels)
         {
+          chan.FavMode = favMode; // required so that channels know how to handle favorites (as bitmasks or as indices)
+
           if (chan.IsDeleted)
             chan.OldProgramNr = -1;
           else
@@ -136,19 +145,19 @@ namespace ChanSort.Api
     #region ApplyCurrentProgramNumbers()
     public void ApplyCurrentProgramNumbers()
     {
-      int c = 0;
-      if (this.MixedSourceFavorites || this.SortedFavorites)
-      {
-        for (int m = (int) this.SupportedFavorites; m != 0; m >>= 1)
-          ++c;
-      }
-
+      // prevent setting OldPosition to -1 in lists that don't support sorted favorites, because it would clear the Favorites flags
+      int maxPos = this.SortedFavorites ? this.FavListCount : 0;
       foreach (var list in this.ChannelLists)
       {
         foreach (var channel in list.Channels)
         {
-          for (int i = 0; i <= c; i++)
-            channel.SetPosition(i, channel.GetOldPosition(i));
+          if (!list.IsMixedSourceFavoritesList)
+            channel.NewProgramNr = channel.OldProgramNr;
+          if (!this.MixedSourceFavorites || list.IsMixedSourceFavoritesList)
+          {
+            for (int i = 1; i <= maxPos; i++)
+              channel.SetPosition(i, channel.GetOldPosition(i));
+          }
         }
       }
     }
@@ -239,31 +248,10 @@ namespace ChanSort.Api
               chan.NewProgramNr = -1;
           }
 
-          chan.OldProgramNr = chan.NewProgramNr;
-          chan.OldFavIndex.Clear();
-          chan.OldFavIndex.AddRange(chan.FavIndex);
+          for (int j=0; j<=this.FavListCount; j++)
+            chan.SetOldPosition(j, chan.GetPosition(j));
         }
       }
-    }
-    #endregion
-
-
-    #region Get/SetFavListCaption()
-
-    private readonly Dictionary<int,string> favListCaptions = new Dictionary<int, string>();
-
-    public void SetFavListCaption(int favIndex, string caption)
-    {
-      favListCaptions[favIndex] = caption;
-    }
-
-    public string GetFavListCaption(int favIndex, bool asTabCaption = false)
-    {
-      var hasCaption = favListCaptions.TryGetValue(favIndex, out var caption);
-      if (!asTabCaption)
-        return caption;
-      var letter = (char)('A' + favIndex);
-      return  hasCaption && !string.IsNullOrEmpty(caption) ? letter + ": " + caption : "Fav " + letter;
     }
     #endregion
   }

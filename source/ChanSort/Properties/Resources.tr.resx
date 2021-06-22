@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainForm_LoadTll_SourceTllNotFound" xml:space="preserve">
+    <value>Quell-TLL konnte nicht gefunden werden:
+'{0}'</value>
+  </data>
+  <data name="MainForm_LoadTll_Exception" xml:space="preserve">
+    <value>TV'nin veri dosyası yüklenirken bir hata oluştu:
+{0}</value>
+  </data>
+  <data name="MainForm_FileDialog_OpenFileFilter" xml:space="preserve">
+    <value>Desteklenen Dosyalar|{0}|Tüm Dosyalar (*.*)|*</value>
+  </data>
+  <data name="MainForm_FileDialog_SaveFileFilter" xml:space="preserve">
+    <value>{0}-Dosyalar|*{0}|Tüm Dosyalar (*.*)|*</value>
+  </data>
+  <data name="MainForm_TryExecute_Exception" xml:space="preserve">
+    <value>Beklenmedik bir sorun oluştu:
+{0}</value>
+  </data>
+  <data name="MainForm_SaveTllFile_Exception" xml:space="preserve">
+    <value>TV veri dosyası yazılırken bir hata oluştu:
+{0}</value>
+  </data>
+  <data name="MainForm_SaveTllFile_Success" xml:space="preserve">
+    <value>Sıralanan TV veri dosyası başarıyla oluşturuldu.</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Question" xml:space="preserve">
+    <value>Değişikliklerinizi kaydetmek istiyor musunuz?</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Save" xml:space="preserve">
+    <value>Değişiklikleri Kaydet</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
+    <value>Değişiklikleri kaydetme</value>
+  </data>
+  <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
+    <value>{0} dosyalarını okumak / yazmak için eklenti bulunamadı.</value>
+  </data>
+  <data name="MainForm_LoadFiles_IOException" xml:space="preserve">
+    <value>Dosya yüklenirken hata oluştu</value>
+  </data>
+  <data name="MainForm_LoadFiles_ValidationWarningMsg" xml:space="preserve">
+    <value>Dosya içeriği bazı anormallikler gösterir ve muhtemelen bozuktur.</value>
+  </data>
+  <data name="MainForm_LoadFiles_ValidationWarningCap" xml:space="preserve">
+    <value>Veri doğrulama</value>
+  </data>
+  <data name="MainForm_RestoreScanOrder_Message" xml:space="preserve">
+    <value>Tüm özel depolamalar kaybolacak.
+Kanal taramasından düzeni geri yüklemek istediğinizden emin misiniz?</value>
+  </data>
+  <data name="MainForm_RestoreScanOrder_Caption" xml:space="preserve">
+    <value>Kanal taramasından düzeni geri yükle</value>
+  </data>
+  <data name="MainForm_LoadFiles_DupeWarningMsg" xml:space="preserve">
+    <value>Giriş dosyası, aynı program numarasını kullanan birden çok kayıt içeriyor.
+TV ChanSort tarafından yapılan değişiklikleri kabul etmeyebilir.
+Bunun nedeni genellikle manuel transponder taraması yapılmasıdır.
+Herhangi bir değişiklik için temiz bir girdi dosyası kullanılması önerilir.
+Bunu yapmak için Otel Modunu KAPALI konuma getirin, TV'yi
+fabrika varsayılanlarına döndürün, yeni bir kör kanal taraması çalıştırın ve Otel Modu'nu tekrar AÇIN, sonra yeni bir temiz TLL dosyası oluşturun.
+</value>
+  </data>
+  <data name="MainForm_btnResetChannelData_Click_Message" xml:space="preserve">
+    <value>UYARI: Tüm analog, DVB-C / T ve DVB-S kanalı ve transponder verileri silinecektir.
+Bu dosyayı TV'nize yükledikten sonra tam kanal taraması yapmanız gerekecektir.
+Devam edilsin mi?</value>
+  </data>
+  <data name="MainForm_btnResetChannelData_Click_Caption" xml:space="preserve">
+    <value>Tüm kanal verilerini sil</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_Message" xml:space="preserve">
+    <value>.bak dosyası {0} klasörüne kopyalanamıyor</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_ItemClick_NoBackup" xml:space="preserve">
+    <value>Yedek dosyası bulunamadı: {0}</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_ItemClick_Confirm" xml:space="preserve">
+    <value>Yedekleme dosyasını geri yüklemek üzeresiniz. Tüm değişiklikler kaybolacak!
+Devam etmek istiyor musun?</value>
+  </data>
+  <data name="MainForm_SaveFiles_ErrorMsg" xml:space="preserve">
+    <value>Dosya kaydedilirken bir hata oluştu. Lütfen bunlardan emin olun
+- dosyaya yazma izninizin olduğundan
+- dosyanın başka bir programda açık olmadığından
+
+Hata mesajı:</value>
+  </data>
+  <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
+    <value>Dosya yazma hatası</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Message" xml:space="preserve">
+    <value>Daha yeni bir sürüm mevcut: v {0}.
+İndirmek için web sitesini açmak istiyor musunuz?</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
+    <value>Yeni Sürüm</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_Question" xml:space="preserve">
+    <value>Kanal listenizi nasıl düzenlemek istersiniz?</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
+    <value>Yeni liste oluştur: Boş bir listeyle başlayın ve kanalları istediğiniz sırada ekleyin</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
+    <value>Geçerli listeyi değiştir: Geçerli listeyle başla ve gerektiğinde değiştir</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
+    <value>Kanal listesini kopyala: Kanalları referans listesindeki gibi düzenleyin</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
+    <value>Sıralanmamış kanallara ne yapılsın?</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Append" xml:space="preserve">
+    <value>Sıralanmamış kanallar listenin sonuna ekle</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
+    <value>Sıralanmamış kanalları listeden silin</value>
+  </data>
+  <data name="MainForm_Cancel" xml:space="preserve">
+    <value>Vazgeç</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Caption" xml:space="preserve">
+    <value>Dosya bulunamadı</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Message" xml:space="preserve">
+    <value>{0} dosyası mevcut değil.</value>
+  </data>
+  <data name="MainForm_ExportExcelList_Message" xml:space="preserve">
+    <value>Kanal listesi panoya kopyalandı
+ve Excel'e veya herhangi bir metin düzenleyicisine yapıştırılabilir.</value>
+  </data>
+  <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
+    <value>Kanal numaralarında boşluk olduğunda TV'niz düzgün çalışmayabilir.
+Kanal numaralarının art arda yeniden düzenlenmesini istiyor musunuz?</value>
+  </data>
+  <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
+    <value>Dosyanın içeriği geçersiz. Boyutu 0 veya tüm baytları aynı değere sahiptir.
+Çeşitli nedenler NTFS dosya sistemine sahip USB belleklerdir (bunun yerine FAT32'yi kullanmayı deneyin)
+veya yeni bir kanal taraması yapmadan ürün yazılımını güncelleyin.
+(TV'deki yeni yazılım dışa aktarma sırasında eski kanal verilerini işleyemeyebilir.)</value>
+  </data>
+  <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
+    <value>Anten,Kablo,Uydu,IP,Analog,Digital,TV,Radyo,Veri</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
+    <value>Hedef listesinden bir Pr# alındığında bunu nasıl ele almak istersiniz?</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Clear" xml:space="preserve">
+    <value>Referans listesini uygulamadan önce hedef listesini temizle</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Overwrite" xml:space="preserve">
+    <value>Referans listesindeki kanalla Pr# üzerine yaz</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Keep" xml:space="preserve">
+    <value>Geçerli kanalı Pr#'da tut</value>
+  </data>
+  <data name="MainForm_SwapChannels_RowCountMsg" xml:space="preserve">
+    <value>Kanalları değiştirmek için sol ve sağ tabloda eşit sayıda satır seçilmelidir.</value>
+  </data>
+  <data name="MainForm_SwapChannels_RowCountTitle" xml:space="preserve">
+    <value>Kanalları Değiştir</value>
+  </data>
+  <data name="ReferenceListForm_ShowOpenFileDialog_Title" xml:space="preserve">
+    <value>İçe aktarmak için bir referans listesi seçin</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Filter" xml:space="preserve">
+    <value>ChanSort Referans Listesi|*.csv|Referans Listesi|*.chl|Tüm Referans Listeleri|*.csv;*.chl</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Title" xml:space="preserve">
+    <value>Referans Listesini Aç</value>
+  </data>
+  <data name="MainForm_LoadTll_InvalidZip" xml:space="preserve">
+    <value>Dosya geçerli bir .zip arşivi değil.
+TV'ler genellikle bozuk dosyaları NTFS dosya sistemiyle biçimlendirilmiş USB belleklerle dışa aktarır.
+Lütfen FAT32 ile biçimlendirilmiş bir bellekle aktarmayı deneyin</value>
+  </data>
+</root>

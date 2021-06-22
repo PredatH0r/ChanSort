@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Text;
+using System.Data;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Panasonic
@@ -9,9 +9,11 @@ namespace ChanSort.Loader.Panasonic
   internal class DbChannel : ChannelInfo
   {
     internal byte[] RawName;
+    internal bool NonAscii;
+    internal bool ValidUtf8 = true;
 
     #region ctor()
-    internal DbChannel(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Encoding encoding)
+    internal DbChannel(IDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Encoding encoding)
     {
       this.RecordIndex = r.GetInt32(field["rowid"]);
       this.RecordOrder = r.GetInt32(field["major_channel"]);
@@ -38,8 +40,11 @@ namespace ChanSort.Loader.Panasonic
         this.SignalSource |= SignalSource.SatIP;
 
       byte[] buffer = new byte[1000];
-      var len = r.GetBytes(field["delivery"], 0, buffer, 0, 1000);
-      this.AddDebug(buffer, 0, (int) len);
+      if (!r.IsDBNull(field["delivery"]))
+      {
+        var len = r.GetBytes(field["delivery"], 0, buffer, 0, 1000);
+        this.AddDebug(buffer, 0, (int) len);
+      }
 
       this.Skip = r.GetInt32(field["skip"]) != 0;
       this.Encrypted = r.GetInt32(field["free_CA_mode"]) != 0;
@@ -56,7 +61,7 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region ParseFavorites
-    private void ParseFavorites(SQLiteDataReader r, IDictionary<string, int> field)
+    private void ParseFavorites(IDataReader r, IDictionary<string, int> field)
     {
       for (int i = 0; i < 4; i++)
       {
@@ -64,14 +69,14 @@ namespace ChanSort.Loader.Panasonic
         if (favIndex > 0)
         {
           this.Favorites |= (Favorites) (1 << i);
-          this.OldFavIndex[i] = favIndex;
+          this.SetOldPosition(i+1, favIndex);
         }
       }
     }
     #endregion
 
     #region ReadAnalogData()
-    private void ReadAnalogData(SQLiteDataReader r, IDictionary<string, int> field)
+    private void ReadAnalogData(IDataReader r, IDictionary<string, int> field)
     {
       this.FreqInMhz = r.IsDBNull(field["freq"]) ? 0 : (decimal)r.GetInt32(field["freq"]) / 1000;
       this.ChannelOrTransponder = Tools.GetAnalogChannelNumber((int)this.FreqInMhz);
@@ -79,13 +84,13 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region ReadDvbData()
-    protected void ReadDvbData(SQLiteDataReader r, IDictionary<string, int> field, DataRoot dataRoot, byte[] delivery)
+    protected void ReadDvbData(IDataReader r, IDictionary<string, int> field, DataRoot dataRoot, byte[] delivery)
     {
       int stype = r.GetInt32(field["stype"]);
       this.SignalSource |= LookupData.Instance.IsRadioTvOrData(stype);
       this.ServiceType = stype;
 
-      int freq = r.GetInt32(field["freq"]);
+      int freq = r.IsDBNull(field["freq"]) ? 0 : r.GetInt32(field["freq"]);
       if ((this.SignalSource & SignalSource.Sat) != 0)
       {
 // ReSharper disable PossibleLossOfFraction
@@ -124,7 +129,7 @@ namespace ChanSort.Loader.Panasonic
     /// <summary>
     /// Character encoding is a mess here. Code pages mixed with UTF-8 and raw data
     /// </summary>
-    private void ReadNamesWithEncodingDetection(SQLiteDataReader r, IDictionary<string, int> field, Encoding encoding)
+    private void ReadNamesWithEncodingDetection(IDataReader r, IDictionary<string, int> field, Encoding encoding)
     {
       byte[] buffer = new byte[100];
       int len = (int)r.GetBytes(field["sname"], 0, buffer, 0, buffer.Length);
@@ -157,19 +162,32 @@ namespace ChanSort.Loader.Panasonic
 
       // single byte code pages might have UTF-8 code mixed in, so we have to parse it manually
       StringBuilder sb = new StringBuilder();
+      this.NonAscii = false;
+      this.ValidUtf8 = true;
       for (int i = startOffset; i < this.RawName.Length; i+=bytesPerChar)
       {
         byte c = this.RawName[i];
         byte c2 = i + 1 < this.RawName.Length ? this.RawName[i + 1] : (byte)0;
-        if (c < 0xA0)
-          sb.Append((char)c);
+        if (c >= 0x80)
+          NonAscii = true;
+
+        if (c < 0x80)
+          sb.Append((char) c);
+        else if (c < 0xA0)
+        {
+          ValidUtf8 = false;
+          sb.Append((char) c);
+        }
         else if (bytesPerChar == 1 && c >= 0xC0 && c <= 0xDF && c2 >= 0x80 && c2 <= 0xBF) // 2 byte UTF-8
         {
           sb.Append((char)(((c & 0x1F) << 6) | (c2 & 0x3F)));
           ++i;
         }
         else
+        {
+          ValidUtf8 = false;
           sb.Append(encoding.GetString(this.RawName, i, bytesPerChar));
+        }
       }
 
       string longName, shortName;
@@ -236,6 +254,24 @@ namespace ChanSort.Loader.Panasonic
 
       longName = sbLong.ToString();
       shortName = sbShort.ToString();
+    }
+    #endregion
+
+    #region UpdateRawData()
+    public void UpdateRawData(bool explicitUtf8, bool implicitUtf8)
+    {
+      if (IsNameModified)
+      {
+        var utf8 = Encoding.UTF8.GetBytes(this.Name);
+        if (implicitUtf8)
+          this.RawName = utf8;
+        else if (explicitUtf8)
+        {
+          this.RawName = new byte[utf8.Length + 1];
+          this.RawName[0] = 0x15; // DVB encoding ID for UTF8
+          Array.Copy(utf8, 0, this.RawName, 1, utf8.Length);
+        }
+      }
     }
     #endregion
   }

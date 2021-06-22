@@ -1,0 +1,669 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="colIndex1.Caption" xml:space="preserve">
+    <value>Pr. dizin</value>
+  </data>
+  <data name="colOutSlot.Caption" xml:space="preserve">
+    <value>Yeni Konum</value>
+  </data>
+  <data name="colOutSlot.ToolTip" xml:space="preserve">
+    <value>Yeni program numarası</value>
+  </data>
+  <data name="colOutName.Caption" xml:space="preserve">
+    <value>Kanal adı</value>
+  </data>
+  <data name="colOutFav.Caption" xml:space="preserve">
+    <value>Favoriler</value>
+  </data>
+  <data name="colOutLock.Caption" xml:space="preserve">
+    <value>Kilit</value>
+  </data>
+  <data name="colOutLock.ToolTip" xml:space="preserve">
+    <value>Ebeveyn kilidi</value>
+  </data>
+  <data name="colOutSkip.Caption" xml:space="preserve">
+    <value>Atla</value>
+  </data>
+  <data name="colOutHide.Caption" xml:space="preserve">
+    <value>Gizle</value>
+  </data>
+  <data name="colOutDeleted.Caption" xml:space="preserve">
+    <value>Silindi</value>
+  </data>
+  <data name="colOutServiceType.Caption" xml:space="preserve">
+    <value>Servis Tipi</value>
+  </data>
+  <data name="colOutSource.Caption" xml:space="preserve">
+    <value>Kaynak</value>
+  </data>
+  <data name="colUid1.Caption" xml:space="preserve">
+    <value>UID</value>
+  </data>
+  <data name="lblHotkeyLeft.Text" xml:space="preserve">
+    <value>F3: Filtre | F4: Liste | -: yukarı taşı | +: aşağı taşı | Del: kaldır</value>
+  </data>
+  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
+    <value>Favori H Aç / Kapa</value>
+  </data>
+  <data name="pageProgNr.Text" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="grpSubList.Text" xml:space="preserve">
+    <value>Alt Liste</value>
+  </data>
+  <data name="miFile.Caption" xml:space="preserve">
+    <value>Dosya</value>
+  </data>
+  <data name="miOpen.Caption" xml:space="preserve">
+    <value>TV veri dosyasını aç…</value>
+  </data>
+  <data name="miReload.Caption" xml:space="preserve">
+    <value>Tekrar yükle</value>
+  </data>
+  <data name="miRestoreOriginal.Caption" xml:space="preserve">
+    <value>Yedeği geri yükle</value>
+  </data>
+  <data name="miFileInformation.Caption" xml:space="preserve">
+    <value>Dosya bilgisi</value>
+  </data>
+  <data name="miSave.Caption" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="miSaveAs.Caption" xml:space="preserve">
+    <value>Farklı Kaydet…</value>
+  </data>
+  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
+    <value>Referans listesinden düzen uygula…</value>
+  </data>
+  <data name="miAddFromRefList.Caption" xml:space="preserve">
+    <value>Referans listesinden kanal ekle…</value>
+  </data>
+  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
+    <value>Referans listesini kaydet…</value>
+  </data>
+  <data name="miExcelExport.Caption" xml:space="preserve">
+    <value>Excel listesini dışa aktar…</value>
+  </data>
+  <data name="miPrint.Caption" xml:space="preserve">
+    <value>Yazdır</value>
+  </data>
+  <data name="miQuit.Caption" xml:space="preserve">
+    <value>Çıkış</value>
+  </data>
+  <data name="miRecentFiles.Caption" xml:space="preserve">
+    <value>Son dosyalar</value>
+  </data>
+  <data name="miEdit.Caption" xml:space="preserve">
+    <value>Düz&amp;enle</value>
+  </data>
+  <data name="miAddChannel.Caption" xml:space="preserve">
+    <value>Kanal ekle</value>
+  </data>
+  <data name="miRemove.Caption" xml:space="preserve">
+    <value>Kanal kaldır</value>
+  </data>
+  <data name="miRenameChannel.Caption" xml:space="preserve">
+    <value>Kanalı yeniden adlandır</value>
+  </data>
+  <data name="mnuFavSet.Caption" xml:space="preserve">
+    <value>Favorilere ekle</value>
+  </data>
+  <data name="mnuFavUnset.Caption" xml:space="preserve">
+    <value>Favorilerden kaldır</value>
+  </data>
+  <data name="miLockOn.Caption" xml:space="preserve">
+    <value>Kanalı kilitle: Açık</value>
+  </data>
+  <data name="miLockOff.Caption" xml:space="preserve">
+    <value>Kanalı kilitle: Kapalı</value>
+  </data>
+  <data name="miSkipOn.Caption" xml:space="preserve">
+    <value>Kanalı atla: Açık</value>
+  </data>
+  <data name="miSkipOff.Caption" xml:space="preserve">
+    <value>Kanalı atla: Kapalı</value>
+  </data>
+  <data name="miHideOn.Caption" xml:space="preserve">
+    <value>Kanalı gizle: Açık</value>
+  </data>
+  <data name="miHideOff.Caption" xml:space="preserve">
+    <value>Kanalı gizle: Kapalı</value>
+  </data>
+  <data name="miRenum.Caption" xml:space="preserve">
+    <value>Kanalları yeniden numaralandır</value>
+  </data>
+  <data name="miSort.Caption" xml:space="preserve">
+    <value>Kanalları alfabetik olarak sırala</value>
+  </data>
+  <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
+    <value>Favorileri Pr# ile yeniden numaralandır</value>
+  </data>
+  <data name="miRenumFavByPrNr.Hint" xml:space="preserve">
+    <value>Aynı Pr# tüm kanal ve favori listelerinde kullanılsın</value>
+  </data>
+  <data name="miCopyCsv.Caption" xml:space="preserve">
+    <value>Listeyi panoya kopyala</value>
+  </data>
+  <data name="barSubItem2.Caption" xml:space="preserve">
+    <value>TV - Ayarı</value>
+  </data>
+  <data name="miTvSettings.Caption" xml:space="preserve">
+    <value>Cihaz ayarı…</value>
+  </data>
+  <data name="miCleanupChannels.Caption" xml:space="preserve">
+    <value>Kanal verilerini temizle</value>
+  </data>
+  <data name="miCleanupChannels.Hint" xml:space="preserve">
+    <value>Kanal kayıtlarını düzenle ve kopyaları kaldır</value>
+  </data>
+  <data name="mnuOptions.Caption" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>Dil</value>
+  </data>
+  <data name="mnuCharset.Caption" xml:space="preserve">
+    <value>Karakter seti</value>
+  </data>
+  <data name="miCharsetForm.Caption" xml:space="preserve">
+    <value>Tüm karakter setleri…</value>
+  </data>
+  <data name="miUtf8Charset.Caption" xml:space="preserve">
+    <value>UTF-8 (Unicode)</value>
+  </data>
+  <data name="miIsoCharSets.Caption" xml:space="preserve">
+    <value>ISO karakter seti</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
+    <value>Dosyayı yükledikten sonra uyarıları göster</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
+    <value>Bir dosyayı açtıktan sonra tüm uyarıları otomatik olarak göster</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Caption" xml:space="preserve">
+    <value>Önceden tanımlanmış listeleri düzenlemeye izin ver (TEHLİKELİ)</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Hint" xml:space="preserve">
+    <value>Önceden tanımlanmış kanal numaralarıyla bir listeyi düzenlediğinizde TV'niz arızalanabilir</value>
+  </data>
+  <data name="miExplorerIntegration.Caption" xml:space="preserve">
+    <value>Windows Gezgini Entegrasyonu</value>
+  </data>
+  <data name="miCheckUpdates.Caption" xml:space="preserve">
+    <value>Güncellemeleri denetle</value>
+  </data>
+  <data name="mnuAccessibility.Caption" xml:space="preserve">
+    <value>Erişebilirlik</value>
+  </data>
+  <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
+    <value>Giriş kaynağı seçimi için bir alt menü açar. Bu menü F1 tuşuyla doğrudan etkinleştirilebilir</value>
+  </data>
+  <data name="mnuGotoChannelList.Caption" xml:space="preserve">
+    <value>Giriş kaynağı seçin</value>
+  </data>
+  <data name="mnuInputSource.Caption" xml:space="preserve">
+    <value>mnuInputSource</value>
+  </data>
+  <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
+    <value>Favori liste seçimi için bir alt menü açar. Bu menü Shift + F1 tuşuyla doğrudan etkinleştirilebilir</value>
+  </data>
+  <data name="mnuGotoFavList.Caption" xml:space="preserve">
+    <value>Program/Favori listesi seçin</value>
+  </data>
+  <data name="mnuFavList.Caption" xml:space="preserve">
+    <value>mnuFavList</value>
+  </data>
+  <data name="miSelectFavList0.Caption" xml:space="preserve">
+    <value>Program listesi</value>
+  </data>
+  <data name="miSelectFavListA.Caption" xml:space="preserve">
+    <value>Favoriler A</value>
+  </data>
+  <data name="miSelectFavListB.Caption" xml:space="preserve">
+    <value>Favoriler B</value>
+  </data>
+  <data name="miSelectFavListC.Caption" xml:space="preserve">
+    <value>Favoriler C</value>
+  </data>
+  <data name="miSelectFavListD.Caption" xml:space="preserve">
+    <value>Favoriler D</value>
+  </data>
+  <data name="miSelectFavListE.Caption" xml:space="preserve">
+    <value>Favoriler E</value>
+  </data>
+  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+    <value>Sol liste filtresi</value>
+  </data>
+  <data name="miGotoLeftList.Caption" xml:space="preserve">
+    <value>Sol liste</value>
+  </data>
+  <data name="miRightListFilter.Caption" xml:space="preserve">
+    <value>Sağ liste filtresi</value>
+  </data>
+  <data name="miGotoRightList.Caption" xml:space="preserve">
+    <value>Sağ liste</value>
+  </data>
+  <data name="mnuHelp.Caption" xml:space="preserve">
+    <value>Yardım</value>
+  </data>
+  <data name="miWiki.Caption" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="miOpenWebsite.Caption" xml:space="preserve">
+    <value>ChanSort sayfası</value>
+  </data>
+  <data name="miAbout.Caption" xml:space="preserve">
+    <value>ChanSort Hakkında</value>
+  </data>
+  <data name="bar1.Text" xml:space="preserve">
+    <value>Araçlar</value>
+  </data>
+  <data name="miMoveUp.Caption" xml:space="preserve">
+    <value>Yukarı taşı</value>
+  </data>
+  <data name="miMoveDown.Caption" xml:space="preserve">
+    <value>Aşağı taşı</value>
+  </data>
+  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
+    <value>değiştir</value>
+  </data>
+  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
+    <value>sonra</value>
+  </data>
+  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
+    <value>önce</value>
+  </data>
+  <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
+    <value>Bir kanalı taşırken / silerken boşluğu kapat</value>
+  </data>
+  <data name="cbCloseGap.ToolTip" xml:space="preserve">
+    <value>Etkin olduğunda, geçerli kanaldan sonraki tüm kanallar otomatik olarak yeniden numaralandırılır</value>
+  </data>
+  <data name="lblInsertMode.Text" xml:space="preserve">
+    <value>Ekleme modu:</value>
+  </data>
+  <data name="pageEmpty.Text" xml:space="preserve">
+    <value>Kanal listesi yok</value>
+  </data>
+  <data name="lblSetProgramNr.Text" xml:space="preserve">
+    <value>Konum belirle</value>
+  </data>
+  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
+    <value>Ekleme ve ayar işlemleri için program numarası</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
+    <value>\d{1,4}</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - TV Kanal Listesi Editörü</value>
+  </data>
+  <data name="btnToggleFavH.Text" xml:space="preserve">
+    <value>±H</value>
+  </data>
+  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
+    <value>Favori G Aç / Kapa</value>
+  </data>
+  <data name="btnToggleFavG.Text" xml:space="preserve">
+    <value>±G</value>
+  </data>
+  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
+    <value>Favori F Aç / Kapa</value>
+  </data>
+  <data name="btnToggleFavF.Text" xml:space="preserve">
+    <value>±F</value>
+  </data>
+  <data name="btnToggleLock.Text" xml:space="preserve">
+    <value>Ebeveyn kilidini Aç / Kapa</value>
+  </data>
+  <data name="btnToggleLock.ToolTip" xml:space="preserve">
+    <value>Ebeveyn kilidi</value>
+  </data>
+  <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
+    <value>Favori E Aç / Kapa</value>
+  </data>
+  <data name="btnToggleFavE.Text" xml:space="preserve">
+    <value>±E</value>
+  </data>
+  <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
+    <value>Favori D Aç / Kapa</value>
+  </data>
+  <data name="btnToggleFavD.Text" xml:space="preserve">
+    <value>±D</value>
+  </data>
+  <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
+    <value>Favori C Aç / Kapa</value>
+  </data>
+  <data name="btnToggleFavC.Text" xml:space="preserve">
+    <value>±C</value>
+  </data>
+  <data name="btnToggleFavB.AccessibleDescription" xml:space="preserve">
+    <value>Favori B Aç / Kapa</value>
+  </data>
+  <data name="btnToggleFavB.Text" xml:space="preserve">
+    <value>±B</value>
+  </data>
+  <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
+    <value>Favori A Aç / Kapa</value>
+  </data>
+  <data name="btnToggleFavA.Text" xml:space="preserve">
+    <value>±A</value>
+  </data>
+  <data name="btnClearLeftFilter.AccessibleDescription" xml:space="preserve">
+    <value>Kanal filtresi ölçütlerini sıralı kanal listesinden kaldırma</value>
+  </data>
+  <data name="btnClearLeftFilter.Text" xml:space="preserve">
+    <value>Filtre</value>
+  </data>
+  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
+    <value>Filtreyi sıfırla</value>
+  </data>
+  <data name="btnRenum.Text" xml:space="preserve">
+    <value>Seçili kanalları sırayla yeniden numaralandırma</value>
+  </data>
+  <data name="btnRenum.ToolTip" xml:space="preserve">
+    <value>Seçili kanalları yeniden numaralandır</value>
+  </data>
+  <data name="btnDown.Text" xml:space="preserve">
+    <value>Seçili kanalı aşağı taşı</value>
+  </data>
+  <data name="btnDown.ToolTip" xml:space="preserve">
+    <value>Seçilen kanalları aşağı taşı</value>
+  </data>
+  <data name="btnUp.Text" xml:space="preserve">
+    <value>Seçili kanalı yukarı taşı</value>
+  </data>
+  <data name="btnUp.ToolTip" xml:space="preserve">
+    <value>Seçili kanalları yukarı taşı</value>
+  </data>
+  <data name="btnRemoveLeft.Text" xml:space="preserve">
+    <value>Seçili kanalları sıralanmış listeden kaldır</value>
+  </data>
+  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
+    <value>Seçilen kanalları kaldır</value>
+  </data>
+  <data name="grpOutputList.Text" xml:space="preserve">
+    <value>Sıralanan kanallar</value>
+  </data>
+  <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="colIndex.Caption" xml:space="preserve">
+    <value>Pr. dizin</value>
+  </data>
+  <data name="colSlotOld.Caption" xml:space="preserve">
+    <value>Eski Konum</value>
+  </data>
+  <data name="colSlotOld.ToolTip" xml:space="preserve">
+    <value>Eski pozisyon</value>
+  </data>
+  <data name="colSlotNew.Caption" xml:space="preserve">
+    <value>Yeni Konum</value>
+  </data>
+  <data name="colSlotNew.ToolTip" xml:space="preserve">
+    <value>Yeni pozisyon</value>
+  </data>
+  <data name="colSource.Caption" xml:space="preserve">
+    <value>Kaynak</value>
+  </data>
+  <data name="colPrNr.Caption" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="colName.Caption" xml:space="preserve">
+    <value>Kanal adı</value>
+  </data>
+  <data name="colShortName.Caption" xml:space="preserve">
+    <value>Kısa adı</value>
+  </data>
+  <data name="colFavorites.Caption" xml:space="preserve">
+    <value>Favoriler</value>
+  </data>
+  <data name="colLock.Caption" xml:space="preserve">
+    <value>Kilitli</value>
+  </data>
+  <data name="colSkip.Caption" xml:space="preserve">
+    <value>Atla</value>
+  </data>
+  <data name="colHidden.Caption" xml:space="preserve">
+    <value>Gizle</value>
+  </data>
+  <data name="colDeleted.Caption" xml:space="preserve">
+    <value>Silinmiş</value>
+  </data>
+  <data name="colEncrypted.Caption" xml:space="preserve">
+    <value>Şifrelenen</value>
+  </data>
+  <data name="colEncrypted.ToolTip" xml:space="preserve">
+    <value>Şifreli</value>
+  </data>
+  <data name="colServiceType.Caption" xml:space="preserve">
+    <value>Servis Türü Kimliği</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Servis Türü</value>
+  </data>
+  <data name="colFreqInMhz.Caption" xml:space="preserve">
+    <value>Frekans (MHz)</value>
+  </data>
+  <data name="colPolarity.Caption" xml:space="preserve">
+    <value>Polarite</value>
+  </data>
+  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
+    <value>Değiştir / Aktar</value>
+  </data>
+  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
+    <value>Kanal veya transponder numarası</value>
+  </data>
+  <data name="colSatellite.Caption" xml:space="preserve">
+    <value>Uydu</value>
+  </data>
+  <data name="colNetworkId.Caption" xml:space="preserve">
+    <value>Ağ (ONID)</value>
+  </data>
+  <data name="colTransportStreamId.Caption" xml:space="preserve">
+    <value>TS Kimliği</value>
+  </data>
+  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
+    <value>Aktarım Akışı Kimliği</value>
+  </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>Servis Kimliği</value>
+  </data>
+  <data name="colPcrPid.Caption" xml:space="preserve">
+    <value>PCR PID</value>
+  </data>
+  <data name="colPcrPid.ToolTip" xml:space="preserve">
+    <value>Program Saati Referans Paket - Kimliği</value>
+  </data>
+  <data name="colVideoPid.Caption" xml:space="preserve">
+    <value>Görüntü PID</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Ses PID</value>
+  </data>
+  <data name="colSymbolRate.Caption" xml:space="preserve">
+    <value>Sembol oranı</value>
+  </data>
+  <data name="colNetworkName.Caption" xml:space="preserve">
+    <value>Ağ Adı</value>
+  </data>
+  <data name="colNetworkOperator.Caption" xml:space="preserve">
+    <value>Ağ Operatörü</value>
+  </data>
+  <data name="colProvider.Caption" xml:space="preserve">
+    <value>Sağlayıcı</value>
+  </data>
+  <data name="colUid.Caption" xml:space="preserve">
+    <value>Uid</value>
+  </data>
+  <data name="colLogicalIndex.Caption" xml:space="preserve">
+    <value>Düzen</value>
+  </data>
+  <data name="colSignalSource.Caption" xml:space="preserve">
+    <value>Sinyal kaynağı</value>
+  </data>
+  <data name="lblHotkeyRight.Text" xml:space="preserve">
+    <value>F5: Filtre | F6: Liste | Enter: ekle</value>
+  </data>
+  <data name="lblPredefinedList.Text" xml:space="preserve">
+    <value>Bu önceden tanımlanmış bir listedir ve düzenlenemez.</value>
+  </data>
+  <data name="lblPredefinedList.ToolTip" xml:space="preserve">
+    <value>TV'nizin kurulumu sırasında önceden tanımlanmış bir kanal listesi seçtiniz. Böyle bir listenin değiştirilmesi TV'nizin arızalanmasına neden olur. Lütfen TV'nizde tam kanal taraması yapın ve belirli bir sağlayıcı, uydu veya ülke listesi seçmeyin.</value>
+  </data>
+  <data name="btnRemoveRight.Text" xml:space="preserve">
+    <value>Seçili kanalları sıralanmış listeden kaldır</value>
+  </data>
+  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
+    <value>Seçili kanalları sıralanmış listeden kaldır</value>
+  </data>
+  <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
+    <value>Listelenen şu anda sıralanmamış tüm kanalları ekle</value>
+  </data>
+  <data name="btnAddAll.Text" xml:space="preserve">
+    <value>&lt;&lt; Tümünü ekle</value>
+  </data>
+  <data name="btnAddAll.ToolTip" xml:space="preserve">
+    <value>Listelenen şu anda sıralanmamış tüm kanalları ekle</value>
+  </data>
+  <data name="btnClearRightFilter.AccessibleDescription" xml:space="preserve">
+    <value>Kanal filtresi ölçütlerini tam kanal listesinden kaldırın</value>
+  </data>
+  <data name="btnClearRightFilter.Text" xml:space="preserve">
+    <value>Filtre</value>
+  </data>
+  <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
+    <value>Filtreyi sıfırla</value>
+  </data>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>Seçili kanalları sıralı listeye ekle</value>
+  </data>
+  <data name="btnAdd.ToolTip" xml:space="preserve">
+    <value>Seçili kanalları sıralı listeye ekle</value>
+  </data>
+  <data name="grpInputList.Text" xml:space="preserve">
+    <value>Orijinal kanallar</value>
+  </data>
+  <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
+    <value>Panel2</value>
+  </data>
+  <data name="splitContainerControl1.Text" xml:space="preserve">
+    <value>bölünmüşBirimKontrolü1</value>
+  </data>
+</root>

@@ -411,9 +411,6 @@
   <data name="miEdit.Caption" xml:space="preserve">
     <value>&amp;Upravit</value>
   </data>
-  <data name="miEnglish.Caption" xml:space="preserve">
-    <value>&amp;English</value>
-  </data>
   <data name="miExcelExport.Caption" xml:space="preserve">
     <value>Exportovat seznam do aplikace Excel...</value>
   </data>
@@ -422,9 +419,6 @@
   </data>
   <data name="miFileInformation.Caption" xml:space="preserve">
     <value>Informace o souboru</value>
-  </data>
-  <data name="miGerman.Caption" xml:space="preserve">
-    <value>&amp;Deutsch</value>
   </data>
   <data name="miGotoLeftFilter.Caption" xml:space="preserve">
     <value>&amp;Filtr levého seznamu</value>
@@ -465,9 +459,6 @@
   <data name="miOpenWebsite.Caption" xml:space="preserve">
     <value>Webové stránky aplikace ChanSort...</value>
   </data>
-  <data name="miPortuguese.Caption" xml:space="preserve">
-    <value>Português</value>
-  </data>
   <data name="miPrint.Caption" xml:space="preserve">
     <value>&amp;Tisk...</value>
   </data>
@@ -500,9 +491,6 @@
   </data>
   <data name="miRightListFilter.Caption" xml:space="preserve">
     <value>&amp;Filtr pravého seznamu</value>
-  </data>
-  <data name="miRussian.Caption" xml:space="preserve">
-    <value>ру́сский</value>
   </data>
   <data name="miSave.Caption" xml:space="preserve">
     <value>&amp;Uložit</value>
@@ -614,5 +602,14 @@
   </data>
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
+  </data>
+  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
+    <value>Přepnout oblíbené F</value>
+  </data>
+  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
+    <value>Přepnout oblíbené G</value>
+  </data>
+  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
+    <value>Přepnout oblíbené H</value>
   </data>
 </root>

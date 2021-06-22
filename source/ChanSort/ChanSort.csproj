@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChanSort.Ui</RootNamespace>
     <AssemblyName>ChanSort</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -65,45 +65,51 @@
   <PropertyGroup>
     <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Data.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Office.v19.2.Core, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Pdf.v19.2.Core, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Office.v20.2.Core, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v20.2.Core, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v19.2.Export, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.RichEdit.v20.2.Export, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Printing.v19.2.Core, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Printing.v20.2.Core, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v19.2.Core, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.RichEdit.v20.2.Core, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.Desktop.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Utils.v19.2.UI, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Utils.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Utils.v20.2.UI, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraGrid.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.XtraPrinting.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Charts.v19.2.Core, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraCharts.v19.2.Wizard, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraCharts.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.PivotGrid.v19.2.Core, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Sparkline.v19.2.Core, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.CodeParser.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v19.2.Extensions, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v20.2.Core, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v20.2.Wizard, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v20.2.Core, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v20.2.Core, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.CodeParser.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v20.2.Extensions, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -195,6 +201,13 @@
     <Compile Include="CharsetForm.Designer.cs">
       <DependentUpon>CharsetForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="XGrid\XGridControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XGrid\XGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XGrid\XGridView.LayoutPersister.cs" />
     <EmbeddedResource Include="AboutForm.cs.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -203,6 +216,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AboutForm.es.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AboutForm.hu.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AboutForm.pl.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AboutForm.pt.resx">
@@ -219,6 +238,9 @@
     <EmbeddedResource Include="AboutForm.ru.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AboutForm.tr.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ActionBox.cs.resx">
       <DependentUpon>ActionBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -226,6 +248,12 @@
       <DependentUpon>ActionBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ActionBox.es.resx">
+      <DependentUpon>ActionBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActionBox.hu.resx">
+      <DependentUpon>ActionBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActionBox.pl.resx">
       <DependentUpon>ActionBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ActionBox.pt.resx">
@@ -240,6 +268,9 @@
     <EmbeddedResource Include="ActionBox.ru.resx">
       <DependentUpon>ActionBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ActionBox.tr.resx">
+      <DependentUpon>ActionBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CharsetForm.cs.resx">
       <DependentUpon>CharsetForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -247,6 +278,12 @@
       <DependentUpon>CharsetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CharsetForm.es.resx">
+      <DependentUpon>CharsetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharsetForm.hu.resx">
+      <DependentUpon>CharsetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharsetForm.pl.resx">
       <DependentUpon>CharsetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CharsetForm.pt.resx">
@@ -262,8 +299,12 @@
     <EmbeddedResource Include="CharsetForm.ru.resx">
       <DependentUpon>CharsetForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CharsetForm.tr.resx">
+      <DependentUpon>CharsetForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GlobalImageCollection.resx">
       <DependentUpon>GlobalImageCollection.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="InfoBox.resx">
       <DependentUpon>InfoBox.cs</DependentUpon>
@@ -276,6 +317,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.es.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.hu.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.pl.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.pt.resx">
@@ -292,6 +339,9 @@
     <EmbeddedResource Include="MainForm.ru.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.tr.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Printing\ChannelListReport.resx">
       <DependentUpon>ChannelListReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -303,6 +353,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Printing\ReportOptionsDialog.es.resx">
+      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printing\ReportOptionsDialog.hu.resx">
+      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printing\ReportOptionsDialog.pl.resx">
       <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Printing\ReportOptionsDialog.pt.resx">
@@ -317,8 +373,13 @@
     <EmbeddedResource Include="Printing\ReportOptionsDialog.ru.resx">
       <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Printing\ReportOptionsDialog.tr.resx">
+      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.cs.resx" />
     <EmbeddedResource Include="Properties\Resources.es.resx" />
+    <EmbeddedResource Include="Properties\Resources.hu.resx" />
+    <EmbeddedResource Include="Properties\Resources.pl.resx" />
     <EmbeddedResource Include="Properties\Resources.pt.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.pt.Designer.cs</LastGenOutput>
@@ -342,6 +403,7 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.ro.resx" />
     <EmbeddedResource Include="Properties\Resources.ru.resx" />
+    <EmbeddedResource Include="Properties\Resources.tr.resx" />
     <EmbeddedResource Include="ReferenceListForm.cs.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -351,10 +413,19 @@
     <EmbeddedResource Include="ReferenceListForm.es.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReferenceListForm.hu.resx">
+      <DependentUpon>ReferenceListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReferenceListForm.pl.resx">
+      <DependentUpon>ReferenceListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReferenceListForm.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReferenceListForm.ro.resx">
+      <DependentUpon>ReferenceListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReferenceListForm.tr.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TextInputForm.resx">
@@ -367,6 +438,12 @@
       <DependentUpon>WaitForm1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaitForm1.es.resx">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitForm1.hu.resx">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitForm1.pl.resx">
       <DependentUpon>WaitForm1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaitForm1.pt.resx">
@@ -382,7 +459,11 @@
     <EmbeddedResource Include="WaitForm1.ru.resx">
       <DependentUpon>WaitForm1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WaitForm1.tr.resx">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="app.manifest" />
     <None Include="Properties\DataSources\ChannelInfo.datasource" />
     <None Include="Properties\DataSources\ChanSort.Api.ChannelList.datasource" />
     <None Include="Properties\DataSources\System.Text.EncodingInfo.datasource" />
@@ -401,13 +482,13 @@
       <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
       <Name>ChanSort.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.GlobalClone\ChanSort.Loader.GlobalClone.csproj">
-      <Project>{5361c8cb-f737-4709-af8c-e1f0456f3c5b}</Project>
-      <Name>ChanSort.Loader.GlobalClone</Name>
+    <ProjectReference Include="..\ChanSort.Loader.Enigma2\ChanSort.Loader.Enigma2.csproj">
+      <Project>{4ad7f77e-617c-4741-82ae-e7a41c85ee4d}</Project>
+      <Name>ChanSort.Loader.Enigma2</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Hisense2017\ChanSort.Loader.Hisense2017.csproj">
-      <Project>{9282e1db-cd1f-400a-aca1-17e0c4562acf}</Project>
-      <Name>ChanSort.Loader.Hisense2017</Name>
+    <ProjectReference Include="..\ChanSort.Loader.Grundig\ChanSort.Loader.Grundig.csproj">
+      <Project>{4d5af0a3-1b96-42c8-910d-0c4852ea22f4}</Project>
+      <Name>ChanSort.Loader.Grundig</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj">
       <Project>{d093e7ee-d3ad-4e7b-af82-c6918ca017fb}</Project>
@@ -425,21 +506,17 @@
       <Project>{68da8072-3a29-4076-9f64-d66f38349585}</Project>
       <Name>ChanSort.Loader.Panasonic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.PhilipsXml\ChanSort.Loader.PhilipsXml.csproj">
-      <Project>{d7bafd55-50f5-46c3-a76b-2193bed5358f}</Project>
-      <Name>ChanSort.Loader.PhilipsXml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.SamsungJ\ChanSort.Loader.SamsungJ.csproj">
-      <Project>{33897002-0537-49a4-b963-a18d17311b3d}</Project>
-      <Name>ChanSort.Loader.SamsungJ</Name>
+    <ProjectReference Include="..\ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj">
+      <Project>{1f52b5ec-a2f1-4e53-9e1a-4658296c5bb5}</Project>
+      <Name>ChanSort.Loader.Philips</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj">
       <Project>{a1c9a98d-368a-44e8-9b7f-7eaca46c9ec5}</Project>
       <Name>ChanSort.Loader.Samsung</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.SilvaSchneider\ChanSort.Loader.SilvaSchneider.csproj">
+    <ProjectReference Include="..\ChanSort.Loader.SatcoDX\ChanSort.Loader.SatcoDX.csproj">
       <Project>{e6279ff8-362a-41e6-ac0d-d0861d43f01c}</Project>
-      <Name>ChanSort.Loader.SilvaSchneider</Name>
+      <Name>ChanSort.Loader.SatcoDX</Name>
     </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj">
       <Project>{70e29c6b-b926-4859-9548-23375bf1e1b5}</Project>
@@ -487,7 +564,38 @@
     <Content Include="ChanSort.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="ReferenceLists\it_hotbird130E_tivusat_EasyHD_&amp;_FTA.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\BE_Telenet_CI+_Module.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\ch_astra192E_hotbird130E_freehd.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\ch_astra192E_hotbird130E_hdplus.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\de_unitymedia_nrw.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\de_vodafone_KabelTV_Berlin.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\gb_astra282E_freesat.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\gb_astra282E_freesat_EastAnglia_StartAt1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\gb_astra282E_sky.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ReferenceLists\ru_eutelsat36E_tricolor.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

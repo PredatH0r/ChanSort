@@ -270,24 +270,6 @@
   <data name="barSubItem1.Caption" xml:space="preserve">
     <value>&amp;Idioma</value>
   </data>
-  <data name="miEnglish.Caption" xml:space="preserve">
-    <value>&amp;English</value>
-  </data>
-  <data name="miGerman.Caption" xml:space="preserve">
-    <value>&amp;Deutsch</value>
-  </data>
-  <data name="miPortuguese.Caption" xml:space="preserve">
-    <value>Português</value>
-  </data>
-  <data name="miRussian.Caption" xml:space="preserve">
-    <value>ру́сский</value>
-  </data>
-  <data name="miCzech.Caption" xml:space="preserve">
-    <value>Česky</value>
-  </data>
-  <data name="miRomanian.Caption" xml:space="preserve">
-    <value>Română</value>
-  </data>
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Set de caracteres</value>
   </data>

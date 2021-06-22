@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Net.Security;
+﻿using System.Net;
 using System.Threading;
 using ChanSort.Ui.Properties;
 using DevExpress.XtraEditors;
@@ -24,7 +22,7 @@ namespace ChanSort.Ui
       try
       {
         var newVersion = this.GetLatestVersion();
-        if (newVersion.CompareTo(MainForm.AppVersion.TrimStart('v')) > 0)
+        if (newVersion.CompareTo(MainForm.AppVersionFull.TrimStart('v')) > 0)
           this.NotifyAboutNewVersion(newVersion);
       }
       catch { }
@@ -40,11 +38,9 @@ namespace ChanSort.Ui
         //Change SSL checks so that all checks pass
         //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-        using (WebClient client = new WebClient())
-        {
-          client.Proxy = null; // prevent a 1min wait/timeout by a .NET bug
-          response = client.DownloadString(UpdateUrl);
-        }
+        using WebClient client = new WebClient();
+        client.Proxy = null; // prevent a 1min wait/timeout by a .NET bug
+        response = client.DownloadString(UpdateUrl);
       }
       finally
       {
@@ -55,8 +51,9 @@ namespace ChanSort.Ui
       if (start >= 0)
       {
         int end = response.IndexOf(".zip", start);
-        if (end == start + SearchString.Length + 10)
-          return response.Substring(start + SearchString.Length, 10);
+        int len = end - start - SearchString.Length;
+        if (len >= 10) // YYYY-MM-DD plus optional _HHmm suffix for a revision
+          return response.Substring(start + SearchString.Length, len);
       }
       return string.Empty;
     }

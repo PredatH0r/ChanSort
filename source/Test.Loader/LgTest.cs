@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChanSort.Loader.LG;
+using ChanSort.Loader.LG.Binary;
 
 namespace Test.Loader
 {
@@ -18,7 +19,7 @@ namespace Test.Loader
     public void TestLgTllLoader()
     {
       var expectedData = this.InitExpectedLgData();
-      TllFileSerializerPlugin plugin = new TllFileSerializerPlugin();
+      var plugin = new LgPlugin();
 
       StringBuilder errors = new StringBuilder();
       var list = this.FindAllFiles("TestFiles_LG", "*.tll");
@@ -26,13 +27,19 @@ namespace Test.Loader
       var firmwareSize = new Dictionary<int, string>();
       foreach(var file in list)
       {
-        if (file.Contains("GlobalClone") || file.Contains("CountrySettings"))
+        if (file.Contains("GlobalClone"))
           continue;
-        Debug.Print("Testing " + file);
+        //Debug.Print("Testing " + file);
         try
         {
-          var serializer = plugin.CreateSerializer(file) as TllFileSerializer;
-          Assert.IsNotNull(serializer, "No Serializer for " + file);
+          var ser = plugin.CreateSerializer(file);
+          Assert.IsNotNull(ser, "No Serializer for " + file);
+
+          // ignore GlobalClone XML based files which slipped through the file name check above
+          var serializer = ser as TllFileSerializer;
+          if (serializer == null)
+            continue;
+
           serializer.IsTesting = true;
           serializer.Load();
 

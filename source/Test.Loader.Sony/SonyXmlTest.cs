@@ -56,7 +56,7 @@ namespace Test.Loader.Sony
     private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio, int dataProgramSid = 0, string dataProgramName = null)
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\" + fileName);
-      var plugin = new SerializerPlugin();
+      var plugin = new SonyPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
 
@@ -85,7 +85,7 @@ namespace Test.Loader.Sony
     public void TestAndroidDeletingChannel()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\android_sdb-sat.xml");
-      var plugin = new SerializerPlugin();
+      var plugin = new SonyPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;
@@ -132,7 +132,7 @@ namespace Test.Loader.Sony
     public void TestKdlDeletingChannel()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\kdl_sdb-cable-sat.xml");
-      var plugin = new SerializerPlugin();
+      var plugin = new SonyPlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;
@@ -152,7 +152,7 @@ namespace Test.Loader.Sony
       data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
       Assert.IsTrue(orf2e.IsDeleted);
-      Assert.IsTrue(orf2e.NewProgramNr == 0);
+      Assert.AreEqual(0, orf2e.NewProgramNr);
 
 
       // save and reload
@@ -169,6 +169,25 @@ namespace Test.Loader.Sony
       Assert.IsNotNull(orf2e);
       Assert.IsTrue(orf2e.IsDeleted);
       Assert.AreEqual(-1, orf2e.NewProgramNr);
+    }
+    #endregion
+
+
+    #region TestChannelAndFavListEditing_Android
+    [TestMethod]
+    public void TestChannelAndFavListEditing_Android()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\android_sdb-sat.xml");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new SonyPlugin());
+    }
+    #endregion
+
+    #region TestChannelAndFavListEditing_KDL
+    [TestMethod]
+    public void TestChannelAndFavListEditing_KDL()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\kdl_sdb-cable-sat.xml");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new SonyPlugin());
     }
     #endregion
 

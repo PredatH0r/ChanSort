@@ -5,11 +5,12 @@ namespace ChanSort.Api
 {
   public class ChannelInfo
   {
-    private const int MAX_FAV_LISTS = 16;
+    private const int MaxFavListsWithFlags = 8;
 
     private string uid;
     private string serviceTypeName;
-
+    private int newProgramNr;
+    
     public virtual bool IsDeleted { get; set; }
     public SignalSource SignalSource { get; set; }
     public string Source { get; set; }
@@ -28,10 +29,21 @@ namespace ChanSort.Api
     /// original program number from the file, except for channels with IsDeleted==true, which will have the value -1
     /// </summary>
     public int OldProgramNr { get; set; }
+
     /// <summary>
     /// new program number or -1, if the channel isn't assigned a number or has IsDeleted==true
     /// </summary>
-    public int NewProgramNr { get; set; }
+    public int NewProgramNr
+    {
+      get => newProgramNr;
+      set
+      {
+        if (value == 0)
+        {
+        }
+        newProgramNr = value;
+      }
+    }
 
     public string Name { get; set; }
     public string ShortName { get; set; }
@@ -56,17 +68,21 @@ namespace ChanSort.Api
     public Transponder Transponder { get; set; }
     
     /// <summary>
+    /// Defines whether favorite lists have individual ordering (FavIndex, OldFavIndex) or if they use the main channel number (Favorites bitmask)
+    /// </summary>
+    public FavoritesMode FavMode { get; set; } 
+    /// <summary>
     /// Bitmask in which favorite lists the channel is included
     /// </summary>
     public Favorites Favorites { get; set; }
     /// <summary>
     /// current number of the channel in the various favorite lists (if individual sorting is supported)
     /// </summary>
-    public List<int> FavIndex { get; }
+    private List<int> FavIndex { get; }
     /// <summary>
     /// original number of the channel in the various favorite lists (if individual sorting is supported)
     /// </summary>
-    public List<int> OldFavIndex { get; }
+    private List<int> OldFavIndex { get; }
 
     /// <summary>
     /// predefined LCN (logical channel number) assigned by TV firmware or cable/sat operator
@@ -79,7 +95,7 @@ namespace ChanSort.Api
     /// <summary>
     /// A proxy channel is inserted into the current channel list when there was no match for a reference list channel
     /// </summary>
-    public bool IsProxy => this.RecordIndex < 0;
+    public bool IsProxy => this.RecordIndex == -1;
     
     /// <summary>
     /// arbitrary information that can be shown in a UI column to assist in analyzing a file format while coding a plugin
@@ -94,13 +110,8 @@ namespace ChanSort.Api
     {
       this.OldProgramNr = -1;
       this.NewProgramNr = -1;
-      this.FavIndex = new List<int>(MAX_FAV_LISTS);
-      this.OldFavIndex = new List<int>(MAX_FAV_LISTS);
-      for (int i = 0; i < MAX_FAV_LISTS; i++)
-      {
-        this.FavIndex.Add(-1);
-        this.OldFavIndex.Add(-1);
-      }
+      this.FavIndex = new List<int>();
+      this.OldFavIndex = new List<int>();
       this.Name = "";
       this.ShortName = "";
     }
@@ -135,6 +146,24 @@ namespace ChanSort.Api
     #endregion
 
     #region Uid
+
+    public static string GetUid(SignalSource signalSource, decimal freqInMhz, int onid, int tsid, int sid, string channelOrTransponder)
+    {
+      if ((signalSource & SignalSource.Analog) != 0)
+        return "A-0-" + (int)(freqInMhz * 20) + "-0";
+      if ((signalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Sat)
+        return "S" + /*this.SatPosition + */ "-" + onid + "-" + tsid + "-" + sid;
+      if ((signalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Antenna || (signalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Cable)
+      {
+        // ChannelOrTransponder is needed for DVB-T where the same ONID+TSID+SID can be received from 2 different radio transmitters, but on different frequencies/channels
+        if (string.IsNullOrEmpty(channelOrTransponder))
+          channelOrTransponder = ((signalSource & SignalSource.Antenna) != 0 ? LookupData.Instance.GetDvbtTransponder(freqInMhz) : LookupData.Instance.GetDvbcTransponder(freqInMhz)).ToString();
+        return "C-" + onid + "-" + tsid + "-" + sid + "-" + channelOrTransponder;
+      }
+      
+      return onid + "-" + tsid + "-" + sid;
+    }
+
     /// <summary>
     /// The Uid is the preferred way of matching channels between the current channel list and a reference list.
     /// The basic format of this string was taken from a command line tool "TllSort" for LG TVs but then expanded beyond that
@@ -142,28 +171,8 @@ namespace ChanSort.Api
     /// </summary>
     public string Uid
     {
-      get
-      {
-        if (this.uid == null)
-        {
-          if ((this.SignalSource & SignalSource.MaskAnalogDigital) == SignalSource.Analog)
-            this.uid = "A-0-" + (int) (this.FreqInMhz*20) + "-0";
-          else
-          {
-            if ((this.SignalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Sat)
-              this.uid = "S" + /*this.SatPosition + */ "-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
-            else if ((this.SignalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Antenna || (this.SignalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Cable)
-            {
-              // ChannelOrTransponder is needed for DVB-T where the same ONID+TSID+SID can be received from 2 different radio transmitters, but on different frequencies/channels
-              this.uid = "C-" + this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId + "-" + this.ChannelOrTransponder;
-            }
-            else
-              this.uid = this.OriginalNetworkId + "-" + this.TransportStreamId + "-" + this.ServiceId;
-          }
-        }
-        return this.uid;
-      }
-      set { this.uid = value; }
+      get => this.uid ??= GetUid(this.SignalSource, this.FreqInMhz, this.OriginalNetworkId, this.TransportStreamId, this.ServiceId, this.ChannelOrTransponder);
+      set => this.uid = value;
     }
     #endregion
 
@@ -299,49 +308,67 @@ namespace ChanSort.Api
     #region GetPosition(), SetPosition(), ChangePosition()
 
     /// <summary>
-    /// Gets the new channel number in the main channel list (index=0) or the various favorite lists (1-x)
+    /// Gets the new channel number in the main channel list (index=0) or the various favorite lists (1..x)
     /// </summary>
-    public int GetPosition(int subListIndex)
-    {
-      return subListIndex == 0 ? this.NewProgramNr : this.FavIndex[subListIndex - 1];
-    }
+    public int GetPosition(int subListIndex) => this.GetNewOrOldPosition(subListIndex, this.NewProgramNr, this.FavIndex);
 
     /// <summary>
-    /// Gets the original channel number in the main channel list (index=0) or the various favorite lists (1-x)
+    /// Gets the original channel number in the main channel list (index=0) or the various favorite lists (1..x)
     /// </summary>
-    public int GetOldPosition(int subListIndex)
-    {
-      return subListIndex == 0 ? this.OldProgramNr : this.OldFavIndex[subListIndex - 1];
-    }
+    public int GetOldPosition(int subListIndex) => this.GetNewOrOldPosition(subListIndex, this.OldProgramNr, this.OldFavIndex);
 
-    /// <summary>
-    /// Sets the new channel number in the main channel list (index=0) or the various favorite lists (1-x)
-    /// </summary>
-    public void SetPosition(int subListIndex, int newPos)
+    private int GetNewOrOldPosition(int subListIndex, int progNr, List<int> fav)
     {
+      if (subListIndex < 0)
+        return -1;
       if (subListIndex == 0)
-        this.NewProgramNr = newPos;
-      else
+        return progNr;
+      if (this.FavMode == FavoritesMode.None)
+        return -1;
+      if (this.FavMode == FavoritesMode.Flags)
+        return subListIndex > MaxFavListsWithFlags ? -1 : ((uint)this.Favorites & (1 << (subListIndex - 1))) == 0 ? 0 : progNr;
+      if (subListIndex - 1 >= fav.Count)
+        return -1;
+      return fav[subListIndex - 1];
+    }
+
+
+    /// <summary>
+    /// Sets the new channel number in the main channel list (index=0) or the various favorite lists (1..x)
+    /// </summary>
+    public void SetPosition(int subListIndex, int newPos) => this.SetNewOrOldPosition(subListIndex, newPos, n => this.NewProgramNr=n, this.FavIndex, f => this.Favorites = f);
+
+    /// <summary>
+    /// Sets the original channel number in the main channel list (index=0) or the various favorite lists (1..x)
+    /// </summary>
+    public void SetOldPosition(int subListIndex, int oldPos) => this.SetNewOrOldPosition(subListIndex, oldPos, n => this.OldProgramNr = n, this.OldFavIndex, null);
+
+    private void SetNewOrOldPosition(int subListIndex, int newPos, Action<int> setMainPosition, List<int> fav, Action<Favorites> setFavFlags)
+    {
+      if (subListIndex < 0)
+        return;
+      if (subListIndex == 0)
+        setMainPosition(newPos);
+      else if (this.FavMode != FavoritesMode.None)
       {
-        this.FavIndex[subListIndex - 1] = newPos;
-        int mask = 1 << (subListIndex - 1);
-        if (newPos == -1)
-          this.Favorites &= (Favorites)~mask;
-        else
-          this.Favorites |= (Favorites)mask;
+        if (this.FavMode != FavoritesMode.Flags)
+        {
+          for (int i = fav.Count; i < subListIndex; i++)
+            fav.Add(-1);
+          fav[subListIndex - 1] = newPos;
+        }
+
+        if (setFavFlags != null && subListIndex <= MaxFavListsWithFlags)
+        {
+          int mask = 1 << (subListIndex - 1);
+          if (newPos == -1)
+            this.Favorites &= (Favorites) ~mask;
+          else
+            this.Favorites |= (Favorites) mask;
+        }
       }
     }
 
-    /// <summary>
-    /// Sets the original channel number in the main channel list (index=0) or the various favorite lists (1-x)
-    /// </summary>
-    public void SetOldPosition(int subListIndex, int oldPos)
-    {
-      if (subListIndex == 0)
-        this.OldProgramNr = oldPos;
-      else
-        this.OldFavIndex[subListIndex - 1] = oldPos;
-    }
 
     /// <summary>
     /// Internal helper method to adjust the main or favorite program number by a delta value
@@ -350,9 +377,19 @@ namespace ChanSort.Api
     {
       if (subListIndex == 0)
         this.NewProgramNr += delta;
-      else
-        this.FavIndex[subListIndex - 1] += delta;      
+      else if (this.FavMode != FavoritesMode.None)
+      {
+        for (int i = this.FavIndex.Count; i < subListIndex; i++)
+          this.FavIndex.Add(-1);
+        this.FavIndex[subListIndex - 1] += delta;
+      }
     }
     #endregion
+
+    public void ResetFavorites()
+    {
+      this.FavIndex.Clear();
+      this.Favorites = 0;
+    }
   }
 }

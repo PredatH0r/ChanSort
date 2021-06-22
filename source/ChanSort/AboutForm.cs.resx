@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -143,8 +143,5 @@
   </data>
   <data name="lnkLicense.EditValue" xml:space="preserve">
     <value>GNU GPLv3</value>
-  </data>
-  <data name="txtAuthor.Text" xml:space="preserve">
-    <value>Horst Beham</value>
   </data>
 </root>

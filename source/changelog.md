@@ -1,7 +1,210 @@
 ChanSort Change Log 
 ===================
 
-2020-02-11B
+2021-05-01_1615
+- fixed issue with high-res displays / Windows display scaling other than 100% aka 96dpi, that caused columns to
+  become wider every time the program was started.
+
+2021-05-01
+- added "Settings / Reset to defaults and restart" function to delete the stored customized settings in case something
+  went wrong (like massively oversized column widths)
+- Philips ChannelMap\_30: fixed error when trying to save this type of list
+- Upgraded to DevExpress WinForms 20.2.7 user interface library
+
+2021-04-25
+- removed dependency on Visual C++ 2010 Redistributable Package (x86):
+  Hisense, Panasonic, Philips, Samsung and Toshiba channel list use SQLite database files, which ChanSort accessed
+  through a 3rd party ADO.NET data provider, which depended on this package. Now a different ADO.NET provider is used.
+- Philips DVB\*.xml: maintain same indentation as original file (can be 0, 2 or 4 spaces) for easier before/after diff
+- Philips ChannelMap\_30-45: fixed a bug that caused the list not to load when certain error messages were logged
+
+2021-04-11_1900
+- Philips ChannelMap\_30: fixed bug that caused favorite lists to be in wrong order
+
+2021-04-11
+- Philips: added support for ChannelMap\_30 format
+- LG Web OS 5: fixed a bug that wrote wrong values for "audioPid" to the file (which had no effect on the TV's operation)
+
+2021-04-10
+- Samsung .zip: Support for files that contain an empty SRV_EXT_APP table, which caused the whole list to show up empty.
+
+2021-04-02_1734
+- Philips: another fix for lists with missing s2channellib\\DVBSall.xml file
+
+2021-04-02
+- Philips: skip read-only files when loading the list, so they don't cause errors when the list is saved (e.g. DVBSall.xml)
+
+2021-03-28_1809
+- LG webOS 5: fixed handling of channels with an ampersand (&) character showing as "&amp;" and not matching
+  a text-only reference list.
+
+2021-03-27
+- SatcoDX (.sdx): fixed handling of format version 105, which contains trailing data after the last channel
+- SatcoDX: changing the character set in the menu now instantly corrects channel names with non-ASCII characters
+
+2021-03-17
+- improved reference list channel matching: if multiple channels match the same name, then the candidates are narrowed
+  down by service type (TV/radio/data - if known), case sensitivity (upper/lowercase), encryption (unencrypted first
+
+2021-03-16
+- Sharp, Dyon, Blaupunkt, ...: added support for DVBS_Program.csv and \*DVBS_CHANNEL_TABLE.csv files
+- Enigma2: added support for Linux based Set-Top-Boxes (Dreambox, VU+, Octagon, ...) using lamedb and bouquets
+- Toshiba settingsDB.db: support for lists without analog tuner data (missing TADTunerDataTable)
+- Grunding: failed to load lists where the <Digital> element did not contain a <channels> child element
+- refrence lists can now be applied to main channel numbers (as before) or to a specific favorite list (new)
+
+2021-02-24
+- Philips ChannelMap\_45: TV did not remember last selected favorite list when first fav list was created by ChanSort.
+- Philips ChannelMap\_100 and later: "Channel" XML elements inside the DVB\*.xml files are now reordered by program nr.
+- Philips ChannelMap\_105 and 110: fixed saving favorite lists (keeping FavoriteNumber="0" in DVB\*.xml and only 
+  setting the numbers in Favorites.xml)
+- m3u: keep original end-of-line characters (CRLF or LF)
+- m3u: detect whether channel names are prefixed with a program number or not, and save the file in the same way.
+
+2021-02-17_2
+- Philips ChannelMap\_105 and 110: fixed broken favorites.xml file and DVB\*.xml when channels were renamed
+
+2021-02-17
+- Panasonic: fixed error reading lists with channels that refer to non-existing transponders
+- Philips ChannelMap\_45: incrementing fav list version number when saving and setting the last\_watched\_channel\_id to
+  the first channel in the fav list (ensuring that the channel is actually present in the list)
+- UI: added search button (because it is not obvious that the top row of the table is a search/filter row)
+
+2021-02-09
+- Sony: fixed incorrect checksum error for Android based TVs which use CR+LF as line separators (normally only LF is used)
+- Philips: show info that it may be necessary to unplug and reboot the TV after the import
+- Philips ChannelMap\_45: show info when there are checksum errors, which indicate that TV's internal list is broken
+  and a rescan is required in order to properly export/import the list.
+
+2021-02-08
+- Philips: lists with a chanLst.bin file show information about file format version and TV model under File / Information
+- Philips ChannelMap\_45: fixed handling of favorite lists (allow up to 8 lists, empty ones get removed automatically)
+- Philips ChannelMap\_45: no longer prompting to reorder channels sequentially (to close gaps). 
+  (This feature caused DVB-C/T list to only contain odd numbers and DVB-S to contain only even numbers, when both exist)
+- Philips ChannelMap\_45: added display for service type (TV/radio), encryption, sat frequency polarity
+- Philips ChannelMap\_45: fixed display of DVB-C/T frequency
+- Philips Repair\chanLst.bin (1.x): fixed sat frequency display for transponders with vertical polarity
+
+2021-02-05
+- Philips ChannelMap_100 and later: keeping original indentation in XML files 
+  and original number of bytes for hex-encoded Unicode names (channel name, fav list names)
+- Philips ChannelMap_110: setting the "UserReorderChannel" flag in the file to 1
+- Philips ChannelMap\_45: fixed error when channel names did not match between tv.db and Cable/Terrestrial/SatelliteDb.bin
+
+2021-01-31
+- Philips ChannelMap\_45: fixed bug writting "channel edited" indicator to the wrong location inside the file
+- Philips ChannelMap\_45: fixed display of wrong frequency
+- Philips ChannelMap\_45: added support for favorite lists
+
+2021-01-24
+- fixed issues with applying reference lists (especially .m3u)
+
+2021-01-23
+- Toshiba: added support for settingsDB.db lists
+- SatcoDX (*.sdx format used by ITT, Telefunken, Silva-Schneider, ...): minor bug fixes
+
+2021-01-17
+- Philips: added support for ChannelMap\_45 format
+- Philips: fixed display of symbol rate and frequency (off by factor 1000 depending of list and DVB source)
+- Philips: fixed special characters in channel names (e.g. german umlauts)
+- Philips: "ServiceType" now only shows "TV" or "Radio". There is no information about HD/SD in the file.
+
+2021-01-02
+- Grundig: added support for dvb*_config.xml channel lists
+
+2020-12-29
+- update check could not distinguish between 2 program versions from the same day (kept showing "an update is available")
+
+2020-12-26_2
+- Panasonic: channel name editing is now supported when all channels implicitly use valid utf-8 encoding
+
+2020-12-26
+- LG WebOS 5: added warning that support is only experimental.
+- Panasonic: Channel name editing is now supported for svl.bin files (unless there is no indicator what encoding to use)
+- Hungarian translation: added missing files to .zip
+
+2020-12-05
+- Philips: Fixed error saving the Favorite.xml file (effects Philips "ChannelMap_105" and later file format versions)
+- added Hungarian translation (credits to Istvan Krisko)
+- Sony XML: fixed display of wrong DVB-C cable channel/transponder number
+- LG webOS 5: unfortunately no news yet, but the insight that some "CX" models run on webOS 3.6 and others on 5.1, using
+  different file formats. 
+
+2020-11-16
+- Philips: TV rejected modified lists because checksums inside chanLst.bin were not updated. This is now fixed.
+- LG WebOS 5: fixed handling for deleted satellite radio channels (some TVs expect majorNumber 0, others 16384)
+- "Open File Dialog" now works again when double-clicking on a shortcut to a directory (.lnk file).
+
+2020-08-27
+- LG WebOS 5: added support for lists with analog cable/antenna channels
+- Philips: added support for analog channel lists (Repair/CM_* format)
+- GB Freesat reference lists updated
+
+2020-08-10
+- Philips: added support for models that export a Repair/ChannelList/channellib/*Table and s2channelLib/*.dat  folder 
+  structure, e.g. PFL4317K, PFL5507K, PFL5806K, PFL7656K
+
+2020-08-03
+- Philips: older models which export a Repair/*.BIN file can now be loaded, when there is an invisible .xml file in the same
+  directory. 
+  (Philips exports the .xml file with file attributes "hidden" and "system", which makes them invisible to Windows Explorer)
+- upgrade to DevExpress 20.1.6
+
+2020-07-13
+- Samsung 1242 format: channel names were displayed as chinese letters instead of latin
+  (Names are not stored as characters in this format, but instead 16 bits of UTF16 code points are encoded as "payload"
+  inside 3 byte UTF-8 sequences)
+
+2020-07-12
+- added UTF-16 Big Endian and Little Endian options to character set menu
+- Samsung .zip loader: auto-detect UTF-16 endianness and allow to change encoding after loading to UTF-16 LE/BE
+  (some files use Little Endian format and show chinese characters when loaded with the default Big Endian format)
+- Customized column order is now preserved across file formats and input sources
+- Note about LG WebOS 5 files (e.g. CX series):
+  It is still unclear what exact firmware version and conditions are needed to properly import a channel list.
+  Users reported about varying success of an import, reaching from not possible at all, only after a factory reset, 
+  importing the same list twice or working just fine.
+  The problems is not related to ChanSort, as it can be reproduced by exporting a list to USB, swapping channels 
+  in the TV's menu and trying to loading the previously exported list back. The TV may keep the swapped channels and 
+  show inconsistencies between the channel list in the settings menu and the EPG.
+
+2020-05-15 (inofficial)
+- fixed more issues with the LG WebOS 5.0 format
+
+2020-05-11
+- improved support for LG OLED series (CX) - now supports lists with multiple sources (DVB-C, DVB-S), but still no favorite lists
+- added info screen when opening an empty LG channel list which is most likely caused by selecting a predefined list
+  during the TV setup or channel search
+- fixed: Sony KDL channel lists were not saved correctly
+- upgrade to DevExpres 20.1.3
+
+2020-05-03
+- added experimental support for LG WebOS 5.0 (e.g. OLED CX series) - NO FAV LISTS YET
+
+2020-05-02
+- added Turkish translation (thanks to Ali Haykir)
+- Philips: combined DVB-C and DVB-T into a single list with a common number domain
+- added exprimental support for Samsung "iptv" list
+- added Suiss reference lists with Astra 19.2E + Hotbird 13.0E channels
+- fixed "System.ArgumentOutOfRangeException..." when opening a file which supports mixed-source favorite lists 
+  (Sony, Philips, Hisense, ...)
+- System requirements changed: .NET Framework 4.8
+- added high-DPI support
+- added Accessibility menu options to change the UI font size
+
+2020-03-20
+- another attempt to get Samsung 1352.0 format working
+
+2020-03-15
+- repackaged to include Polish translation files
+
+2020-03-14
+- check for updates can now handle multiple updates on a specific day
+- fixed applying favorites from a reference list (it showed fav letters on the channels, but the fav lists were empty)
+- added Polish translation (thanks to Jakub Driver!)
+- potential fix for Samsung 1352.0 format, which can contain channels marked as deleted 
+
+2020-02-11 (re-upload)
 - fixed: removing channels from a favorite list caused incorrect reordering
 
 2020-02-11

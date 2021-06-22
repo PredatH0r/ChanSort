@@ -1,3 +1,5 @@
+//#include "chansort.h"
+
 struct TLL_DvbsHeaderSubblock
 {
   dword Crc_32;

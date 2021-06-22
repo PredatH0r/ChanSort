@@ -43,6 +43,7 @@ namespace ChanSort.Ui
       // 
       resources.ApplyResources(this.lblMessage, "lblMessage");
       this.lblMessage.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("lblMessage.Appearance.Font")));
+      this.lblMessage.Appearance.Options.UseFont = true;
       this.lblMessage.Name = "lblMessage";
       // 
       // imageCollection1

@@ -2,6 +2,9 @@
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using DevExpress.Utils;
+using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
 
 namespace ChanSort.Ui
 {
@@ -25,6 +28,9 @@ namespace ChanSort.Ui
       Application.ThreadException += Application_ThreadException;
       Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
       DevExpress.Skins.SkinManager.EnableFormSkins();
+      WindowsFormsSettings.AllowDpiScale = true;
+      WindowsFormsSettings.AllowAutoScale = DefaultBoolean.True;
+      BarAndDockingController.Default.PropertiesBar.ScaleIcons = false;
       do
       {
         ChangeLanguage = false;

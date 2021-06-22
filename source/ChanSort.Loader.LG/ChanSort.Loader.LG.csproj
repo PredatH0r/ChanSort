@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChanSort.Loader.LG</RootNamespace>
     <AssemblyName>ChanSort.Loader.LG</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -25,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +49,7 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\Release\</OutputPath>
@@ -58,11 +61,16 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.Desktop.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v20.2, Version=20.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -73,11 +81,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalogChannel.cs" />
-    <Compile Include="DtvChannel.cs" />
-    <Compile Include="DvbsDataLayout.cs" />
-    <Compile Include="FirmwareData.cs" />
-    <Compile Include="LnbConfig.cs" />
+    <Compile Include="Binary\AnalogChannel.cs" />
+    <Compile Include="Binary\DtvChannel.cs" />
+    <Compile Include="Binary\DvbsDataLayout.cs" />
+    <Compile Include="Binary\FirmwareData.cs" />
+    <Compile Include="Binary\LnbConfig.cs" />
+    <Compile Include="GlobalClone\GcChannel.cs" />
+    <Compile Include="GlobalClone\GcJsonSerializer.cs" />
+    <Compile Include="LgPlugin.cs" />
+    <Compile Include="GlobalClone\GcXmlSerializer.cs" />
     <Compile Include="PresetProgramNrDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,27 +97,21 @@
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.de.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="SatChannel.cs" />
-    <Compile Include="SatChannelListHeader.cs" />
-    <Compile Include="SatTransponder.cs" />
-    <Compile Include="TllChannelBase.cs" />
-    <Compile Include="TllFileSerializer.cs" />
-    <Compile Include="TllFileSerializer.sql.cs" />
-    <Compile Include="TllFileSerializerPlugin.cs" />
-    <Compile Include="TvSettingsForm.cs">
+    <Compile Include="Binary\SatChannel.cs" />
+    <Compile Include="Binary\SatChannelListHeader.cs" />
+    <Compile Include="Binary\SatTransponder.cs" />
+    <Compile Include="Binary\TllChannelBase.cs" />
+    <Compile Include="Binary\TllFileSerializer.cs" />
+    <Compile Include="Binary\TllFileSerializer.sql.cs" />
+    <Compile Include="Binary\TvSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TvSettingsForm.Designer.cs">
+    <Compile Include="Binary\TvSettingsForm.Designer.cs">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -130,6 +136,12 @@
     <EmbeddedResource Include="PresetProgramNrDialog.es.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PresetProgramNrDialog.hu.resx">
+      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresetProgramNrDialog.pl.resx">
+      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PresetProgramNrDialog.pt.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -143,6 +155,9 @@
     <EmbeddedResource Include="PresetProgramNrDialog.ru.resx">
       <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PresetProgramNrDialog.tr.resx">
+      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Resource.cs.resx" />
     <EmbeddedResource Include="Resource.de.resx">
@@ -151,6 +166,8 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource.es.resx" />
+    <EmbeddedResource Include="Resource.hu.resx" />
+    <EmbeddedResource Include="Resource.pl.resx" />
     <EmbeddedResource Include="Resource.pt.resx" />
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -159,29 +176,42 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resource.ro.resx" />
     <EmbeddedResource Include="Resource.ru.resx" />
-    <EmbeddedResource Include="TvSettingsForm.cs.resx">
+    <EmbeddedResource Include="Resource.tr.resx" />
+    <EmbeddedResource Include="Binary\TvSettingsForm.cs.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.de.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.es.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.pt.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.resx">
+    <EmbeddedResource Include="Binary\TvSettingsForm.de.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.ro.resx">
+    <EmbeddedResource Include="Binary\TvSettingsForm.es.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.ru.resx">
+    <EmbeddedResource Include="Binary\TvSettingsForm.hu.resx">
       <DependentUpon>TvSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Binary\TvSettingsForm.pl.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Binary\TvSettingsForm.pt.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Binary\TvSettingsForm.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Binary\TvSettingsForm.ro.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Binary\TvSettingsForm.ru.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Binary\TvSettingsForm.tr.resx">
+      <DependentUpon>TvSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

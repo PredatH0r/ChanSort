@@ -9,8 +9,8 @@ using ChanSort.Api;
 namespace ChanSort.Loader.M3u
 {
   /*
-   * This serializer reads .m3u files that are used for SAT>IP lists. Some hardware SAT>IP servers use this format as well as VNC.
-   * There is no official standard for .m3u and files may have a UTF-8 BOM or not, may be encoded in UTF-8 or a locale specific encoding and my have different new-line sequences.
+   * This serializer reads .m3u files that are used for SAT>IP lists. Some hardware SAT>IP servers use this format as well as VLC.
+   * There is no official standard for .m3u and files may have a UTF-8 BOM or not, may be encoded in UTF-8 or a locale specific and my have different new-line sequences.
    * This loader attempts to maintain the original file as much as possible, including comment lines that are not directly understood by ChanSort.
    */
   class Serializer : SerializerBase
@@ -20,6 +20,7 @@ namespace ChanSort.Loader.M3u
 
     private Encoding overrideEncoding;
     private string newLine = "\r\n";
+    private bool allChannelsPrefixedWithProgNr = true;
     private List<string> headerLines = new List<string>();
     private List<string> trailingLines = new List<string>(); // comment and blank lines after the last URI line
 
@@ -28,8 +29,7 @@ namespace ChanSort.Loader.M3u
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.Physically;
-      this.Features.SortedFavorites = false;
-      this.Features.SupportedFavorites = 0;
+      this.Features.FavoritesMode = FavoritesMode.None;
       this.Features.CanLockChannels = false;
       this.Features.CanSkipChannels = false;
       this.Features.CanHideChannels = false;
@@ -39,7 +39,7 @@ namespace ChanSort.Loader.M3u
       base.DefaultEncoding = new UTF8Encoding(false);
       this.allChannels.VisibleColumnFieldNames = new List<string>()
       {
-        "OldPosition", "Position", "Name", "FreqInMhz", "Polarity", "SymbolRate", "VideoPid", "AudioPid", "Satellite", "Provider"
+        "+OldPosition", "+Position", "+Name", "+FreqInMhz", "+Polarity", "+SymbolRate", "+VideoPid", "+AudioPid", "+Satellite", "+Provider"
       };
     }
     #endregion
@@ -55,8 +55,8 @@ namespace ChanSort.Loader.M3u
         overrideEncoding = new UTF8Encoding(false);
 
       // detect line separator
-      int idx = Array.IndexOf(content, '\n');
-      this.newLine = idx >= 1 && content[idx] - 1 == '\r' ? "\r\n" : "\n";
+      int idx = Array.IndexOf(content, (byte)'\n');
+      this.newLine = idx >= 1 && content[idx-1] == '\r' ? "\r\n" : "\n";
 
       var rdr = new StreamReader(new MemoryStream(content), overrideEncoding ?? this.DefaultEncoding);
       string line = rdr.ReadLine()?.TrimEnd();
@@ -126,6 +126,7 @@ namespace ChanSort.Loader.M3u
 
       if (extInfLine != null)
       {
+        bool extInfContainsProgNr = false;
         extInfTrackNameIndex = FindExtInfTrackName(extInfLine);
         if (extInfTrackNameIndex >= 0)
         {
@@ -135,14 +136,18 @@ namespace ChanSort.Loader.M3u
           {
             progNr = this.ParseInt(match.Groups[1].Value);
             name = match.Groups[2].Value;
+            extInfContainsProgNr = true;
           }
         }
+        this.allChannelsPrefixedWithProgNr &= extInfContainsProgNr;
       }
+
 
       if (progNr == 0)
         progNr = this.allChannels.Count + 1;
 
       var chan = new Channel(uriLineNr, progNr, name, allLines);
+      chan.Uid = uriLine;
       chan.ExtInfTrackNameIndex = extInfTrackNameIndex;
       chan.Provider = group;
 
@@ -230,7 +235,10 @@ namespace ChanSort.Loader.M3u
           foreach (var line in chan.Lines)
           {
             if (line.StartsWith("#EXTINF:"))
-              file.WriteLine($"{line.Substring(0, chan.ExtInfTrackNameIndex)}{chan.NewProgramNr}. {chan.Name}");
+            {
+              var progNrPrefix = this.allChannelsPrefixedWithProgNr ? chan.NewProgramNr + ". " : "";
+              file.WriteLine($"{line.Substring(0, chan.ExtInfTrackNameIndex)}{progNrPrefix}{chan.Name}");
+            }
             else
               file.WriteLine(line);
           }
