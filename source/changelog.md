@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+TBA
+- added experimental support for Hisense Vidaa U5.2 format
+
+2021-06-13
+- improved High-DPI support
+
 2021-05-01_1615
 - fixed issue with high-res displays / Windows display scaling other than 100% aka 96dpi, that caused columns to
   become wider every time the program was started.

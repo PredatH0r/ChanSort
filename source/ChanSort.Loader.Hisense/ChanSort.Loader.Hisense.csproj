@@ -107,6 +107,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ServicelistDb\DbSchema.cs" />
     <Compile Include="ServicelistDb\ServicelistDbSerializer.cs" />
     <Compile Include="HisensePlugin.cs" />
   </ItemGroup>

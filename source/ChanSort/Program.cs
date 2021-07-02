@@ -3,8 +3,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
-using DevExpress.Utils;
-using DevExpress.Utils.Diagnostics;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 

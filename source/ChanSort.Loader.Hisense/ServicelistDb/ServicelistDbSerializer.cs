@@ -94,6 +94,8 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
     /// </summary>
     private int pidAv;
 
+    private IDbSchema dbSchema;
+
     #region ctor()
 
     public ServicelistDbSerializer(string inputFile) : base(inputFile)
@@ -121,9 +123,14 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
           RepairCorruptedDatabaseImage(cmd);
           LoadTableNames(cmd);
 
+          if (tableNames.Contains("favoritelist"))
+            dbSchema = new DbSchema2017();
+          else if (tableNames.Contains("servicelist"))
+            dbSchema = new DbSchema2021();
+
           // make sure this .db file contains the required tables
-          if (!tableNames.Contains("service") || !tableNames.Contains("tuner") || !tableNames.Contains("favoriteitem"))
-            throw new FileLoadException("File doesn't contain service/tuner/favoriteitem tables");
+          if (dbSchema == null || !tableNames.Contains("service") || !tableNames.Contains("tuner"))
+            throw new FileLoadException("File doesn't contain the expected tables");
 
           LoadLists(cmd);
           LoadTunerData(cmd);
@@ -153,11 +160,9 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
     private void LoadTableNames(SqliteCommand cmd)
     {
       cmd.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table' order by name";
-      using (var r = cmd.ExecuteReader())
-      {
-        while (r.Read())
-          tableNames.Add(r.GetString(0).ToLower());
-      }
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
+        tableNames.Add(r.GetString(0).ToLower());
     }
 
     #endregion
@@ -166,7 +171,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
 
     private void LoadLists(SqliteCommand cmd)
     {
-      cmd.CommandText = "select Pid, Name from FavoriteList";
+      cmd.CommandText = $"select Pid, Name from {dbSchema.ChannelListTable}";
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
@@ -209,66 +214,171 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
 
     #endregion
 
+    #region LoadTunerData()
+
+    private void LoadTunerData(SqliteCommand cmd)
+    {
+      if (dbSchema.UnifiedTunerTable)
+        LoadTunerData2021(cmd);
+      else
+        LoadTunerData2017(cmd);
+    }
+    #endregion
+
+    #region LoadTunerData2021
+    private void LoadTunerData2021(SqliteCommand cmd)
+    {
+      cmd.CommandText = "select tunerid, oid, tid, satellite, frequency, sr, frontend from tuner";
+
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
+      {
+        var id = r.GetInt32(0);
+        var trans = new HisTransponder(id);
+        trans.OriginalNetworkId = r.GetInt32(1);
+        trans.TransportStreamId = r.GetInt32(2);
+        trans.Satellite = DataRoot.Satellites.TryGet(r.GetInt32(3));
+        trans.FrequencyInMhz = r.GetInt32(4) / 1000;
+        trans.SymbolRate = r.GetInt32(5);
+        switch (r.GetInt32(6)) // frontend
+        {
+          case 2:
+            trans.SignalSource = SignalSource.DvbT;
+            trans.Source = "DVB-T";
+            break;
+          case 3:
+            trans.SignalSource = SignalSource.DvbC;
+            trans.Source = "DVB-C";
+            break;
+          case 4:
+            trans.SignalSource = SignalSource.DvbS;
+            trans.Source = "DVB-S"; // also S2
+            break;
+          case 6:
+            trans.SignalSource = SignalSource.DvbT;
+            trans.Source = "DVB-T2";
+            break;
+          default:
+            trans.SignalSource = SignalSource.Digital;
+            break;
+        }
+
+        DataRoot.AddTransponder(trans.Satellite, trans);
+      }
+
+    }
+    #endregion
+
+    #region LoadTunerData2017
+    private void LoadTunerData2017(SqliteCommand cmd)
+    {
+      var inputs = new List<Tuple<string, SignalSource, string>>
+      {
+        Tuple.Create("C", SignalSource.DvbC, "symbolrate"),
+        Tuple.Create("C2", SignalSource.DvbC, "bandwidth"),
+        Tuple.Create("S", SignalSource.DvbS, "symbolrate"),
+        Tuple.Create("S2", SignalSource.DvbS, "symbolrate"),
+        Tuple.Create("T", SignalSource.DvbT, "bandwidth"),
+        Tuple.Create("T2", SignalSource.DvbT, "bandwidth")
+      };
+
+      foreach (var input in inputs)
+      {
+        var table = input.Item1;
+        var symrate = input.Item3;
+        LoadTunerData2017(cmd, "DVB" + table + "Tuner", ", Frequency," + symrate, (t, r, i0) =>
+        {
+          t.Source = "DVB-" + input.Item1;
+          t.SignalSource = input.Item2;
+          t.FrequencyInMhz = (decimal)r.GetInt32(i0 + 0) / 1000;
+          t.SymbolRate = r.GetInt32(i0 + 1);
+        });
+      }
+    }
+
+    private void LoadTunerData2017(SqliteCommand cmd, string joinTable, string joinFields, Action<HisTransponder, SqliteDataReader, int> enhanceTransponderInfo)
+    {
+      if (!tableNames.Contains(joinTable.ToLower()))
+        return;
+
+      cmd.CommandText = $"select tuner.tunerid, oid, tid, satellite {joinFields} "
+                        + $" from tuner inner join {joinTable} on {joinTable}.tunerid=tuner.tunerid";
+
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
+      {
+        var id = r.GetInt32(0);
+        var trans = new HisTransponder(id);
+        trans.OriginalNetworkId = r.GetInt32(1);
+        trans.TransportStreamId = r.GetInt32(2);
+        trans.Satellite = DataRoot.Satellites.TryGet(r.GetInt32(3));
+
+        enhanceTransponderInfo(trans, r, 4);
+
+        DataRoot.AddTransponder(trans.Satellite, trans);
+      }
+    }
+
+    #endregion
+
     #region LoadServiceData()
 
     private void LoadServiceData(SqliteCommand cmd)
     {
-      cmd.CommandText = @"
-select s.pid, s.type, anls.Frequency, digs.TunerId, digs.Sid, Name, ShortName, Encrypted, Visible, Selectable, ParentalLock, MediaType
+      cmd.CommandText = @$"
+select s.pid, s.type, anls.Frequency, digs.TunerId, digs.Sid, Name, {dbSchema.ShortName}, Encrypted, Visible, Selectable, {dbSchema.ParentalLock}, MediaType
 from service s
 left outer join AnalogService anls on anls.ServiceId=s.Pid
-left outer join DVBService digs on digs.ServiceId=s.Pid
+left outer join {dbSchema.DvbServiceTable} digs on digs.ServiceId=s.Pid
 ";
 
-      using (var r = cmd.ExecuteReader())
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
       {
-        while (r.Read())
+        ChannelInfo ci = null;
+        if (!r.IsDBNull(2)) // AnalogService
         {
-          ChannelInfo ci = null;
-          if (!r.IsDBNull(2)) // AnalogService
-          {
-            ci = new ChannelInfo(SignalSource.Analog, r.GetInt32(0), -1, r.GetString(5));
-          }
-          else if (!r.IsDBNull(3)) // DvbService
-          {
-            var trans = (HisTransponder) DataRoot.Transponder.TryGet(r.GetInt32(3));
-            ci = new ChannelInfo(trans.SignalSource, r.GetInt32(0), -1, r.GetString(5));
-            ci.Transponder = trans;
-            ci.FreqInMhz = trans.FrequencyInMhz;
-            ci.OriginalNetworkId = trans.OriginalNetworkId;
-            ci.TransportStreamId = trans.TransportStreamId;
-            ci.Source = trans.Source;
-            ci.ServiceId = r.GetInt32(4);
-            ci.ShortName = r.GetString(6);
-            ci.Encrypted = r.GetInt32(7) != 0;
-            ci.Hidden = r.GetInt32(8) == 0;
-            ci.Skip = r.GetInt32(9) == 0;
-            ci.Lock = r.GetInt32(10) != 0;
-            var mediaType = r.GetInt32(11);
-            if (mediaType == 1)
-            {
-              ci.SignalSource |= SignalSource.Tv;
-              ci.ServiceTypeName = "TV";
-            }
-            else if (mediaType == 2)
-            {
-              ci.SignalSource |= SignalSource.Radio;
-              ci.ServiceTypeName = "Radio";
-            }
-            else
-            {
-              ci.ServiceTypeName = mediaType.ToString();
-            }
-          }
-          else if (r.GetInt32(1) == 0) // A/V input
-          {
-            ci = new ChannelInfo(SignalSource.AvInput, r.GetInt32(0), -1, r.GetString(5));
-            ci.ServiceTypeName = "A/V";
-          }
-
-          if (ci != null)
-            channelsById.Add(ci.RecordIndex, ci);
+          ci = new ChannelInfo(SignalSource.Analog, r.GetInt32(0), -1, r.GetString(5));
         }
+        else if (!r.IsDBNull(3)) // DvbService
+        {
+          var trans = (HisTransponder) DataRoot.Transponder.TryGet(r.GetInt32(3));
+          ci = new ChannelInfo(trans.SignalSource, r.GetInt32(0), -1, r.GetString(5));
+          ci.Transponder = trans;
+          ci.FreqInMhz = trans.FrequencyInMhz;
+          ci.OriginalNetworkId = trans.OriginalNetworkId;
+          ci.TransportStreamId = trans.TransportStreamId;
+          ci.Source = trans.Source;
+          ci.ServiceId = r.GetInt32(4);
+          ci.ShortName = r.GetString(6);
+          ci.Encrypted = r.GetInt32(7) != 0;
+          ci.Hidden = r.GetInt32(8) == 0;
+          ci.Skip = r.GetInt32(9) == 0;
+          ci.Lock = r.GetInt32(10) != 0;
+          var mediaType = r.GetInt32(11);
+          if (mediaType == 1)
+          {
+            ci.SignalSource |= SignalSource.Tv;
+            ci.ServiceTypeName = "TV";
+          }
+          else if (mediaType == 2)
+          {
+            ci.SignalSource |= SignalSource.Radio;
+            ci.ServiceTypeName = "Radio";
+          }
+          else
+          {
+            ci.ServiceTypeName = mediaType.ToString();
+          }
+        }
+        else if (r.GetInt32(1) == 0) // A/V input
+        {
+          ci = new ChannelInfo(SignalSource.AvInput, r.GetInt32(0), -1, r.GetString(5));
+          ci.ServiceTypeName = "A/V";
+        }
+
+        if (ci != null)
+          channelsById.Add(ci.RecordIndex, ci);
       }
     }
 
@@ -278,11 +388,7 @@ left outer join DVBService digs on digs.ServiceId=s.Pid
 
     private void LoadFavorites(SqliteCommand cmd)
     {
-      cmd.CommandText = @"
-select fi.FavoriteId, fi.ServiceId, fi.ChannelNum, fi.Selectable, fi.Visible, fi.isDeleted, fi.Protected, l.Lcn 
-from FavoriteItem fi 
-left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
-";
+      cmd.CommandText = dbSchema.SelectChannels;
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
@@ -314,7 +420,8 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
             ci.Lock = r.GetInt32(6) != 0;
             ci.Hidden = r.GetInt32(4) == 0;
             ci.IsDeleted = r.GetInt32(5) != 0;
-            ci.Source = list.ShortCaption;
+            if (list.ShortCaption != "$all")
+              ci.Source = list.ShortCaption;
             if (ci.IsDeleted)
               ci.OldProgramNr = -1;
             if ((ci.SignalSource & (SignalSource.MaskAntennaCableSat | SignalSource.MaskAnalogDigital)) == SignalSource.DvbS)
@@ -379,8 +486,7 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
 
     private void UpdateServices(SqliteCommand cmd)
     {
-      cmd.CommandText =
-        "update Service set Name=@name, ShortName=@sname, ParentalLock=@lock, Visible=@vis, Selectable=@sel, FavTag=@fav1, FavTag2=@fav1, FavTag3=@fav3, FavTag4=@fav4 where Pid=@servId";
+      cmd.CommandText = dbSchema.UpdateService;
       cmd.Parameters.Clear();
       cmd.Parameters.Add("@servId", SqliteType.Integer);
       cmd.Parameters.Add("@name", SqliteType.Text);
@@ -416,7 +522,7 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
 
     private void UpdatePhysicalChannelLists(SqliteCommand cmd)
     {
-      cmd.CommandText = "update FavoriteItem set ChannelNum=@ch, isDeleted=@del, Protected=@prot, Selectable=@sel, Visible=@vis where FavoriteId=@favId and ServiceId=@servId";
+      cmd.CommandText = dbSchema.UpdateChannelItem;
       cmd.Parameters.Clear();
       cmd.Parameters.Add("@favId", SqliteType.Integer);
       cmd.Parameters.Add("@servId", SqliteType.Integer);
@@ -471,11 +577,11 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
     {
       // delete all FavoriteItem records that belong to the FAV1-4 lists
       cmd.Parameters.Clear();
-      cmd.CommandText = "delete from FavoriteItem where FavoriteId in (select Pid from FavoriteList where name like 'FAV_')";
+      cmd.CommandText = dbSchema.DeleteChannelItem;
       cmd.ExecuteNonQuery();
 
       // (re-)insert the user's new favorites
-      cmd.CommandText = "insert into FavoriteItem (FavoriteId, ServiceId, ChannelNum) values (@favId, @servId, @ch)";
+      cmd.CommandText = dbSchema.InsertChannelItem;
       cmd.Parameters.Add("@favId", SqliteType.Integer);
       cmd.Parameters.Add("@servId", SqliteType.Integer);
       cmd.Parameters.Add("@ch", SqliteType.Integer);
@@ -518,59 +624,5 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.FavoriteId=fi.FavoriteId
 
     #endregion
 
-    #region LoadTunerData()
-
-    private void LoadTunerData(SqliteCommand cmd)
-    {
-      var inputs = new List<Tuple<string, SignalSource, string>>
-      {
-        Tuple.Create("C", SignalSource.DvbC, "symbolrate"),
-        Tuple.Create("C2", SignalSource.DvbC, "bandwidth"),
-        Tuple.Create("S", SignalSource.DvbS, "symbolrate"),
-        Tuple.Create("S2", SignalSource.DvbS, "symbolrate"),
-        Tuple.Create("T", SignalSource.DvbT, "bandwidth"),
-        Tuple.Create("T2", SignalSource.DvbT, "bandwidth")
-      };
-
-      foreach (var input in inputs)
-      {
-        var table = input.Item1;
-        var symrate = input.Item3;
-        LoadTunerData(cmd, "DVB" + table + "Tuner", ", Frequency," + symrate, (t, r, i0) =>
-        {
-          t.Source = "DVB-" + input.Item1;
-          t.SignalSource = input.Item2;
-          t.FrequencyInMhz = (decimal) r.GetInt32(i0 + 0) / 1000;
-          t.SymbolRate = r.GetInt32(i0 + 1);
-        });
-      }
-    }
-
-    private void LoadTunerData(SqliteCommand cmd, string joinTable, string joinFields, Action<HisTransponder, SqliteDataReader, int> enhanceTransponderInfo)
-    {
-      if (!tableNames.Contains(joinTable.ToLower()))
-        return;
-
-      cmd.CommandText = $"select tuner.tunerid, oid, tid, satellite {joinFields} "
-                        + $" from tuner inner join {joinTable} on {joinTable}.tunerid=tuner.tunerid";
-
-      using (var r = cmd.ExecuteReader())
-      {
-        while (r.Read())
-        {
-          var id = r.GetInt32(0);
-          var trans = new HisTransponder(id);
-          trans.OriginalNetworkId = r.GetInt32(1);
-          trans.TransportStreamId = r.GetInt32(2);
-          trans.Satellite = DataRoot.Satellites.TryGet(r.GetInt32(3));
-
-          enhanceTransponderInfo(trans, r, 4);
-
-          DataRoot.AddTransponder(trans.Satellite, trans);
-        }
-      }
-    }
-
-    #endregion
   }
 }
