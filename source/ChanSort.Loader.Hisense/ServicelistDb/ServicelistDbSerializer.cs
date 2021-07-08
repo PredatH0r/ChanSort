@@ -539,6 +539,9 @@ left outer join {dbSchema.DvbServiceTable} digs on digs.ServiceId=s.Pid
         if (list.ReadOnly) // don't update read-only lists (i.e. containing LCNs)
           continue;
 
+        if (list.IsMixedSourceFavoritesList)
+          continue;
+
         // don't update the $all list directly. It will be updated while iterating all other lists
         var favId = entry.Key;
         if (favId == pidAll)

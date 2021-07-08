@@ -239,13 +239,14 @@
   <ItemGroup>
     <Compile Include="ChannelDb\HisenseChannelDbTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServicelistDb\HisenseServicelistDbTest.cs" />
+    <Compile Include="ServicelistDb\HisenseServicelistDb2021Test.cs" />
+    <Compile Include="ServicelistDb\HisenseServicelistDb2017Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="ChannelDb\TestFiles\channel.db" />
     <None Include="packages.config" />
-    <None Include="ServicelistDb\TestFiles\servicelist.db" />
+    <None Include="ServicelistDb\TestFiles\servicelist_2017.db" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">

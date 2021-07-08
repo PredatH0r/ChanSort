@@ -8,7 +8,7 @@ namespace Test.Loader
   public static class RoundtripTest
   {
     #region TestChannelAndFavListEditing
-    public static void TestChannelAndFavListEditing(string tempFile, ISerializerPlugin plugin, bool swapChans = true, int firstProgNr = 1)
+    public static void TestChannelAndFavListEditing(string tempFile, ISerializerPlugin plugin, bool swapChans = true, int firstProgNr = 1, int firstProgIndex = 0)
     {
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
@@ -60,6 +60,9 @@ namespace Test.Loader
           Assert.AreEqual(orderedFav ? 1 : firstProgNr + progNr - 1, chans[0].GetPosition(i));
         }
       }
+
+      foreach (var l in root.ChannelLists)
+        l.ReadOnly = false;
 
       ser.Save(tempFile);
 

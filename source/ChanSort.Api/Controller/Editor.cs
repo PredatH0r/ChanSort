@@ -257,7 +257,7 @@ namespace ChanSort.Api
         if (!(chanFilter?.Invoke(refChannel, true) ?? true))
           continue;
 
-        var tvChannel = FindChannel(tvList, newPos, refChannel, onidTsidSid);
+        var tvChannel = FindChannel(tvList, newPos, refChannel, onidTsidSid, overwrite);
 
         if (tvChannel != null)
         {
@@ -307,7 +307,7 @@ namespace ChanSort.Api
       }
     }
 
-    private ChannelInfo FindChannel(ChannelList tvList, int subListIndex, ChannelInfo refChannel, Dictionary<long, List<ChannelInfo>> onidTsidSid)
+    private ChannelInfo FindChannel(ChannelList tvList, int subListIndex, ChannelInfo refChannel, Dictionary<long, List<ChannelInfo>> onidTsidSid, bool overwrite)
     {
       List<ChannelInfo> candidates;
 
@@ -349,12 +349,12 @@ namespace ChanSort.Api
 
       // if the reference list has information about a service type (tv/radio/data), then only consider channels matching it (or lacking service type information)
       var serviceType = refChannel.SignalSource & SignalSource.MaskTvRadioData;
-      if (serviceType != 0)
+      if (serviceType != 0 && serviceType != SignalSource.MaskTvRadioData)
       {
         channels = channels.Where(ch =>
         {
           var m = ch.SignalSource & SignalSource.MaskTvRadioData;
-          return m == 0 || m == serviceType;
+          return m == 0 || (m & serviceType) != 0;
         }).ToList();
       }
 

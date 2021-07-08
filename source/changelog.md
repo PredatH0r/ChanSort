@@ -1,8 +1,9 @@
 ChanSort Change Log 
 ===================
 
-TBA
-- added experimental support for Hisense Vidaa U5.2 format
+2021-07-08
+- added experimental support for Hisense Vidaa U5.2 format (servicelist.db with different table and column names)
+- applying a reference list did not work in some cases (depending on the type of reference list file and channel list)
 
 2021-06-13
 - improved High-DPI support

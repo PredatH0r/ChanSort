@@ -8,7 +8,7 @@ namespace ChanSort.Api
   {
     private static readonly char[] Separators = { ';' };
 
-    private readonly ChannelList allChannels = new ChannelList(0, "All");
+    private readonly ChannelList allChannels = new ChannelList(SignalSource.All, "All");
 
     #region ctor()
 
@@ -65,7 +65,7 @@ namespace ChanSort.Api
           if (!int.TryParse(parts[0], out progNr))
             continue;
 
-          var channel = new ChannelInfo(allChannels.SignalSource, lineNr, progNr, parts[1]);
+          var channel = new ChannelInfo(SignalSource.All, lineNr, progNr, parts[1]);
           if (parts.Length >= 3)
           {
             var subParts = parts[2].Split('-');

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 using ChanSort.Api;
 using ChanSort.Loader.Hisense;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,21 +8,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test.Loader.Hisense.ServicelistDb
 {
   [TestClass]
-  public class HisenseServicelistDbTest
+  public class HisenseServicelistDb2021Test
   {
-    #region TestAstraChannelsAddedToCorrectLists
+    #region TestAntennaChannelsAddedToCorrectLists
     [TestMethod]
-    public void TestAstraChannelsAddedToCorrectLists()
+    public void TestAntennaChannelsAddedToCorrectLists()
     {
-      this.TestChannelsAddedToCorrectLists("servicelist.db", "ASTRA1 19.2°E", 1214, 1052, 162);
-    }
-    #endregion
-
-    #region TestEutelsatChannelsAddedToCorrectLists
-    [TestMethod]
-    public void TesEutelsatChannelsAddedToCorrectLists()
-    {
-      this.TestChannelsAddedToCorrectLists("servicelist.db", "Hot Bird 13°E", 1732, 1439, 293);
+      this.TestChannelsAddedToCorrectLists("servicelist_2021.db", "Antenna", 33, 24, 9);
     }
     #endregion
 
@@ -51,7 +44,7 @@ namespace Test.Loader.Hisense.ServicelistDb
     [TestMethod]
     public void TestDeletingChannel()
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ServicelistDb\\TestFiles\\servicelist.db");
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ServicelistDb\\TestFiles\\servicelist_2021.db");
       var plugin = new HisensePlugin();
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
@@ -59,21 +52,24 @@ namespace Test.Loader.Hisense.ServicelistDb
       data.ValidateAfterLoad();
       data.ApplyCurrentProgramNumbers();
 
-      // Pr# 910 = ORF2E 
+      // Pr# 804 = Das Erste HD
 
       var dvbs = data.GetChannelList(SignalSource.DvbS);
-      var orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
-      Assert.IsNotNull(orf2e);
-      Assert.AreEqual(910, orf2e.OldProgramNr);
-      Assert.AreEqual(910, orf2e.NewProgramNr);
-      Assert.IsFalse(orf2e.IsDeleted);
+      var chan = dvbs.Channels.FirstOrDefault(ch => ch.Name == "Das Erste HD");
+      Assert.IsNotNull(chan);
+      Assert.AreEqual(804, chan.OldProgramNr);
+      Assert.AreEqual(804, chan.NewProgramNr);
+      Assert.IsFalse(chan.IsDeleted);
 
-      orf2e.NewProgramNr = -1;
+      chan.NewProgramNr = -1;
       data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Delete);
 
-      Assert.IsTrue(orf2e.IsDeleted);
-      Assert.IsTrue(orf2e.NewProgramNr > 0);
+      Assert.IsTrue(chan.IsDeleted);
+      Assert.IsTrue(chan.NewProgramNr > 0);
       Assert.AreEqual(0, dvbs.Channels.Count(ch => ch.NewProgramNr <= 0));
+
+      foreach (var list in data.ChannelLists)
+        list.ReadOnly = false;
 
 
       // save and reload
@@ -86,10 +82,10 @@ namespace Test.Loader.Hisense.ServicelistDb
 
       // channel was marked deleted in database
       dvbs = data.GetChannelList(SignalSource.DvbS);
-      orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
-      Assert.IsNotNull(orf2e);
-      Assert.IsTrue(orf2e.IsDeleted);
-      Assert.AreEqual(-1, orf2e.NewProgramNr);
+      chan = dvbs.Channels.FirstOrDefault(ch => ch.Name == "Das Erste HD");
+      Assert.IsNotNull(chan);
+      Assert.IsTrue(chan.IsDeleted);
+      Assert.AreEqual(-1, chan.NewProgramNr);
     }
     #endregion
 
@@ -97,8 +93,8 @@ namespace Test.Loader.Hisense.ServicelistDb
     [TestMethod]
     public void TestChannelAndFavListEditing()
     {
-      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ServicelistDb\\TestFiles\\" + "servicelist.db");
-      RoundtripTest.TestChannelAndFavListEditing(tempFile, new HisensePlugin());
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ServicelistDb\\TestFiles\\" + "servicelist_2021.db");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new HisensePlugin(), true, 271, 7);
     }
     #endregion
 

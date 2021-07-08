@@ -6,7 +6,7 @@ cd /d %~dp0
 set languages=cs de es hu pl pt ru tr
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
-set DXversion=20.2
+set DXversion=21.1
 mkdir "%target%" 2>nul
 rem del /s /q "%target%\*"
 xcopy /idy debug\ChanSort.exe* "%target%"
@@ -98,11 +98,11 @@ goto:eof
 :copyLangDll
 set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
-set source="d:\downloads\DevExpress\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.resources.dll"
+set source="d:\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
 set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
-set source="d:\downloads\DevExpress\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
+set source="d:\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
 goto:eof
 
