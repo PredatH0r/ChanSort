@@ -56,7 +56,7 @@ left outer join Lcn l on l.ServiceId=fi.ServiceId and l.ServiceListId=fi.Service
     public string ShortName => "Service9";
     public string ParentalLock => "0"; // supposedly "Service11", but that's not plausible
     public string UpdateService =>
-      "update Service set Name=@name, Service9=@sname, Service11=@lock, Visible=@vis, /*Selectable=@sel,*/ Service16=@fav1, Service17=@fav2, Service18=@fav3, Service19=@fav4 where Pid=@servId";
+      "update Service set Name=@name, Service9=@sname, Service11=@lock, Visible=@vis, Selectable=@sel, Service16=@fav1, Service17=@fav2, Service18=@fav3, Service19=@fav4 where Pid=@servId";
     public string UpdateChannelItem => "update ServiceItem set ChannelNumber=@ch, ServiceItem6=@del, ServiceItem7=@prot, ServiceItem3=@sel, ServiceItem4=@vis where ServiceListId=@favId and ServiceId=@servId";
     public string DeleteChannelItem => "delete from ServiceItem where ServiceListId in (select Pid from ServiceList where name like 'FAV_')";
     public string InsertChannelItem => "insert into ServiceItem (ServiceListId, ServiceId, ChannelNumber) values (@favId, @servId, @ch)";
