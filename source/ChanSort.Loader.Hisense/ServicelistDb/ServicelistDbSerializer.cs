@@ -416,9 +416,11 @@ left outer join {dbSchema.DvbServiceTable} digs on digs.ServiceId=s.Pid
 #endif
             }
 
-            ci.Skip = r.GetInt32(3) == 0;
-            ci.Lock = r.GetInt32(6) != 0;
-            ci.Hidden = r.GetInt32(4) == 0;
+            // for skip/lock/hide (selectable/protected/visible) the TV supports values in the service table directly and overrides in each favorite-list
+            // ChanSort only supports per-channel values and not per-list, so they are combined here
+            ci.Skip |= r.GetInt32(3) == 0; // -1 = use "Selectable" from Service table, 0=skip, 1=selectable
+            ci.Lock |= r.GetInt32(6) == 1; // -1 = use "ParentalLock/Service11" from Service table, 0=not locked, 1=locked
+            ci.Hidden |= r.GetInt32(4) == 0; // -1 = use "Visible" from Service table, 0=hidden, 1=visible
             ci.IsDeleted = r.GetInt32(5) != 0;
             if (list.ShortCaption != "$all")
               ci.Source = list.ShortCaption;
