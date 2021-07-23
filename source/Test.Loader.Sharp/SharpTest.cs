@@ -24,6 +24,15 @@ namespace Test.Loader.Sharp
     }
     #endregion
 
+    #region TestChannelAndFavListEditing_6
+    [TestMethod]
+    public void TestChannelAndFavListEditing_6()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sharp\\TestFiles\\DVBS_Program6.csv");
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new SharpPlugin());
+    }
+    #endregion
+
     #region TestChannelAndFavListEditing_7
     [TestMethod]
     public void TestChannelAndFavListEditing_7()

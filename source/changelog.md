@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2021-07-23
+DVBS_Program.csv, DVBS_CHANNEL_TABLE.csv, MSxxxx_DVBS_CHANNEL_TABLE.csv: 
+(various versions of these files are used by Blaupunkt, Dyon, Hisense, Sharp and many others)
+- added support for Hisense .csv files with 6 columns including "channel number" and "LCN"
+- using separate lists for DTV, Radio and Data, which all start with 1
+
 2021-07-18
 - added support for Hisense Vidaa U5.2 format (servicelist.db with different table and column names)
 - applying reference lists did not work in many cases (depending on the type of reference list file and channel list)
