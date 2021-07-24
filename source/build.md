@@ -1,6 +1,6 @@
 Build environment
 ---
-ChanSort is a Microsoft .NET Framework 4.8 application and can be built with Visual Studio 2019.
+ChanSort is a Microsoft .NET Framework 4.8 application and can be built with Visual Studio 2019. 
 It uses the "Any CPU" target architecture and a version of Microsoft.Data.Sqlite which supports x86, x64 and ARM, so that the 
 generated ChanSort.exe can run on any of these CPUs.
 
@@ -21,7 +21,7 @@ You can select any of these in the Visual Studio tool bar:
 Run your own build
 ---
 The application is designed so that you can add, modify and compile non-UI projects using the "NoDevExpress_Debug" build configuration.
-Simply copy precompiled ChanSort.exe and \*.UI.dll files to your solution's "Debug" folder, e.g. from a release .zip on [github](https://github.com/PredatH0r/ChanSort/releases).
+Simply copy precompiled ChanSort.exe and \*.UI.dll files to your solution's "Debug" folder, e.g. from a [binary release .zip on github](https://github.com/PredatH0r/ChanSort/releases).
 
 ChanSort.exe will dynamically load all ChanSort.Loader.*.dll assemblies that it finds in its folder and iterates though classes implementing 
 ChanSort.Api.ISerializerPlugin until one successfully loads the file opened by the user.
