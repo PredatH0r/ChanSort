@@ -1,4 +1,5 @@
-*Build environment*
+Build environment
+---
 ChanSort is a Microsoft .NET Framework 4.8 application and can be built with Visual Studio 2019. 
 
 The user interface is based on Windows Forms and the commercial "DevExpress WinForms" user interface library from Developer Express. 
@@ -8,19 +9,22 @@ To add/change any of the file loading modules, you don't need a license.
 The Visual Studio plug-in "ResX Manager" is used to export and import language specific strings to/from the translation.xls file,
 which can be edited by volunteers. Converting the .xls back to .resx and satellite assemblies requires recompilation of all projects.
 
-*Build configurations* (selectable in the Visual Studio Toolbar): 
+Build configurations (selectable in the Visual Studio Toolbar): 
+---
 - NoDevExpress_Debug: builds all source projects, except ChanSort and ChanSort.Loader.LG.UI (no license needed) 
 - All_Debug: builds all source projects (requires a license) 
 - All_Release: not used (requires a license) 
 
-*Run your own build*
+Run your own build
+---
 The application is designed so that you can add, modify and compile non-UI projects using the "NoDevExpress_Debug" build configuration
 and copy precompiled ChanSort.exe and \*.UI.dll files to the ..\Debug folder (e.g. from a release .zip on github.com/ChanSort/releases/).
 
 ChanSort.exe will dynamically load all ChanSort.Loader.*.dll assemblies that it finds in its folder and iterates though classes implementing 
 ChanSort.Api.ISerializerPlugin until one successfully loads a channel list file.
 
-*Write your own Loader project*
+Write your own Loader project
+---
 You can add a new project to the solution, open Build / Configuration manager and select your project to be included in the build.
 
 ChanSort will use your ISerializerPlugin implementation to get an instance of your loader class, which must be derived from SerializerBase. 
@@ -36,7 +40,8 @@ Override SerializerBase.GetFileInformation() if you want to display some informa
 The ChanSort.Api.View class can be used by your non-UI project to access some very basic UI functions (message box, action selection).
 
 
-*Sample code*
+Sample code
+---
 If you want to write a loader for a new file format, it's best to look at an existing loader that uses a similar data format: 
 - Binary files: Samsung.Scm, LG.Binary, Philips.BinarySerializer
 - SQLite: Hisense, Panasonic, Samsung.Zip, Toshiba

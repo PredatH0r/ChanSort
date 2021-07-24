@@ -152,7 +152,8 @@ Requires a local copy of the files "lamedb", "bouquets.\*" and "userbouquet.\*" 
 
 Build from source
 -----------------
-See [build.md](build.md)
+See [build.md](source/build.md)
+
 
 License (GPLv3)
 ---------------

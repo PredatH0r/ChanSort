@@ -150,6 +150,11 @@ Unterstützt SAT>IP .m3u Dateien mit erweiterten Informationen zu Sendernamen und
 Erfordert eine lokale Kopie der Dateien "lamedb", "bouquets.\*" and "userbouquet.\*" aus /etc/Enigma2/.  
 
 
+Quellcode selbst übersetzen
+-----------------
+Siehe [build.md](source/build.md)
+
+
 Lizenz (GPLv3)
 ---------------
 GNU General Public Licence, Version 3: http://www.gnu.org/licenses/gpl.html  
