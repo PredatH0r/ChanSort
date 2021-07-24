@@ -13,7 +13,7 @@ ChanSort is a Windows application that allows you to reorder your TV's channel l
 Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
 ChanSort supports various file formats from Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,
 Sharp, Dyon, Blaupunkt, SatcoDX (used by ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),
-Linux VDR, SAT>IP .m3u and Enimgma2 based Linux boxes.
+Linux VDR, SAT>IP .m3u and Enigma2 based Linux boxes.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-en.png)
 
@@ -149,6 +149,10 @@ Supports SAT>IP .m3u files with extended information holding channel names and p
 **Enigma2 (Dreambox, VU+ and many other Linux based receivers)**  
 Requires a local copy of the files "lamedb", "bouquets.\*" and "userbouquet.\*" from /etc/Enigma2/.  
 
+
+Build from source
+-----------------
+See [build.md](build.md)
 
 License (GPLv3)
 ---------------

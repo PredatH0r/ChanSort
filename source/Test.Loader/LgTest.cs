@@ -27,7 +27,8 @@ namespace Test.Loader
       var firmwareSize = new Dictionary<int, string>();
       foreach(var file in list)
       {
-        if (file.Contains("GlobalClone"))
+        var lfile = file.ToLowerInvariant();
+        if (lfile.Contains("globalclone") || lfile.Contains("atsc") || lfile.Contains("broken") || lfile.Contains("bad") || lfile.Contains("incomplete"))
           continue;
         //Debug.Print("Testing " + file);
         try

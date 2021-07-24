@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using ChanSort.Api;
-using System.Windows.Forms;
 using ChanSort.Loader.LG;
 
 namespace ChanSort.Loader.GlobalClone
@@ -107,7 +106,7 @@ namespace ChanSort.Loader.GlobalClone
             {
               series = match.Groups[1].Value;
               if ((series == "LB" || series == "UB") && StringComparer.InvariantCulture.Compare(match.Groups[2].Value, "60") >= 0)
-                Api.View.Default.MessageBox(Resource.GcSerializer_webOsFirmwareWarning, "LG GlobalClone", (int)MessageBoxButtons.OK, (int)MessageBoxIcon.Information);
+                Api.View.Default.MessageBox(Resource.GcSerializer_webOsFirmwareWarning, "LG GlobalClone", View.MessageBoxButtons.OK, View.MessageBoxIcon.Information);
             }
             break;
         }
@@ -119,7 +118,7 @@ namespace ChanSort.Loader.GlobalClone
       if (binTlls.Length > 0 && !(binTlls.Length == 1 && Path.GetFileName(binTlls[0]).ToLower() == Path.GetFileName(this.FileName).ToLower()))
       {
         var txt = Resource.GcSerializer_ReadModelInfo_ModelWarning;
-        if (Api.View.Default != null && Api.View.Default.MessageBox(txt, "LG GlobalClone", (int)MessageBoxButtons.YesNo, (int)MessageBoxIcon.Information) == (int)DialogResult.Yes)
+        if (Api.View.Default != null && Api.View.Default.MessageBox(txt, "LG GlobalClone", View.MessageBoxButtons.YesNo, View.MessageBoxIcon.Information) == View.DialogResult.Yes)
         {
           foreach (var file in binTlls)
             File.Move(file, file + "_bak");
@@ -205,7 +204,7 @@ namespace ChanSort.Loader.GlobalClone
       if (total == 0)
       {
         Api.View.Default.MessageBox(Resource.GcSerializer_ReadChannelLists_NoChannelsMsg, Resource.GcSerializer_ReadChannelLists_NoChannelsCap, 
-          (int)MessageBoxButtons.OK, (int)MessageBoxIcon.Exclamation);
+          View.MessageBoxButtons.OK, View.MessageBoxIcon.Exclamation);
       }
     }
     #endregion

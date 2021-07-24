@@ -494,6 +494,10 @@
       <Project>{d093e7ee-d3ad-4e7b-af82-c6918ca017fb}</Project>
       <Name>ChanSort.Loader.Hisense</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.LG.UI\ChanSort.Loader.LG.UI.csproj">
+      <Project>{321deb9d-9f28-47b3-8b90-ee036b5f0019}</Project>
+      <Name>ChanSort.Loader.LG.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj">
       <Project>{e972d8a1-2f5f-421c-ac91-cff45e5191be}</Project>
       <Name>ChanSort.Loader.LG</Name>

@@ -64,17 +64,11 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Data.Desktop.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -90,12 +84,6 @@
     <Compile Include="GlobalClone\GcJsonSerializer.cs" />
     <Compile Include="LgPlugin.cs" />
     <Compile Include="GlobalClone\GcXmlSerializer.cs" />
-    <Compile Include="PresetProgramNrDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PresetProgramNrDialog.Designer.cs">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -108,12 +96,7 @@
     <Compile Include="Binary\TllChannelBase.cs" />
     <Compile Include="Binary\TllFileSerializer.cs" />
     <Compile Include="Binary\TllFileSerializer.sql.cs" />
-    <Compile Include="Binary\TvSettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Binary\TvSettingsForm.Designer.cs">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="ILgUserInterfaceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
@@ -127,37 +110,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PresetProgramNrDialog.cs.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.de.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.es.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.hu.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.pl.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.pt.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.ro.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.ru.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.tr.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Resource.cs.resx" />
     <EmbeddedResource Include="Resource.de.resx">
@@ -177,38 +129,6 @@
     <EmbeddedResource Include="Resource.ro.resx" />
     <EmbeddedResource Include="Resource.ru.resx" />
     <EmbeddedResource Include="Resource.tr.resx" />
-    <EmbeddedResource Include="Binary\TvSettingsForm.cs.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Binary\TvSettingsForm.de.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Binary\TvSettingsForm.es.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Binary\TvSettingsForm.hu.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Binary\TvSettingsForm.pl.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Binary\TvSettingsForm.pt.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Binary\TvSettingsForm.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Binary\TvSettingsForm.ro.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Binary\TvSettingsForm.ru.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Binary\TvSettingsForm.tr.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

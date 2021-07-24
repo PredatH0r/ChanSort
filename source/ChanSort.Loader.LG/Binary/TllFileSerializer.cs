@@ -2,15 +2,17 @@
 //#define LM640T_EXPERIMENT
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Windows.Forms;
 using ChanSort.Api;
+using View = ChanSort.Api.View;
 
 namespace ChanSort.Loader.LG.Binary
 {
-  public partial class TllFileSerializer : SerializerBase
+  public partial class TllFileSerializer : SerializerBase, ITllFileSerializer
   {
     enum SpecialHandlingModels { Standard, LH3000, LH250, PN, LP, LT, LY };
 
@@ -71,6 +73,8 @@ namespace ChanSort.Loader.LG.Binary
     private bool removeDeletedActChannels;
     private bool mustReorganizeDvbs;
     private decimal dvbsSymbolRateFactor;
+
+    private ILgUserInterfaceFactory uiFactory;
 
     #region ctor()
     public TllFileSerializer(string inputFile) : base(inputFile)
@@ -136,6 +140,8 @@ namespace ChanSort.Loader.LG.Binary
 
     public override void Load()
     {
+      this.InitUiFactory();
+
       string basename = (Path.GetFileNameWithoutExtension(this.FileName) ?? "").ToUpper();
       if (basename.StartsWith("XXLH250"))
         this.specialModel = SpecialHandlingModels.LH250;
@@ -176,7 +182,7 @@ namespace ChanSort.Loader.LG.Binary
           channel.NewProgramNr = channel.OldProgramNr;
         foreach (var channel in this.satRadioChannels.Channels)
           channel.NewProgramNr = channel.OldProgramNr;
-        if (IsTesting || new PresetProgramNrDialog().ShowDialog() != DialogResult.Yes)
+        if (IsTesting || !PromptForEditingPresetList())
         {
           this.satTvChannels.ReadOnly = true;
           this.satRadioChannels.ReadOnly = true;          
@@ -189,6 +195,41 @@ namespace ChanSort.Loader.LG.Binary
 
       foreach (var list in this.DataRoot.ChannelLists)
         list.MaxChannelNameLength = 40;
+    }
+
+    private void InitUiFactory()
+    {
+      if (this.uiFactory != null || this.IsTesting)
+        return;
+
+      // run-time-binding to the UI factory so that the loader module can be edited + compiled without DevExpress dependencies
+      var ass = Assembly.Load(new AssemblyName("ChanSort.Loader.LG.UI"));
+      var type = ass.GetType("ChanSort.Loader.LG.UI.LgUserInterfaceFactory");
+      this.uiFactory = (ILgUserInterfaceFactory)Activator.CreateInstance(type);
+    }
+
+    private bool PromptForEditingPresetList()
+    {
+#if false
+      return uiFactory.ShowPresetProgramNrDialog();
+#else
+      View.Default.ShowHtmlBox(
+@"<b>Editing of the satellite channel list is disabled!</b>
+
+This file contains preset program numbers for satellite channels. 
+Due to issues with most recent LG firmwares such lists can no longer be modified reliably.
+
+<b>To enable editing you must first run a clean full channel search:</b>
+- Keep a copy of the current TLL file if you want to use it as a reference list later
+- Execute a Factory Reset on your TV
+- Execute an automatic channel search with options 'Full', 'None' and 'Blind search'
+- Save the new list to USB and open it with ChanSort
+
+
+<a href='http://sourceforge.net/p/chansort/wiki/Channels%20disappear%20or%20change%20program%20numbers%20randomly/'>See the ChanSort Wiki for details</a>",
+"!!! Attention !!!", 450, 220, url => Process.Start(url));
+      return false; // TODO
+#endif
     }
 
     #endregion
@@ -1102,10 +1143,7 @@ namespace ChanSort.Loader.LG.Binary
     #region ShowDeviceSettingsForm()
     public override void ShowDeviceSettingsForm(object parentWindow)
     {
-      using (var dlg = new TvSettingsForm(this))
-      {
-        dlg.ShowDialog((Form)parentWindow);
-      }
+      uiFactory.ShowTvSettingsForm(this, parentWindow);
     }
     #endregion
 

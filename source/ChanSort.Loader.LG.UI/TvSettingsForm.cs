@@ -6,9 +6,9 @@ namespace ChanSort.Loader.LG.Binary
 {
   public partial class TvSettingsForm : XtraForm
   {
-    private readonly TllFileSerializer tvSerializer;
+    private readonly ITllFileSerializer tvSerializer;
 
-    public TvSettingsForm(TllFileSerializer tvSerializer)
+    public TvSettingsForm(ITllFileSerializer tvSerializer)
     {
       this.tvSerializer = tvSerializer;
       InitializeComponent();

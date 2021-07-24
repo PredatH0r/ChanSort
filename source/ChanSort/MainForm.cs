@@ -104,7 +104,8 @@ namespace ChanSort.Ui
       // The Api.View.Default object gives loaders access to UI functions
       Api.View.Default = new Api.View();
       Api.View.Default.CreateActionBox = msg => new ActionBoxDialog(msg);
-      Api.View.Default.MessageBoxImpl = (msg, caption, buttons, icon) => (int)XtraMessageBox.Show(this, msg, caption, (MessageBoxButtons) buttons, (MessageBoxIcon) icon);
+      Api.View.Default.MessageBoxImpl = (msg, caption, buttons, icon) => (Api.View.DialogResult)(int)XtraMessageBox.Show(this, msg, caption, (MessageBoxButtons)buttons, (MessageBoxIcon)icon);
+      Api.View.Default.ShowHtmlBoxImpl = ShowHtmlBoxImpl;
 
       var defaultColumns = new List<string>();
       foreach (GridColumn col in this.gviewRight.Columns.OrderBy(c => c.VisibleIndex))
@@ -115,6 +116,46 @@ namespace ChanSort.Ui
 
       ChannelList.DefaultVisibleColumns = defaultColumns;
     }
+    #endregion
+
+    #region CreateHtmlBoxImpl
+    private void ShowHtmlBoxImpl(string html, string title, int width, int height, Action<string> onUrlClick)
+    {
+      var dlg = new XtraForm();
+      dlg.SuspendLayout();
+      
+      dlg.ClientSize = new Size(width, height);
+      dlg.MinimizeBox = false;
+      dlg.MaximizeBox = false;
+      dlg.StartPosition = FormStartPosition.CenterParent;
+      dlg.Text = title ?? "";
+
+      var lbl = new LabelControl();
+      lbl.Location = new Point(10, 10);
+      lbl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+      lbl.AutoSizeMode = LabelAutoSizeMode.None;
+      lbl.Appearance.TextOptions.VAlignment = VertAlignment.Top;
+      lbl.Size = new Size(width - 10 - 10, height - 10 - 32);
+      lbl.AllowHtmlString = true;
+      lbl.Appearance.TextOptions.WordWrap = WordWrap.Wrap;
+      lbl.Text = html;
+      if (onUrlClick != null)
+        lbl.HyperlinkClick += (sender, args) => onUrlClick(args.Link);
+      dlg.Controls.Add(lbl);
+
+      var btn = new SimpleButton();
+      btn.Size = new Size(60, 24);
+      btn.Location = new Point(width - 70, height - 30);
+      btn.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+      btn.Text = "Ok";
+      btn.DialogResult = DialogResult.OK;
+      dlg.Controls.Add(btn);
+
+      dlg.ResumeLayout();
+
+      dlg.ShowDialog(this);
+    }
+
     #endregion
 
     internal IList<ISerializerPlugin> Plugins { get; }
@@ -619,6 +660,9 @@ namespace ChanSort.Ui
 
     private void InitInitialChannelOrder()
     {
+      if (this.DataRoot.ChannelLists.All(l => l.Count == 0 || l.ReadOnly))
+        return;
+
       DialogResult res;
       var msg = Resources.MainForm_InitInitialChannelOrder_Question;
       using (var dlg = new ActionBoxDialog(msg))

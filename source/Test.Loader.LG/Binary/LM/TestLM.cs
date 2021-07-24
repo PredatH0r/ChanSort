@@ -47,7 +47,7 @@ namespace Test.Loader.LG.Binary
     public void TestDeletingChannel()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.LG\\Binary\\LM\\xxLM620s-ZE00001.TLL.in");
-      var plugin = new LgPlugin();
+      var plugin = new LgPlugin() { IsTesting = true };
       var ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       var data = ser.DataRoot;
@@ -93,7 +93,7 @@ namespace Test.Loader.LG.Binary
       var tllFile = inFile.Replace(".in", ".tll");
       File.Delete(tllFile);
       File.Move(inFile, tllFile);
-      RoundtripTest.TestChannelAndFavListEditing(tllFile, new LgPlugin());
+      RoundtripTest.TestChannelAndFavListEditing(tllFile, new LgPlugin() {IsTesting = true});
     }
     #endregion
 

@@ -21,7 +21,9 @@ namespace ChanSort.Loader.LG
       if (content.Contains("<TLLDATA>"))
         return new GlobalClone.GcXmlSerializer(inputFile);
 
-      return new Binary.TllFileSerializer(inputFile);
+      return new Binary.TllFileSerializer(inputFile) { IsTesting = this.IsTesting };
     }
+
+    internal bool IsTesting { get; set; }
   }
 }
