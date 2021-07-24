@@ -1,6 +1,8 @@
 Build environment
 ---
-ChanSort is a Microsoft .NET Framework 4.8 application and can be built with Visual Studio 2019. 
+ChanSort is a Microsoft .NET Framework 4.8 application and can be built with Visual Studio 2019.
+It uses the "Any CPU" target architecture and a version of Microsoft.Data.Sqlite which supports x86, x64 and ARM, so that the 
+generated ChanSort.exe can run on any of these CPUs.
 
 The user interface is based on Windows Forms and the commercial "DevExpress WinForms" user interface library from Developer Express. 
 To change and compile the user interface, you need a DevExpress license. 
@@ -9,23 +11,24 @@ To add/change any of the file loading modules, you don't need a license.
 The Visual Studio plug-in "ResX Manager" is used to export and import language specific strings to/from the translation.xls file,
 which can be edited by volunteers. Converting the .xls back to .resx and satellite assemblies requires recompilation of all projects.
 
-Build configurations (selectable in the Visual Studio Toolbar): 
+Build configurations 
 ---
-- NoDevExpress_Debug: builds all source projects, except ChanSort and ChanSort.Loader.LG.UI (no license needed) 
-- All_Debug: builds all source projects (requires a license) 
-- All_Release: not used (requires a license) 
+You can select any of these in the Visual Studio tool bar:
+- **NoDevExpress_Debug**: builds all source projects, except ChanSort and ChanSort.Loader.LG.UI (no license needed) 
+- **All_Debug**: builds all source projects (requires a DevExpress license) 
+- All_Release: not used
 
 Run your own build
 ---
-The application is designed so that you can add, modify and compile non-UI projects using the "NoDevExpress_Debug" build configuration
-and copy precompiled ChanSort.exe and \*.UI.dll files to the ..\Debug folder (e.g. from a release .zip on github.com/ChanSort/releases/).
+The application is designed so that you can add, modify and compile non-UI projects using the "NoDevExpress_Debug" build configuration.
+Simply copy precompiled ChanSort.exe and \*.UI.dll files to your solution's "Debug" folder, e.g. from a release .zip on [github](https://github.com/PredatH0r/ChanSort/releases).
 
 ChanSort.exe will dynamically load all ChanSort.Loader.*.dll assemblies that it finds in its folder and iterates though classes implementing 
-ChanSort.Api.ISerializerPlugin until one successfully loads a channel list file.
+ChanSort.Api.ISerializerPlugin until one successfully loads the file opened by the user.
 
-Write your own Loader project
+Write your own loader project
 ---
-You can add a new project to the solution, open Build / Configuration manager and select your project to be included in the build.
+You can add a new "Class Library (.NET Framework)" project to the solution, open Build / Configuration manager and select your project to be included in the build.
 
 ChanSort will use your ISerializerPlugin implementation to get an instance of your loader class, which must be derived from SerializerBase. 
 The SerializerBase.DataRoot object is where your loader adds the lists and channels so that the UI can display them.
