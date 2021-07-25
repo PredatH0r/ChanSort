@@ -306,7 +306,7 @@
       // 
       // gviewLeft
       // 
-      this.gviewLeft.Appearance.FocusedRow.Font = ((System.Drawing.Font)(resources.GetObject("gviewLeft.Appearance.FocusedRow.Font")));
+      this.gviewLeft.Appearance.FocusedRow.FontStyleDelta = ((System.Drawing.FontStyle)(resources.GetObject("gviewLeft.Appearance.FocusedRow.FontStyleDelta")));
       this.gviewLeft.Appearance.FocusedRow.Options.UseFont = true;
       this.gviewLeft.Appearance.HeaderPanel.Options.UseTextOptions = true;
       this.gviewLeft.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
@@ -629,7 +629,7 @@
       // 
       // gviewRight
       // 
-      this.gviewRight.Appearance.FocusedRow.Font = ((System.Drawing.Font)(resources.GetObject("gviewRight.Appearance.FocusedRow.Font")));
+      this.gviewRight.Appearance.FocusedRow.FontStyleDelta = ((System.Drawing.FontStyle)(resources.GetObject("gviewRight.Appearance.FocusedRow.FontStyleDelta")));
       this.gviewRight.Appearance.FocusedRow.Options.UseFont = true;
       this.gviewRight.Appearance.HeaderPanel.Options.UseTextOptions = true;
       this.gviewRight.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;

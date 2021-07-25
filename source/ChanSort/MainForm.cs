@@ -62,7 +62,6 @@ namespace ChanSort.Ui
     {
       if (!string.IsNullOrEmpty(Config.Default.Language))
         Thread.CurrentThread.CurrentUICulture = new CultureInfo(Config.Default.Language);
-      //this.LookAndFeel.SetSkinStyle("Office 2010 Blue");
       UserLookAndFeel.Default.SkinName = Config.Default.SkinName;
 
       InitializeComponent();
@@ -3345,7 +3344,7 @@ namespace ChanSort.Ui
           return;
         }
 
-        if (deltaSize == Config.Default.FontSizeDelta) // no change => early exit
+        if (deltaSize == Config.Default.FontSizeDelta && deltaSize == 0) // no change => early exit
           return;
 
         var font = new Font(deltaSize == 0 ? "Tahoma" : "Segoe UI", 8.25f + deltaSize);

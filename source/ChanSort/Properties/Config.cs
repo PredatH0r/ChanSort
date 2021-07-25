@@ -52,7 +52,7 @@ namespace ChanSort.Ui.Properties
     public int PrintColumnCount { get; set; } = 2;
     public bool ExplorerIntegration { get; set; } = false;
     public bool CheckForUpdates { get; set; } = true;
-    public int FontSizeDelta { get; set; }
+    public int FontSizeDelta { get; set; } = 1;
     public string LeftGridLayout { get; set; }
     public string RightGridLayout { get; set; }
     
