@@ -176,6 +176,12 @@
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="SkinPickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SkinPickerForm.Designer.cs">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TextInputForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -428,6 +434,36 @@
     <EmbeddedResource Include="ReferenceListForm.tr.resx">
       <DependentUpon>ReferenceListForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.cs.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.de.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.es.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.hu.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.pl.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.pt.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.ro.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.ru.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkinPickerForm.tr.resx">
+      <DependentUpon>SkinPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TextInputForm.resx">
       <DependentUpon>TextInputForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -542,13 +578,7 @@
     <None Include="Resources\Donate.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\btn_donateCC_LG.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\paypal-button.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btn_donateCC_LG_de.gif" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReferenceLists\at_astra192E_orf-freehd.txt">
@@ -568,6 +598,8 @@
     <Content Include="ChanSort.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\btn_donateCC_LG.png" />
+    <Content Include="Resources\btn_donateCC_LG_de.png" />
     <None Include="ReferenceLists\it_hotbird130E_tivusat_EasyHD_&amp;_FTA.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

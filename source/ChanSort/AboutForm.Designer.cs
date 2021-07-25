@@ -61,7 +61,7 @@
       // 
       resources.ApplyResources(this.lnkDownload, "lnkDownload");
       this.lnkDownload.Name = "lnkDownload";
-      this.lnkDownload.Properties.Appearance.BackColor = ((System.Drawing.Color)(resources.GetObject("lnkDownload.Properties.Appearance.BackColor")));
+      this.lnkDownload.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
       this.lnkDownload.Properties.Appearance.Options.UseBackColor = true;
       this.lnkDownload.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
       this.lnkDownload.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.lnkDownload_OpenLink);
@@ -106,7 +106,7 @@
       // 
       resources.ApplyResources(this.lnkEmail, "lnkEmail");
       this.lnkEmail.Name = "lnkEmail";
-      this.lnkEmail.Properties.Appearance.BackColor = ((System.Drawing.Color)(resources.GetObject("lnkEmail.Properties.Appearance.BackColor")));
+      this.lnkEmail.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
       this.lnkEmail.Properties.Appearance.Options.UseBackColor = true;
       this.lnkEmail.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
       this.lnkEmail.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.lnkEmail_OpenLink);
@@ -125,7 +125,7 @@
       // 
       resources.ApplyResources(this.lnkLicense, "lnkLicense");
       this.lnkLicense.Name = "lnkLicense";
-      this.lnkLicense.Properties.Appearance.BackColor = ((System.Drawing.Color)(resources.GetObject("lnkLicense.Properties.Appearance.BackColor")));
+      this.lnkLicense.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
       this.lnkLicense.Properties.Appearance.Options.UseBackColor = true;
       this.lnkLicense.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
       this.lnkLicense.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.lnkLicense_OpenLink);

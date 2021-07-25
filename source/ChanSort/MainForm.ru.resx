@@ -339,7 +339,7 @@
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>Набор символов</value>
   </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
+  <data name="mnuLanguages.Caption" xml:space="preserve">
     <value>Язык</value>
   </data>
   <data name="mnuOptions.Caption" xml:space="preserve">
@@ -467,5 +467,8 @@
   </data>
   <data name="colIndex1.Caption" xml:space="preserve">
     <value>Индекс пр.</value>
+  </data>
+  <data name="miTheme.Caption" xml:space="preserve">
+    <value>Цветовая схема</value>
   </data>
 </root>

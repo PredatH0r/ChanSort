@@ -396,7 +396,7 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Zeichensatz</value>
   </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
+  <data name="mnuLanguages.Caption" xml:space="preserve">
     <value>&amp;Sprache</value>
   </data>
   <data name="mnuOptions.Caption" xml:space="preserve">
@@ -525,7 +525,7 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   <data name="miSelectFavListE.Caption" xml:space="preserve">
     <value>Favoriten E</value>
   </data>
-  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+  <data name="miSearch.Caption" xml:space="preserve">
     <value>Filterzeile in der &amp;linken Liste</value>
   </data>
   <data name="miGotoLeftList.Caption" xml:space="preserve">
@@ -681,5 +681,8 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   </data>
   <data name="miResetAndRestart.Hint" xml:space="preserve">
     <value>Löscht alle Benutzereinstellungen und startet das Programm neu</value>
+  </data>
+  <data name="miTheme.Caption" xml:space="preserve">
+    <value>Farbschema</value>
   </data>
 </root>

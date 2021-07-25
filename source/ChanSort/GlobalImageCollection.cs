@@ -50,7 +50,55 @@ namespace ChanSort.Ui
       // rawImageCollection
       // 
       this.rawImageCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("rawImageCollection.ImageStream")));
+      this.rawImageCollection.Images.SetKeyName(0, "0000.png");
+      this.rawImageCollection.Images.SetKeyName(1, "0001.png");
+      this.rawImageCollection.Images.SetKeyName(2, "0002.png");
+      this.rawImageCollection.Images.SetKeyName(3, "0003.png");
+      this.rawImageCollection.Images.SetKeyName(4, "0004.png");
+      this.rawImageCollection.Images.SetKeyName(5, "0005.png");
+      this.rawImageCollection.Images.SetKeyName(6, "0006.png");
+      this.rawImageCollection.Images.SetKeyName(7, "0007.png");
+      this.rawImageCollection.Images.SetKeyName(8, "0008.png");
+      this.rawImageCollection.Images.SetKeyName(9, "0009.png");
+      this.rawImageCollection.Images.SetKeyName(10, "0010.png");
+      this.rawImageCollection.Images.SetKeyName(11, "0011.png");
+      this.rawImageCollection.Images.SetKeyName(12, "0012.png");
+      this.rawImageCollection.Images.SetKeyName(13, "0013.png");
+      this.rawImageCollection.Images.SetKeyName(14, "0014.png");
+      this.rawImageCollection.Images.SetKeyName(15, "0015.png");
+      this.rawImageCollection.Images.SetKeyName(16, "0016.png");
+      this.rawImageCollection.Images.SetKeyName(17, "0017.png");
+      this.rawImageCollection.Images.SetKeyName(18, "0018.png");
+      this.rawImageCollection.Images.SetKeyName(19, "0019.png");
+      this.rawImageCollection.Images.SetKeyName(20, "0020.png");
+      this.rawImageCollection.Images.SetKeyName(21, "0021.png");
+      this.rawImageCollection.Images.SetKeyName(22, "0022.png");
+      this.rawImageCollection.Images.SetKeyName(23, "0023.png");
+      this.rawImageCollection.Images.SetKeyName(24, "0024.png");
+      this.rawImageCollection.Images.SetKeyName(25, "0025.png");
+      this.rawImageCollection.Images.SetKeyName(26, "0026.png");
+      this.rawImageCollection.Images.SetKeyName(27, "0027.png");
+      this.rawImageCollection.Images.SetKeyName(28, "0028.png");
+      this.rawImageCollection.Images.SetKeyName(29, "0029.png");
+      this.rawImageCollection.Images.SetKeyName(30, "0030.png");
+      this.rawImageCollection.Images.SetKeyName(31, "0031.png");
+      this.rawImageCollection.Images.SetKeyName(32, "0032.png");
+      this.rawImageCollection.Images.SetKeyName(33, "0033.png");
+      this.rawImageCollection.Images.SetKeyName(34, "0034.png");
+      this.rawImageCollection.Images.SetKeyName(35, "0035.png");
+      this.rawImageCollection.Images.SetKeyName(36, "0036.png");
+      this.rawImageCollection.Images.SetKeyName(37, "0037.png");
+      this.rawImageCollection.Images.SetKeyName(38, "0038.png");
+      this.rawImageCollection.Images.SetKeyName(39, "0039.png");
+      this.rawImageCollection.Images.SetKeyName(40, "0040.png");
+      this.rawImageCollection.Images.SetKeyName(41, "0041.png");
+      this.rawImageCollection.Images.SetKeyName(42, "0042.png");
+      this.rawImageCollection.Images.SetKeyName(43, "0043.png");
+      this.rawImageCollection.Images.SetKeyName(44, "0044.png");
+      this.rawImageCollection.Images.SetKeyName(45, "0045.png");
+      this.rawImageCollection.Images.SetKeyName(46, "0046.png");
       this.rawImageCollection.Images.SetKeyName(47, "0047.png");
+      this.rawImageCollection.Images.SetKeyName(48, "0048.png");
       ((System.ComponentModel.ISupportInitialize)(this.rawImageCollection)).EndInit();
 
     }

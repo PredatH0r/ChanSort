@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ChanSort.Api
@@ -96,15 +95,28 @@ namespace ChanSort.Api
     {
       if (channels.Count == 0)
         return;
+
       if (up && channels[0].GetPosition(this.SubListIndex) <= this.ChannelList.FirstProgramNumber)
         return;
+      if (channels.Any(ch => ch.NewProgramNr < 0))
+        return;
 
+      int maxNr = this.ChannelList.Channels.Count == 0 ? 0 : this.ChannelList.Channels.Max(c => c.GetPosition(this.SubListIndex));
       int delta = (up ? -1 : +1);
       foreach (var channel in (up ? channels : channels.Reverse()))
       {
         int newProgramNr = channel.GetPosition(this.SubListIndex) + delta;
-        ChannelInfo channelAtNewPos =
-          this.ChannelList.Channels.FirstOrDefault(ch => ch.GetPosition(this.SubListIndex) == newProgramNr);
+        if (newProgramNr < 0) // can't move a channel up when it's not in the list
+          continue;
+        if (newProgramNr == 0) // "+" should work like "add at the end" when the channel is not in the list yet
+        {
+          newProgramNr = ++maxNr;
+          channel.SetPosition(this.SubListIndex, newProgramNr);
+          continue;
+        }
+
+        maxNr = Math.Max(maxNr, newProgramNr);
+        ChannelInfo channelAtNewPos = this.ChannelList.Channels.FirstOrDefault(ch => ch.GetPosition(this.SubListIndex) == newProgramNr);
         if (channelAtNewPos != null)
           channelAtNewPos.ChangePosition(this.SubListIndex, -delta);
         channel.ChangePosition(this.SubListIndex, delta);

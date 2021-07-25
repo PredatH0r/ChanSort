@@ -123,7 +123,7 @@
   <data name="bar1.Text" xml:space="preserve">
     <value>Nástroje</value>
   </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
+  <data name="mnuLanguages.Caption" xml:space="preserve">
     <value>&amp;Jazyk</value>
   </data>
   <data name="barSubItem2.Caption" xml:space="preserve">
@@ -420,7 +420,7 @@
   <data name="miFileInformation.Caption" xml:space="preserve">
     <value>Informace o souboru</value>
   </data>
-  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+  <data name="miSearch.Caption" xml:space="preserve">
     <value>&amp;Filtr levého seznamu</value>
   </data>
   <data name="miGotoLeftList.Caption" xml:space="preserve">
@@ -611,5 +611,8 @@
   </data>
   <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
     <value>Přepnout oblíbené H</value>
+  </data>
+  <data name="miTheme.Caption" xml:space="preserve">
+    <value>Barevné schéma</value>
   </data>
 </root>

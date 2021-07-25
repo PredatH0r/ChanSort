@@ -227,7 +227,7 @@
   <data name="mnuCharset.Caption" xml:space="preserve">
     <value>&amp;Tabela de caracteres</value>
   </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
+  <data name="mnuLanguages.Caption" xml:space="preserve">
     <value>&amp;Idioma</value>
   </data>
   <data name="mnuOptions.Caption" xml:space="preserve">
@@ -369,5 +369,8 @@
         X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
         WIeWYGkVXQEL
 </value>
+  </data>
+  <data name="miTheme.Caption" xml:space="preserve">
+    <value>Esquema de cores</value>
   </data>
 </root>

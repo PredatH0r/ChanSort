@@ -276,7 +276,7 @@
   <data name="mnuOptions.Caption" xml:space="preserve">
     <value>&amp;Ustawienia</value>
   </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
+  <data name="mnuLanguages.Caption" xml:space="preserve">
     <value>&amp;Język</value>
   </data>
   <data name="mnuCharset.Caption" xml:space="preserve">
@@ -348,7 +348,7 @@
   <data name="miSelectFavListE.Caption" xml:space="preserve">
     <value>Ulubione E</value>
   </data>
-  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+  <data name="miSearch.Caption" xml:space="preserve">
     <value>&amp;Filtr listy po lewej stronie</value>
   </data>
   <data name="miGotoLeftList.Caption" xml:space="preserve">
@@ -665,5 +665,8 @@
   </data>
   <data name="splitContainerControl1.Text" xml:space="preserve">
     <value>splitContainerControl1</value>
+  </data>
+  <data name="miTheme.Caption" xml:space="preserve">
+    <value>Schemat kolorów</value>
   </data>
 </root>

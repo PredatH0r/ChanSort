@@ -153,15 +153,13 @@
   </data>
   <data name="lnkDownload.EditValue" xml:space="preserve">
     <value>http://github.com/PredatH0r/ChanSort</value>
-  <comment>@Invariant</comment></data>
+    <comment>@Invariant</comment>
+  </data>
   <data name="lnkDownload.Location" type="System.Drawing.Point, System.Drawing">
     <value>108, 90</value>
   </data>
-  <data name="lnkDownload.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
-    <value>Transparent</value>
-  </data>
   <data name="lnkDownload.Size" type="System.Drawing.Size, System.Drawing">
-    <value>205, 18</value>
+    <value>374, 18</value>
   </data>
   <data name="lnkDownload.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -198,12 +196,10 @@
   </data>
   <data name="lnkEmail.EditValue" xml:space="preserve">
     <value>horst@beham.biz</value>
-  <comment>@Invariant</comment></data>
+    <comment>@Invariant</comment>
+  </data>
   <data name="lnkEmail.Location" type="System.Drawing.Point, System.Drawing">
     <value>108, 31</value>
-  </data>
-  <data name="lnkEmail.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
-    <value>Transparent</value>
   </data>
   <data name="lnkEmail.Size" type="System.Drawing.Size, System.Drawing">
     <value>97, 18</value>
@@ -282,12 +278,10 @@
   </data>
   <data name="lnkLicense.EditValue" xml:space="preserve">
     <value>GNU GPLv3</value>
-  <comment>@Invariant</comment></data>
+    <comment>@Invariant</comment>
+  </data>
   <data name="lnkLicense.Location" type="System.Drawing.Point, System.Drawing">
     <value>108, 66</value>
-  </data>
-  <data name="lnkLicense.Properties.Appearance.BackColor" type="System.Drawing.Color, System.Drawing">
-    <value>Transparent</value>
   </data>
   <data name="lnkLicense.Size" type="System.Drawing.Size, System.Drawing">
     <value>338, 18</value>
@@ -396,7 +390,8 @@
   </data>
   <data name="txtAuthor.Text" xml:space="preserve">
     <value>Horst Beham</value>
-  <comment>@Invariant</comment></data>
+    <comment>@Invariant</comment>
+  </data>
   <data name="&gt;&gt;txtAuthor.Name" xml:space="preserve">
     <value>txtAuthor</value>
   </data>

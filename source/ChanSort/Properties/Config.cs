@@ -62,6 +62,9 @@ namespace ChanSort.Ui.Properties
     /// </summary>
     public SizeF ScaleFactor { get; set; }
 
+    public bool SplitView { get; set; } = true;
+    public string SkinName { get; set; } = "Office 2019 Colorful";
+
     private bool allowSave = true;
 
     public void Save()

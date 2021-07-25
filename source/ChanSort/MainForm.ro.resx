@@ -264,7 +264,7 @@
   <data name="mnuOptions.Caption" xml:space="preserve">
     <value>&amp;Setări</value>
   </data>
-  <data name="barSubItem1.Caption" xml:space="preserve">
+  <data name="mnuLanguages.Caption" xml:space="preserve">
     <value>&amp;Limba</value>
   </data>
   <data name="mnuCharset.Caption" xml:space="preserve">
@@ -327,7 +327,7 @@
   <data name="miSelectFavListE.Caption" xml:space="preserve">
     <value>Favorite E</value>
   </data>
-  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+  <data name="miSearch.Caption" xml:space="preserve">
     <value>Filtru de listă &amp;stânga</value>
   </data>
   <data name="miGotoLeftList.Caption" xml:space="preserve">
@@ -629,5 +629,8 @@ furnizor specific, satelit sau liste de țări.</value>
   </data>
   <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
     <value>Comutați pe Favorite H</value>
+  </data>
+  <data name="miTheme.Caption" xml:space="preserve">
+    <value>Schema de culori</value>
   </data>
 </root>
