@@ -310,8 +310,6 @@
       this.gviewLeft.Appearance.FocusedRow.Options.UseFont = true;
       this.gviewLeft.Appearance.HeaderPanel.Options.UseTextOptions = true;
       this.gviewLeft.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
-      this.gviewLeft.Appearance.HideSelectionRow.Font = ((System.Drawing.Font)(resources.GetObject("gviewLeft.Appearance.HideSelectionRow.Font")));
-      this.gviewLeft.Appearance.HideSelectionRow.Options.UseFont = true;
       this.gviewLeft.ColumnPanelRowHeight = 35;
       this.gviewLeft.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIndex1,
@@ -633,8 +631,6 @@
       this.gviewRight.Appearance.FocusedRow.Options.UseFont = true;
       this.gviewRight.Appearance.HeaderPanel.Options.UseTextOptions = true;
       this.gviewRight.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
-      this.gviewRight.Appearance.HideSelectionRow.Font = ((System.Drawing.Font)(resources.GetObject("gviewRight.Appearance.HideSelectionRow.Font")));
-      this.gviewRight.Appearance.HideSelectionRow.Options.UseFont = true;
       this.gviewRight.ColumnPanelRowHeight = 35;
       this.gviewRight.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIndex,
