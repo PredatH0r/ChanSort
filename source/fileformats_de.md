@@ -1,7 +1,7 @@
 Einige TV Modelle und Sat-Empfängerboxen unterschiedlicher Marken verwenden die gleiche Tuner-Hardware (inkl. Firmware 
 und Dateiformaten) von Drittherstellern, somit werden auch einige Marken und Modelle unterstützt, die
-hier nicht explizit aufgeführt.  
-Andererseits kann es auch vorkommen, dann ein Hersteller für einige Modelle ein Dateiformat verwendet, das von ChanSort
+hier nicht explizit angeführt sind.  
+Andererseits kommt es auch vor, dass ein Hersteller für einige Modelle ein Dateiformat verwendet, das von ChanSort
 (noch) nicht unterstützt wird.
 
 <a name="samsung"/>Samsung
