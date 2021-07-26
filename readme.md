@@ -11,7 +11,7 @@ About ChanSort
 --------------
 ChanSort is a PC application that allows you to reorder your TV's channel list.  
 Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
-ChanSort supports [file formats from numerious brands](#models) and can copy program numbers and
+ChanSort supports [file formats from numerious brands](readme.md#models) and can copy program numbers and
 favorites from one file to another, even between different models and brands.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-en.png)
