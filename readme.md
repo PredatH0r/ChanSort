@@ -42,7 +42,7 @@ There is a chance of unwanted side-effects or even damage to your TV, as reporte
 
 Hisense is the only manufacturer who provided technical information and a test device.
 
-Supported TV models 
+<a href="models"/>Supported TV models 
 -------------------
 ChanSort supports a large number of file formats, but it's impossible to tell for every brand and TV model 
 what file format it uses (with may even change with firmware updates).  

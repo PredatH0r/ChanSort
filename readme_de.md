@@ -42,7 +42,7 @@ Es besteht die Möglichkeit von unerwarteten Nebeneffekten oder Schaden am Gerät 
 
 Hisense ist der einzige Hersteller, der Informationen und ein Testgerät bereitstellten.
 
-Unterstützte TV-Modelle 
+<a href="models"/>Unterstützte TV-Modelle 
 ---------------------
 ChanSort unterstützt eine große Anzahl an Dateiformaten, aber es ist unmöglich für jede Marke und jedes Modell zu
 sagen, welches Format verwendet wird (was sich auch durch Firmware-Updates ändern kann).  
