@@ -11,9 +11,8 @@ About ChanSort
 --------------
 ChanSort is a PC application that allows you to reorder your TV's channel list.  
 Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
-ChanSort supports various file formats from Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,
-Sharp, Dyon, Blaupunkt, SatcoDX (used by ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),
-Linux VDR, SAT>IP .m3u and Enigma2 based Linux boxes.
+ChanSort supports [file formats from numerious brands](#models) and can copy program numbers and
+favorites from one file to another, even between different models and brands.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-en.png)
 
@@ -43,25 +42,6 @@ There is a chance of unwanted side-effects or even damage to your TV, as reporte
 
 Hisense is the only manufacturer who provided technical information and a test device.
 
-
-System requirements
--------------------
-**Windows**:  
-- Windows 7 SP1, Windows 8.1, Windows 10 v1606 or later, Windows 11 (with x86, x64 or ARM CPU)
-- [Microsoft .NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework)
-- The .NET FW 4.8 does NOT work with Windows 7 without SP1, Windows 8 or Windows 10 prior to v1606
-
-**Linux**:  
-- wine (sudo apt-get install wine)
-- winetricks (sudo apt-get install winetricks)
-- start winetricks, select or create a wineprefix (32 bit or 64 bit), select
-  "Install Windows DLL or component" and install the "dotnet48" package and ignore dozens of message boxes
-- right-click on ChanSort.exe and select "open with", "all applications", "A wine application"
-
-**Hardware**:
-- USB stick/SD-card to transfer the channel list between your TV and PC. A stick <= 32 GB with FAT32 file system 
-is STRONGLY recommended. (Some TVs write gargabe to NTFS and don't support exFAT at all)
-
 Supported TV models 
 -------------------
 ChanSort supports a large number of file formats, but it's impossible to tell for every brand and TV model 
@@ -81,6 +61,24 @@ it may work anyway:
 - [VDR](source/fileformats.md#vdr)
 - [SAT>IP m3u](source/fileformats.md#m3u)
 - [Enigma2](source/fileformats.md#enigma2)
+
+System requirements
+-------------------
+**Windows**:  
+- Windows 7 SP1, Windows 8.1, Windows 10 v1606 or later, Windows 11 (with x86, x64 or ARM CPU)
+- [Microsoft .NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework)
+- The .NET FW 4.8 does NOT work with Windows 7 without SP1, Windows 8 or Windows 10 prior to v1606
+
+**Linux**:  
+- wine (sudo apt-get install wine)
+- winetricks (sudo apt-get install winetricks)
+- start winetricks, select or create a wineprefix (32 bit or 64 bit), select
+  "Install Windows DLL or component" and install the "dotnet48" package and ignore dozens of message boxes
+- right-click on ChanSort.exe and select "open with", "all applications", "A wine application"
+
+**Hardware**:
+- USB stick/SD-card to transfer the channel list between your TV and PC. A stick <= 32 GB with FAT32 file system 
+is STRONGLY recommended. (Some TVs write gargabe to NTFS and don't support exFAT at all)
 
 Build from source
 -----------------

@@ -11,9 +11,8 @@ Links
 --------------
 ChanSort ist eine PC Anwendung, die das Sortieren von Fernsehsenderlisten erlaubt.  
 Die meisten modernen Fernseher können Senderlisten auf einen USB-Stick übertragen, den man danach am PC anschließt.  
-ChanSort unterstützt diverse Dateiformate von Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,
-Sharp, Dyon, Blaupunkt, SatcoDX (verwendet von Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),
-Linux VDR, SAT>IP .m3u und Enigma2 basierender Linux TV-Boxen.
+ChanSort unterstützt [Dateiformate diverser Marken](#models) und kann Programmnummern und Favoritenlisten
+von einer Senderdatei auf eine andere übertragen, sogar zwischen verschiedenen Modellen und Marken.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-de.png)
 
@@ -43,6 +42,25 @@ Es besteht die Möglichkeit von unerwarteten Nebeneffekten oder Schaden am Gerät 
 
 Hisense ist der einzige Hersteller, der Informationen und ein Testgerät bereitstellten.
 
+Unterstützte TV-Modelle 
+---------------------
+ChanSort unterstützt eine große Anzahl an Dateiformaten, aber es ist unmöglich für jede Marke und jedes Modell zu
+sagen, welches Format verwendet wird (was sich auch durch Firmware-Updates ändern kann).  
+Diese unvollständige Liste führt einige Beispiele an, die unterstützt werden, aber selbst wenn ein Modell oder Marke
+hier nicht angeführt ist, könnte es trotzdem funktiontionieren:
+- [Samsung](source/fileformats_de.md#samsung)
+- [LG](source/fileformats_de.md#lg)
+- [Sony](source/fileformats_de.md#sony)
+- [Hisense](source/fileformats_de.md#hisense)
+- [Panasonic](source/fileformats_de.md#panasonic)
+- [Philips](source/fileformats_de.md#philips)
+- [Sharp, Dyon, Blaupunkt, Hisense, Changhong, Grundig, alphatronics, JTC Genesis, ...](source/fileformats_de.md#sharp)
+- [Toshiba](source/fileformats_de.md#toshiba)
+- [Grundig](source/fileformats_de.md#grundig)
+- [SatcoDX: ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken, ...](source/fileformats_de.md#satcodx)
+- [VDR](source/fileformats_de.md#vdr)
+- [SAT>IP m3u](source/fileformats_de.md#m3u)
+- [Enigma2](source/fileformats_de.md#enigma2)
 
 Systemvoraussetzungen
 -------------------
@@ -61,27 +79,6 @@ Systemvoraussetzungen
 **Hardware**:  
 - USB Stick/SD-Karte zur Übertragung der Senderliste zwischen TV und PC (Ein Stick <= 32 GB mit FAT32-Formatierung
 ist DRINGEND empfohlen. (Einige TVs schreiben Müll auf NTFS bzw. unterstützen exFAT gar nicht)
-
-
-Unterstützte TV-Modelle 
----------------------
-ChanSort unterstützt eine große Anzahl an Dateiformaten, aber es ist unmöglich für jede Marke und jedes Modell zu
-sagen, welches Format verwendet wird (was sich auch durch Firmware-Updates ändern kann).  
-Diese unvollständige Liste führt einige Beispiele an, die unterstützt werden, aber selbst wenn ein Modell oder Marke
-hier nicht angeführt ist, könnte es trotzdem funktiontionieren:
-- [Samsung](source/fileformats.md#samsung)
-- [LG](source/fileformats.md#lg)
-- [Sony](source/fileformats.md#sony)
-- [Hisense](source/fileformats.md#hisense)
-- [Panasonic](source/fileformats.md#panasonic)
-- [Philips](source/fileformats.md#philips)
-- [Sharp, Dyon, Blaupunkt, Hisense, Changhong, Grundig, alphatronics, JTC Genesis, ...](source/fileformats.md#sharp)
-- [Toshiba](source/fileformats.md#toshiba)
-- [Grundig](source/fileformats.md#grundig)
-- [SatcoDX: ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken, ...](source/fileformats.md#satcodx)
-- [VDR](source/fileformats.md#vdr)
-- [SAT>IP m3u](source/fileformats.md#m3u)
-- [Enigma2](source/fileformats.md#enigma2)
 
 Quellcode selbst übersetzen
 -----------------
