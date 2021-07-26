@@ -11,7 +11,7 @@ Links
 --------------
 ChanSort ist eine PC Anwendung, die das Sortieren von Fernsehsenderlisten erlaubt.  
 Die meisten modernen Fernseher können Senderlisten auf einen USB-Stick übertragen, den man danach am PC anschließt.  
-ChanSort unterstützt [Dateiformate diverser Marken](readme.md#models) und kann Programmnummern und Favoritenlisten
+ChanSort unterstützt [Dateiformate diverser Marken](#models) und kann Programmnummern und Favoritenlisten
 von einer Senderdatei auf eine andere übertragen, sogar zwischen verschiedenen Modellen und Marken.
 
 ![screenshot](http://beham.biz/chansort/ChanSort-de.png)
@@ -42,7 +42,7 @@ Es besteht die Möglichkeit von unerwarteten Nebeneffekten oder Schaden am Gerät 
 
 Hisense ist der einzige Hersteller, der Informationen und ein Testgerät bereitstellten.
 
-<a href="models"/>Unterstützte TV-Modelle 
+<a href="models"></a>Unterstützte TV-Modelle 
 ---------------------
 ChanSort unterstützt eine große Anzahl an Dateiformaten, aber es ist unmöglich für jede Marke und jedes Modell zu
 sagen, welches Format verwendet wird (was sich auch durch Firmware-Updates ändern kann).  
