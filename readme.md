@@ -9,7 +9,7 @@ Links
 
 About ChanSort
 --------------
-ChanSort is a Windows application that allows you to reorder your TV's channel list.  
+ChanSort is a PC application that allows you to reorder your TV's channel list.  
 Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
 ChanSort supports various file formats from Samsung, LG, Panasonic, Sony, Philips, Hisense, Toshiba, Grundig,
 Sharp, Dyon, Blaupunkt, SatcoDX (used by ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken),
@@ -22,10 +22,11 @@ Features
 - Reorder channels (change numbers directly, move up/down, drag&drop, double-click)
 - Use another channel list as a reference to apply the same ordering
 - Multi-selection for editing multiple channels at once
+- Single-list view (showing assigned channels first and then all unassigned channels)
 - Side-by-side view of new/sorted list and original/complete list (similar to playlist and library)
 - Rename or delete channels
 - Manage favorites, parental lock, channel skipping (when zapping), channel hiding
-- User interface in English, German, Spanish, and partially in Turkish, Portuguese and Russian
+- User interface in English, German, Spanish, Turkish, Portuguese, Russian and Romanian
 - Unicode character support for channel names (Latin, Cyrillic, Greek, ...)
 
 NOT supported:
@@ -45,115 +46,45 @@ Hisense is the only manufacturer who provided technical information and a test d
 
 System requirements
 -------------------
-- [Microsoft .NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework)  
-  (When running under Linux, you need Winetricks, select a 32bit wineprefix and install the "dotnet48" package)
-- [Microsoft Visual C++ 2010 Redistributable Package (x86)](http://www.microsoft.com/en-us/download/details.aspx?id=8328)  
-  required to edit SQLite lists (Hisense, Panasonic, Toshiba and Samsung .zip format)
-- USB stick/SD-card to transfer the channel list between your TV and PC (FAT32 file system recommended)
+**Windows**:  
+- Windows 7 SP1, Windows 8.1, Windows 10 v1606 or later, Windows 11 (with x86, x64 or ARM CPU)
+- [Microsoft .NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework)
+- The .NET FW 4.8 does NOT work with Windows 7 without SP1, Windows 8 or Windows 10 prior to v1606
 
+**Linux**:  
+- wine (sudo apt-get install wine)
+- winetricks (sudo apt-get install winetricks)
+- start winetricks, select or create a wineprefix (32 bit or 64 bit), select
+  "Install Windows DLL or component" and install the "dotnet48" package and ignore dozens of message boxes
+- right-click on ChanSort.exe and select "open with", "all applications", "A wine application"
+
+**Hardware**:
+- USB stick/SD-card to transfer the channel list between your TV and PC. A stick <= 32 GB with FAT32 file system 
+is STRONGLY recommended. (Some TVs write gargabe to NTFS and don't support exFAT at all)
 
 Supported TV models 
 -------------------
-
-**Samsung**  
-- .scm files: B (2009)*, B (2013), C, D, E, F, H, J series  
-- .zip files (Tizen OS): H, J, K, M, N and Q, R series  
-
-\*: The "clone.bin" format is not supported. In the "*.scm" format
-the "Air Analog"-list of the 2009 B-series doesn't support all 
-editing features due to a lack of test files.
-
-Instructions for transferring the channel list can be found on:
-https://github.com/PredatH0r/ChanSort/wiki/Samsung
-
-**LG**  
-- Series based on NetCast OS exporting a xx\*.TLL file:  
-  CS, DM, LA, LB\*, LD, LE, LF, LH, LK, LM+, LN, LP#, LS, LT, LV, LW, LX, PM, PN, PT, UB\*  
-- Series based on webOS 2-5 exporting a GlobalClone00001.TLL file
-
-\*: Some devices behave erroneously due to firmware issues.  
-+: See system requirements for LM-series. xxLM640T is not supported due to its firmware limitations.  
-\#: Only satellite channels supported.
-
-Models with the NetCast operating system don't have the export/import function in the menu. Instead you need to press+hold the 
-settings button on the remote control until the settings disappear again, then enter 1105 and select the "TV Link Loader" menu.
-With the latest firmware for the LM series the special "service remote control" is no longer needed, "1105" works now too.
-
-IMPORTANT: It is REQUIRED to select special options during the channel search on the TV. If you select a provider / country / 
-satellite specific list, it will be pre-ordered and your TV will behave erratic after an export+import.
-Always select "none / other / all" and never your cable TV provider or something like "Astra 19.2E list" and blindscan.
-
-**Panasonic**  
-Most Viera models since 2011 with a channel list formats
-- svl.bin 
-- svl.db 
-
-**Sony**  
-- Android-TVs "sdb.xml" files using format "FormateVer" 1.1.0
-- KDL 2012/2014 "sdb.xml" files using "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
-
-**Philips**  
-Philips uses countless incompatible file formats for various TV models.
-ChanSort currently supports the formats:  
-- PhilipsChannelMaps\ChannelMap_45, 100, 105 and 110
-- Repair\ChannelList\channellib\\\*Table and s2channellib\\\*.dat
-- Repair\CM_TPM1013E_LA_CK.xml (sometimes that file is hidden and only a .bin file is visible)
-
-**Hisense**  
-- Some older models like LTDN40D50TS use the same .csv files as Sharp. See "Sharp" for instructions.
-- 2016 "Smart" models with a channel.db file, i.e. H65M5500  
-- 2017 models with a servicelist.db file
-
-Special thanks to Hisense for supporting ChanSort with technical information and a test device!
-
-**Toshiba**  
-- Models that export a .zip file containing chmgt.db, dvbSysData.db and dvbMainData.db files.  
-(e.g. RL, SL, TL, UL, VL, WL, XL, YL models of series 8xx/9xx)  
-- Models with a settingsDB.db file
-
-**Grundig**  
-- Models that export files named dvb\*_config.xml.
-- Models that export a cvt_database.dat file, e.g. 24 GHB 5944: see "Sharp" below
-
-**SatcoDX (OEM for ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)**  
-Various brands use the same hardware for DVB-S, which exports .sdx files 
-
-**Sharp (and some models from Dyon, Blaupunkt, Hisense, Changhong, alphatronics, JTC Genesis)**  
-Some of these TV share similar hardware and can export/import a .csv file allowing to change the channel order:  
-- DVBS_Program.csv (alongside cvt_database.dat)
-- DVBS_CHANNEL_TABLE.csv (alongside dtv_cmdb\*.bin)
-- MS\*_DVBS_CHANNEL_TABLE.csv (alongside MS\*_HOTELMODE_TABLE.json)
-  
-Blaupunkt B40A148TCSFHD, B32B133T2CSHD, ...  
-Changhong LED32E2200ST2, ...  
-Dyon Live 22 Pro, Live 24 Pro, ENTER 32 Pro X, ...  
-Hisense LTDN40D50TS, ...  
-Sharp LC-xxCFE4142E, LC-xxCFF6002E, LC-xxFI5542E, LC-xxFG5242E, LC-xxUI7552E, LC-xxUI7652E, xxBJ1E, xxBJ3E, xxBJ5E, ...  
-Grundig 24 GHB 5944  
-
-Depending on the actual TV the import/export function can be part of the regular user menu, a hotel menu or a service menu
-and the exported files may be different. Some models like Sharp Aquos xxBJ1E have a sub menu for exporting. You need to
-export all 4 type of files for the import to work.  
-To access the secret hotel / service menus, there are several possible key combinations on the remote control:  
-hotel menu: MENU 7906 / MENU 4588  
-service menu: MENU 1147 / MENU 11471147 / SOURCE 2580  
-Do not make any changes in the service menu, as this could damage your TV. Only use the import/export functions.
-
-**VDR (Linux Video Disk Recorder)**  
-Supports the channels.conf file format.  
-Implementation for this was provided by TCr82 from the VDR project.
-
-**m3u (SAT>IP)**  
-Supports SAT>IP .m3u files with extended information holding channel names and program numbers.
-
-**Enigma2 (Dreambox, VU+ and many other Linux based receivers)**  
-Requires a local copy of the files "lamedb", "bouquets.\*" and "userbouquet.\*" from /etc/Enigma2/.  
-
+ChanSort supports a large number of file formats, but it's impossible to tell for every brand and TV model 
+what file format it uses (with may even change with firmware updates).  
+This list gives some examples of what should be supported, but even if your model or brand is not in this list, 
+it may work anyway:
+- [Samsung](source/fileformats.md#samsung)
+- [LG](source/fileformats.md#lg)
+- [Sony](source/fileformats.md#sony)
+- [Hisense](source/fileformats.md#hisense)
+- [Panasonic](source/fileformats.md#panasonic)
+- [Philips](source/fileformats.md#philips)
+- [Sharp, Dyon, Blaupunkt, Hisense, Changhong, Grundig, alphatronics, JTC Genesis, ...](source/fileformats.md#sharp)
+- [Toshiba](source/fileformats.md#toshiba)
+- [Grundig](source/fileformats.md#grundig)
+- [SatcoDX: ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken, ...](source/fileformats.md#satcodx)
+- [VDR](source/fileformats.md#vdr)
+- [SAT>IP m3u](source/fileformats.md#m3u)
+- [Enigma2](source/fileformats.md#enigma2)
 
 Build from source
 -----------------
 See [build.md](source/build.md)
-
 
 License (GPLv3)
 ---------------

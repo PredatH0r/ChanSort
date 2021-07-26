@@ -66,6 +66,8 @@ namespace ChanSort.Ui
 
       InitializeComponent();
 
+      this.DoubleBuffered = true;
+
       var version = this.GetType().Assembly.GetName().Version;
       AppVersion = new DateTime(2000, 1, 1).AddDays(version.Build).ToString("yyyy-MM-dd");
       AppVersionFull = new DateTime(2000, 1, 1).AddDays(version.Build).AddSeconds(version.Revision * 2).ToString("yyyy-MM-dd_HHmm");
@@ -1026,7 +1028,7 @@ namespace ChanSort.Ui
               this.gviewRight.BeginUpdate();
               this.gviewRight.ClearSelection();
               this.gviewRight.FocusedRowHandle = Math.Min(rh, this.gviewRight.RowCount - 1);
-              this.gviewRight.SelectRow(this.gviewRight.FocusedRowHandle);
+              this.EnsureFocusedRowIsSelected();
               this.gviewRight.EndUpdate();
             }));
           }
@@ -1095,7 +1097,6 @@ namespace ChanSort.Ui
         this.UpdateMenu();
       }
     }
-
     #endregion
 
     #region SwapChannels()
@@ -1179,15 +1180,34 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region SelectFocusedRow()
+    #region SelectFocusedRow(), EnsureFocusedRowIsSelected(), timerSelectFocusedRow_Tick
 
     private void SelectFocusedRow(GridView grid, int rowHandle)
     {
-      grid.BeginSelection();
-      grid.ClearSelection();
+      //grid.BeginSelection();
+      //grid.ClearSelection();
       grid.FocusedRowHandle = rowHandle;
-      grid.SelectRow(rowHandle);
-      grid.EndSelection();
+      //grid.SelectRow(rowHandle);
+      //grid.EndSelection();
+      this.EnsureFocusedRowIsSelected();
+    }
+
+    private void EnsureFocusedRowIsSelected()
+    {
+      // Directly calling gviewRight.SelectRow(e.RowHanle) causes MASSIVE lags on Linux/Wine (in a Hyper-V VM).
+      // When delayed with a timer, the row might get automatically selected by DevExpress without lags
+      // or a different row gets focused in the meantime anyway
+      this.timerSelectFocusedRow.Stop();
+      this.timerSelectFocusedRow.Start(); 
+    }
+
+    private void timerSelectFocusedRow_Tick(object sender, EventArgs e)
+    {
+      this.timerSelectFocusedRow.Stop();
+      if (!this.gviewLeft.IsRowSelected(this.gviewLeft.FocusedRowHandle))
+        this.gviewLeft.SelectRow(this.gviewLeft.FocusedRowHandle);
+      if (!this.gviewRight.IsRowSelected(this.gviewRight.FocusedRowHandle))
+        this.gviewRight.SelectRow(this.gviewRight.FocusedRowHandle);
     }
 
     #endregion
@@ -1483,7 +1503,7 @@ namespace ChanSort.Ui
       if (this.CurrentChannelList != null)
         this.CurrentChannelList.InsertProgramNumber = programNr;
       this.UpdateInsertSlotTextBox();
-      this.gviewLeft.SelectRow(this.gviewLeft.FocusedRowHandle);
+      this.EnsureFocusedRowIsSelected();
     }
 
     #endregion
@@ -2517,7 +2537,7 @@ namespace ChanSort.Ui
 
     private void gviewRight_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
     {
-      this.gviewRight.SelectRow(e.FocusedRowHandle);
+      this.EnsureFocusedRowIsSelected();
       this.UpdateMenu();
     }
 
@@ -3145,6 +3165,7 @@ namespace ChanSort.Ui
     {
       var split = this.splitView = this.miSplitView.Down;
 
+      Win32.SuspendRedraw(this);
       this.SuspendRedraw();
       this.SuspendLayout();
 
@@ -3162,7 +3183,7 @@ namespace ChanSort.Ui
         var rowIndex = this.gviewRight.GetDataSourceRowIndex(this.gviewRight.FocusedRowHandle);
         this.gviewLeft.ClearSelection();
         this.gviewLeft.FocusedRowHandle = Math.Max(0, this.gviewLeft.GetRowHandle(rowIndex));
-        this.gviewLeft.SelectRow(this.gviewLeft.FocusedRowHandle);
+        this.EnsureFocusedRowIsSelected();
       }
       else
       {
@@ -3181,7 +3202,7 @@ namespace ChanSort.Ui
         var rowIndex = this.gviewLeft.GetDataSourceRowIndex(this.gviewLeft.FocusedRowHandle);
         this.gviewRight.ClearSelection();
         this.gviewRight.FocusedRowHandle = Math.Max(0, this.gviewRight.GetRowHandle(rowIndex));
-        this.gviewRight.SelectRow(this.gviewRight.FocusedRowHandle);
+        this.EnsureFocusedRowIsSelected();
         this.lastFocusedGrid = this.gviewRight;
       }
 
@@ -3189,9 +3210,14 @@ namespace ChanSort.Ui
       this.grpInputList.ShowCaption = split;
       this.lblInsertMode.Enabled = this.rbInsertAfter.Enabled = this.rbInsertBefore.Enabled = this.rbInsertSwap.Enabled = split;
 
-      this.ResumeLayout();
+      this.ResumeLayout(true);
       this.ResumeRedraw();
-      this.UpdateMenu();
+      
+      this.BeginInvoke((Action)(() =>
+      {
+        Win32.ResumeRedraw(this);
+        this.UpdateMenu();
+      }));
     }
     #endregion
 
@@ -3643,5 +3669,7 @@ namespace ChanSort.Ui
       }
     }
     #endregion
+
+
   }
 }

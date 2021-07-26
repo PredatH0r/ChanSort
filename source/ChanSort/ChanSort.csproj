@@ -207,6 +207,7 @@
     <Compile Include="CharsetForm.Designer.cs">
       <DependentUpon>CharsetForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Win32.cs" />
     <Compile Include="XGrid\XGridControl.cs">
       <SubType>Component</SubType>
     </Compile>

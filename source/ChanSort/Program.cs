@@ -32,7 +32,7 @@ namespace ChanSort.Ui
       WindowsFormsSettings.EnableFormSkins();
       //WindowsFormsSettings.ForcePaintApiDiagnostics(PaintApiDiagnosticsLevel.Default);
       BarAndDockingController.Default.PropertiesBar.ScaleIcons = false;
-      WindowsFormsSettings.DefaultFont = new Font("Tahoma", 8.25f);
+      //WindowsFormsSettings.DefaultFont = new Font("Tahoma", 8.25f);
       //DevExpress.Skins.SkinManager.EnableFormSkins();
 
       Application.EnableVisualStyles();

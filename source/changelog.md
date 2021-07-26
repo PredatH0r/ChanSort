@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+TBD
+- improved Linux/Wine performance
+
 2021-07-26
 - user interface can now be toggled between 
    - **split view**: classic ChanSort UI with new/ordered and old/full list side-by-side
@@ -8,7 +11,7 @@ ChanSort Change Log
   When you choose to "Modify current list", the single-table view is used by default,
   otherwise the split view. But you can always toggle between them.
 - added option to select a color theme. The UI now uses the "Office 2019 Colorful" theme by default,
-  the old theme was "Office 2016 Blue".
+  the old theme was "Office 2010 Blue".
 - improved many keyboard shortcuts (open the drop-down menus to see the shortcuts)
 
 2021-07-25

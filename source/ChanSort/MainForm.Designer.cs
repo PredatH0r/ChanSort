@@ -217,6 +217,7 @@
       this.pageProgNr = new DevExpress.XtraTab.XtraTabPage();
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
+      this.timerSelectFocusedRow = new System.Windows.Forms.Timer(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
       this.splitContainerControl1.Panel1.SuspendLayout();
@@ -2185,6 +2186,10 @@
       this.popupFavList.Name = "popupFavList";
       this.popupFavList.ShowCaption = true;
       // 
+      // timerSelectFocusedRow
+      // 
+      this.timerSelectFocusedRow.Tick += new System.EventHandler(this.timerSelectFocusedRow_Tick);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -2437,6 +2442,7 @@
     private DevExpress.XtraEditors.SimpleButton btnSearchLeft;
     private DevExpress.XtraBars.BarButtonItem miSplitView;
     private DevExpress.XtraBars.BarButtonItem miTheme;
+    private System.Windows.Forms.Timer timerSelectFocusedRow;
   }
 }
 
