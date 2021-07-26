@@ -3,6 +3,7 @@ ChanSort Change Log
 
 TBD
 - improved Linux/Wine performance
+- minor fixes ("File / File information" didn't ignore deleted channels when counting duplicates)
 
 2021-07-26
 - user interface can now be toggled between 

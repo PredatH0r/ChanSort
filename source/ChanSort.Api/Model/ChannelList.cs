@@ -75,13 +75,13 @@ namespace ChanSort.Api
     public string AddChannel(ChannelInfo ci)
     {
       IList<ChannelInfo> others;
-      if (this.channelByUid.TryGetValue(ci.Uid, out others))
-        ++duplicateUidCount;
-      else
+      if (!this.channelByUid.TryGetValue(ci.Uid, out others))
       {
         others = new List<ChannelInfo>();
         this.channelByUid.Add(ci.Uid, others);
       }
+      if (others.Count > 0 && !ci.IsDeleted)
+        ++duplicateUidCount;
       others.Add(ci);
 
       string warning2 = null;

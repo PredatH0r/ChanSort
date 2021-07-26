@@ -225,7 +225,6 @@ namespace ChanSort.Loader.GlobalClone
         ch.Skip = (bool) node["skipped"];
         ch.Lock = (bool)node["locked"];
         ch.Hidden = (bool) node["Invisible"];
-        ch.OldProgramNr = ch.IsDeleted ? -1 : major;
         var nameBytes = Convert.FromBase64String((string) node["chNameBase64"]);
         dec.GetChannelNames(nameBytes, 0, nameBytes.Length, out var name, out var shortName);
         ch.ShortName = shortName;
@@ -269,12 +268,18 @@ namespace ChanSort.Loader.GlobalClone
         }
 
 
-        if ((ch.OldProgramNr & 0x4000) != 0)
+        if (ch.IsDeleted)
+          ch.OldProgramNr = -1;
+        else
         {
-          ch.OldProgramNr &= 0x3FFF;
-          ch.SignalSource |= SignalSource.Radio;
+          ch.OldProgramNr = major;
+          if ((major & 0x4000) != 0)
+          {
+            ch.OldProgramNr &= 0x3FFF;
+            ch.SignalSource |= SignalSource.Radio;
+          }
         }
-        
+
         var list = this.DataRoot.GetChannelList(ch.SignalSource);
         this.DataRoot.AddChannel(list, ch);
       }

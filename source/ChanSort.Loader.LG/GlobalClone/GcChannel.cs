@@ -1,11 +1,9 @@
-﻿using System.Xml;
-using ChanSort.Api;
+﻿using ChanSort.Api;
 
 namespace ChanSort.Loader.GlobalClone
 {
   internal class GcChannel<TNode> : ChannelInfo
   {
-    internal int Index;
     internal TNode Node;
     internal bool IsDisabled;
 
@@ -13,7 +11,7 @@ namespace ChanSort.Loader.GlobalClone
     internal GcChannel(SignalSource source, int index, TNode node)
     {
       this.SignalSource = source;
-      this.Index = index;
+      this.RecordIndex = index;
       this.RecordOrder = index;
       this.Node = node;
     }
