@@ -4,6 +4,7 @@ ChanSort Change Log
 TBD
 - improved Linux/Wine performance
 - minor fixes ("File / File information" didn't ignore deleted channels when counting duplicates)
+- updated Swiss reference lists with new ONID-TSID-SID for SRF info HD and RSI LA HD
 
 2021-07-26
 - user interface can now be toggled between 
