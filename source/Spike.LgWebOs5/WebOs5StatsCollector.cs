@@ -9,11 +9,17 @@ using Newtonsoft.Json;
 
 namespace Spike.LgWebOs5
 {
-  class Program
+  class WebOs5StatsCollector
   {
     private static string basedir;
 
     static void Main(string[] args)
+    {
+      CollectLgWebOs5Stats(args);
+    }
+
+    #region CollectLgWebOs5Stats()
+    static void CollectLgWebOs5Stats(string[] args)
     {
       basedir = args.Length > 0 ? args[0] : @"d:\sources\chansort\testfiles_lg";
 
@@ -44,7 +50,9 @@ namespace Spike.LgWebOs5
 
       ProcessWebOs5Files(basedir, csv);
     }
+    #endregion
 
+    #region ProcessWebOs5Files
     private static void ProcessWebOs5Files(string dir, StreamWriter csv)
     {
       var files = Directory.GetFiles(dir, "GlobalClone*.tll");
@@ -61,6 +69,7 @@ namespace Spike.LgWebOs5
       foreach (var subdir in Directory.GetDirectories(dir))
         ProcessWebOs5Files(subdir, csv);
     }
+    #endregion
 
     #region ProcessFile()
     private static string ProcessFile(string file)
@@ -192,6 +201,7 @@ namespace Spike.LgWebOs5
     }
     #endregion
 
+    #region Dup()
     private static string Dup(string str, int count)
     {
       var sb = new StringBuilder(str.Length * count);
@@ -199,6 +209,7 @@ namespace Spike.LgWebOs5
         sb.Append(str);
       return sb.ToString();
     }
+    #endregion
   }
 
   #region class ChanListStats

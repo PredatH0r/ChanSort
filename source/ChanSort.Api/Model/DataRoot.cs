@@ -114,7 +114,7 @@ namespace ChanSort.Api
       this.FavListCount = this.loader.Features.MaxFavoriteLists;
 
       var favMode = this.FavoritesMode;
-      if (this.ChannelLists.Any(l => l.IsMixedSourceFavoritesList))
+      if (this.ChannelLists.Any(l => l.IsMixedSourceFavoritesList && l.Channels.Count > 0))
         favMode = loader.Features.FavoritesMode = FavoritesMode.MixedSource;
 
       foreach (var list in this.ChannelLists)

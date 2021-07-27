@@ -22,7 +22,9 @@ public struct LaSat
 			uint8 header[28];
 			struct
 			{
-				uint16 u1[3];
+				uint16 u1;
+				uint16 zero1;
+				uint16 zero2;
 				uint16 sid;
 				uint16 u2;
 				uint16 pcrPid;
@@ -53,5 +55,5 @@ public struct LaSat
 			} satellites[30];
 		} structured;
 	} dataBlock;
-	uint8 suffix_0A_0D[2];
+	uint8 suffix_0A_0D[2]; // this may or may not be present, also additional data may follow, which should be kept as-is
 };

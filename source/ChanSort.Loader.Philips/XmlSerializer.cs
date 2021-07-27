@@ -80,7 +80,7 @@ namespace ChanSort.Loader.Philips
       this.DataRoot.AddChannelList(this.dvbcChannels);
       this.DataRoot.AddChannelList(this.satChannels);
       this.DataRoot.AddChannelList(this.allSatChannels);
-      this.DataRoot.AddChannelList(this.favChannels);
+      //this.DataRoot.AddChannelList(this.favChannels); // format 100.0 does not support mixed source favs and adding it would automatically switch to mixed source fav mode
 
       this.dvbtChannels.VisibleColumnFieldNames.Add("Source");
       this.dvbcChannels.VisibleColumnFieldNames.Add("Source");
@@ -174,6 +174,9 @@ namespace ChanSort.Loader.Philips
         // otherwise load the single file that was originally selected by the user
         LoadFile(this.FileName);
       }
+
+      if (this.Features.FavoritesMode == FavoritesMode.MixedSource)
+        this.DataRoot.AddChannelList(this.favChannels);
     }
     #endregion
 

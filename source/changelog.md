@@ -1,10 +1,11 @@
 ChanSort Change Log 
 ===================
 
-TBD
-- improved Linux/Wine performance
-- minor fixes ("File / File information" didn't ignore deleted channels when counting duplicates)
+2021-07-27
+- Philips ChannelMap\_100: fixed reading/writing favorites
 - updated Swiss reference lists with new ONID-TSID-SID for SRF info HD and RSI LA HD
+- improved Linux/Wine performance
+- "File / File information" now ignores deleted channels when counting duplicates
 
 2021-07-26
 - user interface can now be toggled between 

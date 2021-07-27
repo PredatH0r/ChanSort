@@ -74,7 +74,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="PhilipsXmlStatsCollector.cs" />
+    <None Include="WebOs5StatsCollector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +86,10 @@
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
       <Project>{dccffa08-472b-4d17-bb90-8f513fc01392}</Project>
       <Name>ChanSort.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj">
+      <Project>{1f52b5ec-a2f1-4e53-9e1a-4658296c5bb5}</Project>
+      <Name>ChanSort.Loader.Philips</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

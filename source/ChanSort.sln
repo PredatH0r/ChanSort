@@ -67,7 +67,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.M3u", "Chan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Philips", "ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj", "{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spike.LgWebOs5", "Spike.LgWebOs5\Spike.LgWebOs5.csproj", "{32EFB306-DEF8-4488-B1AE-46D5B183C373}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spikes", "Spike.LgWebOs5\Spikes.csproj", "{32EFB306-DEF8-4488-B1AE-46D5B183C373}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Grundig", "ChanSort.Loader.Grundig\ChanSort.Loader.Grundig.csproj", "{4D5AF0A3-1B96-42C8-910D-0C4852EA22F4}"
 EndProject
