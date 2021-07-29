@@ -580,60 +580,70 @@
   </data>
   <data name="miEnglish.Caption" xml:space="preserve">
     <value>English</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miEnglish.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="miCzech.Caption" xml:space="preserve">
     <value>Česky</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miCzech.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>41</value>
   </data>
   <data name="miGerman.Caption" xml:space="preserve">
     <value>&amp;Deutsch</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miGerman.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="miSpanish.Caption" xml:space="preserve">
     <value>Español</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miSpanish.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>44</value>
   </data>
   <data name="miHungarian.Caption" xml:space="preserve">
     <value>Magyar</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miHungarian.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>47</value>
   </data>
   <data name="miPolski.Caption" xml:space="preserve">
     <value>Polski</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miPolski.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>45</value>
   </data>
   <data name="miPortuguese.Caption" xml:space="preserve">
     <value>Português</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miPortuguese.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="miRomanian.Caption" xml:space="preserve">
     <value>Română</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miRomanian.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>42</value>
   </data>
   <data name="miRussian.Caption" xml:space="preserve">
     <value>ру́сский</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miRussian.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>35</value>
   </data>
   <data name="miTurkish.Caption" xml:space="preserve">
     <value>Türkçe</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miTurkish.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>46</value>
@@ -652,15 +662,18 @@
   </data>
   <data name="miUtf8Charset.Caption" xml:space="preserve">
     <value>UTF-8 (Unicode)</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miIsoCharSets.Caption" xml:space="preserve">
     <value>ISO character sets</value>
   </data>
   <data name="miUtf16BigEndian.Caption" xml:space="preserve">
     <value>UTF-16 Big Endian (Unicode MSB first)</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miUtf16LittleEndian.Caption" xml:space="preserve">
     <value>UTF-16 Little Endian (Unicode LSB first)</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miTheme.Caption" xml:space="preserve">
     <value>Theme</value>
@@ -745,18 +758,23 @@
   </data>
   <data name="miFontSmall.Caption" xml:space="preserve">
     <value>S - Tahoma 8pt</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miFontMedium.Caption" xml:space="preserve">
     <value>M - Segoe UI 9pt</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miFontLarge.Caption" xml:space="preserve">
     <value>L - Segoe UI 10pt</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miFontXLarge.Caption" xml:space="preserve">
     <value>XL - Segoe UI 11pt</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miFontXxLarge.Caption" xml:space="preserve">
     <value>XXL - Segoe UI 12pt</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="mnuHelp.Caption" xml:space="preserve">
     <value>&amp;Help</value>
@@ -1145,6 +1163,7 @@
   </data>
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="txtSetSlot.Properties.Mask.MaskType" type="DevExpress.XtraEditors.Mask.MaskType, DevExpress.XtraEditors.v21.1">
     <value>RegEx</value>

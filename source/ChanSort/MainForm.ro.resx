@@ -387,9 +387,6 @@
   <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Numărul programului pentru operațiile de inserare și setare</value>
   </data>
-  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
-    <value>\d{1,4}</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>ChanSort {0} - Editorul de canale TV</value>
   </data>

@@ -135,13 +135,4 @@
   <data name="lblWebsite.Text" xml:space="preserve">
     <value>Webové stránky projektu:</value>
   </data>
-  <data name="lnkDownload.EditValue" xml:space="preserve">
-    <value>http://github.com/PredatH0r/ChanSort</value>
-  </data>
-  <data name="lnkEmail.EditValue" xml:space="preserve">
-    <value>horst@beham.biz</value>
-  </data>
-  <data name="lnkLicense.EditValue" xml:space="preserve">
-    <value>GNU GPLv3</value>
-  </data>
 </root>

@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+TBD
+- Sony: Files with incorrect checksum are no longer rejected. Information about a bad checksum is visible
+  unter File / File Information. (The TV seems to ignore bad checksums during the import and the official
+  Sony PC Editor ignores bad checksums and write incorrect ones, depending on the file format version)
+- Updated Hungarian translation. Thanks to efi99 on Github!
+
 2021-07-27
 - Philips ChannelMap\_100: fixed reading/writing favorites
 - updated Swiss reference lists with new ONID-TSID-SID for SRF info HD and RSI LA HD

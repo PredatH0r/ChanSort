@@ -36,6 +36,7 @@ namespace ChanSort.Loader.Sony
     private string format;
     private bool isEFormat;
     private string newline;
+    private readonly StringBuilder fileInfo = new();
 
     private readonly Dictionary<SignalSource, ChannelListNodes> channeListNodes = new Dictionary<SignalSource, ChannelListNodes>();
     private ChannelList mixedFavList;
@@ -514,7 +515,7 @@ namespace ChanSort.Loader.Sony
       uint crc = CalcChecksum(this.content, this.textContent);
 
       if (crc != expectedCrc)
-        throw new FileLoadException($"Invalid checksum: expected 0x{expectedCrc:x8}, calculated 0x{crc:x8}");
+        this.fileInfo.AppendLine($"Invalid checksum: expected 0x{expectedCrc:x8}, calculated 0x{crc:x8}. This could indicate that the file is corrupted or it was modified with the Sony channel editor.");
     }
     #endregion
 
@@ -574,6 +575,13 @@ namespace ChanSort.Loader.Sony
     }
     #endregion
 
+    #region GetFileInformation()
+    public override string GetFileInformation()
+    {
+      var txt = base.GetFileInformation();
+      return txt + "\n\n" + this.fileInfo;
+    }
+    #endregion
 
 
     #region Save()

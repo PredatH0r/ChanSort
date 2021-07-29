@@ -172,7 +172,7 @@
     <value>Dosya</value>
   </data>
   <data name="miOpen.Caption" xml:space="preserve">
-    <value>TV veri dosyasını aç…</value>
+    <value>TV veri dosyasını aç...</value>
   </data>
   <data name="miReload.Caption" xml:space="preserve">
     <value>Tekrar yükle</value>
@@ -181,7 +181,7 @@
     <value>Yedeği geri yükle</value>
   </data>
   <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>Dosya bilgisi</value>
+    <value>Dosya bilgisi...</value>
   </data>
   <data name="miSave.Caption" xml:space="preserve">
     <value>Kaydet</value>
@@ -190,7 +190,7 @@
     <value>Farklı Kaydet…</value>
   </data>
   <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Referans listesinden düzen uygula…</value>
+    <value>Referans listesinden düzen uygula...</value>
   </data>
   <data name="miAddFromRefList.Caption" xml:space="preserve">
     <value>Referans listesinden kanal ekle…</value>
@@ -199,10 +199,10 @@
     <value>Referans listesini kaydet…</value>
   </data>
   <data name="miExcelExport.Caption" xml:space="preserve">
-    <value>Excel listesini dışa aktar…</value>
+    <value>Excel listesini dışa aktar...</value>
   </data>
   <data name="miPrint.Caption" xml:space="preserve">
-    <value>Yazdır</value>
+    <value>Yazdır...</value>
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
     <value>Çıkış</value>
@@ -367,7 +367,7 @@
     <value>Wiki</value>
   </data>
   <data name="miOpenWebsite.Caption" xml:space="preserve">
-    <value>ChanSort sayfası</value>
+    <value>ChanSort sayfası...</value>
   </data>
   <data name="miAbout.Caption" xml:space="preserve">
     <value>ChanSort Hakkında</value>
@@ -407,9 +407,6 @@
   </data>
   <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Ekleme ve ayar işlemleri için program numarası</value>
-  </data>
-  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
-    <value>\d{1,4}</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>ChanSort {0} - TV Kanal Listesi Editörü</value>

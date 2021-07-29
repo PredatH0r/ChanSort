@@ -120,4 +120,26 @@
   <data name="Cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
+  <data name="InfoIgnoreImportError" xml:space="preserve">
+    <value>Lehet, hogy a TV hibásan mutatja, hogy az importálás sikertelen volt, de ezt figyelmen kívül lehet hagyni.</value>
+  </data>
+  <data name="InfoRestartAfterImport" xml:space="preserve">
+    <value>INFORMÁCIÓ: Miután importálta a listát a TV -be, húzza ki a hálózati csatlakozót, majd néhány másodperc múlva csatlakoztassa újra.</value>
+  </data>
+  <data name="WarningChecksumErrorMsg" xml:space="preserve">
+    <value>FIGYELEM: Ellenőrző összeg hibák voltak a betöltött listában!
+
+Ez két esetben fordul elő:
+
+- A TV belső csatornalistája sérült (pl. Firmware frissítés után)
+    Ez megoldható új csatornakeresés újrafuttatásával vagy a TV alaphelyzetbe állításával.
+    Ezt követően újra exportálja a listát, és nyissa meg a ChanSort segítségével.
+    A jelenleg meghibásodott fájl szerkesztésének és importálásának kísérlete a TV -készülék váratlan viselkedéséhez vezethet.
+
+- Hibás USB-stick (rossz memóriacellák vagy nem kompatibilis fájlformátum)
+    Próbáljon meg egy 16 GB-osnál nem nagyobb, FAT32 -es (nem NTFS és exFAT) formátumú pendrive-ot használni</value>
+  </data>
+  <data name="WarningChechsumErrorIgnore" xml:space="preserve">
+    <value>Hiba figyelmenkívül hagyása és a lista szerkesztése</value>
+  </data>
 </root>

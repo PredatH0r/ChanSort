@@ -141,4 +141,23 @@ A régebbi LG firmware webOS alapú TV-modelleknél nem kezeli megfelelően a cs
   <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
+  <data name="LG_BlindscanInfo" xml:space="preserve">
+    <value>!!! FIGYELEM !!!
+
+Az LG csatornalistákat CSAK akkor lehet visszaimportálni a tévékészülékbe, ha a csatornakeresési folyamat során speciális beállítások voltak kiválasztva:
+- Szolgáltató: Nincs/Egyéb KELL (NE válasszon ki a kábelszolgáltatót vagy az Astra 19.2E -t)
+- Blindscan: ki KELL jelölni
+- Hálózati keresés: opcionális (kiválasztható)
+
+TV -je nem fogja megfelelően feldolgozni a listát, ha nem követi ezeket a lépéseket!</value>
+  </data>
+  <data name="LG_BlindscanInfo_OpenWebpage" xml:space="preserve">
+    <value>A webOS5 támogatásáról szóló információkat olvassa el a github.com-on</value>
+  </data>
+  <data name="LG_BlindscanInfo_Continue" xml:space="preserve">
+    <value>A csatorna keresés a fent leírtak szerint történt</value>
+  </data>
+  <data name="LG_BlindscanInfo_Rejected" xml:space="preserve">
+    <value>A betöltési folyamat leállítva</value>
+  </data>
 </root>

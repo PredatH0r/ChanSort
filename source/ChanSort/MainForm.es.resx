@@ -175,7 +175,7 @@
     <value>Restaurar copia de seguridad</value>
   </data>
   <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>Archivo e información…</value>
+    <value>Archivo e información...</value>
   </data>
   <data name="miSave.Caption" xml:space="preserve">
     <value>&amp;Guardar</value>
@@ -193,10 +193,10 @@
     <value>Guardar lista de referencia…</value>
   </data>
   <data name="miExcelExport.Caption" xml:space="preserve">
-    <value>Exportar lista de Excel</value>
+    <value>Exportar lista de Excel...</value>
   </data>
   <data name="miPrint.Caption" xml:space="preserve">
-    <value>&amp;Imprimir</value>
+    <value>&amp;Imprimir...</value>
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
     <value>&amp;Salir</value>
@@ -358,7 +358,7 @@
     <value>Wiki</value>
   </data>
   <data name="miOpenWebsite.Caption" xml:space="preserve">
-    <value>Sitio Web de ChanSort…</value>
+    <value>Sitio Web de ChanSort...</value>
   </data>
   <data name="miAbout.Caption" xml:space="preserve">
     <value>&amp;Acerca de ChanSort…</value>
@@ -398,9 +398,6 @@
   </data>
   <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Insertar o definir posición del canal</value>
-  </data>
-  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
-    <value>\d{1,4}</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>ChanSort {0} - Editor de lista de canales de TV</value>

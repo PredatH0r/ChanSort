@@ -121,6 +121,6 @@
     <value>Hogyan szeretné folytatni?</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Válasszon egy műveletet…</value>
+    <value>Válasszon egy műveletet...</value>
   </data>
 </root>

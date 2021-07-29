@@ -126,4 +126,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Színösszeállítás</value>
   </data>
+  <data name="btnReset.Text" xml:space="preserve">
+    <value>Alapértelmezett téme használata</value>
+  </data>
 </root>

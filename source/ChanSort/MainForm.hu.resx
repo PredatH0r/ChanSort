@@ -187,7 +187,7 @@
     <value>&amp;Mentés</value>
   </data>
   <data name="miSaveAs.Caption" xml:space="preserve">
-    <value>Mentés m&amp;ásként</value>
+    <value>Mentés m&amp;ásként...</value>
   </data>
   <data name="miOpenReferenceFile.Caption" xml:space="preserve">
     <value>Rendezés alkalmazása referencia listából...</value>
@@ -408,9 +408,6 @@
   <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Programszám a beszúrás és beállítás műveletekhez</value>
   </data>
-  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
-    <value>\d{1,4}</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>ChanSort {0} - TV csatornalista szerkesztő</value>
   </data>
@@ -484,13 +481,13 @@
     <value>Mozgassa a kijelölt csatornát lefelé</value>
   </data>
   <data name="btnDown.ToolTip" xml:space="preserve">
-    <value>Mozgassa a kijelölt csatornát lefelé</value>
+    <value>Mozgassa a kijelölt csatornákat lefelé</value>
   </data>
   <data name="btnUp.Text" xml:space="preserve">
     <value>Mozgassa a kijelölt csatornát felfelé</value>
   </data>
   <data name="btnUp.ToolTip" xml:space="preserve">
-    <value>Mozgassa a kijelölt csatornát felfelé</value>
+    <value>Mozgassa a kijelölt csatornákat felfelé</value>
   </data>
   <data name="btnRemoveLeft.Text" xml:space="preserve">
     <value>Távolítsa el a kijelölt csatornákat a rendezett listából</value>
@@ -634,7 +631,7 @@
     <value>Távolítsa el a kijelölt csatornákat a rendezett listáról</value>
   </data>
   <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
-    <value>#N/A</value>
+    <value>Az összes jelenleg nem rendezett csatorna hozzáfűzése a lista végéhez</value>
   </data>
   <data name="btnAddAll.Text" xml:space="preserve">
     <value>&lt;&lt; Hozzáad mind</value>
@@ -668,5 +665,29 @@
   </data>
   <data name="miTheme.Caption" xml:space="preserve">
     <value>Színösszeállítás</value>
+  </data>
+  <data name="btnSearchLeft.AccessibleDescription" xml:space="preserve">
+    <value>Egy csatorna keresése</value>
+  </data>
+  <data name="miSplitView.Caption" xml:space="preserve">
+    <value>Osztott nézet</value>
+  </data>
+  <data name="mnuLanguage.Caption" xml:space="preserve">
+    <value>&amp;Nyelv</value>
+  </data>
+  <data name="miResetAndRestart.Caption" xml:space="preserve">
+    <value>Alaphelyzetbe állítás és újraindítás</value>
+  </data>
+  <data name="miResetAndRestart.Hint" xml:space="preserve">
+    <value>Töröl minden egyéni beállítást és újraindítja a programot</value>
+  </data>
+  <data name="btnSearchLeft.ToolTip" xml:space="preserve">
+    <value>Csatorna keresése név alapján</value>
+  </data>
+  <data name="btnSearch.AccessibleDescription" xml:space="preserve">
+    <value>Egy csatorna keresése</value>
+  </data>
+  <data name="btnSearch.ToolTip" xml:space="preserve">
+    <value>Csatorna keresése név alapján</value>
   </data>
 </root>

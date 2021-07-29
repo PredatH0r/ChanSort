@@ -418,7 +418,7 @@
     <value>&amp;Soubor</value>
   </data>
   <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>Informace o souboru</value>
+    <value>Informace o souboru...</value>
   </data>
   <data name="miSearch.Caption" xml:space="preserve">
     <value>&amp;Filtr levého seznamu</value>
@@ -599,9 +599,6 @@
   </data>
   <data name="splitContainerControl1.Text" xml:space="preserve">
     <value>splitContainerControl1</value>
-  </data>
-  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
-    <value>\d{1,4}</value>
   </data>
   <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
     <value>Přepnout oblíbené F</value>

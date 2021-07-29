@@ -130,7 +130,7 @@
     <value>Fuente:</value>
   </data>
   <data name="btnPreview.Text" xml:space="preserve">
-    <value>Previsualizar…</value>
+    <value>Previsualizar...</value>
   </data>
   <data name="btnCancel.Text" xml:space="preserve">
     <value>Cancelar</value>
