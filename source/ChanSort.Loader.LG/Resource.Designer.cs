@@ -61,7 +61,7 @@ namespace ChanSort.Loader.LG {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -.
+        ///   Looks up a localized string similar to Empty List.
         /// </summary>
         internal static string GcSerializer_ReadChannelLists_NoChannelsCap {
             get {
@@ -70,7 +70,7 @@ namespace ChanSort.Loader.LG {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -.
+        ///   Looks up a localized string similar to The channel list file contains no channels..
         /// </summary>
         internal static string GcSerializer_ReadChannelLists_NoChannelsMsg {
             get {

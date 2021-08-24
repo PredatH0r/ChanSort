@@ -46,7 +46,7 @@ namespace ChanSort.Loader.Philips
   Used in format version 30 (not 45) as a 3rd file containing program numbers. SQLite database containing tables "AnalogTable" and "DigSrvTable".
 
   */
-  class BinarySerializer : SerializerBase
+  public class BinarySerializer : SerializerBase
   {
     private readonly IniFile ini;
     private readonly List<string> dataFilePaths = new List<string>();

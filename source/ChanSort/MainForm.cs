@@ -1185,7 +1185,7 @@ namespace ChanSort.Ui
     private void SelectFocusedRow(GridView grid, int rowHandle)
     {
       //grid.BeginSelection();
-      //grid.ClearSelection();
+      grid.ClearSelection();
       grid.FocusedRowHandle = rowHandle;
       //grid.SelectRow(rowHandle);
       //grid.EndSelection();

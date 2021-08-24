@@ -110,7 +110,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Resource.cs.resx" />
     <EmbeddedResource Include="Resource.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>

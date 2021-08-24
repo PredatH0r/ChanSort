@@ -130,10 +130,10 @@
     <value>Channel #{0} (Pr# {1}) was erased because it is a duplicate of channel #{2} (Pr# {3}): {4}</value>
   </data>
   <data name="GcSerializer_ReadChannelLists_NoChannelsCap" xml:space="preserve">
-    <value>-</value>
+    <value>Empty List</value>
   </data>
   <data name="GcSerializer_ReadChannelLists_NoChannelsMsg" xml:space="preserve">
-    <value>-</value>
+    <value>The channel list file contains no channels.</value>
   </data>
   <data name="GcSerializer_ReadModelInfo_ModelWarning" xml:space="preserve">
     <value>Your TV will only import the GlobalClone file when there are no files named xx*.TLL in the same directory.

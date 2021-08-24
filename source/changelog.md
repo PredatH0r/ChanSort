@@ -5,6 +5,7 @@ TBD
 - Sony: Files with incorrect checksum are no longer rejected. Information about a bad checksum is visible
   unter File / File Information. (The TV seems to ignore bad checksums during the import and the official
   Sony PC Editor ignores bad checksums and write incorrect ones, depending on the file format version)
+- Philips: experimental support for Repair\mgr_chan_s_fta.db file format (DVB-S only)
 - Updated Hungarian translation. Thanks to efi99 on Github!
 
 2021-07-27

@@ -80,7 +80,7 @@ namespace ChanSort.Loader.Philips
 
     public string DllName { get; set; }
     public string PluginName => "Philips";
-    public string FileFilter => "*.bin;*.xml";
+    public string FileFilter => "*.bin;*.xml;*.db";
 
     public SerializerBase CreateSerializer(string inputFile)
     {
@@ -100,6 +100,14 @@ namespace ChanSort.Loader.Philips
             inputFile = path;
             var data = File.ReadAllBytes(inputFile);
             majorVersion = BitConverter.ToInt16(data, 2);
+            break;
+          }
+
+          path = Path.Combine(dir, "channel_db_ver.db");
+          if (File.Exists(path))
+          {
+            inputFile = path;
+            majorVersion = -1;
             break;
           }
 
@@ -125,6 +133,8 @@ namespace ChanSort.Loader.Philips
         return new XmlSerializer(inputFile);
       if (majorVersion == 1 || majorVersion == 30 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
         return new BinarySerializer(inputFile);
+      if (majorVersion == -1)
+        return new DbSerializer(inputFile);
 
       throw new FileLoadException($"Philips ChannelMap format version {majorVersion} is not supported.");
     }

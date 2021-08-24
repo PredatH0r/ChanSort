@@ -514,6 +514,7 @@ namespace ChanSort.Loader.Sony
 
       uint crc = CalcChecksum(this.content, this.textContent);
 
+      // the official Sony editor ignores wrong checksums, writes wrong checksums and according to user feedback, the TV imports files with wrong checksums. so no error, just an info msg
       if (crc != expectedCrc)
         this.fileInfo.AppendLine($"Invalid checksum: expected 0x{expectedCrc:x8}, calculated 0x{crc:x8}. This could indicate that the file is corrupted or it was modified with the Sony channel editor.");
     }

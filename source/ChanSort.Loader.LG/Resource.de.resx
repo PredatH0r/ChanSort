@@ -161,4 +161,10 @@ Ihr Fernseher wird die Senderliste nicht korrekt verarbeiten, wenn diese Schritt
   <data name="LG_BlindscanInfo_Rejected" xml:space="preserve">
     <value>Ladevorgang wurde abgebrochen</value>
   </data>
+  <data name="GcSerializer_ReadChannelLists_NoChannelsCap" xml:space="preserve">
+    <value>Leere Liste</value>
+  </data>
+  <data name="GcSerializer_ReadChannelLists_NoChannelsMsg" xml:space="preserve">
+    <value>Die Senderlistendatei enthält keine Sender.</value>
+  </data>
 </root>
