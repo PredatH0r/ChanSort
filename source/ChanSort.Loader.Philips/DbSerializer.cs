@@ -12,6 +12,9 @@ namespace ChanSort.Loader.Philips
    * This serializer is used for the channel list format with a Repair\ folder containing files like channel_db_ver.db, mgr_chan_s_fta.db, ...
    * The .db files are proprietary binary files, not SQLite databases.
    * So far only the mgr_chan_s_fta.db file holing DVB-S channels is reverse engineered, the offsets are defined in PChanSort.Loader.Philips.ini
+   *
+   * Unfortunately modifying the .db files does not seem to be enough. The TV also depends on channel data in the FLASH_* files, which I don't know how how to edit.
+   * Therefore lists of this format can be read as read-only reference lists, but modifications are disabled.
    */
   class DbSerializer : SerializerBase
   {
@@ -26,6 +29,7 @@ namespace ChanSort.Loader.Philips
       this.Features.MaxFavoriteLists = 1;
       this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
       this.Features.DeleteMode = DeleteMode.NotSupported;
+      this.Features.CanHaveGaps = false;
 
       string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
       this.ini = new IniFile(iniFile);
@@ -43,6 +47,7 @@ namespace ChanSort.Loader.Philips
         nameof(Channel.OriginalNetworkId),
         nameof(Channel.ServiceId)
       };
+      dvbsChannels.ReadOnly = true;
     }
 
     #region Load()
@@ -163,7 +168,7 @@ namespace ChanSort.Loader.Philips
       var offFooterChecksum = sec.GetInt("offFooterChecksum");
 
       var mapping = new DataMapping(ini.GetSection("mgr_chan_s_fta.db_entry"));
-
+#if JUST_CHANGE_NUMBERS
       // update channel data
       foreach (var ch in dvbsChannels.Channels)
       {
@@ -172,7 +177,28 @@ namespace ChanSort.Loader.Philips
         mapping.SetWord("offPrevProgNr", ch.NewProgramNr - 1);
         mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
       }
+#else
+      // physically reorder channels
+      var newData = new byte[data.Length];
+      Array.Copy(data, newData, lenHeader);
+      var off = lenHeader + lenEntry * dvbsChannels.Channels.Count;
+      Array.Copy(data, off, newData, off, lenFooter);
 
+      int i = 0;
+      foreach (var ch in dvbsChannels.Channels.OrderBy(c => c.NewProgramNr))
+      {
+        off = lenHeader + i * lenEntry;
+        Array.Copy(data, lenHeader + ch.RecordOrder * lenEntry, newData, off, lenEntry);
+        mapping.SetDataPtr(newData, off);
+        mapping.SetWord("offProgNr", ch.NewProgramNr);
+        mapping.SetWord("offPrevProgNr", ch.NewProgramNr - 1);
+        mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
+        ch.RecordOrder = i;
+        ++i;
+      }
+
+      data = newData;
+#endif
       // update checksum
       var offChecksum = data.Length - lenFooter + offFooterChecksum;
       var checksum = CalcChecksum(data, 0, offChecksum);

@@ -120,7 +120,7 @@ namespace ChanSort.Loader.Samsung.Zip
       cmd.CommandText = "select name from sqlite_master where type='table'";
       using var r = cmd.ExecuteReader();
       while (r.Read())
-        this.tableNames.Add(r.GetString(0).ToUpper());
+        this.tableNames.Add(r.GetString(0).ToUpperInvariant());
 
       if (tableNames.Contains("SAT") && tableNames.Contains("SAT_TP"))
         return FileType.SatDb;

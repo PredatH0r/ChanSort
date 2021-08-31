@@ -11,7 +11,7 @@ namespace ChanSort.Loader.Toshiba
 
     public SerializerBase CreateSerializer(string inputFile)
     {
-      if (Path.GetExtension(inputFile).ToLower() == ".db")
+      if (Path.GetExtension(inputFile).ToLowerInvariant() == ".db")
         return new SettingsDbSerializer(inputFile);
       else
         return new ChmgtDbSerializer(inputFile);

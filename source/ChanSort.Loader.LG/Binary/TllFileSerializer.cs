@@ -113,7 +113,7 @@ namespace ChanSort.Loader.LG.Binary
 
     private void ReadConfigurationFromIniFile()
     {
-      string iniFile = this.GetType().Assembly.Location.ToLower().Replace(".dll", ".ini");
+      string iniFile = this.GetType().Assembly.Location.ToLowerInvariant().Replace(".dll", ".ini");
       IniFile ini = new IniFile(iniFile);
       foreach (var section in ini.Sections)
       {
@@ -142,7 +142,7 @@ namespace ChanSort.Loader.LG.Binary
     {
       this.InitUiFactory();
 
-      string basename = (Path.GetFileNameWithoutExtension(this.FileName) ?? "").ToUpper();
+      string basename = (Path.GetFileNameWithoutExtension(this.FileName) ?? "").ToUpperInvariant();
       if (basename.StartsWith("XXLH250"))
         this.specialModel = SpecialHandlingModels.LH250;
       else if (basename.StartsWith("XXLH3000"))
@@ -1131,7 +1131,7 @@ Due to issues with most recent LG firmwares such lists can no longer be modified
       set
       {
         if (value.Length < 3 || this.settingsBlockOffset == 0 || this.settingsBlockSize < 8) return;
-        value = value.ToUpper();
+        value = value.ToUpperInvariant();
         int off = this.settingsBlockOffset + 4 + 4 + 2;
         for (int i = 0; i < 3; i++)
           this.fileContent[off--] = (byte)value[i];

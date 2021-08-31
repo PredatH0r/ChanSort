@@ -265,7 +265,7 @@ namespace ChanSort.Ui
       {
         filter.Append(plugin.PluginName).Append("|").Append(plugin.FileFilter);
         filter.Append("|");
-        foreach (var ext in plugin.FileFilter.ToLower().Split(';'))
+        foreach (var ext in plugin.FileFilter.ToLowerInvariant().Split(';'))
         {
           if (!(";" + extension + ";").Contains(";" + ext + ";"))
           {
@@ -533,10 +533,10 @@ namespace ChanSort.Ui
         candidates.Add(hint);
       else
       {
-        var upperFileName = (Path.GetFileName(inputFileName) ?? "").ToUpper();
+        var upperFileName = (Path.GetFileName(inputFileName) ?? "").ToLowerInvariant();
         foreach (var plugin in this.Plugins)
         {
-          foreach (var filter in plugin.FileFilter.ToUpper().Split(';'))
+          foreach (var filter in plugin.FileFilter.ToLowerInvariant().Split(';'))
           {
             var regex = filter.Replace(".", "\\.").Replace("*", ".*").Replace("?", ".");
             if (Regex.IsMatch(upperFileName, regex))
@@ -966,7 +966,7 @@ namespace ChanSort.Ui
         fileName = dlg.FileName;
       }
 
-      var ext = (Path.GetExtension(fileName) ?? "").ToLower();
+      var ext = (Path.GetExtension(fileName) ?? "").ToLowerInvariant();
       if (ext == ".csv")
         CsvRefListSerializer.Save(fileName, this.DataRoot);
       else if (ext == ".chl" || ext == ".txt")
@@ -1652,7 +1652,7 @@ namespace ChanSort.Ui
     private void SetFavorite(string fav, bool set)
     {
       if (string.IsNullOrEmpty(fav) || !this.mnuFavSet.Enabled) return;
-      int idx = char.ToUpper(fav[0]) - 'A';
+      int idx = char.ToUpperInvariant(fav[0]) - 'A';
       if (idx < 0 || idx >= this.mnuFavSet.ItemLinks.Count || this.subListIndex == idx + 1) return;
       var list = this.GetSelectedChannels(this.lastFocusedGrid);
       if (list.Count == 0) return;

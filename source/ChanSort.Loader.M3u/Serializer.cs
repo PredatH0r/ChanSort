@@ -166,7 +166,7 @@ namespace ChanSort.Loader.M3u
               break;
             case "pol":
               if (val.Length == 1)
-                chan.Polarity = Char.ToUpper(val[0]);
+                chan.Polarity = Char.ToUpperInvariant(val[0]);
               break;
             case "sr":
               chan.SymbolRate = this.ParseInt(val);

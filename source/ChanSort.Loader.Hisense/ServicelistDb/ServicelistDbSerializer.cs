@@ -162,7 +162,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
       cmd.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table' order by name";
       using var r = cmd.ExecuteReader();
       while (r.Read())
-        tableNames.Add(r.GetString(0).ToLower());
+        tableNames.Add(r.GetString(0).ToLowerInvariant());
     }
 
     #endregion
@@ -298,7 +298,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
 
     private void LoadTunerData2017(SqliteCommand cmd, string joinTable, string joinFields, Action<HisTransponder, SqliteDataReader, int> enhanceTransponderInfo)
     {
-      if (!tableNames.Contains(joinTable.ToLower()))
+      if (!tableNames.Contains(joinTable.ToLowerInvariant()))
         return;
 
       cmd.CommandText = $"select tuner.tunerid, oid, tid, satellite {joinFields} "

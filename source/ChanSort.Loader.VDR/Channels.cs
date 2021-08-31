@@ -214,7 +214,7 @@ namespace ChanSort.Loader.VDR
         #region ParseParams
         private void ParseParams(String Params)
         {
-            Params = Params.ToUpper();
+            Params = Params.ToUpperInvariant();
             for (int i = 0; i < Params.Length; i++)
             {
                 switch (Params[i])

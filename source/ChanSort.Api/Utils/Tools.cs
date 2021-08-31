@@ -110,9 +110,9 @@ namespace ChanSort.Api
       var bytes = new byte[input.Length/2];
       for (int i = 0, c = input.Length/2; i < c; i++)
       {
-        char ch = Char.ToUpper(input[i*2]);
+        char ch = Char.ToUpperInvariant(input[i*2]);
         var high = Char.IsDigit(ch) ? ch - '0' : ch - 'A' + 10;
-        ch = Char.ToUpper(input[i*2 + 1]);
+        ch = Char.ToUpperInvariant(input[i*2 + 1]);
         var low = Char.IsDigit(ch) ? ch - '0' : ch - 'A' + 10;
         bytes[i] = (byte)((high << 4) | low);
       }

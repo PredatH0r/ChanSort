@@ -347,7 +347,7 @@ namespace ChanSort
         try
         {
           this.isExporting = true;
-          switch ((Path.GetExtension(dlg.FileName) ?? "").ToLower())
+          switch ((Path.GetExtension(dlg.FileName) ?? "").ToLowerInvariant())
           {
             case ".xlsx":
               this.ExportToXlsx(dlg.FileName);

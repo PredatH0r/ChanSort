@@ -85,7 +85,7 @@ namespace ChanSort.Loader.Philips
     public SerializerBase CreateSerializer(string inputFile)
     {
       int majorVersion = int.MinValue;
-      var filename = Path.GetFileName(inputFile).ToLower();
+      var filename = Path.GetFileName(inputFile).ToLowerInvariant();
       if (Regex.IsMatch(filename, @"^CM_.*\.(?:bin|xml)$", RegexOptions.IgnoreCase))
         majorVersion = 0;
       else 
@@ -111,7 +111,7 @@ namespace ChanSort.Loader.Philips
             break;
           }
 
-          var dirName = Path.GetFileName(dir).ToLower();
+          var dirName = Path.GetFileName(dir).ToLowerInvariant();
           if (dirName == "channellib" || dirName == "s2channellib")
             dir = Path.GetDirectoryName(dir);
           else if (Directory.Exists(Path.Combine(dir, "PhilipsChannelMaps")))

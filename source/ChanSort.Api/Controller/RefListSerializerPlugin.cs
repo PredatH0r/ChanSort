@@ -12,7 +12,7 @@ namespace ChanSort.Api
     
     public SerializerBase CreateSerializer(string inputFile)
     {
-      var ext = (Path.GetExtension(inputFile) ?? "").ToLower();
+      var ext = (Path.GetExtension(inputFile) ?? "").ToLowerInvariant();
       if (ext == ".csv")
         return new CsvRefListSerializer(inputFile);
       else

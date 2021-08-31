@@ -14,11 +14,19 @@ namespace ChanSort.Loader.Philips
     This loader supports 2 different kinds of XML files from Philips, the first in a "Repair" folder, the others in a "ChannelMap_100" (or later) folder
 
     Example from Repair\CM_TPM1013E_LA_CK.xml:
+    This "Repair" format comes with a visible .BIN file and a .xml file that has file system attributes "hidden" and "system".
+    The TV seems to use the .BIN file as its primary source for setting up the internal list and then applies the .xml on top of it to reorder channels.
+    It uses the "oldpresetnumber" from the XML to lookup the channel from the .BIN file and then apply the new "presetnumber".
+    The .BIN file itself is compressed with some unknown cl_Zip compression / archive format and can't be edited with ChanSort.
+    Deleting a channel is not possible by modifiying the .xml file. Omitting a channel only results in duplicate numbers with the TV still showing the missing channels at their old numbers.
+
     <Channel>
     <Setup oldpresetnumber="1" presetnumber="1" name="Das Erste" ></Setup>
     <Broadcast medium="dvbc" frequency="410000" system="west" serviceID="1" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
     </Channel>
-     
+  
+  
+    Newer channel lists from Philips contain multiple XML files with a different internal structure, which also varies based on the version number in the ChannelMap_xxx folder name:
 
    	<Channel>
     <Setup SatelliteName="0x54 0x00 0x55 0x00 0x52 0x00 0x4B 0x00 0x53 0x00 0x41 0x00 0x54 0x00 0x20 0x00 0x34 0x00 0x32 0x00 0x45 0x00 " ChannelNumber="1" ChannelName="0x54 0x00 0xC4 0x00 0xB0 0x00 0x56 0x00 0xC4 0x00 0xB0 0x00 0x42 0x00 0x55 0x00 0x20 0x00 0x53 0x00 0x50 0x00 0x4F 0x00 0x52 0x00 " ChannelLock="0" UserModifiedName="0" LogoID="0" UserModifiedLogo="0" LogoLock="0" UserHidden="0" FavoriteNumber="0" />
@@ -70,7 +78,7 @@ namespace ChanSort.Loader.Philips
       this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
-      this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanSaveAs = false;
       this.Features.AllowGapsInFavNumbers = false;
       this.Features.CanEditFavListNames = true;
@@ -132,7 +140,7 @@ namespace ChanSort.Loader.Philips
       // support for files in a ChannelMap_xxx directory structure
       bool isChannelMapFolderStructure = false;
       var dir = Path.GetDirectoryName(this.FileName);
-      var dirName = Path.GetFileName(dir).ToLower();
+      var dirName = Path.GetFileName(dir).ToLowerInvariant();
       if (dirName == "channellib" || dirName == "s2channellib")
       {
         dir = Path.GetDirectoryName(dir);
@@ -147,7 +155,7 @@ namespace ChanSort.Loader.Philips
         this.chanLstBin = new ChanLstBin();
         this.chanLstBin.Load(this.FileName, msg => this.logMessages.AppendLine(msg));
       }
-      else if (Path.GetExtension(this.FileName).ToLower() == ".bin")
+      else if (Path.GetExtension(this.FileName).ToLowerInvariant() == ".bin")
       {
         // older Philips models export a visible file like Repair\CM_T911_LA_CK.BIN and an invisible (hidden+system) .xml file with the same name
         var xmlPath = Path.Combine(dir, Path.GetFileNameWithoutExtension(this.FileName) + ".xml");
@@ -264,7 +272,7 @@ namespace ChanSort.Loader.Philips
       var setupNode = node["Setup"] ?? throw new FileLoadException("Missing Setup XML element");
       var bcastNode = node["Broadcast"] ?? throw new FileLoadException("Missing Broadcast XML element");
 
-      var fname = Path.GetFileNameWithoutExtension(file.path).ToLower();
+      var fname = Path.GetFileNameWithoutExtension(file.path).ToLowerInvariant();
       var medium = bcastNode.GetAttribute("medium");
       if (medium == "" && fname.Length >= 4 && fname.StartsWith("dvb"))
         medium = fname;
@@ -276,9 +284,22 @@ namespace ChanSort.Loader.Philips
         list.VisibleColumnFieldNames.Add("ServiceTypeName");
       }
 
-      if (setupNode.HasAttribute("ChannelName"))
+      if (setupNode.HasAttribute("name"))
       {
         file.formatVersion = 1;
+        this.Features.FavoritesMode = FavoritesMode.None;
+        foreach (var list in this.DataRoot.ChannelLists)
+        {
+          list.VisibleColumnFieldNames.Remove("Favorites");
+          list.VisibleColumnFieldNames.Remove("Lock");
+          list.VisibleColumnFieldNames.Remove("Hidden");
+          list.VisibleColumnFieldNames.Remove("ServiceTypeName");
+          list.VisibleColumnFieldNames.Remove("Encrypted");
+        }
+      }
+      else if (setupNode.HasAttribute("ChannelName"))
+      {
+        file.formatVersion = 2;
         this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
         this.Features.MaxFavoriteLists = 1;
 
@@ -291,19 +312,6 @@ namespace ChanSort.Loader.Philips
           medium = "dvbs";
 
         hasEncrypt = setupNode.HasAttribute("Scrambled");
-      }
-      else if (setupNode.HasAttribute("name"))
-      {
-        file.formatVersion = 2;
-        this.Features.FavoritesMode = FavoritesMode.None;
-        foreach (var list in this.DataRoot.ChannelLists)
-        {
-          list.VisibleColumnFieldNames.Remove("Favorites");
-          list.VisibleColumnFieldNames.Remove("Lock");
-          list.VisibleColumnFieldNames.Remove("Hidden");
-          list.VisibleColumnFieldNames.Remove("ServiceTypeName");
-          list.VisibleColumnFieldNames.Remove("Encrypted");
-        }
       }
       else
         throw new FileLoadException("Unknown data format");
@@ -353,9 +361,9 @@ namespace ChanSort.Loader.Philips
       chan.OldProgramNr = -1;
       chan.IsDeleted = false;
       if (file.formatVersion == 1)
-        this.ParseChannelFormat1(data, chan);
+        this.ParseRepairFormat(data, chan);
       else if (file.formatVersion == 2)
-        this.ParseChannelFormat2(data, chan);
+        this.ParseChannelMapFormat(data, chan);
 
       if ((chan.SignalSource & SignalSource.MaskAdInput) == SignalSource.DvbT)
         chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
@@ -366,10 +374,30 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    #region ParseChannelFormat1
-    private void ParseChannelFormat1(Dictionary<string,string> data, Channel chan)
+    #region ParseRepairFormat
+    private void ParseRepairFormat(Dictionary<string, string> data, Channel chan)
     {
       chan.Format = 1;
+      chan.OldProgramNr = ParseInt(data.TryGet("presetnumber"));
+      chan.Name = data.TryGet("name");
+      chan.RawName = chan.Name;
+      chan.FreqInMhz = ParseInt(data.TryGet("frequency"));
+      //if ((chan.SignalSource & SignalSource.Analog) != 0) // analog channels have some really strange values (e.g. 00080 - 60512) that I can't convert to a plausible freq range (48-856 MHz)
+      //  chan.FreqInMhz /= 16;
+      if (chan.FreqInMhz > 1200 && (chan.SignalSource & SignalSource.Sat) == 0)
+        chan.FreqInMhz /= 1000;
+      chan.ServiceId = ParseInt(data.TryGet("serviceID"));
+      chan.OriginalNetworkId = ParseInt(data.TryGet("ONID"));
+      chan.TransportStreamId = ParseInt(data.TryGet("TSID"));
+      chan.ServiceType = ParseInt(data.TryGet("serviceType"));
+      chan.SymbolRate = ParseInt(data.TryGet("symbolrate")) / 1000;
+    }
+    #endregion
+
+    #region ParseChannelMapFormat
+    private void ParseChannelMapFormat(Dictionary<string,string> data, Channel chan)
+    {
+      chan.Format = 2;
       chan.RawSatellite = data.TryGet("SatelliteName");
       chan.Satellite = DecodeName(chan.RawSatellite);
       chan.OldProgramNr = ParseInt(data.TryGet("ChannelNumber"));
@@ -407,26 +435,6 @@ namespace ChanSort.Loader.Philips
       chan.Hidden |= data.TryGet("SystemHidden") == "1";
 
       chan.Encrypted = data.TryGet("Scrambled") == "1"; // introduced in ChannelMap_105 format
-    }
-    #endregion
-
-    #region ParseChannelFormat2
-    private void ParseChannelFormat2(Dictionary<string, string> data, Channel chan)
-    {
-      chan.Format = 2;
-      chan.OldProgramNr = ParseInt(data.TryGet("presetnumber"));
-      chan.Name = data.TryGet("name");
-      chan.RawName = chan.Name;
-      chan.FreqInMhz = ParseInt(data.TryGet("frequency"));
-      //if ((chan.SignalSource & SignalSource.Analog) != 0) // analog channels have some really strange values (e.g. 00080 - 60512) that I can't convert to a plausible freq range (48-856 MHz)
-      //  chan.FreqInMhz /= 16;
-      if (chan.FreqInMhz > 1200 && (chan.SignalSource & SignalSource.Sat) == 0)
-        chan.FreqInMhz /= 1000;
-      chan.ServiceId = ParseInt(data.TryGet("serviceID"));
-      chan.OriginalNetworkId = ParseInt(data.TryGet("ONID"));
-      chan.TransportStreamId = ParseInt(data.TryGet("TSID"));
-      chan.ServiceType = ParseInt(data.TryGet("serviceType"));
-      chan.SymbolRate = ParseInt(data.TryGet("symbolrate")) / 1000;
     }
     #endregion
 
@@ -542,15 +550,25 @@ namespace ChanSort.Loader.Philips
         }
 
         if (ch.Format == 1)
-          this.UpdateChannelFormat1(ch, setFavoriteNumber);
+          this.UpdateRepairFormat(ch);
         else if (ch.Format == 2)
-          this.UpdateChannelFormat2(ch);
+          this.UpdateChannelMapFormat(ch, setFavoriteNumber);
       }
     }
     #endregion
 
-    #region UpdateChannelFormat1 and 2
-    private void UpdateChannelFormat1(Channel ch, bool setFavoriteNumber)
+    #region UpdateRepairFormat()
+
+    private void UpdateRepairFormat(Channel ch)
+    {
+      ch.SetupNode.Attributes["presetnumber"].Value = ch.NewProgramNr.ToString();
+      if (ch.IsNameModified)
+        ch.SetupNode.Attributes["name"].Value = ch.Name;
+    }
+    #endregion
+
+    #region UpdateChannelMapFormat()
+    private void UpdateChannelMapFormat(Channel ch, bool setFavoriteNumber)
     {
       ch.SetupNode.Attributes["ChannelNumber"].Value = ch.NewProgramNr.ToString();
 
@@ -574,18 +592,12 @@ namespace ChanSort.Loader.Philips
       }
     }
 
-    private void UpdateChannelFormat2(Channel ch)
-    {
-      ch.SetupNode.Attributes["presetnumber"].Value = ch.NewProgramNr.ToString();
-      if (ch.IsNameModified)
-        ch.SetupNode.Attributes["name"].Value = ch.Name;
-    }
     #endregion
 
     #region UpdateFavList
     private void UpdateFavList()
     {
-      var favFile = this.fileDataList.FirstOrDefault(fd => Path.GetFileName(fd.path).ToLower() == "favorite.xml");
+      var favFile = this.fileDataList.FirstOrDefault(fd => Path.GetFileName(fd.path).ToLowerInvariant() == "favorite.xml");
       if (favFile == null)
         return;
 
@@ -644,7 +656,7 @@ namespace ChanSort.Loader.Philips
     #region ReorderNodes
     private void ReorderNodes(FileData file)
     {
-      if (file.formatVersion != 1)
+      if (file.formatVersion != 2)
         return;
 
       var nodes = file.doc.DocumentElement.GetElementsByTagName("Channel");

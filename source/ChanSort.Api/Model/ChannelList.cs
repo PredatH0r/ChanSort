@@ -102,7 +102,7 @@ namespace ChanSort.Api
       if (!isDupeProgNr)
         this.channelByProgNr[ci.OldProgramNr] = ci;
 
-      var lowerName = (ci.Name ?? "").ToLower().Trim();
+      var lowerName = (ci.Name ?? "").ToLowerInvariant().Trim();
       var byNameList = this.channelByName.TryGet(lowerName);
       if (byNameList == null)
       {
@@ -138,7 +138,7 @@ namespace ChanSort.Api
     #region GetChannelByName()
     public IEnumerable<ChannelInfo> GetChannelByName(string name)
     {
-      var hits = this.channelByName.TryGet(name.ToLower().Trim());
+      var hits = this.channelByName.TryGet(name.ToLowerInvariant().Trim());
       return hits ?? new List<ChannelInfo>();
     }
     #endregion

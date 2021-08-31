@@ -110,7 +110,7 @@ namespace ChanSort.Api
 
     public static void Save(string fileName, ChannelList list)
     {
-      var samToolBoxMode = (Path.GetExtension(fileName) ?? "").ToLower() == ".chl";
+      var samToolBoxMode = (Path.GetExtension(fileName) ?? "").ToLowerInvariant() == ".chl";
 
       using (var writer = new StreamWriter(fileName, false, Encoding.UTF8))
       {

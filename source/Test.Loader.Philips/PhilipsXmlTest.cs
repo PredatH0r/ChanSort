@@ -8,31 +8,31 @@ namespace Test.Loader.Philips
   [TestClass]
   public class PhilipsXmlTest
   {
-    #region TestFormat1SatChannelsAddedToCorrectLists
+    #region TestRepairFormatCableChannelsAddedToCorrectLists
     [TestMethod]
-    public void TestFormat1SatChannelsAddedToCorrectLists()
+    public void TestRepairFormatCableChannelsAddedToCorrectLists()
+    {
+      // this file format doesn't provide any information whether a channel is TV/radio/data or analog/digital. It only contains the "medium" for antenna/cable/sat
+      var file = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles") + "\\Repair\\CM_TPM1013E_LA_CK.xml";
+      this.TestChannelsAddedToCorrectLists(file, SignalSource.DvbC, 483, 0, 0);
+    }
+    #endregion
+
+    #region TestChannelMapFormatSatChannelsAddedToCorrectLists
+    [TestMethod]
+    public void TestChannelMapFormatSatChannelsAddedToCorrectLists()
     {
       var file = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles") + "\\ChannelMap_100\\ChannelList\\chanLst.bin";
       this.TestChannelsAddedToCorrectLists(file, SignalSource.DvbS, 502, 350, 152);
     }
     #endregion
 
-    #region TestFormat1CableChannelsAddedToCorrectLists
+    #region TestChannelMapFormatCableChannelsAddedToCorrectLists
     [TestMethod]
-    public void TestFormat1CableChannelsAddedToCorrectLists()
+    public void TestChannelMapFormatCableChannelsAddedToCorrectLists()
     {
       var file = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles") + "\\ChannelMap_100\\ChannelList\\chanLst.bin";
       this.TestChannelsAddedToCorrectLists(file, SignalSource.DvbC, 459, 358, 101);
-    }
-    #endregion
-
-    #region TestFormat2CableChannelsAddedToCorrectLists
-    [TestMethod]
-    public void TestFormat2CableChannelsAddedToCorrectLists()
-    {
-      // this file format doesn't provide any information whether a channel is TV/radio/data or analog/digital. It only contains the "medium" for antenna/cable/sat
-      var file = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles") + "\\Repair\\CM_TPM1013E_LA_CK.xml";
-      this.TestChannelsAddedToCorrectLists(file, SignalSource.DvbC, 483, 0, 0);
     }
     #endregion
 

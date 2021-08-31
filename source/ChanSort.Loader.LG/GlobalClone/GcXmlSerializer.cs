@@ -115,7 +115,7 @@ namespace ChanSort.Loader.GlobalClone
       // ask whether binary TLL file should be deleted
       var dir = Path.GetDirectoryName(this.FileName) ?? ".";
       var binTlls = Directory.GetFiles(dir, "xx" + series + "*.tll");
-      if (binTlls.Length > 0 && !(binTlls.Length == 1 && Path.GetFileName(binTlls[0]).ToLower() == Path.GetFileName(this.FileName).ToLower()))
+      if (binTlls.Length > 0 && !(binTlls.Length == 1 && Path.GetFileName(binTlls[0]).ToLowerInvariant() == Path.GetFileName(this.FileName).ToLowerInvariant()))
       {
         var txt = Resource.GcSerializer_ReadModelInfo_ModelWarning;
         if (Api.View.Default != null && Api.View.Default.MessageBox(txt, "LG GlobalClone", View.MessageBoxButtons.YesNo, View.MessageBoxIcon.Information) == View.DialogResult.Yes)
@@ -585,7 +585,7 @@ namespace ChanSort.Loader.GlobalClone
 
     private int HexNibble(char hexDigit)
     {
-      return hexDigit >= '0' && hexDigit <= '9' ? hexDigit - '0' : (Char.ToUpper(hexDigit) - 'A') + 10;
+      return hexDigit >= '0' && hexDigit <= '9' ? hexDigit - '0' : (Char.ToUpperInvariant(hexDigit) - 'A') + 10;
     }
     #endregion
   }

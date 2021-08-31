@@ -183,7 +183,7 @@ namespace ChanSort.Loader.GlobalClone
 
         tp.FrequencyInMhz = (int) node["frequency"];
         tp.Number = (int) node["channelIdx"];
-        var pol = ((string) node["polarization"]).ToLower();
+        var pol = ((string) node["polarization"]).ToLowerInvariant();
         tp.Polarity = pol.StartsWith("h") ? 'H' : pol.StartsWith("V") ? 'V' : '\0';
         tp.TransportStreamId = (int) node["TSID"];
         tp.OriginalNetworkId = (int)node["ONID"];

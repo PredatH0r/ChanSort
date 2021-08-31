@@ -213,7 +213,7 @@ namespace ChanSort.Api
     {
       if (string.IsNullOrWhiteSpace(input))
         return 0;
-      if (input.Length > 2 && input[0] == '0' && char.ToLower(input[1]) == 'x')
+      if (input.Length > 2 && input[0] == '0' && char.ToLowerInvariant(input[1]) == 'x')
         return int.Parse(input.Substring(2), NumberStyles.HexNumber);
       if (int.TryParse(input, out var value))
         return value;
@@ -226,7 +226,7 @@ namespace ChanSort.Api
     {
       if (string.IsNullOrWhiteSpace(input))
         return 0;
-      if (input.Length > 2 && input[0] == '0' && char.ToLower(input[1]) == 'x')
+      if (input.Length > 2 && input[0] == '0' && char.ToLowerInvariant(input[1]) == 'x')
         return long.Parse(input.Substring(2), NumberStyles.HexNumber);
       if (long.TryParse(input, out var value))
         return value;

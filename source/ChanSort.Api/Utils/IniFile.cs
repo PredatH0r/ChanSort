@@ -110,7 +110,7 @@ namespace ChanSort.Api
         int sig = value.StartsWith("-") ? -1 : 1;
         if (sig < 0)
           value = value.Substring(1).Trim();
-        if (value.ToLower().StartsWith("0x"))
+        if (value.ToLowerInvariant().StartsWith("0x"))
         {
           try { return Convert.ToInt32(value, 16) * sig; }
           catch { return 0; }

@@ -73,7 +73,7 @@ namespace ChanSort.Api
           var fields = CsvFile.Parse(line, ';');
           if (fields.Count == 0)
             continue;
-          switch (fields[0].ToLower())
+          switch (fields[0].ToLowerInvariant())
           {
             case "onid": this.ParseNetwork(fields); break;
             case "transp": this.ParseTransponder(fields); break;
