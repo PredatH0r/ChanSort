@@ -26,7 +26,20 @@ namespace ChanSort.Loader.Philips
     </Channel>
   
   
-    Newer channel lists from Philips contain multiple XML files with a different internal structure, which also varies based on the version number in the ChannelMap_xxx folder name:
+    Newer channel lists from Philips contain multiple XML files with a different internal structure, which also varies based on the version number in the ChannelMap_xxx folder name.
+    The official Philips Channel Editor 6.61.22 supports the binary file format 1.1 and 1.2 as well as the XML file format "ChannelMap_100" (but not 45, 105 nor 110).
+    That editor keeps the channel lines in the .xml file in their original order but changes the ChannelNumber attribute so that the first record may have number 2, the second record may have 1.
+    Other than that the Philips editor has some breaking modifications to the XML, e.g. replacing Modulation="8-VSB" with Modulation="8". 
+    It adds indentation to the XML elements, changes hex digits to uppercase and adds 4 bytes to the SatelliteName (from 42 to 46).
+    The Philips editor updates the checksums in chanLst.bin (but that file does not include the DVBS.xml file, only DVBT.xml, DVBC.xml an DVBSall.xml)
+    
+    The ChannelMap_100 formats can also be edited with Onka editor. Unlike the Philips editor, this one sorts the XML nodes by their new ChannelNumber. 
+    Onka can also read/write formats 105 and 110, but removes all XML attributes that it doesn't know (and didn't exist in 100), like "Scrambled" and "UserReorderChannel". 
+    It adds an XML namespace, indentation and uses short closing tags and removes the <SatelliteListcopy> element from format 105/110.
+    Onka does not update chanLst.bin (which isn't required when only DVBS.xml is modified)
+    Nevertheless a user reported that swapping DVB-S channels 1 and 2 with Onka on a TV that uses format 110 worked for him.
+
+
 
    	<Channel>
     <Setup SatelliteName="0x54 0x00 0x55 0x00 0x52 0x00 0x4B 0x00 0x53 0x00 0x41 0x00 0x54 0x00 0x20 0x00 0x34 0x00 0x32 0x00 0x45 0x00 " ChannelNumber="1" ChannelName="0x54 0x00 0xC4 0x00 0xB0 0x00 0x56 0x00 0xC4 0x00 0xB0 0x00 0x42 0x00 0x55 0x00 0x20 0x00 0x53 0x00 0x50 0x00 0x4F 0x00 0x52 0x00 " ChannelLock="0" UserModifiedName="0" LogoID="0" UserModifiedLogo="0" LogoLock="0" UserHidden="0" FavoriteNumber="0" />
@@ -69,6 +82,7 @@ namespace ChanSort.Loader.Philips
     private ChanLstBin chanLstBin;
     private readonly StringBuilder logMessages = new StringBuilder();
     private readonly IniFile ini;
+    private IniFile.Section iniMapSection;
 
 
     #region ctor()
@@ -300,7 +314,7 @@ namespace ChanSort.Loader.Philips
       else if (setupNode.HasAttribute("ChannelName"))
       {
         file.formatVersion = 2;
-        this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+        this.Features.FavoritesMode = FavoritesMode.Flags;
         this.Features.MaxFavoriteLists = 1;
 
         var dtype = bcastNode.GetAttribute("DecoderType");
@@ -338,6 +352,17 @@ namespace ChanSort.Loader.Philips
 
       if (!hasEncrypt)
         chList?.VisibleColumnFieldNames.Remove("Encrypted");
+
+      var ver = this.chanLstBin?.VersionMajor ?? 0;
+      this.iniMapSection = ini.GetSection("Map" + ver);
+
+      if (ver >= 105)
+        this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+      else if (ver == 100)
+      {
+        if (this.iniMapSection?.GetBool("setReorderedFavNumber") ?? false)
+          this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+      }
 
       return chList;
     }
@@ -519,10 +544,27 @@ namespace ChanSort.Loader.Philips
           this.UpdateChannelList(list);
       }
 
+      var reorderNodes = this.iniMapSection?.GetBool("reorderXmlNodesByChannelNumber", true) ?? true;
       foreach (var file in this.fileDataList)
       {
-        if (Path.GetFileName(file.path).ToLowerInvariant().StartsWith("dvb"))
+        if (reorderNodes && Path.GetFileName(file.path).ToLowerInvariant().StartsWith("dvb"))
           this.ReorderNodes(file);
+        var satelliteListcopy = this.iniMapSection?.GetString("satelliteListcopy") ?? "";
+        var nodeList = file.doc.GetElementsByTagName("SatelliteListcopy");
+        var arr = new XmlNode[nodeList.Count];
+        for (int i = 0; i < arr.Length; i++)
+          arr[i] = nodeList[i];
+        if (satelliteListcopy == "" || satelliteListcopy == "delete" || satelliteListcopy == "remove")
+        {
+          foreach (XmlNode elem in arr)
+            elem.ParentNode.RemoveChild(elem);
+        }
+        else
+        {
+          foreach (XmlNode elem in arr)
+            elem.InnerText = satelliteListcopy;
+        }
+
         this.SaveFile(file);
       }
 
@@ -534,8 +576,8 @@ namespace ChanSort.Loader.Philips
     #region UpdateChannelList()
     private void UpdateChannelList(ChannelList list)
     {
-      var sec = ini.GetSection("Map" + (this.chanLstBin?.VersionMajor ?? 0));
-      var setFavoriteNumber = sec?.GetBool("setFavoriteNumber", false) ?? false;
+      var setFavoriteNumber = this.iniMapSection?.GetBool("setFavoriteNumber", false) ?? false;
+      var userReorderChannel = this.iniMapSection?.GetString("userReorderChannel") ?? "";
 
       foreach (var channel in list.Channels)
       {
@@ -552,7 +594,7 @@ namespace ChanSort.Loader.Philips
         if (ch.Format == 1)
           this.UpdateRepairFormat(ch);
         else if (ch.Format == 2)
-          this.UpdateChannelMapFormat(ch, setFavoriteNumber);
+          this.UpdateChannelMapFormat(ch, setFavoriteNumber, userReorderChannel);
       }
     }
     #endregion
@@ -568,7 +610,7 @@ namespace ChanSort.Loader.Philips
     #endregion
 
     #region UpdateChannelMapFormat()
-    private void UpdateChannelMapFormat(Channel ch, bool setFavoriteNumber)
+    private void UpdateChannelMapFormat(Channel ch, bool setFavoriteNumber, string userReorderChannel)
     {
       ch.SetupNode.Attributes["ChannelNumber"].Value = ch.NewProgramNr.ToString();
 
@@ -581,15 +623,23 @@ namespace ChanSort.Loader.Philips
       }
 
       // ChannelMap_100 supports a single fav list and stores the favorite number directly here in the channel.
+      // The official Philips editor forces the favorites to be in the same order as the main program number. I don't know if this is a requirement or just a limitation of the editor.
+
       // ChannelMap_105 and later always store the value 0 in the channel and instead use a separate Favorites.xml file.
       ch.SetupNode.Attributes["FavoriteNumber"].Value = setFavoriteNumber ? Math.Max(ch.GetPosition(1), 0).ToString() : "0";
 
-      if (ch.OldProgramNr != ch.NewProgramNr)
+      var urc = ch.SetupNode.Attributes["UserReorderChannel"]; // introduced with format 110, but not always present
+      if (userReorderChannel == "")
+        userReorderChannel = "0";
+      if (userReorderChannel == "delete" || userReorderChannel == "remove")
+        urc.OwnerElement?.RemoveAttributeNode(urc);
+      else if (userReorderChannel == "auto")
       {
-        var attr = ch.SetupNode.Attributes["UserReorderChannel"]; // introduced with format 110, but not always present
-        if (attr != null)
-          attr.InnerText = "1";
+        if (urc != null && ch.OldProgramNr != ch.NewProgramNr)
+          urc.InnerText = "1";
       }
+      else if (urc != null)
+        urc.InnerText = userReorderChannel;
     }
 
     #endregion
