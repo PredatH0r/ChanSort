@@ -2279,6 +2279,12 @@ namespace ChanSort.Ui
 
     private void grid_DragOver(GridView gview, DragEventArgs e)
     {
+      if (this.dragDropInfo == null)
+      {
+        e.Effect = DragDropEffects.None;
+        return;
+      }
+
       // this event is called on the current target of the drag operation
       var grid = gview.GridControl;
       var point = grid.PointToClient(MousePosition);

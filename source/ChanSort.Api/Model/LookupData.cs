@@ -188,6 +188,7 @@ namespace ChanSort.Api
         case 0x19: // H264/AVC-HD
         case 0x1F: // UHD (future use)
         case 0x9F: // UHD (user defined)
+        case 0xD3: // Option (Sky channels)
           return SignalSource.Tv;
         case 0x02:
         case 0x0A:

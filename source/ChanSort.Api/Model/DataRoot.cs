@@ -153,11 +153,15 @@ namespace ChanSort.Api
         foreach (var channel in list.Channels)
         {
           if (!list.IsMixedSourceFavoritesList)
-            channel.NewProgramNr = channel.OldProgramNr;
+            channel.NewProgramNr = Math.Max(-1, channel.OldProgramNr);
           if (!this.MixedSourceFavorites || list.IsMixedSourceFavoritesList)
           {
             for (int i = 1; i <= maxPos; i++)
-              channel.SetPosition(i, channel.GetOldPosition(i));
+            {
+              var oldPos = channel.GetOldPosition(i);
+              if (oldPos >= 0)
+                channel.SetPosition(i, oldPos);
+            }
           }
         }
       }
