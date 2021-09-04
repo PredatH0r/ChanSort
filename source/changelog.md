@@ -18,6 +18,7 @@ ChanSort Change Log
   please send it to me via github or email.
 - Sony: Files with incorrect checksum are no longer rejected, as the TV seems to ignore bad checksums.  
   Information about a bad checksum is visible under File / File Information. 
+- Sony: Sky option channels are now in the TV channel list rather than data channel list
 - updated Hungarian translation. Thanks to efi99 on Github!
 - pressing the "Del"-key on the keyboard no longer deletes a channel when a text editor is open
 - dragging a file (or something else) from outside ChanSort over the ChanSort window no longer creates an error

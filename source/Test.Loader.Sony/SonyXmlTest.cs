@@ -38,7 +38,7 @@ namespace Test.Loader.Sony
     [TestMethod]
     public void TestKdlSatChannelsAddedToCorrectLists()
     {
-      this.TestChannelsAddedToCorrectLists("kdl_sdb-cable-sat.xml", SignalSource.DvbS, 1540, 1191, 173, 7216, "HUMAX DOWNLOAD SVC");
+      this.TestChannelsAddedToCorrectLists("kdl_sdb-cable-sat.xml", SignalSource.DvbS, 1540, 1225, 173, 7216, "HUMAX DOWNLOAD SVC");
     }
 
     [TestMethod]

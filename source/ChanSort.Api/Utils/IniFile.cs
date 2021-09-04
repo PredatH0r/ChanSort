@@ -18,26 +18,29 @@ namespace ChanSort.Api
       }
 
       #region Name
-      public string Name { get; private set; }
+      public string Name { get; }
       #endregion
 
       #region Set()
-      internal void Set(string key, string value)
+      public void Set(string key, object value)
       {
-        data[key] = value;
+        if (value == null)
+          data.Remove(key);
+        else
+          data[key] = value.ToString();
       }
       #endregion
 
       #region Keys
-      public IEnumerable<string> Keys { get { return data.Keys; } }
+      public IEnumerable<string> Keys => data.Keys;
+
       #endregion
 
       #region GetString()
 
       public string GetString(string key)
       {
-        string value;
-        if (!data.TryGetValue(key, out value))
+        if (!data.TryGetValue(key, out var value))
           return null;
         return value;
       }
@@ -48,8 +51,7 @@ namespace ChanSort.Api
 
       public int GetInt(string key, int defaultValue = 0)
       {
-        string value;
-        if (!data.TryGetValue(key, out value))
+        if (!data.TryGetValue(key, out var value))
           return defaultValue;
         return this.ParseNumber(value);
       }
@@ -60,11 +62,10 @@ namespace ChanSort.Api
 
       public byte[] GetBytes(string key)
       {
-        string value;
-        if (!data.TryGetValue(key, out value))
+        if (!data.TryGetValue(key, out var value))
           return null;
         if (string.IsNullOrEmpty(value))
-          return new byte[0];
+          return Array.Empty<byte>();
 
         string[] parts = value.Split(',');
         byte[] bytes = new byte[parts.Length];
@@ -81,7 +82,7 @@ namespace ChanSort.Api
       {
         string value = this.GetString(key);
         if (string.IsNullOrEmpty(value))
-          return new int[0];
+          return Array.Empty<int>();
         string[] numbers = value.Split(',');
         int[] ret = new int[numbers.Length];
         for (int i = 0; i < numbers.Length; i++)
@@ -115,8 +116,8 @@ namespace ChanSort.Api
           try { return Convert.ToInt32(value, 16) * sig; }
           catch { return 0; }
         }
-        int intValue;
-        int.TryParse(value, out intValue);
+
+        int.TryParse(value, out var intValue);
         return intValue;
       }
       #endregion
@@ -133,10 +134,7 @@ namespace ChanSort.Api
       this.ReadIniFile(fileName);
     }
 
-    public IEnumerable<Section> Sections
-    {
-      get { return this.sectionList; }
-    }
+    public IEnumerable<Section> Sections => this.sectionList;
 
     public Section GetSection(string sectionName)
     {
@@ -146,46 +144,44 @@ namespace ChanSort.Api
     #region ReadIniFile()
     private void ReadIniFile(string fileName)
     {
-      using (StreamReader rdr = new StreamReader(fileName))
+      using StreamReader rdr = new StreamReader(fileName);
+      Section currentSection = null;
+      string line;
+      string key = null;
+      string val = null;
+      while ((line = rdr.ReadLine()) != null)
       {
-        Section currentSection = null;
-        string line;
-        string key = null;
-        string val = null;
-        while ((line = rdr.ReadLine()) != null)
+        string trimmedLine = line.Trim();
+        if (trimmedLine.StartsWith(";"))
+          continue;
+        if (trimmedLine.StartsWith("["))
         {
-          string trimmedLine = line.Trim();
-          if (trimmedLine.StartsWith(";"))
+          string sectionName = trimmedLine.EndsWith("]")
+            ? trimmedLine.Substring(1, trimmedLine.Length - 2)
+            : trimmedLine.Substring(1);
+          currentSection = new Section(sectionName);
+          this.sectionList.Add(currentSection);
+          this.sectionDict[sectionName] = currentSection;
+          continue;
+        }
+        if (currentSection == null)
+          continue;
+        if (val == null)
+        {
+          int idx = trimmedLine.IndexOf("=", StringComparison.InvariantCulture);
+          if (idx < 0)
             continue;
-          if (trimmedLine.StartsWith("["))
-          {
-            string sectionName = trimmedLine.EndsWith("]")
-                                   ? trimmedLine.Substring(1, trimmedLine.Length - 2)
-                                   : trimmedLine.Substring(1);
-            currentSection = new Section(sectionName);
-            this.sectionList.Add(currentSection);
-            this.sectionDict[sectionName] = currentSection;
-            continue;
-          }
-          if (currentSection == null)
-            continue;
-          if (val == null)
-          {
-            int idx = trimmedLine.IndexOf("=");
-            if (idx < 0)
-              continue;
-            key = trimmedLine.Substring(0, idx).Trim();
-            val = trimmedLine.Substring(idx + 1).Trim();
-          }
-          else
-            val += line;
-          if (val.EndsWith("\\"))
-            val = val.Substring(val.Length - 1).Trim();
-          else
-          {
-            currentSection.Set(key, val);
-            val = null;
-          }
+          key = trimmedLine.Substring(0, idx).Trim();
+          val = trimmedLine.Substring(idx + 1).Trim();
+        }
+        else
+          val += line;
+        if (val.EndsWith("\\"))
+          val = val.Substring(val.Length - 1).Trim();
+        else
+        {
+          currentSection.Set(key, val);
+          val = null;
         }
       }
     }

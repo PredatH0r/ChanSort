@@ -840,8 +840,7 @@ namespace ChanSort.Ui
       catch (IOException ex)
       {
         XtraMessageBox.Show(this,
-          Resources.MainForm_SaveFiles_ErrorMsg +
-          ex.Message,
+          Resources.MainForm_SaveFiles_ErrorMsg + "\n" + ex.Message,
           Resources.MainForm_SaveFiles_ErrorTitle,
           MessageBoxButtons.OK, MessageBoxIcon.Error);
       }

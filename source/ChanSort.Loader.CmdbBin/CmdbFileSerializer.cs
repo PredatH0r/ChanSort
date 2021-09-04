@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System.CodeDom;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text;
 using ChanSort.Api;
 
@@ -12,17 +9,18 @@ namespace ChanSort.Loader.CmdbBin
   public class CmdbFileSerializer : SerializerBase
   {
     private IniFile ini;
-    private readonly MappingPool<DataMapping> satMappings = new MappingPool<DataMapping>("dtv_cmdb_2.bin");
     private readonly ChannelList dvbsTv = new ChannelList(SignalSource.DvbS | SignalSource.Tv, "Sat TV");
     private readonly ChannelList dvbsRadio = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat Radio");
     private readonly ChannelList dvbsData = new ChannelList(SignalSource.DvbS | SignalSource.Radio, "Sat Data");
     private DvbStringDecoder dvbStringDecoder;
-    private bool loaded = false;
+    private bool loaded;
+    private readonly StringBuilder protocol = new StringBuilder();
 
     public CmdbFileSerializer(string inputFile) : base(inputFile)
     {
       this.Features.FavoritesMode = FavoritesMode.Flags;
       this.Features.MaxFavoriteLists = 1;
+      this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr; // TODO there can be lots of channels in each list with number 65534, which seems to indicate user-deleted
 
       this.DataRoot.AddChannelList(dvbsTv);
       this.DataRoot.AddChannelList(dvbsRadio);
@@ -30,31 +28,14 @@ namespace ChanSort.Loader.CmdbBin
       this.ReadConfigurationFromIniFile();
 
       foreach (var list in this.DataRoot.ChannelLists)
-      {
-        //list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Favorites));
-        //list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Skip));
-        //list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Lock));
         list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Hidden));
-        //list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
-      }
     }
 
     #region ReadConfigurationFromIniFile()
-
     private void ReadConfigurationFromIniFile()
     {
       string iniFile = this.GetType().Assembly.Location.ToLowerInvariant().Replace(".dll", ".ini");
       this.ini = new IniFile(iniFile);
-
-      foreach (var section in ini.Sections)
-      {
-        int idx = section.Name.IndexOf(":");
-        if (idx < 0)
-          continue;
-        string recordLength = idx < 0 ? "" : section.Name.Substring(idx + 1);
-        if (section.Name.StartsWith("dtv_cmdb_2"))
-          satMappings.AddMapping(recordLength, new DataMapping(section));
-      }
     }
     #endregion
 
@@ -63,14 +44,13 @@ namespace ChanSort.Loader.CmdbBin
     {
       this.dvbStringDecoder = new DvbStringDecoder(this.DefaultEncoding);
 
-      foreach (var file in Directory.GetFiles(Path.GetDirectoryName(this.FileName)))
+      foreach (var file in Directory.GetFiles(Path.GetDirectoryName(this.FileName) ?? "."))
       {
         var lower = Path.GetFileName(file).ToLowerInvariant();
-        var size = (int)new FileInfo(file).Length;
         switch (lower)
         {
           case "dtv_cmdb_2.bin":
-            LoadFile(file, this.dvbsTv, this.dvbsRadio, this.dvbsData, this.satMappings.GetMapping(size));
+            LoadFile(file, this.dvbsTv, this.dvbsRadio, this.dvbsData);
             break;
         }
       }
@@ -81,21 +61,22 @@ namespace ChanSort.Loader.CmdbBin
     #endregion
 
     #region LoadFile()
-    private void LoadFile(string file, ChannelList tvList, ChannelList radioList, ChannelList dataList, DataMapping fileMapping)
+    private void LoadFile(string file, ChannelList tvList, ChannelList radioList, ChannelList dataList)
     {
       var data = File.ReadAllBytes(file);
-      var sec = fileMapping.Settings;
+      var fileName = Path.GetFileName(file).ToLowerInvariant();
+      var sec = this.ini.GetSection($"{fileName}:{data.Length}");
 
       LoadBitmappedRecords(data, sec, "Satellite", ReadSatellite);
       LoadBitmappedRecords(data, sec, "Transponder", ReadTransponder);
-      LoadBitmappedRecords(data, sec, "Channel", (map, index) => ReadChannel(map, tvList, radioList, dvbsData, index));
+      LoadBitmappedRecords(data, sec, "Channel", (map, index, len) => ReadChannel(map, tvList, radioList, dataList, index, len));
 
       this.loaded = true;
     }
     #endregion
 
     #region LoadBitmappedRecords()
-    private void LoadBitmappedRecords(byte[] data, IniFile.Section sec, string recordType, Action<DataMapping, int> readRecord)
+    private void LoadBitmappedRecords(byte[] data, IniFile.Section sec, string recordType, Action<DataMapping, int, int> readRecord)
     {
       var lenRecord = sec.GetInt($"len{recordType}Record");
       var map = new DataMapping(this.ini.GetSection($"dvbs{recordType}:{lenRecord}"));
@@ -112,7 +93,7 @@ namespace ChanSort.Loader.CmdbBin
         for (byte mask = 1; mask != 0; mask <<= 1)
         {
           if ((b & mask) != 0)
-            readRecord(map, index);
+            readRecord(map, index, lenRecord);
           map.BaseOffset += lenRecord;
           if (++index >= count)
             break;
@@ -122,7 +103,7 @@ namespace ChanSort.Loader.CmdbBin
     #endregion
 
     #region ReadSatellite()
-    private void ReadSatellite(DataMapping map, int index)
+    private void ReadSatellite(DataMapping map, int index, int lenRecord)
     {
       var sat = new Satellite(index);
       sat.Name = map.GetString("offName", map.Settings.GetInt("lenName"));
@@ -131,7 +112,7 @@ namespace ChanSort.Loader.CmdbBin
     #endregion
     
     #region ReadTransponder()
-    private void ReadTransponder(DataMapping map, int index)
+    private void ReadTransponder(DataMapping map, int index, int lenRecord)
     {
       //var idx = map.GetWord("offTransponderIndex"); // seems to be some logical number, skipping a new numbers here and there
 
@@ -147,7 +128,7 @@ namespace ChanSort.Loader.CmdbBin
     #endregion
 
     #region ReadChannel()
-    private void ReadChannel(DataMapping chanMap, ChannelList tvList, ChannelList radioList, ChannelList dataList, int recordIndex)
+    private void ReadChannel(DataMapping chanMap, ChannelList tvList, ChannelList radioList, ChannelList dataList, int recordIndex, int recordLength)
     {
       var channelType = (int)chanMap.GetByte("offChannelType");
       if (channelType == 0) // some file format versions store the channel type in the upper nibble of a byte
@@ -174,12 +155,12 @@ namespace ChanSort.Loader.CmdbBin
 
       var ch = new ChannelInfo(list.SignalSource, recordIndex, progNr, "");
       ch.ServiceType = serviceType;
-      ch.ServiceTypeName = Api.LookupData.Instance.GetServiceTypeDescription(ch.ServiceType);
-      ch.PcrPid = chanMap.GetWord("offPcrPid") & 0x1FFF;
+      ch.ServiceTypeName = LookupData.Instance.GetServiceTypeDescription(ch.ServiceType);
       ch.ServiceId = chanMap.GetWord("offServiceId");
-      ch.AudioPid = chanMap.GetWord("offAudioPid");
-      ch.Encrypted = chanMap.GetFlag("Encrypted");
+      ch.PcrPid = chanMap.GetWord("offPcrPid") & 0x1FFF;
+      ch.AudioPid = chanMap.GetWord("offAudioPid") & 0x1FFF;
       ch.VideoPid = chanMap.GetWord("offVideoPid") & 0x1FFF;
+      ch.Encrypted = chanMap.GetFlag("Encrypted");
       ch.Skip = chanMap.GetFlag("Skip");
       ch.Lock = chanMap.GetFlag("Locked");
       ch.Favorites = chanMap.GetFlag("Fav") ? Favorites.A : 0;
@@ -214,12 +195,73 @@ namespace ChanSort.Loader.CmdbBin
       }
       
       this.DataRoot.AddChannel(list, ch);
+
+      
+      // validate checksum
+      var calculated = CalcChecksum(chanMap.Data, chanMap.BaseOffset, recordLength - 4);
+      var expected = BitConverter.ToInt32(chanMap.Data, chanMap.BaseOffset + recordLength - 4);
+      if (calculated != expected)
+        this.protocol.AppendFormat($"Data record has invalid checksum. Expected: {expected}, calculated: {calculated}\r\n");
     }
     #endregion
 
+    #region CalcChecksum()
+    private int CalcChecksum(byte[] data, int offset, int length)
+    {
+      int sum = 0;
+      for (int i = 0; i < length; i++)
+        sum += data[offset++];
+      return sum;
+    }
+    #endregion
+
+
+    #region Save()
     public override void Save(string tvOutputFile)
     {
-      throw new NotImplementedException();
+      // save-as is not supported
+
+      // TODO: currently hardcoded to support only dtv_cmdb_2.bin
+
+      var data = File.ReadAllBytes(this.FileName); // filename is currently always the dtv_cmdb_2.bin, even if the user selected another file
+      var config = this.ini.GetSection("dtv_cmdb_2.bin:" + data.Length);
+      var lenChannelRecord = config.GetInt("lenChannelRecord");
+      var sec = this.ini.GetSection($"dvbsChannel:{lenChannelRecord}");
+      sec.Set("offChecksum", lenChannelRecord - 4);
+      var mapping = new DataMapping(sec);
+      
+      var baseOffset = config.GetInt("offChannelRecord");
+
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        foreach (var chan in list.Channels)
+        {
+          mapping.SetDataPtr(data, baseOffset + (int)chan.RecordIndex * lenChannelRecord);
+          mapping.SetWord("offProgramNr", chan.IsDeleted ? 0xFFFE : chan.NewProgramNr);
+          if (chan.IsDeleted) // undo the automatic number changes from the "File / Save" function
+          {
+            chan.NewProgramNr = -2;
+            chan.IsDeleted = false;
+          }
+
+          mapping.SetFlag("Skip", chan.Skip);
+          mapping.SetFlag("Lock", chan.Lock);
+          mapping.SetFlag("Fav", chan.Favorites != 0);
+          var sum = CalcChecksum(data, mapping.BaseOffset, lenChannelRecord - 4);
+          mapping.SetDword("offChecksum", sum);
+        }
+      }
+
+      File.WriteAllBytes(this.FileName, data);
     }
+    #endregion
+
+
+    #region GetFileInformation()
+    public override string GetFileInformation()
+    {
+      return base.GetFileInformation() + "\n\n" + protocol;
+    }
+    #endregion
   }
 }

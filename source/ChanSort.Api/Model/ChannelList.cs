@@ -86,7 +86,7 @@ namespace ChanSort.Api
 
       string warning2 = null;
       bool isDupeProgNr = false;
-      if (ci.OldProgramNr != -1)
+      if (ci.OldProgramNr >= 0)
       {
         ChannelInfo other;
         this.channelByProgNr.TryGetValue(ci.OldProgramNr, out other);

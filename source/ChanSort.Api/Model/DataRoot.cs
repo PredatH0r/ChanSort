@@ -253,8 +253,13 @@ namespace ChanSort.Api
               chan.NewProgramNr = -1;
           }
 
-          for (int j=0; j<=this.FavListCount; j++)
-            chan.SetOldPosition(j, chan.GetPosition(j));
+          for (int j = 0; j <= this.FavListCount; j++)
+          {
+            var newPos = chan.GetPosition(j);
+            chan.SetOldPosition(j, newPos);
+            if (newPos < -1)
+              chan.SetPosition(j, -1);
+          }
         }
       }
     }
