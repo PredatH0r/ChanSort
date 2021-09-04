@@ -669,7 +669,10 @@ namespace ChanSort.Ui
     private void InitInitialChannelOrder()
     {
       if (this.DataRoot.ChannelLists.All(l => l.Count == 0 || l.ReadOnly))
+      {
+        this.DataRoot.ApplyCurrentProgramNumbers(); // otherwise there wouldn't be any numbers in single pane view
         return;
+      }
 
       DialogResult res;
       var msg = Resources.MainForm_InitInitialChannelOrder_Question;
@@ -2061,6 +2064,7 @@ namespace ChanSort.Ui
     }
     #endregion
 
+
     // UI events
 
     #region MainForm_Shown
@@ -2684,6 +2688,111 @@ namespace ChanSort.Ui
 
     #endregion
 
+
+    #region gview_MouseDown, gview_MouseUp, timerEditDelay_Tick, gview_ShowingEditor
+
+    // these 4 event handler in combination override the default row-selection and editor-opening 
+    // behavior of the grid control.
+
+    private bool dontFocusClickedRow;
+
+    private void gview_MouseDown(object sender, MouseEventArgs e)
+    {
+      var view = (GridView)sender;
+      this.downHit = view.CalcHitInfo(e.Location);
+      this.dragDropInfo = null;
+      if (!view.IsDataRow(downHit.RowHandle))
+        return;
+      if (e.Button == MouseButtons.Left)
+      {
+        if (ModifierKeys == Keys.None)
+        {
+          if (downHit.RowHandle != view.FocusedRowHandle && !dontFocusClickedRow)
+            SelectFocusedRow(view, downHit.RowHandle);
+          this.timerEditDelay.Start();
+        }
+        else
+        {
+          if (ModifierKeys == Keys.Control && !view.IsRowSelected(downHit.RowHandle))
+            this.BeginInvoke((Action)(() => view.SelectRow(downHit.RowHandle)));
+        }
+      }
+      else if (e.Button == MouseButtons.Right)
+      {
+        if (!view.IsRowSelected(downHit.RowHandle))
+          SelectFocusedRow(view, downHit.RowHandle);
+      }
+
+      this.dontOpenEditor = true;
+      this.dontFocusClickedRow = false;
+    }
+
+    private void gview_MouseUp(object sender, MouseEventArgs e)
+    {
+      this.timerEditDelay.Stop();
+      this.BeginInvoke((Action)(() => { this.dontOpenEditor = false; }));
+    }
+
+    private void timerEditDelay_Tick(object sender, EventArgs e)
+    {
+      this.timerEditDelay.Stop();
+      this.dontOpenEditor = false;
+      if (this.lastFocusedGrid != null)
+      {
+        var hit = this.lastFocusedGrid.CalcHitInfo(this.lastFocusedGrid.GridControl.PointToClient(MousePosition));
+        if (hit.Column == this.lastFocusedGrid.FocusedColumn && hit.RowHandle == this.lastFocusedGrid.FocusedRowHandle)
+          this.lastFocusedGrid.ShowEditor();
+      }
+    }
+
+    private void gview_ShowingEditor(object sender, CancelEventArgs e)
+    {
+      var field = ((GridView)sender).FocusedColumn.FieldName;
+      if (this.dontOpenEditor && (field == this.colSlotNew.FieldName || field == this.colName.FieldName))
+        e.Cancel = true;
+    }
+
+    #endregion
+
+    #region gview_ShownEditor, gview_KeyPress
+
+    private void gview_ShownEditor(object sender, EventArgs e)
+    {
+      var view = (GridView)sender;
+      if (view.FocusedRowHandle < 0)
+        return;
+      var edit = view.ActiveEditor as TextEdit;
+      if (edit == null) return;
+      edit.Properties.MaxLength = view.FocusedColumn.FieldName == "Name" ? this.CurrentChannelList.MaxChannelNameLength : 0;
+    }
+
+    private void gview_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      var view = (GridView)sender;
+      if (view.FocusedColumn.DisplayFormat.FormatType == FormatType.Numeric && (e.KeyChar < '0' || e.KeyChar > '9'))
+        e.Handled = true;
+    }
+
+    #endregion
+
+    #region gviewLeft_LayoutUpgrade, gviewRight_LayoutUpgrade
+
+    private void gviewLeft_LayoutUpgrade(object sender, LayoutUpgradeEventArgs e)
+    {
+      this.gviewLeft.ClearGrouping();
+      this.gviewLeft.OptionsCustomization.AllowGroup = false;
+    }
+
+    private void gviewRight_LayoutUpgrade(object sender, LayoutUpgradeEventArgs e)
+    {
+      this.gviewRight.ClearGrouping();
+      this.gviewRight.OptionsCustomization.AllowGroup = false;
+    }
+
+    #endregion
+
+
+
     #region rbInsertMode_CheckedChanged
 
     private void rbInsertMode_CheckedChanged(object sender, EventArgs e)
@@ -2960,6 +3069,23 @@ namespace ChanSort.Ui
     #endregion
 
     // -- menus
+
+    #region barManager1_ShortcutItemClick
+    private void barManager1_ShortcutItemClick(object sender, ShortcutItemClickEventArgs e)
+    {
+      if (e.Shortcut.Key == Keys.Delete)
+      {
+        // the Del hotkey to remove a channel is only allowed when a grid is focused and no editor is open
+
+        if (this.gridLeft.ContainsFocus)
+          e.Cancel |= this.gviewLeft.ActiveEditor != null;
+        else if (this.gridRight.ContainsFocus)
+          e.Cancel |= this.gviewRight.ActiveEditor != null;
+        else
+          e.Cancel = true;
+      }
+    }
+    #endregion
 
     #region File menu
 
@@ -3306,6 +3432,60 @@ namespace ChanSort.Ui
     }
     #endregion
 
+    #region miCheckUpdates_ItemClick
+    private void miCheckUpdates_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      try
+      {
+        if (this.miCheckUpdates.Down == Config.Default.CheckForUpdates)
+          return;
+
+        if (this.miCheckUpdates.Down)
+          UpdateCheck.CheckForNewVersion();
+        this.SaveSettings();
+      }
+      catch (Exception ex)
+      {
+        HandleException(ex);
+      }
+    }
+    #endregion
+
+    #region miExplorerIntegration_ItemClick
+    private void miExplorerIntegration_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      try
+      {
+        if (this.miExplorerIntegration.Down == Config.Default.ExplorerIntegration)
+          return;
+
+        // get all file extensions from loader plugins
+        var ext = new HashSet<string>();
+        foreach (var loader in this.Plugins)
+        {
+          var filters = loader.FileFilter.Split(';');
+          foreach (var filter in filters)
+          {
+            int i = filter.LastIndexOf('.');
+            if (i >= 0 && i < filter.Length - 1)
+              ext.Add(filter.Substring(i).ToLowerInvariant());
+          }
+        }
+
+        if (this.miExplorerIntegration.Down)
+          FileAssociations.CreateMissingAssociations(ext);
+        else
+          FileAssociations.DeleteAssociations(ext);
+
+        this.SaveSettings();
+      }
+      catch (Exception ex)
+      {
+        HandleException(ex);
+      }
+    }
+    #endregion
+
     #endregion
 
     #region Help menu
@@ -3392,163 +3572,7 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region miExplorerIntegration_ItemClick
-    private void miExplorerIntegration_ItemClick(object sender, ItemClickEventArgs e)
-    {
-      try
-      {
-        if (this.miExplorerIntegration.Down == Config.Default.ExplorerIntegration)
-          return;
 
-        // get all file extensions from loader plugins
-        var ext = new HashSet<string>();
-        foreach (var loader in this.Plugins)
-        {
-          var filters = loader.FileFilter.Split(';');
-          foreach (var filter in filters)
-          {
-            int i = filter.LastIndexOf('.');
-            if (i >= 0 && i < filter.Length - 1)
-              ext.Add(filter.Substring(i).ToLowerInvariant());
-          }
-        }
-
-        if (this.miExplorerIntegration.Down)
-          FileAssociations.CreateMissingAssociations(ext);
-        else
-          FileAssociations.DeleteAssociations(ext);
-
-        this.SaveSettings();
-      }
-      catch (Exception ex)
-      {
-        HandleException(ex);
-      }
-    }
-    #endregion
-
-    #region miCheckUpdates_ItemClick
-    private void miCheckUpdates_ItemClick(object sender, ItemClickEventArgs e)
-    {
-      try
-      {
-        if (this.miCheckUpdates.Down == Config.Default.CheckForUpdates)
-          return;
-
-        if (this.miCheckUpdates.Down)
-          UpdateCheck.CheckForNewVersion();
-        this.SaveSettings();
-      }
-      catch (Exception ex)
-      {
-        HandleException(ex);
-      }
-    }
-    #endregion
-
-
-
-    #region gview_MouseDown, gview_MouseUp, timerEditDelay_Tick, gview_ShowingEditor
-
-    // these 4 event handler in combination override the default row-selection and editor-opening 
-    // behavior of the grid control.
-
-    private bool dontFocusClickedRow;
-
-    private void gview_MouseDown(object sender, MouseEventArgs e)
-    {
-      var view = (GridView) sender;
-      this.downHit = view.CalcHitInfo(e.Location);
-      this.dragDropInfo = null;
-      if (!view.IsDataRow(downHit.RowHandle))
-        return;
-      if (e.Button == MouseButtons.Left)
-      {
-        if (ModifierKeys == Keys.None)
-        {
-          if (downHit.RowHandle != view.FocusedRowHandle && !dontFocusClickedRow)
-            SelectFocusedRow(view, downHit.RowHandle);
-          this.timerEditDelay.Start();
-        }
-        else
-        {
-          if (ModifierKeys == Keys.Control && !view.IsRowSelected(downHit.RowHandle))
-            this.BeginInvoke((Action) (() => view.SelectRow(downHit.RowHandle)));
-        }
-      }
-      else if (e.Button == MouseButtons.Right)
-      {
-        if (!view.IsRowSelected(downHit.RowHandle))
-          SelectFocusedRow(view, downHit.RowHandle);
-      }
-
-      this.dontOpenEditor = true;
-      this.dontFocusClickedRow = false;
-    }
-
-    private void gview_MouseUp(object sender, MouseEventArgs e)
-    {
-      this.timerEditDelay.Stop();
-      this.BeginInvoke((Action) (() => { this.dontOpenEditor = false; }));
-    }
-
-    private void timerEditDelay_Tick(object sender, EventArgs e)
-    {
-      this.timerEditDelay.Stop();
-      this.dontOpenEditor = false;
-      if (this.lastFocusedGrid != null)
-      {
-        var hit = this.lastFocusedGrid.CalcHitInfo(this.lastFocusedGrid.GridControl.PointToClient(MousePosition));
-        if (hit.Column == this.lastFocusedGrid.FocusedColumn && hit.RowHandle == this.lastFocusedGrid.FocusedRowHandle)
-          this.lastFocusedGrid.ShowEditor();
-      }
-    }
-
-    private void gview_ShowingEditor(object sender, CancelEventArgs e)
-    {
-      var field = ((GridView) sender).FocusedColumn.FieldName;
-      if (this.dontOpenEditor && (field == this.colSlotNew.FieldName || field == this.colName.FieldName))
-        e.Cancel = true;
-    }
-
-    #endregion
-
-    #region gview_ShownEditor, gview_KeyPress
-
-    private void gview_ShownEditor(object sender, EventArgs e)
-    {
-      var view = (GridView) sender;
-      if (view.FocusedRowHandle < 0)
-        return;
-      var edit = view.ActiveEditor as TextEdit;
-      if (edit == null) return;
-      edit.Properties.MaxLength = view.FocusedColumn.FieldName == "Name" ? this.CurrentChannelList.MaxChannelNameLength : 0;
-    }
-
-    private void gview_KeyPress(object sender, KeyPressEventArgs e)
-    {
-      var view = (GridView) sender;
-      if (view.FocusedColumn.DisplayFormat.FormatType == FormatType.Numeric && (e.KeyChar < '0' || e.KeyChar > '9'))
-        e.Handled = true;
-    }
-
-    #endregion
-
-    #region gviewLeft_LayoutUpgrade, gviewRight_LayoutUpgrade
-
-    private void gviewLeft_LayoutUpgrade(object sender, LayoutUpgradeEventArgs e)
-    {
-      this.gviewLeft.ClearGrouping();
-      this.gviewLeft.OptionsCustomization.AllowGroup = false;
-    }
-
-    private void gviewRight_LayoutUpgrade(object sender, LayoutUpgradeEventArgs e)
-    {
-      this.gviewRight.ClearGrouping();
-      this.gviewRight.OptionsCustomization.AllowGroup = false;
-    }
-
-    #endregion
 
     #region btnClearLeftFilter_Click, btnClearRightFilter_Click
 
@@ -3674,8 +3698,7 @@ namespace ChanSort.Ui
         }
       }
     }
+
     #endregion
-
-
   }
 }

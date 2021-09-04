@@ -1,17 +1,27 @@
 ChanSort Change Log 
 ===================
 
-2021-08-31
-- ChanSort didn't work properly for Turkish (and other system locales) that don't translate ".bin" to uppercase 
-  ".BIN" and ".BIN" to lowercase ".bin".
-- Sony: Files with incorrect checksum are no longer rejected. Information about a bad checksum is visible
-  unter File / File Information. (The TV seems to ignore bad checksums during the import and the official
-  Sony PC Editor ignores bad checksums and write incorrect ones, depending on the file format version)
-- Philips: Removing a channel from a list is no longer possible (because it is not supported by the TV's import). 
-  When saving a file, all unsorted channels will be placed at the end of the list.
-- Added read-only support for Philips Repair\\Mgr_chan_s_fta.db lists. Files can be used as a reference list,
-  but modifying them won't be possible.
-- Updated Hungarian translation. Thanks to efi99 on Github!
+2021-09-04 (pre-release)
+- ChanSort didn't work properly with Windows region settings that don't convert ".BIN" to lowercase ".bin" (e.g. Turkey)
+- Philips: added ChanSort.Loader.Philips.ini file to try out different configurations until working ones get confirmed. 
+- Philips: disabled deleting channels for most file formats (they require files for menu and tuner to be kept in-sync).
+- Philips: identified several variants of ChannelMap_100 format which now have special handling.  
+  one that exports \*cmdb\*.bin files is now fully tested and working.  
+  ones that export only .xml files inside the channellib and s2channellib folders should work too, but not confirmed.  
+- Philips: ChannelFormat_105 and 110 specific settings in .ini, currently best-effort without user confirmation.
+- Philips: added support for Repair\\Mgr_chan_s_fta.db lists. Can be read as a reference list, but editing is
+  currently disabled in the .ini file (enabling it is experimental)
+- added experimental support for 8 variants of "dtv_cmdb_2.bin" DVB-S channel lists (DVB-C/T not supported yet).  
+  Brands known to use this format include Sharp, Toshiba, Dyon, OK.  
+  Philips also uses this format as part of ChannelMap_100, but only for the tuner data and uses .xml for the menu.  
+  All variants need specific configuration in the ChanSort.Loader.CmdbBin.ini file. If your file is not supported yet,
+  please send it to me via github or email.
+- Sony: Files with incorrect checksum are no longer rejected, as the TV seems to ignore bad checksums.  
+  Information about a bad checksum is visible under File / File Information. 
+- updated Hungarian translation. Thanks to efi99 on Github!
+- pressing the "Del"-key on the keyboard no longer deletes a channel when a text editor is open
+- dragging a file (or something else) from outside ChanSort over the ChanSort window no longer creates an error
+- opening a file containing a read-only channel list now shows the original numbers
 
 2021-07-27
 - Philips ChannelMap\_100: fixed reading/writing favorites

@@ -1118,6 +1118,7 @@
       this.barManager1.MainMenu = this.bar1;
       this.barManager1.MaxItemId = 115;
       this.barManager1.ShowFullMenus = true;
+      this.barManager1.ShortcutItemClick += new DevExpress.XtraBars.ShortcutItemClickEventHandler(this.barManager1_ShortcutItemClick);
       // 
       // bar1
       // 

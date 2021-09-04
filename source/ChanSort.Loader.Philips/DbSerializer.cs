@@ -47,7 +47,9 @@ namespace ChanSort.Loader.Philips
         nameof(Channel.OriginalNetworkId),
         nameof(Channel.ServiceId)
       };
-      dvbsChannels.ReadOnly = true;
+
+      var sec = ini.GetSection("mgr_chan_s_fta.db");
+      dvbsChannels.ReadOnly = sec.GetBool("allowEdit", false);
     }
 
     #region Load()
@@ -168,37 +170,42 @@ namespace ChanSort.Loader.Philips
       var offFooterChecksum = sec.GetInt("offFooterChecksum");
 
       var mapping = new DataMapping(ini.GetSection("mgr_chan_s_fta.db_entry"));
-#if JUST_CHANGE_NUMBERS
-      // update channel data
-      foreach (var ch in dvbsChannels.Channels)
-      {
-        mapping.SetDataPtr(data, lenHeader + ch.RecordOrder * lenEntry);
-        mapping.SetWord("offProgNr", ch.NewProgramNr);
-        mapping.SetWord("offPrevProgNr", ch.NewProgramNr - 1);
-        mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
-      }
-#else
-      // physically reorder channels
-      var newData = new byte[data.Length];
-      Array.Copy(data, newData, lenHeader);
-      var off = lenHeader + lenEntry * dvbsChannels.Channels.Count;
-      Array.Copy(data, off, newData, off, lenFooter);
 
-      int i = 0;
-      foreach (var ch in dvbsChannels.Channels.OrderBy(c => c.NewProgramNr))
+      if (sec.GetBool("reorderRecordsByChannelNumber"))
       {
-        off = lenHeader + i * lenEntry;
-        Array.Copy(data, lenHeader + ch.RecordOrder * lenEntry, newData, off, lenEntry);
-        mapping.SetDataPtr(newData, off);
-        mapping.SetWord("offProgNr", ch.NewProgramNr);
-        mapping.SetWord("offPrevProgNr", ch.NewProgramNr - 1);
-        mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
-        ch.RecordOrder = i;
-        ++i;
+        // physically reorder channels
+        var newData = new byte[data.Length];
+        Array.Copy(data, newData, lenHeader);
+        var off = lenHeader + lenEntry * dvbsChannels.Channels.Count;
+        Array.Copy(data, off, newData, off, lenFooter);
+
+        int i = 0;
+        foreach (var ch in dvbsChannels.Channels.OrderBy(c => c.NewProgramNr))
+        {
+          off = lenHeader + i * lenEntry;
+          Array.Copy(data, lenHeader + ch.RecordOrder * lenEntry, newData, off, lenEntry);
+          mapping.SetDataPtr(newData, off);
+          mapping.SetWord("offProgNr", ch.NewProgramNr);
+          //mapping.SetWord("offPrevProgNr", ch.NewProgramNr - 1);
+          mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
+          ch.RecordOrder = i;
+          ++i;
+        }
+
+        data = newData;
+      }
+      else
+      {
+        // update channel data
+        foreach (var ch in dvbsChannels.Channels)
+        {
+          mapping.SetDataPtr(data, lenHeader + ch.RecordOrder * lenEntry);
+          mapping.SetWord("offProgNr", ch.NewProgramNr);
+          //mapping.SetWord("offPrevProgNr", ch.NewProgramNr - 1);
+          mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
+        }
       }
 
-      data = newData;
-#endif
       // update checksum
       var offChecksum = data.Length - lenFooter + offFooterChecksum;
       var checksum = CalcChecksum(data, 0, offChecksum);

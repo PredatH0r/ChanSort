@@ -34,12 +34,17 @@ namespace ChanSort.Loader.Philips
     The Philips editor updates the checksums in chanLst.bin (but that file does not include the DVBS.xml file, only DVBT.xml, DVBC.xml an DVBSall.xml)
     
     The ChannelMap_100 formats can also be edited with Onka editor. Unlike the Philips editor, this one sorts the XML nodes by their new ChannelNumber. 
-    Onka can also read/write formats 105 and 110, but removes all XML attributes that it doesn't know (and didn't exist in 100), like "Scrambled" and "UserReorderChannel". 
-    It adds an XML namespace, indentation and uses short closing tags and removes the <SatelliteListcopy> element from format 105/110.
-    Onka does not update chanLst.bin (which isn't required when only DVBS.xml is modified)
-    Nevertheless a user reported that swapping DVB-S channels 1 and 2 with Onka on a TV that uses format 110 worked for him.
+    Onka can also read/write formats 105 and 110, but removes all XML attributes that it doesn't know (and didn't exist in 100), like "Scramble"/"Scrambled" and "UserReorderChannel". 
+    It adds an XML namespace, indentation, uses short closing tags and removes the <SatelliteListcopy> element from format 105/110.
+    Onka does not update chanLst.bin (which isn't required when only DVBS.xml is modified since that file has no checksum in chanLst.bin)
+    Nevertheless a user reported that swapping DVB-S channels 1 and 2 with Onka on a TV that uses this xml-only format 110 worked for him.
 
-
+    There seem to be 3 different flavors or the "100" format:
+    One has only .xml files in the channellib and s2channellib folders, does not indent lines in the .xml files, has a fixed number of bytes for channel and satellite names (padded with 0x00) and has no "Scramble" attribute.
+    And a version that has dtv_cmdb_*.bin next to the .xml files, uses 4 spaces for indentation, only writes as many bytes for names as needed and has a "Scramble" attribute. 
+    While the first seems to work fine when XML nodes are reordered by their new programNr, the latter seems to get confused when the .bin and .xml files have different data record orders. This is still under investigation. 
+    The Philips editor does not modify these .bin files, appends 0x00 padding to the channel names, changes indentation to 2 tabs and strips the Scramble attribute. It's likely it wasn't designed for this type of list.
+  
 
    	<Channel>
     <Setup SatelliteName="0x54 0x00 0x55 0x00 0x52 0x00 0x4B 0x00 0x53 0x00 0x41 0x00 0x54 0x00 0x20 0x00 0x34 0x00 0x32 0x00 0x45 0x00 " ChannelNumber="1" ChannelName="0x54 0x00 0xC4 0x00 0xB0 0x00 0x56 0x00 0xC4 0x00 0xB0 0x00 0x42 0x00 0x55 0x00 0x20 0x00 0x53 0x00 0x50 0x00 0x4F 0x00 0x52 0x00 " ChannelLock="0" UserModifiedName="0" LogoID="0" UserModifiedLogo="0" LogoLock="0" UserHidden="0" FavoriteNumber="0" />
@@ -104,17 +109,17 @@ namespace ChanSort.Loader.Philips
       this.DataRoot.AddChannelList(this.allSatChannels);
       //this.DataRoot.AddChannelList(this.favChannels); // format 100.0 does not support mixed source favs and adding it would automatically switch to mixed source fav mode
 
-      this.dvbtChannels.VisibleColumnFieldNames.Add("Source");
-      this.dvbcChannels.VisibleColumnFieldNames.Add("Source");
+      this.dvbtChannels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Source));
+      this.dvbcChannels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Source));
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        list.VisibleColumnFieldNames.Remove("PcrPid");
-        list.VisibleColumnFieldNames.Remove("VideoPid");
-        list.VisibleColumnFieldNames.Remove("AudioPid");
-        list.VisibleColumnFieldNames.Remove("Skip");
-        list.VisibleColumnFieldNames.Remove("ShortName");
-        list.VisibleColumnFieldNames.Remove("Provider");
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.PcrPid));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.VideoPid));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Skip));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ShortName));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
       }
 
       this.analogChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.OriginalNetworkId));
@@ -301,14 +306,15 @@ namespace ChanSort.Loader.Philips
       if (setupNode.HasAttribute("name"))
       {
         file.formatVersion = 1;
+        this.iniMapSection = ini.GetSection("Repair_xml");
         this.Features.FavoritesMode = FavoritesMode.None;
         foreach (var list in this.DataRoot.ChannelLists)
         {
-          list.VisibleColumnFieldNames.Remove("Favorites");
-          list.VisibleColumnFieldNames.Remove("Lock");
-          list.VisibleColumnFieldNames.Remove("Hidden");
-          list.VisibleColumnFieldNames.Remove("ServiceTypeName");
-          list.VisibleColumnFieldNames.Remove("Encrypted");
+          list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Favorites));
+          list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Lock));
+          list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Hidden));
+          list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ServiceTypeName));
+          list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
         }
       }
       else if (setupNode.HasAttribute("ChannelName"))
@@ -325,7 +331,7 @@ namespace ChanSort.Loader.Philips
         else if (dtype == "3")
           medium = "dvbs";
 
-        hasEncrypt = setupNode.HasAttribute("Scrambled");
+        hasEncrypt = setupNode.HasAttribute("Scramble") || setupNode.HasAttribute("Scrambled");
       }
       else
         throw new FileLoadException("Unknown data format");
@@ -354,15 +360,26 @@ namespace ChanSort.Loader.Philips
         chList?.VisibleColumnFieldNames.Remove("Encrypted");
 
       var ver = this.chanLstBin?.VersionMajor ?? 0;
-      this.iniMapSection = ini.GetSection("Map" + ver);
+      if (ver > 0)
+        this.iniMapSection = ini.GetSection("Map" + ver);
 
       if (ver >= 105)
-        this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+        this.Features.FavoritesMode = FavoritesMode.OrderedPerSource; // will be overridden when a Favorite.xml file is found
       else if (ver == 100)
       {
+        // use special configs for version 100 variants
+        var dir = Path.GetDirectoryName(this.FileName) ?? "";
+        if (File.Exists(Path.Combine(dir, "atv_cmdb.bin")))
+          this.iniMapSection = ini.GetSection("Map100_cmdb.bin");
+        else if (File.Exists(Path.Combine(dir, "channelFile.bin")))
+          this.iniMapSection = ini.GetSection("Map100_channelFile.bin");
+
         if (this.iniMapSection?.GetBool("setReorderedFavNumber") ?? false)
           this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
       }
+
+      if (this.iniMapSection?.GetBool("allowDelete", false) ?? false)
+        this.Features.DeleteMode = DeleteMode.Physically;
 
       return chList;
     }
@@ -386,9 +403,9 @@ namespace ChanSort.Loader.Philips
       chan.OldProgramNr = -1;
       chan.IsDeleted = false;
       if (file.formatVersion == 1)
-        this.ParseRepairFormat(data, chan);
+        this.ParseRepairXml(data, chan);
       else if (file.formatVersion == 2)
-        this.ParseChannelMapFormat(data, chan);
+        this.ParseChannelMapXml(data, chan);
 
       if ((chan.SignalSource & SignalSource.MaskAdInput) == SignalSource.DvbT)
         chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
@@ -399,8 +416,8 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    #region ParseRepairFormat
-    private void ParseRepairFormat(Dictionary<string, string> data, Channel chan)
+    #region ParseRepairXml()
+    private void ParseRepairXml(Dictionary<string, string> data, Channel chan)
     {
       chan.Format = 1;
       chan.OldProgramNr = ParseInt(data.TryGet("presetnumber"));
@@ -419,8 +436,8 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    #region ParseChannelMapFormat
-    private void ParseChannelMapFormat(Dictionary<string,string> data, Channel chan)
+    #region ParseChannelMapXml()
+    private void ParseChannelMapXml(Dictionary<string,string> data, Channel chan)
     {
       chan.Format = 2;
       chan.RawSatellite = data.TryGet("SatelliteName");
@@ -459,11 +476,11 @@ namespace ChanSort.Loader.Philips
         chan.Polarity = pol == "0" ? 'H' : 'V';
       chan.Hidden |= data.TryGet("SystemHidden") == "1";
 
-      chan.Encrypted = data.TryGet("Scrambled") == "1"; // introduced in ChannelMap_105 format
+      chan.Encrypted = data.TryGet("Scramble") == "1" || data.TryGet("Scrambled") == "1"; // v100 sometimes contains a "Scramble", v105/v110 always contain "Scrambled"
     }
     #endregion
 
-    #region ReadFavList
+    #region ReadFavList()
     private void ReadFavList(XmlNode node)
     {
       int index = ParseInt(node.Attributes["Index"].InnerText);
@@ -544,10 +561,18 @@ namespace ChanSort.Loader.Philips
           this.UpdateChannelList(list);
       }
 
-      var reorderNodes = this.iniMapSection?.GetBool("reorderXmlNodesByChannelNumber", true) ?? true;
+      // It is unclear whether XML nodes must be sorted by the new program number or kept in the original order. This may be different for the various format versions.
+      // Onka, which was made for the ChannelMap_100 flavor that doesn't export dtv_cmdb_2.bin files, reorders the XML nodes and users reported that it works.
+      // The official Philips Editor 6.61.22 does not reorder the XML nodes and does not change dtv_cmdb_*.bin when editing a ChannelMap_100 folder. But it is unclear if this editor is designed to handle the cmdb flavor.
+      
+      // A user with a ChannelMap_100 export including a dtv_cmdb_2.bin reported, that the TV shows the reordered list in the menu, but tunes the channels based on the original numbers.
+      // It's unclear if that happenes because the XML was reordered and out-of-sync with the .bin, or if the TV always uses the .bin for tuning and XML edits are moot.
+      // On top of that this TV messed up Umlauts during the import, despite ChanSort writing the exact same name data in hex-encoded UTF16. The result was as if the string was exported as UTF-8 bytes and then parsed with an 8-bit code page.
+      var reorderNodes = this.iniMapSection?.GetBool("reorderRecordsByChannelNumber") ?? false;
+
       foreach (var file in this.fileDataList)
       {
-        if (reorderNodes && Path.GetFileName(file.path).ToLowerInvariant().StartsWith("dvb"))
+        if (reorderNodes && (file.formatVersion == 1 || Path.GetFileName(file.path).ToLowerInvariant().StartsWith("dvb")))
           this.ReorderNodes(file);
         var satelliteListcopy = this.iniMapSection?.GetString("satelliteListcopy") ?? "";
         var nodeList = file.doc.GetElementsByTagName("SatelliteListcopy");
@@ -576,6 +601,7 @@ namespace ChanSort.Loader.Philips
     #region UpdateChannelList()
     private void UpdateChannelList(ChannelList list)
     {
+      var padChannelNameBytes = this.iniMapSection?.GetBool("padChannelName", true) ?? true;
       var setFavoriteNumber = this.iniMapSection?.GetBool("setFavoriteNumber", false) ?? false;
       var userReorderChannel = this.iniMapSection?.GetString("userReorderChannel") ?? "";
 
@@ -592,16 +618,16 @@ namespace ChanSort.Loader.Philips
         }
 
         if (ch.Format == 1)
-          this.UpdateRepairFormat(ch);
+          this.UpdateRepairXml(ch);
         else if (ch.Format == 2)
-          this.UpdateChannelMapFormat(ch, setFavoriteNumber, userReorderChannel);
+          this.UpdateChannelMapXml(ch, padChannelNameBytes, setFavoriteNumber, userReorderChannel);
       }
     }
     #endregion
 
-    #region UpdateRepairFormat()
+    #region UpdateRepairXml()
 
-    private void UpdateRepairFormat(Channel ch)
+    private void UpdateRepairXml(Channel ch)
     {
       ch.SetupNode.Attributes["presetnumber"].Value = ch.NewProgramNr.ToString();
       if (ch.IsNameModified)
@@ -609,42 +635,59 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    #region UpdateChannelMapFormat()
-    private void UpdateChannelMapFormat(Channel ch, bool setFavoriteNumber, string userReorderChannel)
+    #region UpdateChannelMapXml()
+    private void UpdateChannelMapXml(Channel ch, bool paddedName, bool setFavoriteNumber, string userReorderChannel)
     {
-      ch.SetupNode.Attributes["ChannelNumber"].Value = ch.NewProgramNr.ToString();
+      var setup = ch.SetupNode.Attributes;
+      setup["ChannelNumber"].Value = ch.NewProgramNr.ToString();
 
       if (ch.IsNameModified)
       {
-        ch.SetupNode.Attributes["ChannelName"].InnerText = EncodeName(ch.Name, (ch.SetupNode.Attributes["ChannelName"].InnerText.Length + 1) / 5, true);
-        var attr = ch.SetupNode.Attributes["UserModifiedName"];
+
+        setup["ChannelName"].InnerText = EncodeName(ch.Name, 50, paddedName, paddedName);
+        var attr = setup["UserModifiedName"];
         if (attr != null)
           attr.InnerText = "1";
       }
 
-      // ChannelMap_100 supports a single fav list and stores the favorite number directly here in the channel.
-      // The official Philips editor forces the favorites to be in the same order as the main program number. I don't know if this is a requirement or just a limitation of the editor.
+      setup["ChannelLock"].Value = ch.Lock ? "1" : "0";
+      setup["UserHidden"].Value = ch.Hidden ? "1" : "0";
 
-      // ChannelMap_105 and later always store the value 0 in the channel and instead use a separate Favorites.xml file.
-      ch.SetupNode.Attributes["FavoriteNumber"].Value = setFavoriteNumber ? Math.Max(ch.GetPosition(1), 0).ToString() : "0";
+      // ChannelMap_100 supports a single fav list and stores the favorite number directly in the channel.
+      // The official Philips editor allows to reorder favorites when switched to the "Favourite" list view
 
-      var urc = ch.SetupNode.Attributes["UserReorderChannel"]; // introduced with format 110, but not always present
-      if (userReorderChannel == "")
-        userReorderChannel = "0";
-      if (userReorderChannel == "delete" || userReorderChannel == "remove")
-        urc.OwnerElement?.RemoveAttributeNode(urc);
-      else if (userReorderChannel == "auto")
+      // ChannelMap_105 and later always store the value 0 and instead use a separate Favorites.xml file with mixed-source channels.
+      setup["FavoriteNumber"].Value = setFavoriteNumber ? Math.Max(ch.GetPosition(1), 0).ToString() : "0";
+
+      // "UserReorderChannel" was introduced with format 110, but not always present.
+      // It is unclear if this should be 0, 1, or removed for the import to work.
+      // One user reported a 110 format file edited with Onka (which basically reverted the file to format 100 and removed UserReorderChannel) worked for him, 
+      // while my attempt with ChanSort and setting UserReorderChannel=1 didn't work. But maybe that was due to other factors.
+      var urc = setup["UserReorderChannel"];
+      if (urc != null)
       {
-        if (urc != null && ch.OldProgramNr != ch.NewProgramNr)
-          urc.InnerText = "1";
+        if (userReorderChannel == "")
+          userReorderChannel = "0";
+        switch (userReorderChannel)
+        {
+          case "delete":
+          case "remove":
+            urc.OwnerElement?.RemoveAttributeNode(urc);
+            break;
+          case "auto":
+            if (ch.OldProgramNr != ch.NewProgramNr)
+              urc.InnerText = "1";
+            break;
+          default:
+            urc.InnerText = userReorderChannel;
+            break;
+        }
       }
-      else if (urc != null)
-        urc.InnerText = userReorderChannel;
     }
 
     #endregion
 
-    #region UpdateFavList
+    #region UpdateFavList()
     private void UpdateFavList()
     {
       var favFile = this.fileDataList.FirstOrDefault(fd => Path.GetFileName(fd.path).ToLowerInvariant() == "favorite.xml");
@@ -658,7 +701,7 @@ namespace ChanSort.Loader.Philips
         favListNode.InnerXml = ""; // clear all <FavoriteChannel> child elements but keep the attributes of the current node
         var attr = favListNode.Attributes?["Name"];
         if (attr != null)
-          attr.InnerText = EncodeName(this.favChannels.GetFavListCaption(index - 1), (attr.InnerText.Length + 1)/5, false);
+          attr.InnerText = EncodeName(this.favChannels.GetFavListCaption(index - 1), (attr.InnerText.Length + 1)/5 /* 64 */, true, false);
 
         // increment fav list version, unless disabled in .ini file
         if (chanLstBin != null && (ini.GetSection("Map" + chanLstBin.VersionMajor)?.GetBool("incrementFavListVersion", true) ?? true))
@@ -686,28 +729,32 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    #region EncodeName
-    private string EncodeName(string name, int numBytes, bool upperCaseHexDigits)
+    #region EncodeName()
+    private string EncodeName(string name, int maxBytes, bool padBytes, bool upperCaseHexDigits)
     {
       var bytes = Encoding.Unicode.GetBytes(name);
       var sb = new StringBuilder();
       var pattern = upperCaseHexDigits ? "0x{0:X2} " : "0x{0:x2} ";
-      for (int i = 0; i < numBytes - 2; i++)
+      var len = Math.Min(bytes.Length, padBytes ? maxBytes-2 : maxBytes); // when padding, always add a 0x00 0x00 end-of-string
+      int i;
+      
+      for (i = 0; i < len; i++)
+        sb.AppendFormat(pattern, bytes[i]);
+      if (padBytes)
       {
-        var b = i < bytes.Length ? bytes[i] : 0;
-        sb.AppendFormat(pattern, b);
+        for (; i < maxBytes; i++)
+          sb.Append("0x00 ");
+        sb.Remove(sb.Length - 1, 1);
       }
 
-      sb.Append("0x00 0x00"); // always add an end-of-string
       return sb.ToString();
     }
     #endregion
 
-    #region ReorderNodes
+    #region ReorderNodes()
     private void ReorderNodes(FileData file)
     {
-      if (file.formatVersion != 2)
-        return;
+      var progNrAttrib = file.formatVersion == 1 ? "presetnumber" : "ChannelNumer";
 
       var nodes = file.doc.DocumentElement.GetElementsByTagName("Channel");
       var list = new List<XmlElement>();
@@ -715,7 +762,7 @@ namespace ChanSort.Loader.Philips
         list.Add((XmlElement)node);
       foreach (var node in list)
         file.doc.DocumentElement.RemoveChild(node);
-      foreach(var node in list.OrderBy(elem => int.Parse(elem["Setup"].Attributes["ChannelNumber"].InnerText)))
+      foreach(var node in list.OrderBy(elem => int.Parse(elem["Setup"].Attributes[progNrAttrib].InnerText)))
         file.doc.DocumentElement.AppendChild(node);
     }
     #endregion
@@ -758,10 +805,13 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
+    #region GetFileInformation()
     public override string GetFileInformation()
     {
       return base.GetFileInformation() + this.logMessages.Replace("\n", "\r\n");
     }
+    #endregion
+
 
     #region class FileData
     private class FileData
