@@ -23,7 +23,7 @@ https://github.com/PredatH0r/ChanSort/wiki/Samsung
 - Series based on webOS 2-5 exporting a GlobalClone00001.TLL file
 
 \*: Some devices behave erroneously due to firmware issues.  
-+: See system requirements for LM-series. xxLM640T is not supported due to its firmware limitations.  
++: xxLM640T is not supported due to its firmware limitations.  
 \#: Only satellite channels supported.
 
 Models with the NetCast operating system don't have the export/import function in the menu. Instead you need to press+hold the 
@@ -36,8 +36,8 @@ Always select "none / other / all" and never your cable TV provider or something
 
 <a name="sony"/>Sony
 ---
-- Android-TVs "sdb.xml" files using format "FormateVer" 1.1.0
-- KDL 2012/2014 "sdb.xml" files using "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
+- Android-TVs: "sdb.xml" files using format "FormateVer" 1.1.0
+- KDL 2012/2014: "sdb.xml" files using "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
 
 <a name="hisense"/>Hisense
 ---
@@ -49,7 +49,7 @@ Special thanks to Hisense for supporting ChanSort with technical information and
 
 <a name="panasonic"/>Panasonic
 ---
-Most Viera models since 2011 with a channel list formats
+Most Viera models since 2011 with channel list formats
 - svl.bin 
 - svl.db 
 
@@ -63,7 +63,7 @@ ChanSort currently supports the formats:
 
 <a name="sharp"/>Sharp (and some models from Dyon, Blaupunkt, Hisense, Changhong, Grundig, alphatronics, JTC Genesis)
 ---
-Some of these TV share similar hardware and can export/import a .csv file allowing to change the channel order:  
+Some of these TVs share similar hardware and can export/import a .csv file allowing to change the channel order:  
 - DVBS_Program.csv (alongside cvt_database.dat)
 - DVBS_CHANNEL_TABLE.csv (alongside dtv_cmdb\*.bin)
 - MS\*_DVBS_CHANNEL_TABLE.csv (alongside MS\*_HOTELMODE_TABLE.json)

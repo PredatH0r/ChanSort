@@ -23,7 +23,7 @@ https://github.com/PredatH0r/ChanSort/wiki/Samsung
 - Serien basierend auf webOS 2-5, die eine GlobalClone00001.TLL-Datei exportieren
 
 \*: Einige Geräte verhalten sich fehlerhaft aufgrund Probleme in deren Firmware.  
-+: Siehe Systemanforderungen für die LM-Serie. xxLM640T kann aufgrund von Firmwaremängeln nicht unterstützt werden.  
++: xxLM640T kann aufgrund von Firmwaremängeln nicht unterstützt werden.  
 \#: Nur Satellitensender werden unterstützt.
 
 Modelle mit NetCast Betriebssytem beinhalten keine Import/Export Funktion im normalen Menü. Um das Geheimmenü aufzurufen,
@@ -36,8 +36,8 @@ Wählen Sie immer "Keiner / Anderer / Alle" aus bzw. "Blindsuche", und nie einen 
 
 <a name="sony"/>Sony
 ---
-- Android-TV "sdb.xml" Dateien mit Version "FormateVer" 1.1.0
-- KDL 2012/2014 "sdb.xml" mit "FormatVer" 1.0.0, 1.1.0 and 1.2.0
+- Android-TVs: "sdb.xml" Dateien mit Version "FormateVer" 1.1.0
+- KDL 2012/2014: "sdb.xml" mit "FormatVer" 1.0.0, 1.1.0 and 1.2.0
 
 <a name="hisense"/>Hisense
 ---

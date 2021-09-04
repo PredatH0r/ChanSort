@@ -21,10 +21,22 @@ namespace ChanSort.Loader.CmdbBin
 
     public CmdbFileSerializer(string inputFile) : base(inputFile)
     {
+      this.Features.FavoritesMode = FavoritesMode.Flags;
+      this.Features.MaxFavoriteLists = 1;
+
       this.DataRoot.AddChannelList(dvbsTv);
       this.DataRoot.AddChannelList(dvbsRadio);
       // this.DataRoot.AddChannelList(dvbsData); // there seem to be multiple data lists with Toshiba TVs which all have their own numbering starting at 1. Better don't show data channels at all than dupes
       this.ReadConfigurationFromIniFile();
+
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        //list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Favorites));
+        //list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Skip));
+        //list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Lock));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Hidden));
+        //list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
+      }
     }
 
     #region ReadConfigurationFromIniFile()
@@ -109,13 +121,16 @@ namespace ChanSort.Loader.CmdbBin
     }
     #endregion
 
+    #region ReadSatellite()
     private void ReadSatellite(DataMapping map, int index)
     {
       var sat = new Satellite(index);
       sat.Name = map.GetString("offName", map.Settings.GetInt("lenName"));
       this.DataRoot.AddSatellite(sat);
     }
-
+    #endregion
+    
+    #region ReadTransponder()
     private void ReadTransponder(DataMapping map, int index)
     {
       //var idx = map.GetWord("offTransponderIndex"); // seems to be some logical number, skipping a new numbers here and there
@@ -129,6 +144,7 @@ namespace ChanSort.Loader.CmdbBin
       tp.SymbolRate = map.GetWord("offSymbolRate");
       this.DataRoot.AddTransponder(tp.Satellite, tp);
     }
+    #endregion
 
     #region ReadChannel()
     private void ReadChannel(DataMapping chanMap, ChannelList tvList, ChannelList radioList, ChannelList dataList, int recordIndex)
@@ -137,8 +153,9 @@ namespace ChanSort.Loader.CmdbBin
       if (channelType == 0) // some file format versions store the channel type in the upper nibble of a byte
         channelType = chanMap.GetByte("offChannelTypeOld") >> 4;
       var serviceType = chanMap.GetByte("offServiceType");
-      var apid = chanMap.GetWord("offAudioPid") & 0x1FFF;
-      var vpid = chanMap.GetWord("offVideoPid") & 0x1FFF;
+
+      if (chanMap.Settings.GetInt("offFav", -1) < 0)
+        this.Features.FavoritesMode = FavoritesMode.None;
 
       ChannelList list;
       if (channelType != 0)
@@ -149,10 +166,7 @@ namespace ChanSort.Loader.CmdbBin
         list = type == SignalSource.Radio ? radioList : type == SignalSource.Tv ? tvList : dataList;
       }
       else
-      {
-        //list = vpid != 0 && vpid != 0x1FFF ? tvList : apid != 0 && apid != 0x1FFF ? radioList : dataList;
         list = tvList;
-      }
 
       var progNr = (int)chanMap.GetWord("offProgramNr");
       if (progNr == 0xFFFE)
@@ -163,8 +177,12 @@ namespace ChanSort.Loader.CmdbBin
       ch.ServiceTypeName = Api.LookupData.Instance.GetServiceTypeDescription(ch.ServiceType);
       ch.PcrPid = chanMap.GetWord("offPcrPid") & 0x1FFF;
       ch.ServiceId = chanMap.GetWord("offServiceId");
-      ch.AudioPid = apid;
-      ch.VideoPid = vpid;
+      ch.AudioPid = chanMap.GetWord("offAudioPid");
+      ch.Encrypted = chanMap.GetFlag("Encrypted");
+      ch.VideoPid = chanMap.GetWord("offVideoPid") & 0x1FFF;
+      ch.Skip = chanMap.GetFlag("Skip");
+      ch.Lock = chanMap.GetFlag("Locked");
+      ch.Favorites = chanMap.GetFlag("Fav") ? Favorites.A : 0;
 
       var off = chanMap.BaseOffset + chanMap.GetOffsets("offName")[0];
       this.dvbStringDecoder.GetChannelNames(chanMap.Data, off, chanMap.Settings.GetInt("lenName"), out var longName, out var shortName);

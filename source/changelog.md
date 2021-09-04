@@ -6,8 +6,8 @@ ChanSort Change Log
 - Philips: added ChanSort.Loader.Philips.ini file to try out different configurations until working ones get confirmed. 
 - Philips: disabled deleting channels for most file formats (they require files for menu and tuner to be kept in-sync).
 - Philips: identified several variants of ChannelMap_100 format which now have special handling.  
-  one that exports \*cmdb\*.bin files is now fully tested and working.  
-  ones that export only .xml files inside the channellib and s2channellib folders should work too, but not confirmed.  
+  - one that exports \*cmdb\*.bin files is now fully tested and working.  
+  - ones that export only .xml files inside the channellib and s2channellib folders should work too, but not confirmed.  
 - Philips: ChannelFormat_105 and 110 specific settings in .ini, currently best-effort without user confirmation.
 - Philips: added support for Repair\\Mgr_chan_s_fta.db lists. Can be read as a reference list, but editing is
   currently disabled in the .ini file (enabling it is experimental)

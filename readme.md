@@ -78,7 +78,7 @@ System requirements
 
 **Hardware**:
 - USB stick/SD-card to transfer the channel list between your TV and PC. A stick <= 32 GB with FAT32 file system 
-is STRONGLY recommended. (Some TVs write gargabe to NTFS and don't support exFAT at all)
+is STRONGLY recommended. (Some TVs write garbage to NTFS and don't support exFAT at all)
 
 Build from source
 -----------------

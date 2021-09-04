@@ -1,4 +1,5 @@
-﻿using ChanSort.Api;
+﻿using System.IO;
+using ChanSort.Api;
 
 namespace ChanSort.Loader.CmdbBin
 {
@@ -10,7 +11,15 @@ namespace ChanSort.Loader.CmdbBin
 
     public SerializerBase CreateSerializer(string inputFile)
     {
-      return new CmdbFileSerializer(inputFile);
+      var dir = Path.GetDirectoryName(inputFile);
+      
+      // ignore Philips ChannelMap_100 channel lists which don't have atv_cmdb.bin and dtv_cmdb_2.bin in the same folder
+
+      var anchorFile = Path.Combine(dir, "dtv_cmdb_2.bin");
+      if (File.Exists(anchorFile) && File.Exists(Path.Combine(dir, "atv_cmdb.bin")))
+        return new CmdbFileSerializer(anchorFile);
+
+      return null;
     }
   }
 }

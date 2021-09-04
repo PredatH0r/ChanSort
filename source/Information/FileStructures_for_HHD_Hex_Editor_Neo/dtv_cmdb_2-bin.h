@@ -7,7 +7,25 @@
 enum ChannelType : byte
 {
 	Tv = 1,
-	Radio = 2
+	Radio = 2,
+	Data = 3,
+	Data5 = 5
+};
+
+struct Flags
+{
+	byte u1 : 3;
+	byte protected : 1;
+	byte u2 : 1;
+	byte skip : 1;
+	byte locked : 1;
+	byte u3 : 1;
+};
+
+struct ChannelTypeNibble
+{
+	byte unk : 4;
+	ChannelType type : 4;
 };
 
 struct DvbId
@@ -20,7 +38,9 @@ struct Channel_5048
 {
 	var off0 = current_offset;
 	word channelIndex;
-	byte u1[13];
+	byte u1[11];
+	Flags flags;
+	byte u1b;
 	ChannelType channelType;
 	word serviceType;
 	byte u2[2];
@@ -36,7 +56,8 @@ struct Channel_5048
 	byte u6[186];
 	char name[66];
 	char provider[270];
-	byte unk[channelSize - (current_offset - off0)];
+	byte unk[channelSize - 4 - (current_offset - off0)];
+	dword bytesum;
 };
 
 struct Transponder_5048
@@ -91,6 +112,94 @@ public struct dtv_cmdb_2_5048
 };
 
 
+
+#undef channelSize
+#define channelSize 608
+#undef transponderSize
+#define transponderSize 320
+#undef satelliteSize
+#define satelliteSize 68
+
+struct Channel_4532
+{
+	var off0 = current_offset;
+	word channelIndex;
+	byte u1[11];
+	Flags flags;
+	byte u1b;
+	ChannelType channelType;
+	word serviceType;
+	byte u2[2];
+	word transponderIndex;
+	word pmtPid;
+	word u3;
+	word pcrPid;
+	word videoPid;
+	word u4;
+	word programNr;
+	word serviceId;
+	byte u5[22];
+	word audioPid;
+	byte u6[186];
+	char name[66];
+	char provider[270];
+	byte unk[channelSize - 4 - (current_offset - off0)];
+	dword bytesum;
+};
+
+struct Transponder_4532
+{
+	var off0 = current_offset;
+	word satelliteIndex;
+	word u1[2];
+	word tsid;
+	word onid;
+	word nid_maybe;
+	word u2;
+	word transpoderNumber;
+	word freqInMhz;
+	byte u3[10];
+	word symrate;
+	byte unk[transponderSize - (current_offset - off0)];
+};
+
+struct Satellite_4532
+{
+	var off0 = current_offset;
+	byte u1[2];
+	char name[32];
+	byte u2[2];
+	word lowFreq;
+	word highFreq;
+	byte unk[satelliteSize - (current_offset - off0)];
+};
+
+public struct dtv_cmdb_2_4532
+{
+	char magic[4];
+	word u1;
+	word u2;
+	byte channelBitmap[752];
+	Channel_4532 channels[6000];
+		
+	byte transponderBitmap[376];
+	Transponder_4532 transponder[3000];
+		
+	byte unknownBitmap[32];
+	struct {
+		word u1;
+		word onid;		
+		byte unknownData[50];
+	} unknown[254];
+	
+	byte satelliteBitmap[32];
+	Satellite_4532 satellites[254];
+	
+	byte _0x30;
+};
+
+
+
 #undef channelSize
 #define channelSize 256
 #undef transponderSize
@@ -102,7 +211,9 @@ struct Channel_1684
 {
 	var off0 = current_offset;
 	word channelIndex;
-	byte u1[13];
+	byte u1[11];
+	Flags flags;
+	byte u1b;
 	ChannelType channelType;
 	word serviceType;
 	byte u2[2];
@@ -119,7 +230,8 @@ struct Channel_1684
 	byte u6[90];
 	char name[50];
 	char provider[52];
-	byte unk[channelSize - (current_offset - off0)];
+	byte unk[channelSize - 4 - (current_offset - off0)];
+	dword bytesum;
 };
 
 struct Transponder_1684
@@ -185,8 +297,10 @@ struct Channel_1322
 {
 	var off0 = current_offset;
 	word channelIndex;
-	byte u1[14];
-	//ChannelType channelType;
+	byte u1[11];
+	Flags flags;
+	byte u1b;
+	ChannelTypeNibble channelType;
     byte u1b;
 	byte serviceType;
 	word transponderIndex;
@@ -201,7 +315,8 @@ struct Channel_1322
 	DvbId audioPid;
 	byte u6[90];
 	char name[50];
-	byte unk[channelSize - (current_offset - off0)];
+	byte unk[channelSize - 4 - (current_offset - off0)];
+	dword bytesum;
 };
 
 struct Transponder_1322
@@ -265,7 +380,11 @@ struct Channel_1296
 {
 	var off0 = current_offset;
 	word channelIndex;
-	byte u1[13];
+	byte u1[9];
+	Flags flags_maybe;
+	byte u1a;
+	ChannelTypeNibble type;
+	byte u1b;
 	byte serviceType;	
 	word transponderIndex;
 	DvbId pmtPid;
@@ -280,7 +399,8 @@ struct Channel_1296
 	DvbId audioPid;
 	byte u6[90];
 	char name[50];
-	byte unk[channelSize - (current_offset - off0)];
+	byte unk[channelSize - 4 -(current_offset - off0)];
+	dword bytesum;
 };
 
 struct Transponder_1296
