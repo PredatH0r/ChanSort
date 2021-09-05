@@ -1,7 +1,9 @@
 ChanSort Change Log 
 ===================
+2021-09-05_2010
+- Philips: fixed wrong .ini settings for formats 100, 105 and 110
 
-2021-09-05 (pre-release)
+2021-09-05
 - ChanSort didn't work properly with Windows region settings that don't convert ".BIN" to lowercase ".bin" (e.g. Turkey)
 - Philips: added ChanSort.Loader.Philips.ini file to try out different configurations until working ones get confirmed. 
 - Philips: disabled deleting channels for most file formats (they require files for menu and tuner to be kept in-sync).
