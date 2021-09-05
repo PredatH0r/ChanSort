@@ -138,6 +138,9 @@ namespace ChanSort.Api
     }
     #endregion
 
+    public virtual string TvModelName { get; set; }
+    public virtual string FileFormatVersion { get; set; }
+
     public virtual void ShowDeviceSettingsForm(object parentWindow) { }
 
     public virtual string CleanUpChannelData() { return ""; }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Schema;
 using ChanSort.Api;
@@ -173,6 +174,8 @@ namespace ChanSort.Loader.Philips
         isChannelMapFolderStructure = true;
         this.chanLstBin = new ChanLstBin();
         this.chanLstBin.Load(this.FileName, msg => this.logMessages.AppendLine(msg));
+        this.TvModelName = this.chanLstBin.ModelName;
+        this.FileFormatVersion = $"{chanLstBin.VersionMajor}.{chanLstBin.VersionMinor}";
       }
       else if (Path.GetExtension(this.FileName).ToLowerInvariant() == ".bin")
       {
@@ -183,6 +186,11 @@ namespace ChanSort.Loader.Philips
           try { File.SetAttributes(xmlPath, FileAttributes.Archive);}
           catch { /**/ }
           this.FileName = xmlPath;
+          var baseName = Path.GetFileNameWithoutExtension(xmlPath).ToUpperInvariant();
+          if (baseName.StartsWith("CM_"))
+            baseName = baseName.Substring(3);
+          this.TvModelName = baseName;
+          this.FileFormatVersion = "Legacy XML";
         }
       }
 

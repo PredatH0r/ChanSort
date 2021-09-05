@@ -95,6 +95,9 @@ namespace ChanSort.Loader.Philips
     {
       this.chanLstBin = new ChanLstBin();
       this.chanLstBin.Load(this.FileName, msg => this.logMessages.AppendLine(msg));
+      this.TvModelName = this.chanLstBin.ModelName;
+      this.FileFormatVersion = $"{chanLstBin.VersionMajor}.{chanLstBin.VersionMinor}";
+
       this.dataFilePaths.Add(this.FileName);
 
       var dir = Path.GetDirectoryName(this.FileName) ?? "";

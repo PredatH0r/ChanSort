@@ -117,7 +117,7 @@ namespace ChanSort.Loader.Philips
         var actualCrc = Crc16.Calc(data, 0, length);
         if (actualCrc != expectedCrc)
         {
-          var msg = $"chanLst.bin: stored CRC for {entry.Key} is {expectedCrc:x4} but calculated {actualCrc:x4}";
+          var msg = $"chanLst.bin: stored CRC for {entry.Key} is {expectedCrc:X4} but calculated {actualCrc:X4}";
           errors += "\n" + msg;
         }
       }

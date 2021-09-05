@@ -1890,17 +1890,25 @@ namespace ChanSort.Ui
     {
       if (this.currentTvSerializer == null)
         return;
-      var info = this.currentTvSerializer.GetFileInformation();
+
+      var info = new StringBuilder();
+      if (!string.IsNullOrEmpty(this.currentTvSerializer.TvModelName))
+        info.AppendLine("TV model name:       " + this.currentTvSerializer.TvModelName);
+      if (!string.IsNullOrEmpty(this.currentTvSerializer.FileFormatVersion))
+        info.AppendLine("List format version: " + this.currentTvSerializer.FileFormatVersion);
+
+      info.AppendLine();
+      info.AppendLine(this.currentTvSerializer.GetFileInformation());
 
       if (this.DataRoot.Warnings.Length > 0)
       {
         var lines = this.DataRoot.Warnings.ToString().Split('\n');
         Array.Sort(lines);
         var sortedWarnings = string.Join("\n", lines);
-        info += "\r\n\r\n\r\n" + Resources.MainForm_LoadFiles_ValidationWarningMsg + "\r\n\r\n" + sortedWarnings;
+        info.Append("\r\n\r\n\r\n").Append(Resources.MainForm_LoadFiles_ValidationWarningMsg).Append("\r\n\r\n").Append(sortedWarnings);
       }
 
-      InfoBox.Show(this, info, this.miFileInformation.Caption.Replace("...", "").Replace("&", ""));
+      InfoBox.Show(this, info.ToString(), this.miFileInformation.Caption.Replace("...", "").Replace("&", ""));
     }
 
     #endregion

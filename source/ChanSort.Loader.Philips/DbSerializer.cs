@@ -62,6 +62,9 @@ namespace ChanSort.Loader.Philips
         var lc = Path.GetFileName(file).ToLowerInvariant();
         switch (lc)
         {
+          case "channel_db_ver.db":
+            LoadVersion(file);
+            break;
           case "mgr_chan_s_fta.db":
             LoadDvbs(file);
             validList = true;
@@ -72,7 +75,40 @@ namespace ChanSort.Loader.Philips
       if (!validList)
         throw new FileLoadException(this.FileName + " is not a supported Philips Repair/mgr_chan_s_fta.db channel list");
     }
+    #endregion
 
+    #region LoadVersion()
+    private void LoadVersion(string file)
+    {
+      var data = File.ReadAllBytes(file);
+      this.FileFormatVersion = "FLASH/.db";
+      if (data.Length >= 2)
+        this.FileFormatVersion += " " + BitConverter.ToInt16(data, 0);
+      if (data.Length >= 3)
+        this.FileFormatVersion += $"-{data[2]:D2}";
+      if (data.Length >= 4)
+        this.FileFormatVersion += $"-{data[3]:D2}";
+      if (data.Length >= 5)
+        this.FileFormatVersion += $" {data[4]:D2}";
+      if (data.Length >= 6)
+        this.FileFormatVersion += $":{data[5]:D2}";
+      if (data.Length >= 7)
+        this.FileFormatVersion += $":{data[6]:D2}";
+
+      // Philips doesn't export any information about the TV model in this format. For automated stats I manually place modelinfo.txt files in the folders
+      for (var dir = Path.GetDirectoryName(file); dir != ""; dir = Path.GetDirectoryName(dir))
+      {
+        var path = Path.Combine(dir, "modelinfo.txt");
+        if (File.Exists(path))
+        {
+          this.TvModelName = File.ReadAllText(path);
+          break;
+        }
+      }
+    }
+    #endregion
+
+    #region LoadDvbs()
     private void LoadDvbs(string file)
     {
       var data = File.ReadAllBytes(file);
