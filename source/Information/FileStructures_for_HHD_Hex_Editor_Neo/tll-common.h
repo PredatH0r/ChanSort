@@ -30,16 +30,22 @@ struct TLL_HotelSettings
 
 enum TLL_SignalSource : byte
 {
+  Analog_T = 0,
   DVB_T = 1,
-  Analog = 2,
+  Analog_C = 2,
   DVB_C = 3,
   DVB_S = 7
 };
 
 enum LH_SignalSource : byte
 {
-  Antenna = 2,
-  Cable = 3
+  //Antenna = 2,
+  //Cable = 3
+  Analog_T = 0,
+  DVB_T = 1,
+  Analog_C = 2,
+  DVB_C = 3,
+  DVB_S = 7
 };
 
 enum TLL_EditFlags : byte

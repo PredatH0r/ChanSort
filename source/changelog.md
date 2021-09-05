@@ -1,7 +1,7 @@
 ChanSort Change Log 
 ===================
 
-2021-09-04 (pre-release)
+2021-09-05 (pre-release)
 - ChanSort didn't work properly with Windows region settings that don't convert ".BIN" to lowercase ".bin" (e.g. Turkey)
 - Philips: added ChanSort.Loader.Philips.ini file to try out different configurations until working ones get confirmed. 
 - Philips: disabled deleting channels for most file formats (they require files for menu and tuner to be kept in-sync).
@@ -19,6 +19,7 @@ ChanSort Change Log
 - Sony: Files with incorrect checksum are no longer rejected, as the TV seems to ignore bad checksums.  
   Information about a bad checksum is visible under File / File Information. 
 - Sony: Sky option channels are now in the TV channel list rather than data channel list
+- LG: added distinction between analog cable and analog antenna channels for legacy binary files (xxMODEL00001.TLL)
 - updated Hungarian translation. Thanks to efi99 on Github!
 - pressing the "Del"-key on the keyboard no longer deletes a channel when a text editor is open
 - dragging a file (or something else) from outside ChanSort over the ChanSort window no longer creates an error

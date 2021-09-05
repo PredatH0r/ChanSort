@@ -30,7 +30,8 @@ namespace ChanSort.Loader.LG.Binary
     private readonly MappingPool<FirmwareData> firmwareMappings = new MappingPool<FirmwareData>("Firmware");
     private readonly MappingPool<DataMapping> lnbMappings = new MappingPool<DataMapping>("LNB Config"); 
 
-    private readonly ChannelList atvChannels = new ChannelList(SignalSource.AnalogCT | SignalSource.Tv, "Analog TV");
+    private readonly ChannelList avbcTvChannels = new ChannelList(SignalSource.AnalogC | SignalSource.Tv, "Analog Cable");
+    private readonly ChannelList avbtTvChannels = new ChannelList(SignalSource.AnalogT | SignalSource.Tv, "Analog Antenna");
     private readonly ChannelList dvbcTvChannels = new ChannelList(SignalSource.DvbC | SignalSource.Tv, "DVB-C TV");
     private readonly ChannelList dvbtTvChannels = new ChannelList(SignalSource.DvbT | SignalSource.Tv, "DVB-T TV");
     private readonly ChannelList dvbcRadioChannels = new ChannelList(SignalSource.DvbC | SignalSource.Radio, "DVB-C Radio");
@@ -99,7 +100,8 @@ namespace ChanSort.Loader.LG.Binary
 
       this.ReadConfigurationFromIniFile();
 
-      this.DataRoot.AddChannelList(atvChannels);
+      this.DataRoot.AddChannelList(avbcTvChannels);
+      this.DataRoot.AddChannelList(avbtTvChannels);
       this.DataRoot.AddChannelList(dvbcTvChannels);
       this.DataRoot.AddChannelList(dvbcRadioChannels);
       this.DataRoot.AddChannelList(dvbtTvChannels);
@@ -989,7 +991,10 @@ Due to issues with most recent LG firmwares such lists can no longer be modified
     #region ReorderActChannelsPhysically()
     private void ReorderActChannelsPhysically()
     {
-      this.ReorderChannelData(this.analogBlockOffset + 8, this.actChannelSize, this.analogChannelCount, this.atvChannels.Channels);
+      var avbt = this.avbtTvChannels.Channels.OrderBy(c => c.NewProgramNr);
+      var avbc = this.avbcTvChannels.Channels.OrderBy(c => c.NewProgramNr);
+      var avb = avbt.Union(avbc).ToList();
+      this.ReorderChannelData(this.analogBlockOffset + 8, this.actChannelSize, this.analogChannelCount, avb);
 
       var dvbcTv = this.dvbcTvChannels.Channels.OrderBy(c => c.NewProgramNr);
       var dvbcRadio = this.dvbcRadioChannels.Channels.OrderBy(c => c.NewProgramNr);

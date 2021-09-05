@@ -96,13 +96,14 @@ namespace Test.Loader
           key = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + Path.GetFileName(file);
           if (expectedData.TryGetValue(key, out exp))
           {
-            var analogTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogCT|ChanSort.Api.SignalSource.Tv);
+            var analogC = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogC|ChanSort.Api.SignalSource.Tv);
+            var analogT = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.AnalogT | ChanSort.Api.SignalSource.Tv);
             var dvbcTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbC|ChanSort.Api.SignalSource.Tv);
             var dvbtTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbT | ChanSort.Api.SignalSource.Tv);
             var dtvTv = dvbcTv.Channels.Count > 0 ? dvbcTv : dvbtTv;
             var satTv = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.DvbS | ChanSort.Api.SignalSource.Tv);
             expectedData.Remove(key);
-            Assert.AreEqual(exp.AnalogChannels, analogTv.Channels.Count, file + ": analog");
+            Assert.AreEqual(exp.AnalogChannels, analogC.Channels.Count + analogT.Channels.Count, file + ": analog");
             Assert.AreEqual(exp.DtvChannels, dtvTv.Channels.Count, file + ": DTV");
             if (exp.SatChannels != 0)
               Assert.AreEqual(exp.SatChannels, satTv.Channels.Count, file + ": Sat");

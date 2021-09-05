@@ -22,7 +22,7 @@ namespace Test.Loader.LG.Binary
     }
 
     [TestMethod]
-    public void TestLA7408_Firmware04_20_29()
+    public void TestLA691S_Firmware04_20_29()
     {
       // "DanGmail"
       //this.GenerateTestFiles("LA/xxLA691S-ZA00004");
