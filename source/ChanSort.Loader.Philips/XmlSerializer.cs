@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Schema;
 using ChanSort.Api;
@@ -378,9 +377,15 @@ namespace ChanSort.Loader.Philips
         // use special configs for version 100 variants
         var dir = Path.GetDirectoryName(this.FileName) ?? "";
         if (File.Exists(Path.Combine(dir, "atv_cmdb.bin")))
+        {
           this.iniMapSection = ini.GetSection("Map100_cmdb.bin");
+          this.FileFormatVersion += "/cmdb";
+        }
         else if (File.Exists(Path.Combine(dir, "channelFile.bin")))
+        {
           this.iniMapSection = ini.GetSection("Map100_channelFile.bin");
+          this.FileFormatVersion += "/channelFile";
+        }
 
         if (this.iniMapSection?.GetBool("setReorderedFavNumber") ?? false)
           this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
@@ -762,7 +767,7 @@ namespace ChanSort.Loader.Philips
     #region ReorderNodes()
     private void ReorderNodes(FileData file)
     {
-      var progNrAttrib = file.formatVersion == 1 ? "presetnumber" : "ChannelNumer";
+      var progNrAttrib = file.formatVersion == 1 ? "presetnumber" : "ChannelNumber";
 
       var nodes = file.doc.DocumentElement.GetElementsByTagName("Channel");
       var list = new List<XmlElement>();

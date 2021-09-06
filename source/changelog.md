@@ -1,5 +1,13 @@
 ChanSort Change Log 
 ===================
+
+2021-09-06
+- Philips: fixes for ChannelMap_100, 105 and 110 formats
+- Philips: support for FLASH/*.bin DVB-T/C and preset DVB-S lists (mgr_chan_s_pkg.db)
+- Toshiba: lists with chmgt_type001\\chmgt.bin can now be opened without zipping them
+- Toshiba: selecting the hotelopt_type001.bin will now also load the list (if the type is supported)
+- Alden: added support for "Alden" Android SmartTV channel list format (dvr_rtk_tv.db)
+
 2021-09-05_2010
 - Philips: fixed wrong .ini settings for formats 100, 105 and 110
 
@@ -11,7 +19,7 @@ ChanSort Change Log
   - one that exports \*cmdb\*.bin files is now fully tested and working.  
   - ones that export only .xml files inside the channellib and s2channellib folders should work too, but not confirmed.  
 - Philips: ChannelFormat_105 and 110 specific settings in .ini, currently best-effort without user confirmation.
-- Philips: added support for Repair\\Mgr_chan_s_fta.db lists. Can be read as a reference list, but editing is
+- Philips: added support for Repair\\mgr_chan_s_fta.db lists. Can be read as a reference list, but editing is
   currently disabled in the .ini file (enabling it is experimental)
 - added experimental support for 8 variants of "dtv_cmdb_2.bin" DVB-S channel lists (DVB-C/T not supported yet).  
   Brands known to use this format include Sharp, Toshiba, Dyon, OK.  

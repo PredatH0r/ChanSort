@@ -9,6 +9,9 @@ namespace ChanSort.Api
 {
   public abstract class SerializerBase : IDisposable
   {
+    public const string ERR_UnknownFormat = "unknown channel list format";
+    public const string ERR_UnsupportedFormat = "Detected a known but unsupported channel list format: {0}";
+
     #region class SupportedFeatures
 
     public enum DeleteMode

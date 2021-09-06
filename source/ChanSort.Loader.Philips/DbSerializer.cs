@@ -11,17 +11,18 @@ namespace ChanSort.Loader.Philips
   /*
    * This serializer is used for the channel list format with a Repair\ folder containing files like channel_db_ver.db, mgr_chan_s_fta.db, ...
    * The .db files are proprietary binary files, not SQLite databases.
-   * So far only the mgr_chan_s_fta.db file holing DVB-S channels is reverse engineered, the offsets are defined in PChanSort.Loader.Philips.ini
-   *
-   * Unfortunately modifying the .db files does not seem to be enough. The TV also depends on channel data in the FLASH_* files, which I don't know how how to edit.
-   * Therefore lists of this format can be read as read-only reference lists, but modifications are disabled.
+   * Due to lack of sample lists, the analog and DVB-C files have not been reverse engineered yet.
+   * The data offsets are defined in ChanSort.Loader.Philips.ini
    */
   class DbSerializer : SerializerBase
   {
     private readonly IniFile ini;
-    private readonly List<string> dataFilePaths = new List<string>();
 
-    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
+    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
+    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbT, "DVB-C");
+    private readonly ChannelList dvbsFtaChannels = new ChannelList(SignalSource.DvbS | SignalSource.Provider0, "DVB-S FTA");
+    private readonly ChannelList dvbsPkgChannels = new ChannelList(SignalSource.DvbS | SignalSource.Provider1, "DVB-S Preset");
+    private readonly Dictionary<ChannelList, string> fileByList = new();
 
 
     public DbSerializer(string inputFile) : base(inputFile)
@@ -29,27 +30,30 @@ namespace ChanSort.Loader.Philips
       this.Features.MaxFavoriteLists = 1;
       this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
       this.Features.DeleteMode = DeleteMode.NotSupported;
-      this.Features.CanHaveGaps = false;
+      this.Features.CanHaveGaps = true; // the mgr_chan_s_pkg can have gaps
 
       string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
       this.ini = new IniFile(iniFile);
 
-      this.DataRoot.AddChannelList(dvbsChannels);
-      dvbsChannels.VisibleColumnFieldNames = new List<string>
+      this.DataRoot.AddChannelList(dvbtChannels);
+      this.DataRoot.AddChannelList(dvbcChannels);
+      this.DataRoot.AddChannelList(dvbsFtaChannels);
+      this.DataRoot.AddChannelList(dvbsPkgChannels);
+      foreach (var list in this.DataRoot.ChannelLists)
       {
-        "Position", //nameof(Channel.NewProgramNr),
-        "OldPosition", // nameof(Channel.OldProgramNr),
-        nameof(Channel.Name),
-        nameof(Channel.Favorites),
-        nameof(Channel.FreqInMhz),
-        nameof(Channel.SymbolRate),
-        nameof(Channel.TransportStreamId),
-        nameof(Channel.OriginalNetworkId),
-        nameof(Channel.ServiceId)
-      };
-
-      var sec = ini.GetSection("mgr_chan_s_fta.db");
-      dvbsChannels.ReadOnly = sec.GetBool("allowEdit", false);
+        list.VisibleColumnFieldNames = new List<string>
+        {
+          "Position", //nameof(Channel.NewProgramNr),
+          "OldPosition", // nameof(Channel.OldProgramNr),
+          nameof(Channel.Name),
+          nameof(Channel.Favorites),
+          nameof(Channel.FreqInMhz),
+          nameof(Channel.SymbolRate),
+          nameof(Channel.TransportStreamId),
+          nameof(Channel.OriginalNetworkId),
+          nameof(Channel.ServiceId)
+        };
+      }
     }
 
     #region Load()
@@ -57,23 +61,42 @@ namespace ChanSort.Loader.Philips
     {
       bool validList = false;
 
-      foreach (var file in Directory.GetFiles(Path.GetDirectoryName(this.FileName)))
+      foreach (var file in Directory.GetFiles(Path.GetDirectoryName(this.FileName) ?? ""))
       {
         var lc = Path.GetFileName(file).ToLowerInvariant();
         switch (lc)
         {
+          case "atv_channel_t.db":
+            // TODO: no sample file yet that contains analog terrestrial channels
+            break;
+          case "atv_channel_c.db":
+            // TODO: no sample file yet that contains analog cable channels
+            break;
           case "channel_db_ver.db":
             LoadVersion(file);
             break;
+          case "mgr_chan_dvbt.db":
+            LoadDvb(file, lc, dvbtChannels);
+            validList = true;
+            break;
+          case "mgr_chan_dvbc.db":
+            // no sample file with DVB-C data yet, so this here is a guess based on DVB-T
+            LoadDvb(file, lc, dvbcChannels);
+            validList = true;
+            break;
           case "mgr_chan_s_fta.db":
-            LoadDvbs(file);
+            LoadDvb(file, lc, dvbsFtaChannels);
+            validList = true;
+            break;
+          case "mgr_chan_s_pkg.db":
+            LoadDvb(file, lc, dvbsPkgChannels);
             validList = true;
             break;
         }
       }
 
       if (!validList)
-        throw new FileLoadException(this.FileName + " is not a supported Philips Repair/mgr_chan_s_fta.db channel list");
+        throw new FileLoadException(this.FileName + " is not a supported Philips Repair/channel_db_ver.db channel list");
     }
     #endregion
 
@@ -96,7 +119,7 @@ namespace ChanSort.Loader.Philips
         this.FileFormatVersion += $":{data[6]:D2}";
 
       // Philips doesn't export any information about the TV model in this format. For automated stats I manually place modelinfo.txt files in the folders
-      for (var dir = Path.GetDirectoryName(file); dir != ""; dir = Path.GetDirectoryName(dir))
+      for (var dir = Path.GetDirectoryName(file); dir != null; dir = Path.GetDirectoryName(dir))
       {
         var path = Path.Combine(dir, "modelinfo.txt");
         if (File.Exists(path))
@@ -109,11 +132,12 @@ namespace ChanSort.Loader.Philips
     #endregion
 
     #region LoadDvbs()
-    private void LoadDvbs(string file)
+    private void LoadDvb(string path, string sectionName, ChannelList list)
     {
-      var data = File.ReadAllBytes(file);
+      var signalSource = list.SignalSource;
+      var data = File.ReadAllBytes(path);
 
-      var sec = ini.GetSection("mgr_chan_s_fta.db");
+      var sec = ini.GetSection(sectionName);
       var lenHeader = sec.GetInt("lenHeader");
       var lenFooter = sec.GetInt("lenFooter");
       var lenEntry = sec.GetInt("lenEntry");
@@ -121,9 +145,11 @@ namespace ChanSort.Loader.Philips
 
       var records = (data.Length - lenHeader - lenFooter) / lenEntry;
       if (records <= 0)
-        throw new FileLoadException("Currently only DVB-S lists are supported and mgr_chan_s_fta.db contains no channels.");
+        return;
 
-      var mapping = new DataMapping(this.ini.GetSection("mgr_chan_s_fta.db_entry"));
+      list.ReadOnly = !sec.GetBool("allowEdit", false);
+
+      var mapping = new DataMapping(this.ini.GetSection(sectionName + "_entry"));
       sec = ini.GetSection("mgr_chan_s_fta.db_entry");
       var lenName = sec.GetInt("lenName");
       for (int i = 0; i < records; i++)
@@ -136,26 +162,30 @@ namespace ChanSort.Loader.Philips
         var name = data[off + 0] == 0 ? (data[off + 1] == 0 ? "" : Encoding.BigEndianUnicode.GetString(data, off, lenName)) : DefaultEncoding.GetString(data, off, lenName);
         name = name.TrimEnd('\0');
 
-        var ch = new Channel(SignalSource.DvbS, i, oldProgNr, name);
+        var ch = new Channel(signalSource, i, oldProgNr, name);
         ch.RecordOrder = i;
         var favPos = mapping.GetWord("offFav");
         if (favPos > 0)
           ch.SetOldPosition(1, favPos);
         ch.SymbolRate = mapping.GetWord("offSymbolRate");
-        ch.FreqInMhz = mapping.GetWord("offFreq");
+        ch.FreqInMhz = mapping.GetDword("offFreq");
+        if (ch.FreqInMhz > 13000) // DVB-S stores value in MHz, DVB-T in Hz
+          ch.FreqInMhz /= 1000;
+        if (ch.FreqInMhz > 13000)
+          ch.FreqInMhz /= 1000;
         ch.TransportStreamId = mapping.GetWord("offTsid");
         ch.OriginalNetworkId = mapping.GetWord("offOnid");
         ch.ServiceId = mapping.GetWord("offSid");
-        this.DataRoot.AddChannel(dvbsChannels, ch);
+        this.DataRoot.AddChannel(list, ch);
       }
 
       var offChecksum = data.Length - lenFooter + offFooterChecksum;
       var expectedChecksum = BitConverter.ToUInt16(data, offChecksum);
       var actualChecksum = CalcChecksum(data, 0, offChecksum);
       if (actualChecksum != expectedChecksum)
-        throw new FileLoadException($"File {file} contains invalid checksum. Expected {expectedChecksum:x4} but calculated {actualChecksum:x4}");
+        throw new FileLoadException($"File {path} contains invalid checksum. Expected {expectedChecksum:x4} but calculated {actualChecksum:x4}");
 
-      this.dataFilePaths.Add(file);
+      this.fileByList[list] = path;
     }
     #endregion
 
@@ -177,46 +207,43 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    public override IEnumerable<string> GetDataFilePaths() => this.dataFilePaths.ToList();
+    public override IEnumerable<string> GetDataFilePaths() => this.fileByList.Values.ToList();
 
     #region Save()
 
     public override void Save(string tvOutputFile)
     {
-      foreach (var file in this.dataFilePaths)
+      foreach (var listAndFile in this.fileByList)
       {
-        var lc = Path.GetFileName(file).ToLowerInvariant();
-        switch (lc)
-        {
-          case "mgr_chan_s_fta.db":
-            SaveDvbs(file);
-            break;
-        }
+        var list = listAndFile.Key;
+        var file = listAndFile.Value;
+        var secName = Path.GetFileName(file).ToLowerInvariant();
+        SaveDvb(file, secName, list);
       }
     }
 
-    private void SaveDvbs(string file)
+    private void SaveDvb(string file, string secName, ChannelList list)
     {
       var data = File.ReadAllBytes(file);
 
-      var sec = ini.GetSection("mgr_chan_s_fta.db");
+      var sec = ini.GetSection(secName);
       var lenHeader = sec.GetInt("lenHeader");
       var lenFooter = sec.GetInt("lenFooter");
       var lenEntry = sec.GetInt("lenEntry");
       var offFooterChecksum = sec.GetInt("offFooterChecksum");
 
-      var mapping = new DataMapping(ini.GetSection("mgr_chan_s_fta.db_entry"));
+      var mapping = new DataMapping(ini.GetSection(secName + "_entry"));
 
       if (sec.GetBool("reorderRecordsByChannelNumber"))
       {
         // physically reorder channels
         var newData = new byte[data.Length];
         Array.Copy(data, newData, lenHeader);
-        var off = lenHeader + lenEntry * dvbsChannels.Channels.Count;
+        var off = lenHeader + lenEntry * list.Channels.Count;
         Array.Copy(data, off, newData, off, lenFooter);
 
         int i = 0;
-        foreach (var ch in dvbsChannels.Channels.OrderBy(c => c.NewProgramNr))
+        foreach (var ch in list.Channels.OrderBy(c => c.NewProgramNr))
         {
           off = lenHeader + i * lenEntry;
           Array.Copy(data, lenHeader + ch.RecordOrder * lenEntry, newData, off, lenEntry);
@@ -233,7 +260,7 @@ namespace ChanSort.Loader.Philips
       else
       {
         // update channel data
-        foreach (var ch in dvbsChannels.Channels)
+        foreach (var ch in list.Channels)
         {
           mapping.SetDataPtr(data, lenHeader + ch.RecordOrder * lenEntry);
           mapping.SetWord("offProgNr", ch.NewProgramNr);

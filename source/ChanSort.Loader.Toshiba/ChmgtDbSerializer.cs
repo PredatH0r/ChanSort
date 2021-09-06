@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using ChanSort.Api;
 using Microsoft.Data.Sqlite;
 
@@ -16,6 +17,8 @@ namespace ChanSort.Loader.Toshiba
     private readonly ChannelList dtvTvChannels = new(SignalSource.DvbCT | SignalSource.Tv, "DTV");
     private readonly ChannelList satRadioChannels = new(SignalSource.DvbS | SignalSource.Radio, "Sat-Radio");
     private readonly ChannelList satTvChannels = new(SignalSource.DvbS | SignalSource.Tv, "Sat-TV");
+
+    private string workingDir;
 
     #region ctor()
 
@@ -41,9 +44,16 @@ namespace ChanSort.Loader.Toshiba
 
     public override void Load()
     {
-      UnzipFileToTempFolder();
+      // this.FileName can be either hotelopt_type001.bin (as an anchor for the directory structure), or a .zip file containing that directory structure
+      if (Path.GetExtension(this.FileName).ToLowerInvariant() == ".zip")
+      {
+        UnzipFileToTempFolder();
+        workingDir = this.TempPath;
+      }
+      else
+        workingDir = Path.GetDirectoryName(this.FileName);
 
-      var sysDataConnString = "Data Source=" + TempPath + FILE_dvbSysData_db;
+      var sysDataConnString = "Data Source=" + this.workingDir + FILE_dvbSysData_db;
       using (var conn = new SqliteConnection(sysDataConnString))
       {
         conn.Open();
@@ -53,7 +63,7 @@ namespace ChanSort.Loader.Toshiba
         ReadTransponders(cmd);
       }
 
-      var mainDataConnString = "Data Source=" + TempPath + FILE_dvbMainData_db;
+      var mainDataConnString = "Data Source=" + this.workingDir + FILE_dvbMainData_db;
       using (var conn = new SqliteConnection(mainDataConnString))
       {
         conn.Open();
@@ -61,7 +71,7 @@ namespace ChanSort.Loader.Toshiba
         ReadCryptInfo(cmd);
       }
 
-      var channelConnString = "Data Source=" + TempPath + FILE_chmgt_db;
+      var channelConnString = "Data Source=" + this.workingDir + FILE_chmgt_db;
       using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();
@@ -250,7 +260,7 @@ namespace ChanSort.Loader.Toshiba
 
     public override void Save(string tvOutputFile)
     {
-      var channelConnString = "Data Source=" + TempPath + FILE_chmgt_db;
+      var channelConnString = "Data Source=" + this.workingDir + FILE_chmgt_db;
       using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();
@@ -268,7 +278,8 @@ namespace ChanSort.Loader.Toshiba
         RepairCorruptedDatabaseImage(cmd);
       }
 
-      ZipToOutputFile(tvOutputFile);
+      if (Path.GetExtension(this.FileName).ToLowerInvariant() == ".zip")
+        ZipToOutputFile(tvOutputFile);
     }
 
     #endregion

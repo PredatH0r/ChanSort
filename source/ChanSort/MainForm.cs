@@ -567,7 +567,7 @@ namespace ChanSort.Ui
         {
           serializer?.Dispose();
           var errMsg = ex is FileLoadException ? ex.Message : ex.ToString(); // FileLoadExceptions are normal when a Loader does not support a file. No stack trace needed
-          errorMsgs.AppendLine($"{plugin.DllName} ({plugin.PluginName}): {errMsg}\n\n");
+          errorMsgs.AppendLine($"{plugin.PluginName}: {errMsg}\n\n");
           if (ex is ArgumentException)
           {
             var msg = ex.ToString();
@@ -614,7 +614,7 @@ namespace ChanSort.Ui
       this.currentPlugin = plugin;
       this.currentTvSerializer = serializer;
       this.DataRoot = serializer.DataRoot;
-      this.AddFileToMruList(tvDataFile);
+      this.AddFileToMruList(serializer.FileName);
       this.UpdateMruMenu();
 
       return true;

@@ -136,7 +136,7 @@ namespace ChanSort.Loader.Philips
       if (majorVersion == -1)
         return new DbSerializer(inputFile);
 
-      throw new FileLoadException($"Philips ChannelMap format version {majorVersion} is not supported.");
+      throw new FileLoadException(majorVersion == int.MinValue ? SerializerBase.ERR_UnknownFormat : $"Philips ChannelMap format version {majorVersion} is not supported (yet).");
     }
   }
 }

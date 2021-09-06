@@ -522,6 +522,14 @@
       <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
       <Name>ChanSort.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Android\ChanSort.Loader.Android.csproj">
+      <Project>{5088db0d-6bde-4678-8c50-a14e6a294a45}</Project>
+      <Name>ChanSort.Loader.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.CmdbBin\ChanSort.Loader.CmdbBin.csproj">
+      <Project>{b594dda4-7bd5-450e-b648-668e0f659813}</Project>
+      <Name>ChanSort.Loader.CmdbBin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.Enigma2\ChanSort.Loader.Enigma2.csproj">
       <Project>{4ad7f77e-617c-4741-82ae-e7a41c85ee4d}</Project>
       <Name>ChanSort.Loader.Enigma2</Name>

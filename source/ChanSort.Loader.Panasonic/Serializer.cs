@@ -10,7 +10,6 @@ namespace ChanSort.Loader.Panasonic
 {
   class Serializer : SerializerBase
   {
-    private const string ERR_FileFormatOrEncryption = "File uses an unknown format or encryption";
     private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT, "Analog Antenna");
     private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC, "Analog Cable");
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
@@ -97,7 +96,7 @@ namespace ChanSort.Loader.Panasonic
     {
       this.cypherMode = this.GetCypherMode(this.FileName);
       if (cypherMode == CypherMode.Unknown)
-        throw new FileLoadException(ERR_FileFormatOrEncryption);
+        throw new FileLoadException(ERR_UnknownFormat);
       if (cypherMode == CypherMode.None)
         return this.FileName;
 
