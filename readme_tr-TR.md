@@ -1,53 +1,50 @@
 Links
 -----
 [![EN](http://beham.biz/chansort/flag_en.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme.md)
-[![DE](http://beham.biz/chansort/flag_de.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md) |
-[Download](https://github.com/PredatH0r/ChanSort/releases) | 
-[Documentation](https://github.com/PredatH0r/ChanSort/wiki) |
+[![DE](http://beham.biz/chansort/flag_de.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md)
+[![TR](http://beham.biz/chansort/flag_tr.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_tr-TR.md) |
+[İndir](https://github.com/PredatH0r/ChanSort/releases) | 
+[Dökümantasyon](https://github.com/PredatH0r/ChanSort/wiki) |
 [Forum](https://github.com/PredatH0r/ChanSort/issues) | 
-[E-Mail](mailto:horst@beham.biz)
+[E-Posta](mailto:horst@beham.biz)
 
-About ChanSort
+ChanSort Hakkında
 --------------
-ChanSort is a PC application that allows you to reorder your TV's channel list.  
-Most modern TVs can transfer channel lists via USB stick, which you can plug into your PC.  
-ChanSort supports [file formats from numerious brands](#supported-tv-models) and can copy program numbers and
-favorites from one file to another, even between different models and brands.
+ChanSort, TV'nizin kanal listesini yeniden sıralamanıza imkân veren bir PC uygulamasıdır.  
+Çoğu modern TV, daha sonra PC'nize takmakta kullanabileceğiniz USB bellekler aracılığıyla kanal listelerini dışarı aktarabilir.  
+ChanSort [çok sayıda markanın dosya formatını](#supported-tv-models) destekler ve program sıralarını ve favorileri bir dosyadan bir diğerine kopyalayabilir, hatta farklı marka ve modeller arasında bile.
 
-![screenshot](http://beham.biz/chansort/ChanSort-en.png)
+![ekran-görüntüsü](http://beham.biz/chansort/ChanSort-en.png)
 
-Features
+Özellikler
 --------
-- Reorder channels (change numbers directly, move up/down, drag&drop, double-click)
-- Use another channel list as a reference to apply the same ordering
-- Multi-selection for editing multiple channels at once
-- Single-list view (showing assigned channels first and then all unassigned channels)
-- Side-by-side view of new/sorted list and original/complete list (similar to playlist and library)
-- Rename or delete channels
-- Manage favorites, parental lock, channel skipping (when zapping), channel hiding
-- User interface in English, German, Spanish, Turkish, Portuguese, Russian and Romanian
-- Unicode character support for channel names (Latin, Cyrillic, Greek, ...)
+- Kannalların yeniden sıralanması (numaraları doğrudan, aşağı/yukarı taşıyarak, sürükle-bırakarak, çift tıklayarak değiştirin)
+- Aynı sıralamayı uygulamak için başka bir kanal listesini referans olarak kullanın
+- Birden fazla kanalı aynı anda düzenleyebilmek için çoklu-seçim
+- Tek-liste görünümü (atanmış kanalların önce ve tüm atanmamış kanalları sonda göstermi)
+- Yeni/hizalanmış listenin ve orjinal/bütün listenin yan-yana görünümü (şimdi oynatılıyor ve kütüphane gibi)
+- Kanalları yeniden isimlendirin ya da silin
+- Favorileri, ebevey kilidini, kanal atlamayı (kanal değiştirirken) ve kanal gizlemeyi yönetin
+- Türkçe, İngilizce, Almanca, İspanyolca, Portekizce, Rusça ve Romanca kullanıcı arayüzü
+- Kanal isimleri için Unicode karakter desteği (Latin, Kiril, Yunanca, ...)
 
-NOT supported:
-- adding new transponders or channels
-- changing tuner related properties of channels (ONID, TSID, SID, frequency, APID, VPID, ...)
+Bu özellikler DESTEKLENMEZ:
+- Yeni rransponder ya da kanal eklenmesi
+- Kanalların uydu alıcısı ile alakalı niteliklerinin değiştirilmesi (ONID, TSID, SID, frekans, APID, VPID, ...)
 
-Some features may not be available on all TV models and channel types (analog, digital, sat, cable, ...)
+Bazı özellikler tüm TV modellerinde ve kanal türlerinde geçerli olmayabilir (analog, dijital, uydu, kablo, ...)
 
-! USE AT YOUR OWN RISK !
+! KULLANIM SORUMLULUĞU SİZE AİTTİR !
 ------------------------
-Most of this software was written without support from TV manufacturers or access to any official 
-documentation about the file formats. It is solely based on analysing existing data files, trial and error.
-There is a chance of unwanted side-effects or even damage to your TV, as reported in 2 cases.
+Bu yazılımın büyük bir kısmı, TV üreticilerinin desteği olmadan veya dosya formatlarıyla ilgili herhangi bir resmi belgeye erişim olmadan yazılmıştır. Yalnızca eldeki veri dosyalarının, deneme yanılma analizine dayanır.
+İstenmeyen yan etkiler ortaya çıkabilir ve hatta TV'nize zarar verme olasılığı vardır, bununla ilgili şu ana kadar 2 vakâ bildirilmiştir.
 
-Hisense is the only manufacturer who provided technical information and a test device.
+Hisense, teknik bilgi ve test cihazı sağlamış olan tek firmadır.
 
-Supported TV models 
+Desteklenen TV modelleri 
 -------------------
-ChanSort supports a large number of file formats, but it's impossible to tell for every brand and TV model 
-what file format it uses (with may even change with firmware updates).  
-This list gives some examples of what should be supported, but even if your model or brand is not in this list, 
-it may work anyway:
+ChanSort çok sayıda dosya formatını destekler, ancak her marka ve model TV için hangi dosya formatının kullanıldığını söylemek imkansızdır (-ki bu dosya formatlarının televizyonun yazılım güncellemeleriyle değişmiş olması da mümkündür).  
+Bu liste nelerin desteklendiğine dair bir örnek teşkil eder, ancak yine de bu listede bulunmayan marka veya modeliniz destekleniyor olabilir:
 - [Samsung](source/fileformats.md#samsung)
 - [LG](source/fileformats.md#lg)
 - [Sony](source/fileformats.md#sony)
@@ -62,34 +59,32 @@ it may work anyway:
 - [SAT>IP m3u](source/fileformats.md#m3u)
 - [Enigma2](source/fileformats.md#enigma2)
 
-System requirements
+Sistem Gereksinimleri
 -------------------
 **Windows**:  
-- Windows 7 SP1, Windows 8.1, Windows 10 v1606 or later, Windows 11 (with x86, x64 or ARM CPU)
+- Windows 7 SP1, Windows 8.1, Windows 10 v1606 ve üzeri, Windows 11 (x86, x64 ya da ARM CPU)
 - [Microsoft .NET Framework 4.8](https://dotnet.microsoft.com/download/dotnet-framework)
-- The .NET FW 4.8 does NOT work with Windows 7 without SP1, Windows 8 or Windows 10 prior to v1606
+- .NET FW 4.8 şâyet ki, SP1 yüklü değilse Windows 7 üzerinde çalışmayacaktır, Windows 8 ya da Windows 10 v1606 ve üzeri
 
 **Linux**:  
 - wine (sudo apt-get install wine)
 - winetricks (sudo apt-get install winetricks)
-- start winetricks, select or create a wineprefix (32 bit or 64 bit), select
-  "Install Windows DLL or component" and install the "dotnet48" package and ignore dozens of message boxes
-- right-click on ChanSort.exe and select "open with", "all applications", "A wine application"
+- winetricks'i başlatın, wineprefix'i seçin ya da oluşturun (32 bit ya da 64 bit), "Install Windows DLL or component"i seçin ve "dotnet48" paketini yükleyin, bu sırada çıkan düzinelerce uyarı mesajını görmezden gelin
+- ChanSort.exe'ye sağ tıklayın ve "open with", "all applications", "A wine application" sırasınca seçin
 
-**Hardware**:
-- USB stick/SD-card to transfer the channel list between your TV and PC. A stick <= 32 GB with FAT32 file system 
-is STRONGLY recommended. (Some TVs write garbage to NTFS and don't support exFAT at all)
+**Donanım**:
+- TV'niz ile PC'niz arasında kanal listesini aktarabilmek için USB bellek/SD-kart. En azından 32 GB bir bellek şiddetle tavsiye olunur. (Bazı TV'ler çöplerini NTFS dosya ssitemine yazar ve exFAT'ı desteklemezler bile.)
 
-Build from source
+Kaynaktan derleme
 -----------------
-See [build.md](source/build.md)
+[build.md](source/build.md)'i gözden geçirin.
 
-License (GPLv3)
+Lisans (GPLv3)
 ---------------
-GNU General Public Licence, Version 3: http://www.gnu.org/licenses/gpl.html  
-Source code is available on https://github.com/PredatH0r/ChanSort
+GNU Genel Kamu Lisansı, Versiyon 3: http://www.gnu.org/licenses/gpl.html  
+Kaynak koduna https://github.com/PredatH0r/ChanSort adresinden erişilebilir
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+İLGİLİ YAZILIM; PAZARLANABİLİRLİK, DOĞRUDAN VEYA DOLAYILI HERHANGİBİR GARANTİ VERMEZ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
