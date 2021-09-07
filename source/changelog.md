@@ -1,6 +1,11 @@
 ChanSort Change Log 
 ===================
 
+2021-09-07
+- added turkish readme
+- Reference lists can now also be applied to a particular favorites list as the target
+  e.g. copy the main program numbers from a Samsung list to the "Fav A" list of a Philips TV
+
 2021-09-06
 - Philips: fixes for ChannelMap_100, 105 and 110 formats
 - Philips: support for FLASH/*.bin DVB-T/C and preset DVB-S lists (mgr_chan_s_pkg.db)

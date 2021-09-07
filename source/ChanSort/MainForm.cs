@@ -171,6 +171,7 @@ namespace ChanSort.Ui
     internal Editor Editor { get; private set; }
 
     internal ChannelList CurrentChannelList { get; private set; }
+    internal int SubListIndex => this.subListIndex;
 
     private GridView EditorGridView => this.miSplitView.Down ? this.gviewLeft : this.gviewRight;
 
@@ -690,6 +691,12 @@ namespace ChanSort.Ui
       {
         this.DataRoot.ApplyCurrentProgramNumbers();
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
+        
+        // reset selection otherweise the previously focused row will still be selected as well as the new first row
+        this.gviewLeft.ClearSelection();
+        this.gviewLeft.FocusedRowHandle = 0;
+        this.gviewRight.ClearSelection();
+        this.gviewRight.FocusedRowHandle = 0;
       }
 
       this.gviewRight.FocusedRowHandle = 0;

@@ -140,23 +140,30 @@ namespace ChanSort.Ui
         }
       }
 
-      // select target
+      // fill target
       this.comboTarget.EditValue = null;
       this.comboTarget.Properties.Items.Clear();
       foreach (var list in main.DataRoot.ChannelLists)
       {
         if (list.Channels.Count == 0)
           continue;
-        if (list.IsMixedSourceFavoritesList)
+        if (!list.IsMixedSourceFavoritesList)
+          this.comboTarget.Properties.Items.Add(new ListOption(list, 0, list.ShortCaption));
+
+        if (!main.DataRoot.MixedSourceFavorites || list.IsMixedSourceFavoritesList)
         {
           for (int i = 1; i <= main.DataRoot.FavListCount; i++)
             this.comboTarget.Properties.Items.Add(new ListOption(list, i, list.ShortCaption + (i == 0 ? "" : " - " + list.GetFavListCaption(i - 1, true))));
         }
-        else
+      }
+
+      // set current list/sublist from the main form as the target
+      foreach (ListOption option in this.comboTarget.Properties.Items)
+      {
+        if (option.ChannelList == main.CurrentChannelList && option.PosIndex == main.SubListIndex)
         {
-          this.comboTarget.Properties.Items.Add(new ListOption(list, 0, list.ShortCaption));
-          if (main.CurrentChannelList == list)
-            this.comboTarget.SelectedIndex = this.comboTarget.Properties.Items.Count - 1;
+          this.comboTarget.SelectedItem = option;
+          break;
         }
       }
       if (this.comboTarget.SelectedIndex < 0 && this.comboTarget.Properties.Items.Count > 0)
