@@ -1,8 +1,8 @@
 Links
 -----
-[![EN](http://beham.biz/chansort/flag_en.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme.md)
-[![DE](http://beham.biz/chansort/flag_de.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md)
-[![TR](http://beham.biz/chansort/flag_tr.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_tr-TR.md) |
+[![EN](https://chansort.com/img/flag_en.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme.md)
+[![DE](https://chansort.com/img/flag_de.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md) |
+[![TR](https://chansort.com/img/flag_tr.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_tr-TR.md) |
 [Download](https://github.com/PredatH0r/ChanSort/releases) | 
 [Documentation](https://github.com/PredatH0r/ChanSort/wiki) |
 [Forum](https://github.com/PredatH0r/ChanSort/issues) | 
