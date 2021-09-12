@@ -664,7 +664,7 @@
     <value>splitContainerControl1</value>
   </data>
   <data name="miTheme.Caption" xml:space="preserve">
-    <value>Színösszeállítás</value>
+    <value>Színösszeállítás...</value>
   </data>
   <data name="btnSearchLeft.AccessibleDescription" xml:space="preserve">
     <value>Egy csatorna keresése</value>

@@ -20,39 +20,16 @@ namespace ChanSort
 {
   public partial class XGridView : GridView
   {
-    private byte[] initialLayout;
     private readonly List<GridColumn> columnOrder = new List<GridColumn>();
     protected override string ViewName => "XGridView";
-    private int expandLevel;
 
     #region ctor
 
     public XGridView() : this(null) { }
     public XGridView(GridControl grid) : base(grid)
     {
-      this.OptionsPersistence = XGridView.ColumnOptions.All;
-      this.AllowSmartExpand = true;
     }
     #endregion
-
-    public void StoreVisibleOrder()
-    {
-      // place invisible column based on the absolute order
-      this.columnOrder.Clear();
-      int visIndex = 0;
-      var comparer = new DelegateComparer<GridColumn>((a, b) => Tools.FirstNotDefault(a.VisibleIndex.CompareTo(b.VisibleIndex), a.AbsoluteIndex.CompareTo(b.AbsoluteIndex)));
-      var cleanVisList = this.Columns.Where(c => c.VisibleIndex >= 0).OrderBy(c => c, comparer).ToList();
-      foreach (GridColumn col in this.Columns)
-      {
-        if (!col.Visible)
-          this.columnOrder.Add(col);
-        else
-        {
-          this.columnOrder.Add(cleanVisList[visIndex]);
-          visIndex++;
-        }
-      }
-    }
 
     public override void EndInit()
     {
@@ -126,73 +103,6 @@ namespace ChanSort
 
     internal new GridViewInfo ViewInfo => base.ViewInfo;
 
-    #region AllowSmartExpand
-    [Browsable(true), DefaultValue(true)]
-    public bool AllowSmartExpand { get; set; }
-    #endregion
-
-    #region OptionsPersistence
-    [Browsable(true), Description("Options for persisting customization details")]
-    public ColumnOptions OptionsPersistence { get; set; }
-    #endregion
-
-    #region GetRowCellValue()
-    public override object GetRowCellValue(int rowHandle, GridColumn column)
-    {
-      // Workaround for "#N/A" text when exporting to Excel
-      var val = base.GetRowCellValue(rowHandle, column);
-      if (val != null && ((XGridControl)this.GridControl).isExporting)
-      {
-        var type = val.GetType();
-        if (!type.IsPrimitive && type != typeof(decimal) && type != typeof(DateTime))
-          return val.ToString();
-      }
-      return val;
-    }
-    #endregion
-
-    #region SaveInitialLayout(), RestoreInitialLayout()
-
-    internal void SaveInitialLayout()
-    {
-      if (this.initialLayout != null) return;
-      using (var strm = new MemoryStream())
-      {
-        this.SaveLayoutToStream(strm);
-        this.initialLayout = strm.GetBuffer();
-      }
-      if (this.columnOrder.Count == 0)
-        this.StoreVisibleOrder();
-    }
-
-    public void RestoreInitialLayout()
-    {
-      if (this.initialLayout == null) return;
-      using (var strm = new MemoryStream(this.initialLayout))
-        this.RestoreLayoutFromStream(strm);
-      this.StoreVisibleOrder();
-    }
-    #endregion
-
-    #region SmartExpand(), SmartCollapse()
-    public bool SmartExpand()
-    {
-      if (this.expandLevel >= this.GroupCount)
-        return false;
-      this.ExpandGroupLevel(this.expandLevel, false);
-      ++expandLevel;
-      return true;
-    }
-
-    public bool SmartCollapse()
-    {
-      if (this.expandLevel == 0)
-        return false;
-      --expandLevel;
-      this.CollapseGroupLevel(this.expandLevel, false);
-      return true;
-    }
-    #endregion
 
     #region ShowEditor()
     public override void ShowEditor()

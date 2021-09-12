@@ -4,12 +4,32 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace ChanSort.Ui.Properties
+namespace ChanSort.Ui
 {
   public class Config
   {
     private static readonly XmlSerializer Serializer;
     private static readonly string ConfigFilePath;
+
+    #region class ColumnInfo
+    public class ColumnInfo
+    {
+      [XmlAttribute("name")] public string Name { get; set; }
+      [XmlAttribute("width")] public int Width { get; set; }
+
+      [XmlAttribute("visible")]//[Obsolete("For XML serialization only. Use Visible instead")]
+      public bool VisibleXml
+      {
+        get => this.Visible ?? true;
+        set => this.Visible = value;
+      }
+      
+      [XmlIgnore]
+      public bool? Visible { get; set; }
+
+    }
+    #endregion
+
 
     #region static ctor()
     static Config()
@@ -53,8 +73,14 @@ namespace ChanSort.Ui.Properties
     public bool ExplorerIntegration { get; set; } = false;
     public bool CheckForUpdates { get; set; } = true;
     public int FontSizeDelta { get; set; } = 1;
-    public string LeftGridLayout { get; set; }
-    public string RightGridLayout { get; set; }
+
+    // deprecated LeftGridLayout and RightGridLayout because they don't preserve order of invisible columns
+    //public string LeftGridLayout { get; set; }
+    //public string RightGridLayout { get; set; }
+
+    public List<ColumnInfo> LeftColumns { get; set; } = new();
+    public List<ColumnInfo> RightColumns { get; set; } = new();
+    public bool AutoHideColumns { get; set; } = true;
     
     /// <summary>
     /// The LeftGridLayout and RightGridLayout contain Width values which are scaled to this ScaleFactor.

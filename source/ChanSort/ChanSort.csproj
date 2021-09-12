@@ -168,7 +168,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Properties\Config.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="ReferenceListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -214,7 +214,9 @@
     <Compile Include="XGrid\XGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="XGrid\XGridView.LayoutPersister.cs" />
+    <Compile Include="XGrid\XGridView.LayoutPersister.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="AboutForm.cs.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>

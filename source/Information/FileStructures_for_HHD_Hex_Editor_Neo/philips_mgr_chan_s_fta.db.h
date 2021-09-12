@@ -159,3 +159,67 @@ public struct Philips_mgr_chan_dvbt
 	
 	SFooter footer;	
 };
+
+#pragma byte_order(LittleEndian)
+
+struct ProgNr
+{
+	WORD nr : 14;
+	WORD flags : 2;
+};
+
+public struct Philips_FLASH_DTVINFO_S_FTA
+{
+	char ddtc[4];
+	var off0 = current_offset;
+	struct 
+	{
+		struct
+		{
+			WORD u1 : 3;
+			WORD isRadio: 1;
+			WORD u2 : 1;
+			WORD transponderIndex : 11;
+		} info;
+		WORD chanIdx;
+	} chanIndexInfo[(0x5f2c - off0)/4];
+	
+	off0 = current_offset;
+	struct s_transponder
+	{
+		var off1 = current_offset;
+		WORD id;
+		WORD u1;
+		WORD freqInMhz;
+		WORD symbolRate;
+		BYTE u2[2];
+		WORD onid;
+		WORD tsid;
+		WORD nid;	
+		BYTE u3[5];
+		WORD freqInMhz2;
+		BYTE u4[8];
+	} transponder[(0x10000 - off0)/sizeof(s_transponder)];
+	
+	BYTE filler[4];
+	char ddtc2[4];
+	
+	struct s_channel
+	{
+		WORD idx1;
+		BYTE u1[4];
+		BYTE u2[2];
+		WORD sid;
+		WORD pcrPid;
+		WORD vpid;
+		BYTE u3[8];
+		ProgNr progNr;
+		BYTE u3b[7];
+		WORD apid1_maybe;
+		char lang1[3];
+		BYTE u4[45];
+		WORD apid2_maybe;
+		char lang2[3];
+		BYTE u5[3];
+	} channel[*];
+};
