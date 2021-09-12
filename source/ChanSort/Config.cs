@@ -12,6 +12,7 @@ namespace ChanSort.Ui
     private static readonly string ConfigFilePath;
 
     #region class ColumnInfo
+
     public class ColumnInfo
     {
       [XmlAttribute("name")] public string Name { get; set; }
@@ -23,11 +24,12 @@ namespace ChanSort.Ui
         get => this.Visible ?? true;
         set => this.Visible = value;
       }
-      
+
       [XmlIgnore]
       public bool? Visible { get; set; }
 
     }
+
     #endregion
 
 
@@ -41,8 +43,8 @@ namespace ChanSort.Ui
         ConfigFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ChanSort", "config.xml");
         if (File.Exists(ConfigFilePath))
         {
-          using (var stream = new StreamReader(ConfigFilePath, System.Text.Encoding.UTF8))
-            Default = (Config)Serializer.Deserialize(stream);
+          using var stream = new StreamReader(ConfigFilePath, System.Text.Encoding.UTF8);
+          Default = (Config)Serializer.Deserialize(stream);
           return;
         }
       }
@@ -78,9 +80,12 @@ namespace ChanSort.Ui
     //public string LeftGridLayout { get; set; }
     //public string RightGridLayout { get; set; }
 
+    [XmlArrayItem("Column")]
     public List<ColumnInfo> LeftColumns { get; set; } = new();
+    [XmlArrayItem("Column")]
     public List<ColumnInfo> RightColumns { get; set; } = new();
     public bool AutoHideColumns { get; set; } = true;
+    public bool LoadLastListAfterStart { get; set; } = true;
     
     /// <summary>
     /// The LeftGridLayout and RightGridLayout contain Width values which are scaled to this ScaleFactor.
@@ -98,7 +103,7 @@ namespace ChanSort.Ui
       if (!allowSave)
         return;
 
-      var folder = Path.GetDirectoryName(ConfigFilePath);
+      var folder = Path.GetDirectoryName(ConfigFilePath) ?? ".";
       Directory.CreateDirectory(folder);
 
       using var stream = new FileStream(ConfigFilePath, FileMode.Create);

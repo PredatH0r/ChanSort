@@ -37,8 +37,8 @@ namespace ChanSort.Ui
     public static string AppVersionFull { get; private set; }
 
     private const int MaxMruEntries = 10;
-    private readonly List<string> isoEncodings = new List<string>();
-    private readonly List<string> mruFiles = new List<string>();
+    private readonly List<string> isoEncodings = new();
+    private readonly List<string> mruFiles = new();
 
     private readonly string title;
     private EditMode curEditMode = EditMode.InsertAfter;
@@ -53,10 +53,8 @@ namespace ChanSort.Ui
     private bool ignoreLanguageChange;
     private GridView lastFocusedGrid;
     private int subListIndex;
-    private SizeF absScaleFactor = new SizeF(1,1);
+    private SizeF absScaleFactor = new (1,1);
     private bool splitView = true;
-    private readonly List<GridColumn> columnOrderLeft = new();
-    private readonly List<GridColumn> columnOrderRight = new();
     private int ignoreEvents;
 
     #region ctor()
@@ -69,7 +67,7 @@ namespace ChanSort.Ui
 
       InitializeComponent();
 
-      this.DoubleBuffered = true;
+      base.DoubleBuffered = true;
 
       var version = this.GetType().Assembly.GetName().Version;
       AppVersion = new DateTime(2000, 1, 1).AddDays(version.Build).ToString("yyyy-MM-dd");
@@ -123,9 +121,6 @@ namespace ChanSort.Ui
       }
       ChannelList.DefaultVisibleColumns = defaultColumns;
       this.UpdateMenu(true); // disable menu items that depend on an open file
-
-      this.SaveColumnOrder(this.gviewLeft, this.columnOrderLeft);
-      this.SaveColumnOrder(this.gviewRight, this.columnOrderRight);
     }
     #endregion
 
@@ -151,7 +146,7 @@ namespace ChanSort.Ui
       lbl.Appearance.TextOptions.WordWrap = WordWrap.Wrap;
       lbl.Text = html;
       if (onUrlClick != null)
-        lbl.HyperlinkClick += (sender, args) => onUrlClick(args.Link);
+        lbl.HyperlinkClick += (_, args) => onUrlClick(args.Link);
       dlg.Controls.Add(lbl);
 
       var btn = new SimpleButton();
@@ -230,7 +225,7 @@ namespace ChanSort.Ui
           HandleException(new IOException("Plugin " + file + "\n" + ex.Message, ex));
         }
       }
-      list.Sort((a, b) => a.PluginName.CompareTo(b.PluginName));
+      list.Sort((a, b) => String.Compare(a.PluginName, b.PluginName, StringComparison.Ordinal));
       return list;
     }
 
@@ -714,7 +709,9 @@ namespace ChanSort.Ui
 
     private void ShowOpenReferenceFileDialog(bool addChannels)
     {
-      new ReferenceListForm(this).ShowDialog(this);
+      _ = addChannels; // param for future use
+      using var dlg = new ReferenceListForm(this);
+      dlg.ShowDialog(this);
     }
 
     #endregion
@@ -726,9 +723,14 @@ namespace ChanSort.Ui
       this.CurrentChannelList = channelList;
       this.Editor.ChannelList = channelList;
 
+      this.gviewLeft.BeginUpdate();
+      this.gviewRight.BeginUpdate();
+
       if (channelList != null)
       {
-        this.LoadInputGridLayout();
+        this.UpdateColumnVisiblity();
+        this.ClearRightFilter();
+
         this.gridRight.DataSource = channelList.Channels;
         this.gridLeft.DataSource = channelList.Channels;
 
@@ -783,6 +785,9 @@ namespace ChanSort.Ui
       this.mnuFavList.Enabled = this.grpSubList.Visible;
       if (!this.grpSubList.Visible)
         this.tabSubList.SelectedTabPageIndex = 0;
+
+      this.gviewLeft.EndUpdate();
+      this.gviewRight.EndUpdate();
     }
 
     #endregion
@@ -1388,7 +1393,6 @@ namespace ChanSort.Ui
     #endregion
 
     #region LoadSettings()
-
     private void LoadSettings()
     {
       // note: WindowSize must be restored in ctor in order to make WindowStartPosition.CenterScreen work
@@ -1399,8 +1403,6 @@ namespace ChanSort.Ui
       if (width > 0)
         this.splitContainerControl1.SplitterPosition = (int)(width * this.absScaleFactor.Width); // set unscaled value because the whole Form will be scaled later
       this.SelectLanguageMenuItem();
-
-      //this.SetGridLayout(this.gviewLeft, Config.Default.OutputListLayout);
 
       this.miShowWarningsAfterLoad.Checked = Config.Default.ShowWarningsAfterLoading;
       this.cbCloseGap.Checked = Config.Default.CloseGaps;
@@ -1422,110 +1424,15 @@ namespace ChanSort.Ui
         }
       }
 
-      //if (Config.Default.LeftGridLayout != null)
-      //{
-      //  this.gridLeft.ForceInitialize();
-      //  var xml = Config.Default.LeftGridLayout;
-      //  this.gviewLeft.LoadLayoutFromXml(xml);
-      //  if (Config.Default.ScaleFactor.Width != 0)
-      //  {
-      //    foreach (GridColumn col in this.gviewLeft.Columns)
-      //      col.Width = (int) (col.Width / Config.Default.ScaleFactor.Width);
-      //  }
-      //}
-      this.LoadGridLayout(this.gviewLeft, Config.Default.LeftColumns, this.columnOrderLeft);
-      this.LoadGridLayout(this.gviewRight, Config.Default.RightColumns, this.columnOrderRight);
+      // LoadSettings is called from MainForm_Shown. At this time automatic UI scaling is already done and we need to manually scale stored column widths
+      this.SetColumnWidths(this.gviewLeft, Config.Default.LeftColumns);
+      this.SetColumnWidths(this.gviewRight, Config.Default.RightColumns);
+
+      this.gviewLeft.SetColumnOrder(Config.Default.LeftColumns.Select(c => c.Name), false);
+      this.gviewRight.SetColumnOrder(Config.Default.RightColumns.Select(c => c.Name), false);
       this.miAutoHideColumns.Down = Config.Default.AutoHideColumns;
-
-      //if (Config.Default.RightGridLayout != null)
-      //{
-      //  this.gridRight.ForceInitialize();
-      //  var xml = Config.Default.RightGridLayout;
-      //  this.gviewRight.LoadLayoutFromXml(xml);
-      //  if (Config.Default.ScaleFactor.Width != 0)
-      //  {
-      //    foreach (GridColumn col in this.gviewRight.Columns)
-      //      col.Width = (int) (col.Width / Config.Default.ScaleFactor.Width);
-      //  }
-      //}
-
-      this.miSplitView.Down = Config.Default.SplitView; // will change column visibility and must happen after restoring the grid layout
-    }
-
-    private void SaveColumnOrder(GridView view, List<GridColumn> columns)
-    {
-      // for this to work, the columns in absolute index order must represent the intended visible order
-      columns.AddRange(view.Columns.OrderBy(c => c.AbsoluteIndex));
-    }
-
-    private void LoadGridLayout(XGridView view, List<Config.ColumnInfo> configColumns, List<GridColumn> list)
-    {
-      // must handle situations where new columns were added to the program, which are not included in the config
-      // These columns should be kept at their relative position in the default visible order
-
-
-      // build a dictionary with FieldName => "desired visible order"
-      var colsInConfig = new Dictionary<string,int>();
-      int visIndex = 0;
-      foreach (var info in configColumns)
-      {
-        if (view.Columns[info.Name] != null)
-          colsInConfig.Add(info.Name, visIndex++);
-      }
-
-      ++this.ignoreEvents;
-      var oldList = new List<GridColumn>(list);
-      var newList = new List<GridColumn>();
-      foreach (var info in configColumns)
-      {
-        var col = view.Columns[info.Name];
-        
-        // ignore columns from config that don't exist in the program
-        if (col == null)
-          continue;
-
-        col.Width = info.Width.Scale(this.absScaleFactor.Width);
-        
-        
-        // prepend columns that don't exist in the config and come before the current column in the default order
-        while (oldList.Count > 0)
-        {
-          var oldCol = oldList[0];
-          if (oldCol == col)
-            break;
-          if (colsInConfig.ContainsKey(oldCol.FieldName))
-            break;
-          newList.Add(oldCol);
-          oldList.Remove(oldCol);
-        }
-
-        newList.Add(col);
-        oldList.Remove(col);
-      }
-
-      newList.AddRange(oldList);
-      list.Clear();
-      list.AddRange(newList);
-      --this.ignoreEvents;
-    }
-
-    private void SaveGridLayout(List<Config.ColumnInfo> configColumns, List<GridColumn> list)
-    {
-      var oldCfg = new Dictionary<string, Config.ColumnInfo>();
-      foreach (var info in configColumns)
-        oldCfg[info.Name] = info;
-
-      var setVisible = !this.miAutoHideColumns.Down;
-
-      configColumns.Clear();
-      foreach (var col in list)
-      {
-        var info = new Config.ColumnInfo();
-        info.Name = col.FieldName;
-        info.Width = col.Width.Unscale(this.absScaleFactor.Width);
-        info.Visible = setVisible ? col.Visible : oldCfg.TryGetValue(col.FieldName, out var oldInfo) ? oldInfo.Visible : null;
-        configColumns.Add(info);
-      }
+      this.miSplitView.Down = Config.Default.SplitView;
+      this.miLoadListAfterStart.Down = Config.Default.LoadLastListAfterStart;
     }
     #endregion
 
@@ -1629,15 +1536,16 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region LoadInputGridLayout()
-
-    private void LoadInputGridLayout()
+    #region SetColumnWidths
+    private void SetColumnWidths(GridView view, List<Config.ColumnInfo> cols)
     {
-      this.ShowGridColumns(this.gviewLeft);
-      this.ShowGridColumns(this.gviewRight);
-      this.ClearRightFilter();
+      foreach (var info in cols)
+      {
+        var col = view.Columns[info.Name];
+        if (col != null)
+          col.Width = info.Width.Scale(this.absScaleFactor.Width);
+      }
     }
-
     #endregion
 
     #region UpdateColumnVisibility()
@@ -1646,17 +1554,12 @@ namespace ChanSort.Ui
       this.ShowGridColumns(this.gviewLeft);
       this.ShowGridColumns(this.gviewRight);
     }
-
     #endregion
 
     #region ShowGridColumns()
-
     private void ShowGridColumns(XGridView gview)
     {
-      //foreach (GridColumn col in gview.Columns)
-      //  gview.SetColumnVisibility(col, GetGridColumnVisibility(col));
-
-      var list = gview == this.gviewLeft ? this.columnOrderLeft : this.columnOrderRight;
+      var list = gview.GetColumnOrder();
       var visIndex = 0;
       ++this.ignoreEvents;
       foreach (var col in list)
@@ -1665,11 +1568,9 @@ namespace ChanSort.Ui
       }
       --this.ignoreEvents;
     }
-
     #endregion
 
     #region GetGridColumnVisibility()
-
     private bool GetGridColumnVisibility(GridColumn col)
     {
       if (!this.miAutoHideColumns.Down)
@@ -1736,7 +1637,6 @@ namespace ChanSort.Ui
 
       return true;
     }
-
     #endregion
 
     #region SetFavorite()
@@ -1815,7 +1715,6 @@ namespace ChanSort.Ui
     #endregion
 
     #region UpdateMenu
-
     private void UpdateMenu(bool afterFileLoad = false)
     {
       var fileLoaded = this.DataRoot != null;
@@ -1865,14 +1764,13 @@ namespace ChanSort.Ui
 
       this.miAddChannel.Enabled = mayEdit; // && isRight;
 
-      var visRight = isRight ? BarItemVisibility.Always : BarItemVisibility.Never;
       var visLeft = isRight ? BarItemVisibility.Never : BarItemVisibility.Always;
 
       this.miSort.Visibility = visLeft;
       this.miRenum.Visibility = visLeft;
       this.miMoveUp.Visibility = visLeft;
       this.miMoveDown.Visibility = visLeft;
-      //this.miAddChannel.Visibility = visRight;
+
       this.miSkipOn.Enabled = this.miSkipOff.Enabled = this.currentTvSerializer?.Features.CanSkipChannels ?? false;
       this.miLockOn.Enabled = this.miLockOff.Enabled = this.currentTvSerializer?.Features.CanLockChannels ?? false;
       this.miHideOn.Enabled = this.miHideOff.Enabled = this.currentTvSerializer?.Features.CanHideChannels ?? false;
@@ -2174,7 +2072,7 @@ namespace ChanSort.Ui
       var args = Environment.GetCommandLineArgs();
       if (args.Length > 1)
         this.TryExecute(() => this.LoadFiles(null, args[args.Length - 1]));
-      else if (this.mruFiles.Count > 0)
+      else if (this.mruFiles.Count > 0 && Config.Default.LoadLastListAfterStart)
         this.TryExecute(() => this.LoadFiles(null, this.mruFiles[0]));
     }
 
@@ -2236,7 +2134,7 @@ namespace ChanSort.Ui
       this.absScaleFactor = absScaleFactor.Scale(new SizeF(fact, fact));
       this.SuspendRedraw();
       this.bar1.Visible = false;
-      GlobalImageCollection.Scale((float)e.DeviceDpiNew / 96f, false);
+      GlobalImageCollection.Scale(e.DeviceDpiNew / 96f, false);
       this.bar1.Visible = true;
       base.OnDpiChanged(e);
       this.ResumeRedraw();
@@ -2889,41 +2787,6 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region gviewLeft_ColumnPositionChanged, gviewRight_ColumnPositionChanged
-    private void gviewLeft_ColumnPositionChanged(object sender, EventArgs e)
-    {
-      TryExecute(() => this.ColumnPositionChanged((GridColumn)sender, this.columnOrderLeft));
-    }
-
-    private void gviewRight_ColumnPositionChanged(object sender, EventArgs e)
-    {
-      TryExecute(() => this.ColumnPositionChanged((GridColumn)sender, this.columnOrderRight));
-    }
-
-    private void ColumnPositionChanged(GridColumn col, List<GridColumn> list)
-    {
-      if (this.ignoreEvents > 0)
-        return;
-
-      // columnOrderLeft and columnOrderRight are kept in desired column order including hidden columns
-      // when a column is moved to a new visible position, it is put behind all columns (including invisible ones) that have a lower position
-
-      var visIdx = col.VisibleIndex;
-      if (visIdx < 0)
-        return;
-
-      var listIdx = list.IndexOf(col);
-      list.RemoveAt(listIdx);
-      int i;
-      for (i = 0; i < list.Count; i++)
-      {
-        if (list[i].VisibleIndex >= 0 && list[i].VisibleIndex >= visIdx)
-          break;
-      }
-      list.Insert(i, col);
-    }
-    #endregion
-
 
     #region rbInsertMode_CheckedChanged
 
@@ -3080,8 +2943,8 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region SaveSettings(), GetGridLayout()
 
+    #region SaveSettings()
     private void SaveSettings()
     {
       this.gviewRight.PostEditor();
@@ -3099,15 +2962,38 @@ namespace ChanSort.Ui
       config.ExplorerIntegration = this.miExplorerIntegration.Down;
       config.CheckForUpdates = this.miCheckUpdates.Down;
       config.SplitView = this.miSplitView.Down;
-      this.SaveGridLayout(config.LeftColumns, this.columnOrderLeft);
-      this.SaveGridLayout(config.RightColumns, this.columnOrderRight);
+
+      var updateVisible = !this.miAutoHideColumns.Down;
+      this.SaveGridLayout(config.LeftColumns, this.gviewLeft.GetColumnOrder(), updateVisible);
+      this.SaveGridLayout(config.RightColumns, this.gviewRight.GetColumnOrder(), updateVisible);
       config.AutoHideColumns = this.miAutoHideColumns.Down;
       config.ScaleFactor = this.absScaleFactor;
+      config.LoadLastListAfterStart = this.miLoadListAfterStart.Down;
 
       config.Save();
     }
 
     #endregion
+
+    #region SaveGridLayout()
+    private void SaveGridLayout(List<Config.ColumnInfo> configColumns, List<GridColumn> list, bool updateVisible)
+    {
+      var oldCfg = new Dictionary<string, Config.ColumnInfo>();
+      foreach (var info in configColumns)
+        oldCfg[info.Name] = info;
+
+      configColumns.Clear();
+      foreach (var col in list)
+      {
+        var info = new Config.ColumnInfo();
+        info.Name = col.FieldName;
+        info.Width = col.Width.Unscale(this.absScaleFactor.Width);
+        info.Visible = updateVisible ? col.Visible : oldCfg.TryGetValue(col.FieldName, out var oldInfo) ? oldInfo.Visible : null;
+        configColumns.Add(info);
+      }
+    }
+    #endregion
+
 
     #region ClearLeftFilter(), ClearRightFilter()
 
@@ -3622,7 +3508,16 @@ namespace ChanSort.Ui
     #region miAutoHideColumns_DownChanged
     private void miAutoHideColumns_DownChanged(object sender, ItemClickEventArgs e)
     {
-      this.TryExecute(this.UpdateColumnVisiblity);
+      this.TryExecute(() =>
+      {
+        // when switching from manual to auto-hide mode, store the manually configured column visibility
+        if (this.miAutoHideColumns.Down && this.ignoreEvents <= 0)
+        {
+          this.SaveGridLayout(Config.Default.LeftColumns, gviewLeft.GetColumnOrder(), true);
+          this.SaveGridLayout(Config.Default.RightColumns, gviewRight.GetColumnOrder(), true);
+        }
+        this.UpdateColumnVisiblity();
+      });
     }
     #endregion
 

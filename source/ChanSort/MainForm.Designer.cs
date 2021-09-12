@@ -167,6 +167,7 @@
       this.miTheme = new DevExpress.XtraBars.BarButtonItem();
       this.miSplitView = new DevExpress.XtraBars.BarButtonItem();
       this.miAutoHideColumns = new DevExpress.XtraBars.BarButtonItem();
+      this.miLoadListAfterStart = new DevExpress.XtraBars.BarButtonItem();
       this.miShowWarningsAfterLoad = new DevExpress.XtraBars.BarCheckItem();
       this.miAllowEditPredefinedLists = new DevExpress.XtraBars.BarButtonItem();
       this.miExplorerIntegration = new DevExpress.XtraBars.BarButtonItem();
@@ -359,7 +360,6 @@
       this.gviewLeft.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gview_ShowingEditor);
       this.gviewLeft.ShownEditor += new System.EventHandler(this.gview_ShownEditor);
       this.gviewLeft.EndSorting += new System.EventHandler(this.gviewLeft_EndSorting);
-      this.gviewLeft.ColumnPositionChanged += new System.EventHandler(this.gviewLeft_ColumnPositionChanged);
       this.gviewLeft.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewLeft_FocusedRowChanged);
       this.gviewLeft.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewLeft_CellValueChanged);
       this.gviewLeft.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gview_CustomUnboundColumnData);
@@ -713,7 +713,6 @@
       this.gviewRight.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.gviewRight_SelectionChanged);
       this.gviewRight.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gview_ShowingEditor);
       this.gviewRight.ShownEditor += new System.EventHandler(this.gview_ShownEditor);
-      this.gviewRight.ColumnPositionChanged += new System.EventHandler(this.gviewRight_ColumnPositionChanged);
       this.gviewRight.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gviewRight_FocusedRowChanged);
       this.gviewRight.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gviewRight_CellValueChanged);
       this.gviewRight.CustomColumnSort += new DevExpress.XtraGrid.Views.Base.CustomColumnSortEventHandler(this.gviewRight_CustomColumnSort);
@@ -1141,9 +1140,10 @@
             this.miResetAndRestart,
             this.miSplitView,
             this.miTheme,
-            this.miAutoHideColumns});
+            this.miAutoHideColumns,
+            this.miLoadListAfterStart});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 116;
+      this.barManager1.MaxItemId = 117;
       this.barManager1.ShowFullMenus = true;
       this.barManager1.ShortcutItemClick += new DevExpress.XtraBars.ShortcutItemClickEventHandler(this.barManager1_ShortcutItemClick);
       // 
@@ -1638,6 +1638,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miTheme),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSplitView),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAutoHideColumns),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miLoadListAfterStart),
             new DevExpress.XtraBars.LinkPersistInfo(this.miShowWarningsAfterLoad),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAllowEditPredefinedLists),
             new DevExpress.XtraBars.LinkPersistInfo(this.miExplorerIntegration),
@@ -1892,6 +1893,17 @@
       this.miAutoHideColumns.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miAutoHideColumns.ImageOptions.SvgImage")));
       this.miAutoHideColumns.Name = "miAutoHideColumns";
       this.miAutoHideColumns.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miAutoHideColumns_DownChanged);
+      // 
+      // miLoadListAfterStart
+      // 
+      resources.ApplyResources(this.miLoadListAfterStart, "miLoadListAfterStart");
+      this.miLoadListAfterStart.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      this.miLoadListAfterStart.Down = true;
+      this.miLoadListAfterStart.Id = 116;
+      this.miLoadListAfterStart.ImageOptions.ImageIndex = ((int)(resources.GetObject("miLoadListAfterStart.ImageOptions.ImageIndex")));
+      this.miLoadListAfterStart.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miLoadListAfterStart.ImageOptions.LargeImageIndex")));
+      this.miLoadListAfterStart.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miLoadListAfterStart.ImageOptions.SvgImage")));
+      this.miLoadListAfterStart.Name = "miLoadListAfterStart";
       // 
       // miShowWarningsAfterLoad
       // 
@@ -2710,6 +2722,7 @@
     private DevExpress.XtraBars.BarButtonItem miTheme;
     private System.Windows.Forms.Timer timerSelectFocusedRow;
     private DevExpress.XtraBars.BarButtonItem miAutoHideColumns;
+    private DevExpress.XtraBars.BarButtonItem miLoadListAfterStart;
   }
 }
 

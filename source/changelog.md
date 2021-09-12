@@ -1,6 +1,13 @@
 ChanSort Change Log 
 ===================
 
+2021-09-13
+- column order is now preserved between program starts even when lists with different supported columns
+  were loaded and columns reordered.
+- added option to enabled/disable auto-loading of the last opened list when starting the program
+- added UI option "Hide/unhide columns automatically". When turned off, the program will no longer hide columns
+  automatically based on the selected list. It is recommended to leave this setting turned on.
+
 2021-09-07
 - added turkish readme
 - Reference lists can now also be applied to a particular favorites list as the target

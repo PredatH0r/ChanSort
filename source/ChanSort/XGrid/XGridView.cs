@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using ChanSort.Api;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Registrator;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Base.Handler;
@@ -20,7 +14,6 @@ namespace ChanSort
 {
   public partial class XGridView : GridView
   {
-    private readonly List<GridColumn> columnOrder = new List<GridColumn>();
     protected override string ViewName => "XGridView";
 
     #region ctor
@@ -34,72 +27,9 @@ namespace ChanSort
     public override void EndInit()
     {
       base.EndInit();
-      this.StoreVisibleOrder();
+      this.StoreDefaultColumnOrder();
     }
 
-    protected override void SetColumnVisibleIndex(GridColumn column, int newValue)
-    {
-      int oldVisIndex = column.VisibleIndex;
-      int newIdx = newValue > column.VisibleIndex ? newValue - 1 : newValue;
-      base.SetColumnVisibleIndex(column, newValue);
-
-      if (newIdx < 0 || oldVisIndex == newIdx)
-      {
-        // hide or no change: keep as-is
-      }
-      else if (newIdx >= 0)
-      {
-        // move
-        columnOrder.Remove(column);
-        if (newIdx == 0)
-          columnOrder.Insert(0, column);
-        else
-        {
-          var afterCol = this.VisibleColumns[column.VisibleIndex - 1];
-          columnOrder.Insert(columnOrder.IndexOf(afterCol) + 1, column);
-        }
-      }
-    }
-
-    protected override void OnColumnDeleted(GridColumn column)
-    {
-      this.columnOrder.Remove(column);
-      base.OnColumnDeleted(column);
-    }
-
-    protected override void OnColumnAdded(GridColumn column)
-    {
-      base.OnColumnAdded(column);
-      if (this.IsInitialized)
-        this.StoreVisibleOrder();
-    }
-
-    public void SetColumnVisibility(GridColumn column, bool visible)
-    {
-      if (column.Visible == visible)
-        return;
-      if (!visible)
-      {
-        column.Visible = false;
-        return;
-      }
-
-      int idx = 0;
-      foreach (var col in this.columnOrder)
-      {
-        if (col == column)
-        {
-          col.VisibleIndex = idx;
-          return;
-        }
-
-        if (col.Visible)
-          ++idx;
-      }
-
-      // fallback
-      column.VisibleIndex = this.VisibleColumns.Count;
-    }
 
     internal new GridViewInfo ViewInfo => base.ViewInfo;
 

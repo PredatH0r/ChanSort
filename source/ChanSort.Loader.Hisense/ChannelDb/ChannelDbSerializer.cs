@@ -114,7 +114,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
         {
           "OldPosition",
           "Position",
-          "Source",
+          //"Source",
           "NewProgramNr",
           "Name",
           "ShortName",

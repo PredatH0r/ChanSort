@@ -168,6 +168,9 @@
   <data name="&gt;&gt;colEncrypted.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="miLoadListAfterStart.Caption" xml:space="preserve">
+    <value>Load last used list after start</value>
+  </data>
   <data name="mnuOptions.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
@@ -359,7 +362,7 @@
     <value>ChanSort website...</value>
   </data>
   <data name="&gt;&gt;gviewLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.7925.40855, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.7926.932, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="colEncrypted.ToolTip" xml:space="preserve">
     <value>Encrypted</value>
@@ -377,15 +380,14 @@
   <data name="&gt;&gt;miSkipOff.Name" xml:space="preserve">
     <value>miSkipOff</value>
   </data>
-  <data name="&gt;&gt;btnAdd.Parent" xml:space="preserve">
-    <value>pnlEditControlRight</value>
+  <data name="&gt;&gt;miLoadListAfterStart.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="btnRemoveLeft.Text" xml:space="preserve">
     <value>Remove selected channels from sorted list</value>
   </data>
   <data name="miEnglish.Caption" xml:space="preserve">
     <value>English</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="barDockControlRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
@@ -411,7 +413,6 @@
   </data>
   <data name="miHungarian.Caption" xml:space="preserve">
     <value>Magyar</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="btnToggleFavC.Location" type="System.Drawing.Point, System.Drawing">
     <value>182, 5</value>
@@ -524,6 +525,9 @@
   </data>
   <data name="barDockControlBottom.Size" type="System.Drawing.Size, System.Drawing">
     <value>1402, 0</value>
+  </data>
+  <data name="rbInsertBefore.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
   </data>
   <data name="miSort.Caption" xml:space="preserve">
     <value>Sor&amp;t channels alphabetically</value>
@@ -647,6 +651,9 @@
   </data>
   <data name="&gt;&gt;miSaveReferenceFile.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="miRemove.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
   </data>
   <data name="&gt;&gt;btnSearch.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -789,7 +796,6 @@
   </data>
   <data name="miFontXLarge.Caption" xml:space="preserve">
     <value>XL - Segoe UI 11pt</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="btnToggleLock.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -895,6 +901,9 @@
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
     <value>&amp;Quit</value>
+  </data>
+  <data name="rbInsertBefore.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
   </data>
   <data name="pnlEditControls.Location" type="System.Drawing.Point, System.Drawing">
     <value>2, 23</value>
@@ -1095,7 +1104,7 @@
     <value>colLogicalIndex</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>09/12/2021 22:56:51</value>
+    <value>09/13/2021 01:36:15</value>
   </data>
   <data name="txtSetSlot.Location" type="System.Drawing.Point, System.Drawing">
     <value>437, 5</value>
@@ -1148,6 +1157,9 @@
   <data name="&gt;&gt;lblInsertMode.Name" xml:space="preserve">
     <value>lblInsertMode</value>
   </data>
+  <data name="gridRight.EmbeddedNavigator.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnToggleFavA.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
   </data>
@@ -1162,7 +1174,6 @@
   </data>
   <data name="miGerman.Caption" xml:space="preserve">
     <value>&amp;Deutsch</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="btnToggleLock.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -1184,7 +1195,6 @@
   </data>
   <data name="miRussian.Caption" xml:space="preserve">
     <value>ру́сский</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="btnRemoveRight.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -1236,6 +1246,9 @@
   </data>
   <data name="&gt;&gt;gridLeft.Parent" xml:space="preserve">
     <value>grpOutputList</value>
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.ToolTipTitle" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;miResetAndRestart.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -1331,7 +1344,7 @@
     <value>1</value>
   </data>
   <data name="&gt;&gt;gviewRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.7925.40855, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.7926.932, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;miSelectFavListA.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -1359,7 +1372,6 @@
   </data>
   <data name="miPortuguese.Caption" xml:space="preserve">
     <value>Português</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;btnRemoveRight.Name" xml:space="preserve">
     <value>btnRemoveRight</value>
@@ -1417,10 +1429,12 @@
   </data>
   <data name="miTurkish.Caption" xml:space="preserve">
     <value>Türkçe</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>New program number</value>
+  </data>
+  <data name="rbInsertBefore.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
   </data>
   <data name="miFontMedium.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -1478,6 +1492,9 @@
   </data>
   <data name="&gt;&gt;miFileInformation.Name" xml:space="preserve">
     <value>miFileInformation</value>
+  </data>
+  <data name="cbCloseGap.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
   </data>
   <data name="mnuGotoFavList.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -1568,6 +1585,9 @@
   </data>
   <data name="colPcrPid.Caption" xml:space="preserve">
     <value>PCR PID</value>
+  </data>
+  <data name="miLoadListAfterStart.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="&gt;&gt;btnClearLeftFilter.ZOrder" xml:space="preserve">
     <value>10</value>
@@ -1709,6 +1729,9 @@
   <data name="miPolski.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
+  <data name="miLoadListAfterStart.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
   <data name="&gt;&gt;repositoryItemCheckedComboBoxEdit2.Name" xml:space="preserve">
     <value>repositoryItemCheckedComboBoxEdit2</value>
   </data>
@@ -1736,6 +1759,9 @@
   <data name="&gt;&gt;pnlEditControlRight.Parent" xml:space="preserve">
     <value>grpInputList</value>
   </data>
+  <data name="gridRight.EmbeddedNavigator.ToolTipTitle" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;miRecentFiles.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
@@ -1747,6 +1773,9 @@
   </data>
   <data name="&gt;&gt;btnClearLeftFilter.Name" xml:space="preserve">
     <value>btnClearLeftFilter</value>
+  </data>
+  <data name="cbCloseGap.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;btnToggleFavG.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -2076,9 +2105,6 @@
   <data name="miTheme.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="&gt;&gt;miUtf16LittleEndian.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="btnToggleLock.Location" type="System.Drawing.Point, System.Drawing">
     <value>334, 5</value>
   </data>
@@ -2229,6 +2255,9 @@
   <data name="colNetworkId.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="miLoadListAfterStart.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
   <data name="tabSubList.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
@@ -2268,7 +2297,6 @@
   </data>
   <data name="miUtf16BigEndian.Caption" xml:space="preserve">
     <value>UTF-16 Big Endian (Unicode MSB first)</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;timerSelectFocusedRow.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2344,7 +2372,6 @@
   </data>
   <data name="miPolski.Caption" xml:space="preserve">
     <value>Polski</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="btnClearRightFilter.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>28</value>
@@ -2362,7 +2389,7 @@
     <value>False</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7925.40855, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.7926.932, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="miAddChannel.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
     <value>-1</value>
@@ -2396,7 +2423,6 @@
   </data>
   <data name="miFontLarge.Caption" xml:space="preserve">
     <value>L - Segoe UI 10pt</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;miTheme.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -2406,7 +2432,6 @@
   </data>
   <data name="miCzech.Caption" xml:space="preserve">
     <value>Česky</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="grpInputList.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -2431,6 +2456,9 @@
   </data>
   <data name="&gt;&gt;barDockControlTop.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <data name="rbInsertSwap.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;mnuLanguage.Name" xml:space="preserve">
     <value>mnuLanguage</value>
@@ -2474,14 +2502,17 @@
   <data name="colHidden.VisibleIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
+  <data name="&gt;&gt;btnAdd.Parent" xml:space="preserve">
+    <value>pnlEditControlRight</value>
+  </data>
   <data name="&gt;&gt;colUid.Name" xml:space="preserve">
     <value>colUid</value>
   </data>
   <data name="mnuGotoFavList.Caption" xml:space="preserve">
     <value>Select program/&amp;favorite list</value>
   </data>
-  <data name="miRemove.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
-    <value>-1</value>
+  <data name="&gt;&gt;miLoadListAfterStart.Name" xml:space="preserve">
+    <value>miLoadListAfterStart</value>
   </data>
   <data name="&gt;&gt;barSubItem2.Name" xml:space="preserve">
     <value>barSubItem2</value>
@@ -2517,7 +2548,7 @@
     <value>-1</value>
   </data>
   <data name="&gt;&gt;gridRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7925.40855, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7926.932, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;repositoryItemTextEdit1.Name" xml:space="preserve">
     <value>repositoryItemTextEdit1</value>
@@ -2538,7 +2569,7 @@
     <value>8</value>
   </data>
   <data name="&gt;&gt;gridLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7925.40855, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.7926.932, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="colOutName.VisibleIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2551,6 +2582,9 @@
   </data>
   <data name="mnuOptions.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
     <value>-1</value>
+  </data>
+  <data name="cbCloseGap.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;cbCloseGap.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -2612,7 +2646,6 @@
   </data>
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="splitContainerControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -2736,7 +2769,6 @@
   </data>
   <data name="miUtf8Charset.Caption" xml:space="preserve">
     <value>UTF-8 (Unicode)</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;miLockOn.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -2770,6 +2802,9 @@
   </data>
   <data name="rbInsertBefore.Size" type="System.Drawing.Size, System.Drawing">
     <value>55, 20</value>
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;btnToggleLock.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -2942,6 +2977,9 @@
   <data name="miSelectFavList0.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>-1</value>
   </data>
+  <data name="rbInsertAfter.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;colName.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
@@ -2983,6 +3021,9 @@
   </data>
   <data name="colDeleted.Width" type="System.Int32, mscorlib">
     <value>48</value>
+  </data>
+  <data name="rbInsertSwap.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
   </data>
   <data name="rbInsertAfter.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 20</value>
@@ -3161,8 +3202,8 @@
   <data name="&gt;&gt;miRenameChannel.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="grpTopPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 27</value>
+  <data name="&gt;&gt;miUtf16LittleEndian.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="miSaveAs.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
     <value>-1</value>
@@ -3253,7 +3294,6 @@
   </data>
   <data name="miUtf16LittleEndian.Caption" xml:space="preserve">
     <value>UTF-16 Little Endian (Unicode LSB first)</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="mnuHelp.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>-1</value>
@@ -3366,8 +3406,8 @@
   <data name="miRenumFavByPrNr.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="&gt;&gt;grpInputList.Name" xml:space="preserve">
-    <value>grpInputList</value>
+  <data name="grpTopPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 27</value>
   </data>
   <data name="&gt;&gt;miHideOff.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -3401,7 +3441,6 @@
   </data>
   <data name="miFontSmall.Caption" xml:space="preserve">
     <value>S - Tahoma 8pt</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;miOpen.Name" xml:space="preserve">
     <value>miOpen</value>
@@ -3487,6 +3526,9 @@
   <data name="&gt;&gt;pnlEditControls.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.PanelControl, DevExpress.Utils.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;grpInputList.Name" xml:space="preserve">
+    <value>grpInputList</value>
+  </data>
   <data name="&gt;&gt;txtSetSlot.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
@@ -3525,7 +3567,6 @@
   </data>
   <data name="miFontXxLarge.Caption" xml:space="preserve">
     <value>XXL - Segoe UI 12pt</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="colShortName.VisibleIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -3574,6 +3615,9 @@
   </data>
   <data name="colEncrypted.Caption" xml:space="preserve">
     <value>Crypt</value>
+  </data>
+  <data name="rbInsertAfter.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
   </data>
   <data name="btnToggleFavH.Text" xml:space="preserve">
     <value>±H</value>

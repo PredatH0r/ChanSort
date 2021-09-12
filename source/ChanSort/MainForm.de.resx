@@ -148,9 +148,15 @@
   <data name="gridLeft.EmbeddedNavigator.TextLocation" type="DevExpress.XtraEditors.NavigatorButtonsTextLocation, DevExpress.XtraEditors.v21.1">
     <value>Center</value>
   </data>
+  <data name="gridLeft.EmbeddedNavigator.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <assembly alias="DevExpress.Utils.v21.1" name="DevExpress.Utils.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="gridLeft.EmbeddedNavigator.ToolTipIconType" type="DevExpress.Utils.ToolTipIconType, DevExpress.Utils.v21.1">
     <value>None</value>
+  </data>
+  <data name="gridLeft.EmbeddedNavigator.ToolTipTitle" xml:space="preserve">
+    <value />
   </data>
   <data name="colIndex1.Caption" xml:space="preserve">
     <value>Pr. Index</value>
@@ -714,6 +720,18 @@
   <data name="miAutoHideColumns.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
+  <data name="miLoadListAfterStart.Caption" xml:space="preserve">
+    <value>Beim Start zuletzt geöffnete Liste laden</value>
+  </data>
+  <data name="miLoadListAfterStart.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
+  <data name="miLoadListAfterStart.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
+  <data name="miLoadListAfterStart.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
     <value>Warnungen beim Laden anzeigen</value>
   </data>
@@ -1095,6 +1113,15 @@
   <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
     <value>tauschen</value>
   </data>
+  <data name="rbInsertSwap.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertSwap.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertSwap.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
+  </data>
   <data name="rbInsertSwap.Properties.GlyphVerticalAlignment" type="DevExpress.Utils.VertAlignment, DevExpress.Data.v21.1">
     <value>Default</value>
   </data>
@@ -1103,6 +1130,15 @@
   </data>
   <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
     <value>dahinter</value>
+  </data>
+  <data name="rbInsertAfter.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertAfter.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertAfter.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
   </data>
   <data name="rbInsertAfter.Properties.GlyphVerticalAlignment" type="DevExpress.Utils.VertAlignment, DevExpress.Data.v21.1">
     <value>Default</value>
@@ -1113,6 +1149,15 @@
   <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
     <value>davor</value>
   </data>
+  <data name="rbInsertBefore.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertBefore.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rbInsertBefore.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
+  </data>
   <data name="rbInsertBefore.Properties.GlyphVerticalAlignment" type="DevExpress.Utils.VertAlignment, DevExpress.Data.v21.1">
     <value>Default</value>
   </data>
@@ -1121,6 +1166,15 @@
   </data>
   <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
     <value>Lücken beim Verschieben/Entfernen von Sendern schließen</value>
+  </data>
+  <data name="cbCloseGap.Properties.DisplayValueChecked" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbCloseGap.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbCloseGap.Properties.DisplayValueUnchecked" xml:space="preserve">
+    <value />
   </data>
   <data name="cbCloseGap.Properties.GlyphVerticalAlignment" type="DevExpress.Utils.VertAlignment, DevExpress.Data.v21.1">
     <value>Default</value>
@@ -1236,8 +1290,14 @@
   <data name="gridRight.EmbeddedNavigator.TextLocation" type="DevExpress.XtraEditors.NavigatorButtonsTextLocation, DevExpress.XtraEditors.v21.1">
     <value>Center</value>
   </data>
+  <data name="gridRight.EmbeddedNavigator.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="gridRight.EmbeddedNavigator.ToolTipIconType" type="DevExpress.Utils.ToolTipIconType, DevExpress.Utils.v21.1">
     <value>None</value>
+  </data>
+  <data name="gridRight.EmbeddedNavigator.ToolTipTitle" xml:space="preserve">
+    <value />
   </data>
   <data name="colIndex.Caption" xml:space="preserve">
     <value>Pr. Index</value>
