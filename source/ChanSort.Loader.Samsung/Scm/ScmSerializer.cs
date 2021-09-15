@@ -390,7 +390,7 @@ namespace ChanSort.Loader.Samsung.Scm
       int count = data.Length / c.avbtFineTuneLength;
       for (int i = 0; i < count; i++)
       {
-        bool isCable = mapping.GetFlag("offIsCable", "maskIsCable"); // HACK: this is just a guess
+        bool isCable = mapping.GetFlag("IsCable",false); // HACK: this is just a guess
         int slot = mapping.GetWord("offSlotNr");
         float freq = mapping.GetFloat("offFrequency");
         var dict = isCable ? avbcFrequency : avbtFrequency;

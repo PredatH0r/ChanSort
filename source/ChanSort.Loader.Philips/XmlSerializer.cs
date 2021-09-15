@@ -19,6 +19,7 @@ namespace ChanSort.Loader.Philips
     It uses the "oldpresetnumber" from the XML to lookup the channel from the .BIN file and then apply the new "presetnumber".
     The .BIN file itself is compressed with some unknown cl_Zip compression / archive format and can't be edited with ChanSort.
     Deleting a channel is not possible by modifiying the .xml file. Omitting a channel only results in duplicate numbers with the TV still showing the missing channels at their old numbers.
+    The channel nodes in the .XML must be kept in the original order with "oldpresetnumber" keeping the original value and only "presetnumber" being updated.
 
     <Channel>
     <Setup oldpresetnumber="1" presetnumber="1" name="Das Erste" ></Setup>
@@ -183,7 +184,7 @@ namespace ChanSort.Loader.Philips
         if (File.Exists(xmlPath))
         {
           try { File.SetAttributes(xmlPath, FileAttributes.Archive);}
-          catch { /**/ }
+          catch(Exception ex) { this.logMessages.AppendLine("Failed to reset file attributes for " + xmlPath + ": " + ex.Message); }
           this.FileName = xmlPath;
           var baseName = Path.GetFileNameWithoutExtension(xmlPath).ToUpperInvariant();
           if (baseName.StartsWith("CM_"))

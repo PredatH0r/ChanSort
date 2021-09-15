@@ -6,14 +6,14 @@ namespace ChanSort.Api
   public class DataMapping
   {
     protected readonly IniFile.Section settings;
-    private int baseOffset;
-    private byte[] data { get; set; }
     public Encoding DefaultEncoding { get; set; }
+    public bool ThrowWhenAccessingUnknownSetting { get; set; } = false;
 
     #region ctor()
-    public DataMapping(IniFile.Section settings)
+    public DataMapping(IniFile.Section settings, byte[] data = null)
     {
       this.settings = settings;
+      this.Data = data;
       this.DefaultEncoding = Encoding.Default;
     }
     #endregion
@@ -21,19 +21,23 @@ namespace ChanSort.Api
     #region SetDataPtr(), Data, BaseOffset
     public void SetDataPtr(byte[] data, int baseOffset)
     {
-      this.data = data;
-      this.baseOffset = baseOffset;
+      this.Data = data;
+      this.BaseOffset = baseOffset;
     }
 
-    public byte[] Data { get { return this.data; } }
-    public int BaseOffset { get { return this.baseOffset; } set { this.baseOffset = value; } }
+    public byte[] Data { get; set; }
+
+    public int BaseOffset { get; set; }
     #endregion
 
     
     #region GetOffsets()
     public int[] GetOffsets(string key)
     {
-      return settings.GetIntList(key);
+      var list= settings.GetIntList(key);
+      if (list == null) 
+        return DefaultValue(key, Array.Empty<int>());
+      return list;
     }
     #endregion
 
@@ -46,7 +50,7 @@ namespace ChanSort.Api
       list = settings.GetIntList("mask" + key);
       if (list != null && list.Length > 0)
         return list[0];
-      return -1;
+      return DefaultValue(key, -1);
     }
     #endregion
 
@@ -61,22 +65,22 @@ namespace ChanSort.Api
     #endregion
 
 
-    public IniFile.Section Settings { get { return this.settings; } }
+    public IniFile.Section Settings => this.settings;
 
 
     #region Byte
     public byte GetByte(string key)
     {
       var offsets = settings.GetIntList(key);
-      if (offsets.Length==0) return 0;
-      return this.data[baseOffset + offsets[0]];
+      if (offsets.Length==0) return DefaultValue(key, (byte)0);
+      return this.Data[BaseOffset + offsets[0]];
     }
 
     public void SetByte(string key, int value)
     {
       var offsets = settings.GetIntList(key);
       foreach (int offset in offsets)
-        this.data[baseOffset + offset] = (byte)value;
+        this.Data[BaseOffset + offset] = (byte)value;
     }
     #endregion
 
@@ -84,8 +88,8 @@ namespace ChanSort.Api
     public ushort GetWord(string key)
     {
       var offsets = settings.GetIntList(key);
-      if (offsets.Length == 0) return 0;
-      return BitConverter.ToUInt16(this.data, baseOffset + offsets[0]);
+      if (offsets.Length == 0) return DefaultValue(key, (ushort)0);
+      return BitConverter.ToUInt16(this.Data, BaseOffset + offsets[0]);
     }
 
     public void SetWord(string key, int value)
@@ -93,8 +97,8 @@ namespace ChanSort.Api
       var offsets = settings.GetIntList(key);
       foreach (int offset in offsets)
       {
-        this.data[baseOffset + offset + 0] = (byte)value;
-        this.data[baseOffset + offset + 1] = (byte)(value>>8);
+        this.Data[BaseOffset + offset + 0] = (byte)value;
+        this.Data[BaseOffset + offset + 1] = (byte)(value>>8);
       }
     }
     #endregion
@@ -103,8 +107,8 @@ namespace ChanSort.Api
     public long GetDword(string key)
     {
       var offsets = settings.GetIntList(key);
-      if (offsets.Length == 0) return 0;
-      return BitConverter.ToUInt32(this.data, baseOffset + offsets[0]);
+      if (offsets.Length == 0) return DefaultValue(key, (uint)0);
+      return BitConverter.ToUInt32(this.Data, BaseOffset + offsets[0]);
     }
 
     public void SetDword(string key, long value)
@@ -112,10 +116,10 @@ namespace ChanSort.Api
       var offsets = settings.GetIntList(key);
       foreach (int offset in offsets)
       {
-        this.data[baseOffset + offset + 0] = (byte)value;
-        this.data[baseOffset + offset + 1] = (byte)(value >> 8);
-        this.data[baseOffset + offset + 2] = (byte)(value >> 16);
-        this.data[baseOffset + offset + 3] = (byte)(value >> 24);
+        this.Data[BaseOffset + offset + 0] = (byte)value;
+        this.Data[BaseOffset + offset + 1] = (byte)(value >> 8);
+        this.Data[BaseOffset + offset + 2] = (byte)(value >> 16);
+        this.Data[BaseOffset + offset + 3] = (byte)(value >> 24);
       }
     }
     #endregion
@@ -124,8 +128,8 @@ namespace ChanSort.Api
     public float GetFloat(string key)
     {
       var offsets = settings.GetIntList(key);
-      if (offsets.Length == 0) return 0;
-      return BitConverter.ToSingle(this.data, baseOffset + offsets[0]);
+      if (offsets.Length == 0) return DefaultValue(key, 0f);
+      return BitConverter.ToSingle(this.Data, BaseOffset + offsets[0]);
     }
 
     public void SetFloat(string key, float value)
@@ -135,25 +139,25 @@ namespace ChanSort.Api
       foreach (int offset in offsets)
       {
         for (int i = 0; i < 4; i++)
-          this.data[baseOffset + offset + i] = bytes[i];
+          this.Data[BaseOffset + offset + i] = bytes[i];
       }
     }
     #endregion
 
     #region GetFlag
 
-    public bool GetFlag(string key, bool defaultValue = false)
+    public bool GetFlag(string key, bool defaultValue)
     {
       return GetFlag("off" + key, "mask" + key, defaultValue);
     }
 
-    public bool GetFlag(string valueKey, string maskKey, bool defaultValue = false)
+    public bool GetFlag(string valueKey, string maskKey, bool defaultValue)
     {
       int mask = settings.GetInt(maskKey);
       return GetFlag(valueKey, mask, defaultValue);
     }
 
-    public bool GetFlag(string valueKey, int mask, bool defaultValue = false)
+    public bool GetFlag(string valueKey, int mask, bool defaultValue)
     {
       if (mask == 0) return defaultValue;
 
@@ -165,7 +169,7 @@ namespace ChanSort.Api
       }
       var offsets = settings.GetIntList(valueKey);
       if (offsets.Length == 0) return defaultValue;
-      bool isSet = (this.data[baseOffset + offsets[0]] & mask) == mask;
+      bool isSet = (this.Data[BaseOffset + offsets[0]] & mask) == mask;
       return isSet != reverseLogic;
     }
     #endregion
@@ -195,9 +199,9 @@ namespace ChanSort.Api
       foreach (var offset in offsets)
       {
         if (value != reverseLogic)
-          this.data[baseOffset + offset] |= (byte)mask;
+          this.Data[BaseOffset + offset] |= (byte)mask;
         else
-          this.data[baseOffset + offset] &= (byte)~mask;
+          this.Data[BaseOffset + offset] &= (byte)~mask;
       }
     }
     #endregion
@@ -207,12 +211,12 @@ namespace ChanSort.Api
     public string GetString(string key, int maxLen)
     {
       var offsets = settings.GetIntList(key);
-      if (offsets.Length == 0) return null;
+      if (offsets.Length == 0) return DefaultValue(key, (string)null);
       int length = this.GetByte(key + "Length");
       if (length == 0)
         length = maxLen;
       var encoding = this.DefaultEncoding;
-      return encoding.GetString(this.data, baseOffset + offsets[0], length).TrimEnd('\0');
+      return encoding.GetString(this.Data, BaseOffset + offsets[0], length).TrimEnd('\0');
     }
     #endregion
 
@@ -223,11 +227,28 @@ namespace ChanSort.Api
       int len = Math.Min(bytes.Length, maxLen);
       foreach (var offset in settings.GetIntList(key))
       {
-        Array.Copy(bytes, 0, this.data, baseOffset + offset, len);
+        Array.Copy(bytes, 0, this.Data, BaseOffset + offset, len);
         for (int i = len; i < maxLen; i++)
-          this.data[baseOffset + offset + i] = 0;
+          this.Data[BaseOffset + offset + i] = 0;
       }
       return len;
+    }
+    #endregion
+
+    #region DefaultValue()
+    private T DefaultValue<T>(string key, T value)
+    {
+      if (this.ThrowWhenAccessingUnknownSetting)
+        throw new ArgumentException($"undefined setting \"{key}\" in {this.Settings}");
+      return value;
+    }
+    #endregion
+
+    #region HasValue()
+    public bool HasValue(string key)
+    {
+      var list = this.settings.GetIntList(key);
+      return list != null && list.Length > 0;
     }
     #endregion
   }

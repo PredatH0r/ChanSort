@@ -148,7 +148,7 @@ from channel c inner join chanseq s on s.listid=c.listid and s.slot=c.slot
         cmd.Parameters["@listid"].Value = listId;
         cmd.Parameters["@slot"].Value = slot;
         cmd.Parameters["@seq"].Value = DBNull.Value;
-        cmd.Parameters["@isdel"].Value = dvbsMapping.GetFlag("InUse") ? 0 : 1;
+        cmd.Parameters["@isdel"].Value = dvbsMapping.GetFlag("InUse", false) ? 0 : 1;
         cmd.Parameters["@progmask"].Value = dvbsMapping.GetWord("offProgramNr");
         cmd.Parameters["@prognr"].Value = dvbsMapping.GetWord("offProgramNr") & 0x3FFF;
         cmd.Parameters["@progfix"].Value = dvbsMapping.GetWord("offProgramNrPreset");

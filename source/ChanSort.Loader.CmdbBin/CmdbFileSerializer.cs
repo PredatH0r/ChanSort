@@ -160,10 +160,10 @@ namespace ChanSort.Loader.CmdbBin
       ch.PcrPid = chanMap.GetWord("offPcrPid") & 0x1FFF;
       ch.AudioPid = chanMap.GetWord("offAudioPid") & 0x1FFF;
       ch.VideoPid = chanMap.GetWord("offVideoPid") & 0x1FFF;
-      ch.Encrypted = chanMap.GetFlag("Encrypted");
-      ch.Skip = chanMap.GetFlag("Skip");
-      ch.Lock = chanMap.GetFlag("Locked");
-      ch.Favorites = chanMap.GetFlag("Fav") ? Favorites.A : 0;
+      ch.Encrypted = chanMap.GetFlag("Encrypted", false);
+      ch.Skip = chanMap.GetFlag("Skip", false);
+      ch.Lock = chanMap.GetFlag("Locked", false);
+      ch.Favorites = chanMap.GetFlag("Fav", false) ? Favorites.A : 0;
 
       var off = chanMap.BaseOffset + chanMap.GetOffsets("offName")[0];
       this.dvbStringDecoder.GetChannelNames(chanMap.Data, off, chanMap.Settings.GetInt("lenName"), out var longName, out var shortName);

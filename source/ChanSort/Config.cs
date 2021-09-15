@@ -12,13 +12,12 @@ namespace ChanSort.Ui
     private static readonly string ConfigFilePath;
 
     #region class ColumnInfo
-
     public class ColumnInfo
     {
       [XmlAttribute("name")] public string Name { get; set; }
       [XmlAttribute("width")] public int Width { get; set; }
 
-      [XmlAttribute("visible")]//[Obsolete("For XML serialization only. Use Visible instead")]
+      [XmlAttribute("visible")]//[Obsolete("For XML serialization only. Use Visible instead")] // won't be serialized/deserialized when marked [Obsolete]
       public bool VisibleXml
       {
         get => this.Visible ?? true;
@@ -27,9 +26,7 @@ namespace ChanSort.Ui
 
       [XmlIgnore]
       public bool? Visible { get; set; }
-
     }
-
     #endregion
 
 
@@ -76,9 +73,6 @@ namespace ChanSort.Ui
     public bool CheckForUpdates { get; set; } = true;
     public int FontSizeDelta { get; set; } = 1;
 
-    // deprecated LeftGridLayout and RightGridLayout because they don't preserve order of invisible columns
-    //public string LeftGridLayout { get; set; }
-    //public string RightGridLayout { get; set; }
 
     [XmlArrayItem("Column")]
     public List<ColumnInfo> LeftColumns { get; set; } = new();

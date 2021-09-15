@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-using ChanSort.Api;
-using DevExpress.Data;
 using DevExpress.XtraGrid.Columns;
-using DevExpress.XtraGrid.Views.Grid;
 
 namespace ChanSort
 {
@@ -19,14 +9,16 @@ namespace ChanSort
     private List<GridColumn> columnOrder = new();
     private int ignoreEvents;
 
+    #region StoreDefaultColumnOrder()
     private void StoreDefaultColumnOrder()
     {
       // for this to work, the columns in absolute index order must represent the intended visible order
       this.columnOrder.Clear();
       this.columnOrder.AddRange(this.Columns.OrderBy(c => c.AbsoluteIndex));
     }
+    #endregion
 
-    #region SetColumnOrder
+    #region SetColumnOrder()
     public void SetColumnOrder(IEnumerable<string> names, bool updateVisibleIndex = true)
     {
       // must handle situations where new columns were added to the program, which are not included in the config
@@ -85,14 +77,19 @@ namespace ChanSort
     }
     #endregion
 
+    #region GetColumnOrder()
     public List<GridColumn> GetColumnOrder() => this.columnOrder.ToList();
+    #endregion
 
+    #region RaiseColumnPositionChanged()
     protected override void RaiseColumnPositionChanged(GridColumn column)
     {
       this.OnColumnPositionChanged(column);
       base.RaiseColumnPositionChanged(column);
     }
+    #endregion
 
+    #region OnColumnPositionChanged()
     private void OnColumnPositionChanged(GridColumn col)
     {
       // internal reordering should be ignored
@@ -117,7 +114,9 @@ namespace ChanSort
       }
       list.Insert(i, col);
     }
+    #endregion
 
+    #region SetColumnVisiblity()
     public void SetColumnVisibility(GridColumn column, bool visible)
     {
       if (column.Visible == visible)
@@ -144,29 +143,6 @@ namespace ChanSort
       // fallback
       column.VisibleIndex = this.VisibleColumns.Count;
     }
-
-    //protected override void SetColumnVisibleIndex(GridColumn column, int newValue)
-    //{
-    //  int oldVisIndex = column.VisibleIndex;
-    //  int newIdx = newValue > column.VisibleIndex ? newValue - 1 : newValue;
-    //  base.SetColumnVisibleIndex(column, newValue);
-
-    //  if (newIdx < 0 || oldVisIndex == newIdx)
-    //  {
-    //    // hide or no change: keep as-is
-    //  }
-    //  else if (newIdx >= 0)
-    //  {
-    //    // move
-    //    columnOrder.Remove(column);
-    //    if (newIdx == 0)
-    //      columnOrder.Insert(0, column);
-    //    else
-    //    {
-    //      var afterCol = this.VisibleColumns[column.VisibleIndex - 1];
-    //      columnOrder.Insert(columnOrder.IndexOf(afterCol) + 1, column);
-    //    }
-    //  }
-    //}
+    #endregion
   }
 }

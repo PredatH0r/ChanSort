@@ -12,10 +12,13 @@ namespace ChanSort.Api
     {
       private readonly Dictionary<string, string> data = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
       
-      public Section(string name)
+      public Section(string name, IniFile iniFile)
       {
         this.Name = name;
+        this.IniFile = iniFile;
       }
+
+      public IniFile IniFile { get; }
 
       #region Name
       public string Name { get; }
@@ -121,24 +124,31 @@ namespace ChanSort.Api
         return intValue;
       }
       #endregion
+
+      public override string ToString() => $"{this.IniFile} [{this.Name}]";
     }
     #endregion
 
     private readonly Dictionary<string, Section> sectionDict;
     private readonly List<Section> sectionList;
+    private readonly string filePath;
     
-    public IniFile(string fileName)
+    public IniFile(string filePath)
     {
+      this.filePath = filePath;
       this.sectionDict = new Dictionary<string, Section>();
       this.sectionList = new List<Section>();
-      this.ReadIniFile(fileName);
+      this.ReadIniFile(filePath);
     }
 
     public IEnumerable<Section> Sections => this.sectionList;
 
-    public Section GetSection(string sectionName)
+    public Section GetSection(string sectionName, bool throwException = false)
     {
-      return sectionDict.TryGet(sectionName);
+      var sec = sectionDict.TryGet(sectionName);
+      if (sec == null && throwException)
+        throw new ArgumentException($"No [{sectionName}] in {this}");
+      return sec;
     }
 
     #region ReadIniFile()
@@ -152,14 +162,14 @@ namespace ChanSort.Api
       while ((line = rdr.ReadLine()) != null)
       {
         string trimmedLine = line.Trim();
-        if (trimmedLine.StartsWith(";"))
+        if (trimmedLine.Length == 0 || trimmedLine.StartsWith(";") || trimmedLine.StartsWith("#") || trimmedLine.StartsWith("//"))
           continue;
         if (trimmedLine.StartsWith("["))
         {
           string sectionName = trimmedLine.EndsWith("]")
             ? trimmedLine.Substring(1, trimmedLine.Length - 2)
             : trimmedLine.Substring(1);
-          currentSection = new Section(sectionName);
+          currentSection = new Section(sectionName, this);
           this.sectionList.Add(currentSection);
           this.sectionDict[sectionName] = currentSection;
           continue;
@@ -186,5 +196,7 @@ namespace ChanSort.Api
       }
     }
     #endregion
+
+    public override string ToString() => Path.GetFileName(this.filePath);
   }
 }

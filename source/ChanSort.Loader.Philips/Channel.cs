@@ -36,5 +36,11 @@ namespace ChanSort.Loader.Philips
     /// </summary>
     public int Id; // links entries in the ChannelMap45/*Db.bin files with the entries in the tv.db channels table
 
+    /// <summary>
+    /// used in the mgr_db / FLASH format to hold the absolute offset of the channel in the FLASH file
+    /// </summary>
+    public int FlashFileOffset;
+
+    public int DbFileOffset;
   }
 }

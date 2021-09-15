@@ -492,12 +492,12 @@ namespace ChanSort.Loader.Philips
 
       // onid, tsid, pcrpid and vpid can be 0 in some lists
       ch.PcrPid = mapping.GetWord("offPcrPid") & mapping.GetMask("maskPcrPid");
-      ch.Lock = mapping.GetFlag("Locked");
+      ch.Lock = mapping.GetFlag("Locked", false);
       ch.OriginalNetworkId = mapping.GetWord("offOnid");
       ch.TransportStreamId = mapping.GetWord("offTsid");
       ch.ServiceId = mapping.GetWord("offSid");
       ch.VideoPid = mapping.GetWord("offVpid") & mapping.GetMask("maskVpid");
-      ch.Favorites = mapping.GetFlag("IsFav") ? Favorites.A : 0;
+      ch.Favorites = mapping.GetFlag("IsFav", false) ? Favorites.A : 0;
       ch.OldProgramNr = progNr;
       ch.Id = mapping.GetWord("offId"); // relevant for ChannelMap45
 

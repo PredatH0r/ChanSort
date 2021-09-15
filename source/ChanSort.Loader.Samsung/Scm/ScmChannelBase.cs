@@ -62,14 +62,14 @@ namespace ChanSort.Loader.Samsung.Scm
       this.OldProgramNr = (short)data.GetWord(_ProgramNr);
       this.Name = data.GetString(_Name, data.Settings.GetInt("lenName"));
       this.Favorites = this.ParseRawFavorites();
-      this.Lock = data.GetFlag(_Lock);
+      this.Lock = data.GetFlag(_Lock, false);
       int hiddenPrimary = data.GetByte(_Hidden);
       if (hiddenPrimary == 255)
         this.Hidden = data.GetByte(_HiddenAlt) != 0;
       else
         this.Hidden = hiddenPrimary != 0;
-      this.Skip = data.GetFlag(_Skip);
-      this.Encrypted = data.GetFlag(_Encrypted);
+      this.Skip = data.GetFlag(_Skip, false);
+      this.Encrypted = data.GetFlag(_Encrypted, false);
       this.IsDeleted = data.GetFlag(_Deleted, false) || !data.GetFlag(_IsActive, true);
       this.AddDebug(data.Data, data.BaseOffset + 25, 3);
     }
