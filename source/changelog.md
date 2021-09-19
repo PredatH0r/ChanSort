@@ -7,8 +7,8 @@ ChanSort Change Log
 - Philips: improved experimental support for Philips FLASH\_\*/\*.db file formats
   (read-only by default, can be enabled in Philips.ini for testing)
 - added Polish readme and updated translation (by JakubDriver)
-
-2021-09-13
+- Panasonic: added exerimental support for channel\_list.xml lists (Panasonic Android TVs, 2019 and later)
+  Unfortunately the only information included in this format is the channel number and a truncated channel name.
 - column order is now preserved between program starts even when lists with different supported columns
   were loaded and columns reordered.
 - added option to enabled/disable auto-loading of the last opened list when starting the program

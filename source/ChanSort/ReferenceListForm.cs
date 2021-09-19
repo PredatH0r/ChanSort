@@ -48,7 +48,7 @@ namespace ChanSort.Ui
       if (disposing)
       {
         this.components?.Dispose();
-        this.serializer.Dispose();
+        this.serializer?.Dispose();
       }
       base.Dispose(disposing);
     }
