@@ -2,6 +2,7 @@ Bağlantılar
 -----
 [![EN](https://chansort.com/img/flag_en.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme.md)
 [![DE](https://chansort.com/img/flag_de.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md)
+[![PL](https://chansort.com/img/flag_pl.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_pl.md)
 [![TR](https://chansort.com/img/flag_tr.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_tr-TR.md) |
 [İndir](https://github.com/PredatH0r/ChanSort/releases) | 
 [Dökümantasyon](https://github.com/PredatH0r/ChanSort/wiki) |
