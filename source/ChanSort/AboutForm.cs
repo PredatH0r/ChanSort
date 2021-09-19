@@ -15,11 +15,11 @@ namespace ChanSort.Ui
 @"
 Ciprian Leca: Romanian translation
 Istvan Krisko: Hungarian translation
-Jakub Driver: Polish translation
+JakubDriver: Polish translation
 Marco Sánchez: Spanish Translation
 Pavel Mizera: Czech translation
 Vitor Martins Augusto: Portuguese translation
-Yaşar Tuna Zorlu: Turkish Translation
+umitseyhan75, Yaşar Tuna Zorlu: Turkish Translation
 
 TCr82 (Github): Support for VDR's channels.conf file format
 ";

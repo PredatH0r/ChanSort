@@ -201,22 +201,16 @@ lub plik danych z innego telewizora (SCM, TLL, DB, BIN, ...)</value>
     <value>Rodzaj sygnału:</value>
   </data>
   <data name="cbAnalog.Properties.Caption" xml:space="preserve">
-    <value>Analog</value>
+    <value>Analogowy</value>
   </data>
   <data name="cbDigital.Properties.Caption" xml:space="preserve">
     <value>Cyfrowy</value>
-  </data>
-  <data name="lblTargetInfo.Text" xml:space="preserve">
-    <value> </value>
-  </data>
-  <data name="lblSourceInfo.Text" xml:space="preserve">
-    <value> </value>
   </data>
   <data name="labelControl7.Text" xml:space="preserve">
     <value>Rodzaj kanału:</value>
   </data>
   <data name="btnApply.Text" xml:space="preserve">
-    <value>Zastosować</value>
+    <value>Zastosuj</value>
   </data>
   <data name="grpManual.Text" xml:space="preserve">
     <value>grpInstrukcja</value>
@@ -228,7 +222,7 @@ lub plik danych z innego telewizora (SCM, TLL, DB, BIN, ...)</value>
     <value>Zamknij/Anuluj</value>
   </data>
   <data name="linkWiki.Text" xml:space="preserve">
-    <value>Otwórz Wiki ChanSort, aby uzyskać więcej informacji i pobrać listy referencyjne</value>
+    <value>Otwórz stronę ChanSort, aby uzyskać więcej informacji i pobrać listy referencyjne</value>
   </data>
   <data name="groupControl1.Text" xml:space="preserve">
     <value>1. Wybierz plik listy referencyjnej</value>

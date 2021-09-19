@@ -672,6 +672,7 @@ namespace ChanSort.Ui
       if (this.DataRoot.ChannelLists.All(l => l.Count == 0 || l.ReadOnly))
       {
         this.DataRoot.ApplyCurrentProgramNumbers(); // otherwise there wouldn't be any numbers in single pane view
+        this.RefreshGrids();
         return;
       }
 

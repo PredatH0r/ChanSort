@@ -41,8 +41,8 @@ namespace ChanSort.Loader.Philips
     Nevertheless a user reported that swapping DVB-S channels 1 and 2 with Onka on a TV that uses this xml-only format 110 worked for him.
 
     There seem to be 3 different flavors or the "100" format:
-    One has only .xml files in the channellib and s2channellib folders, does not indent lines in the .xml files, has a fixed number of bytes for channel and satellite names (padded with 0x00) and has no "Scramble" attribute.
-    And a version that has dtv_cmdb_*.bin next to the .xml files, uses 4 spaces for indentation, only writes as many bytes for names as needed and has a "Scramble" attribute. 
+    One has only .xml files in the channellib and s2channellib folders, does not indent lines in the .xml files, has a fixed number of bytes for channel and satellite names (padded with 0x00), has no "Scramble" attribute and values 1 and 0 for "Polarization".
+    And a version that has dtv_cmdb_*.bin next to the .xml files, uses 4 spaces for indentation, only writes as many bytes for names as needed, has a "Scramble" attribute and uses values 1 and 2 for "Polarization". 
     While the first seems to work fine when XML nodes are reordered by their new programNr, the latter seems to get confused when the .bin and .xml files have different data record orders. This is still under investigation. 
     The Philips editor does not modify these .bin files, appends 0x00 padding to the channel names, changes indentation to 2 tabs and strips the Scramble attribute. It's likely it wasn't designed for this type of list.
   
@@ -89,7 +89,7 @@ namespace ChanSort.Loader.Philips
     private readonly StringBuilder logMessages = new StringBuilder();
     private readonly IniFile ini;
     private IniFile.Section iniMapSection;
-
+    private string polarizationValueForHorizontal = "1";
 
     #region ctor()
     public XmlSerializer(string inputFile) : base(inputFile)
@@ -381,6 +381,7 @@ namespace ChanSort.Loader.Philips
         {
           this.iniMapSection = ini.GetSection("Map100_cmdb.bin");
           this.FileFormatVersion += "/cmdb";
+          this.polarizationValueForHorizontal = "1"; // TODO validate
         }
         else if (File.Exists(Path.Combine(dir, "channelFile.bin")))
         {
@@ -477,17 +478,13 @@ namespace ChanSort.Loader.Philips
       else
         chan.SignalSource |= SignalSource.Radio;
 
-      var decoderType = data.TryGet("DecoderType");
-      if (decoderType == "1")
-        chan.Source = "DVB-T";
-      else if (decoderType == "2")
-        chan.Source = "DVB-C";
+      chan.Source = (chan.SignalSource & SignalSource.Sat) != 0 ? "DVB-S" : (chan.SignalSource & SignalSource.Cable) != 0 ? "DVB-C" : (chan.SignalSource & SignalSource.Antenna) != 0 ? "DVB-T" : "";
       chan.SignalSource |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType);
       chan.SymbolRate = ParseInt(data.TryGet("SymbolRate"));
       if (chan.SymbolRate > 100000) // DVB-S stores values in kSym, DVB-C stores it in Sym, DVB-T stores 0
         chan.SymbolRate /= 1000;
       if (data.TryGetValue("Polarization", out var pol))
-        chan.Polarity = pol == "0" ? 'H' : 'V';
+        chan.Polarity = pol == polarizationValueForHorizontal ? 'H' : 'V';
       chan.Hidden |= data.TryGet("SystemHidden") == "1";
 
       chan.Encrypted = data.TryGet("Scramble") == "1" || data.TryGet("Scrambled") == "1"; // v100 sometimes contains a "Scramble", v105/v110 always contain "Scrambled"

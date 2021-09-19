@@ -120,4 +120,26 @@
   <data name="Cancel" xml:space="preserve">
     <value>Anuluj</value>
   </data>
+  <data name="InfoIgnoreImportError" xml:space="preserve">
+    <value>Telewizor może niepoprawnie pokazywać, że import się nie powiódł, ale można to zignorować.</value>
+  </data>
+  <data name="InfoRestartAfterImport" xml:space="preserve">
+    <value>INFORMACJE: Po zaimportowaniu listy z powrotem do telewizora odłącz go i podłącz ponownie po kilku sekundach.</value>
+  </data>
+  <data name="WarningChecksumErrorMsg" xml:space="preserve">
+    <value>OSTRZEŻENIE: W załadowanej liście wystąpiły błędy sum kontrolnych!
+
+Istnieją 2 sytuacje, w których może się to zdarzyć:
+
+- Wewnętrzna lista kanałów telewizora jest uszkodzona (np. po aktualizacji oprogramowania)
+    Można to rozwiązać, uruchamiając nowe skanowanie kanałów lub resetując telewizor.
+    Następnie ponownie wyeksportuj listę i otwórz ją za pomocą ChanSort.
+    Próba edycji i importu aktualnie uszkodzonego pliku może prowadzić do nieoczekiwanego zachowania telewizora.
+
+- Bad USB-Stick (złe komórki pamięci lub niezgodny format pliku)
+    Spróbuj użyć pendrive'a &lt;= 16 GB sformatowanego w systemie FAT32 (nie NTFS ani exFAT)</value>
+  </data>
+  <data name="WarningChechsumErrorIgnore" xml:space="preserve">
+    <value>Zignoruj błąd i mimo to edytuj listę</value>
+  </data>
 </root>

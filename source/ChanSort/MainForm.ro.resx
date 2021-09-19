@@ -297,9 +297,6 @@
   <data name="mnuGotoChannelList.Caption" xml:space="preserve">
     <value>Selectați și sursa de &amp;intrare</value>
   </data>
-  <data name="mnuInputSource.Caption" xml:space="preserve">
-    <value>mnuInputSource</value>
-  </data>
   <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
     <value>Deschide un submeniu pentru programul de selecție a listei favorite. Acest meniu poate fi activat direct cu ajutorul tastei Shift+F1</value>
   </data>

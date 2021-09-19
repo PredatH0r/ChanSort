@@ -127,10 +127,10 @@
     <value>Licencja:</value>
   </data>
   <data name="lblCredits.Text" xml:space="preserve">
-    <value>Kredyty:</value>
+    <value>Dziękuję:</value>
   </data>
   <data name="btnClose.Text" xml:space="preserve">
-    <value>Blisko</value>
+    <value>Zamknij</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>O ChanSort</value>

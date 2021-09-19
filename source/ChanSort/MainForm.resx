@@ -388,6 +388,7 @@
   </data>
   <data name="miEnglish.Caption" xml:space="preserve">
     <value>English</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="barDockControlRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
@@ -413,6 +414,7 @@
   </data>
   <data name="miHungarian.Caption" xml:space="preserve">
     <value>Magyar</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="btnToggleFavC.Location" type="System.Drawing.Point, System.Drawing">
     <value>182, 5</value>
@@ -528,6 +530,7 @@
   </data>
   <data name="rbInsertBefore.Properties.DisplayValueGrayed" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="miSort.Caption" xml:space="preserve">
     <value>Sor&amp;t channels alphabetically</value>
@@ -796,6 +799,7 @@
   </data>
   <data name="miFontXLarge.Caption" xml:space="preserve">
     <value>XL - Segoe UI 11pt</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="btnToggleLock.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -904,6 +908,7 @@
   </data>
   <data name="rbInsertBefore.Properties.DisplayValueChecked" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="pnlEditControls.Location" type="System.Drawing.Point, System.Drawing">
     <value>2, 23</value>
@@ -1159,6 +1164,7 @@
   </data>
   <data name="gridRight.EmbeddedNavigator.ToolTip" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="btnToggleFavA.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -1174,6 +1180,7 @@
   </data>
   <data name="miGerman.Caption" xml:space="preserve">
     <value>&amp;Deutsch</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="btnToggleLock.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -1195,6 +1202,7 @@
   </data>
   <data name="miRussian.Caption" xml:space="preserve">
     <value>ру́сский</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="btnRemoveRight.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -1249,6 +1257,7 @@
   </data>
   <data name="gridLeft.EmbeddedNavigator.ToolTipTitle" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;miResetAndRestart.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -1372,6 +1381,7 @@
   </data>
   <data name="miPortuguese.Caption" xml:space="preserve">
     <value>Português</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;btnRemoveRight.Name" xml:space="preserve">
     <value>btnRemoveRight</value>
@@ -1429,12 +1439,14 @@
   </data>
   <data name="miTurkish.Caption" xml:space="preserve">
     <value>Türkçe</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>New program number</value>
   </data>
   <data name="rbInsertBefore.Properties.DisplayValueUnchecked" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="miFontMedium.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -1495,6 +1507,7 @@
   </data>
   <data name="cbCloseGap.Properties.DisplayValueGrayed" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="mnuGotoFavList.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
@@ -1761,6 +1774,7 @@
   </data>
   <data name="gridRight.EmbeddedNavigator.ToolTipTitle" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;miRecentFiles.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarListItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -1776,6 +1790,7 @@
   </data>
   <data name="cbCloseGap.Properties.DisplayValueUnchecked" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;btnToggleFavG.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -2297,6 +2312,7 @@
   </data>
   <data name="miUtf16BigEndian.Caption" xml:space="preserve">
     <value>UTF-16 Big Endian (Unicode MSB first)</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;timerSelectFocusedRow.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2372,6 +2388,7 @@
   </data>
   <data name="miPolski.Caption" xml:space="preserve">
     <value>Polski</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="btnClearRightFilter.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>28</value>
@@ -2423,6 +2440,7 @@
   </data>
   <data name="miFontLarge.Caption" xml:space="preserve">
     <value>L - Segoe UI 10pt</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;miTheme.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -2432,6 +2450,7 @@
   </data>
   <data name="miCzech.Caption" xml:space="preserve">
     <value>Česky</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="grpInputList.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -2459,6 +2478,7 @@
   </data>
   <data name="rbInsertSwap.Properties.DisplayValueChecked" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;mnuLanguage.Name" xml:space="preserve">
     <value>mnuLanguage</value>
@@ -2585,6 +2605,7 @@
   </data>
   <data name="cbCloseGap.Properties.DisplayValueChecked" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;cbCloseGap.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -2646,6 +2667,7 @@
   </data>
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="splitContainerControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -2769,6 +2791,7 @@
   </data>
   <data name="miUtf8Charset.Caption" xml:space="preserve">
     <value>UTF-8 (Unicode)</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;miLockOn.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -2805,6 +2828,7 @@
   </data>
   <data name="gridLeft.EmbeddedNavigator.ToolTip" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;btnToggleLock.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.SimpleButton, DevExpress.XtraEditors.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -2979,6 +3003,7 @@
   </data>
   <data name="rbInsertAfter.Properties.DisplayValueChecked" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;colName.Type" xml:space="preserve">
     <value>DevExpress.XtraGrid.Columns.GridColumn, DevExpress.XtraGrid.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
@@ -3024,6 +3049,7 @@
   </data>
   <data name="rbInsertSwap.Properties.DisplayValueUnchecked" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="rbInsertAfter.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 20</value>
@@ -3294,6 +3320,7 @@
   </data>
   <data name="miUtf16LittleEndian.Caption" xml:space="preserve">
     <value>UTF-16 Little Endian (Unicode LSB first)</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="mnuHelp.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>-1</value>
@@ -3441,6 +3468,7 @@
   </data>
   <data name="miFontSmall.Caption" xml:space="preserve">
     <value>S - Tahoma 8pt</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;miOpen.Name" xml:space="preserve">
     <value>miOpen</value>
@@ -3567,6 +3595,7 @@
   </data>
   <data name="miFontXxLarge.Caption" xml:space="preserve">
     <value>XXL - Segoe UI 12pt</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="colShortName.VisibleIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -3618,6 +3647,7 @@
   </data>
   <data name="rbInsertAfter.Properties.DisplayValueUnchecked" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="btnToggleFavH.Text" xml:space="preserve">
     <value>±H</value>
@@ -3678,6 +3708,7 @@
   </data>
   <data name="mnuInputSource.Caption" xml:space="preserve">
     <value>mnuInputSource</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="miSelectFavListD.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>-1</value>
@@ -3771,6 +3802,7 @@
   </data>
   <data name="mnuLanguage.Caption" xml:space="preserve">
     <value>&amp;Language</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="cbCloseGap.EditValue" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4009,4 +4041,12 @@
   <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>308, 17</value>
   </metadata>
+  <data name="rbInsertAfter.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value></value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="rbInsertSwap.Properties.DisplayValueGrayed" xml:space="preserve">
+    <value></value>
+    <comment>@Invariant</comment>
+  </data>
 </root>

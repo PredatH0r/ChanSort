@@ -124,7 +124,7 @@
     <value>Domyślny zestaw znaków dla mojego kraju</value>
   </data>
   <data name="btnOk.Text" xml:space="preserve">
-    <value>Dobrze</value>
+    <value>Ok</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Zestaw znaków</value>

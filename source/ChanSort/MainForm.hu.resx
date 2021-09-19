@@ -285,9 +285,6 @@
   <data name="miCharsetForm.Caption" xml:space="preserve">
     <value>Az &amp;összes karakter készlet...</value>
   </data>
-  <data name="miUtf8Charset.Caption" xml:space="preserve">
-    <value>UTF-8 (Unicode)</value>
-  </data>
   <data name="miIsoCharSets.Caption" xml:space="preserve">
     <value>ISO karakter készlet</value>
   </data>
@@ -317,9 +314,6 @@
   </data>
   <data name="mnuGotoChannelList.Caption" xml:space="preserve">
     <value>Beviteli &amp;forrás kiválasztása</value>
-  </data>
-  <data name="mnuInputSource.Caption" xml:space="preserve">
-    <value>mnuInputSource</value>
   </data>
   <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
     <value>Megnyit egy almenüt a kedvencek listájának kiválasztásához. Ez a menü közvetlenül aktiválható a Shift+F1 gombbal</value>
@@ -671,9 +665,6 @@
   </data>
   <data name="miSplitView.Caption" xml:space="preserve">
     <value>Osztott nézet</value>
-  </data>
-  <data name="mnuLanguage.Caption" xml:space="preserve">
-    <value>&amp;Nyelv</value>
   </data>
   <data name="miResetAndRestart.Caption" xml:space="preserve">
     <value>Alaphelyzetbe állítás és újraindítás</value>

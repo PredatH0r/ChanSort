@@ -133,16 +133,16 @@
     <value>Ulubione</value>
   </data>
   <data name="colOutLock.Caption" xml:space="preserve">
-    <value>Zablokować</value>
+    <value>Zablokowane</value>
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
     <value>Blokada rodzicielska</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
-    <value>Pominąć</value>
+    <value>Pominięte</value>
   </data>
   <data name="colOutHide.Caption" xml:space="preserve">
-    <value>Ukryć</value>
+    <value>Ukryte</value>
   </data>
   <data name="colOutDeleted.Caption" xml:space="preserve">
     <value>Usunięte</value>
@@ -166,7 +166,7 @@
     <value>Pr#</value>
   </data>
   <data name="grpSubList.Text" xml:space="preserve">
-    <value>Sub List</value>
+    <value>Lista podrzędna</value>
   </data>
   <data name="miFile.Caption" xml:space="preserve">
     <value>&amp;Plik</value>
@@ -175,22 +175,22 @@
     <value>&amp;Otwórz plik danych TV...</value>
   </data>
   <data name="miReload.Caption" xml:space="preserve">
-    <value>&amp;Przeładować</value>
+    <value>&amp;Przeładuj</value>
   </data>
   <data name="miRestoreOriginal.Caption" xml:space="preserve">
-    <value>Przywracania kopii zapasowej</value>
+    <value>Przywracanie kopii zapasowej</value>
   </data>
   <data name="miFileInformation.Caption" xml:space="preserve">
     <value>Plik &amp;informacje...</value>
   </data>
   <data name="miSave.Caption" xml:space="preserve">
-    <value>&amp;Zapisać</value>
+    <value>&amp;Zapisz</value>
   </data>
   <data name="miSaveAs.Caption" xml:space="preserve">
     <value>Zapisz &amp;jako...</value>
   </data>
   <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Złóż zamówienie z listy referencyjnej ...</value>
+    <value>Przyjmij zamówienie z szablonu…</value>
   </data>
   <data name="miAddFromRefList.Caption" xml:space="preserve">
     <value>Dodaj kanały z listy referencyjnej ...</value>
@@ -202,16 +202,16 @@
     <value>Eksportuj listę do Excela ...</value>
   </data>
   <data name="miPrint.Caption" xml:space="preserve">
-    <value>&amp;Wydrukować...</value>
+    <value>&amp;Wydrukuj...</value>
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
-    <value>&amp;Porzucić</value>
+    <value>&amp;Porzuć</value>
   </data>
   <data name="miRecentFiles.Caption" xml:space="preserve">
     <value>Ostatnie pliki</value>
   </data>
   <data name="miEdit.Caption" xml:space="preserve">
-    <value>&amp;Edytować</value>
+    <value>&amp;Edytuj</value>
   </data>
   <data name="miAddChannel.Caption" xml:space="preserve">
     <value>&amp;Dodaj kanały</value>
@@ -268,7 +268,7 @@
     <value>Ustawienie urządzenia...</value>
   </data>
   <data name="miCleanupChannels.Caption" xml:space="preserve">
-    <value>Dane kanału oczyszczania</value>
+    <value>Czyszczenie danych kanału</value>
   </data>
   <data name="miCleanupChannels.Hint" xml:space="preserve">
     <value>Reorganizuj rekordy kanału i usuwaj duplikaty</value>
@@ -283,10 +283,7 @@
     <value>&amp;Zestaw znaków</value>
   </data>
   <data name="miCharsetForm.Caption" xml:space="preserve">
-    <value>Wszystkie i zestawy znaków ...</value>
-  </data>
-  <data name="miUtf8Charset.Caption" xml:space="preserve">
-    <value>UTF-8 (Unicode)</value>
+    <value>Wszystkie zestawy znaków...</value>
   </data>
   <data name="miIsoCharSets.Caption" xml:space="preserve">
     <value>Zestawy znaków ISO</value>
@@ -310,16 +307,13 @@
     <value>Sprawdź aktualizacje</value>
   </data>
   <data name="mnuAccessibility.Caption" xml:space="preserve">
-    <value>&amp;Dostępność</value>
+    <value>&amp;Łatwość dostępu</value>
   </data>
   <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
     <value>Otwiera podmenu wyboru źródła wejściowego. To menu można aktywować bezpośrednio przyciskiem F1</value>
   </data>
   <data name="mnuGotoChannelList.Caption" xml:space="preserve">
     <value>Wybierz i wprowadź źródło</value>
-  </data>
-  <data name="mnuInputSource.Caption" xml:space="preserve">
-    <value>mnuInputSource</value>
   </data>
   <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
     <value>Otwiera podmenu dla programu wyboru listy ulubionych. To menu można aktywować bezpośrednio za pomocą klawiszy Shift + F1</value>
@@ -364,7 +358,7 @@
     <value>&amp;Wsparcie</value>
   </data>
   <data name="miWiki.Caption" xml:space="preserve">
-    <value>Wiki</value>
+    <value>github.com</value>
   </data>
   <data name="miOpenWebsite.Caption" xml:space="preserve">
     <value>Strona internetowa ChanSort...</value>
@@ -373,7 +367,7 @@
     <value>&amp;O ChanSort...</value>
   </data>
   <data name="bar1.Text" xml:space="preserve">
-    <value>Przybory</value>
+    <value>Narzędzia</value>
   </data>
   <data name="miMoveUp.Caption" xml:space="preserve">
     <value>Przejdź w górę</value>
@@ -532,13 +526,13 @@
     <value>Ulubione</value>
   </data>
   <data name="colLock.Caption" xml:space="preserve">
-    <value>Zablokowany</value>
+    <value>Zablokowane</value>
   </data>
   <data name="colSkip.Caption" xml:space="preserve">
-    <value>Pominąć</value>
+    <value>Pominięte</value>
   </data>
   <data name="colHidden.Caption" xml:space="preserve">
-    <value>Ukryć</value>
+    <value>Ukryte</value>
   </data>
   <data name="colDeleted.Caption" xml:space="preserve">
     <value>Usunięte</value>
@@ -547,7 +541,7 @@
     <value>Szyfrowane</value>
   </data>
   <data name="colEncrypted.ToolTip" xml:space="preserve">
-    <value>Szyfrowane</value>
+    <value>Zaszyfrowane</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
     <value>Identyfikator typu usługi</value>
@@ -610,7 +604,7 @@
     <value>Uid</value>
   </data>
   <data name="colLogicalIndex.Caption" xml:space="preserve">
-    <value>Zamówienie</value>
+    <value>Zamówione</value>
   </data>
   <data name="colSignalSource.Caption" xml:space="preserve">
     <value>Źródło sygnału</value>
@@ -658,12 +652,39 @@
     <value>Oryginalne kanały</value>
   </data>
   <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
-    <value>Panel 2</value>
+    <value>Panel2</value>
   </data>
   <data name="splitContainerControl1.Text" xml:space="preserve">
-    <value>splitContainerControl1</value>
+    <value>podzielonaKontrolaKontenera1</value>
   </data>
   <data name="miTheme.Caption" xml:space="preserve">
     <value>Schemat kolorów...</value>
+  </data>
+  <data name="btnSearchLeft.AccessibleDescription" xml:space="preserve">
+    <value>Wyszukaj kanał</value>
+  </data>
+  <data name="miSplitView.Caption" xml:space="preserve">
+    <value>Podzielony widok</value>
+  </data>
+  <data name="miResetAndRestart.Caption" xml:space="preserve">
+    <value>Przywróć ustawienia domyślne i uruchom ponownie</value>
+  </data>
+  <data name="miResetAndRestart.Hint" xml:space="preserve">
+    <value>Resetuje wszystkie niestandardowe ustawienia i ponownie uruchamia program</value>
+  </data>
+  <data name="btnSearchLeft.ToolTip" xml:space="preserve">
+    <value>Wyszukaj kanał według nazwy</value>
+  </data>
+  <data name="btnSearch.AccessibleDescription" xml:space="preserve">
+    <value>Wyszukaj kanał</value>
+  </data>
+  <data name="btnSearch.ToolTip" xml:space="preserve">
+    <value>Wyszukaj kanał według nazwy</value>
+  </data>
+  <data name="miAutoHideColumns.Caption" xml:space="preserve">
+    <value>Ukryj/odkryj kolumny automatycznie</value>
+  </data>
+  <data name="miLoadListAfterStart.Caption" xml:space="preserve">
+    <value>Załaduj ostatnio używaną listę po uruchomieniu</value>
   </data>
 </root>

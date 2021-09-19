@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="progressPanel1.Description" xml:space="preserve">
-    <value>Generando archivo de datos de TV</value>
+    <value>Generando archivo de datos de TV...</value>
   </data>
   <data name="progressPanel1.Caption" xml:space="preserve">
     <value>Por favor sea paciente</value>

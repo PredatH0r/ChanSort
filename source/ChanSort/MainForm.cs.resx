@@ -570,9 +570,6 @@
   <data name="mnuHelp.Caption" xml:space="preserve">
     <value>&amp;Nápověda</value>
   </data>
-  <data name="mnuInputSource.Caption" xml:space="preserve">
-    <value>mnuInputSource</value>
-  </data>
   <data name="mnuOptions.Caption" xml:space="preserve">
     <value>&amp;Nastavení</value>
   </data>

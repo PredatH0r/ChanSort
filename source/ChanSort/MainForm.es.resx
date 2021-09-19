@@ -276,9 +276,6 @@
   <data name="miCharsetForm.Caption" xml:space="preserve">
     <value>Todos los sets de caracteres</value>
   </data>
-  <data name="miUtf8Charset.Caption" xml:space="preserve">
-    <value>UTF-8 (Unicode)</value>
-  </data>
   <data name="miIsoCharSets.Caption" xml:space="preserve">
     <value>Set de caracteres ISO</value>
   </data>
@@ -308,9 +305,6 @@
   </data>
   <data name="mnuGotoChannelList.Caption" xml:space="preserve">
     <value>Seleccionar fuente de entrada</value>
-  </data>
-  <data name="mnuInputSource.Caption" xml:space="preserve">
-    <value>mnuInputSource</value>
   </data>
   <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
     <value>Abre un submenú para la selección de la lista de programas o favoritos. Este menú puede ser activado directamente con las teclas Mayus+F1</value>

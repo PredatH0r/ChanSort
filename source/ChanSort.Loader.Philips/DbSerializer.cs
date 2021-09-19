@@ -38,12 +38,13 @@ namespace ChanSort.Loader.Philips
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbT, "DVB-C");
     private readonly ChannelList dvbsFtaChannels = new ChannelList(SignalSource.DvbS | SignalSource.Provider0, "DVB-S FTA");
     private readonly ChannelList dvbsPkgChannels = new ChannelList(SignalSource.DvbS | SignalSource.Provider1, "DVB-S Preset");
-    private readonly Dictionary<ChannelList, string> dbFileByList = new();
+    private readonly Dictionary<ChannelList, Tuple<string, int>> dbFileByList = new();
     private readonly Dictionary<ChannelList, Tuple<string, int>> flashFileByList = new();
     private int dvbtChannelRecordLength;
     private int dvbcChannelRecordLength;
     private int ftaChannelRecordLength;
     private int pkgChannelRecordLength;
+    private readonly bool reorderPhysically;
 
 
     #region ctor()
@@ -56,6 +57,10 @@ namespace ChanSort.Loader.Philips
 
       string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
       this.ini = new IniFile(iniFile);
+
+      var sec = ini.GetSection("flash_db");
+      this.reorderPhysically = sec.GetBool("reorderRecordsByChannelNumber", true);
+      var allowEdit = sec.GetBool("allowEdit", false);
 
       this.DataRoot.AddChannelList(dvbtChannels);
       this.DataRoot.AddChannelList(dvbcChannels);
@@ -82,6 +87,7 @@ namespace ChanSort.Loader.Philips
           nameof(ChannelInfo.AudioPid),
           nameof(ChannelInfo.ServiceTypeName)
         };
+        list.ReadOnly = !allowEdit;
       }
     }
     #endregion
@@ -132,7 +138,7 @@ namespace ChanSort.Loader.Philips
               LoadFlash(file, lowercaseFileName, dvbsFtaChannels, ftaChannelRecordLength);
             break;
           case "flash_dtvinfo_s_pkg":
-            if (!(dvbsFtaChannels.Count == 0 && dvbsPkgChannels.Count > 0))
+            if (dvbsPkgChannels.Count > 0)
               LoadFlash(file, lowercaseFileName, dvbsPkgChannels, pkgChannelRecordLength);
             break;
         }
@@ -203,11 +209,9 @@ namespace ChanSort.Loader.Philips
         throw new FileLoadException($"File {path} contains invalid checksum. Expected {expectedChecksum:x4} but calculated {actualChecksum:x4}");
 
       channelRecordLength = lenEntry;
- 
-      list.ReadOnly = !sec.GetBool("allowEdit");
-
-      var mapping = new DataMapping(this.ini.GetSection(sectionName + "_entry"));
-      sec = ini.GetSection("mgr_chan_s_fta.db_entry");
+      
+      sec = this.ini.GetSection("mgr.db_entry:" + channelRecordLength);
+      var mapping = new DataMapping(sec);
       var lenName = sec.GetInt("lenName");
       for (int i = 0; i < records; i++)
       {
@@ -236,7 +240,7 @@ namespace ChanSort.Loader.Philips
         this.DataRoot.AddChannel(list, ch);
       }
 
-      this.dbFileByList[list] = path;
+      this.dbFileByList[list] = Tuple.Create(path, channelRecordLength);
     }
     #endregion
 
@@ -459,7 +463,7 @@ namespace ChanSort.Loader.Philips
     }
     #endregion
 
-    public override IEnumerable<string> GetDataFilePaths() => this.dbFileByList.Values.Union(this.flashFileByList.Values.Select(tup => tup.Item1));
+    public override IEnumerable<string> GetDataFilePaths() => this.dbFileByList.Values.Union(this.flashFileByList.Values).Select(tup => tup.Item1);
 
     #region Save()
     public override void Save(string tvOutputFile)
@@ -468,9 +472,10 @@ namespace ChanSort.Loader.Philips
       foreach (var listAndFile in this.dbFileByList)
       {
         var list = listAndFile.Key;
-        var file = listAndFile.Value;
+        var file = listAndFile.Value.Item1;
+        var lenEntry = listAndFile.Value.Item2;
         var secName = Path.GetFileName(file).ToLowerInvariant();
-        SaveDvb(file, secName, list);
+        SaveDvb(file, secName, list, lenEntry);
       }
 
       // update FLASH_* files
@@ -486,30 +491,56 @@ namespace ChanSort.Loader.Philips
     #endregion
 
     #region SaveDvb()
-    private void SaveDvb(string file, string secName, ChannelList list)
+    private void SaveDvb(string file, string secName, ChannelList list, int channelRecordLength)
     {
-      var data = File.ReadAllBytes(file);
+      var oldData = File.ReadAllBytes(file);
 
       var sec = ini.GetSection(secName);
-      if (!GetValuesFromDvbFileHeader(sec, data, out var lenHeader, out var lenEntry, out _, out var offChecksum))
+      if (!GetValuesFromDvbFileHeader(sec, oldData, out var lenHeader, out var lenEntry, out _, out var offChecksum))
         return;
 
-      var mapping = new DataMapping(ini.GetSection(secName + "_entry"));
-      foreach (var chan in list.Channels)
+      var newData = new byte[oldData.Length];
+      Array.Copy(oldData, newData, oldData.Length);
+
+      var mapping = new DataMapping(ini.GetSection("mgr.db_entry:" + channelRecordLength));
+
+      if (this.reorderPhysically)
       {
-        if (chan is not Channel ch)
-          continue;
-        mapping.SetDataPtr(data, lenHeader + (int)ch.RecordIndex * lenEntry);
-        mapping.SetWord("offProgNr", ch.NewProgramNr);
-        mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
+        int newIndex = 0;
+        foreach (var chan in list.Channels.OrderBy(c => c.NewProgramNr).ThenBy(c => c.RecordIndex))
+        {
+          if (chan is not Channel ch)
+            continue;
+          var newOff = lenHeader + newIndex * lenEntry;
+          Array.Copy(oldData, lenHeader + (int)ch.RecordIndex * lenEntry, newData, newOff, lenEntry);
+          mapping.SetDataPtr(newData, newOff);
+          mapping.SetWord("offProgNr", ch.NewProgramNr);
+          mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
+          mapping.SetWord("offOldProgNr", ch.NewProgramNr);
+          mapping.SetWord("offRecordIndex", newIndex);
+          //ch.RecordIndex = newIndex; // will be updated when saving the FLASH file
+          ++newIndex;
+        }
+      }
+      else
+      {
+        foreach (var chan in list.Channels.OrderBy(c => c.NewProgramNr).ThenBy(c => c.RecordIndex))
+        {
+          if (chan is not Channel ch)
+            continue;
+          var newOff = lenHeader + (int)ch.RecordIndex * lenEntry;
+          mapping.SetDataPtr(newData, newOff);
+          mapping.SetWord("offProgNr", ch.NewProgramNr);
+          mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
+        }
       }
 
       // update checksum (only 16 bits are stored)
-      var checksum = CalcChecksum(data, 0, offChecksum);
-      data[offChecksum + 0] = (byte)checksum;
-      data[offChecksum + 1] = (byte)(checksum >> 8);
+      var checksum = CalcChecksum(newData, 0, offChecksum);
+      newData[offChecksum + 0] = (byte)checksum;
+      newData[offChecksum + 1] = (byte)(checksum >> 8);
 
-      File.WriteAllBytes(file, data);
+      File.WriteAllBytes(file, newData);
     }
     #endregion
 
@@ -522,6 +553,23 @@ namespace ChanSort.Loader.Philips
 
       var sec = ini.GetSection(secName + ":" + dbChannelRecordLength, true);
       var mapping = new DataMapping(sec, data);
+
+      // update channel index->id mapping table to match the indices in the new .db file, which is in order by the new ProgNr
+      if (this.reorderPhysically)
+      {
+        var off = sec.GetInt("offChannelTransponderTable");
+        var num = sec.GetInt("numChannelTransponderTable");
+        var oldTable = new byte[num * 4];
+        Array.Copy(data, off, oldTable, 0, oldTable.Length);
+        int i = 0;
+        foreach (var chan in list.Channels.OrderBy(c => c.NewProgramNr).ThenBy(c => c.RecordIndex))
+        {
+          if (chan is not Channel ch)
+            continue;
+          Array.Copy(oldTable, (int)ch.RecordIndex * 4, data, off + i * 4, 4);
+          ch.RecordIndex = i++;
+        }
+      }
 
       // in-place update of channel data
       foreach (var chan in list.Channels)

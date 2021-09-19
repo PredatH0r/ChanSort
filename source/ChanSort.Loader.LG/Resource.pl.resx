@@ -142,4 +142,29 @@ Starsze oprogramowanie LG dla modeli telewizorów opartych na webOS nie obsługu
   <data name="LG_BlindscanInfo_Cancel" xml:space="preserve">
     <value>Anuluj</value>
   </data>
+  <data name="GcSerializer_ReadChannelLists_NoChannelsCap" xml:space="preserve">
+    <value>Pusta lista</value>
+  </data>
+  <data name="GcSerializer_ReadChannelLists_NoChannelsMsg" xml:space="preserve">
+    <value>Plik z listą kanałów nie zawiera kanałów.</value>
+  </data>
+  <data name="LG_BlindscanInfo" xml:space="preserve">
+    <value>!!! UWAGA !!!
+
+Listy kanałów LG można zaimportować z powrotem do telewizora TYLKO, jeśli podczas wyszukiwania kanałów w telewizorze wybrano specjalne opcje:
+- Dostawca: MUSI być żaden/inny (NIE wybieraj dostawcy telewizji kablowej ani Astry 19.2E)
+- Blindscan: MUSI być wybrany
+- Wyszukiwanie sieci: opcjonalne (można wybrać)
+
+Telewizor nie przetworzy listy poprawnie, jeśli te kroki nie zostaną wykonane!</value>
+  </data>
+  <data name="LG_BlindscanInfo_OpenWebpage" xml:space="preserve">
+    <value>Przeczytaj informacje o obsłudze webOS 5 na github.com</value>
+  </data>
+  <data name="LG_BlindscanInfo_Continue" xml:space="preserve">
+    <value>Szukałem kanałów jak opisano powyżej</value>
+  </data>
+  <data name="LG_BlindscanInfo_Rejected" xml:space="preserve">
+    <value>Proces ładowania został anulowany</value>
+  </data>
 </root>

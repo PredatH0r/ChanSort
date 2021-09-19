@@ -159,6 +159,7 @@
   </data>
   <data name="edFile.Properties.Buttons1" xml:space="preserve">
     <value />
+    <comment>@Invariant</comment>
   </data>
   <data name="edFile.Properties.Buttons2" type="System.Int32, mscorlib">
     <value>-1</value>
@@ -483,6 +484,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   </data>
   <data name="comboPrNr.EditValue" xml:space="preserve">
     <value>1</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 134</value>
@@ -492,24 +494,31 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   </data>
   <data name="comboPrNr.Properties.Items" xml:space="preserve">
     <value>1</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items1" xml:space="preserve">
     <value>100</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items2" xml:space="preserve">
     <value>500</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items3" xml:space="preserve">
     <value>1000</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items4" xml:space="preserve">
     <value>2000</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items5" xml:space="preserve">
     <value>5000</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items6" xml:space="preserve">
     <value>7000</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 20</value>
@@ -783,6 +792,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   </data>
   <data name="lblTargetInfo.Text" xml:space="preserve">
     <value> </value>
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;lblTargetInfo.Name" xml:space="preserve">
     <value>lblTargetInfo</value>
@@ -807,6 +817,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   </data>
   <data name="lblSourceInfo.Text" xml:space="preserve">
     <value> </value>
+    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;lblSourceInfo.Name" xml:space="preserve">
     <value>lblSourceInfo</value>

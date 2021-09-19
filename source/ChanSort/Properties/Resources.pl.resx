@@ -146,7 +146,7 @@
     <value>Zapisz zmiany</value>
   </data>
   <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
-    <value>Odrzucać zmiany</value>
+    <value>Odrzuć zmiany</value>
   </data>
   <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
     <value>Nie znaleziono wtyczki do odczytu/zapisu plików {0}.</value>
@@ -158,7 +158,7 @@
     <value>Zawartość pliku wykazuje pewne anomalie i prawdopodobnie jest uszkodzona.</value>
   </data>
   <data name="MainForm_LoadFiles_ValidationWarningCap" xml:space="preserve">
-    <value>Walidacji danych</value>
+    <value>Weryfikacja danych</value>
   </data>
   <data name="MainForm_RestoreScanOrder_Message" xml:space="preserve">
     <value>Wszystkie niestandardowe przechowywanie zostaną utracone.

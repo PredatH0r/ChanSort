@@ -1,6 +1,13 @@
 ChanSort Change Log 
 ===================
 
+2021-09-19
+- Philips: added support for ChannelMap_115 format
+- Philips: ChannelMap formats 100-115 did not always fill "Source" and "Polarity" columns correctly
+- Philips: improved experimental support for Philips FLASH\_\*/\*.db file formats
+  (read-only by default, can be enabled in Philips.ini for testing)
+- added Polish readme and updated translation (by JakubDriver)
+
 2021-09-13
 - column order is now preserved between program starts even when lists with different supported columns
   were loaded and columns reordered.
@@ -15,7 +22,7 @@ ChanSort Change Log
 
 2021-09-06
 - Philips: fixes for ChannelMap_100, 105 and 110 formats
-- Philips: support for FLASH/*.bin DVB-T/C and preset DVB-S lists (mgr_chan_s_pkg.db)
+- Philips: support for FLASH/*.db DVB-T/C and preset DVB-S lists (mgr_chan_s_pkg.db)
 - Toshiba: lists with chmgt_type001\\chmgt.bin can now be opened without zipping them
 - Toshiba: selecting the hotelopt_type001.bin will now also load the list (if the type is supported)
 - Alden: added support for "Alden" Android SmartTV channel list format (dvr_rtk_tv.db)

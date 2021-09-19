@@ -285,9 +285,6 @@
   <data name="miCharsetForm.Caption" xml:space="preserve">
     <value>Tüm karakter setleri…</value>
   </data>
-  <data name="miUtf8Charset.Caption" xml:space="preserve">
-    <value>UTF-8 (Unicode)</value>
-  </data>
   <data name="miIsoCharSets.Caption" xml:space="preserve">
     <value>ISO karakter seti</value>
   </data>
@@ -317,9 +314,6 @@
   </data>
   <data name="mnuGotoChannelList.Caption" xml:space="preserve">
     <value>Giriş kaynağı seçin</value>
-  </data>
-  <data name="mnuInputSource.Caption" xml:space="preserve">
-    <value>mnuInputSource</value>
   </data>
   <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
     <value>Favori liste seçimi için bir alt menü açar. Bu menü Shift + F1 tuşuyla doğrudan etkinleştirilebilir</value>
@@ -664,6 +658,6 @@
     <value>bölünmüşBirimKontrolü1</value>
   </data>
   <data name="miTheme.Caption" xml:space="preserve">
-    <value>Renk uyumu...</value>
+    <value>Renk uyumu...+X91</value>
   </data>
 </root>
