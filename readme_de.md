@@ -1,9 +1,9 @@
 Links
 -----
-[![EN](https://chansort.com/img/flag_en.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme.md)
-[![DE](https://chansort.com/img/flag_de.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md)
-[![PL](https://chansort.com/img/flag_pl.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_pl.md)
-[![TR](https://chansort.com/img/flag_tr.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_tr-TR.md) |
+[![EN](https://chansort.com/img/flag_en_16.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme.md)
+[![DE](https://chansort.com/img/flag_de_24.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_de.md)
+[![PL](https://chansort.com/img/flag_pl_16.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_pl.md)
+[![TR](https://chansort.com/img/flag_tr_16.png)](https://github.com/PredatH0r/ChanSort/blob/master/readme_tr-TR.md) |
 [Download](https://github.com/PredatH0r/ChanSort/releases) | 
 [Dokumentation](https://github.com/PredatH0r/ChanSort/wiki/Home-(de)) |
 [Forum](https://github.com/PredatH0r/ChanSort/issues) | 

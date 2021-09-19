@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		fileformats_de.md = fileformats_de.md
 		..\readme.md = ..\readme.md
 		..\readme_de.md = ..\readme_de.md
+		..\readme_pl.md = ..\readme_pl.md
 		..\readme_tr-TR.md = ..\readme_tr-TR.md
 	EndProjectSection
 EndProject
