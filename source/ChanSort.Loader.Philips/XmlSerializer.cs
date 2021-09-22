@@ -20,12 +20,19 @@ namespace ChanSort.Loader.Philips
     The .BIN file itself is compressed with some unknown cl_Zip compression / archive format and can't be edited with ChanSort.
     Deleting a channel is not possible by modifiying the .xml file. Omitting a channel only results in duplicate numbers with the TV still showing the missing channels at their old numbers.
     The channel nodes in the .XML must be kept in the original order with "oldpresetnumber" keeping the original value and only "presetnumber" being updated.
+    There are (at least) two versions of this format. One starts with <ChannelMap> as the root node, one has a <ECSM> root node wrapping <ChannelMap> and other elements.
 
     <Channel>
     <Setup oldpresetnumber="1" presetnumber="1" name="Das Erste" ></Setup>
     <Broadcast medium="dvbc" frequency="410000" system="west" serviceID="1" ONID="41985" TSID="1101" modulation="256" symbolrate="6901000" bandwidth="Unknown"></Broadcast>
     </Channel>
   
+    <Channel>
+    <Setup presetnumber="1" name="Das Erste HD" ></Setup>
+    <Broadcast medium="dvbs" satellitename="Astra1F-1L 19.2E
+    @" frequency="11494" system="west" serviceID="2604" ONID="1" TSID="1019" modulation="8-VSB" symbolrate="22000"></Broadcast>
+    </Channel>
+
   
     Newer channel lists from Philips contain multiple XML files with a different internal structure, which also varies based on the version number in the ChannelMap_xxx folder name.
     The official Philips Channel Editor 6.61.22 supports the binary file format 1.1 and 1.2 as well as the XML file format "ChannelMap_100" (but not 45, 105 nor 110).
@@ -238,7 +245,8 @@ namespace ChanSort.Loader.Philips
         fileData.doc = new XmlDocument();
         fileData.content = File.ReadAllBytes(fileName);
         fileData.textContent = Encoding.UTF8.GetString(fileData.content);
-        fileData.newline = fileData.textContent.Contains("\r\n") ? "\r\n" : "\n";
+        var idx = fileData.textContent.IndexOf('\n');
+        fileData.newline = idx < 0 ? "" : idx > 0 && fileData.textContent[idx-1] == '\r' ? "\r\n" : "\n"; // there are Repair\*.xml files with <ECSM> root that use \n normally but contain a \n\r\n near the end
 
         // indentation can be 0, 2 or 4 spaces
         var idx1 = fileData.textContent.IndexOf("<Channel>");
@@ -255,7 +263,13 @@ namespace ChanSort.Loader.Philips
           ValidationFlags = XmlSchemaValidationFlags.None,
           DtdProcessing = DtdProcessing.Ignore
         };
-        using (var reader = XmlReader.Create(new StringReader(fileData.textContent), settings))
+
+        fileData.formatVersion = Path.GetFileName(fileName).ToLowerInvariant().StartsWith("cm_") ? FormatVersion.RepairXml : FormatVersion.ChannelMapXml; // first guess, will be set based on file content later
+
+        var xml = fileData.textContent;
+        if (fileData.formatVersion == FormatVersion.RepairXml)
+          xml = xml.Replace("&", "&amp;"); // Philips exports broken XML with unescaped & instead of &amp;
+        using (var reader = XmlReader.Create(new StringReader(xml), settings))
         {
           fileData.doc.Load(reader);
         }
@@ -268,6 +282,8 @@ namespace ChanSort.Loader.Philips
       var root = fileData.doc.FirstChild;
       if (root is XmlDeclaration)
         root = root.NextSibling;
+      if (root?.LocalName == "ECSM")
+        root = root.FirstChild;
       if (fail || root == null || (root.LocalName != "ChannelMap" && root.LocalName != "FavoriteListMAP"))
         throw new FileLoadException("\"" + fileName + "\" is not a supported Philips XML file");
 
@@ -313,7 +329,7 @@ namespace ChanSort.Loader.Philips
 
       if (setupNode.HasAttribute("name"))
       {
-        file.formatVersion = 1;
+        file.formatVersion = FormatVersion.RepairXml;
         this.iniMapSection = ini.GetSection("Repair_xml");
         this.Features.FavoritesMode = FavoritesMode.None;
         foreach (var list in this.DataRoot.ChannelLists)
@@ -321,13 +337,14 @@ namespace ChanSort.Loader.Philips
           list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Favorites));
           list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Lock));
           list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Hidden));
-          list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ServiceTypeName));
+          list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ServiceType));
+          list.VisibleColumnFieldNames.Add("-" + nameof(ChannelInfo.ServiceTypeName));
           list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
         }
       }
       else if (setupNode.HasAttribute("ChannelName"))
       {
-        file.formatVersion = 2;
+        file.formatVersion = FormatVersion.ChannelMapXml;
         this.Features.FavoritesMode = FavoritesMode.Flags;
         this.Features.MaxFavoriteLists = 1;
 
@@ -417,9 +434,9 @@ namespace ChanSort.Loader.Philips
       var chan = new Channel(curList.SignalSource & SignalSource.MaskAdInput, rowId, uniqueId, setupNode);
       chan.OldProgramNr = -1;
       chan.IsDeleted = false;
-      if (file.formatVersion == 1)
+      if (file.formatVersion == FormatVersion.RepairXml)
         this.ParseRepairXml(data, chan);
-      else if (file.formatVersion == 2)
+      else if (file.formatVersion == FormatVersion.ChannelMapXml)
         this.ParseChannelMapXml(data, chan);
 
       if ((chan.SignalSource & SignalSource.MaskAdInput) == SignalSource.DvbT)
@@ -447,7 +464,10 @@ namespace ChanSort.Loader.Philips
       chan.OriginalNetworkId = ParseInt(data.TryGet("ONID"));
       chan.TransportStreamId = ParseInt(data.TryGet("TSID"));
       chan.ServiceType = ParseInt(data.TryGet("serviceType"));
-      chan.SymbolRate = ParseInt(data.TryGet("symbolrate")) / 1000;
+      chan.SymbolRate = ParseInt(data.TryGet("symbolrate"));
+      if (chan.SymbolRate > 100000) // DVB-C/T specify it in Sym/s, DVB-S in kSym/sec
+        chan.SymbolRate /= 1000;
+      chan.Satellite = data.TryGet("satellitename")?.TrimEnd('@', '\n', '\r'); // the satellitename can have a "\n@" at the end
     }
     #endregion
 
@@ -583,7 +603,7 @@ namespace ChanSort.Loader.Philips
 
       foreach (var file in this.fileDataList)
       {
-        if (reorderNodes && (file.formatVersion == 1 || Path.GetFileName(file.path).ToLowerInvariant().StartsWith("dvb")))
+        if (reorderNodes && (file.formatVersion == FormatVersion.RepairXml || Path.GetFileName(file.path).ToLowerInvariant().StartsWith("dvb")))
           this.ReorderNodes(file);
         var satelliteListcopy = this.iniMapSection?.GetString("satelliteListcopy") ?? "";
         var nodeList = file.doc.GetElementsByTagName("SatelliteListcopy");
@@ -765,7 +785,7 @@ namespace ChanSort.Loader.Philips
     #region ReorderNodes()
     private void ReorderNodes(FileData file)
     {
-      var progNrAttrib = file.formatVersion == 1 ? "presetnumber" : "ChannelNumber";
+      var progNrAttrib = file.formatVersion == FormatVersion.RepairXml ? "presetnumber" : "ChannelNumber";
 
       var nodes = file.doc.DocumentElement.GetElementsByTagName("Channel");
       var list = new List<XmlElement>();
@@ -810,6 +830,8 @@ namespace ChanSort.Loader.Philips
       // append trailing newline, if the original file had one
       if (file.textContent.EndsWith(file.newline) && !xml.EndsWith(file.newline))
         xml += file.newline;
+      if (file.formatVersion == FormatVersion.RepairXml)
+        xml = xml.Replace("&amp;", "&"); // Philips uses broken XML with unescaped & instead of &amp;
 
       var enc = new UTF8Encoding(false, false);
       File.WriteAllText(file.path, xml, enc);
@@ -824,6 +846,14 @@ namespace ChanSort.Loader.Philips
     #endregion
 
 
+    #region enum FormatVersion
+
+    private enum FormatVersion
+    {
+      RepairXml = 1, ChannelMapXml = 2
+    }
+    #endregion
+
     #region class FileData
     private class FileData
     {
@@ -833,7 +863,7 @@ namespace ChanSort.Loader.Philips
       public string textContent;
       public string newline;
       public string indent;
-      public int formatVersion;
+      public FormatVersion formatVersion;
     }
     #endregion
   }

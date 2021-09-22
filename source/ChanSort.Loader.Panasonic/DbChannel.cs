@@ -133,9 +133,6 @@ namespace ChanSort.Loader.Panasonic
     {
       byte[] buffer = new byte[100];
       int len = (int)r.GetBytes(field["sname"], 0, buffer, 0, buffer.Length);
-      int end = Array.IndexOf<byte>(buffer, 0, 0, len);
-      if (end >= 0)
-        len = end;
       this.RawName = new byte[len];
       Array.Copy(buffer, 0, this.RawName, 0, len);
       this.ChangeEncoding(encoding);      
@@ -152,22 +149,25 @@ namespace ChanSort.Loader.Panasonic
       // it can be code page encoded without any clue to what the code page is
       // it can have DVB-control characters inside an UTF-8 stream
 
-      if (RawName.Length == 0)
+      int len = Array.IndexOf<byte>(this.RawName, 0, 0, this.RawName.Length);
+      if (len < 0)
+        len = this.RawName.Length;
+      if (len == 0)
         return;
 
-      int startOffset;
-      int bytesPerChar;
-      if (!GetRecommendedEncoding(ref encoding, out startOffset, out bytesPerChar)) 
+      if (!GetRecommendedEncoding(ref encoding, out var startOffset, out var bytesPerChar)) 
         return;
 
       // single byte code pages might have UTF-8 code mixed in, so we have to parse it manually
       StringBuilder sb = new StringBuilder();
       this.NonAscii = false;
       this.ValidUtf8 = true;
-      for (int i = startOffset; i < this.RawName.Length; i+=bytesPerChar)
+      for (int i = startOffset; i < len; i+=bytesPerChar)
       {
         byte c = this.RawName[i];
-        byte c2 = i + 1 < this.RawName.Length ? this.RawName[i + 1] : (byte)0;
+        byte c2 = i + 1 < len ? this.RawName[i + 1] : (byte)0;
+        byte c3 = i + 2 < len ? this.RawName[i + 2] : (byte)0;
+        byte c4 = i + 4 < len ? this.RawName[i + 3] : (byte)0;
         if (c >= 0x80)
           NonAscii = true;
 
@@ -178,10 +178,28 @@ namespace ChanSort.Loader.Panasonic
           ValidUtf8 = false;
           sb.Append((char) c);
         }
-        else if (bytesPerChar == 1 && c >= 0xC0 && c <= 0xDF && c2 >= 0x80 && c2 <= 0xBF) // 2 byte UTF-8
+        else if (bytesPerChar == 1)
         {
-          sb.Append((char)(((c & 0x1F) << 6) | (c2 & 0x3F)));
-          ++i;
+          if (c >= 0xC0 && c <= 0xDF && c2 >= 0x80 && c2 <= 0xBF) // 2 byte UTF-8
+          {
+            sb.Append((char)(((c & 0x1F) << 6) | (c2 & 0x3F)));
+            ++i;
+          }
+          else if (c >= 0xE0 && c <= 0xEF && (c2 & 0xC0) == 0x80 && (c3 & 0xC0) == 0x80) // 3 byte UTF-8
+          {
+            sb.Append((char)(((c & 0x0F) << 12) | ((c2 & 0x3F) << 6) | (c3 & 0x3F)));
+            i += 2;
+          }
+          else if (c >= 0xF0 && c <= 0xF7 && (c2 & 0xC0) == 0x80 && (c3 & 0xC0) == 0x80 && (c4 & 0xC0) == 0x80) // 4 byte UTF-8
+          {
+            sb.Append((char)(((c & 0x07) << 18) | ((c2 & 0x3F) << 12) | ((c3 & 0x3F) << 6) | (c4 & 0x3F)));
+            i += 3;
+          }
+          else
+          {
+            ValidUtf8 = false;
+            sb.Append(encoding.GetString(this.RawName, i, bytesPerChar));
+          }
         }
         else
         {
@@ -190,8 +208,7 @@ namespace ChanSort.Loader.Panasonic
         }
       }
 
-      string longName, shortName;
-      this.GetChannelNames(sb.ToString(), out longName, out shortName);
+      this.GetChannelNames(sb.ToString(), out var longName, out var shortName);
       this.Name = longName;
       this.ShortName = shortName;
     }

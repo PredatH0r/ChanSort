@@ -50,8 +50,8 @@ namespace ChanSort.Loader.Philips
     #region ctor()
     public DbSerializer(string inputFile) : base(inputFile)
     {
-      this.Features.MaxFavoriteLists = 1;
-      this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
+      this.Features.MaxFavoriteLists = 0; //1;
+      this.Features.FavoritesMode = FavoritesMode.None; // FavoritesMode.OrderedPerSource; // doesn't work yet, must be hidden somewhere inside the FLASH files too
       this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanHaveGaps = true; // the mgr_chan_s_pkg can have gaps
 

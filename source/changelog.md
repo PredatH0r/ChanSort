@@ -1,6 +1,14 @@
 ChanSort Change Log 
 ===================
 
+2021-09-22
+- Philips: added support for CM\_*.xml variant that uses a <ECSM> root element around the <ChannelMap>
+- Philips: ability to read/write broken CM\_*.xml files that contain channel names with an unescaped & character
+- Philips: enabled write mode for Repair\\FLASH\_\*/\*.db file format (one variant was confirmed to work)
+  Favorite lists for this format are disabled for now (TV ignored them).
+- Panasonic: importing a modified svl.bin file caused the TV to use case-sensitive sorting when using the 
+  function to list the names sorted alphabetically. This is now fixed.
+   
 2021-09-19
 - Philips: added support for ChannelMap_115 format
 - Philips: ChannelMap formats 100-115 did not always fill "Source" and "Polarity" columns correctly

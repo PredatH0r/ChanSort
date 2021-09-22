@@ -20,7 +20,7 @@ namespace ChanSort.Loader.Panasonic
 
     private string workFile;
     private CypherMode cypherMode;
-    private byte[] fileHeader = new byte[0];
+    private byte[] fileHeader = Array.Empty<byte>();
     private int dbSizeOffset;
     private bool littleEndianByteOrder;
     private string charEncoding;
@@ -329,11 +329,14 @@ order by s.ntype,major_channel
     #region WriteChannels()
     private void WriteChannels(SqliteCommand cmd, ChannelList channelList)
     {
+      if (channelList.Channels.Count == 0)
+        return;
+
       cmd.CommandText = "update SVL set major_channel=@progNr, sname=@sname, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
       cmd.Parameters.Clear();
       cmd.Parameters.Add("@rowid", SqliteType.Integer);
       cmd.Parameters.Add("@progNr", SqliteType.Integer);
-      cmd.Parameters.Add("@sname", SqliteType.Blob);
+      cmd.Parameters.Add("@sname", this.implicitUtf8 ? SqliteType.Text : SqliteType.Blob); // must use "TEXT" when possible to preserve collation / case-insensitive sorting for the TV
       cmd.Parameters.Add("@fav1", SqliteType.Integer);
       cmd.Parameters.Add("@fav2", SqliteType.Integer);
       cmd.Parameters.Add("@fav3", SqliteType.Integer);
@@ -351,7 +354,7 @@ order by s.ntype,major_channel
         channel.UpdateRawData(this.explicitUtf8, this.implicitUtf8);
         cmd.Parameters["@rowid"].Value = channel.RecordIndex;
         cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
-        cmd.Parameters["@sname"].Value = channel.RawName;
+        cmd.Parameters["@sname"].Value = this.implicitUtf8 ? channel.Name : channel.RawName; // must use a string when possible to preserve collation / case-insensitive sorting for the TV
         for (int fav = 0; fav < 4; fav++)
           cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.GetPosition(fav+1));
         cmd.Parameters["@lock"].Value = channel.Lock;

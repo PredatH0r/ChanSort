@@ -217,3 +217,36 @@ public struct Philips_FLASH_DTVINFO_S_PKG
 	BYTE filler[0x10000-current_offset];
     s_channelBlock channelBlocks[*];
 };
+
+#pragma byte_order(BigEndian)		
+
+public struct Philips_FLASH_SDTSECTS_S_PKG
+{
+	BYTE u1[4];
+	BYTE allocationBitmap[64];
+	struct
+	{
+		var off0 = current_offset;
+		DWORD ffff;
+		BYTE u1[3];
+		WORD tsid;
+		BYTE u2[6];
+		struct Channel
+		{
+			WORD serviceId;
+			BYTE u1[6];
+			BYTE lenProviderName;
+			char provider[lenProviderName];
+			BYTE lenChannelName;
+			char channelName[lenChannelName];		
+		};		
+		Channel chan0;
+		BYTE u3[51];		
+		Channel chan1;
+		BYTE u4[60];
+		Channel chan2;
+		BYTE u5[18];
+		Channel chans[16];
+		BYTE filler[0x44C - current_offset];
+	} transponder[*];
+};
