@@ -56,6 +56,7 @@ namespace ChanSort.Ui
     private SizeF absScaleFactor = new (1,1);
     private bool splitView = true;
     private int ignoreEvents;
+    private bool adjustWindowLocationOnScale = true;
 
     #region ctor()
 
@@ -118,8 +119,13 @@ namespace ChanSort.Ui
       {
         if (col.Visible)
           defaultColumns.Add(col.FieldName);
+        col.Caption = col.Caption.Replace("\\n", "\n");
       }
       ChannelList.DefaultVisibleColumns = defaultColumns;
+
+      foreach (GridColumn col in this.gviewLeft.Columns)
+        col.Caption = col.Caption.Replace("\\n", "\n");
+
       this.UpdateMenu(true); // disable menu items that depend on an open file
     }
     #endregion
@@ -1434,6 +1440,7 @@ namespace ChanSort.Ui
       this.miAutoHideColumns.Down = Config.Default.AutoHideColumns;
       this.miSplitView.Down = Config.Default.SplitView;
       this.miLoadListAfterStart.Down = Config.Default.LoadLastListAfterStart;
+      this.adjustWindowLocationOnScale = false;
     }
     #endregion
 
@@ -2143,11 +2150,15 @@ namespace ChanSort.Ui
 
     protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
     {
+      var oldSize = this.ClientSize;
       this.absScaleFactor = absScaleFactor.Scale(factor);
       this.SuspendRedraw();
       base.ScaleControl(factor, specified);
       this.bar1.Visible = false;
       GlobalImageCollection.Scale(absScaleFactor.Height, false);
+      var newSize = this.ClientSize;
+      if (this.adjustWindowLocationOnScale) // adjust WindowStartPosition "CenterScreen" to new window size
+        this.Location = new Point(this.Left - (newSize.Width - oldSize.Width) / 2, this.Top - (newSize.Height - oldSize.Height) / 2);
       this.bar1.Visible = true;
       this.ResumeRedraw();
     }
@@ -3736,6 +3747,5 @@ namespace ChanSort.Ui
     }
 
     #endregion
-
   }
 }

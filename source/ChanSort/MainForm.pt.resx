@@ -66,7 +66,7 @@
   <assembly alias="DevExpress.XtraEditors.v21.1" name="DevExpress.XtraEditors.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <assembly alias="DevExpress.Utils.v21.1" name="DevExpress.Utils.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="colOutSlot.Caption" xml:space="preserve">
-    <value>Novo Pos</value>
+    <value>Novo\nPos</value>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>Posição de canal novo</value>
@@ -78,13 +78,10 @@
     <value>Favoritos</value>
   </data>
   <data name="colOutLock.Caption" xml:space="preserve">
-    <value>Blo- queado</value>
-  </data>
-  <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Parental lock</value>
+    <value>Blo-\nqueado</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
-    <value>Sal- tar</value>
+    <value>Sal-\ntar</value>
   </data>
   <data name="miRenameChannel.Caption" xml:space="preserve">
     <value>Rebatizar canal</value>
@@ -132,49 +129,49 @@
     <value>Operador</value>
   </data>
   <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Nome da rede</value>
+    <value>Nome\nda rede</value>
   </data>
   <data name="colPolarity.Caption" xml:space="preserve">
     <value>Polaridade</value>
   </data>
   <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Taxa de- símbolo</value>
+    <value>Taxa de-\nsímbolo</value>
   </data>
   <data name="colSatellite.Caption" xml:space="preserve">
     <value>Sátelite</value>
   </data>
   <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Tipo serviço</value>
+    <value>Tipo\nserviço</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>Tipo serviço ID</value>
+    <value>Tipo\nserviço ID</value>
   </data>
   <data name="colServiceId.Caption" xml:space="preserve">
-    <value>Sserviço ID</value>
+    <value>Serviço\nID</value>
   </data>
   <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Frequência (MHz)</value>
+    <value>Frequência\n(MHz)</value>
   </data>
   <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
     <value>Número de canal ou transponder</value>
   </data>
   <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Canal/ Transp.</value>
+    <value>Canal/\nTransp</value>
   </data>
   <data name="colEncrypted.ToolTip" xml:space="preserve">
     <value>Codificado</value>
   </data>
   <data name="colEncrypted.Caption" xml:space="preserve">
-    <value>Cod- ificado</value>
+    <value>Cod-\nificado</value>
   </data>
   <data name="colHidden.Caption" xml:space="preserve">
-    <value>Esc- onder</value>
+    <value>Esc-\nonder</value>
   </data>
   <data name="colSkip.Caption" xml:space="preserve">
-    <value>Sal- tar</value>
+    <value>Sal-\ntar</value>
   </data>
   <data name="colLock.Caption" xml:space="preserve">
-    <value>Blo- queado</value>
+    <value>Blo-\nqueado</value>
   </data>
   <data name="colFavorites.Caption" xml:space="preserve">
     <value>Favoritos</value>
@@ -189,13 +186,13 @@
     <value>Posição de canal novo</value>
   </data>
   <data name="colSlotNew.Caption" xml:space="preserve">
-    <value>Novo Pos</value>
+    <value>Novo\nPos</value>
   </data>
   <data name="colSlotOld.ToolTip" xml:space="preserve">
     <value>Posição de canal anterior Programmplatz</value>
   </data>
   <data name="colSlotOld.Caption" xml:space="preserve">
-    <value>Valor Pr# anterior</value>
+    <value>Valor Pr#\nanterior</value>
   </data>
   <data name="grpOutputList.Text" xml:space="preserve">
     <value>Canais ordenados</value>
@@ -315,7 +312,7 @@
     <value>F3: Filtro | F4: Lista | -: para cima | +: para baixo | DEL: remover</value>
   </data>
   <data name="colOutHide.Caption" xml:space="preserve">
-    <value>Esc- onder</value>
+    <value>Esc-\nonder</value>
   </data>
   <data name="mnuHelp.Caption" xml:space="preserve">
     <value>&amp;Ajuda</value>
@@ -327,7 +324,7 @@
     <value>Para cima</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Tipo serviço</value>
+    <value>Tipo\nserviço</value>
   </data>
   <assembly alias="DevExpress.XtraBars.v21.1" name="DevExpress.XtraBars.v21.1, Version=21.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v21.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -372,5 +369,8 @@
   </data>
   <data name="miTheme.Caption" xml:space="preserve">
     <value>Esquema de cores...</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio\nPID</value>
   </data>
 </root>

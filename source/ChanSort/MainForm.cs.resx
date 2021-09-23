@@ -234,11 +234,8 @@
   <data name="cbCloseGap.ToolTip" xml:space="preserve">
     <value>Po aktivaci budou všechny kanály za aktuálním kanálem automaticky přečíslovány</value>
   </data>
-  <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Audio PID</value>
-  </data>
   <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Chan/ Transp</value>
+    <value>Chan/\nTransp</value>
   </data>
   <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
     <value>Číslo kanálu nebo transpondéru</value>
@@ -253,7 +250,7 @@
     <value>Oblíbené</value>
   </data>
   <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Frekvence (MHz)</value>
+    <value>Frekvence\n(MHz)</value>
   </data>
   <data name="colHidden.Caption" xml:space="preserve">
     <value>Skrýt</value>
@@ -274,13 +271,13 @@
     <value>Název kanálu</value>
   </data>
   <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>Síť (ONID)</value>
+    <value>Síť \n(ONID)</value>
   </data>
   <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Název sítě</value>
+    <value>Název\nsítě</value>
   </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
-    <value>Provozovatel sítě</value>
+    <value>Provozovatel\nsítě</value>
   </data>
   <data name="colOutFav.Caption" xml:space="preserve">
     <value>Oblíbené</value>
@@ -292,19 +289,19 @@
     <value>Uzamknout</value>
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Rodičovský zámek</value>
+    <value>Rodičovský\nzámek</value>
   </data>
   <data name="colOutName.Caption" xml:space="preserve">
     <value>Název kanálu</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Typ služby</value>
+    <value>Typ\nslužby</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
     <value>Přeskočit</value>
   </data>
   <data name="colOutSlot.Caption" xml:space="preserve">
-    <value>Nové č. pr.</value>
+    <value>Nové\nč. pr.</value>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>Nové číslo programu</value>
@@ -319,37 +316,37 @@
     <value>Satelit</value>
   </data>
   <data name="colServiceId.Caption" xml:space="preserve">
-    <value>ID služby</value>
+    <value>ID\nslužby</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>ID typu služby</value>
+    <value>ID typu\nslužby</value>
   </data>
   <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Typ služby</value>
+    <value>Typ\nslužby</value>
   </data>
   <data name="colShortName.Caption" xml:space="preserve">
-    <value>Zkrácený název</value>
+    <value>Zkrácený\nnázev</value>
   </data>
   <data name="colSignalSource.Caption" xml:space="preserve">
-    <value>Zdroj signálu</value>
+    <value>Zdroj\nsignálu</value>
   </data>
   <data name="colSkip.Caption" xml:space="preserve">
     <value>Přeskočit</value>
   </data>
   <data name="colSlotNew.Caption" xml:space="preserve">
-    <value>Nové č. pr.</value>
+    <value>Nové\nč. pr.</value>
   </data>
   <data name="colSlotNew.ToolTip" xml:space="preserve">
     <value>Nové číslo programu</value>
   </data>
   <data name="colSlotOld.Caption" xml:space="preserve">
-    <value>Staré č. pr.</value>
+    <value>Staré\nč. pr.</value>
   </data>
   <data name="colSlotOld.ToolTip" xml:space="preserve">
     <value>Staré číslo programu</value>
   </data>
   <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Modulační rychlost</value>
+    <value>Modulační\nrychlost</value>
   </data>
   <data name="colTransportStreamId.Caption" xml:space="preserve">
     <value>TS ID</value>
@@ -364,7 +361,7 @@
     <value>UID</value>
   </data>
   <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>Video PID</value>
+    <value>Video\nPID</value>
   </data>
   <data name="grpInputList.Text" xml:space="preserve">
     <value>Původní kanály</value>
@@ -608,5 +605,8 @@
   </data>
   <data name="miTheme.Caption" xml:space="preserve">
     <value>Barevné schéma...</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio\nPID</value>
   </data>
 </root>

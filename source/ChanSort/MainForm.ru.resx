@@ -133,7 +133,7 @@
     <value>Заблокировать</value>
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Родительский контроль</value>
+    <value>Родительский\nконтроль</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
     <value>Пропускать</value>
@@ -199,55 +199,55 @@
     <value>F5: Фильтр | F6: Список | Enter: Добавить</value>
   </data>
   <data name="colSignalSource.Caption" xml:space="preserve">
-    <value>Источник сигнала</value>
+    <value>Источник\nсигнала</value>
   </data>
   <data name="colLogicalIndex.Caption" xml:space="preserve">
     <value>Order</value>
   </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
-    <value>Оператор сети</value>
+    <value>Оператор\nсети</value>
   </data>
   <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Сетевое имя</value>
+    <value>Сетевое\nимя</value>
   </data>
   <data name="colPolarity.Caption" xml:space="preserve">
     <value>Полярность</value>
   </data>
   <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Скорость передачи</value>
+    <value>Скорость\nпередачи</value>
   </data>
   <data name="colTransportStreamId.ToolTip" xml:space="preserve">
     <value>ID транспортного потока</value>
   </data>
   <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>Сеть (ONID)</value>
+    <value>Сеть\n(ONID)</value>
   </data>
   <data name="colSatellite.Caption" xml:space="preserve">
     <value>Спутник</value>
   </data>
   <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Тип сервиса</value>
+    <value>Тип\nсервиса</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>ID Тип сервиса</value>
+    <value>ID Тип\nсервиса</value>
   </data>
   <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Аудио PID</value>
+    <value>Аудио\nPID</value>
   </data>
   <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>Видео PID</value>
+    <value>Видео\nPID</value>
   </data>
   <data name="colServiceId.Caption" xml:space="preserve">
-    <value>ID сервиса</value>
+    <value>ID\nсервиса</value>
   </data>
   <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Частота (MHz)</value>
+    <value>Частота\n(MHz)</value>
   </data>
   <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
     <value>Номер канала или транспондер</value>
   </data>
   <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Канал/Транспондер</value>
+    <value>Канал/\nТранспондер</value>
   </data>
   <data name="colEncrypted.ToolTip" xml:space="preserve">
     <value>Зашифрованный</value>
@@ -268,7 +268,7 @@
     <value>Избранное</value>
   </data>
   <data name="colShortName.Caption" xml:space="preserve">
-    <value>Краткое имя</value>
+    <value>Краткое\nимя</value>
   </data>
   <data name="colName.Caption" xml:space="preserve">
     <value>Название канала</value>
@@ -463,7 +463,7 @@
     <value>Переместить вверх</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Тип сервиса</value>
+    <value>Тип\nсервиса</value>
   </data>
   <data name="colIndex1.Caption" xml:space="preserve">
     <value>Индекс пр.</value>

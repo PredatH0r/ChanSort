@@ -49,16 +49,17 @@ namespace ChanSort.Ui
 
     private void AddAction(string text, object result, Image image = null, bool isDefault = false)
     {
-      int width = this.ClientSize.Width-20;
+      int scaled20 = this.ScaleHelper.ScaleHorizontal(20);
+      int width = this.ClientSize.Width - scaled20;
       var button = new SimpleButton();
       button.Text = text;
       button.Appearance.TextOptions.HAlignment = HorzAlignment.Near;
       button.Image = image;
       button.Width = width;
-      button.Left = 10;
-      button.Height = ButtonHeight;
+      button.Left = scaled20 / 2;
+      button.Height = this.ScaleHelper.ScaleVertical(ButtonHeight);
       button.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
-      button.Padding = new Padding(20,button.Padding.Top, 20, button.Padding.Bottom);
+      button.Padding = new Padding(scaled20, button.Padding.Top, scaled20, button.Padding.Bottom);
       button.Tag = result;
       button.Click += button_Click;
       
@@ -93,17 +94,18 @@ namespace ChanSort.Ui
     protected override void OnCreateControl()
     {
       base.OnCreateControl();
-      int top = this.lblMessage.Bottom + 20;
+      int top = this.lblMessage.Bottom + this.ScaleHelper.ScaleVertical(20);
+      var spacing = this.ScaleHelper.ScaleVertical(ButtonSpacing);
       foreach (Control c in this.Controls)
       {
         var button = c as SimpleButton;
         if (button != null)
         {
           button.Top = top;
-          top += button.Height + ButtonSpacing;
+          top += button.Height + spacing;
         }
       }
-      this.ClientSize = new Size(this.ClientSize.Width, top + 10);
+      this.ClientSize = new Size(this.ClientSize.Width, top + this.ScaleHelper.ScaleVertical(10));
       this.ActiveControl = this.lblMessage;
     }
     #endregion

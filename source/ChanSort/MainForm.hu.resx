@@ -121,7 +121,7 @@
     <value>Pr. index</value>
   </data>
   <data name="colOutSlot.Caption" xml:space="preserve">
-    <value>Új poz.</value>
+    <value>Új\npoz.</value>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>Új programszám</value>
@@ -136,7 +136,7 @@
     <value>Zár</value>
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Szülői zár</value>
+    <value>Szülői\nzár</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
     <value>Kihagy</value>
@@ -148,7 +148,7 @@
     <value>Törölt</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Szolgáltatás típus</value>
+    <value>Szolgáltatás\ntípus</value>
   </data>
   <data name="colOutSource.Caption" xml:space="preserve">
     <value>Forrás</value>
@@ -499,13 +499,13 @@
     <value>Pr. index</value>
   </data>
   <data name="colSlotOld.Caption" xml:space="preserve">
-    <value>Régi poz.</value>
+    <value>Régi\npoz.</value>
   </data>
   <data name="colSlotOld.ToolTip" xml:space="preserve">
     <value>Régi pozíció</value>
   </data>
   <data name="colSlotNew.Caption" xml:space="preserve">
-    <value>Új poz.</value>
+    <value>Új\npoz.</value>
   </data>
   <data name="colSlotNew.ToolTip" xml:space="preserve">
     <value>Új pozíció</value>
@@ -520,7 +520,7 @@
     <value>Csatorna név</value>
   </data>
   <data name="colShortName.Caption" xml:space="preserve">
-    <value>Rövid név</value>
+    <value>Rövid\nnév</value>
   </data>
   <data name="colFavorites.Caption" xml:space="preserve">
     <value>Kedvencek</value>
@@ -544,19 +544,19 @@
     <value>Kódolt</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>Szolgáltatás típus azonosító</value>
+    <value>Szolgáltatás\ntípus azonosító</value>
   </data>
   <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Szolgáltatás típus</value>
+    <value>Szolgáltatás\ntípus</value>
   </data>
   <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Frekvencia (MHz)</value>
+    <value>Frekvencia\n(MHz)</value>
   </data>
   <data name="colPolarity.Caption" xml:space="preserve">
     <value>Polaritás</value>
   </data>
   <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Csat/Transzp</value>
+    <value>Csat/\nTranszp</value>
   </data>
   <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
     <value>Csatorna vagy transzponder száma</value>
@@ -565,7 +565,7 @@
     <value>Műhold</value>
   </data>
   <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>Hálózat (ONID)</value>
+    <value>Hálózat\n(ONID)</value>
   </data>
   <data name="colTransportStreamId.Caption" xml:space="preserve">
     <value>TS ID</value>
@@ -574,28 +574,22 @@
     <value>Transport Stream ID</value>
   </data>
   <data name="colServiceId.Caption" xml:space="preserve">
-    <value>Service ID</value>
-  </data>
-  <data name="colPcrPid.Caption" xml:space="preserve">
-    <value>PCR PID</value>
+    <value>Service\nID</value>
   </data>
   <data name="colPcrPid.ToolTip" xml:space="preserve">
     <value>Program Clock Reference Packet-ID</value>
   </data>
   <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>Video PID</value>
-  </data>
-  <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Audio PID</value>
+    <value>Video\nPID</value>
   </data>
   <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Symbol rate</value>
+    <value>Symbol\nrate</value>
   </data>
   <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Hálózat név</value>
+    <value>Hálózat\nnév</value>
   </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
-    <value>Hálózat operátor</value>
+    <value>Hálózat\noperátor</value>
   </data>
   <data name="colProvider.Caption" xml:space="preserve">
     <value>Szolgáltató</value>
@@ -680,5 +674,8 @@
   </data>
   <data name="btnSearch.ToolTip" xml:space="preserve">
     <value>Csatorna keresése név alapján</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio\nPID</value>
   </data>
 </root>

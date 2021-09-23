@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2021-09-23
+- improved per-monitor DPI scaling (i.e. moving the window from a Full-HD to a 4K display with 100% and 200% scale)
+- improved "column auto width" (right clicking a column header) by forcing line breaks in the column captions
+- Philips: improved and re-enabled favorite list editing for FLASH\_\*/\*.db lists
+- Panasonic: fixed display of symbol rate and satellite
+
 2021-09-22
 - Philips: added support for CM\_*.xml variant that uses a <ECSM> root element around the <ChannelMap>
 - Philips: ability to read/write broken CM\_*.xml files that contain channel names with an unescaped & character

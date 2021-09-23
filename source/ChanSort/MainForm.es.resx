@@ -121,10 +121,10 @@
     <value>Pr. index</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Tipo de servicio</value>
+    <value>Tipo de\nservicio</value>
   </data>
   <data name="colOutSlot.Caption" xml:space="preserve">
-    <value>Nueva posición</value>
+    <value>Nueva\nposición</value>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>Nueva posición del canal</value>
@@ -139,7 +139,7 @@
     <value>Bloquear</value>
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Bloqueo parental</value>
+    <value>Bloqueo\nparental</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
     <value>Saltar</value>
@@ -475,13 +475,13 @@
     <value>Pr. Index</value>
   </data>
   <data name="colSlotOld.Caption" xml:space="preserve">
-    <value>Pos Ant</value>
+    <value>Pos\nAnt</value>
   </data>
   <data name="colSlotOld.ToolTip" xml:space="preserve">
     <value>Posición anterior</value>
   </data>
   <data name="colSlotNew.Caption" xml:space="preserve">
-    <value>Pos Act</value>
+    <value>Pos\nAct</value>
   </data>
   <data name="colSlotNew.ToolTip" xml:space="preserve">
     <value>Posición actual</value>
@@ -496,7 +496,7 @@
     <value>Nombre de canal</value>
   </data>
   <data name="colShortName.Caption" xml:space="preserve">
-    <value>Nombre corto</value>
+    <value>Nombre\ncorto</value>
   </data>
   <data name="colFavorites.Caption" xml:space="preserve">
     <value>Favoritos</value>
@@ -520,16 +520,16 @@
     <value>Encriptado</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>ID tipo servicio</value>
+    <value>ID tipo\nservicio</value>
   </data>
   <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Tipo servicio</value>
+    <value>Tipo\nservicio</value>
   </data>
   <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Frecuencia (MHz)</value>
+    <value>Frecuencia\n(MHz)</value>
   </data>
   <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Canal/Transp</value>
+    <value>Canal/\nTransp</value>
   </data>
   <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
     <value>Número de canal o transpondedor</value>
@@ -538,7 +538,7 @@
     <value>Satélite</value>
   </data>
   <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>RED (ONID)</value>
+    <value>RED\n(ONID)</value>
   </data>
   <data name="colTransportStreamId.Caption" xml:space="preserve">
     <value>ID TS</value>
@@ -547,31 +547,28 @@
     <value>ID del flujo de transporte TS</value>
   </data>
   <data name="colServiceId.Caption" xml:space="preserve">
-    <value>ID servicio</value>
-  </data>
-  <data name="colPcrPid.Caption" xml:space="preserve">
-    <value>PCR PID</value>
+    <value>ID\nservicio</value>
   </data>
   <data name="colPcrPid.ToolTip" xml:space="preserve">
     <value>Program Clock Reference Packet-ID</value>
   </data>
   <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>PID vídeo</value>
+    <value>PID\nvídeo</value>
   </data>
   <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>PID audio</value>
+    <value>PID\naudio</value>
   </data>
   <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Symbol rate</value>
+    <value>Symbol\nrate</value>
   </data>
   <data name="colPolarity.Caption" xml:space="preserve">
     <value>Polaridad</value>
   </data>
   <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Nombre red</value>
+    <value>Nombre\nred</value>
   </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
-    <value>Operador red</value>
+    <value>Operador\nred</value>
   </data>
   <data name="colProvider.Caption" xml:space="preserve">
     <value>Proveedor</value>
@@ -583,7 +580,7 @@
     <value>Orden</value>
   </data>
   <data name="colSignalSource.Caption" xml:space="preserve">
-    <value>Origen señal</value>
+    <value>Origen\nseñal</value>
   </data>
   <data name="lblHotkeyRight.Text" xml:space="preserve">
     <value>F5: Filtro | F6: Lista | Enter: añadir</value>

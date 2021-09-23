@@ -269,40 +269,28 @@
       // 
       // splitContainerControl1.Panel1
       // 
-      resources.ApplyResources(this.splitContainerControl1.Panel1, "splitContainerControl1.Panel1");
       this.splitContainerControl1.Panel1.Controls.Add(this.grpOutputList);
+      resources.ApplyResources(this.splitContainerControl1.Panel1, "splitContainerControl1.Panel1");
       // 
       // splitContainerControl1.Panel2
       // 
-      resources.ApplyResources(this.splitContainerControl1.Panel2, "splitContainerControl1.Panel2");
       this.splitContainerControl1.Panel2.Controls.Add(this.grpInputList);
+      resources.ApplyResources(this.splitContainerControl1.Panel2, "splitContainerControl1.Panel2");
       this.splitContainerControl1.SplitterPosition = 503;
       // 
       // grpOutputList
       // 
-      resources.ApplyResources(this.grpOutputList, "grpOutputList");
       this.grpOutputList.Controls.Add(this.gridLeft);
       this.grpOutputList.Controls.Add(this.pnlEditControls);
+      resources.ApplyResources(this.grpOutputList, "grpOutputList");
       this.grpOutputList.Name = "grpOutputList";
       this.grpOutputList.Enter += new System.EventHandler(this.grpOutputList_Enter);
       // 
       // gridLeft
       // 
-      resources.ApplyResources(this.gridLeft, "gridLeft");
       this.gridLeft.AllowDrop = true;
       this.gridLeft.DataSource = this.dsChannels;
-      this.gridLeft.EmbeddedNavigator.AccessibleDescription = resources.GetString("gridLeft.EmbeddedNavigator.AccessibleDescription");
-      this.gridLeft.EmbeddedNavigator.AccessibleName = resources.GetString("gridLeft.EmbeddedNavigator.AccessibleName");
-      this.gridLeft.EmbeddedNavigator.AllowHtmlTextInToolTip = ((DevExpress.Utils.DefaultBoolean)(resources.GetObject("gridLeft.EmbeddedNavigator.AllowHtmlTextInToolTip")));
-      this.gridLeft.EmbeddedNavigator.Anchor = ((System.Windows.Forms.AnchorStyles)(resources.GetObject("gridLeft.EmbeddedNavigator.Anchor")));
-      this.gridLeft.EmbeddedNavigator.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("gridLeft.EmbeddedNavigator.BackgroundImage")));
-      this.gridLeft.EmbeddedNavigator.BackgroundImageLayout = ((System.Windows.Forms.ImageLayout)(resources.GetObject("gridLeft.EmbeddedNavigator.BackgroundImageLayout")));
-      this.gridLeft.EmbeddedNavigator.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("gridLeft.EmbeddedNavigator.ImeMode")));
-      this.gridLeft.EmbeddedNavigator.MaximumSize = ((System.Drawing.Size)(resources.GetObject("gridLeft.EmbeddedNavigator.MaximumSize")));
-      this.gridLeft.EmbeddedNavigator.TextLocation = ((DevExpress.XtraEditors.NavigatorButtonsTextLocation)(resources.GetObject("gridLeft.EmbeddedNavigator.TextLocation")));
-      this.gridLeft.EmbeddedNavigator.ToolTip = resources.GetString("gridLeft.EmbeddedNavigator.ToolTip");
-      this.gridLeft.EmbeddedNavigator.ToolTipIconType = ((DevExpress.Utils.ToolTipIconType)(resources.GetObject("gridLeft.EmbeddedNavigator.ToolTipIconType")));
-      this.gridLeft.EmbeddedNavigator.ToolTipTitle = resources.GetString("gridLeft.EmbeddedNavigator.ToolTipTitle");
+      resources.ApplyResources(this.gridLeft, "gridLeft");
       this.gridLeft.MainView = this.gviewLeft;
       this.gridLeft.Name = "gridLeft";
       this.gridLeft.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -324,7 +312,6 @@
       this.gviewLeft.Appearance.FocusedRow.Options.UseFont = true;
       this.gviewLeft.Appearance.HeaderPanel.Options.UseTextOptions = true;
       this.gviewLeft.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
-      resources.ApplyResources(this.gviewLeft, "gviewLeft");
       this.gviewLeft.ColumnPanelRowHeight = 35;
       this.gviewLeft.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIndex1,
@@ -477,7 +464,6 @@
       // 
       // pnlEditControls
       // 
-      resources.ApplyResources(this.pnlEditControls, "pnlEditControls");
       this.pnlEditControls.Controls.Add(this.btnSearchLeft);
       this.pnlEditControls.Controls.Add(this.btnToggleFavH);
       this.pnlEditControls.Controls.Add(this.btnToggleFavG);
@@ -493,6 +479,7 @@
       this.pnlEditControls.Controls.Add(this.btnDown);
       this.pnlEditControls.Controls.Add(this.btnUp);
       this.pnlEditControls.Controls.Add(this.btnRemoveLeft);
+      resources.ApplyResources(this.pnlEditControls, "pnlEditControls");
       this.pnlEditControls.Name = "pnlEditControls";
       // 
       // btnSearchLeft
@@ -502,6 +489,7 @@
       this.btnSearchLeft.Appearance.Options.UseFont = true;
       this.btnSearchLeft.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnSearchLeft.ImageOptions.ImageIndex")));
       this.btnSearchLeft.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnSearchLeft.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
       this.btnSearchLeft.Name = "btnSearchLeft";
       this.btnSearchLeft.Click += new System.EventHandler(this.btnSearch_Click);
       // 
@@ -529,9 +517,10 @@
       // 
       // btnToggleLock
       // 
-      resources.ApplyResources(this.btnToggleLock, "btnToggleLock");
       this.btnToggleLock.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnToggleLock.ImageOptions.ImageIndex")));
       this.btnToggleLock.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnToggleLock.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+      resources.ApplyResources(this.btnToggleLock, "btnToggleLock");
       this.btnToggleLock.Name = "btnToggleLock";
       this.btnToggleLock.Click += new System.EventHandler(this.btnToggleLock_Click);
       // 
@@ -583,61 +572,53 @@
       // 
       // btnRenum
       // 
-      resources.ApplyResources(this.btnRenum, "btnRenum");
       this.btnRenum.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnRenum.ImageOptions.ImageIndex")));
       this.btnRenum.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnRenum.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+      resources.ApplyResources(this.btnRenum, "btnRenum");
       this.btnRenum.Name = "btnRenum";
       this.btnRenum.Click += new System.EventHandler(this.btnRenum_Click);
       // 
       // btnDown
       // 
-      resources.ApplyResources(this.btnDown, "btnDown");
       this.btnDown.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnDown.ImageOptions.ImageIndex")));
       this.btnDown.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnDown.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+      resources.ApplyResources(this.btnDown, "btnDown");
       this.btnDown.Name = "btnDown";
       this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
       // 
       // btnUp
       // 
-      resources.ApplyResources(this.btnUp, "btnUp");
       this.btnUp.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnUp.ImageOptions.ImageIndex")));
       this.btnUp.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnUp.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+      resources.ApplyResources(this.btnUp, "btnUp");
       this.btnUp.Name = "btnUp";
       this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
       // 
       // btnRemoveLeft
       // 
-      resources.ApplyResources(this.btnRemoveLeft, "btnRemoveLeft");
       this.btnRemoveLeft.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnRemoveLeft.ImageOptions.ImageIndex")));
       this.btnRemoveLeft.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnRemoveLeft.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+      resources.ApplyResources(this.btnRemoveLeft, "btnRemoveLeft");
       this.btnRemoveLeft.Name = "btnRemoveLeft";
       this.btnRemoveLeft.Click += new System.EventHandler(this.btnRemoveLeft_Click);
       // 
       // grpInputList
       // 
-      resources.ApplyResources(this.grpInputList, "grpInputList");
       this.grpInputList.Controls.Add(this.gridRight);
       this.grpInputList.Controls.Add(this.pnlEditControlRight);
+      resources.ApplyResources(this.grpInputList, "grpInputList");
       this.grpInputList.Name = "grpInputList";
       this.grpInputList.Enter += new System.EventHandler(this.grpInputList_Enter);
       // 
       // gridRight
       // 
-      resources.ApplyResources(this.gridRight, "gridRight");
       this.gridRight.AllowDrop = true;
       this.gridRight.DataSource = this.dsChannels;
-      this.gridRight.EmbeddedNavigator.AccessibleDescription = resources.GetString("gridRight.EmbeddedNavigator.AccessibleDescription");
-      this.gridRight.EmbeddedNavigator.AccessibleName = resources.GetString("gridRight.EmbeddedNavigator.AccessibleName");
-      this.gridRight.EmbeddedNavigator.AllowHtmlTextInToolTip = ((DevExpress.Utils.DefaultBoolean)(resources.GetObject("gridRight.EmbeddedNavigator.AllowHtmlTextInToolTip")));
-      this.gridRight.EmbeddedNavigator.Anchor = ((System.Windows.Forms.AnchorStyles)(resources.GetObject("gridRight.EmbeddedNavigator.Anchor")));
-      this.gridRight.EmbeddedNavigator.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("gridRight.EmbeddedNavigator.BackgroundImage")));
-      this.gridRight.EmbeddedNavigator.BackgroundImageLayout = ((System.Windows.Forms.ImageLayout)(resources.GetObject("gridRight.EmbeddedNavigator.BackgroundImageLayout")));
-      this.gridRight.EmbeddedNavigator.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("gridRight.EmbeddedNavigator.ImeMode")));
-      this.gridRight.EmbeddedNavigator.MaximumSize = ((System.Drawing.Size)(resources.GetObject("gridRight.EmbeddedNavigator.MaximumSize")));
-      this.gridRight.EmbeddedNavigator.TextLocation = ((DevExpress.XtraEditors.NavigatorButtonsTextLocation)(resources.GetObject("gridRight.EmbeddedNavigator.TextLocation")));
-      this.gridRight.EmbeddedNavigator.ToolTip = resources.GetString("gridRight.EmbeddedNavigator.ToolTip");
-      this.gridRight.EmbeddedNavigator.ToolTipIconType = ((DevExpress.Utils.ToolTipIconType)(resources.GetObject("gridRight.EmbeddedNavigator.ToolTipIconType")));
-      this.gridRight.EmbeddedNavigator.ToolTipTitle = resources.GetString("gridRight.EmbeddedNavigator.ToolTipTitle");
+      resources.ApplyResources(this.gridRight, "gridRight");
       this.gridRight.MainView = this.gviewRight;
       this.gridRight.Name = "gridRight";
       this.gridRight.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -656,7 +637,6 @@
       this.gviewRight.Appearance.FocusedRow.Options.UseFont = true;
       this.gviewRight.Appearance.HeaderPanel.Options.UseTextOptions = true;
       this.gviewRight.Appearance.HeaderPanel.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
-      resources.ApplyResources(this.gviewRight, "gviewRight");
       this.gviewRight.ColumnPanelRowHeight = 35;
       this.gviewRight.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIndex,
@@ -980,13 +960,13 @@
       // 
       // pnlEditControlRight
       // 
-      resources.ApplyResources(this.pnlEditControlRight, "pnlEditControlRight");
       this.pnlEditControlRight.Controls.Add(this.btnSearch);
       this.pnlEditControlRight.Controls.Add(this.lblPredefinedList);
       this.pnlEditControlRight.Controls.Add(this.btnRemoveRight);
       this.pnlEditControlRight.Controls.Add(this.btnAddAll);
       this.pnlEditControlRight.Controls.Add(this.btnClearRightFilter);
       this.pnlEditControlRight.Controls.Add(this.btnAdd);
+      resources.ApplyResources(this.pnlEditControlRight, "pnlEditControlRight");
       this.pnlEditControlRight.Name = "pnlEditControlRight";
       // 
       // btnSearch
@@ -996,23 +976,25 @@
       this.btnSearch.Appearance.Options.UseFont = true;
       this.btnSearch.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnSearch.ImageOptions.ImageIndex")));
       this.btnSearch.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnSearch.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
       this.btnSearch.Name = "btnSearch";
       this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
       // 
       // lblPredefinedList
       // 
-      resources.ApplyResources(this.lblPredefinedList, "lblPredefinedList");
       this.lblPredefinedList.Appearance.Font = ((System.Drawing.Font)(resources.GetObject("lblPredefinedList.Appearance.Font")));
       this.lblPredefinedList.Appearance.ForeColor = System.Drawing.Color.Maroon;
       this.lblPredefinedList.Appearance.Options.UseFont = true;
       this.lblPredefinedList.Appearance.Options.UseForeColor = true;
+      resources.ApplyResources(this.lblPredefinedList, "lblPredefinedList");
       this.lblPredefinedList.Name = "lblPredefinedList";
       // 
       // btnRemoveRight
       // 
-      resources.ApplyResources(this.btnRemoveRight, "btnRemoveRight");
       this.btnRemoveRight.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnRemoveRight.ImageOptions.ImageIndex")));
       this.btnRemoveRight.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnRemoveRight.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+      resources.ApplyResources(this.btnRemoveRight, "btnRemoveRight");
       this.btnRemoveRight.Name = "btnRemoveRight";
       this.btnRemoveRight.Click += new System.EventHandler(this.btnRemoveRight_Click);
       // 
@@ -1034,9 +1016,10 @@
       // 
       // btnAdd
       // 
-      resources.ApplyResources(this.btnAdd, "btnAdd");
       this.btnAdd.ImageOptions.ImageIndex = ((int)(resources.GetObject("btnAdd.ImageOptions.ImageIndex")));
       this.btnAdd.ImageOptions.ImageList = this.globalImageCollection1;
+      this.btnAdd.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+      resources.ApplyResources(this.btnAdd, "btnAdd");
       this.btnAdd.Name = "btnAdd";
       this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
       // 
@@ -1190,9 +1173,6 @@
       resources.ApplyResources(this.miFile, "miFile");
       this.miFile.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miFile.Id = 4;
-      this.miFile.ImageOptions.ImageIndex = ((int)(resources.GetObject("miFile.ImageOptions.ImageIndex")));
-      this.miFile.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miFile.ImageOptions.LargeImageIndex")));
-      this.miFile.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miFile.ImageOptions.SvgImage")));
       this.miFile.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miOpen),
             new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
@@ -1215,8 +1195,6 @@
       this.miOpen.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miOpen.Id = 5;
       this.miOpen.ImageOptions.ImageIndex = ((int)(resources.GetObject("miOpen.ImageOptions.ImageIndex")));
-      this.miOpen.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miOpen.ImageOptions.LargeImageIndex")));
-      this.miOpen.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miOpen.ImageOptions.SvgImage")));
       this.miOpen.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O));
       this.miOpen.Name = "miOpen";
       this.miOpen.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpen_ItemClick);
@@ -1228,8 +1206,6 @@
       this.miReload.Enabled = false;
       this.miReload.Id = 7;
       this.miReload.ImageOptions.ImageIndex = ((int)(resources.GetObject("miReload.ImageOptions.ImageIndex")));
-      this.miReload.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miReload.ImageOptions.LargeImageIndex")));
-      this.miReload.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miReload.ImageOptions.SvgImage")));
       this.miReload.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R));
       this.miReload.Name = "miReload";
       this.miReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miReload_ItemClick);
@@ -1240,8 +1216,6 @@
       this.miRestoreOriginal.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miRestoreOriginal.Id = 42;
       this.miRestoreOriginal.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRestoreOriginal.ImageOptions.ImageIndex")));
-      this.miRestoreOriginal.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miRestoreOriginal.ImageOptions.LargeImageIndex")));
-      this.miRestoreOriginal.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miRestoreOriginal.ImageOptions.SvgImage")));
       this.miRestoreOriginal.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.R));
       this.miRestoreOriginal.Name = "miRestoreOriginal";
@@ -1253,8 +1227,6 @@
       this.miFileInformation.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miFileInformation.Id = 43;
       this.miFileInformation.ImageOptions.ImageIndex = ((int)(resources.GetObject("miFileInformation.ImageOptions.ImageIndex")));
-      this.miFileInformation.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miFileInformation.ImageOptions.LargeImageIndex")));
-      this.miFileInformation.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miFileInformation.ImageOptions.SvgImage")));
       this.miFileInformation.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I));
       this.miFileInformation.Name = "miFileInformation";
       this.miFileInformation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miFileInformation_ItemClick);
@@ -1266,8 +1238,6 @@
       this.miSave.Enabled = false;
       this.miSave.Id = 6;
       this.miSave.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSave.ImageOptions.ImageIndex")));
-      this.miSave.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSave.ImageOptions.LargeImageIndex")));
-      this.miSave.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSave.ImageOptions.SvgImage")));
       this.miSave.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S));
       this.miSave.Name = "miSave";
       this.miSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSave_ItemClick);
@@ -1279,8 +1249,6 @@
       this.miSaveAs.Enabled = false;
       this.miSaveAs.Id = 8;
       this.miSaveAs.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSaveAs.ImageOptions.ImageIndex")));
-      this.miSaveAs.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSaveAs.ImageOptions.LargeImageIndex")));
-      this.miSaveAs.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSaveAs.ImageOptions.SvgImage")));
       this.miSaveAs.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.S));
       this.miSaveAs.Name = "miSaveAs";
@@ -1292,8 +1260,6 @@
       this.miOpenReferenceFile.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miOpenReferenceFile.Id = 44;
       this.miOpenReferenceFile.ImageOptions.ImageIndex = ((int)(resources.GetObject("miOpenReferenceFile.ImageOptions.ImageIndex")));
-      this.miOpenReferenceFile.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miOpenReferenceFile.ImageOptions.LargeImageIndex")));
-      this.miOpenReferenceFile.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miOpenReferenceFile.ImageOptions.SvgImage")));
       this.miOpenReferenceFile.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.O));
       this.miOpenReferenceFile.Name = "miOpenReferenceFile";
@@ -1303,9 +1269,6 @@
       // 
       resources.ApplyResources(this.miAddFromRefList, "miAddFromRefList");
       this.miAddFromRefList.Id = 61;
-      this.miAddFromRefList.ImageOptions.ImageIndex = ((int)(resources.GetObject("miAddFromRefList.ImageOptions.ImageIndex")));
-      this.miAddFromRefList.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miAddFromRefList.ImageOptions.LargeImageIndex")));
-      this.miAddFromRefList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miAddFromRefList.ImageOptions.SvgImage")));
       this.miAddFromRefList.Name = "miAddFromRefList";
       this.miAddFromRefList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miAddFromRefList_ItemClick);
       // 
@@ -1314,8 +1277,6 @@
       resources.ApplyResources(this.miSaveReferenceFile, "miSaveReferenceFile");
       this.miSaveReferenceFile.Id = 57;
       this.miSaveReferenceFile.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSaveReferenceFile.ImageOptions.ImageIndex")));
-      this.miSaveReferenceFile.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSaveReferenceFile.ImageOptions.LargeImageIndex")));
-      this.miSaveReferenceFile.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSaveReferenceFile.ImageOptions.SvgImage")));
       this.miSaveReferenceFile.Name = "miSaveReferenceFile";
       this.miSaveReferenceFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveReferenceFile_ItemClick);
       // 
@@ -1324,8 +1285,6 @@
       resources.ApplyResources(this.miExcelExport, "miExcelExport");
       this.miExcelExport.Id = 59;
       this.miExcelExport.ImageOptions.ImageIndex = ((int)(resources.GetObject("miExcelExport.ImageOptions.ImageIndex")));
-      this.miExcelExport.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miExcelExport.ImageOptions.LargeImageIndex")));
-      this.miExcelExport.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miExcelExport.ImageOptions.SvgImage")));
       this.miExcelExport.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.C));
       this.miExcelExport.Name = "miExcelExport";
@@ -1336,8 +1295,6 @@
       resources.ApplyResources(this.miPrint, "miPrint");
       this.miPrint.Id = 62;
       this.miPrint.ImageOptions.ImageIndex = ((int)(resources.GetObject("miPrint.ImageOptions.ImageIndex")));
-      this.miPrint.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miPrint.ImageOptions.LargeImageIndex")));
-      this.miPrint.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miPrint.ImageOptions.SvgImage")));
       this.miPrint.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P));
       this.miPrint.Name = "miPrint";
       this.miPrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miPrint_ItemClick);
@@ -1347,9 +1304,6 @@
       resources.ApplyResources(this.miQuit, "miQuit");
       this.miQuit.CategoryGuid = new System.Guid("e6c9a329-010b-4d79-8d4d-215e5f197ed3");
       this.miQuit.Id = 9;
-      this.miQuit.ImageOptions.ImageIndex = ((int)(resources.GetObject("miQuit.ImageOptions.ImageIndex")));
-      this.miQuit.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miQuit.ImageOptions.LargeImageIndex")));
-      this.miQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miQuit.ImageOptions.SvgImage")));
       this.miQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4));
       this.miQuit.Name = "miQuit";
       this.miQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miQuit_ItemClick);
@@ -1358,9 +1312,6 @@
       // 
       resources.ApplyResources(this.miRecentFiles, "miRecentFiles");
       this.miRecentFiles.Id = 58;
-      this.miRecentFiles.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRecentFiles.ImageOptions.ImageIndex")));
-      this.miRecentFiles.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miRecentFiles.ImageOptions.LargeImageIndex")));
-      this.miRecentFiles.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miRecentFiles.ImageOptions.SvgImage")));
       this.miRecentFiles.Name = "miRecentFiles";
       this.miRecentFiles.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.miRecentFiles_ListItemClick);
       // 
@@ -1369,9 +1320,6 @@
       resources.ApplyResources(this.miEdit, "miEdit");
       this.miEdit.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miEdit.Id = 22;
-      this.miEdit.ImageOptions.ImageIndex = ((int)(resources.GetObject("miEdit.ImageOptions.ImageIndex")));
-      this.miEdit.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miEdit.ImageOptions.LargeImageIndex")));
-      this.miEdit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miEdit.ImageOptions.SvgImage")));
       this.miEdit.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miMoveUp),
             new DevExpress.XtraBars.LinkPersistInfo(this.miMoveDown),
@@ -1398,8 +1346,6 @@
       this.miMoveUp.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miMoveUp.Id = 45;
       this.miMoveUp.ImageOptions.ImageIndex = ((int)(resources.GetObject("miMoveUp.ImageOptions.ImageIndex")));
-      this.miMoveUp.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miMoveUp.ImageOptions.LargeImageIndex")));
-      this.miMoveUp.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miMoveUp.ImageOptions.SvgImage")));
       this.miMoveUp.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Up));
       this.miMoveUp.Name = "miMoveUp";
       this.miMoveUp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miMoveUp_ItemClick);
@@ -1410,8 +1356,6 @@
       this.miMoveDown.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miMoveDown.Id = 46;
       this.miMoveDown.ImageOptions.ImageIndex = ((int)(resources.GetObject("miMoveDown.ImageOptions.ImageIndex")));
-      this.miMoveDown.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miMoveDown.ImageOptions.LargeImageIndex")));
-      this.miMoveDown.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miMoveDown.ImageOptions.SvgImage")));
       this.miMoveDown.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Down));
       this.miMoveDown.Name = "miMoveDown";
       this.miMoveDown.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miMoveDown_ItemClick);
@@ -1422,8 +1366,6 @@
       this.miAddChannel.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miAddChannel.Id = 39;
       this.miAddChannel.ImageOptions.ImageIndex = ((int)(resources.GetObject("miAddChannel.ImageOptions.ImageIndex")));
-      this.miAddChannel.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miAddChannel.ImageOptions.LargeImageIndex")));
-      this.miAddChannel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miAddChannel.ImageOptions.SvgImage")));
       this.miAddChannel.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Add));
       this.miAddChannel.Name = "miAddChannel";
       this.miAddChannel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miAddChannel_ItemClick);
@@ -1434,8 +1376,6 @@
       this.miRemove.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miRemove.Id = 25;
       this.miRemove.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRemove.ImageOptions.ImageIndex")));
-      this.miRemove.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miRemove.ImageOptions.LargeImageIndex")));
-      this.miRemove.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miRemove.ImageOptions.SvgImage")));
       this.miRemove.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Delete);
       this.miRemove.Name = "miRemove";
       this.miRemove.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRemove_ItemClick);
@@ -1446,8 +1386,6 @@
       this.miRenameChannel.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miRenameChannel.Id = 52;
       this.miRenameChannel.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRenameChannel.ImageOptions.ImageIndex")));
-      this.miRenameChannel.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miRenameChannel.ImageOptions.LargeImageIndex")));
-      this.miRenameChannel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miRenameChannel.ImageOptions.SvgImage")));
       this.miRenameChannel.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
       this.miRenameChannel.Name = "miRenameChannel";
       this.miRenameChannel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenameChannel_ItemClick);
@@ -1458,8 +1396,6 @@
       this.mnuFavSet.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.mnuFavSet.Id = 37;
       this.mnuFavSet.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuFavSet.ImageOptions.ImageIndex")));
-      this.mnuFavSet.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuFavSet.ImageOptions.LargeImageIndex")));
-      this.mnuFavSet.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuFavSet.ImageOptions.SvgImage")));
       this.mnuFavSet.Name = "mnuFavSet";
       this.mnuFavSet.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionInMenu;
       // 
@@ -1468,9 +1404,6 @@
       resources.ApplyResources(this.mnuFavUnset, "mnuFavUnset");
       this.mnuFavUnset.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.mnuFavUnset.Id = 38;
-      this.mnuFavUnset.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuFavUnset.ImageOptions.ImageIndex")));
-      this.mnuFavUnset.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuFavUnset.ImageOptions.LargeImageIndex")));
-      this.mnuFavUnset.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuFavUnset.ImageOptions.SvgImage")));
       this.mnuFavUnset.Name = "mnuFavUnset";
       // 
       // miLockOn
@@ -1479,8 +1412,6 @@
       this.miLockOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miLockOn.Id = 27;
       this.miLockOn.ImageOptions.ImageIndex = ((int)(resources.GetObject("miLockOn.ImageOptions.ImageIndex")));
-      this.miLockOn.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miLockOn.ImageOptions.LargeImageIndex")));
-      this.miLockOn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miLockOn.ImageOptions.SvgImage")));
       this.miLockOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L));
       this.miLockOn.Name = "miLockOn";
       this.miLockOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miLockOn_ItemClick);
@@ -1490,9 +1421,6 @@
       resources.ApplyResources(this.miLockOff, "miLockOff");
       this.miLockOff.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miLockOff.Id = 28;
-      this.miLockOff.ImageOptions.ImageIndex = ((int)(resources.GetObject("miLockOff.ImageOptions.ImageIndex")));
-      this.miLockOff.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miLockOff.ImageOptions.LargeImageIndex")));
-      this.miLockOff.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miLockOff.ImageOptions.SvgImage")));
       this.miLockOff.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.L));
       this.miLockOff.Name = "miLockOff";
@@ -1504,8 +1432,6 @@
       this.miSkipOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miSkipOn.Id = 29;
       this.miSkipOn.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSkipOn.ImageOptions.ImageIndex")));
-      this.miSkipOn.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSkipOn.ImageOptions.LargeImageIndex")));
-      this.miSkipOn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSkipOn.ImageOptions.SvgImage")));
       this.miSkipOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K));
       this.miSkipOn.Name = "miSkipOn";
       this.miSkipOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSkipOn_ItemClick);
@@ -1515,9 +1441,6 @@
       resources.ApplyResources(this.miSkipOff, "miSkipOff");
       this.miSkipOff.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miSkipOff.Id = 30;
-      this.miSkipOff.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSkipOff.ImageOptions.ImageIndex")));
-      this.miSkipOff.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSkipOff.ImageOptions.LargeImageIndex")));
-      this.miSkipOff.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSkipOff.ImageOptions.SvgImage")));
       this.miSkipOff.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.K));
       this.miSkipOff.Name = "miSkipOff";
@@ -1529,8 +1452,6 @@
       this.miHideOn.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miHideOn.Id = 31;
       this.miHideOn.ImageOptions.ImageIndex = ((int)(resources.GetObject("miHideOn.ImageOptions.ImageIndex")));
-      this.miHideOn.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miHideOn.ImageOptions.LargeImageIndex")));
-      this.miHideOn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miHideOn.ImageOptions.SvgImage")));
       this.miHideOn.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H));
       this.miHideOn.Name = "miHideOn";
       this.miHideOn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miHideOn_ItemClick);
@@ -1540,9 +1461,6 @@
       resources.ApplyResources(this.miHideOff, "miHideOff");
       this.miHideOff.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miHideOff.Id = 32;
-      this.miHideOff.ImageOptions.ImageIndex = ((int)(resources.GetObject("miHideOff.ImageOptions.ImageIndex")));
-      this.miHideOff.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miHideOff.ImageOptions.LargeImageIndex")));
-      this.miHideOff.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miHideOff.ImageOptions.SvgImage")));
       this.miHideOff.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.H));
       this.miHideOff.Name = "miHideOff";
@@ -1554,8 +1472,6 @@
       this.miRenum.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miRenum.Id = 41;
       this.miRenum.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRenum.ImageOptions.ImageIndex")));
-      this.miRenum.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miRenum.ImageOptions.LargeImageIndex")));
-      this.miRenum.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miRenum.ImageOptions.SvgImage")));
       this.miRenum.Name = "miRenum";
       this.miRenum.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenum_ItemClick);
       // 
@@ -1565,8 +1481,6 @@
       this.miSort.CategoryGuid = new System.Guid("d7eec464-59c9-4f45-88aa-602e64c81cc0");
       this.miSort.Id = 40;
       this.miSort.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSort.ImageOptions.ImageIndex")));
-      this.miSort.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSort.ImageOptions.LargeImageIndex")));
-      this.miSort.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSort.ImageOptions.SvgImage")));
       this.miSort.Name = "miSort";
       this.miSort.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSort_ItemClick);
       // 
@@ -1574,9 +1488,6 @@
       // 
       resources.ApplyResources(this.miRenumFavByPrNr, "miRenumFavByPrNr");
       this.miRenumFavByPrNr.Id = 63;
-      this.miRenumFavByPrNr.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRenumFavByPrNr.ImageOptions.ImageIndex")));
-      this.miRenumFavByPrNr.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miRenumFavByPrNr.ImageOptions.LargeImageIndex")));
-      this.miRenumFavByPrNr.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miRenumFavByPrNr.ImageOptions.SvgImage")));
       this.miRenumFavByPrNr.Name = "miRenumFavByPrNr";
       this.miRenumFavByPrNr.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRenumFavByPrNr_ItemClick);
       // 
@@ -1585,8 +1496,6 @@
       resources.ApplyResources(this.miCopyCsv, "miCopyCsv");
       this.miCopyCsv.Id = 100;
       this.miCopyCsv.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCopyCsv.ImageOptions.ImageIndex")));
-      this.miCopyCsv.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miCopyCsv.ImageOptions.LargeImageIndex")));
-      this.miCopyCsv.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miCopyCsv.ImageOptions.SvgImage")));
       this.miCopyCsv.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
                 | System.Windows.Forms.Keys.C));
       this.miCopyCsv.Name = "miCopyCsv";
@@ -1596,9 +1505,6 @@
       // 
       resources.ApplyResources(this.barSubItem2, "barSubItem2");
       this.barSubItem2.Id = 47;
-      this.barSubItem2.ImageOptions.ImageIndex = ((int)(resources.GetObject("barSubItem2.ImageOptions.ImageIndex")));
-      this.barSubItem2.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("barSubItem2.ImageOptions.LargeImageIndex")));
-      this.barSubItem2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barSubItem2.ImageOptions.SvgImage")));
       this.barSubItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miTvSettings),
             new DevExpress.XtraBars.LinkPersistInfo(this.miCleanupChannels)});
@@ -1609,8 +1515,6 @@
       resources.ApplyResources(this.miTvSettings, "miTvSettings");
       this.miTvSettings.Id = 48;
       this.miTvSettings.ImageOptions.ImageIndex = ((int)(resources.GetObject("miTvSettings.ImageOptions.ImageIndex")));
-      this.miTvSettings.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miTvSettings.ImageOptions.LargeImageIndex")));
-      this.miTvSettings.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miTvSettings.ImageOptions.SvgImage")));
       this.miTvSettings.Name = "miTvSettings";
       this.miTvSettings.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTvCountrySetup_ItemClick);
       // 
@@ -1618,9 +1522,6 @@
       // 
       resources.ApplyResources(this.miCleanupChannels, "miCleanupChannels");
       this.miCleanupChannels.Id = 56;
-      this.miCleanupChannels.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCleanupChannels.ImageOptions.ImageIndex")));
-      this.miCleanupChannels.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miCleanupChannels.ImageOptions.LargeImageIndex")));
-      this.miCleanupChannels.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miCleanupChannels.ImageOptions.SvgImage")));
       this.miCleanupChannels.Name = "miCleanupChannels";
       this.miCleanupChannels.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCleanupChannels_ItemClick);
       // 
@@ -1629,9 +1530,6 @@
       resources.ApplyResources(this.mnuOptions, "mnuOptions");
       this.mnuOptions.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.mnuOptions.Id = 34;
-      this.mnuOptions.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuOptions.ImageOptions.ImageIndex")));
-      this.mnuOptions.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuOptions.ImageOptions.LargeImageIndex")));
-      this.mnuOptions.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuOptions.ImageOptions.SvgImage")));
       this.mnuOptions.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuLanguage, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.mnuCharset, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -1652,8 +1550,6 @@
       this.mnuLanguage.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.mnuLanguage.Id = 0;
       this.mnuLanguage.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuLanguage.ImageOptions.ImageIndex")));
-      this.mnuLanguage.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuLanguage.ImageOptions.LargeImageIndex")));
-      this.mnuLanguage.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuLanguage.ImageOptions.SvgImage")));
       this.mnuLanguage.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miEnglish),
             new DevExpress.XtraBars.LinkPersistInfo(this.miCzech),
@@ -1670,122 +1566,102 @@
       // 
       // miEnglish
       // 
-      resources.ApplyResources(this.miEnglish, "miEnglish");
       this.miEnglish.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miEnglish, "miEnglish");
       this.miEnglish.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.miEnglish.Id = 2;
       this.miEnglish.ImageOptions.ImageIndex = ((int)(resources.GetObject("miEnglish.ImageOptions.ImageIndex")));
-      this.miEnglish.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miEnglish.ImageOptions.LargeImageIndex")));
-      this.miEnglish.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miEnglish.ImageOptions.SvgImage")));
       this.miEnglish.Name = "miEnglish";
       this.miEnglish.Tag = "en";
       this.miEnglish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miCzech
       // 
-      resources.ApplyResources(this.miCzech, "miCzech");
       this.miCzech.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miCzech, "miCzech");
       this.miCzech.Id = 95;
       this.miCzech.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCzech.ImageOptions.ImageIndex")));
-      this.miCzech.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miCzech.ImageOptions.LargeImageIndex")));
-      this.miCzech.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miCzech.ImageOptions.SvgImage")));
       this.miCzech.Name = "miCzech";
       this.miCzech.Tag = "cs-CZ";
       this.miCzech.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miGerman
       // 
-      resources.ApplyResources(this.miGerman, "miGerman");
       this.miGerman.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miGerman, "miGerman");
       this.miGerman.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.miGerman.Id = 1;
       this.miGerman.ImageOptions.ImageIndex = ((int)(resources.GetObject("miGerman.ImageOptions.ImageIndex")));
-      this.miGerman.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miGerman.ImageOptions.LargeImageIndex")));
-      this.miGerman.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miGerman.ImageOptions.SvgImage")));
       this.miGerman.Name = "miGerman";
       this.miGerman.Tag = "de-DE";
       this.miGerman.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miSpanish
       // 
-      resources.ApplyResources(this.miSpanish, "miSpanish");
       this.miSpanish.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miSpanish, "miSpanish");
       this.miSpanish.Id = 101;
       this.miSpanish.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSpanish.ImageOptions.ImageIndex")));
-      this.miSpanish.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSpanish.ImageOptions.LargeImageIndex")));
-      this.miSpanish.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSpanish.ImageOptions.SvgImage")));
       this.miSpanish.Name = "miSpanish";
       this.miSpanish.Tag = "es-ES";
       this.miSpanish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miHungarian
       // 
-      resources.ApplyResources(this.miHungarian, "miHungarian");
       this.miHungarian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miHungarian, "miHungarian");
       this.miHungarian.Id = 111;
       this.miHungarian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miHungarian.ImageOptions.ImageIndex")));
-      this.miHungarian.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miHungarian.ImageOptions.LargeImageIndex")));
-      this.miHungarian.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miHungarian.ImageOptions.SvgImage")));
       this.miHungarian.Name = "miHungarian";
       this.miHungarian.Tag = "hu-HU";
       this.miHungarian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miPolski
       // 
-      resources.ApplyResources(this.miPolski, "miPolski");
       this.miPolski.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miPolski, "miPolski");
       this.miPolski.Id = 102;
       this.miPolski.ImageOptions.ImageIndex = ((int)(resources.GetObject("miPolski.ImageOptions.ImageIndex")));
-      this.miPolski.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miPolski.ImageOptions.LargeImageIndex")));
-      this.miPolski.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miPolski.ImageOptions.SvgImage")));
       this.miPolski.Name = "miPolski";
       this.miPolski.Tag = "pl-PL";
       this.miPolski.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miPortuguese
       // 
-      resources.ApplyResources(this.miPortuguese, "miPortuguese");
       this.miPortuguese.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miPortuguese, "miPortuguese");
       this.miPortuguese.Id = 60;
       this.miPortuguese.ImageOptions.ImageIndex = ((int)(resources.GetObject("miPortuguese.ImageOptions.ImageIndex")));
-      this.miPortuguese.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miPortuguese.ImageOptions.LargeImageIndex")));
-      this.miPortuguese.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miPortuguese.ImageOptions.SvgImage")));
       this.miPortuguese.Name = "miPortuguese";
       this.miPortuguese.Tag = "pt-PT";
       this.miPortuguese.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miRomanian
       // 
-      resources.ApplyResources(this.miRomanian, "miRomanian");
       this.miRomanian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miRomanian, "miRomanian");
       this.miRomanian.Id = 96;
       this.miRomanian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRomanian.ImageOptions.ImageIndex")));
-      this.miRomanian.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miRomanian.ImageOptions.LargeImageIndex")));
-      this.miRomanian.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miRomanian.ImageOptions.SvgImage")));
       this.miRomanian.Name = "miRomanian";
       this.miRomanian.Tag = "ro-RO";
       this.miRomanian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miRussian
       // 
-      resources.ApplyResources(this.miRussian, "miRussian");
       this.miRussian.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miRussian, "miRussian");
       this.miRussian.Id = 93;
       this.miRussian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miRussian.ImageOptions.ImageIndex")));
-      this.miRussian.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miRussian.ImageOptions.LargeImageIndex")));
-      this.miRussian.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miRussian.ImageOptions.SvgImage")));
       this.miRussian.Name = "miRussian";
       this.miRussian.Tag = "ru-RU";
       this.miRussian.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miTurkish
       // 
-      resources.ApplyResources(this.miTurkish, "miTurkish");
       this.miTurkish.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miTurkish, "miTurkish");
       this.miTurkish.Id = 103;
       this.miTurkish.ImageOptions.ImageIndex = ((int)(resources.GetObject("miTurkish.ImageOptions.ImageIndex")));
-      this.miTurkish.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miTurkish.ImageOptions.LargeImageIndex")));
-      this.miTurkish.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miTurkish.ImageOptions.SvgImage")));
       this.miTurkish.Name = "miTurkish";
       this.miTurkish.Tag = "tr-TR";
       this.miTurkish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
@@ -1796,8 +1672,6 @@
       this.mnuCharset.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.mnuCharset.Id = 15;
       this.mnuCharset.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuCharset.ImageOptions.ImageIndex")));
-      this.mnuCharset.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuCharset.ImageOptions.LargeImageIndex")));
-      this.mnuCharset.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuCharset.ImageOptions.SvgImage")));
       this.mnuCharset.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miCharsetForm),
             new DevExpress.XtraBars.LinkPersistInfo(this.miUtf8Charset, true),
@@ -1813,8 +1687,6 @@
       this.miCharsetForm.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.miCharsetForm.Id = 13;
       this.miCharsetForm.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCharsetForm.ImageOptions.ImageIndex")));
-      this.miCharsetForm.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miCharsetForm.ImageOptions.LargeImageIndex")));
-      this.miCharsetForm.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miCharsetForm.ImageOptions.SvgImage")));
       this.miCharsetForm.Name = "miCharsetForm";
       this.miCharsetForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCharset_ItemClick);
       // 
@@ -1822,9 +1694,6 @@
       // 
       resources.ApplyResources(this.miUtf8Charset, "miUtf8Charset");
       this.miUtf8Charset.Id = 99;
-      this.miUtf8Charset.ImageOptions.ImageIndex = ((int)(resources.GetObject("miUtf8Charset.ImageOptions.ImageIndex")));
-      this.miUtf8Charset.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miUtf8Charset.ImageOptions.LargeImageIndex")));
-      this.miUtf8Charset.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miUtf8Charset.ImageOptions.SvgImage")));
       this.miUtf8Charset.Name = "miUtf8Charset";
       this.miUtf8Charset.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miUtf8Charset_ItemClick);
       // 
@@ -1833,9 +1702,6 @@
       resources.ApplyResources(this.miIsoCharSets, "miIsoCharSets");
       this.miIsoCharSets.CategoryGuid = new System.Guid("870e935c-f3d9-4202-9c58-87966069155d");
       this.miIsoCharSets.Id = 14;
-      this.miIsoCharSets.ImageOptions.ImageIndex = ((int)(resources.GetObject("miIsoCharSets.ImageOptions.ImageIndex")));
-      this.miIsoCharSets.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miIsoCharSets.ImageOptions.LargeImageIndex")));
-      this.miIsoCharSets.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miIsoCharSets.ImageOptions.SvgImage")));
       this.miIsoCharSets.Name = "miIsoCharSets";
       this.miIsoCharSets.ShowNumbers = true;
       this.miIsoCharSets.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.miIsoCharSets_ListItemClick);
@@ -1844,9 +1710,6 @@
       // 
       resources.ApplyResources(this.miUtf16BigEndian, "miUtf16BigEndian");
       this.miUtf16BigEndian.Id = 109;
-      this.miUtf16BigEndian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miUtf16BigEndian.ImageOptions.ImageIndex")));
-      this.miUtf16BigEndian.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miUtf16BigEndian.ImageOptions.LargeImageIndex")));
-      this.miUtf16BigEndian.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miUtf16BigEndian.ImageOptions.SvgImage")));
       this.miUtf16BigEndian.Name = "miUtf16BigEndian";
       this.miUtf16BigEndian.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miUtf16BigEndian_ItemClick);
       // 
@@ -1854,9 +1717,6 @@
       // 
       resources.ApplyResources(this.miUtf16LittleEndian, "miUtf16LittleEndian");
       this.miUtf16LittleEndian.Id = 110;
-      this.miUtf16LittleEndian.ImageOptions.ImageIndex = ((int)(resources.GetObject("miUtf16LittleEndian.ImageOptions.ImageIndex")));
-      this.miUtf16LittleEndian.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miUtf16LittleEndian.ImageOptions.LargeImageIndex")));
-      this.miUtf16LittleEndian.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miUtf16LittleEndian.ImageOptions.SvgImage")));
       this.miUtf16LittleEndian.Name = "miUtf16LittleEndian";
       this.miUtf16LittleEndian.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miUtf16LittleEndian_ItemClick);
       // 
@@ -1865,85 +1725,63 @@
       resources.ApplyResources(this.miTheme, "miTheme");
       this.miTheme.Id = 114;
       this.miTheme.ImageOptions.ImageIndex = ((int)(resources.GetObject("miTheme.ImageOptions.ImageIndex")));
-      this.miTheme.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miTheme.ImageOptions.LargeImageIndex")));
-      this.miTheme.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miTheme.ImageOptions.SvgImage")));
       this.miTheme.Name = "miTheme";
       this.miTheme.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTheme_ItemClick);
       // 
       // miSplitView
       // 
-      resources.ApplyResources(this.miSplitView, "miSplitView");
       this.miSplitView.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miSplitView, "miSplitView");
       this.miSplitView.Down = true;
       this.miSplitView.Id = 113;
       this.miSplitView.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSplitView.ImageOptions.ImageIndex")));
-      this.miSplitView.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSplitView.ImageOptions.LargeImageIndex")));
-      this.miSplitView.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSplitView.ImageOptions.SvgImage")));
       this.miSplitView.Name = "miSplitView";
       this.miSplitView.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miSplitView_DownChanged);
       // 
       // miAutoHideColumns
       // 
-      resources.ApplyResources(this.miAutoHideColumns, "miAutoHideColumns");
       this.miAutoHideColumns.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miAutoHideColumns, "miAutoHideColumns");
       this.miAutoHideColumns.Down = true;
       this.miAutoHideColumns.Id = 115;
-      this.miAutoHideColumns.ImageOptions.ImageIndex = ((int)(resources.GetObject("miAutoHideColumns.ImageOptions.ImageIndex")));
-      this.miAutoHideColumns.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miAutoHideColumns.ImageOptions.LargeImageIndex")));
-      this.miAutoHideColumns.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miAutoHideColumns.ImageOptions.SvgImage")));
       this.miAutoHideColumns.Name = "miAutoHideColumns";
       this.miAutoHideColumns.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miAutoHideColumns_DownChanged);
       // 
       // miLoadListAfterStart
       // 
-      resources.ApplyResources(this.miLoadListAfterStart, "miLoadListAfterStart");
       this.miLoadListAfterStart.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miLoadListAfterStart, "miLoadListAfterStart");
       this.miLoadListAfterStart.Down = true;
       this.miLoadListAfterStart.Id = 116;
-      this.miLoadListAfterStart.ImageOptions.ImageIndex = ((int)(resources.GetObject("miLoadListAfterStart.ImageOptions.ImageIndex")));
-      this.miLoadListAfterStart.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miLoadListAfterStart.ImageOptions.LargeImageIndex")));
-      this.miLoadListAfterStart.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miLoadListAfterStart.ImageOptions.SvgImage")));
       this.miLoadListAfterStart.Name = "miLoadListAfterStart";
       // 
       // miShowWarningsAfterLoad
       // 
       resources.ApplyResources(this.miShowWarningsAfterLoad, "miShowWarningsAfterLoad");
       this.miShowWarningsAfterLoad.Id = 54;
-      this.miShowWarningsAfterLoad.ImageOptions.ImageIndex = ((int)(resources.GetObject("miShowWarningsAfterLoad.ImageOptions.ImageIndex")));
-      this.miShowWarningsAfterLoad.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miShowWarningsAfterLoad.ImageOptions.LargeImageIndex")));
-      this.miShowWarningsAfterLoad.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miShowWarningsAfterLoad.ImageOptions.SvgImage")));
       this.miShowWarningsAfterLoad.Name = "miShowWarningsAfterLoad";
       // 
       // miAllowEditPredefinedLists
       // 
-      resources.ApplyResources(this.miAllowEditPredefinedLists, "miAllowEditPredefinedLists");
       this.miAllowEditPredefinedLists.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miAllowEditPredefinedLists, "miAllowEditPredefinedLists");
       this.miAllowEditPredefinedLists.Id = 94;
-      this.miAllowEditPredefinedLists.ImageOptions.ImageIndex = ((int)(resources.GetObject("miAllowEditPredefinedLists.ImageOptions.ImageIndex")));
-      this.miAllowEditPredefinedLists.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miAllowEditPredefinedLists.ImageOptions.LargeImageIndex")));
-      this.miAllowEditPredefinedLists.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miAllowEditPredefinedLists.ImageOptions.SvgImage")));
       this.miAllowEditPredefinedLists.Name = "miAllowEditPredefinedLists";
       this.miAllowEditPredefinedLists.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miAllowEditPredefinedLists_DownChanged);
       // 
       // miExplorerIntegration
       // 
-      resources.ApplyResources(this.miExplorerIntegration, "miExplorerIntegration");
       this.miExplorerIntegration.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miExplorerIntegration, "miExplorerIntegration");
       this.miExplorerIntegration.Id = 97;
-      this.miExplorerIntegration.ImageOptions.ImageIndex = ((int)(resources.GetObject("miExplorerIntegration.ImageOptions.ImageIndex")));
-      this.miExplorerIntegration.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miExplorerIntegration.ImageOptions.LargeImageIndex")));
-      this.miExplorerIntegration.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miExplorerIntegration.ImageOptions.SvgImage")));
       this.miExplorerIntegration.Name = "miExplorerIntegration";
       this.miExplorerIntegration.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miExplorerIntegration_ItemClick);
       // 
       // miCheckUpdates
       // 
-      resources.ApplyResources(this.miCheckUpdates, "miCheckUpdates");
       this.miCheckUpdates.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miCheckUpdates, "miCheckUpdates");
       this.miCheckUpdates.Id = 98;
-      this.miCheckUpdates.ImageOptions.ImageIndex = ((int)(resources.GetObject("miCheckUpdates.ImageOptions.ImageIndex")));
-      this.miCheckUpdates.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miCheckUpdates.ImageOptions.LargeImageIndex")));
-      this.miCheckUpdates.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miCheckUpdates.ImageOptions.SvgImage")));
       this.miCheckUpdates.Name = "miCheckUpdates";
       this.miCheckUpdates.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miCheckUpdates_ItemClick);
       // 
@@ -1951,9 +1789,6 @@
       // 
       resources.ApplyResources(this.miResetAndRestart, "miResetAndRestart");
       this.miResetAndRestart.Id = 112;
-      this.miResetAndRestart.ImageOptions.ImageIndex = ((int)(resources.GetObject("miResetAndRestart.ImageOptions.ImageIndex")));
-      this.miResetAndRestart.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miResetAndRestart.ImageOptions.LargeImageIndex")));
-      this.miResetAndRestart.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miResetAndRestart.ImageOptions.SvgImage")));
       this.miResetAndRestart.Name = "miResetAndRestart";
       this.miResetAndRestart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miResetAndRestart_ItemClick);
       // 
@@ -1961,9 +1796,6 @@
       // 
       resources.ApplyResources(this.mnuAccessibility, "mnuAccessibility");
       this.mnuAccessibility.Id = 64;
-      this.mnuAccessibility.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuAccessibility.ImageOptions.ImageIndex")));
-      this.mnuAccessibility.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuAccessibility.ImageOptions.LargeImageIndex")));
-      this.mnuAccessibility.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuAccessibility.ImageOptions.SvgImage")));
       this.mnuAccessibility.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuGotoChannelList),
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuGotoFavList),
@@ -1982,9 +1814,6 @@
       resources.ApplyResources(this.mnuGotoChannelList, "mnuGotoChannelList");
       this.mnuGotoChannelList.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
       this.mnuGotoChannelList.Id = 89;
-      this.mnuGotoChannelList.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuGotoChannelList.ImageOptions.ImageIndex")));
-      this.mnuGotoChannelList.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuGotoChannelList.ImageOptions.LargeImageIndex")));
-      this.mnuGotoChannelList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuGotoChannelList.ImageOptions.SvgImage")));
       this.mnuGotoChannelList.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuInputSource)});
       this.mnuGotoChannelList.Name = "mnuGotoChannelList";
@@ -1994,9 +1823,6 @@
       resources.ApplyResources(this.mnuInputSource, "mnuInputSource");
       this.mnuInputSource.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
       this.mnuInputSource.Id = 90;
-      this.mnuInputSource.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuInputSource.ImageOptions.ImageIndex")));
-      this.mnuInputSource.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuInputSource.ImageOptions.LargeImageIndex")));
-      this.mnuInputSource.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuInputSource.ImageOptions.SvgImage")));
       this.mnuInputSource.Name = "mnuInputSource";
       // 
       // mnuGotoFavList
@@ -2004,9 +1830,6 @@
       resources.ApplyResources(this.mnuGotoFavList, "mnuGotoFavList");
       this.mnuGotoFavList.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
       this.mnuGotoFavList.Id = 91;
-      this.mnuGotoFavList.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuGotoFavList.ImageOptions.ImageIndex")));
-      this.mnuGotoFavList.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuGotoFavList.ImageOptions.LargeImageIndex")));
-      this.mnuGotoFavList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuGotoFavList.ImageOptions.SvgImage")));
       this.mnuGotoFavList.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavList)});
       this.mnuGotoFavList.Name = "mnuGotoFavList";
@@ -2016,9 +1839,6 @@
       resources.ApplyResources(this.mnuFavList, "mnuFavList");
       this.mnuFavList.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
       this.mnuFavList.Id = 92;
-      this.mnuFavList.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuFavList.ImageOptions.ImageIndex")));
-      this.mnuFavList.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuFavList.ImageOptions.LargeImageIndex")));
-      this.mnuFavList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuFavList.ImageOptions.SvgImage")));
       this.mnuFavList.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miSelectFavList0),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSelectFavListA),
@@ -2032,9 +1852,6 @@
       // 
       resources.ApplyResources(this.miSelectFavList0, "miSelectFavList0");
       this.miSelectFavList0.Id = 83;
-      this.miSelectFavList0.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSelectFavList0.ImageOptions.ImageIndex")));
-      this.miSelectFavList0.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSelectFavList0.ImageOptions.LargeImageIndex")));
-      this.miSelectFavList0.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSelectFavList0.ImageOptions.SvgImage")));
       this.miSelectFavList0.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
                 | System.Windows.Forms.Keys.D0));
       this.miSelectFavList0.Name = "miSelectFavList0";
@@ -2045,9 +1862,6 @@
       // 
       resources.ApplyResources(this.miSelectFavListA, "miSelectFavListA");
       this.miSelectFavListA.Id = 84;
-      this.miSelectFavListA.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSelectFavListA.ImageOptions.ImageIndex")));
-      this.miSelectFavListA.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSelectFavListA.ImageOptions.LargeImageIndex")));
-      this.miSelectFavListA.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSelectFavListA.ImageOptions.SvgImage")));
       this.miSelectFavListA.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
                 | System.Windows.Forms.Keys.D1));
       this.miSelectFavListA.Name = "miSelectFavListA";
@@ -2058,9 +1872,6 @@
       // 
       resources.ApplyResources(this.miSelectFavListB, "miSelectFavListB");
       this.miSelectFavListB.Id = 85;
-      this.miSelectFavListB.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSelectFavListB.ImageOptions.ImageIndex")));
-      this.miSelectFavListB.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSelectFavListB.ImageOptions.LargeImageIndex")));
-      this.miSelectFavListB.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSelectFavListB.ImageOptions.SvgImage")));
       this.miSelectFavListB.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
                 | System.Windows.Forms.Keys.D2));
       this.miSelectFavListB.Name = "miSelectFavListB";
@@ -2071,9 +1882,6 @@
       // 
       resources.ApplyResources(this.miSelectFavListC, "miSelectFavListC");
       this.miSelectFavListC.Id = 86;
-      this.miSelectFavListC.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSelectFavListC.ImageOptions.ImageIndex")));
-      this.miSelectFavListC.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSelectFavListC.ImageOptions.LargeImageIndex")));
-      this.miSelectFavListC.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSelectFavListC.ImageOptions.SvgImage")));
       this.miSelectFavListC.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
                 | System.Windows.Forms.Keys.D3));
       this.miSelectFavListC.Name = "miSelectFavListC";
@@ -2084,9 +1892,6 @@
       // 
       resources.ApplyResources(this.miSelectFavListD, "miSelectFavListD");
       this.miSelectFavListD.Id = 87;
-      this.miSelectFavListD.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSelectFavListD.ImageOptions.ImageIndex")));
-      this.miSelectFavListD.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSelectFavListD.ImageOptions.LargeImageIndex")));
-      this.miSelectFavListD.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSelectFavListD.ImageOptions.SvgImage")));
       this.miSelectFavListD.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
                 | System.Windows.Forms.Keys.D4));
       this.miSelectFavListD.Name = "miSelectFavListD";
@@ -2097,9 +1902,6 @@
       // 
       resources.ApplyResources(this.miSelectFavListE, "miSelectFavListE");
       this.miSelectFavListE.Id = 88;
-      this.miSelectFavListE.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSelectFavListE.ImageOptions.ImageIndex")));
-      this.miSelectFavListE.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSelectFavListE.ImageOptions.LargeImageIndex")));
-      this.miSelectFavListE.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSelectFavListE.ImageOptions.SvgImage")));
       this.miSelectFavListE.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
                 | System.Windows.Forms.Keys.D5));
       this.miSelectFavListE.Name = "miSelectFavListE";
@@ -2111,9 +1913,6 @@
       resources.ApplyResources(this.miSearch, "miSearch");
       this.miSearch.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
       this.miSearch.Id = 67;
-      this.miSearch.ImageOptions.ImageIndex = ((int)(resources.GetObject("miSearch.ImageOptions.ImageIndex")));
-      this.miSearch.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miSearch.ImageOptions.LargeImageIndex")));
-      this.miSearch.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miSearch.ImageOptions.SvgImage")));
       this.miSearch.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F3);
       this.miSearch.Name = "miSearch";
       this.miSearch.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSearch_ItemClick);
@@ -2123,9 +1922,6 @@
       resources.ApplyResources(this.miGotoLeftList, "miGotoLeftList");
       this.miGotoLeftList.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
       this.miGotoLeftList.Id = 69;
-      this.miGotoLeftList.ImageOptions.ImageIndex = ((int)(resources.GetObject("miGotoLeftList.ImageOptions.ImageIndex")));
-      this.miGotoLeftList.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miGotoLeftList.ImageOptions.LargeImageIndex")));
-      this.miGotoLeftList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miGotoLeftList.ImageOptions.SvgImage")));
       this.miGotoLeftList.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F4);
       this.miGotoLeftList.Name = "miGotoLeftList";
       this.miGotoLeftList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miGotoLeftList_ItemClick);
@@ -2135,69 +1931,51 @@
       resources.ApplyResources(this.miGotoRightList, "miGotoRightList");
       this.miGotoRightList.CategoryGuid = new System.Guid("9cf38b78-167f-4d95-b848-8a3c913209c4");
       this.miGotoRightList.Id = 70;
-      this.miGotoRightList.ImageOptions.ImageIndex = ((int)(resources.GetObject("miGotoRightList.ImageOptions.ImageIndex")));
-      this.miGotoRightList.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miGotoRightList.ImageOptions.LargeImageIndex")));
-      this.miGotoRightList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miGotoRightList.ImageOptions.SvgImage")));
       this.miGotoRightList.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F6);
       this.miGotoRightList.Name = "miGotoRightList";
       this.miGotoRightList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miGotoRightList_ItemClick);
       // 
       // miFontSmall
       // 
-      resources.ApplyResources(this.miFontSmall, "miFontSmall");
       this.miFontSmall.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miFontSmall, "miFontSmall");
       this.miFontSmall.Id = 104;
-      this.miFontSmall.ImageOptions.ImageIndex = ((int)(resources.GetObject("miFontSmall.ImageOptions.ImageIndex")));
-      this.miFontSmall.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miFontSmall.ImageOptions.LargeImageIndex")));
-      this.miFontSmall.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miFontSmall.ImageOptions.SvgImage")));
       this.miFontSmall.Name = "miFontSmall";
       this.miFontSmall.Tag = 0;
       this.miFontSmall.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miFont_DownChanged);
       // 
       // miFontMedium
       // 
-      resources.ApplyResources(this.miFontMedium, "miFontMedium");
       this.miFontMedium.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miFontMedium, "miFontMedium");
       this.miFontMedium.Id = 105;
-      this.miFontMedium.ImageOptions.ImageIndex = ((int)(resources.GetObject("miFontMedium.ImageOptions.ImageIndex")));
-      this.miFontMedium.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miFontMedium.ImageOptions.LargeImageIndex")));
-      this.miFontMedium.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miFontMedium.ImageOptions.SvgImage")));
       this.miFontMedium.Name = "miFontMedium";
       this.miFontMedium.Tag = 1;
       this.miFontMedium.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miFont_DownChanged);
       // 
       // miFontLarge
       // 
-      resources.ApplyResources(this.miFontLarge, "miFontLarge");
       this.miFontLarge.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miFontLarge, "miFontLarge");
       this.miFontLarge.Id = 106;
-      this.miFontLarge.ImageOptions.ImageIndex = ((int)(resources.GetObject("miFontLarge.ImageOptions.ImageIndex")));
-      this.miFontLarge.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miFontLarge.ImageOptions.LargeImageIndex")));
-      this.miFontLarge.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miFontLarge.ImageOptions.SvgImage")));
       this.miFontLarge.Name = "miFontLarge";
       this.miFontLarge.Tag = 2;
       this.miFontLarge.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miFont_DownChanged);
       // 
       // miFontXLarge
       // 
-      resources.ApplyResources(this.miFontXLarge, "miFontXLarge");
       this.miFontXLarge.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miFontXLarge, "miFontXLarge");
       this.miFontXLarge.Id = 107;
-      this.miFontXLarge.ImageOptions.ImageIndex = ((int)(resources.GetObject("miFontXLarge.ImageOptions.ImageIndex")));
-      this.miFontXLarge.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miFontXLarge.ImageOptions.LargeImageIndex")));
-      this.miFontXLarge.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miFontXLarge.ImageOptions.SvgImage")));
       this.miFontXLarge.Name = "miFontXLarge";
       this.miFontXLarge.Tag = 3;
       this.miFontXLarge.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miFont_DownChanged);
       // 
       // miFontXxLarge
       // 
-      resources.ApplyResources(this.miFontXxLarge, "miFontXxLarge");
       this.miFontXxLarge.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miFontXxLarge, "miFontXxLarge");
       this.miFontXxLarge.Id = 108;
-      this.miFontXxLarge.ImageOptions.ImageIndex = ((int)(resources.GetObject("miFontXxLarge.ImageOptions.ImageIndex")));
-      this.miFontXxLarge.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miFontXxLarge.ImageOptions.LargeImageIndex")));
-      this.miFontXxLarge.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miFontXxLarge.ImageOptions.SvgImage")));
       this.miFontXxLarge.Name = "miFontXxLarge";
       this.miFontXxLarge.Tag = 4;
       this.miFontXxLarge.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miFont_DownChanged);
@@ -2207,9 +1985,6 @@
       resources.ApplyResources(this.mnuHelp, "mnuHelp");
       this.mnuHelp.CategoryGuid = new System.Guid("0d554574-30e8-4d31-9a70-da702a984260");
       this.mnuHelp.Id = 10;
-      this.mnuHelp.ImageOptions.ImageIndex = ((int)(resources.GetObject("mnuHelp.ImageOptions.ImageIndex")));
-      this.mnuHelp.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("mnuHelp.ImageOptions.LargeImageIndex")));
-      this.mnuHelp.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("mnuHelp.ImageOptions.SvgImage")));
       this.mnuHelp.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miWiki),
             new DevExpress.XtraBars.LinkPersistInfo(this.miOpenWebsite),
@@ -2220,9 +1995,6 @@
       // 
       resources.ApplyResources(this.miWiki, "miWiki");
       this.miWiki.Id = 51;
-      this.miWiki.ImageOptions.ImageIndex = ((int)(resources.GetObject("miWiki.ImageOptions.ImageIndex")));
-      this.miWiki.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miWiki.ImageOptions.LargeImageIndex")));
-      this.miWiki.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miWiki.ImageOptions.SvgImage")));
       this.miWiki.Name = "miWiki";
       this.miWiki.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miWiki_ItemClick);
       // 
@@ -2230,9 +2002,6 @@
       // 
       resources.ApplyResources(this.miOpenWebsite, "miOpenWebsite");
       this.miOpenWebsite.Id = 50;
-      this.miOpenWebsite.ImageOptions.ImageIndex = ((int)(resources.GetObject("miOpenWebsite.ImageOptions.ImageIndex")));
-      this.miOpenWebsite.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miOpenWebsite.ImageOptions.LargeImageIndex")));
-      this.miOpenWebsite.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miOpenWebsite.ImageOptions.SvgImage")));
       this.miOpenWebsite.Name = "miOpenWebsite";
       this.miOpenWebsite.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miOpenWebsite_ItemClick);
       // 
@@ -2242,33 +2011,31 @@
       this.miAbout.CategoryGuid = new System.Guid("0d554574-30e8-4d31-9a70-da702a984260");
       this.miAbout.Id = 11;
       this.miAbout.ImageOptions.ImageIndex = ((int)(resources.GetObject("miAbout.ImageOptions.ImageIndex")));
-      this.miAbout.ImageOptions.LargeImageIndex = ((int)(resources.GetObject("miAbout.ImageOptions.LargeImageIndex")));
-      this.miAbout.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("miAbout.ImageOptions.SvgImage")));
       this.miAbout.Name = "miAbout";
       this.miAbout.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miAbout_ItemClick);
       // 
       // barDockControlTop
       // 
-      resources.ApplyResources(this.barDockControlTop, "barDockControlTop");
       this.barDockControlTop.CausesValidation = false;
+      resources.ApplyResources(this.barDockControlTop, "barDockControlTop");
       this.barDockControlTop.Manager = this.barManager1;
       // 
       // barDockControlBottom
       // 
-      resources.ApplyResources(this.barDockControlBottom, "barDockControlBottom");
       this.barDockControlBottom.CausesValidation = false;
+      resources.ApplyResources(this.barDockControlBottom, "barDockControlBottom");
       this.barDockControlBottom.Manager = this.barManager1;
       // 
       // barDockControlLeft
       // 
-      resources.ApplyResources(this.barDockControlLeft, "barDockControlLeft");
       this.barDockControlLeft.CausesValidation = false;
+      resources.ApplyResources(this.barDockControlLeft, "barDockControlLeft");
       this.barDockControlLeft.Manager = this.barManager1;
       // 
       // barDockControlRight
       // 
-      resources.ApplyResources(this.barDockControlRight, "barDockControlRight");
       this.barDockControlRight.CausesValidation = false;
+      resources.ApplyResources(this.barDockControlRight, "barDockControlRight");
       this.barDockControlRight.Manager = this.barManager1;
       // 
       // lblInsertMode
@@ -2290,9 +2057,9 @@
       // 
       // lblSetProgramNr
       // 
-      resources.ApplyResources(this.lblSetProgramNr, "lblSetProgramNr");
       this.lblSetProgramNr.Appearance.Options.UseTextOptions = true;
       this.lblSetProgramNr.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+      resources.ApplyResources(this.lblSetProgramNr, "lblSetProgramNr");
       this.lblSetProgramNr.Name = "lblSetProgramNr";
       // 
       // picDonate
@@ -2311,7 +2078,6 @@
       // 
       // grpTopPanel
       // 
-      resources.ApplyResources(this.grpTopPanel, "grpTopPanel");
       this.grpTopPanel.Controls.Add(this.rbInsertSwap);
       this.grpTopPanel.Controls.Add(this.rbInsertAfter);
       this.grpTopPanel.Controls.Add(this.rbInsertBefore);
@@ -2321,6 +2087,7 @@
       this.grpTopPanel.Controls.Add(this.tabChannelList);
       this.grpTopPanel.Controls.Add(this.lblSetProgramNr);
       this.grpTopPanel.Controls.Add(this.txtSetSlot);
+      resources.ApplyResources(this.grpTopPanel, "grpTopPanel");
       this.grpTopPanel.Name = "grpTopPanel";
       this.grpTopPanel.ShowCaption = false;
       // 
@@ -2332,11 +2099,7 @@
       this.rbInsertSwap.Properties.AutoWidth = true;
       this.rbInsertSwap.Properties.Caption = resources.GetString("rbInsertSwap.Properties.Caption");
       this.rbInsertSwap.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-      this.rbInsertSwap.Properties.DisplayValueChecked = resources.GetString("rbInsertSwap.Properties.DisplayValueChecked");
-      this.rbInsertSwap.Properties.DisplayValueGrayed = resources.GetString("rbInsertSwap.Properties.DisplayValueGrayed");
-      this.rbInsertSwap.Properties.DisplayValueUnchecked = resources.GetString("rbInsertSwap.Properties.DisplayValueUnchecked");
       this.rbInsertSwap.Properties.GlyphAlignment = ((DevExpress.Utils.HorzAlignment)(resources.GetObject("rbInsertSwap.Properties.GlyphAlignment")));
-      this.rbInsertSwap.Properties.GlyphVerticalAlignment = ((DevExpress.Utils.VertAlignment)(resources.GetObject("rbInsertSwap.Properties.GlyphVerticalAlignment")));
       this.rbInsertSwap.Properties.RadioGroupIndex = 1;
       this.rbInsertSwap.TabStop = false;
       this.rbInsertSwap.CheckedChanged += new System.EventHandler(this.rbInsertMode_CheckedChanged);
@@ -2349,10 +2112,6 @@
       this.rbInsertAfter.Properties.AutoWidth = true;
       this.rbInsertAfter.Properties.Caption = resources.GetString("rbInsertAfter.Properties.Caption");
       this.rbInsertAfter.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-      this.rbInsertAfter.Properties.DisplayValueChecked = resources.GetString("rbInsertAfter.Properties.DisplayValueChecked");
-      this.rbInsertAfter.Properties.DisplayValueGrayed = resources.GetString("rbInsertAfter.Properties.DisplayValueGrayed");
-      this.rbInsertAfter.Properties.DisplayValueUnchecked = resources.GetString("rbInsertAfter.Properties.DisplayValueUnchecked");
-      this.rbInsertAfter.Properties.GlyphVerticalAlignment = ((DevExpress.Utils.VertAlignment)(resources.GetObject("rbInsertAfter.Properties.GlyphVerticalAlignment")));
       this.rbInsertAfter.Properties.RadioGroupIndex = 1;
       this.rbInsertAfter.CheckedChanged += new System.EventHandler(this.rbInsertMode_CheckedChanged);
       // 
@@ -2364,10 +2123,6 @@
       this.rbInsertBefore.Properties.AutoWidth = true;
       this.rbInsertBefore.Properties.Caption = resources.GetString("rbInsertBefore.Properties.Caption");
       this.rbInsertBefore.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-      this.rbInsertBefore.Properties.DisplayValueChecked = resources.GetString("rbInsertBefore.Properties.DisplayValueChecked");
-      this.rbInsertBefore.Properties.DisplayValueGrayed = resources.GetString("rbInsertBefore.Properties.DisplayValueGrayed");
-      this.rbInsertBefore.Properties.DisplayValueUnchecked = resources.GetString("rbInsertBefore.Properties.DisplayValueUnchecked");
-      this.rbInsertBefore.Properties.GlyphVerticalAlignment = ((DevExpress.Utils.VertAlignment)(resources.GetObject("rbInsertBefore.Properties.GlyphVerticalAlignment")));
       this.rbInsertBefore.Properties.RadioGroupIndex = 1;
       this.rbInsertBefore.TabStop = false;
       this.rbInsertBefore.CheckedChanged += new System.EventHandler(this.rbInsertMode_CheckedChanged);
@@ -2378,10 +2133,6 @@
       this.cbCloseGap.MenuManager = this.barManager1;
       this.cbCloseGap.Name = "cbCloseGap";
       this.cbCloseGap.Properties.Caption = resources.GetString("cbCloseGap.Properties.Caption");
-      this.cbCloseGap.Properties.DisplayValueChecked = resources.GetString("cbCloseGap.Properties.DisplayValueChecked");
-      this.cbCloseGap.Properties.DisplayValueGrayed = resources.GetString("cbCloseGap.Properties.DisplayValueGrayed");
-      this.cbCloseGap.Properties.DisplayValueUnchecked = resources.GetString("cbCloseGap.Properties.DisplayValueUnchecked");
-      this.cbCloseGap.Properties.GlyphVerticalAlignment = ((DevExpress.Utils.VertAlignment)(resources.GetObject("cbCloseGap.Properties.GlyphVerticalAlignment")));
       // 
       // tabChannelList
       // 
@@ -2394,8 +2145,8 @@
       // 
       // pageEmpty
       // 
-      resources.ApplyResources(this.pageEmpty, "pageEmpty");
       this.pageEmpty.Name = "pageEmpty";
+      resources.ApplyResources(this.pageEmpty, "pageEmpty");
       // 
       // popupContext
       // 
@@ -2426,8 +2177,8 @@
       // 
       // grpSubList
       // 
-      resources.ApplyResources(this.grpSubList, "grpSubList");
       this.grpSubList.Controls.Add(this.tabSubList);
+      resources.ApplyResources(this.grpSubList, "grpSubList");
       this.grpSubList.Name = "grpSubList";
       this.grpSubList.ShowCaption = false;
       // 
@@ -2443,8 +2194,8 @@
       // 
       // pageProgNr
       // 
-      resources.ApplyResources(this.pageProgNr, "pageProgNr");
       this.pageProgNr.Name = "pageProgNr";
+      resources.ApplyResources(this.pageProgNr, "pageProgNr");
       // 
       // popupInputSource
       // 
@@ -2470,8 +2221,8 @@
       // 
       // MainForm
       // 
-      resources.ApplyResources(this, "$this");
       this.AllowDrop = true;
+      resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.splitContainerControl1);
       this.Controls.Add(this.grpSubList);

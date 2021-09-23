@@ -1,6 +1,8 @@
 #include <stddefs.h>
 
-struct SHeader
+#pragma byte_order(LittleEndian)
+
+struct Header
 {
   uint32 blockId;
   uint32 blockSize;
@@ -13,32 +15,41 @@ struct SHeader
   uint32 channelBlockSize;
 };
 
-struct SChannel_fta
+struct Channel
 {
     uint32 curProgNr;
     uint32 u1;
     uint8 u2[8];
     uint32 favNr;
-    char chName1[200];
-    uint16 u3;
-    uint8 u3b[208];
-    uint8 u3c[2];
-    uint16 u3d;	
-    uint8 u4[10];
+    char name[200];
+    uint8 u3[208];
+	struct
+	{
+		uint8 isFav : 1;
+	} flags1;
+	uint8 u4;
+	struct
+	{
+		uint8 u1 : 3;
+		uint8 isFav : 1;
+	} flags2;
+    uint8 u5[5];
+	uint32 favNr2;
+	uint8 u6[4];
     uint32 freqInMhz1;
-    uint16 u6;
+    uint16 u7;
     uint16 symRate;
     uint32 oldProgNr;
     uint32 channelIndex;
     uint16 tsid;
-    uint16 u7;
+    uint16 u8;
     uint16 sid;
     uint16 onid;
     uint16 freqInMhz2;
-    uint8 padding[6];
+    uint8 padding[10];
 };
 
-struct SFooter
+struct Footer
 {
     uint32 numDataBlocks;
     uint32 numDataBlockBytes;
@@ -46,108 +57,14 @@ struct SFooter
     uint16 u_zero;
 };
 
-public struct Philips_mgr_chan_s_fta
+public struct Philips_mgr_chan
 {
     char filename[32];
-    SHeader header;
-    var recordCount = header.channelBlockSize / sizeof(SChannel_fta);
-    SChannel_fta channels[recordCount];
-    SFooter footer;	
+    Header header;
+    var recordCount = header.channelBlockSize / sizeof(Channel);
+    Channel channels[recordCount];
+    Footer footer;	
 };
-
-//#########################################################
-
-struct SChannel_pkg
-{
-    uint32 curProgNr;
-    uint32 u1;
-    uint8 u2[8];
-    uint32 favNr;
-    char chName1[200];
-    uint16 u3;
-    uint8 u3b[208];
-    uint8 u3c[2];
-    uint16 u3d;
-    uint8 u4[10];
-    uint32 freqInMhz1;
-    uint16 u6;
-    uint16 symRate;
-    uint32 oldProgNr;
-    uint32 channelIndex;
-    uint16 tsid;
-    uint16 u7;
-    uint16 sid;
-    uint16 onid;
-    uint16 freqInMhz2;
-    uint8 padding[6];
-    // some files have this additional size of 4 bytes
-    uint8 padding2[4];
-};
-
-public struct Philips_mgr_chan_s_pkg
-{
-    char filename[32];
-    SHeader header;
-    var recordCount = header.channelBlockSize / sizeof(SChannel_pkg);
-    SChannel_pkg channels[recordCount];
-    SFooter footer;
-};
-
-//#########################################################
-
-struct CChannel
-{
-    uint32 curProgNr;
-    uint32 u1;
-    uint8 u2[8];
-    uint32 favNr;
-    union
-    {
-        char chName1[200];
-#pragma byte_order (BigEndian)
-        big_endian wchar_t chName2[100];
-#pragma byte_order ()
-        struct 
-        {
-            uint8 zero;
-            wchar_t chName3[99];
-            uint8 zero2;
-        } chName4;
-    } chName;
-    uint16 u3;
-    uint16 u3b;
-    char provider[200];
-    uint8 u4[16];
-    uint32 freqInHz;
-    uint16 u6;
-    uint16 not_symRate;
-    uint32 oldProgNr;
-    uint8 u7[4];
-    uint32 channelIndex;
-    uint16 tsid;
-    uint16 symRate_maybe;
-    uint16 sid;
-    uint16 onid;
-    //uint16 freqInMhz2;
-    //uint16 u9;
-    uint32 u10;
-};
-
-
-public struct Philips_mgr_chan_dvbt
-{
-    var docSize = GetDocumentSize();
-
-    char filename[32];
-    
-    SHeader header;
-
-    var recordCount = header.channelBlockSize / sizeof(CChannel);
-    CChannel channels[recordCount];
-    
-    SFooter footer;	
-};
-
 
 //*****************************************************************************************
 // FLASH files

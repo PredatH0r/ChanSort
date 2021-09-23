@@ -121,10 +121,10 @@
     <value>Pr. index</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Tip de serviciu</value>
+    <value>Tip de\nserviciu</value>
   </data>
   <data name="colOutSlot.Caption" xml:space="preserve">
-    <value>New Pos</value>
+    <value>New\nPos</value>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>Numărul nou de program</value>
@@ -142,7 +142,7 @@
     <value>Blocare</value>
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Blocare parentală</value>
+    <value>Blocare\nparentală</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
     <value>Sări</value>
@@ -466,13 +466,13 @@
     <value>Pr. index</value>
   </data>
   <data name="colSlotOld.Caption" xml:space="preserve">
-    <value>Postul vechi</value>
+    <value>Postul\nvechi</value>
   </data>
   <data name="colSlotOld.ToolTip" xml:space="preserve">
     <value>Nr. vechi</value>
   </data>
   <data name="colSlotNew.Caption" xml:space="preserve">
-    <value>Postul nou</value>
+    <value>Postul\nnou</value>
   </data>
   <data name="colSlotNew.ToolTip" xml:space="preserve">
     <value>Nr. nou</value>
@@ -484,7 +484,7 @@
     <value>Numele canalului</value>
   </data>
   <data name="colShortName.Caption" xml:space="preserve">
-    <value>Nume scurt</value>
+    <value>Nume\nscurt</value>
   </data>
   <data name="colFavorites.Caption" xml:space="preserve">
     <value>Favorite</value>
@@ -505,16 +505,16 @@
     <value>Codificat</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>ID Tip serviciu</value>
+    <value>ID Tip\nserviciu</value>
   </data>
   <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Tip de serviciu</value>
+    <value>Tip de\nserviciu</value>
   </data>
   <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Frecvența (MHz)</value>
+    <value>Frecvența\n(MHz)</value>
   </data>
   <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Canal/ Transp</value>
+    <value>Canal/\nTransp</value>
   </data>
   <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
     <value>Numărul canalului sau al transponderului</value>
@@ -523,7 +523,7 @@
     <value>Satelit</value>
   </data>
   <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>Rețea (ONID)</value>
+    <value>Rețea\n(ONID)</value>
   </data>
   <data name="colTransportStreamId.Caption" xml:space="preserve">
     <value>ID TS</value>
@@ -532,25 +532,22 @@
     <value>ID Flux de transport</value>
   </data>
   <data name="colServiceId.Caption" xml:space="preserve">
-    <value>ID Serviciu</value>
+    <value>ID\nServiciu</value>
   </data>
   <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>Video PID</value>
-  </data>
-  <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Audio PID</value>
+    <value>Video\nPID</value>
   </data>
   <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Rată simbol</value>
+    <value>Rată\nsimbol</value>
   </data>
   <data name="colPolarity.Caption" xml:space="preserve">
     <value>Polaritate</value>
   </data>
   <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Numele retelei</value>
+    <value>Numele\nretelei</value>
   </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
-    <value>Operatorul rețelei</value>
+    <value>Operatorul\nrețelei</value>
   </data>
   <data name="colProvider.Caption" xml:space="preserve">
     <value>Furnizor de</value>
@@ -562,7 +559,7 @@
     <value>Order</value>
   </data>
   <data name="colSignalSource.Caption" xml:space="preserve">
-    <value>Sursă de semnal</value>
+    <value>Sursă de\nsemnal</value>
   </data>
   <data name="lblHotkeyRight.Text" xml:space="preserve">
     <value>F5: Filtru | F6: Listă | Enter: adăugați</value>
@@ -626,5 +623,8 @@ furnizor specific, satelit sau liste de țări.</value>
   </data>
   <data name="miTheme.Caption" xml:space="preserve">
     <value>Schema de culori...</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio\nPID</value>
   </data>
 </root>

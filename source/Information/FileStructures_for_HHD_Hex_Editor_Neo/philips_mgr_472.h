@@ -1,5 +1,7 @@
 #include <stddefs.h>
 
+#pragma byte_order(LittleEndian)
+
 struct Header
 {
   uint32 blockId;
@@ -20,23 +22,36 @@ struct Channel
     uint8 u2[8];
     uint32 favNr;
     char name[200];
-    uint16 u3;
-    uint16 u3b;
+    uint16 u3[2];
     char provider[200];
-    uint8 u4[16];
+
+	// < unsure > offset not 100% sure
+    uint8 u4[4];
+	struct
+	{
+		uint8 isFav : 1;
+	} flags1;
+	uint8 u5;
+	struct
+	{
+		uint8 u1 : 3;
+		uint8 isFav : 1;
+	} flags2;
+    uint8 u6[5];
+	uint32 favNr2;
+	// </ unsure >
+
     uint32 freqInHz;
-    uint16 u6;
+    uint16 u7;
     uint16 not_symRate;
     uint32 oldProgNr;
-    uint8 u7[4];
+    uint8 u8[4];
     uint32 channelIndex;
     uint16 tsid;
     uint16 symRate_maybe;
     uint16 sid;
     uint16 onid;
-    //uint16 freqInMhz2;
-    //uint16 u9;
-    uint32 u10;
+    uint32 u9;
 };
 
 struct Footer
@@ -47,7 +62,7 @@ struct Footer
     uint16 u_zero;
 };
 
-public struct Philips_mgr_chan_s_fta
+public struct Philips_mgr_chan
 {
     char filename[32];
     Header header;

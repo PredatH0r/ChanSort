@@ -40,9 +40,10 @@ namespace ChanSort.Loader.Panasonic
         this.SignalSource |= SignalSource.SatIP;
 
       byte[] buffer = new byte[1000];
+      int len = 0;
       if (!r.IsDBNull(field["delivery"]))
       {
-        var len = r.GetBytes(field["delivery"], 0, buffer, 0, 1000);
+        len = (int)r.GetBytes(field["delivery"], 0, buffer, 0, 1000);
         this.AddDebug(buffer, 0, (int) len);
       }
 
@@ -55,7 +56,7 @@ namespace ChanSort.Loader.Panasonic
       if (ntype == 10 || ntype == 14)
         this.ReadAnalogData(r, field);
       else
-        this.ReadDvbData(r, field, dataRoot, buffer);
+        this.ReadDvbData(r, field, dataRoot, buffer, len);
     }
 
     #endregion
@@ -84,7 +85,7 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region ReadDvbData()
-    protected void ReadDvbData(IDataReader r, IDictionary<string, int> field, DataRoot dataRoot, byte[] delivery)
+    protected void ReadDvbData(IDataReader r, IDictionary<string, int> field, DataRoot dataRoot, byte[] delivery, int deliveryLength)
     {
       int stype = r.GetInt32(field["stype"]);
       this.SignalSource |= LookupData.Instance.IsRadioTvOrData(stype);
@@ -96,18 +97,37 @@ namespace ChanSort.Loader.Panasonic
 // ReSharper disable PossibleLossOfFraction
         this.FreqInMhz = freq/10;
 // ReSharper restore PossibleLossOfFraction
-        int satId = r.GetInt32(field["physical_ch"]) >> 12;
-        var sat = dataRoot.Satellites.TryGet(satId);
-        if (sat != null)
+
+        if (deliveryLength == 17) // files of this version also include an additional "cicam_identifier" column
         {
-          this.Satellite = sat.Name;
-          this.SatPosition = sat.OrbitalPosition;
+          // 50 94 14 01 90 99 21 00 22 31 92 01 00 00 00 00 00
+          this.SymbolRate = (delivery[6] >> 4) * 10000 + (delivery[6] & 0x0F) * 1000 +
+                            (delivery[5] >> 4) * 100 + (delivery[5] & 0x0F) * 10;
+          this.SatPosition = ((decimal)((delivery[11] >> 4) * 1000 + (delivery[11] & 0x0F) * 100 + 
+                                        (delivery[10] >> 4) * 10 + (delivery[10] & 0x0F)) / 10).ToString("n1"); // 92 01 => 19.2
+          this.Satellite = this.SatPosition;
         }
-        if (delivery.Length >= 7)
+        else if (deliveryLength == 15)
         {
-          this.SymbolRate = (delivery[5] >> 4)*10000 + (delivery[5] & 0x0F)*1000 +
-                            (delivery[6] >> 4)*100 + (delivery[6] & 0x0F)*10;
+          // 01 14 92 99 00 21 99 90 02 31 01 92 00 00 00
+          this.SymbolRate = (delivery[5] >> 4) * 10000 + (delivery[5] & 0x0F) * 1000 +
+                            (delivery[6] >> 4) * 100 + (delivery[6] & 0x0F) * 10;
+          this.SatPosition = ((decimal)((delivery[10] >> 4) * 1000 + (delivery[10] & 0x0F) * 100 + (delivery[11] >> 4) * 10 +
+                                        (delivery[11] & 0x0F)) / 10).ToString("n1"); // 01 92 => 19.2
+          this.Satellite = this.SatPosition;
         }
+        else
+        {
+          int satId = r.GetInt32(field["physical_ch"]) >> 12;
+          var sat = dataRoot.Satellites.TryGet(satId);
+          if (sat != null)
+          {
+            this.Satellite = sat.Name;
+            this.SatPosition = sat.OrbitalPosition;
+          }
+        }
+
+        this.Source = "DVB-S";
       }
       else
       {
@@ -116,7 +136,7 @@ namespace ChanSort.Loader.Panasonic
         this.ChannelOrTransponder = (this.SignalSource & SignalSource.Antenna) != 0 ? 
           LookupData.Instance.GetDvbtTransponder(freq).ToString() : 
           LookupData.Instance.GetDvbcTransponder(freq).ToString();
-        this.Satellite = (this.SignalSource & SignalSource.Antenna) != 0 ? "DVB-T" : "DVB-C";
+        this.Source = (this.SignalSource & SignalSource.Antenna) != 0 ? "DVB-T" : "DVB-C";
       }
 
       this.OriginalNetworkId = r.GetInt32(field["onid"]);

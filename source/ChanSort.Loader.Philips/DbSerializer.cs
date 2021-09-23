@@ -50,8 +50,8 @@ namespace ChanSort.Loader.Philips
     #region ctor()
     public DbSerializer(string inputFile) : base(inputFile)
     {
-      this.Features.MaxFavoriteLists = 0; //1;
-      this.Features.FavoritesMode = FavoritesMode.None; // FavoritesMode.OrderedPerSource; // doesn't work yet, must be hidden somewhere inside the FLASH files too
+      this.Features.MaxFavoriteLists = 1;
+      this.Features.FavoritesMode = FavoritesMode.OrderedPerSource; // doesn't work yet, must be hidden somewhere inside the FLASH files too
       this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanHaveGaps = true; // the mgr_chan_s_pkg can have gaps
 
@@ -237,6 +237,10 @@ namespace ChanSort.Loader.Philips
         ch.TransportStreamId = mapping.GetWord("offTsid");
         ch.OriginalNetworkId = mapping.GetWord("offOnid");
         ch.ServiceId = mapping.GetWord("offSid");
+
+        ch.AddDebug(mapping.GetByte("offFavFlags1"));
+        ch.AddDebug(mapping.GetByte("offFavFlags2"));
+
         this.DataRoot.AddChannel(list, ch);
       }
 
@@ -406,6 +410,7 @@ namespace ChanSort.Loader.Philips
 
         var ch = (Channel)channelList.Channels[idMapping.ChannelIndex];
         ch.FlashFileOffset = mapping.BaseOffset;
+        ch.AddDebug($"{ch.FlashFileOffset:x5}:{block}.{i:d3}");
         var hasDiff = false;
         var sid = mapping.GetWord("sid");
         var progNr = (mapping.GetWord("progNr") & 0x3FFF);
@@ -513,11 +518,14 @@ namespace ChanSort.Loader.Philips
             continue;
           var newOff = lenHeader + newIndex * lenEntry;
           Array.Copy(oldData, lenHeader + (int)ch.RecordIndex * lenEntry, newData, newOff, lenEntry);
+          var favPos = Math.Max(0, ch.GetPosition(1));
           mapping.SetDataPtr(newData, newOff);
           mapping.SetWord("offProgNr", ch.NewProgramNr);
-          mapping.SetWord("offFav", Math.Max(0, ch.GetPosition(1)));
+          mapping.SetWord("offFav", favPos);
           mapping.SetWord("offOldProgNr", ch.NewProgramNr);
           mapping.SetWord("offRecordIndex", newIndex);
+          mapping.SetFlag("FavFlags1", favPos > 0);
+          mapping.SetFlag("FavFlags2", favPos > 0);
           //ch.RecordIndex = newIndex; // will be updated when saving the FLASH file
           ++newIndex;
         }

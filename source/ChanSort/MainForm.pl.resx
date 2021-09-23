@@ -121,7 +121,7 @@
     <value>Pr. indeks</value>
   </data>
   <data name="colOutSlot.Caption" xml:space="preserve">
-    <value>Nowa pozycja</value>
+    <value>Nowa\npozycja</value>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
     <value>Nowy numer programu</value>
@@ -136,7 +136,7 @@
     <value>Zablokowane</value>
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Blokada rodzicielska</value>
+    <value>Blokada\nrodzicielska</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
     <value>Pominięte</value>
@@ -148,7 +148,7 @@
     <value>Usunięte</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Rodzaj usługi</value>
+    <value>Rodzaj\nusługi</value>
   </data>
   <data name="colOutSource.Caption" xml:space="preserve">
     <value>Źródło</value>
@@ -505,7 +505,7 @@
     <value>Stary numer programu</value>
   </data>
   <data name="colSlotNew.Caption" xml:space="preserve">
-    <value>Nowa pozycja</value>
+    <value>Nowa\npozycja</value>
   </data>
   <data name="colSlotNew.ToolTip" xml:space="preserve">
     <value>Nowa pozycja</value>
@@ -520,7 +520,7 @@
     <value>Nazwa kanału</value>
   </data>
   <data name="colShortName.Caption" xml:space="preserve">
-    <value>Krótka nazwa</value>
+    <value>Krótka\nnazwa</value>
   </data>
   <data name="colFavorites.Caption" xml:space="preserve">
     <value>Ulubione</value>
@@ -544,19 +544,19 @@
     <value>Zaszyfrowane</value>
   </data>
   <data name="colServiceType.Caption" xml:space="preserve">
-    <value>Identyfikator typu usługi</value>
+    <value>Identyfikator\ntypu usługi</value>
   </data>
   <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Rodzaj usługi</value>
+    <value>Rodzaj\nusługi</value>
   </data>
   <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Częstotliwość (MHz)</value>
+    <value>Częstotliwość\n(MHz)</value>
   </data>
   <data name="colPolarity.Caption" xml:space="preserve">
     <value>Polaryzacja</value>
   </data>
   <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Kanał/ Transponder</value>
+    <value>Kanał/\nTransp</value>
   </data>
   <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
     <value>Numer kanału lub transpondera</value>
@@ -565,7 +565,7 @@
     <value>Satelita</value>
   </data>
   <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>Sieć (ONID)</value>
+    <value>Sieć\n(ONID)</value>
   </data>
   <data name="colTransportStreamId.Caption" xml:space="preserve">
     <value>TS ID</value>
@@ -574,28 +574,22 @@
     <value>Identyfikator strumienia transportowego</value>
   </data>
   <data name="colServiceId.Caption" xml:space="preserve">
-    <value>ID usługi</value>
-  </data>
-  <data name="colPcrPid.Caption" xml:space="preserve">
-    <value>PCR PID</value>
+    <value>ID\nusługi</value>
   </data>
   <data name="colPcrPid.ToolTip" xml:space="preserve">
     <value>Numer referencyjny pakietu programu</value>
   </data>
   <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>Wideo PID</value>
-  </data>
-  <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Audio PID</value>
+    <value>Wideo\nPID</value>
   </data>
   <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Szybkość transferu</value>
+    <value>Szybkość\ntransferu</value>
   </data>
   <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Nazwa sieci</value>
+    <value>Nazwa\nsieci</value>
   </data>
   <data name="colNetworkOperator.Caption" xml:space="preserve">
-    <value>Operator sieci</value>
+    <value>Operator\nsieci</value>
   </data>
   <data name="colProvider.Caption" xml:space="preserve">
     <value>Dostawca</value>
@@ -607,7 +601,7 @@
     <value>Zamówione</value>
   </data>
   <data name="colSignalSource.Caption" xml:space="preserve">
-    <value>Źródło sygnału</value>
+    <value>Źródło\nsygnału</value>
   </data>
   <data name="lblHotkeyRight.Text" xml:space="preserve">
     <value>F5: Filtr | F6: lista | Wpisz: dodaj</value>
@@ -686,5 +680,8 @@
   </data>
   <data name="miLoadListAfterStart.Caption" xml:space="preserve">
     <value>Załaduj ostatnio używaną listę po uruchomieniu</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio\nPID</value>
   </data>
 </root>
