@@ -1,6 +1,10 @@
 ChanSort Change Log 
 ===================
 
+TBD
+- Panasonic: improved symbol rate and satellite position detection
+- startup window location and size are adjusted to fit on screen
+
 2021-09-23
 - improved per-monitor DPI scaling (i.e. moving the window from a Full-HD to a 4K display with 100% and 200% scale)
 - improved "column auto width" (right clicking a column header) by forcing line breaks in the column captions

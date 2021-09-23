@@ -100,31 +100,35 @@ namespace ChanSort.Loader.Panasonic
 
         if (deliveryLength >= 12)
         {
-          // byte 5 and 6 contain hex-encoded decimal digits for symbol rate divided by 10. bytes 10 and 11 are the sat orbital position
-          // however there are some files that swap the bytes with no clear indication what format is used by the TV.
-          // we use a heuristic approach whether byte 0 or byte 3 is 0x01
+          // Bytes 4-6 or 5-7 contain hex-encoded decimal digits for symbol rate. Bytes 10 and 11 are the sat orbital position.
+          // The byte-order varies between files and neither the endian-ness of the file header nor any other field gives a reliable clue which order is used.
+          // So I use bytes 0 and 3 as a heuristic to check for 0x01
 
-          if (delivery[3] == 0x01)
+          // 01 14 92 99 00 21 99 90 02 31 01 92 00 00 00
+          var bigEndianSymbolRate = (delivery[5] >> 4) * 10000 + (delivery[5] & 0x0F) * 1000 + // 21 99 90 => 21999
+                                    (delivery[6] >> 4) * 100 + (delivery[6] & 0x0F) * 10 + (delivery[7] >> 4);
+          var bigEndianSatPosition = (delivery[10] >> 4) * 1000 + (delivery[10] & 0x0F) * 100 + (delivery[11] >> 4) * 10 + (delivery[11] & 0x0F); // 01 92 => 192
+
+          // 50 94 14 01 90 99 21 00 22 31 92 01 00 00 00 00 00 
+          // 04 54 10 01 10 50 27 00 04 09 30 01 00 00 00
+          var littleEndianSymbolRate = (delivery[6] >> 4) * 10000 + (delivery[6] & 0x0F) * 1000 + // 21 99 90 => 21999
+                                       (delivery[5] >> 4) * 100 + (delivery[5] & 0x0F) * 10 + (delivery[4] >> 4);
+          var littleEndianSatPosition = (delivery[11] >> 4) * 1000 + (delivery[11] & 0x0F) * 100 + (delivery[10] >> 4) * 10 + (delivery[10] & 0x0F); // 92 01 => 192
+
+
+          bool useBigEndian = delivery[0] == 1 ? delivery[3] != 1 || bigEndianSymbolRate >= 4000 && bigEndianSymbolRate <= 60000 && (bigEndianSymbolRate + 5) % 100 <= 10 : false;
+          if (useBigEndian)
           {
-            // 50 94 14 01 90 99 21 00 22 31 92 01 00 00 00 00 00 
-            // 04 54 10 01 10 50 27 00 04 09 30 01 00 00 00
-
-            this.SymbolRate = (delivery[6] >> 4) * 10000 + (delivery[6] & 0x0F) * 1000 +
-                              (delivery[5] >> 4) * 100 + (delivery[5] & 0x0F) * 10;
-            this.SatPosition = ((decimal)((delivery[11] >> 4) * 1000 + (delivery[11] & 0x0F) * 100 + // 99 21 => 21990, 50 27 => 27500
-                                          (delivery[10] >> 4) * 10 + (delivery[10] & 0x0F)) / 10).ToString("n1"); // 92 01 => 19.2
-            this.Satellite = this.SatPosition;
+            this.SymbolRate = bigEndianSymbolRate;
+            this.SatPosition = ((decimal)bigEndianSatPosition / 10).ToString("n1");
           }
           else
           {
-            // 01 14 92 99 00 21 99 90 02 31 01 92 00 00 00
-
-            this.SymbolRate = (delivery[5] >> 4) * 10000 + (delivery[5] & 0x0F) * 1000 + // 21 99 => 21990
-                              (delivery[6] >> 4) * 100 + (delivery[6] & 0x0F) * 10;
-            this.SatPosition = ((decimal)((delivery[10] >> 4) * 1000 + (delivery[10] & 0x0F) * 100 + (delivery[11] >> 4) * 10 +
-                                          (delivery[11] & 0x0F)) / 10).ToString("n1"); // 01 92 => 19.2
-            this.Satellite = this.SatPosition;
+            this.SymbolRate = littleEndianSymbolRate;
+            this.SatPosition = ((decimal)littleEndianSatPosition / 10).ToString("n1");
           }
+
+          this.Satellite = this.SatPosition;
         }
         else
         {

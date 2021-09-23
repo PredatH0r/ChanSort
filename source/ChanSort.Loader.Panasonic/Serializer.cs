@@ -8,6 +8,8 @@ using ChanSort.Api;
 
 namespace ChanSort.Loader.Panasonic
 {
+  internal enum ByteOrder { BigEndian, LittleEndian }
+
   class Serializer : SerializerBase
   {
     private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT, "Analog Antenna");
@@ -22,7 +24,7 @@ namespace ChanSort.Loader.Panasonic
     private CypherMode cypherMode;
     private byte[] fileHeader = Array.Empty<byte>();
     private int dbSizeOffset;
-    private bool littleEndianByteOrder;
+    private ByteOrder headerByteOrder;
     private string charEncoding;
     private bool explicitUtf8;
     private bool implicitUtf8;
@@ -168,12 +170,12 @@ namespace ChanSort.Loader.Panasonic
         throw new FileLoadException("Checksum validation failed");
 
       int offset;
-      if (!this.ValidateFileSize(data, false, out offset) 
-        && !this.ValidateFileSize(data, true, out offset))
+      if (!this.ValidateFileSize(data, ByteOrder.BigEndian, out offset) && 
+          !this.ValidateFileSize(data, ByteOrder.LittleEndian, out offset))
         throw new FileLoadException("File size validation failed");
 
       using (var stream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
-        stream.Write(data, offset, data.Length - offset - 4);
+      stream.Write(data, offset, data.Length - offset - 4);
 
       this.fileHeader = new byte[offset];
       Array.Copy(data, 0, this.fileHeader, 0, offset);
@@ -181,13 +183,13 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region ValidateFileSize()
-    private bool ValidateFileSize(byte[] data, bool littleEndian, out int offset)
+    private bool ValidateFileSize(byte[] data, ByteOrder byteOrder, out int offset)
     {
-      this.littleEndianByteOrder = littleEndian;
-      offset = 30 + Tools.GetInt16(data, 28, littleEndian);
+      this.headerByteOrder = byteOrder;
+      offset = 30 + Tools.GetInt16(data, 28, byteOrder == ByteOrder.LittleEndian);
       if (offset >= data.Length) return false;
       this.dbSizeOffset = offset;
-      int dbSize = Tools.GetInt32(data, offset, littleEndian);
+      int dbSize = Tools.GetInt32(data, offset, byteOrder == ByteOrder.LittleEndian);
       offset += 4;
       return data.Length == offset + dbSize + 4;
     }
@@ -403,7 +405,7 @@ order by s.ntype,major_channel
       using (var stream = new FileStream(this.workFile, FileMode.Open, FileAccess.Read))
         stream.Read(data, fileHeader.Length, (int)workFileSize);
 
-      Tools.SetInt32(data, this.dbSizeOffset, (int)workFileSize, this.littleEndianByteOrder);
+      Tools.SetInt32(data, this.dbSizeOffset, (int)workFileSize, this.headerByteOrder == ByteOrder.LittleEndian);
       this.UpdateChecksum(data);
 
       using (var stream = new FileStream(this.FileName, FileMode.Create, FileAccess.Write))
@@ -435,8 +437,7 @@ order by s.ntype,major_channel
         case CypherMode.Encryption: sb.AppendLine("encrypted SQLite database"); break;
         case CypherMode.HeaderAndChecksum: 
           sb.AppendLine("embedded SQLite database");
-          sb.Append("Byte order: ").AppendLine(this.littleEndianByteOrder ? 
-            "little-endian (least significant byte first)" : "big-endian (most significant byte first)");
+          sb.Append("Header byte order: ").AppendLine(this.headerByteOrder.ToString());
           break;
       }
       sb.Append("Character encoding: ").AppendLine(this.charEncoding);
