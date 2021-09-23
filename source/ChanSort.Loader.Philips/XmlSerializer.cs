@@ -605,21 +605,6 @@ namespace ChanSort.Loader.Philips
       {
         if (reorderNodes && (file.formatVersion == FormatVersion.RepairXml || Path.GetFileName(file.path).ToLowerInvariant().StartsWith("dvb")))
           this.ReorderNodes(file);
-        var satelliteListcopy = this.iniMapSection?.GetString("satelliteListcopy") ?? "";
-        var nodeList = file.doc.GetElementsByTagName("SatelliteListcopy");
-        var arr = new XmlNode[nodeList.Count];
-        for (int i = 0; i < arr.Length; i++)
-          arr[i] = nodeList[i];
-        if (satelliteListcopy == "" || satelliteListcopy == "delete" || satelliteListcopy == "remove")
-        {
-          foreach (XmlNode elem in arr)
-            elem.ParentNode.RemoveChild(elem);
-        }
-        else
-        {
-          foreach (XmlNode elem in arr)
-            elem.InnerText = satelliteListcopy;
-        }
 
         this.SaveFile(file);
       }

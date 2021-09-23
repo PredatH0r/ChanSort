@@ -1,7 +1,9 @@
 ChanSort Change Log 
 ===================
 
-TBD
+2021-09-23_1945
+- Philips: disabled deleting of channels for ChannelMap\_100 - 115, except for version 100 without any .bin files.
+  (Lists with .bin files require that the .xml file contains all the same channels to override all channel numbers)
 - Panasonic: improved symbol rate and satellite position detection
 - startup window location and size are adjusted to fit on screen
 
