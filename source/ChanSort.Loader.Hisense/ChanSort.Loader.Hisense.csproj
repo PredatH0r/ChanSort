@@ -137,6 +137,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.ro.resx" />
+    <EmbeddedResource Include="Resources.ru.resx" />
     <EmbeddedResource Include="Resources.tr.resx" />
   </ItemGroup>
   <ItemGroup />

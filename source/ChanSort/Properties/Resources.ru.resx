@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,4 +117,181 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MainForm_LoadTll_SourceTllNotFound" xml:space="preserve">
+    <value>Не удалось найти исходный TLL::
+'{0}'</value>
+  </data>
+  <data name="MainForm_LoadTll_Exception" xml:space="preserve">
+    <value>Ошибка загрузки файла с ТВ-данными:
+{0}</value>
+  </data>
+  <data name="MainForm_FileDialog_OpenFileFilter" xml:space="preserve">
+    <value>Поддерживаемые файлы|{0}|Все файлы (*.*)|*</value>
+  </data>
+  <data name="MainForm_FileDialog_SaveFileFilter" xml:space="preserve">
+    <value>{0}-файлы|*{0}|Все файлы (*.*)|*</value>
+  </data>
+  <data name="MainForm_TryExecute_Exception" xml:space="preserve">
+    <value>Неизвестная ошибка:
+{0}</value>
+  </data>
+  <data name="MainForm_SaveTllFile_Exception" xml:space="preserve">
+    <value>Ошибка записи файла с ТВ-данными:
+{0}</value>
+  </data>
+  <data name="MainForm_SaveTllFile_Success" xml:space="preserve">
+    <value>Файл с отсортированными ТВ-данными успешно создан.</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Question" xml:space="preserve">
+    <value>Сохранить изменения?</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Save" xml:space="preserve">
+    <value>Сохранить изменения</value>
+  </data>
+  <data name="MainForm_PromptSaveAndContinue_Discard" xml:space="preserve">
+    <value>Не сохранять изменения</value>
+  </data>
+  <data name="MainForm_LoadTll_SerializerNotFound" xml:space="preserve">
+    <value>Не найден плагин для чтения/записи файлов {0}.</value>
+  </data>
+  <data name="MainForm_LoadFiles_IOException" xml:space="preserve">
+    <value>Ошибка загрузки файла</value>
+  </data>
+  <data name="MainForm_LoadFiles_ValidationWarningMsg" xml:space="preserve">
+    <value>Не всё в порядке с содержимым файла, возможно, он повреждён.</value>
+  </data>
+  <data name="MainForm_LoadFiles_ValidationWarningCap" xml:space="preserve">
+    <value>Проверка данных</value>
+  </data>
+  <data name="MainForm_RestoreScanOrder_Message" xml:space="preserve">
+    <value>Все пользовательские изменения будут потеряны.
+Вы действительно хотите восстановить порядок из сканирования каналов?</value>
+  </data>
+  <data name="MainForm_RestoreScanOrder_Caption" xml:space="preserve">
+    <value>Порядок из сканирования каналов</value>
+  </data>
+  <data name="MainForm_LoadFiles_DupeWarningMsg" xml:space="preserve">
+    <value>Входной файл содержит несколько записей, в которых используется 
+один и тот же номер программы. Вполне возможно, что телевизор
+не примет изменения, внесённые ChanSort.
+Обычно это вызвано выполнением сканирования транспондера вручную.
+Рекомендуется использовать чистый входной файл для любых изменений.
+Для этого выключите режим отеля, сбросьте настройки телевизора в 
+заводские, запустите новое слепое сканирование каналов и снова включите
+режим отеля, после чего экспортируйте новый чистый TLL-файл.</value>
+  </data>
+  <data name="MainForm_btnResetChannelData_Click_Message" xml:space="preserve">
+    <value>ВНИМАНИЕ: Все аналоговые, DVB-C/T и DVB-S каналы и данные транспондера будут удалены.
+После загрузки этого файла в телевизор придётся выполнить полное сканирование каналов.
+Продолжить?</value>
+  </data>
+  <data name="MainForm_btnResetChannelData_Click_Caption" xml:space="preserve">
+    <value>Стереть все данные каналов</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_Message" xml:space="preserve">
+    <value>Невозможно скопировать файл .bak в {0}</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_ItemClick_NoBackup" xml:space="preserve">
+    <value>Не найден файл резервной копии: {0}</value>
+  </data>
+  <data name="MainForm_miRestoreOriginal_ItemClick_Confirm" xml:space="preserve">
+    <value>Вы собираетесь восстановить данные из резервной копии. Все изменения будут потеряны!
+Продолжить?</value>
+  </data>
+  <data name="MainForm_SaveFiles_ErrorMsg" xml:space="preserve">
+    <value>Ошибка при сохранении файла. Убедитесь, что
+- у вас есть разрешение на запись в файл
+- файл не открыт в другой программе
+
+Сообщение об ошибке:</value>
+  </data>
+  <data name="MainForm_SaveFiles_ErrorTitle" xml:space="preserve">
+    <value>Ошибка записи файла</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Message" xml:space="preserve">
+    <value>Доступна новая версия: v{0}.
+Открыть веб-страницу загрузки?</value>
+  </data>
+  <data name="UpdateCheck_NotifyAboutNewVersion_Caption" xml:space="preserve">
+    <value>Новая версия</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_Question" xml:space="preserve">
+    <value>Как вы хотите отредактировать список каналов?</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
+    <value>Создать новый список: Начать с пустого списка и добавить каналы в нужном порядке</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
+    <value>Изменить текущий список: Начать с текущего списка и изменить его</value>
+  </data>
+  <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
+    <value>Скопировать список каналов: Упорядочить каналы, как в справочном списке</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
+    <value>Как поступить с неотсортированными каналами?</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Append" xml:space="preserve">
+    <value>Добавить в конец списка</value>
+  </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
+    <value>Удалить из списка</value>
+  </data>
+  <data name="MainForm_Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Caption" xml:space="preserve">
+    <value>Файл не найден</value>
+  </data>
+  <data name="MainForm_LoadTvDataFile_FileNotFound_Message" xml:space="preserve">
+    <value>Файл {0} не существует.</value>
+  </data>
+  <data name="MainForm_ExportExcelList_Message" xml:space="preserve">
+    <value>Список каналов скопирован в буфер обмена и
+может быть вставлен в Excel или текстовый редактор.</value>
+  </data>
+  <data name="MainForm_HandleChannelNumberGaps" xml:space="preserve">
+    <value>Телевизор может работать неправильно, если есть пропуски номеров каналов.
+Хотите, чтобы номера каналов были последовательно переупорядочены?</value>
+  </data>
+  <data name="MainForm_LoadFiles_AllZero" xml:space="preserve">
+    <value>Некорректное содержимое файла. Либо у файла нулевой размер, либо все его байты имеют одинаковое значение.
+Типичные причины - USB-накопители с файловой системой NTFS (попробуйте вместо неё использовать FAT32)
+или обновление прошивки без повторного сканирования каналов. 
+(Возможно, новое ПО телевизора не сможет обработать старые данные каналов при экспорте.)</value>
+  </data>
+  <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
+    <value>Антенна,Кабель,Спутник,IP,Аналог,Цифра,ТВ,Радио,Данные</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
+    <value>Что делать, если в целевом списке № канала уже занят?</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Clear" xml:space="preserve">
+    <value>Очистить целевой список перед применением базового списка</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Overwrite" xml:space="preserve">
+    <value>Перезаписать номера каналов из исходного списка</value>
+  </data>
+  <data name="ReferenceListForm_btnApply_Click_Keep" xml:space="preserve">
+    <value>Сохранить у текущего канала Pr#</value>
+  </data>
+  <data name="MainForm_SwapChannels_RowCountMsg" xml:space="preserve">
+    <value>Для обмена каналов местами нужно выбрать равное количество строк в левой и правой таблицах.</value>
+  </data>
+  <data name="MainForm_SwapChannels_RowCountTitle" xml:space="preserve">
+    <value>Обмен каналами</value>
+  </data>
+  <data name="ReferenceListForm_ShowOpenFileDialog_Title" xml:space="preserve">
+    <value>Выберите базовый список для импорта</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Filter" xml:space="preserve">
+    <value>Базовый список ChanSort|*.csv|Базовый список SamToolBox|*.chl|Все базовые списки|*.csv;*.chl</value>
+  </data>
+  <data name="MainForm_ShowOpenReferenceFileDialog_Title" xml:space="preserve">
+    <value>Открыть базовый список</value>
+  </data>
+  <data name="MainForm_LoadTll_InvalidZip" xml:space="preserve">
+    <value>Этот файл не является корректным zip-архивом.
+Телевизоры нередко экспортируют с ошибками файлы на USB-накопители с файловой системой NTFS.
+Попробуйте выполнить экспорт на USB-флешку, отформатированную в FAT32.</value>
+  </data>
 </root>

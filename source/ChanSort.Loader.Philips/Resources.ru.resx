@@ -117,10 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="progressPanel1.Description" xml:space="preserve">
-    <value>Создание файла ТВ-данных…</value>
+  <data name="InfoIgnoreImportError" xml:space="preserve">
+    <value>Телевизор может неправильно сообщать об ошибке импорта, но это можно игнорировать.</value>
   </data>
-  <data name="progressPanel1.Caption" xml:space="preserve">
-    <value>Подождите</value>
+  <data name="InfoRestartAfterImport" xml:space="preserve">
+    <value>ИНФОРМАЦИЯ: После импорта списка обратно в телевизор отключите его и снова включите через несколько секунд.</value>
+  </data>
+  <data name="WarningChecksumErrorMsg" xml:space="preserve">
+    <value>ВНИМАНИЕ: В загруженном списке обнаружены ошибки контрольных сумм!
+
+Возможны две ситуации, как это может произойти:
+
+- Повреждён внутренний список каналов телевизора (например, после обновления прошивки)
+   Это можно исправить, снова выполнив сканирование каналов или сбросив настройки телевизора.
+   Затем снова экспортируйте список и откройте его в ChanSort.
+   Попытка отредактировать и импортировать повреждённый файл может привести к некорректной работе телевизора.
+
+- Плохой USB-накопитель (плохие ячейки памяти или несовместимый формат файла)
+   Попробуйте использовать флешку объёмом не больше 16 ГБ, отформатированную в FAT32 (но не в NTFS или exFAT).</value>
+  </data>
+  <data name="WarningChechsumErrorIgnore" xml:space="preserve">
+    <value>Игнорировать ошибку и всё равно редактировать список</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
   </data>
 </root>

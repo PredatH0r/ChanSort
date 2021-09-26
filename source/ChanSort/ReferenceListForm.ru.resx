@@ -117,10 +117,97 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="progressPanel1.Description" xml:space="preserve">
-    <value>Создание файла ТВ-данных…</value>
+  <data name="labelControl1.Text" xml:space="preserve">
+    <value>Базовый файл-список:</value>
   </data>
-  <data name="progressPanel1.Caption" xml:space="preserve">
-    <value>Подождите</value>
+  <data name="edFile.EditValue" xml:space="preserve">
+    <value>← нажмите кнопку, чтобы выбрать файл</value>
+  </data>
+  <data name="labelControl2.Text" xml:space="preserve">
+    <value>Выберите файл с порядком каналов, который вы хотите применить к текущему списку. Можно использовать один из предопределённых списков ChanSort (TXT, CHL, CSV) или файл данных с другого телевизора (SCM, TLL, DB, BIN, ...)</value>
+  </data>
+  <data name="rbAuto.Properties.Caption" xml:space="preserve">
+    <value>Автопереупорядочивание всех списков в ТВ-файле</value>
+  </data>
+  <data name="rbManual.Properties.Caption" xml:space="preserve">
+    <value>Расширенное переупорядочивание</value>
+  </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Базовый список:</value>
+  </data>
+  <data name="labelControl4.Text" xml:space="preserve">
+    <value>Целевой список:</value>
+  </data>
+  <data name="cbTv.Properties.Caption" xml:space="preserve">
+    <value>ТВ</value>
+  </data>
+  <data name="cbRadio.Properties.Caption" xml:space="preserve">
+    <value>Радио</value>
+  </data>
+  <data name="labelControl5.Text" xml:space="preserve">
+    <value>Начинать с №:</value>
+  </data>
+  <data name="labelControl6.Text" xml:space="preserve">
+    <value>(т.е. пусть радиоканалы начинаются с 5000, чтобы избежать конфликтов с номерами телеканалов)</value>
+  </data>
+  <data name="checkEdit1.Properties.Caption" xml:space="preserve">
+    <value>Данные/Другое</value>
+  </data>
+  <data name="cbConsecutive.Properties.Caption" xml:space="preserve">
+    <value>Последовательная нумерация (удалять пропуски из списка №пр)</value>
+  </data>
+  <data name="cbIp.Properties.Caption" xml:space="preserve">
+    <value>IP (сеть)</value>
+  </data>
+  <data name="cbSat.Properties.Caption" xml:space="preserve">
+    <value>Спутник</value>
+  </data>
+  <data name="labelControl11.Text" xml:space="preserve">
+    <value>Вход:</value>
+  </data>
+  <data name="cbAntenna.Properties.Caption" xml:space="preserve">
+    <value>Антенна</value>
+  </data>
+  <data name="cbCable.Properties.Caption" xml:space="preserve">
+    <value>Кабель</value>
+  </data>
+  <data name="labelControl9.Text" xml:space="preserve">
+    <value>Сигнал:</value>
+  </data>
+  <data name="cbAnalog.Properties.Caption" xml:space="preserve">
+    <value>Аналоговый</value>
+  </data>
+  <data name="cbDigital.Properties.Caption" xml:space="preserve">
+    <value>Цифровой</value>
+  </data>
+  <data name="labelControl7.Text" xml:space="preserve">
+    <value>Тип канала:</value>
+  </data>
+  <data name="btnApply.Text" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="btnClose.Text" xml:space="preserve">
+    <value>Закрыть/Отмена</value>
+  </data>
+  <data name="linkWiki.Text" xml:space="preserve">
+    <value>Открыть вики-страницу ChanSort с информацией и загрузкой базовых списков</value>
+  </data>
+  <data name="groupControl1.Text" xml:space="preserve">
+    <value>1. Выберите базовый файл-список</value>
+  </data>
+  <data name="labelControl10.Text" xml:space="preserve">
+    <value>Если ТВ-файл и базовый файл содержат несколько списков или используют различную группировку, к целевому списку можно применить выбранные части базового списка. При необходимости этот шаг можно повторить.</value>
+  </data>
+  <data name="labelControl8.Text" xml:space="preserve">
+    <value>Эта опция доступна, только если ТВ-файл и базовый список организованы одинаково (т.е. те же субсписки для комбинаций антенны / кабеля / спутника, ТВ / радио, аналога / цифры)</value>
+  </data>
+  <data name="groupControl2.Text" xml:space="preserve">
+    <value>2. Наведите порядок в ТВ-файле</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Применить базовый список</value>
   </data>
 </root>

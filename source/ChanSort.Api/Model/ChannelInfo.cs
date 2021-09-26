@@ -247,42 +247,47 @@ namespace ChanSort.Api
     #endregion
 
     #region AddDebug()
-    public void AddDebug(byte val)
+    public ChannelInfo AddDebug(byte val)
     {
       if (this.Debug == null)
         this.Debug = val.ToString("x2");
       else
         this.Debug += " " + val.ToString("x2");
+      return this;
     }
 
-    public void AddDebug(ushort val)
+    public ChannelInfo AddDebug(ushort val)
     {
       if (this.Debug == null)
         this.Debug = val.ToString("x4");
       else
         this.Debug += " " + val.ToString("x4");
+      return this;
     }
 
-    public void AddDebug(uint val)
+    public ChannelInfo AddDebug(uint val)
     {
       if (this.Debug == null)
         this.Debug = val.ToString("x8");
       else
         this.Debug += " " + val.ToString("x8");
+      return this;
     }
 
-    public void AddDebug(byte[] data, int offset, int len)
+    public ChannelInfo AddDebug(byte[] data, int offset, int len)
     {
       for (int i = 0; i < len; i++)
         this.AddDebug(data[offset + i]);
+      return this;
     }
 
-    public void AddDebug(string val)
+    public ChannelInfo AddDebug(string val)
     {
       if (this.Debug == null)
         this.Debug = val;
       else
         this.Debug += " " + val;
+      return this;
     }
     #endregion
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,4 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="labelControl1.Text" xml:space="preserve">
+    <value>Этот файл содержит предустановленные номера программ для спутниковых каналов. Из-за проблем с новыми прошивками LG такие списки больше не могут быть надёжно изменены.</value>
+  </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Редактирование списка спутниковых каналов отключено!</value>
+  </data>
+  <data name="labelControl4.Text" xml:space="preserve">
+    <value>Чтобы включить редактирование, нужно сначала выполнить чистый полный поиск каналов:</value>
+  </data>
+  <data name="labelControl5.Text" xml:space="preserve">
+    <value>* Сохраните копию текущего файла TLL, если хотите использовать его как базовый список позже</value>
+  </data>
+  <data name="labelControl6.Text" xml:space="preserve">
+    <value>* Выполните автоматический поиск каналов с опциями "Полный", "Нет" и "Слепой поиск"</value>
+  </data>
+  <data name="labelControl7.Text" xml:space="preserve">
+    <value>* Сбросьте настройки телевизора в заводские значения</value>
+  </data>
+  <data name="linkDetails.Text" xml:space="preserve">
+    <value>См. подробности на вики-странице ChanSort</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="labelControl2.Text" xml:space="preserve">
+    <value>* Сохраните новый список на USB и откройте его в ChanSort</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Важное замечание</value>
+  </data>
 </root>

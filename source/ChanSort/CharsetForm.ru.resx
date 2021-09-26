@@ -121,12 +121,15 @@
     <value>Набор символов</value>
   </data>
   <data name="btnCancel.Text" xml:space="preserve">
-    <value>Отменить</value>
+    <value>Отмена</value>
   </data>
   <data name="btnMyCountry.Text" xml:space="preserve">
     <value>Набор символов по умолчанию для моей страны</value>
   </data>
   <data name="btnOk.Text" xml:space="preserve">
-    <value>Ok</value>
+    <value>OK</value>
+  </data>
+  <data name="colDisplayName.Caption" xml:space="preserve">
+    <value>Описание</value>
   </data>
 </root>

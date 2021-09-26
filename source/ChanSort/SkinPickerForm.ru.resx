@@ -118,12 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnCancel.Text" xml:space="preserve">
-    <value>Отменить</value>
+    <value>Отмена</value>
   </data>
   <data name="btnOk.Text" xml:space="preserve">
-    <value>Ok</value>
+    <value>OK</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Цветовая схема</value>
+    <value>Цветовая тема</value>
+  </data>
+  <data name="btnReset.Text" xml:space="preserve">
+    <value>Использовать стандартную тему</value>
   </data>
 </root>

@@ -118,6 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnCancel.Text" xml:space="preserve">
-    <value>Отменить</value>
+    <value>Отмена</value>
+  </data>
+  <data name="labelControl1.Text" xml:space="preserve">
+    <value>Сортировка:</value>
+  </data>
+  <data name="rbSortByNumber.Properties.Caption" xml:space="preserve">
+    <value>Номер</value>
+  </data>
+  <data name="rbSortByName.Properties.Caption" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="labelControl2.Text" xml:space="preserve">
+    <value>Шрифт:</value>
+  </data>
+  <data name="btnPreview.Text" xml:space="preserve">
+    <value>Предпросмотр…</value>
+  </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Колонки:</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Параметры печати</value>
   </data>
 </root>

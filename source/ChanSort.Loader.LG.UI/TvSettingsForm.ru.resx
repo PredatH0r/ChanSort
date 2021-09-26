@@ -118,6 +118,54 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnCancel.Text" xml:space="preserve">
-    <value>Отменить</value>
+    <value>Отмена</value>
+  </data>
+  <data name="cbHbbTv.Properties.Caption" xml:space="preserve">
+    <value>Включить HbbTV (работает только с настройками страны DEU, FRA, NED и ESP)</value>
+  </data>
+  <data name="cbCustomCountry.Properties.Caption" xml:space="preserve">
+    <value>разрешить своё значение (на ваш риск!)</value>
+  </data>
+  <data name="labelControl1.Text" xml:space="preserve">
+    <value>Страна:</value>
+  </data>
+  <data name="grpOption.Text" xml:space="preserve">
+    <value>Меню OPTION</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>ПРИМЕЧАНИЕ: Если включён режим отеля, вы не сможете выбирать канал из телегида, а сброс в заводские настройки станет недоступным.</value>
+  </data>
+  <data name="labelControl2.Text" xml:space="preserve">
+    <value>Опции ниже предназначены только для режима отеля</value>
+  </data>
+  <data name="cbDtvUpdate.Properties.Caption" xml:space="preserve">
+    <value>Автообновление каналов D-TV (лучше выключить)</value>
+  </data>
+  <data name="cbHotelMode.Properties.Caption" xml:space="preserve">
+    <value>Включить режим отеля (лучше включить)</value>
+  </data>
+  <data name="grpHotelMode.Text" xml:space="preserve">
+    <value>Режим отеля</value>
+  </data>
+  <data name="cbAutoChannelUpdate.Properties.Caption" xml:space="preserve">
+    <value>Автообновление каналов (лучше выключить)</value>
+  </data>
+  <data name="grpSetup.Text" xml:space="preserve">
+    <value>Меню SETUP</value>
+  </data>
+  <data name="labelControl4.Text" xml:space="preserve">
+    <value>TLL-файл вашей модели телевизора поддерживается не полностью, из-за чего многие функции здесь отключены.</value>
+  </data>
+  <data name="grpInformation.Text" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="lblHotelMenuAutoDetect.Text" xml:space="preserve">
+    <value>Автоопределение меню отеля</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Настройки ТВ</value>
   </data>
 </root>

@@ -117,10 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="progressPanel1.Description" xml:space="preserve">
-    <value>Создание файла ТВ-данных…</value>
+  <data name="Load_NoChannelsMsg" xml:space="preserve">
+    <value>Этот файл-список каналов не содержит никаких данных.
+Скорее всего, во время начальной настройки телевизора был выбран предопределённый список каналов. Такие списки не экспортируются и не могут быть отредактированы на телевизоре или в компьютере.
+Чтобы получить список, который можно редактировать на компьютере, нужно сбросить настройки телевизора до заводских и выбрать опцию 'Другое' при настройке спутниковых каналов.</value>
   </data>
-  <data name="progressPanel1.Caption" xml:space="preserve">
-    <value>Подождите</value>
+  <data name="Load_NoChannelsCaption" xml:space="preserve">
+    <value>Каналы не найдены</value>
   </data>
 </root>

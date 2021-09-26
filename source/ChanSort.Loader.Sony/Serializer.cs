@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using ChanSort.Api;
+// ReSharper disable UnusedMember.Local
 
 namespace ChanSort.Loader.Sony
 {
@@ -40,6 +42,8 @@ namespace ChanSort.Loader.Sony
 
     private readonly Dictionary<SignalSource, ChannelListNodes> channeListNodes = new Dictionary<SignalSource, ChannelListNodes>();
     private ChannelList mixedFavList;
+    private readonly IniFile ini;
+    private readonly IniFile.Section iniSection;
 
     #region enum NwMask
     // ui4_nw_mask for the Android "e110"-format
@@ -57,16 +61,18 @@ namespace ChanSort.Loader.Sony
       NotDeletedByUserOption = 0x0200,
       Radio = 0x0400,
       Encrypted = 0x0800,
+      Tv = 0x2000,
 
       MaskWhenDeleted = 0x0206
     }
 
+    // ui4_nw_option_mask for the Android "e110"-format
     [Flags]
     private enum NwOptionMask : uint
     {
-      NameEdited = 1 << 3, // guess based on values from Hisense
-      ChNumEdited = 1 << 10, // used by Sony Channel Editor 1.2.0, SetEdit 1.21 and Hisense
-      DeletedByUser = 1 << 13 // used by Sony Channel Editor 1.2.0 and Hisense
+      NameEdited = 1 << 3, // 8, 0x0008 - guess based on values from Hisense
+      ChNumEdited = 1 << 10, // 1024, 0x0400 - used by Sony Channel Editor 1.2.0, SetEdit 1.21 and Hisense
+      DeletedByUser = 1 << 13 // 8192, 0x2000 - used by Sony Channel Editor 1.2.0 and Hisense
     }
     #endregion
 
@@ -102,6 +108,10 @@ namespace ChanSort.Loader.Sony
         list.VisibleColumnFieldNames.Remove("ShortName");
         list.VisibleColumnFieldNames.Remove("Provider");
       }
+
+      string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
+      this.ini = new IniFile(iniFile);
+      this.iniSection = ini.GetSection("sdb.xml");
     }
     #endregion
 
@@ -124,10 +134,8 @@ namespace ChanSort.Loader.Sony
           ValidationFlags = XmlSchemaValidationFlags.None,
           DtdProcessing = DtdProcessing.Ignore
         };
-        using (var reader = XmlReader.Create(new StringReader(textContent), settings))
-        {
-          doc.Load(reader);
-        }
+        using var reader = XmlReader.Create(new StringReader(textContent), settings);
+        doc.Load(reader);
       }
       catch
       {
@@ -336,15 +344,15 @@ namespace ChanSort.Loader.Sony
       {
         var recId = int.Parse(svcData["ui2_svl_rec_id"][i]);
         var chan = new Channel(signalSource, i, recId);
-        var no = ParseInt(svcData["No"][i]);
+        var no = ParseInt(svcData["No"][i]); // the lower 18 bits always have 0x80 set and bits 0-1 seem to encode a service type like 1=TV, 2=radio, 3=data
+        chan.AddDebug("No.low=").AddDebug((uint)no & 0x3FFFF);
         chan.OldProgramNr = (int)((uint)no >> 18);
+        chan.RecordOrder = chan.OldProgramNr;
         var nwMask = (NwMask)uint.Parse(svcData["ui4_nw_mask"][i]);
-        chan.AddDebug("NW=");
-        chan.AddDebug((uint)nwMask);
-        chan.AddDebug("OPT=");
-        chan.AddDebug(uint.Parse(svcData["ui4_nw_option_mask"][i]));
+        chan.AddDebug("NW=").AddDebug((uint)nwMask);
+        chan.AddDebug("OPT=").AddDebug(uint.Parse(svcData["ui4_nw_option_mask"][i]));
         chan.IsDeleted = (nwMask & NwMask.NotDeletedByUserOption) == 0;
-        chan.IsDeleted |= svcData["b_deleted_by_user"][i] != "1";
+        chan.IsDeleted |= svcData["b_deleted_by_user"][i] != "1"; // reverse logic: 0=deleted, 1=NOT deleted
         chan.Hidden = (nwMask & NwMask.Visible) == 0;
         chan.Encrypted = (nwMask & NwMask.Encrypted) != 0;
         chan.Encrypted |= dvbData["t_free_ca_mode"][i] == "1";
@@ -749,12 +757,26 @@ namespace ChanSort.Loader.Sony
         if (field == "ui4_nw_mask")
         {
           var mask = ((uint) ch.Favorites << 4) | (ch.Hidden ? 0u : (uint) NwMask.Visible) | (uint.Parse(value) & ~(uint) (NwMask.FavMask | NwMask.Visible));
+          // for deleted channels in the e110 format SDBEdit 0.9 removes only 0x200 from this mask, Sony Channel Editor 1.2.0 clears 0x206
           if (ch.IsDeleted)
             mask &= ~(uint)NwMask.MaskWhenDeleted;
           return mask.ToString();
         }
+
         if (field == "ui4_nw_option_mask")
-          return (uint.Parse(value) | (uint)(NwOptionMask.ChNumEdited | (ch.IsNameModified ? NwOptionMask.NameEdited : 0) | (ch.IsDeleted ? NwOptionMask.DeletedByUser : 0))).ToString();
+        {
+          // SDBEdit 0.9 does not change this field at all (in the e110 format)
+          // Sony Channel Editor 1.2.0 sets the DeletedByUser flag + ChNumEdited flag 
+          var mask = (NwOptionMask)uint.Parse(value);
+          if (this.iniSection.GetBool("setProgNrEditedFlag", true))
+            mask = (mask & ~NwOptionMask.ChNumEdited) | (ch.IsNameModified ? NwOptionMask.ChNumEdited : 0);
+          if (this.iniSection.GetBool("setProgNameEditedFlag", true))
+            mask = (mask & ~NwOptionMask.NameEdited) | (ch.IsNameModified ? NwOptionMask.NameEdited : 0);
+          if (this.iniSection.GetBool("setDeletedFlagInNwOptionMask", true))
+            mask = mask & ~NwOptionMask.DeletedByUser | (ch.IsDeleted ? NwOptionMask.DeletedByUser : 0);
+          return ((uint)mask).ToString();
+        }
+
         if (field == "aui1_custom_data") // mixed favorite list position
         {
           var vals = value.Split(' ');

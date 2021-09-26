@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="$this.Text" xml:space="preserve">
-    <value>О ChanSort</value>
+    <value>О программе ChanSort</value>
   </data>
   <data name="btnClose.Text" xml:space="preserve">
     <value>Закрыть</value>
@@ -133,6 +133,6 @@
     <value>Лицензия:</value>
   </data>
   <data name="lblCredits.Text" xml:space="preserve">
-    <value>Благодарность:</value>
+    <value>Благодарности:</value>
   </data>
 </root>

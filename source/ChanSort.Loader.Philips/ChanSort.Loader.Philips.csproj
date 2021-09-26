@@ -131,6 +131,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.ro.resx" />
+    <EmbeddedResource Include="Resources.ru.resx" />
     <EmbeddedResource Include="Resources.tr.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

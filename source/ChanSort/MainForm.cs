@@ -18,6 +18,7 @@ using ChanSort.Ui.Printing;
 using ChanSort.Ui.Properties;
 using DevExpress.Data;
 using DevExpress.LookAndFeel;
+using DevExpress.Office.Services;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
@@ -2160,11 +2161,12 @@ namespace ChanSort.Ui
       if (this.adjustWindowLocationOnScale) // adjust WindowStartPosition "CenterScreen" to new window size, but don't move upper left corner off-screen
       {
         var screen = Screen.FromPoint(new Point(this.Left + this.Width / 2, this.Top + this.Height / 2));
+        var b = screen.WorkingArea;
         this.Bounds = new Rectangle(
-          Math.Max(screen.Bounds.Left, this.Left - (newSize.Width - oldSize.Width) / 2), 
-          Math.Max(screen.Bounds.Top, this.Top - (newSize.Height - oldSize.Height) / 2),
-          Math.Min(screen.Bounds.Width, this.Width),
-          Math.Min(screen.Bounds.Height, this.Height));
+          Math.Max(b.Left, this.Left - (newSize.Width - oldSize.Width) / 2), 
+          Math.Max(b.Top, this.Top - (newSize.Height - oldSize.Height) / 2),
+          Math.Min(b.Width, this.Width),
+          Math.Min(b.Height, this.Height));
       }
 
       this.bar1.Visible = true;
