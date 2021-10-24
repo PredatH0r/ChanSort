@@ -502,9 +502,13 @@ namespace ChanSort.Ui
 
         regex += c;
       }
-      regex += "]*";
+      if (favorites == 0)
+        regex = "";
+      else
+        regex += "]*";
       this.repositoryItemCheckedComboBoxEdit1.Mask.EditMask = regex;
       this.repositoryItemCheckedComboBoxEdit2.Mask.EditMask = regex;
+      this.repositoryItemCheckedComboBoxEdit1.ReadOnly = this.repositoryItemCheckedComboBoxEdit2.ReadOnly = favorites == 0;
       
       this.tabSubList.BeginUpdate();
       while (this.tabSubList.TabPages.Count > favCount + 1)

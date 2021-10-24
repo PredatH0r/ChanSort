@@ -1,6 +1,16 @@
 ChanSort Change Log 
 ===================
 
+2021-10-24
+- LG webOS 5 and 6: Improved support for DVB-C lists which changed channel numbers after import
+  (Now setting the "userEditChNumber" and "userSelCHNo" flags when channel numbers are changed.
+  This can be disabled in ChanSort.Loader.LG.ini, section \[webOS 5\], setting set_userEditChNumber=false)
+- Sat>IP/.m3u: Support for files with extra information after the #EXTM3U header
+  Also capturing the group-title from #EXTINF, showing the msys value in the Source column (dvbs/dvbt/...), 
+  and showing all URL-parameters in the Debug column
+- Panasonic .xml: files with "&" characters in channel names can now be loaded 
+  (Panasonic does not escape special XML characters and produces invalid XML syntax) 
+
 2021-09-23_1945
 - Philips: disabled deleting of channels for ChannelMap\_100 - 115, except for version 100 without any .bin files.
   (Lists with .bin files require that the .xml file contains all the same channels to override all channel numbers)

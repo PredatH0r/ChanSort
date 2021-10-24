@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Schema;
 using ChanSort.Api;
@@ -70,6 +71,7 @@ namespace ChanSort.Loader.Panasonic
         doc = new XmlDocument();
         var content = File.ReadAllBytes(this.FileName);
         var textContent = Encoding.UTF8.GetString(content);
+        textContent = FixUnescapedXmlChars(textContent);
 
         var settings = new XmlReaderSettings
         {
@@ -101,6 +103,30 @@ namespace ChanSort.Loader.Panasonic
             break;
         }
       }
+    }
+    #endregion
+
+    #region FixUnescapedXmlChars()
+    private string FixUnescapedXmlChars(string textContent)
+    {
+      var sb = new StringBuilder((int)(textContent.Length * 1.1));
+      var inQuotes = false;
+      foreach (var c in textContent)
+      {
+        if (c == '\"')
+          inQuotes = !inQuotes;
+
+        if (c == '&' && inQuotes)
+          sb.Append("&amp;");
+        else if (c == '<' && inQuotes)
+          sb.Append("&lt;");
+        else if (c == '>' && inQuotes)
+          sb.Append("&gt;");
+        else
+          sb.Append(c);
+      }
+
+      return sb.ToString();
     }
     #endregion
 
@@ -152,11 +178,73 @@ namespace ChanSort.Loader.Panasonic
       xmlSettings.NewLineHandling = NewLineHandling.None;
       xmlSettings.NewLineChars = "\n";
       xmlSettings.OmitXmlDeclaration = true;
-      using var w = XmlWriter.Create(tvOutputFile, xmlSettings);
+
+      // write to a string so that we can patch the result to be binary identical to the original file (if there are no changes)
+      using var stringWriter = new StringWriter();
+      using var w = XmlWriter.Create(stringWriter, xmlSettings);
       doc.WriteTo(w);
+      w.Flush();
+      stringWriter.Write('\n'); // original file has a trailing \x0A
+      var xml = stringWriter.ToString();
+      xml = UnescapeXmlChars(xml); // create same broken XML as the original export with unescaped entities
+      xml = xml.Replace(" />", "/>"); // original file has no space before the element end
+      File.WriteAllText(tvOutputFile, xml, xmlSettings.Encoding);
       this.FileName = tvOutputFile;
     }
 
+    #endregion
+
+    #region UnescapeXmlChars()
+    /// <summary>
+    /// Generate the same broken XML with unescaped XML-entities as the original Panasonic XML export does (i.e. literal '&' character in channel names)
+    /// </summary>
+    private string UnescapeXmlChars(string xml)
+    {
+      bool inQuotes = false;
+      bool inEntity = false;
+      string entity = "";
+      var sb = new StringBuilder(xml.Length);
+      foreach (var c in xml)
+      {
+        if (inEntity)
+        {
+          if (c == ';')
+          {
+            switch (entity)
+            {
+              case "lt":
+                sb.Append("<");
+                break;
+              case "gt":
+                sb.Append(">");
+                break;
+              case "amp":
+                sb.Append("&");
+                break;
+            }
+
+            inEntity = false;
+          }
+          else
+            entity += c;
+          continue;
+        }
+
+        if (c == '"')
+          inQuotes = !inQuotes;
+
+        if (c == '&' && inQuotes)
+        {
+          inEntity = true;
+          entity = "";
+          continue;
+        }
+
+        sb.Append(c);
+      }
+
+      return sb.ToString();
+    }
     #endregion
 
 

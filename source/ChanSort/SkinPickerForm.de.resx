@@ -126,4 +126,7 @@
   <data name="btnOk.Text" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="btnReset.Text" xml:space="preserve">
+    <value>Standard-Skin verwenden</value>
+  </data>
 </root>

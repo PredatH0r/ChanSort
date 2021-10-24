@@ -39,7 +39,7 @@ namespace ChanSort.Loader.M3u
       base.DefaultEncoding = new UTF8Encoding(false);
       this.allChannels.VisibleColumnFieldNames = new List<string>()
       {
-        "+OldPosition", "+Position", "+Name", "+FreqInMhz", "+Polarity", "+SymbolRate", "+VideoPid", "+AudioPid", "+Satellite", "+Provider"
+        "+OldPosition", "+Position", "+Name", "+SatPosition", "+Source", "+FreqInMhz", "+Polarity", "+SymbolRate", "+Satellite", "+Provider", "+Debug"
       };
     }
     #endregion
@@ -60,7 +60,7 @@ namespace ChanSort.Loader.M3u
 
       var rdr = new StreamReader(new MemoryStream(content), overrideEncoding ?? this.DefaultEncoding);
       string line = rdr.ReadLine()?.TrimEnd();
-      if (line == null || line != "#EXTM3U")
+      if (line == null || !(line == "#EXTM3U" || line.StartsWith("#EXTM3U ")))
         throw new FileLoadException("Unsupported .m3u file: " + this.FileName);
 
       this.headerLines.Add(line);
@@ -122,15 +122,14 @@ namespace ChanSort.Loader.M3u
     {
       int progNr = 0;
       string name = "";
-      int extInfTrackNameIndex = -1;
 
+      int extInfTrackNameIndex = -1;
       if (extInfLine != null)
       {
         bool extInfContainsProgNr = false;
-        extInfTrackNameIndex = FindExtInfTrackName(extInfLine);
-        if (extInfTrackNameIndex >= 0)
+        ParseExtInf(extInfLine, out name, out extInfTrackNameIndex, out var param);
+        if (name != "")
         {
-          name = extInfLine.Substring(extInfTrackNameIndex);
           var match = ExtInfTrackName.Match(name);
           if (!string.IsNullOrEmpty(match.Groups[1].Value))
           {
@@ -139,6 +138,10 @@ namespace ChanSort.Loader.M3u
             extInfContainsProgNr = true;
           }
         }
+
+        if (string.IsNullOrEmpty(group))
+          param.TryGetValue("group-title", out group);
+
         this.allChannelsPrefixedWithProgNr &= extInfContainsProgNr;
       }
 
@@ -156,11 +159,15 @@ namespace ChanSort.Loader.M3u
         var uri = new Uri(uriLine);
         chan.Satellite = uri.GetLeftPart(UriPartial.Path);
         var parms = HttpUtility.ParseQueryString(uri.Query);
+        chan.AddDebug(uri.Query);
         foreach (var key in parms.AllKeys)
         {
           var val = parms.Get(key);
           switch (key)
           {
+            case "src":
+              chan.SatPosition = "src=" + val;
+              break;
             case "freq":
               chan.FreqInMhz = this.ParseInt(val);
               break;
@@ -168,17 +175,11 @@ namespace ChanSort.Loader.M3u
               if (val.Length == 1)
                 chan.Polarity = Char.ToUpperInvariant(val[0]);
               break;
+            case "msys":
+              chan.Source = val;
+              break;
             case "sr":
               chan.SymbolRate = this.ParseInt(val);
-              break;
-            case "pids":
-              var pids = val.Split(',');
-              //if (pids.Length > 3)
-              //  chan.PcrPid = this.ParseInt(pids[3]);
-              if (pids.Length > 4)
-                chan.VideoPid = this.ParseInt(pids[4]);
-              if (pids.Length > 5)
-                chan.AudioPid = this.ParseInt(pids[5]);
               break;
           }
         }
@@ -196,24 +197,78 @@ namespace ChanSort.Loader.M3u
     }
     #endregion
 
-    #region FindExtInfTrackName()
+    #region ParseExtInf()
+
+    enum ExtInfParsePhase
+    {
+      Header,
+      Length,
+      Key,
+      Value,
+      Name
+    }
+
     /// <summary>
     /// parse track name from lines that may look like:
     /// #EXTINF:&lt;length&gt;[ key="value" ...],&lt;TrackName&gt;
     /// </summary>
-    private int FindExtInfTrackName(string extInfLine)
+    private void ParseExtInf(string extInfLine, out string name, out int nameIndex, out Dictionary<string,string> param)
     {
+      name = "";
+      nameIndex = -1;
+      param = new Dictionary<string, string>();
       bool inQuote = false;
+      var key = "";
+      var value = "";
+      ExtInfParsePhase phase = ExtInfParsePhase.Header;
       for (int i = 0, c = extInfLine.Length; i < c; i++)
       {
         var ch = extInfLine[i];
-        if (ch == ',' && !inQuote)
-          return i + 1;
-        if (ch == '"')
-          inQuote = !inQuote;
-      }
+        switch (phase)
+        {
+          case ExtInfParsePhase.Header:
+            if (ch == ':')
+              phase = ExtInfParsePhase.Length;
+            break;
+          case ExtInfParsePhase.Length:
+            if (ch == ' ')
+              phase = ExtInfParsePhase.Key;
+            else if (ch == ',')
+            {
+              phase = ExtInfParsePhase.Name;
+              nameIndex = i + 1;
+            }
+            break;
+          case ExtInfParsePhase.Key:
+            if (ch == '=')
+              phase = ExtInfParsePhase.Value;
+            else
+              key += ch;
+            break;
+          case ExtInfParsePhase.Value:
+            if (ch == '"')
+              inQuote = !inQuote;
+            else if (ch == ' ' && !inQuote)
+            {
+              param[key] = value;
+              key = "";
+              value = "";
 
-      return -1;
+            }
+            else if (ch == ',' && !inQuote)
+            {
+              phase = ExtInfParsePhase.Name;
+              param[key] = value;
+            }
+            else
+              value += ch;
+            break;
+          case ExtInfParsePhase.Name:
+            if (ch != ' ' || name.Length > 0)
+              name += ch;
+            break;
+        }
+      }
     }
 
     #endregion

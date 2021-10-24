@@ -16,9 +16,10 @@ namespace ChanSort.Loader.GlobalClone
   internal class GcJsonSerializer : SerializerBase
   {
     private readonly string content;
-    string xmlPrefix;
-    string xmlSuffix;
+    private string xmlPrefix;
+    private string xmlSuffix;
     private JObject doc;
+    private readonly IniFile.Section ini;
 
     public GcJsonSerializer(string filename, string content) : base(filename)
     {
@@ -42,6 +43,9 @@ namespace ChanSort.Loader.GlobalClone
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbC | SignalSource.Radio, "DVB-C Radio"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Tv | SignalSource.Data, "DVB-S TV"));
       this.DataRoot.AddChannelList(new ChannelList(SignalSource.DvbS | SignalSource.Radio, "DVB-S Radio"));
+
+      string iniFile = this.GetType().Assembly.Location.ToLowerInvariant().Replace(".dll", ".ini");
+      this.ini = new IniFile(iniFile).GetSection("webOS 5", false);
     }
 
     #region Load()
@@ -315,6 +319,7 @@ namespace ChanSort.Loader.GlobalClone
       foreach (var list in this.DataRoot.ChannelLists)
       {
         int radioMask = (list.SignalSource & SignalSource.Radio) != 0 ? 0x4000 : 0;
+        var updateUserEditChNumber = ini.GetBool("set_userEditChNumber");
         foreach (var chan in list.Channels)
         {
           if (!(chan is GcChannel<JToken> ch))
@@ -326,7 +331,8 @@ namespace ChanSort.Loader.GlobalClone
             node["chNameBase64"] = Convert.ToBase64String(Encoding.UTF8.GetBytes(ch.Name));
           }
 
-          node["deleted"] = ch.IsDeleted;
+          //node["deleted"] = ch.IsDeleted; // we don't support deleting in this serializer
+
           var nr = Math.Max(ch.NewProgramNr, 0) | radioMask; // radio channels have 0x4000 added to the majorNumber
           node["majorNumber"] = nr;
           node["skipped"] = ch.Skip;
@@ -337,11 +343,11 @@ namespace ChanSort.Loader.GlobalClone
 
           // the only successfully imported file was one where these flags were NOT set by ChanSort
           // these flags do get set when changing numbers through the TV's menu, but then prevent further modifications, e.g. through an import
-          //if (ch.NewProgramNr != Math.Max(ch.OldProgramNr, 0))
-          //{
-          //  node["userEditChNumber"] = false;
-          //  node["userSelCHNo"] = false;
-          //}
+          if (updateUserEditChNumber && ch.NewProgramNr != Math.Max(ch.OldProgramNr, 0))
+          {
+            node["userEditChNumber"] = true;
+            node["userSelCHNo"] = true;
+          }
 
           //node["disableUpdate"] = true; // No-Go! This blocked the whole list and required a factory reset. Regardless of the setting, the TV showed wrong numbers.
 
