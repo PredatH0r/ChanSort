@@ -123,7 +123,7 @@ public struct Ph_ServiceDat
     {
       byte unk : 4;
       byte locked : 1;
-      byte unk2 : 1;
+      byte crypt : 1;
       byte isFav2 : 1;
       byte unk3 : 1;
     } flags;

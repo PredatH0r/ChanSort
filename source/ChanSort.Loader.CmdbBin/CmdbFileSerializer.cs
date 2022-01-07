@@ -56,7 +56,7 @@ namespace ChanSort.Loader.CmdbBin
       }
 
       if (!this.loaded)
-        throw new FileLoadException("\"" + this.FileName + "\" does not belong to a dtv_cmdb_* file system");
+        throw new FileLoadException("\"" + this.FileName + "\" does not belong to a supported dtv_cmdb_* file system");
     }
     #endregion
 
@@ -65,7 +65,13 @@ namespace ChanSort.Loader.CmdbBin
     {
       var data = File.ReadAllBytes(file);
       var fileName = Path.GetFileName(file).ToLowerInvariant();
-      var sec = this.ini.GetSection($"{fileName}:{data.Length}");
+      var secId = $"{fileName}:{data.Length}";
+      var sec = this.ini.GetSection(secId);
+      if (sec == null)
+      {
+        protocol.AppendLine("Skipped file with unknown data size: " + secId);
+        return;
+      }
 
       LoadBitmappedRecords(data, sec, "Satellite", ReadSatellite);
       LoadBitmappedRecords(data, sec, "Transponder", ReadTransponder);

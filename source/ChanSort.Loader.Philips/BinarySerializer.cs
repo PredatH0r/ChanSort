@@ -165,8 +165,6 @@ namespace ChanSort.Loader.Philips
           this.dataFilePaths.Add(listDbFile);
         }
 
-        foreach (var list in this.DataRoot.ChannelLists)
-          list.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Encrypted));
         satChannels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Polarity));
       }
       else
@@ -190,7 +188,7 @@ namespace ChanSort.Loader.Philips
           list.VisibleColumnFieldNames.Remove("ServiceTypeName");
         list.VisibleColumnFieldNames.Remove("Hidden");
         list.VisibleColumnFieldNames.Remove("AudioPid");
-        list.VisibleColumnFieldNames.Remove("Encrypted");
+        //list.VisibleColumnFieldNames.Remove("Encrypted");
       }
 
       foreach (var list in new[] { dvbcChannels, dvbtChannels, antChannels, cabChannels, satChannels })
@@ -493,6 +491,7 @@ namespace ChanSort.Loader.Philips
       // onid, tsid, pcrpid and vpid can be 0 in some lists
       ch.PcrPid = mapping.GetWord("offPcrPid") & mapping.GetMask("maskPcrPid");
       ch.Lock = mapping.GetFlag("Locked", false);
+      ch.Encrypted = mapping.GetFlag("Encrypted", false);
       ch.OriginalNetworkId = mapping.GetWord("offOnid");
       ch.TransportStreamId = mapping.GetWord("offTsid");
       ch.ServiceId = mapping.GetWord("offSid");

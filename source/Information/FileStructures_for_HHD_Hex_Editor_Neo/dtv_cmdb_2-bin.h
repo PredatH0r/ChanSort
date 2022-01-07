@@ -288,6 +288,100 @@ public struct dtv_cmdb_2_1684
 
 
 #undef channelSize
+#define channelSize 268
+#undef transponderSize
+#define transponderSize 52
+#undef satelliteSize
+#define satelliteSize 54
+
+struct Channel_1489
+{
+	var off0 = current_offset;
+	word channelIndex;
+	byte u1[9];
+	Flags flags;
+	byte u2;
+	ChannelType channelType;
+	word serviceType;
+	word fav;
+	word u2b;
+	word transponderIndex;
+	DvbId pmtPid;
+	word u3;
+	DvbId pcrPid;
+	DvbId videoPid;
+	word u4;
+	word programNr;
+	word serviceId;
+	byte u5[14];
+	DvbId audioPid;
+	byte u6[90];
+	char name[50];
+	char provider[52];
+	byte unk[channelSize - 4 - (current_offset - off0)];
+	dword bytesum;
+};
+
+struct Transponder_1489
+{
+	var off0 = current_offset;
+	word satelliteIndex;
+	word u1[2];
+	word tsid;
+	word onid;
+	word nid_maybe;
+	word u2;
+	word transpoderNumber;
+	word freqInMhz;
+	byte u3[10];
+	word symrate;
+	byte unk[transponderSize - (current_offset - off0)];
+};
+
+struct Satellite_1489
+{
+	var off0 = current_offset;
+	word u1[2];
+	char name[22];
+	//byte u2[2];
+	word lowFreq;
+	word highFreq;
+	byte unk[satelliteSize - (current_offset - off0)];
+};
+
+struct Satellite2_1489
+{
+	var off0 = current_offset;
+	byte u1[2];
+	char name[22];
+	//byte u2[2];
+	word lowFreq;
+	word highFreq;
+	byte unk[satelliteSize - 2 - (current_offset - off0)];
+};
+
+public struct dtv_cmdb_2_1489
+{
+	char magic[4];
+	word u1;
+	word u2;
+	byte channelBitmap[628];
+	Channel_1489 channels[5000];
+		
+	byte transponderBitmap[376];
+	Transponder_1489 transponder[3000];
+		
+	byte satelliteBitmap[32];
+	Satellite_1489 satellites[254];
+
+	byte satelliteBitmap2[32];
+	Satellite2_1489 satellites2[254];
+	
+	byte _0x30;
+};
+
+
+#undef channelSize
 #define channelSize 200
 #undef transponderSize
 #define transponderSize 40

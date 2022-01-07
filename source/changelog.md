@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+TBD
+- Philips \*Table and \*.dat format: now showing "Encrypted" information
+
 2021-10-24
 - LG webOS 5 and 6: Improved support for DVB-C lists which changed channel numbers after import
   (Now setting the "userEditChNumber" and "userSelCHNo" flags when channel numbers are changed.
