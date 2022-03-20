@@ -12,6 +12,7 @@
     public char Polarity { get; set; }
     public int OriginalNetworkId { get; set; }
     public int TransportStreamId { get; set; }
+    public SignalSource SignalSource { get; set; }
 
     public Transponder(int id)
     {

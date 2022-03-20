@@ -159,7 +159,7 @@ namespace ChanSort.Loader.Philips
       // ChannelMap_100/ChannelList/chanLst.bin
       // + optionally
       // ChannelMap_100/ChannelList/channelFile.bin
-      // ChannelMap_100/ChannelList/Favorite.xml
+      // ChannelMap_105/ChannelList/Favorite.xml
       // ChannelMap_100/ChannelList/satInfo.bin
 
       var dataFiles = new[] { @"channellib\DVBC.xml", @"channellib\DVBT.xml", @"s2channellib\DVBS.xml", @"s2channellib\DVBSall.xml", @"Favorite.xml" };

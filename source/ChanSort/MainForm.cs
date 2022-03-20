@@ -1996,7 +1996,7 @@ namespace ChanSort.Ui
 
     private void ExportExcelList()
     {
-      const string header = "List;Pr#;Channel Name;Favorites;Lock;Skip;Hide;Encrypted;Satellite;Ch/Tp;Freq;ONID;TSID;SymRate;SID;VPID;APID";
+      const string header = "List;Pr#;Channel Name;Favorites;Lock;Skip;Hide;Encrypted;Satellite;Ch/Tp;Freq;Pol;SymRate;ONID;TSID;SID;VPID;APID";
       const char sep = '\t';
       var sb = new StringBuilder();
       sb.AppendLine(header.Replace(';', sep));
@@ -2017,9 +2017,10 @@ namespace ChanSort.Ui
           sb.Append('"').Append(channel.Satellite).Append('"').Append(sep);
           sb.Append(channel.ChannelOrTransponder).Append(sep);
           sb.Append(channel.FreqInMhz).Append(sep);
+          sb.Append(channel.Polarity).Append(sep);
+          sb.Append(channel.SymbolRate).Append(sep);
           sb.Append(channel.OriginalNetworkId).Append(sep);
           sb.Append(channel.TransportStreamId).Append(sep);
-          sb.Append(channel.SymbolRate).Append(sep);
           sb.Append(channel.ServiceId).Append(sep);
           sb.Append(channel.VideoPid).Append(sep);
           sb.Append(channel.AudioPid);

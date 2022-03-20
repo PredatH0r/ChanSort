@@ -623,7 +623,6 @@ left outer join {dbSchema.DvbServiceTable} digs on digs.ServiceId=s.Pid
       {
       }
 
-      public SignalSource SignalSource { get; set; }
       public string Source { get; set; }
     }
 

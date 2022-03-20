@@ -1,8 +1,13 @@
 ChanSort Change Log 
 ===================
 
-TBD
+2022-03-20
 - Philips \*Table and \*.dat format: now showing "Encrypted" information
+- added ChangHong LED40D3000ISX dtv_cmdb_2.bin format (1489 KB size)
+- added experimental support for Loewe servicelist.xml format
+- added polarity information to Excel export (and changed column order slightly)
+- added missing Romanian translation files to the .zip
+
 
 2021-10-24
 - LG webOS 5 and 6: Improved support for DVB-C lists which changed channel numbers after import
