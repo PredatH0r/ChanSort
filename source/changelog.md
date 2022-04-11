@@ -1,6 +1,9 @@
 ChanSort Change Log 
 ===================
 
+2022-04-11
+- added ChangHong/Chiq L32H7N dtv_cmdb_2.bin format (4419 KB size)
+
 2022-03-20
 - Philips \*Table and \*.dat format: now showing "Encrypted" information
 - added ChangHong LED40D3000ISX dtv_cmdb_2.bin format (1489 KB size)
