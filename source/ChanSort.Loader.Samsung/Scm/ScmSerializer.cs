@@ -38,7 +38,8 @@ namespace ChanSort.Loader.Samsung.Scm
     private readonly Dictionary<int, decimal> avbcFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> dvbcFrequency = new Dictionary<int, decimal>();
     private readonly Dictionary<int, decimal> dvbtFrequency = new Dictionary<int, decimal>();
-    
+
+    private readonly string baseFolder;
     private byte[] avbtFileContent;
     private byte[] avbcFileContent;
     private byte[] avbxFileContent;
@@ -57,8 +58,9 @@ namespace ChanSort.Loader.Samsung.Scm
     private Dictionary<int, string> serviceProviderNames;
 
     #region ctor()
-    public ScmSerializer(string inputFile) : base(inputFile)
+    public ScmSerializer(string inputFile, string baseFolder = "") : base(inputFile)
     {
+      this.baseFolder = baseFolder;
       this.ReadConfigurationFromIniFile();
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
@@ -113,27 +115,28 @@ namespace ChanSort.Loader.Samsung.Scm
       Features.FavoritesMode = c.SortedFavorites == FavoritesIndexMode.IndividuallySorted ? FavoritesMode.OrderedPerSource : FavoritesMode.Flags;
       Features.MaxFavoriteLists = c.numFavorites;
 
-      ReadAnalogFineTuning(this.TempPath);
-      ReadAnalogChannels(this.TempPath, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
-      ReadAnalogChannels(this.TempPath, "map-CableA", this.avbcChannels, out this.avbcFileContent, this.avbcFrequency);
-      ReadAnalogChannels(this.TempPath, "map-AirCableMixedA", this.avbxChannels, out this.avbxFileContent, this.avbcFrequency);
-      ReadDvbTransponderFrequenciesFromPtc(this.TempPath, "PTCAIR", this.dvbtFrequency);
-      ReadDvbServiceProviders(this.TempPath);
-      ReadDvbctChannels(this.TempPath, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
-      ReadDvbTransponderFrequenciesFromPtc(this.TempPath, "PTCCABLE", this.dvbcFrequency);
-      ReadDvbctChannels(this.TempPath, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(this.TempPath, "map-AirCableMixedD", this.dvbxChannels, out this.dvbxFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(this.TempPath, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(this.TempPath, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(this.TempPath, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(this.TempPath, "map-CanalDigitalSatD", this.canalDigitalChannels, out this.canalDigitalFileContent, this.dvbcFrequency);
-      ReadDvbctChannels(this.TempPath, "map-DigitalPlusD", this.digitalPlusChannels, out this.digitalPlusFileContent, this.dvbcFrequency);
-      ReadSatellites(this.TempPath);
-      ReadTransponder(this.TempPath, "UserTransponderDataBase.dat"); // read user data first so it has priority over overridden default transponsers
-      ReadTransponder(this.TempPath, "TransponderDataBase.dat");
-      ReadDvbsChannels(this.TempPath, "map-SateD", this.dvbsChannels, out this.dvbsFileContent, c.dvbsChannelLength);
-      ReadDvbsChannels(this.TempPath, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
-      ReadAstraHdPlusChannels(this.TempPath);        
+      var dataFolder = Path.Combine(this.TempPath, this.baseFolder);
+      ReadAnalogFineTuning(dataFolder);
+      ReadAnalogChannels(dataFolder, "map-AirA", this.avbtChannels, out this.avbtFileContent, this.avbtFrequency);
+      ReadAnalogChannels(dataFolder, "map-CableA", this.avbcChannels, out this.avbcFileContent, this.avbcFrequency);
+      ReadAnalogChannels(dataFolder, "map-AirCableMixedA", this.avbxChannels, out this.avbxFileContent, this.avbcFrequency);
+      ReadDvbTransponderFrequenciesFromPtc(dataFolder, "PTCAIR", this.dvbtFrequency);
+      ReadDvbServiceProviders(dataFolder);
+      ReadDvbctChannels(dataFolder, "map-AirD", this.dvbtChannels, out this.dvbtFileContent, this.dvbtFrequency);
+      ReadDvbTransponderFrequenciesFromPtc(dataFolder, "PTCCABLE", this.dvbcFrequency);
+      ReadDvbctChannels(dataFolder, "map-CableD", this.dvbcChannels, out this.dvbcFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(dataFolder, "map-AirCableMixedD", this.dvbxChannels, out this.dvbxFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(dataFolder, "map-CablePrime_D", this.primeChannels, out this.primeFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(dataFolder, "map-FreesatD", this.freesatChannels, out this.freesatFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(dataFolder, "map-TivusatD", this.tivusatChannels, out this.tivusatFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(dataFolder, "map-CanalDigitalSatD", this.canalDigitalChannels, out this.canalDigitalFileContent, this.dvbcFrequency);
+      ReadDvbctChannels(dataFolder, "map-DigitalPlusD", this.digitalPlusChannels, out this.digitalPlusFileContent, this.dvbcFrequency);
+      ReadSatellites(dataFolder);
+      ReadTransponder(dataFolder, "UserTransponderDataBase.dat"); // read user data first so it has priority over overridden default transponsers
+      ReadTransponder(dataFolder, "TransponderDataBase.dat");
+      ReadDvbsChannels(dataFolder, "map-SateD", this.dvbsChannels, out this.dvbsFileContent, c.dvbsChannelLength);
+      ReadDvbsChannels(dataFolder, "map-CyfraPlusD", this.cyfraPlusChannels, out this.cyfraPlusFileContent, c.cyfraPlusChannelSize);
+      ReadAstraHdPlusChannels(dataFolder);        
 
 
       foreach (var list in this.DataRoot.ChannelLists)
@@ -164,28 +167,42 @@ namespace ChanSort.Loader.Samsung.Scm
     #region DetectModelFromFileName()
     private bool DetectModelFromFileName()
     {
-      string file = Path.GetFileName(this.FileName)??"";
-      System.Text.RegularExpressions.Regex regex =
-        new System.Text.RegularExpressions.Regex("channel_list_([A-Z]{2}[0-9]{2}|BD-)([A-Z])[0-9A-Z]+_([0-9]{4}).*\\.scm");
-      var match = regex.Match(file);
-      if (match.Success)
+      string series = null;
+
+      // the known Orsay .zip files contain the same file format as the .scm E/F series
+      if (Path.GetExtension(this.FileName).ToLower() == ".zip")
+        series = "E";
+      else
       {
-        string series;
-        switch (match.Groups[3].Value)
+        // for Samsung .scm files the number in the file name is an indicator for the firmware/file format version
+        string file = Path.GetFileName(this.FileName)??"";
+        System.Text.RegularExpressions.Regex regex =
+          new System.Text.RegularExpressions.Regex("channel_list_([A-Z]{2}[0-9]{2}|BD-)([A-Z])[0-9A-Z]+_([0-9]{4}).*\\.scm");
+        var match = regex.Match(file);
+        if (match.Success)
         {
-          case "1001": series = "C"; break;
-          case "1101": series = "D"; break;
-          case "1201":
-            //var letter = match.Groups[2].Value;
-            // E, F, H and some J models use same file format
-            series = "E";
-            break;
-          default:
-            return false;
+          switch (match.Groups[3].Value)
+          {
+            case "1001":
+              series = "C";
+              break;
+            case "1101":
+              series = "D";
+              break;
+            case "1201":
+              //var letter = match.Groups[2].Value;
+              // E, F, H and some J models use same file format
+              series = "E";
+              break;
+            default:
+              return false;
+          }
         }
-        if (this.modelConstants.TryGetValue("Series:" + series, out this.c))
-          return true;
       }
+
+      if (series != null && this.modelConstants.TryGetValue("Series:" + series, out this.c))
+        return true;
+      
       return false;
     }
     #endregion
@@ -638,7 +655,7 @@ namespace ChanSort.Loader.Samsung.Scm
     #region Save()
     public override void Save(string tvOutputFile)
     {
-      string zip = this.TempPath;
+      var zip = Path.Combine(this.TempPath, this.baseFolder);
       this.SaveChannels(zip, "map-AirA", this.avbtChannels, this.avbtFileContent);
       this.SaveChannels(zip, "map-CableA", this.avbcChannels, this.avbcFileContent);
       this.SaveChannels(zip, "map-AirCableMixedA", this.avbxChannels, this.avbxFileContent);
@@ -653,7 +670,7 @@ namespace ChanSort.Loader.Samsung.Scm
       this.SaveChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, this.canalDigitalFileContent);
       this.SaveChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, this.digitalPlusFileContent);
       this.SaveChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, this.cyfraPlusFileContent);
-      this.ZipToOutputFile(tvOutputFile);
+      this.ZipToOutputFile(tvOutputFile, false);
     }
     #endregion
 

@@ -166,10 +166,10 @@ namespace ChanSort.Api
       ZipFile.ExtractToDirectory(this.FileName, this.TempPath);
     }
 
-    protected void ZipToOutputFile(string tvOutputFile)
+    protected void ZipToOutputFile(string tvOutputFile, bool compress = true)
     {
       File.Delete(tvOutputFile);
-      ZipFile.CreateFromDirectory(this.TempPath, tvOutputFile);
+      ZipFile.CreateFromDirectory(this.TempPath, tvOutputFile, compress ? CompressionLevel.Optimal : CompressionLevel.NoCompression, false);
       this.FileName = tvOutputFile;
     }
     #endregion

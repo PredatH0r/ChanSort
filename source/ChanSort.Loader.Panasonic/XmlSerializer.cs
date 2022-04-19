@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Schema;
 using ChanSort.Api;
@@ -13,11 +11,20 @@ namespace ChanSort.Loader.Panasonic
 {
   /*
 
-  Panasonic Android TVs (2020 and later) use the same unstandardized compressed .bin binary format as many Philips lists and some Sharp TVs.
-  Additionally it exports a .xml file with very limited information that only includes channel numbers and channel names truncated at 8 characters.
+  MediaTek based Android TVs (e.g. Panasonic 2020 and later, Nokia, ...) use the same unstandardized compressed .bin binary format as many 
+  Philips lists and some Sharp TVs.
+  Additionally it exports a .xml file with very limited information that only includes channel numbers and channel names truncated at 8 bytes. 
   
   This truncation makes it impossible for a user to distinguish between channels that have longer names like "Sky Bundesliga ...", therefore
   this loader adds the "SvlId" as the ShortName. This SvlId is probably a "service list id" and refers to a a data record inside the .bin file.
+  The truncation can also happen in the middle of a multi-type UTF-8 character sequence. Non-latin characters, including German umlauts or all
+  cyrillic characters require 2 bytes/character, effectively reducing the channel name length to 4-8 characters.
+
+  Another severe issue with these files is that XML special characters in channel names are not escaped properly. Some preprocessing is required
+  in order to guess if a "&" is meant as an &amp; data value or an XML attribute. It's likely that < and > inside channel names have the same problem.
+
+  When the TV has channels from various sources, it is not possible to determine to which internal source a channel belongs, making sorting of 
+  sub-lists more or less impossible.
 
   */
   class XmlSerializer : SerializerBase

@@ -36,6 +36,7 @@
       this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
       this.comboPrNr = new DevExpress.XtraEditors.ComboBoxEdit();
       this.grpManual = new DevExpress.XtraEditors.GroupControl();
+      this.cbData = new DevExpress.XtraEditors.CheckEdit();
       this.cbConsecutive = new DevExpress.XtraEditors.CheckEdit();
       this.cbIp = new DevExpress.XtraEditors.CheckEdit();
       this.cbSat = new DevExpress.XtraEditors.CheckEdit();
@@ -56,7 +57,7 @@
       this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
       this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
       this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
-      this.cbData = new DevExpress.XtraEditors.CheckEdit();
+      this.xtraScrollableControl1 = new DevExpress.XtraEditors.XtraScrollableControl();
       ((System.ComponentModel.ISupportInitialize)(this.edFile.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.rbAuto.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.rbManual.Properties)).BeginInit();
@@ -67,6 +68,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.comboPrNr.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpManual)).BeginInit();
       this.grpManual.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.cbData.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbConsecutive.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbIp.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbSat.Properties)).BeginInit();
@@ -78,7 +80,7 @@
       this.groupControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
       this.groupControl2.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.cbData.Properties)).BeginInit();
+      this.xtraScrollableControl1.SuspendLayout();
       this.SuspendLayout();
       // 
       // labelControl1
@@ -222,6 +224,14 @@
       this.grpManual.Name = "grpManual";
       this.grpManual.ShowCaption = false;
       // 
+      // cbData
+      // 
+      resources.ApplyResources(this.cbData, "cbData");
+      this.cbData.Name = "cbData";
+      this.cbData.Properties.AutoWidth = true;
+      this.cbData.Properties.Caption = resources.GetString("cbData.Properties.Caption");
+      this.cbData.TabStop = false;
+      // 
       // cbConsecutive
       // 
       resources.ApplyResources(this.cbConsecutive, "cbConsecutive");
@@ -361,24 +371,21 @@
       resources.ApplyResources(this.labelControl8, "labelControl8");
       this.labelControl8.Name = "labelControl8";
       // 
-      // cbData
+      // xtraScrollableControl1
       // 
-      resources.ApplyResources(this.cbData, "cbData");
-      this.cbData.Name = "cbData";
-      this.cbData.Properties.AutoWidth = true;
-      this.cbData.Properties.Caption = resources.GetString("checkEdit1.Properties.Caption");
-      this.cbData.TabStop = false;
+      resources.ApplyResources(this.xtraScrollableControl1, "xtraScrollableControl1");
+      this.xtraScrollableControl1.Controls.Add(this.groupControl1);
+      this.xtraScrollableControl1.Controls.Add(this.groupControl2);
+      this.xtraScrollableControl1.Name = "xtraScrollableControl1";
       // 
       // ReferenceListForm
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnClose;
-      this.Controls.Add(this.groupControl2);
-      this.Controls.Add(this.groupControl1);
+      this.Controls.Add(this.xtraScrollableControl1);
       this.Controls.Add(this.btnClose);
       this.Controls.Add(this.btnOk);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "ReferenceListForm";
@@ -393,6 +400,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.grpManual)).EndInit();
       this.grpManual.ResumeLayout(false);
       this.grpManual.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.cbData.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbConsecutive.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbIp.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbSat.Properties)).EndInit();
@@ -406,7 +414,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
       this.groupControl2.ResumeLayout(false);
       this.groupControl2.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.cbData.Properties)).EndInit();
+      this.xtraScrollableControl1.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -449,5 +457,6 @@
     private DevExpress.XtraEditors.HyperlinkLabelControl linkWiki;
     private DevExpress.XtraEditors.CheckEdit cbConsecutive;
     private DevExpress.XtraEditors.CheckEdit cbData;
+    private DevExpress.XtraEditors.XtraScrollableControl xtraScrollableControl1;
   }
 }

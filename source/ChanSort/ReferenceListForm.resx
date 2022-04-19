@@ -159,7 +159,6 @@
   </data>
   <data name="edFile.Properties.Buttons1" xml:space="preserve">
     <value />
-    <comment>@Invariant</comment>
   </data>
   <data name="edFile.Properties.Buttons2" type="System.Int32, mscorlib">
     <value>-1</value>
@@ -243,7 +242,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Automatically reorder all lists in the TV file</value>
   </data>
   <data name="rbAuto.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 19</value>
+    <value>222, 20</value>
   </data>
   <data name="rbAuto.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -270,7 +269,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Advanced reordering</value>
   </data>
   <data name="rbManual.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 19</value>
+    <value>124, 20</value>
   </data>
   <data name="rbManual.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -390,7 +389,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>TV</value>
   </data>
   <data name="cbTv.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 19</value>
+    <value>33, 18</value>
   </data>
   <data name="cbTv.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -414,7 +413,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Radio</value>
   </data>
   <data name="cbRadio.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 19</value>
+    <value>48, 18</value>
   </data>
   <data name="cbRadio.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -484,7 +483,6 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   </data>
   <data name="comboPrNr.EditValue" xml:space="preserve">
     <value>1</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Location" type="System.Drawing.Point, System.Drawing">
     <value>123, 134</value>
@@ -494,31 +492,24 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   </data>
   <data name="comboPrNr.Properties.Items" xml:space="preserve">
     <value>1</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items1" xml:space="preserve">
     <value>100</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items2" xml:space="preserve">
     <value>500</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items3" xml:space="preserve">
     <value>1000</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items4" xml:space="preserve">
     <value>2000</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items5" xml:space="preserve">
     <value>5000</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Properties.Items6" xml:space="preserve">
     <value>7000</value>
-    <comment>@Invariant</comment>
   </data>
   <data name="comboPrNr.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 20</value>
@@ -544,11 +535,11 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   <data name="cbData.Location" type="System.Drawing.Point, System.Drawing">
     <value>284, 109</value>
   </data>
-  <data name="checkEdit1.Properties.Caption" xml:space="preserve">
+  <data name="cbData.Properties.Caption" xml:space="preserve">
     <value>Data/Other</value>
   </data>
   <data name="cbData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 19</value>
+    <value>76, 18</value>
   </data>
   <data name="cbData.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -572,7 +563,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Use consecutive numbers (remove gaps from reference list Pr#)</value>
   </data>
   <data name="cbConsecutive.Size" type="System.Drawing.Size, System.Drawing">
-    <value>484, 19</value>
+    <value>484, 18</value>
   </data>
   <data name="cbConsecutive.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -596,7 +587,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>IP (Network)</value>
   </data>
   <data name="cbIp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 19</value>
+    <value>82, 18</value>
   </data>
   <data name="cbIp.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -620,7 +611,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Satellite</value>
   </data>
   <data name="cbSat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 19</value>
+    <value>59, 18</value>
   </data>
   <data name="cbSat.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -668,7 +659,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Antenna</value>
   </data>
   <data name="cbAntenna.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 19</value>
+    <value>62, 18</value>
   </data>
   <data name="cbAntenna.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -692,7 +683,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Cable</value>
   </data>
   <data name="cbCable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 19</value>
+    <value>48, 18</value>
   </data>
   <data name="cbCable.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -740,7 +731,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Analog</value>
   </data>
   <data name="cbAnalog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 19</value>
+    <value>54, 18</value>
   </data>
   <data name="cbAnalog.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -764,7 +755,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Digital</value>
   </data>
   <data name="cbDigital.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 19</value>
+    <value>50, 18</value>
   </data>
   <data name="cbDigital.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -792,7 +783,6 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   </data>
   <data name="lblTargetInfo.Text" xml:space="preserve">
     <value> </value>
-    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;lblTargetInfo.Name" xml:space="preserve">
     <value>lblTargetInfo</value>
@@ -817,7 +807,6 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
   </data>
   <data name="lblSourceInfo.Text" xml:space="preserve">
     <value> </value>
-    <comment>@Invariant</comment>
   </data>
   <data name="&gt;&gt;lblSourceInfo.Name" xml:space="preserve">
     <value>lblSourceInfo</value>
@@ -913,7 +902,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Bottom, Right</value>
   </data>
   <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>526, 662</value>
+    <value>525, 662</value>
   </data>
   <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 23</value>
@@ -934,13 +923,13 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnOk.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="btnClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>621, 662</value>
+    <value>620, 662</value>
   </data>
   <data name="btnClose.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 23</value>
@@ -961,7 +950,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="groupControl1.AppearanceCaption.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 12pt</value>
@@ -991,7 +980,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>0</value>
   </data>
   <data name="groupControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 22</value>
+    <value>12, 12</value>
   </data>
   <data name="groupControl1.Size" type="System.Drawing.Size, System.Drawing">
     <value>696, 142</value>
@@ -1009,10 +998,10 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v21.2, Version=21.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;groupControl1.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>xtraScrollableControl1</value>
   </data>
   <data name="&gt;&gt;groupControl1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="groupControl2.AppearanceCaption.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 12pt</value>
@@ -1074,7 +1063,7 @@ This step can be repeated as needed.</value>
     <value>1</value>
   </data>
   <data name="groupControl2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 184</value>
+    <value>12, 185</value>
   </data>
   <data name="groupControl2.Size" type="System.Drawing.Size, System.Drawing">
     <value>696, 456</value>
@@ -1092,9 +1081,33 @@ This step can be repeated as needed.</value>
     <value>DevExpress.XtraEditors.GroupControl, DevExpress.Utils.v21.2, Version=21.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;groupControl2.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>xtraScrollableControl1</value>
   </data>
   <data name="&gt;&gt;groupControl2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="xtraScrollableControl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="xtraScrollableControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="xtraScrollableControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>708, 646</value>
+  </data>
+  <data name="xtraScrollableControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;xtraScrollableControl1.Name" xml:space="preserve">
+    <value>xtraScrollableControl1</value>
+  </data>
+  <data name="&gt;&gt;xtraScrollableControl1.Type" xml:space="preserve">
+    <value>DevExpress.XtraEditors.XtraScrollableControl, DevExpress.Utils.v21.2, Version=21.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;xtraScrollableControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;xtraScrollableControl1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -1104,7 +1117,7 @@ This step can be repeated as needed.</value>
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>721, 697</value>
+    <value>720, 697</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

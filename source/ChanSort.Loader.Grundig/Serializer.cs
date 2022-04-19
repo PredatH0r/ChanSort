@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,12 @@ namespace ChanSort.Loader.Grundig
 {
   class Serializer : SerializerBase
   {
-    private readonly ChannelList terrChannels = new ChannelList(SignalSource.Antenna, "Antenna");
-    private readonly ChannelList cableChannels = new ChannelList(SignalSource.Cable, "Cable");
-    private readonly ChannelList satChannels = new ChannelList(SignalSource.Sat, "Satellite");
+    private readonly ChannelList terrChannels = new ChannelList(SignalSource.Antenna | SignalSource.TvAndData, "Antenna TV");
+    private readonly ChannelList cableChannels = new ChannelList(SignalSource.Cable | SignalSource.TvAndData, "Cable TV");
+    private readonly ChannelList satChannels = new ChannelList(SignalSource.Sat | SignalSource.TvAndData, "Satellite TV");
+    private readonly ChannelList terrChannelsRadio = new ChannelList(SignalSource.Antenna | SignalSource.Radio, "Antenna Radio");
+    private readonly ChannelList cableChannelsRadio = new ChannelList(SignalSource.Cable | SignalSource.Radio, "Cable Radio");
+    private readonly ChannelList satChannelsRadio = new ChannelList(SignalSource.Sat | SignalSource.Radio, "Satellite Radio");
 
     private readonly List<FileData> fileDataList = new List<FileData>();
     private readonly StringBuilder logMessages = new StringBuilder();
@@ -37,6 +41,9 @@ namespace ChanSort.Loader.Grundig
       this.DataRoot.AddChannelList(this.terrChannels);
       this.DataRoot.AddChannelList(this.cableChannels);
       this.DataRoot.AddChannelList(this.satChannels);
+      this.DataRoot.AddChannelList(this.terrChannelsRadio);
+      this.DataRoot.AddChannelList(this.cableChannelsRadio);
+      this.DataRoot.AddChannelList(this.satChannelsRadio);
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -49,6 +56,8 @@ namespace ChanSort.Loader.Grundig
 
       this.terrChannels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Source));
       this.cableChannels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Source));
+      this.terrChannelsRadio.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Source));
+      this.cableChannelsRadio.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Source));
     }
     #endregion
 
@@ -87,6 +96,18 @@ namespace ChanSort.Loader.Grundig
         fileData.path = fileName;
         fileData.hasBom = content.Length >= 3 && content[0] == 0xef && content[1] == 0xbb && content[2] == 0xbf;
         var textContent = Encoding.UTF8.GetString(content, fileData.hasBom ? 3 : 0, content.Length - (fileData.hasBom ? 3 : 0));
+        
+        // some files contain unescaped characters like \x10, which causes XML parsing to fail
+        var sb = new StringBuilder(textContent.Length);
+        foreach (var ch in textContent)
+        {
+          if (ch < 32 && ch != '\n' && ch != '\r' && ch != '\t')
+            sb.Append($"&#x{(int)ch:x2};");
+          else
+            sb.Append(ch);
+        }
+        textContent = sb.ToString();
+
         fileData.newline = textContent.Contains("\r\n") ? "\r\n" : "\n";
         fileData.indent = textContent.Contains("  <");
         fileData.doc = new XmlDocument();
@@ -217,7 +238,7 @@ namespace ChanSort.Loader.Grundig
             c.Source = type;
             c.Provider = provider;
 
-            var list = this.DataRoot.GetChannelList(src);
+            var list = this.DataRoot.GetChannelList(c.SignalSource);
             this.DataRoot.AddChannel(list, c);
             ++chanId;
           }
@@ -241,6 +262,8 @@ namespace ChanSort.Loader.Grundig
       c.ServiceId = Int32.Parse(service.Attributes["sid"].InnerText);
       c.Encrypted = service.Attributes["ca"].InnerText == "1";
       c.IsDeleted = service.Attributes["del"].InnerText == "1";
+      var typ = service.Attributes["typ"].InnerText;
+      c.SignalSource |= typ == "1" ? SignalSource.Tv : typ == "2" ? SignalSource.Radio : SignalSource.Data;
       return c;
     }
 
@@ -314,7 +337,27 @@ namespace ChanSort.Loader.Grundig
       var xml = sw.ToString();
 
       if (!file.indent)
-        xml = xml.Replace("\" />", "\"/>");
+      {
+        xml = xml.Replace(" />", "/>");
+        
+        // replace escaped characters with unescaped ones (invalid XML, but that's how Grundig does it)
+        var sb = new StringBuilder(xml.Length);
+        for (int i = 0, c = xml.Length - 5; i < c; i++)
+        {
+          if (xml[i] == '&' && xml[i + 1] == '#' && xml[i + 2] == 'x' && xml[i + 5] == ';')
+          {
+            sb.Append((char)int.Parse(xml.Substring(i + 3, 2), NumberStyles.HexNumber));
+            i += 5;
+          }
+          else
+            sb.Append(xml[i]);
+        }
+
+        var trail = Math.Min(5, xml.Length);
+        sb.Append(xml, xml.Length - trail, trail);
+        xml = sb.ToString();
+      }
+
       var enc = new UTF8Encoding(file.hasBom, false);
       File.WriteAllText(file.path, xml, enc);
     }

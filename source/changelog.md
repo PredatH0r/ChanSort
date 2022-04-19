@@ -1,6 +1,12 @@
 ChanSort Change Log 
 ===================
 
+2022-04-19
+- added support for Orsay .zip files which contain a Clone/map-AirD and other files similar to Samsung .scm
+- Reference list dialog is now resizable
+- Grundig dvb\*_config.xml lists are now separated into TV and Radio lists with individual ordering
+- ability to load Grundig dvb\*\_config.xml files containing invalid XML characters (e.g. 0x10)
+
 2022-04-11
 - added ChangHong/Chiq L32H7N dtv_cmdb_2.bin format (4419 KB size)
 
