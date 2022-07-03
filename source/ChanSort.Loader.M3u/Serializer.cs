@@ -292,7 +292,8 @@ namespace ChanSort.Loader.M3u
             if (line.StartsWith("#EXTINF:"))
             {
               var progNrPrefix = this.allChannelsPrefixedWithProgNr ? chan.NewProgramNr + ". " : "";
-              file.WriteLine($"{line.Substring(0, chan.ExtInfTrackNameIndex)}{progNrPrefix}{chan.Name}");
+              var linePrefix = chan.ExtInfTrackNameIndex >= 0 ? line.Substring(0, chan.ExtInfTrackNameIndex) : "";
+              file.WriteLine($"{linePrefix}{progNrPrefix}{chan.Name}");
             }
             else
               file.WriteLine(line);
