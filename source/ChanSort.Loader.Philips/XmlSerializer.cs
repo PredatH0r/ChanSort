@@ -562,7 +562,8 @@ namespace ChanSort.Loader.Philips
       {
         if (part == "")
           continue;
-        buffer.WriteByte((byte)ParseInt(part));
+        var val = (byte)ParseInt(part);
+        buffer.WriteByte(val);
       }
 
       return Encoding.Unicode.GetString(buffer.GetBuffer(), 0, (int) buffer.Length).TrimEnd('\x0');

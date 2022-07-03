@@ -6,7 +6,7 @@ cd /d %~dp0
 set languages=cs de es hu pl pt ro ru tr
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
-set DXversion=21.2
+set DXversion=22.1
 mkdir "%target%" 2>nul
 rem del /s /q "%target%\*"
 xcopy /idy debug\ChanSort.exe* "%target%"
@@ -34,7 +34,7 @@ mkdir "%target%\ReferenceLists" 2>nul
 xcopy /sidy ChanSort\ReferenceLists\* "%target%\ReferenceLists"
 copy /y ..\readme.md "%target%\readme.txt"
 copy /y changelog.md "%target%\changelog.txt"
-for %%f in (Utils Data Data.Desktop DataAccess Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
+for %%f in (Utils Data Data.Desktop DataAccess Drawing Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
 call :CodeSigning
 
 cd ..
@@ -88,19 +88,19 @@ goto:eof
 
 :copyDll
 echo Copying DevExpress %1
-set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\DevExpress.%1.v%DXversion%.dll"
+set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\DevExpress.%1.v%DXversion%.dll"
 if exist %source% xcopy /idy %source% "%target%"
-set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\DevExpress.%1.v%DXversion%.Core.dll"
+set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\DevExpress.%1.v%DXversion%.Core.dll"
 if exist %source% xcopy /idy %source% "%target%"
 for %%l in (%languages%) do call :copyLangDll %1 %%l
 goto:eof
 
 :copyLangDll
-set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.resources.dll"
+set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
 set source="d:\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
-set source="C:\Program Files (x86)\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
+set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
 set source="d:\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"

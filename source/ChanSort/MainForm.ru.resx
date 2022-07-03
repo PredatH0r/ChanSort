@@ -148,7 +148,7 @@
     <value>до</value>
   </data>
   <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
-    <value>Закрывать разрыв при перемещении/удалении канала</value>
+    <value>Убирать разрыв при перемещении/удалении канала</value>
   </data>
   <data name="cbCloseGap.ToolTip" xml:space="preserve">
     <value>Если включено, все каналы после текущего будут автоматически перенумерованы</value>
@@ -160,7 +160,7 @@
     <value>Нет списков каналов</value>
   </data>
   <data name="lblSetProgramNr.Text" xml:space="preserve">
-    <value>Установить:</value>
+    <value>Позиция:</value>
   </data>
   <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
     <value>Номер программы для добавления и установки</value>
@@ -328,7 +328,7 @@
     <value>после</value>
   </data>
   <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
-    <value>обменять</value>
+    <value>обмен</value>
   </data>
   <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
     <value>Показывать предупреждения после загрузки файла</value>
@@ -349,7 +349,7 @@
     <value>Перенастроить каналы и удалить дубликаты</value>
   </data>
   <data name="miCleanupChannels.Caption" xml:space="preserve">
-    <value>Очистка данных канала</value>
+    <value>Очистка данных о каналах</value>
   </data>
   <data name="miTvSettings.Caption" xml:space="preserve">
     <value>Настройка устройства...</value>
@@ -376,10 +376,10 @@
     <value>Заблокировать канал</value>
   </data>
   <data name="mnuFavUnset.Caption" xml:space="preserve">
-    <value>Удалить из Избранного</value>
+    <value>Удалить из избранного</value>
   </data>
   <data name="mnuFavSet.Caption" xml:space="preserve">
-    <value>Добавить в Избранное</value>
+    <value>Добавить в избранное</value>
   </data>
   <data name="miRenum.Caption" xml:space="preserve">
     <value>Изменить нумерацию каналов</value>
@@ -430,7 +430,7 @@
     <value>Перезагрузить</value>
   </data>
   <data name="miOpen.Caption" xml:space="preserve">
-    <value>Открыть файл данных ТВ...</value>
+    <value>Открыть файл с ТВ-данными…</value>
   </data>
   <data name="miFile.Caption" xml:space="preserve">
     <value>Файл</value>
@@ -501,36 +501,6 @@
   <data name="mnuLanguage.Caption" xml:space="preserve">
     <value>Язык</value>
   </data>
-  <data name="miEnglish.Caption" xml:space="preserve">
-    <value>Английский</value>
-  </data>
-  <data name="miCzech.Caption" xml:space="preserve">
-    <value>Чешский</value>
-  </data>
-  <data name="miGerman.Caption" xml:space="preserve">
-    <value>Немецкий</value>
-  </data>
-  <data name="miSpanish.Caption" xml:space="preserve">
-    <value>Испанский</value>
-  </data>
-  <data name="miHungarian.Caption" xml:space="preserve">
-    <value>Венгерский</value>
-  </data>
-  <data name="miPolski.Caption" xml:space="preserve">
-    <value>Польский</value>
-  </data>
-  <data name="miPortuguese.Caption" xml:space="preserve">
-    <value>Португальский</value>
-  </data>
-  <data name="miRomanian.Caption" xml:space="preserve">
-    <value>Румынский</value>
-  </data>
-  <data name="miRussian.Caption" xml:space="preserve">
-    <value>Русский</value>
-  </data>
-  <data name="miTurkish.Caption" xml:space="preserve">
-    <value>Турецкий</value>
-  </data>
   <data name="miUtf8Charset.Caption" xml:space="preserve">
     <value>UTF-8 (Юникод)</value>
   </data>
@@ -565,7 +535,7 @@
     <value>Интеграция с Проводником Windows</value>
   </data>
   <data name="miCheckUpdates.Caption" xml:space="preserve">
-    <value>Проверка обновлений</value>
+    <value>Проверять обновления</value>
   </data>
   <data name="miResetAndRestart.Caption" xml:space="preserve">
     <value>Сбросить в стандартные настройки и перезапустить</value>
@@ -574,7 +544,7 @@
     <value>Сбросить все изменённые настройки и перезапустить программу</value>
   </data>
   <data name="mnuAccessibility.Caption" xml:space="preserve">
-    <value>Доступность</value>
+    <value>Разное</value>
   </data>
   <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
     <value>Открыть подменю выбора источника входного сигнала. Это меню можно вызвать сразу клавишей F1</value>
@@ -615,38 +585,23 @@
   <data name="miGotoRightList.Caption" xml:space="preserve">
     <value>Список справа</value>
   </data>
-  <data name="miFontSmall.Caption" xml:space="preserve">
-    <value>S - Tahoma 8пт</value>
-  </data>
-  <data name="miFontMedium.Caption" xml:space="preserve">
-    <value>M - Segoe UI 9пт</value>
-  </data>
-  <data name="miFontLarge.Caption" xml:space="preserve">
-    <value>L - Segoe UI 10пт</value>
-  </data>
-  <data name="miFontXLarge.Caption" xml:space="preserve">
-    <value>XL - Segoe UI 11пт</value>
-  </data>
-  <data name="miFontXxLarge.Caption" xml:space="preserve">
-    <value>XXL - Segoe UI 12пт</value>
-  </data>
   <data name="btnSearchLeft.ToolTip" xml:space="preserve">
     <value>Поиск канала по имени</value>
   </data>
   <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
-    <value>Вкл./выкл. Избранное H</value>
+    <value>Вкл./выкл. избранное H</value>
   </data>
   <data name="btnToggleFavH.Text" xml:space="preserve">
     <value>±H</value>
   </data>
   <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
-    <value>Вкл./выкл. Избранное G</value>
+    <value>Вкл./выкл. избранное G</value>
   </data>
   <data name="btnToggleFavG.Text" xml:space="preserve">
     <value>±G</value>
   </data>
   <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
-    <value>Вкл./выкл. Избранное F</value>
+    <value>Вкл./выкл. избранное F</value>
   </data>
   <data name="btnToggleFavF.Text" xml:space="preserve">
     <value>±F</value>
@@ -655,31 +610,31 @@
     <value>Вкл./выкл. родительский контроль</value>
   </data>
   <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
-    <value>Вкл./выкл. Избранное E</value>
+    <value>Вкл./выкл. избранное E</value>
   </data>
   <data name="btnToggleFavE.Text" xml:space="preserve">
     <value>±E</value>
   </data>
   <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
-    <value>Вкл./выкл. Избранное D</value>
+    <value>Вкл./выкл. избранное D</value>
   </data>
   <data name="btnToggleFavD.Text" xml:space="preserve">
     <value>±D</value>
   </data>
   <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
-    <value>Вкл./выкл. Избранное C</value>
+    <value>Вкл./выкл. избранное C</value>
   </data>
   <data name="btnToggleFavC.Text" xml:space="preserve">
     <value>±C</value>
   </data>
   <data name="btnToggleFavB.AccessibleDescription" xml:space="preserve">
-    <value>Вкл./выкл. Избранное B</value>
+    <value>Вкл./выкл. избранное B</value>
   </data>
   <data name="btnToggleFavB.Text" xml:space="preserve">
     <value>±B</value>
   </data>
   <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
-    <value>Вкл./выкл. Избранное A</value>
+    <value>Вкл./выкл. избранное A</value>
   </data>
   <data name="btnToggleFavA.Text" xml:space="preserve">
     <value>±A</value>

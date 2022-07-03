@@ -159,10 +159,10 @@ namespace ChanSort.Api
     {
       if (fields.Count < 3)
         return;
-      int freq;
-      int.TryParse(fields[1], out freq);
+      int.TryParse(fields[1], out var freq);
       if (freq == 0)
         return;
+      freq /= 1000;
       this.dvbcChannels[freq] = fields[2];
     }
     #endregion
@@ -231,11 +231,13 @@ namespace ChanSort.Api
       if (freqInMhz > 2000)
         freqInMhz /= 1000;
 
-      return dvbcChannels.TryGet((int)(freqInMhz * 1000)) 
-             ?? dvbcChannels.TryGet((int)((freqInMhz - 1) * 1000))
-             ?? dvbcChannels.TryGet((int)((freqInMhz - 2) * 1000)) 
-             ?? dvbcChannels.TryGet((int)((freqInMhz + 1) * 1000))
-             ?? dvbcChannels.TryGet((int)((freqInMhz + 2) * 1000))
+      return dvbcChannels.TryGet((int)freqInMhz) 
+             ?? dvbcChannels.TryGet((int)freqInMhz - 1)
+             ?? dvbcChannels.TryGet((int)freqInMhz - 2)
+             //?? dvbcChannels.TryGet((int)freqInMhz - 3)
+             ?? dvbcChannels.TryGet((int)freqInMhz + 1)
+             ?? dvbcChannels.TryGet((int)freqInMhz + 2)
+             //?? dvbcChannels.TryGet((int)freqInMhz + 3)
              ?? "";      
     }
   }

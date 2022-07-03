@@ -6,9 +6,9 @@ namespace ChanSort.Api
 {
   public class ChannelList
   {
-    private readonly Dictionary<string, IList<ChannelInfo>> channelByUid = new Dictionary<string, IList<ChannelInfo>>();
-    private readonly Dictionary<int, ChannelInfo> channelByProgNr = new Dictionary<int, ChannelInfo>();
-    private readonly Dictionary<string, IList<ChannelInfo>> channelByName = new Dictionary<string, IList<ChannelInfo>>();
+    private readonly Dictionary<string, IList<ChannelInfo>> channelByUid = new ();
+    private readonly Dictionary<int, ChannelInfo> channelByProgNr = new ();
+    private readonly Dictionary<string, IList<ChannelInfo>> channelByName = new ();
     private int insertProgramNr = 1;
     private int duplicateUidCount;
     private int duplicateProgNrCount;
@@ -138,6 +138,7 @@ namespace ChanSort.Api
     #region GetChannelByName()
     public IEnumerable<ChannelInfo> GetChannelByName(string name)
     {
+      name ??= "";
       var hits = this.channelByName.TryGet(name.ToLowerInvariant().Trim());
       return hits ?? new List<ChannelInfo>();
     }

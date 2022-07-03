@@ -127,6 +127,6 @@
     <value>Цветовая тема</value>
   </data>
   <data name="btnReset.Text" xml:space="preserve">
-    <value>Использовать стандартную тему</value>
+    <value>Использовать стандартную</value>
   </data>
 </root>

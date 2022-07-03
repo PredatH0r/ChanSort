@@ -129,7 +129,7 @@
     <value>Поддерживаемые файлы|{0}|Все файлы (*.*)|*</value>
   </data>
   <data name="MainForm_FileDialog_SaveFileFilter" xml:space="preserve">
-    <value>{0}-файлы|*{0}|Все файлы (*.*)|*</value>
+    <value>Файлы {0}|*{0}|Все файлы (*.*)|*</value>
   </data>
   <data name="MainForm_TryExecute_Exception" xml:space="preserve">
     <value>Неизвестная ошибка:
@@ -219,13 +219,13 @@
     <value>Как вы хотите отредактировать список каналов?</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_EmptyList" xml:space="preserve">
-    <value>Создать новый список: Начать с пустого списка и добавить каналы в нужном порядке</value>
+    <value>Создать новый список - начать с пустого списка и добавить каналы в нужном порядке</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_CurrentList" xml:space="preserve">
-    <value>Изменить текущий список: Начать с текущего списка и изменить его</value>
+    <value>Изменить текущий список - начать с текущего списка и изменить его</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
-    <value>Скопировать список каналов: Упорядочить каналы, как в справочном списке</value>
+    <value>Скопировать список каналов - упорядочить каналы, как в базовом списке</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
     <value>Как поступить с неотсортированными каналами?</value>

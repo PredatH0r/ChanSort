@@ -1,5 +1,10 @@
-ChanSort Change Log 
+ï»¿ChanSort Change Log 
 ===================
+
+2022-07-03
+- experimental support for Grundig and ChangHong atv\_cmdb.bin files (analog antenna and cable TV)
+- Reference list dialog further optimized to fit 1920x1080 @150% or 1024x768 @100% screens
+- re-imported translation file (to fix incorrect letters in language names like "Ğ ÑƒÑÑĞºĞ¸Ğ¹")
 
 2022-04-19
 - added support for Orsay .zip files which contain a Clone/map-AirD and other files similar to Samsung .scm
@@ -364,7 +369,7 @@ ChanSort Change Log
 - fixed error when opening reference list dialog
 
 2019-12-29
-- Added Spanish translation (thanks to Marco Sánchez!)
+- Added Spanish translation (thanks to Marco SÃ¡nchez!)
 - Added support for Philips "ChannelMap" favorites lists (1-8)
 
 2019-11-24
@@ -932,60 +937,60 @@ ChanSort Change Log
   channels in red)
 
 2013-03-30
-- FIX: bei nicht-LM Geräten wurden die DVB-S Programmnummern falsch ausgelesen
-- Hotelmodus/DTV-channel-update kann nun bei allen LG serien geändert werden
+- FIX: bei nicht-LM GerÃ¤ten wurden die DVB-S Programmnummern falsch ausgelesen
+- Hotelmodus/DTV-channel-update kann nun bei allen LG serien geÃ¤ndert werden
 
 2013-03-29
 - LG: Doppelt vorhandene Sender (die automatisch vom TV bei der Sendersuche
-  mit Ländervoreinstellung angelegt werden) werden nun automatisch gelöscht.
-  Diese führen am TV häufig dazu, dass Sender zufällig zwischen deren
-  Programmplätzen hin- und herspringen. (Bug im TV, unabhängig von ChanSort)
-- LG: Sender können nun gelöscht werden ("Nicht explizit sortierte Sender: Löschen")
-- LG: Ändern von Sendernamen möglich (um bei DVB-C/T/S die Namen nicht wieder
+  mit LÃ¤ndervoreinstellung angelegt werden) werden nun automatisch gelÃ¶scht.
+  Diese fÃ¼hren am TV hÃ¤ufig dazu, dass Sender zufÃ¤llig zwischen deren
+  ProgrammplÃ¤tzen hin- und herspringen. (Bug im TV, unabhÃ¤ngig von ChanSort)
+- LG: Sender kÃ¶nnen nun gelÃ¶scht werden ("Nicht explizit sortierte Sender: LÃ¶schen")
+- LG: Ã„ndern von Sendernamen mÃ¶glich (um bei DVB-C/T/S die Namen nicht wieder
   zu verlieren, muss Hotel-Mode=ein und DTV channel update="manual" sein)
-- LG: Für die LM-Serie kann nun innerhalb von ChanSort der Hotel-Modus bzw
+- LG: FÃ¼r die LM-Serie kann nun innerhalb von ChanSort der Hotel-Modus bzw
   die Senderlisten-Aktualisierung ein-/ausgeschaltet werden.
 
 2013-02-26
-- Neuer Bearbeitungsmodus "Tauschen" eingebaut, mit dem beim Ändern der
+- Neuer Bearbeitungsmodus "Tauschen" eingebaut, mit dem beim Ã„ndern der
   Programmnummer die beiden Sender ihre Nummer tauschen und alle anderen
-  Nummern unverändert bleiben.
-- Beim Öffnen einer TV-Datei ohne zugehöriger Referenzliste werden nun
-  automatisch alle Sender in die "Sortierte Liste" übernommen.
+  Nummern unverÃ¤ndert bleiben.
+- Beim Ã–ffnen einer TV-Datei ohne zugehÃ¶riger Referenzliste werden nun
+  automatisch alle Sender in die "Sortierte Liste" Ã¼bernommen.
 - "Speichern unter" funktioniert nun auch mit Samsung's SCM Dateien
-- Wenn beim Speichern ein Fehler auftritt, wird nun auf mögliche Ursachen 
+- Wenn beim Speichern ein Fehler auftritt, wird nun auf mÃ¶gliche Ursachen 
   hingewiesen
 
 2013-02-11
 - Mehrfach vorhandene Sender werden nun getrennt angezeigt, wenn sie 
   unterschiedlichen Programmnummern zugewiesen sind (z.B. DVB-T Empfang des 
-  gleichen Senders über verschiedene Sendeanlagen).
-- Beim Ändern der Programmnr auf eine bisher nicht verwendete Nummer werden
-  die Programmnummern hinter der neuen Nummer nicht mehr erhöht.
+  gleichen Senders Ã¼ber verschiedene Sendeanlagen).
+- Beim Ã„ndern der Programmnr auf eine bisher nicht verwendete Nummer werden
+  die Programmnummern hinter der neuen Nummer nicht mehr erhÃ¶ht.
 
 2013-02-04
-- Unterstützung für Samsung "AstraHDPlus" Senderliste hinzugefügt
-- Funktion zum Übernehmen der bestehenden Senderliste in die sortierte Liste
+- UnterstÃ¼tzung fÃ¼r Samsung "AstraHDPlus" Senderliste hinzugefÃ¼gt
+- Funktion zum Ãœbernehmen der bestehenden Senderliste in die sortierte Liste
 
 2013-01-22
-- Fix: Import von .chl Referenzlisten, wenn der gleiche Sendername über
+- Fix: Import von .chl Referenzlisten, wenn der gleiche Sendername Ã¼ber
   mehrere Satelliten empfangen wird und dort dem gleichen TSID zugewiesen ist.
 
 2013-01-16
 - Import von .chl Referenzlisten von SamToolBox
-- Samsung Senderlisten zeigen nun "verschlüsselt"-Info an
+- Samsung Senderlisten zeigen nun "verschlÃ¼sselt"-Info an
 - FIX: Mehrfachauswahl in den Senderlisten (mit Strg/Shift + Maus/Cursortasten)
 - FIX: Warnung statt Absturz bei mehrfach vergebenen Transponder-IDs (.SCM Datei)
 
 2013-01-15
-- Samsung Serie E wird nun unterstützt
+- Samsung Serie E wird nun unterstÃ¼tzt
 - Favoritenliste der Samsung Serie D und E  wird nun erkannt
 - Samsung Modellerkennung verbessert
 
 2012-12-26
-- Unterstützung für Samsung Fernseher hinzugefügt
-- Funktion zum Öffnen einer Referenzliste hinzugefügt
-- Funktion zum kompletten Löschen der Senderlisten für LG Fernseher
+- UnterstÃ¼tzung fÃ¼r Samsung Fernseher hinzugefÃ¼gt
+- Funktion zum Ã–ffnen einer Referenzliste hinzugefÃ¼gt
+- Funktion zum kompletten LÃ¶schen der Senderlisten fÃ¼r LG Fernseher
 - Diverse Bugfixes
 
 2012-11-07
@@ -995,11 +1000,11 @@ ChanSort Change Log
 
 2012-11-06
 - Fix: Analoge Senderliste wurde nicht korrekt gespeichert
-- Fix: Hinzufügen von Sendern zu einer leeren Liste
-- Setzen von Favoriten möglich
-- Setzen von Sender sperren / überspringen / verstecken
+- Fix: HinzufÃ¼gen von Sendern zu einer leeren Liste
+- Setzen von Favoriten mÃ¶glich
+- Setzen von Sender sperren / Ã¼berspringen / verstecken
 - Direkte Eingabe von neuer Programmnr in den Tabellen
-- Kontextmenü über rechte Maustaste
+- KontextmenÃ¼ Ã¼ber rechte Maustaste
 
 2012-11-05
 - Fix: DVB-C/T Senderliste wurde nicht korrekt gespeichert
@@ -1010,39 +1015,39 @@ ChanSort Change Log
 - Mehrfach vorhandene Sender werden nun nicht mehr ausgefiltert
 
 2012-11-01
-- UI und internes Datenmodell komplett überarbeitet
-- Getrennte Listen für Analog, DVB-C/T, DVB-S in jeweils Radio/TV
+- UI und internes Datenmodell komplett Ã¼berarbeitet
+- Getrennte Listen fÃ¼r Analog, DVB-C/T, DVB-S in jeweils Radio/TV
 
 2012-10-30
-- Unterstützung für LG Serie CS, LD, LE, LH und PM hinzugefügt
-- Neue Serien können durch Anpassen einer .INI Datei hinzugefügt werden
-- Automatischer Test im Sourcecode, der alle bekannten TLLs lädt
-- Hilfe-Menü hinzugefügt
+- UnterstÃ¼tzung fÃ¼r LG Serie CS, LD, LE, LH und PM hinzugefÃ¼gt
+- Neue Serien kÃ¶nnen durch Anpassen einer .INI Datei hinzugefÃ¼gt werden
+- Automatischer Test im Sourcecode, der alle bekannten TLLs lÃ¤dt
+- Hilfe-MenÃ¼ hinzugefÃ¼gt
 
 2012-10-29
 - Plugin zum direkten Laden/Speichern von TLLs, ohne TLLsort.exe
-- Unterstützung für LG Serie LV und LW hinzugefügt
-- Sourcen veröffentlicht
+- UnterstÃ¼tzung fÃ¼r LG Serie LV und LW hinzugefÃ¼gt
+- Sourcen verÃ¶ffentlicht
 
 2012-10-26
 - Programm umbenannt von TLLsortGUI auf ChanSort
-- Übersetzt in Englisch und Österreichisch
-- Einstellungen werden beim Beenden/Speichern des Programms übernommen
-- Ausgewählten Zeilen in der sortierten Liste alphabetisch sortieren
-- Dateinamen für Speichern können geändert werden
-- Unterstützung für Plugin-DLLs für verschiedene TV-Modelle
+- Ãœbersetzt in Englisch und Ã–sterreichisch
+- Einstellungen werden beim Beenden/Speichern des Programms Ã¼bernommen
+- AusgewÃ¤hlten Zeilen in der sortierten Liste alphabetisch sortieren
+- Dateinamen fÃ¼r Speichern kÃ¶nnen geÃ¤ndert werden
+- UnterstÃ¼tzung fÃ¼r Plugin-DLLs fÃ¼r verschiedene TV-Modelle
 
 2012-10-25
-- Neu: Wenn eine Gruppenzeile (Sat, Analog, CableAndTerrestic) ausgewählt
-  ist, werden alle darin enthaltene Sender eingefügt bzw. entfernt.
-- Bugfix: Eingabefelder für Einfügepositionen erlauben nun keine 
-  ungültigen (sprich zu hohe, nicht fortlaufende) Nummern mehr.
+- Neu: Wenn eine Gruppenzeile (Sat, Analog, CableAndTerrestic) ausgewÃ¤hlt
+  ist, werden alle darin enthaltene Sender eingefÃ¼gt bzw. entfernt.
+- Bugfix: Eingabefelder fÃ¼r EinfÃ¼gepositionen erlauben nun keine 
+  ungÃ¼ltigen (sprich zu hohe, nicht fortlaufende) Nummern mehr.
 
 2012-10-24 (14:52 MESZ)
 - Bugfix: Fehler beim Einlesen der TLL-Datei, wenn der gleiche Sender 
   (sprich Uid) mehrfach enthalten war. Kann vermutlich passieren, wenn 
-  ein Sendersuchlauf 2x durchgeführt wurde, ohne die alten Programme zu
-  löschen.
+  ein Sendersuchlauf 2x durchgefÃ¼hrt wurde, ohne die alten Programme zu
+  lÃ¶schen.
 
 2012-10-24 (#1)
-- erste Veröffentlichung
+- erste VerÃ¶ffentlichung

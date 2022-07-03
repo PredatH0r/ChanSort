@@ -210,4 +210,28 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Применить базовый список</value>
   </data>
+  <data name="comboPrNr.EditValue" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboPrNr.Properties.Items" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboPrNr.Properties.Items1" xml:space="preserve">
+    <value>100</value>
+  </data>
+  <data name="comboPrNr.Properties.Items2" xml:space="preserve">
+    <value>500</value>
+  </data>
+  <data name="comboPrNr.Properties.Items3" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items4" xml:space="preserve">
+    <value>2000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items5" xml:space="preserve">
+    <value>5000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items6" xml:space="preserve">
+    <value>7000</value>
+  </data>
 </root>

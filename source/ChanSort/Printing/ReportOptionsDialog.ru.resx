@@ -133,7 +133,7 @@
     <value>Шрифт:</value>
   </data>
   <data name="btnPreview.Text" xml:space="preserve">
-    <value>Предпросмотр…</value>
+    <value>Просмотр…</value>
   </data>
   <data name="labelControl3.Text" xml:space="preserve">
     <value>Колонки:</value>
