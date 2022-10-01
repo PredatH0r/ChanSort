@@ -238,4 +238,10 @@ Acest pas poate fi repetat după cum este necesar.</value>
   <data name="comboPrNr.Properties.Items6" xml:space="preserve">
     <value>7000</value>
   </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>1. Selectați fișierul listă de referință</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>2. Aduceți ordine în fișierul dvs. TV</value>
+  </data>
 </root>

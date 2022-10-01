@@ -18,7 +18,6 @@ using ChanSort.Ui.Printing;
 using ChanSort.Ui.Properties;
 using DevExpress.Data;
 using DevExpress.LookAndFeel;
-using DevExpress.Office.Services;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;

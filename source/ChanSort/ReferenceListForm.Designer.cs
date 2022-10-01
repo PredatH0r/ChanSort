@@ -52,12 +52,12 @@
       this.btnApply = new DevExpress.XtraEditors.SimpleButton();
       this.btnOk = new DevExpress.XtraEditors.SimpleButton();
       this.btnClose = new DevExpress.XtraEditors.SimpleButton();
-      this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
       this.linkWiki = new DevExpress.XtraEditors.HyperlinkLabelControl();
-      this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
       this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
       this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
-      this.xtraScrollableControl1 = new DevExpress.XtraEditors.XtraScrollableControl();
+      this.tabControl = new DevExpress.XtraTab.XtraTabControl();
+      this.tabPage1 = new DevExpress.XtraTab.XtraTabPage();
+      this.tabPage2 = new DevExpress.XtraTab.XtraTabPage();
       ((System.ComponentModel.ISupportInitialize)(this.edFile.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.rbAuto.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.rbManual.Properties)).BeginInit();
@@ -76,11 +76,10 @@
       ((System.ComponentModel.ISupportInitialize)(this.cbCable.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbAnalog.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbDigital.Properties)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
-      this.groupControl1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
-      this.groupControl2.SuspendLayout();
-      this.xtraScrollableControl1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.tabControl)).BeginInit();
+      this.tabControl.SuspendLayout();
+      this.tabPage1.SuspendLayout();
+      this.tabPage2.SuspendLayout();
       this.SuspendLayout();
       // 
       // labelControl1
@@ -331,35 +330,12 @@
       this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
       this.btnClose.Name = "btnClose";
       // 
-      // groupControl1
-      // 
-      this.groupControl1.AppearanceCaption.Font = ((System.Drawing.Font)(resources.GetObject("groupControl1.AppearanceCaption.Font")));
-      this.groupControl1.AppearanceCaption.Options.UseFont = true;
-      this.groupControl1.Controls.Add(this.linkWiki);
-      this.groupControl1.Controls.Add(this.labelControl2);
-      this.groupControl1.Controls.Add(this.labelControl1);
-      this.groupControl1.Controls.Add(this.edFile);
-      resources.ApplyResources(this.groupControl1, "groupControl1");
-      this.groupControl1.Name = "groupControl1";
-      // 
       // linkWiki
       // 
       this.linkWiki.Cursor = System.Windows.Forms.Cursors.Hand;
       resources.ApplyResources(this.linkWiki, "linkWiki");
       this.linkWiki.Name = "linkWiki";
       this.linkWiki.HyperlinkClick += new DevExpress.Utils.HyperlinkClickEventHandler(this.linkWiki_HyperlinkClick);
-      // 
-      // groupControl2
-      // 
-      this.groupControl2.AppearanceCaption.Font = ((System.Drawing.Font)(resources.GetObject("groupControl2.AppearanceCaption.Font")));
-      this.groupControl2.AppearanceCaption.Options.UseFont = true;
-      this.groupControl2.Controls.Add(this.labelControl10);
-      this.groupControl2.Controls.Add(this.labelControl8);
-      this.groupControl2.Controls.Add(this.rbAuto);
-      this.groupControl2.Controls.Add(this.rbManual);
-      this.groupControl2.Controls.Add(this.grpManual);
-      resources.ApplyResources(this.groupControl2, "groupControl2");
-      this.groupControl2.Name = "groupControl2";
       // 
       // labelControl10
       // 
@@ -371,21 +347,44 @@
       resources.ApplyResources(this.labelControl8, "labelControl8");
       this.labelControl8.Name = "labelControl8";
       // 
-      // xtraScrollableControl1
+      // tabControl
       // 
-      resources.ApplyResources(this.xtraScrollableControl1, "xtraScrollableControl1");
-      this.xtraScrollableControl1.Controls.Add(this.groupControl1);
-      this.xtraScrollableControl1.Controls.Add(this.groupControl2);
-      this.xtraScrollableControl1.Name = "xtraScrollableControl1";
+      resources.ApplyResources(this.tabControl, "tabControl");
+      this.tabControl.Name = "tabControl";
+      this.tabControl.SelectedTabPage = this.tabPage1;
+      this.tabControl.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.tabPage1,
+            this.tabPage2});
+      // 
+      // tabPage1
+      // 
+      this.tabPage1.Controls.Add(this.linkWiki);
+      this.tabPage1.Controls.Add(this.edFile);
+      this.tabPage1.Controls.Add(this.labelControl2);
+      this.tabPage1.Controls.Add(this.labelControl1);
+      this.tabPage1.Name = "tabPage1";
+      resources.ApplyResources(this.tabPage1, "tabPage1");
+      // 
+      // tabPage2
+      // 
+      this.tabPage2.Controls.Add(this.labelControl10);
+      this.tabPage2.Controls.Add(this.rbAuto);
+      this.tabPage2.Controls.Add(this.labelControl8);
+      this.tabPage2.Controls.Add(this.grpManual);
+      this.tabPage2.Controls.Add(this.rbManual);
+      this.tabPage2.Name = "tabPage2";
+      this.tabPage2.PageEnabled = false;
+      resources.ApplyResources(this.tabPage2, "tabPage2");
       // 
       // ReferenceListForm
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnClose;
-      this.Controls.Add(this.xtraScrollableControl1);
+      this.Controls.Add(this.tabControl);
       this.Controls.Add(this.btnClose);
       this.Controls.Add(this.btnOk);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "ReferenceListForm";
@@ -408,13 +407,12 @@
       ((System.ComponentModel.ISupportInitialize)(this.cbCable.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbAnalog.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cbDigital.Properties)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
-      this.groupControl1.ResumeLayout(false);
-      this.groupControl1.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
-      this.groupControl2.ResumeLayout(false);
-      this.groupControl2.PerformLayout();
-      this.xtraScrollableControl1.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.tabControl)).EndInit();
+      this.tabControl.ResumeLayout(false);
+      this.tabPage1.ResumeLayout(false);
+      this.tabPage1.PerformLayout();
+      this.tabPage2.ResumeLayout(false);
+      this.tabPage2.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -445,8 +443,6 @@
     private DevExpress.XtraEditors.LabelControl labelControl9;
     private DevExpress.XtraEditors.CheckEdit cbAnalog;
     private DevExpress.XtraEditors.CheckEdit cbDigital;
-    private DevExpress.XtraEditors.GroupControl groupControl1;
-    private DevExpress.XtraEditors.GroupControl groupControl2;
     private DevExpress.XtraEditors.LabelControl labelControl10;
     private DevExpress.XtraEditors.LabelControl labelControl8;
     private DevExpress.XtraEditors.CheckEdit cbIp;
@@ -457,6 +453,8 @@
     private DevExpress.XtraEditors.HyperlinkLabelControl linkWiki;
     private DevExpress.XtraEditors.CheckEdit cbConsecutive;
     private DevExpress.XtraEditors.CheckEdit cbData;
-    private DevExpress.XtraEditors.XtraScrollableControl xtraScrollableControl1;
+    private DevExpress.XtraTab.XtraTabControl tabControl;
+    private DevExpress.XtraTab.XtraTabPage tabPage1;
+    private DevExpress.XtraTab.XtraTabPage tabPage2;
   }
 }

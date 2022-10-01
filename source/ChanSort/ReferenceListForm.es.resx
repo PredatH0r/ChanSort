@@ -238,4 +238,10 @@ Este paso puede ser repetido tanto como se necesite</value>
   <data name="comboPrNr.Properties.Items6" xml:space="preserve">
     <value>7000</value>
   </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>1. Seleccione el archivo de la lista de referencia</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>2. Ordenar su archivo de TV</value>
+  </data>
 </root>

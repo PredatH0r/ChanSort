@@ -239,4 +239,10 @@ lub plik danych z innego telewizora (SCM, TLL, DB, BIN, ...)</value>
   <data name="comboPrNr.Properties.Items6" xml:space="preserve">
     <value>7000</value>
   </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>1. Wybierz plik listy referencyjnej</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>2. Wprowadź porządek do pliku telewizyjnego</value>
+  </data>
 </root>

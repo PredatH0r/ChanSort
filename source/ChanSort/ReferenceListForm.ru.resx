@@ -234,4 +234,10 @@
   <data name="comboPrNr.Properties.Items6" xml:space="preserve">
     <value>7000</value>
   </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>1. Выберите базовый файл-список</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>2. Наведите порядок в ТВ-файле</value>
+  </data>
 </root>

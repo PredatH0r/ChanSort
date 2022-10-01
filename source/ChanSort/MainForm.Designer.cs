@@ -235,6 +235,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).BeginInit();
       this.pnlEditControls.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).BeginInit();
       this.grpInputList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridRight)).BeginInit();
@@ -492,6 +493,10 @@
       this.btnSearchLeft.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
       this.btnSearchLeft.Name = "btnSearchLeft";
       this.btnSearchLeft.Click += new System.EventHandler(this.btnSearch_Click);
+      // 
+      // globalImageCollection1
+      // 
+      this.globalImageCollection1.ParentControl = this;
       // 
       // btnToggleFavH
       // 
@@ -2251,6 +2256,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).EndInit();
       this.pnlEditControls.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).EndInit();
       this.grpInputList.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.gridRight)).EndInit();

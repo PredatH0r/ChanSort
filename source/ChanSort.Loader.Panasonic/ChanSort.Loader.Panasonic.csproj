@@ -27,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -98,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbChannel.cs" />
+    <Compile Include="IdtvChannelSerializer.cs" />
     <Compile Include="Serializer.cs" />
     <Compile Include="PanasonicPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

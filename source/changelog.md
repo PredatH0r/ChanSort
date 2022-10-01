@@ -1,6 +1,10 @@
 ﻿ChanSort Change Log 
 ===================
 
+TBA
+- fixed "NullReferenceException" while applying a reference list based on a SQLite database file 
+  (\*.db or Samsung .zip) which contained NULL values for channel names instead of empty strings.
+
 2022-07-03
 - experimental support for Grundig and ChangHong atv\_cmdb.bin files (analog antenna and cable TV)
 - Reference list dialog further optimized to fit 1920x1080 @150% or 1024x768 @100% screens

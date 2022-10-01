@@ -240,4 +240,10 @@ veya başka bir TV'den veri dosyası (SCM, TLL, DB, BIN, ...)</value>
   <data name="comboPrNr.Properties.Items6" xml:space="preserve">
     <value>7000</value>
   </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>1. Referans listesi dosyasını seçin</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>2. TV dosyanızı düzenleyin</value>
+  </data>
 </root>

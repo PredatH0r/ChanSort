@@ -239,4 +239,10 @@ Dieser Schritt kann je nach Bedarf wiederholt werden.</value>
   <data name="btnOk.Text" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>1. Wählen Sie eine Vorlage-Datei</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>2. Bringen Sie Ordnung in Ihre TV-Liste</value>
+  </data>
 </root>

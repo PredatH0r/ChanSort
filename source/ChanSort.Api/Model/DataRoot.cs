@@ -126,6 +126,8 @@ namespace ChanSort.Api
         bool hasPolarity = false;
         foreach (var chan in list.Channels)
         {
+          chan.Name ??= ""; // some SQLite based lists may have NULL values for channel names, which can cause NPEs later on
+
           chan.FavMode = favMode; // required so that channels know how to handle favorites (as bitmasks or as indices)
 
           if (chan.IsDeleted)

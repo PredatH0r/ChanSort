@@ -670,7 +670,7 @@ namespace ChanSort.Loader.Samsung.Scm
       this.SaveChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, this.canalDigitalFileContent);
       this.SaveChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, this.digitalPlusFileContent);
       this.SaveChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, this.cyfraPlusFileContent);
-      this.ZipToOutputFile(tvOutputFile, false);
+      this.ZipToOutputFile(tvOutputFile, true);
     }
     #endregion
 

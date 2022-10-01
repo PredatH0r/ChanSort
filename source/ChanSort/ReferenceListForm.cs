@@ -71,8 +71,7 @@ namespace ChanSort.Ui
       BeginInvoke((Action) (() =>
       {
         var ser = ShowOpenFileDialog(main);
-        if (ser != null)
-          this.SetInput(ser);
+        this.SetInput(ser);
       }));
     }
     #endregion
@@ -116,6 +115,10 @@ namespace ChanSort.Ui
     private void SetInput(SerializerBase ser)
     {
       this.serializer?.Dispose();
+
+      this.tabPage2.PageEnabled = ser != null;
+      if (ser == null)
+        return;
 
       this.serializer = ser;
       this.edFile.Text = serializer.FileName;
@@ -182,6 +185,8 @@ namespace ChanSort.Ui
         this.rbAuto.Checked = true;
       else
         this.rbManual.Checked = true;
+
+      this.tabControl.SelectedTabPage = tabPage2;
     }
 
     #endregion
@@ -269,8 +274,7 @@ namespace ChanSort.Ui
     private void edFile_ButtonClick(object sender, ButtonPressedEventArgs e)
     {
       var ser = ShowOpenFileDialog(this.main);
-      if (ser != null)
-        SetInput(ser);
+      SetInput(ser);
     }
     #endregion
 

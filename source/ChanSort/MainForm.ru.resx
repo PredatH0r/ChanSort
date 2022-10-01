@@ -699,4 +699,19 @@
   <data name="colDebug.Caption" xml:space="preserve">
     <value>Отладочные\nданные</value>
   </data>
+  <data name="miFontSmall.Caption" xml:space="preserve">
+    <value>S - Tahoma 8пт</value>
+  </data>
+  <data name="miFontMedium.Caption" xml:space="preserve">
+    <value>M - Segoe UI 9пт</value>
+  </data>
+  <data name="miFontLarge.Caption" xml:space="preserve">
+    <value>L - Segoe UI 10пт</value>
+  </data>
+  <data name="miFontXLarge.Caption" xml:space="preserve">
+    <value>XL - Segoe UI 11пт</value>
+  </data>
+  <data name="miFontXxLarge.Caption" xml:space="preserve">
+    <value>XXL - Segoe UI 12пт</value>
+  </data>
 </root>
