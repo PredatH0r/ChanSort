@@ -23,7 +23,14 @@ internal class IdtvChannelSerializer : SerializerBase
   /*
    The idtvChannel.bin seems to be related to the TV's DVB tuner. 
    It does not contain some streaming related channels that can be found in tv.db, but contains lots of DVB channels that are not includedin tv.bin (probably filtered out there by country settings)
-   When changing program numbers through the TV's menu, the data records in the .bin file get physically reordered to match the logical order.
+   The data records in the .bin are shown in exactly that order in the TV's menu, so they must be physically ordered by the program number.
+
+   The .bin file starts with:
+   00 00 4b 09
+   uint numRecords;
+   fixed byte md5Chechsum[16];
+   IdtvChannel channels[numRecords]
+
   */
 
   [Flags]
@@ -60,15 +67,10 @@ internal class IdtvChannelSerializer : SerializerBase
 
   #endregion
 
-  class ChannelDictEntry
-  {
-    public ChannelInfo Channel;
-    public long FilePosition;
-  }
-
   private readonly string dbFile;
   private readonly string binFile;
-  private readonly Dictionary<long, ChannelDictEntry> channelDict = new();
+  private Dictionary<int, ChannelInfo> channelDict = new(); // maps record-index of .bin file to Channel object created from .db file
+  private List<int> binFileRecordOffsets = new();
 
   private readonly StringBuilder log = new();
 
@@ -195,7 +197,7 @@ internal class IdtvChannelSerializer : SerializerBase
       var list = this.DataRoot.GetChannelList(signalSource);
       this.DataRoot.AddChannel(list, ch);
 
-      channelDict.Add(ch.RecordOrder, new ChannelDictEntry() { Channel = ch });
+      channelDict.Add(ch.RecordOrder, ch);
     }
   }
   #endregion
@@ -228,6 +230,7 @@ internal class IdtvChannelSerializer : SerializerBase
     while (strm.Position + structSize <= data.Length)
     {
       var off = strm.Position;
+      binFileRecordOffsets.Add((int)off);
         
       // C# trickery to read binary data into a structure
       var bytes = r.ReadBytes(structSize);
@@ -244,11 +247,8 @@ internal class IdtvChannelSerializer : SerializerBase
 
       log.AppendLine($"{i}\t{name}\t{progNr}\t{chan.Onid}-{chan.Tsid}-{chan.Sid}\t{(ushort)chan.Flags:X4}");
 
-      if (channelDict.TryGetValue(i, out var entry))
+      if (channelDict.TryGetValue(i, out var ch))
       {
-        entry.FilePosition = off;
-
-        var ch = entry.Channel;
         if (ch.OldProgramNr != progNr)
           throw new FileLoadException($"mismatching program_number between tv.db _id {ch.RecordIndex} ({ch.OldProgramNr}) and idtvChannel.bin record {i} ({progNr})");
         if (ch.Name != name)
@@ -286,34 +286,158 @@ internal class IdtvChannelSerializer : SerializerBase
   }
   #endregion
 
-  #region GetDataFilePaths()
-  public override IEnumerable<string> GetDataFilePaths()
-  {
-    // return the list of files where ChanSort will create a .bak copy
-    return new[] { dbFile, binFile };
-  }
-  #endregion
+
 
   #region Save()
   public override void Save(string tvOutputFile)
+  {
+    // saving the list requires to:
+    // - physically reorder the .bin file and update fields inside the data records
+    // - updating records in the .db file
+    // - updating this loaders internal data in channelDict, binFileRecordOffsets and channelInfo.RecordOrder for consecutive save operations to work
+
+    GetNewIdtvChannelBinRecordOrder(out var newToOld, out var oldToNew);
+
+    SaveIdtvChannelBin(newToOld);
+    SaveTvDb(oldToNew);
+  }
+  #endregion
+
+  #region GetNewBinFileRecordOrder()
+  private void GetNewIdtvChannelBinRecordOrder(out List<int> newToOld, out IDictionary<int, int> oldToNew)
+  {
+    // create forward mapping by sorting a list that contains old record numbers. The index of the list is the new record number.
+    newToOld = new List<int>(binFileRecordOffsets.Count);
+    for (int i = 0, c=this.binFileRecordOffsets.Count; i<c; i++)
+      newToOld.Add(i);
+    newToOld.Sort((a, b) =>
+    {
+      this.channelDict.TryGetValue(a, out var ch1);
+      this.channelDict.TryGetValue(b, out var ch2);
+      if (ch1 == null && ch2 == null)
+        return a.CompareTo(b);
+      if (ch2 == null)
+        return -1;
+      if (ch1 == null)
+        return +1;
+
+      var c = ch1.SignalSource.CompareTo(ch2.SignalSource); // group by DVB-C/T/S and TV/Radio/Data
+      if (c != 0)
+        return c;
+      c = ch1.NewProgramNr.CompareTo(ch2.NewProgramNr);
+      if (c != 0)
+        return c;
+
+      return a.CompareTo(b); // default keeps old order
+    });
+
+    // create reverse mapping
+    oldToNew = new Dictionary<int, int>(newToOld.Count);
+    for (int i = 0; i < newToOld.Count; i++)
+      oldToNew[newToOld[i]] = i;
+  }
+  #endregion
+
+  #region SaveIdtvChannelBin()
+  private void SaveIdtvChannelBin(IList<int> newToOld)
+  {
+    var data = UpdateIdtvChannelBinRecords();
+
+    data = ReorderBinFileRecords(data, newToOld);
+
+    // update MD5 checksum
+    var md5 = MD5.Create();
+    var checksum = md5.ComputeHash(data, 8 + 16, data.Length - 8 - 16);
+    Array.Copy(checksum, 0, data, 8, 16);
+
+    File.WriteAllBytes(binFile, data);
+  }
+  #endregion
+  
+  #region UpdateIdtvChannelBinRecords()
+  private byte[] UpdateIdtvChannelBinRecords()
+  {
+    // in-place update of the old .bin file data
+
+    var offProgNr = (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.ProgNr));
+    var offFlags = (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.Flags));
+
+    var data = File.ReadAllBytes(this.binFile);
+    var w = new BinaryWriter(new MemoryStream(data));
+
+    foreach (var list in this.DataRoot.ChannelLists)
+    {
+      foreach (var ch in list.Channels)
+      {
+        var filePosition = this.binFileRecordOffsets[ch.RecordOrder];
+        w.Seek(filePosition + offProgNr, SeekOrigin.Begin);
+        w.Write((ushort)ch.NewProgramNr);
+
+
+        // update flags
+        var off = filePosition + offFlags;
+        var flags = BitConverter.ToUInt16(data, off);
+        if (ch.Favorites == 0)
+          flags = (ushort)(flags & ~(ushort)Flags.IsFavorite);
+        else
+          flags = (ushort)(flags | (ushort)Flags.IsFavorite);
+        if (ch.Hidden)
+          flags = (ushort)(flags | (ushort)Flags.Hidden);
+        else
+          flags = (ushort)(flags & ~(ushort)Flags.Hidden);
+        w.Seek(filePosition + offFlags, SeekOrigin.Begin);
+        w.Write(flags);
+      }
+    }
+
+    w.Flush();
+    return data;
+  }
+  #endregion
+
+  #region ReorderBinFileRecords()
+  private byte[] ReorderBinFileRecords(byte[] binFileData, IList<int> newToOld)
+  {
+    using var mem = new MemoryStream(binFileData.Length);
+    mem.Write(binFileData, 0, 8 + 16); // copy header
+
+    var newOffsets = new List<int>(newToOld.Count);
+    foreach (var oldIndex in newToOld)
+    {
+      newOffsets.Add((int)mem.Position);
+
+      // TODO: this only works as long as channel name editing is not supported
+      var off = binFileRecordOffsets[oldIndex];
+      var recordLen = BitConverter.ToInt16(binFileData, off + (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.RecordLength))) + 4;
+      mem.Write(binFileData, off, recordLen);
+    }
+    mem.Flush();
+    binFileRecordOffsets = newOffsets;
+
+    binFileData = new byte[mem.Length];
+    Array.Copy(mem.GetBuffer(), 0, binFileData, 0, mem.Length);
+    return binFileData;
+  }
+  #endregion
+
+  #region SaveTvDb()
+  private void SaveTvDb(IDictionary<int, int> oldToNew)
   {
     string connString = "Data Source=" + this.dbFile;
     using var db = new SqliteConnection(connString);
     db.Open();
 
-    var data = File.ReadAllBytes(binFile);
-    var w = new BinaryWriter(new MemoryStream(data));
-
     using var trans = db.BeginTransaction();
-      
+
     using var upd = db.CreateCommand();
-    upd.CommandText = "update channels set display_number=@progNr, browsable=@browseable, searchable=@searchable, locked=@locked, favorite=@fav where _id=@id";
+    upd.CommandText = "update channels set display_number=@progNr, browsable=@browseable, searchable=@searchable, locked=@locked, favorite=@fav, channel_index=@recIdx where _id=@id";
     upd.Parameters.Add("@id", SqliteType.Integer);
     upd.Parameters.Add("@progNr", SqliteType.Text);
     upd.Parameters.Add("@browseable", SqliteType.Integer);
     upd.Parameters.Add("@searchable", SqliteType.Integer);
     upd.Parameters.Add("@locked", SqliteType.Integer);
     upd.Parameters.Add("@fav", SqliteType.Integer);
+    upd.Parameters.Add("@recIdx", SqliteType.Integer);
     upd.Prepare();
 
     using var del = db.CreateCommand();
@@ -321,8 +445,7 @@ internal class IdtvChannelSerializer : SerializerBase
     del.Parameters.Add("@id", SqliteType.Integer);
     del.Prepare();
 
-    var offProgNr = (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.ProgNr));
-    var offFlags = (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.Flags));
+    var newChannelDict = new Dictionary<int, ChannelInfo>();
     foreach (var list in this.DataRoot.ChannelLists)
     {
       foreach (var ch in list.Channels)
@@ -336,52 +459,43 @@ internal class IdtvChannelSerializer : SerializerBase
         }
         else
         {
+          var newRecordIndex = oldToNew[ch.RecordOrder];
+
           upd.Parameters["@id"].Value = ch.RecordIndex;
           upd.Parameters["@progNr"].Value = ch.NewProgramNr;
           upd.Parameters["@browseable"].Value = !ch.Skip;
           upd.Parameters["@searchable"].Value = !ch.Hidden;
           upd.Parameters["@locked"].Value = ch.Lock;
           upd.Parameters["@fav"].Value = (int)ch.Favorites;
+          upd.Parameters["@recIdx"].Value = newRecordIndex;
           upd.ExecuteNonQuery();
 
-          var entry = channelDict[ch.RecordOrder];
-          w.Seek((int)entry.FilePosition + offProgNr, SeekOrigin.Begin);
-          w.Write((ushort)ch.NewProgramNr);
+          ch.RecordOrder = newRecordIndex;
 
-          // update flags
-          var off = (int)entry.FilePosition + offFlags;
-          var flags = BitConverter.ToUInt16(data, off);
-          if (ch.Favorites == 0)
-            flags = (ushort)(flags & ~(ushort)Flags.IsFavorite);
-          else
-            flags = (ushort)(flags | (ushort)Flags.IsFavorite);
-          if (ch.Hidden)
-            flags = (ushort)(flags | (ushort)Flags.Hidden);
-          else
-            flags = (ushort)(flags & ~(ushort)Flags.Hidden);
-          w.Seek((int)entry.FilePosition + offFlags, SeekOrigin.Begin);
-          w.Write(flags);
+          newChannelDict.Add(newRecordIndex, ch);
         }
       }
     }
+    this.channelDict = newChannelDict;
+
     trans.Commit();
-
-    w.Flush();
-
-    // TODO reorder data records in .bin file based on progNr
-    // this also requires to update all the FilePositions in this.channelMap
-
-    // update MD5 checksum
-    var md5 = MD5.Create();
-    var checksum = md5.ComputeHash(data, 8 + 16, data.Length - 8 - 16);
-    Array.Copy(checksum, 0, data, 8, 16);
-
-    File.WriteAllBytes(binFile, data);
   }
   #endregion
 
+
+
+  #region GetDataFilePaths()
+  public override IEnumerable<string> GetDataFilePaths()
+  {
+    // return the list of files where ChanSort will create a .bak copy
+    return new[] { dbFile, dbFile + "-shm", dbFile + "-wal", binFile };
+  }
+  #endregion
+
+  #region GetFileInformation()
   public override string GetFileInformation()
   {
     return base.GetFileInformation() + "\n\n\n" + this.log;
   }
+  #endregion
 }

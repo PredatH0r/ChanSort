@@ -1839,7 +1839,6 @@ namespace ChanSort.Ui
     #endregion
 
     #region RestoreBackupFile()
-
     private void RestoreBackupFile()
     {
       var bakFile = this.GetPathOfMissingBackupFile();
@@ -1863,6 +1862,8 @@ namespace ChanSort.Ui
       foreach (var dataFilePath in this.currentTvSerializer.GetDataFilePaths())
       {
         bakFile = dataFilePath + ".bak";
+        if (!File.Exists(bakFile))
+          continue;
         try
         {
           File.Copy(bakFile, dataFilePath, true);
@@ -1881,7 +1882,6 @@ namespace ChanSort.Ui
       if (this.currentPlugin != null)
         this.LoadFiles(this.currentPlugin, this.currentTvFile);
     }
-
     #endregion
 
     #region ShowFileInformation()
