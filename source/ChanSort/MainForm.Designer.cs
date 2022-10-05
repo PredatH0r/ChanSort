@@ -220,6 +220,7 @@
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
       this.timerSelectFocusedRow = new System.Windows.Forms.Timer(this.components);
+      this.miDeleteBackup = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
       this.splitContainerControl1.Panel1.SuspendLayout();
@@ -235,7 +236,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).BeginInit();
       this.pnlEditControls.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).BeginInit();
       this.grpInputList.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridRight)).BeginInit();
@@ -493,10 +493,6 @@
       this.btnSearchLeft.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
       this.btnSearchLeft.Name = "btnSearchLeft";
       this.btnSearchLeft.Click += new System.EventHandler(this.btnSearch_Click);
-      // 
-      // globalImageCollection1
-      // 
-      this.globalImageCollection1.ParentControl = this;
       // 
       // btnToggleFavH
       // 
@@ -1129,9 +1125,10 @@
             this.miSplitView,
             this.miTheme,
             this.miAutoHideColumns,
-            this.miLoadListAfterStart});
+            this.miLoadListAfterStart,
+            this.miDeleteBackup});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 117;
+      this.barManager1.MaxItemId = 118;
       this.barManager1.ShowFullMenus = true;
       this.barManager1.ShortcutItemClick += new DevExpress.XtraBars.ShortcutItemClickEventHandler(this.barManager1_ShortcutItemClick);
       // 
@@ -1182,6 +1179,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miOpen),
             new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRestoreOriginal),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miDeleteBackup),
             new DevExpress.XtraBars.LinkPersistInfo(this.miFileInformation),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSave, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
@@ -2224,6 +2222,13 @@
       // 
       this.timerSelectFocusedRow.Tick += new System.EventHandler(this.timerSelectFocusedRow_Tick);
       // 
+      // miDeleteBackup
+      // 
+      resources.ApplyResources(this.miDeleteBackup, "miDeleteBackup");
+      this.miDeleteBackup.Id = 117;
+      this.miDeleteBackup.Name = "miDeleteBackup";
+      this.miDeleteBackup.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miDeleteBackup_ItemClick);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -2256,7 +2261,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pnlEditControls)).EndInit();
       this.pnlEditControls.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.globalImageCollection1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.grpInputList)).EndInit();
       this.grpInputList.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.gridRight)).EndInit();
@@ -2480,6 +2484,7 @@
     private System.Windows.Forms.Timer timerSelectFocusedRow;
     private DevExpress.XtraBars.BarButtonItem miAutoHideColumns;
     private DevExpress.XtraBars.BarButtonItem miLoadListAfterStart;
-  }
+        private DevExpress.XtraBars.BarButtonItem miDeleteBackup;
+    }
 }
 

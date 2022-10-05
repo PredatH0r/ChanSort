@@ -15,13 +15,14 @@ namespace ChanSort.Loader.Panasonic
       // check for files in the 2022 /mnt/vendor/tvdata/database/channel/ directory structure file format with tv.db and idtvChannel.bin
       var name = Path.GetFileName(inputFile).ToLowerInvariant();
       var baseDir = Path.GetDirectoryName(inputFile);
-      if (name == "hotel.bin")
-        baseDir = Path.Combine(baseDir, "mnt", "vendor", "tvdata", "database");
-      if (name == "idtvChannel.bin")
-        baseDir = Path.GetDirectoryName(baseDir);
-      var tvDb = Path.Combine(baseDir, "tv.db");
-      if (File.Exists(tvDb) && File.Exists(Path.Combine(baseDir, "channel", "idtvChannel.bin")))
-        return new IdtvChannelSerializer(tvDb);
+      if (name == "idtvchannel.bin")
+        baseDir = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(baseDir))))); // go down channel/database/tvdata/vendor/mnt
+      else if (name == "tv.db")
+        baseDir = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(baseDir)))); // go down database/tvdata/vendor/mnt
+      
+      var hotelBin = Path.Combine(baseDir, "hotel.bin");
+      if (File.Exists(hotelBin) && File.Exists(Path.Combine(baseDir, "mnt/vendor/tvdata/database", "tv.db")) && File.Exists(Path.Combine(baseDir, "mnt/vendor/tvdata/database/channel", "idtvChannel.bin")))
+        return new IdtvChannelSerializer(hotelBin);
 
       // Android based models use an .xml format. Unfortunately that format is utter garbage and not really useful
       var ext = Path.GetExtension(inputFile).ToLowerInvariant();

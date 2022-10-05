@@ -57,6 +57,7 @@ namespace ChanSort.Ui
     private bool splitView = true;
     private int ignoreEvents;
     private bool adjustWindowLocationOnScale = true;
+    private string lastOpenedFile;
 
     #region ctor()
 
@@ -244,7 +245,8 @@ namespace ChanSort.Ui
       var filter = GetTvDataFileFilter(out var supportedExtensions, out var numberOfFilters);
 
       using var dlg = new OpenFileDialog();
-      dlg.InitialDirectory = this.mruFiles.Count > 0 ? Path.GetDirectoryName(this.mruFiles[0]) : Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+      var lastFile = this.lastOpenedFile ?? (this.mruFiles.Count > 0 ? this.mruFiles[0] : null);
+      dlg.InitialDirectory = lastFile != null ? Path.GetDirectoryName(this.lastOpenedFile) : Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
       dlg.AddExtension = true;
       dlg.Filter = filter + string.Format(Resources.MainForm_FileDialog_OpenFileFilter, supportedExtensions);
       dlg.FilterIndex = numberOfFilters + 1;
@@ -321,6 +323,7 @@ namespace ChanSort.Ui
     private void LoadFiles(ISerializerPlugin plugin, string tvDataFile)
     {
       var dataUpdated = false;
+      this.lastOpenedFile = tvDataFile;
       try
       {
         if (DetectCommonFileCorruptions(tvDataFile))
@@ -1761,6 +1764,7 @@ namespace ChanSort.Ui
         this.miReload.Enabled = fileLoaded;
         this.miFileInformation.Enabled = fileLoaded;
         this.miRestoreOriginal.Enabled = fileLoaded && this.GetPathOfMissingBackupFile() == null;
+        this.miDeleteBackup.Enabled = fileLoaded;
         this.miSave.Enabled = fileLoaded;
         this.miSaveAs.Enabled = fileLoaded && this.currentTvSerializer.Features.CanSaveAs;
         this.miOpenReferenceFile.Enabled = fileLoaded;
@@ -1881,6 +1885,32 @@ namespace ChanSort.Ui
       this.currentTvSerializer.DataRoot.NeedsSaving = false;
       if (this.currentPlugin != null)
         this.LoadFiles(this.currentPlugin, this.currentTvFile);
+    }
+    #endregion
+
+    #region DeleteBackupFile()
+    private void DeleteBackupFile()
+    {
+      if (this.currentTvSerializer == null)
+        return;
+      var files = this.currentTvSerializer.GetDataFilePaths();
+      string lastError = null;
+      foreach (var file in files)
+      {
+        try
+        {
+          var bak = file + ".bak";
+          if (File.Exists(bak))
+            File.Delete(bak);
+        }
+        catch (Exception ex)
+        {
+          lastError = ex.Message;
+        }
+      }
+
+      if (lastError != null)
+        XtraMessageBox.Show(this, lastError);
     }
     #endregion
 
@@ -3157,6 +3187,11 @@ namespace ChanSort.Ui
     private void miRestoreOriginal_ItemClick(object sender, ItemClickEventArgs e)
     {
       TryExecute(this.RestoreBackupFile);
+    }
+
+    private void miDeleteBackup_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.DeleteBackupFile);
     }
 
     private void miFileInformation_ItemClick(object sender, ItemClickEventArgs e)

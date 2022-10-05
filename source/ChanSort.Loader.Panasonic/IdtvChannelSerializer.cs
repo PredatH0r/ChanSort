@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml.Linq;
 using ChanSort.Api;
 using Microsoft.Data.Sqlite;
 
@@ -39,29 +40,35 @@ internal class IdtvChannelSerializer : SerializerBase
     Encrypted = 0x0002,
     IsFavorite = 0x0080,
     Deleted = 0x0100,
-    Hidden = 0x0400
+    Skip = 0x0400,
+    CustomProgNr = 0x1000
   }
 
-  [StructLayout(LayoutKind.Sequential)]
+  [StructLayout(LayoutKind.Sequential,Pack=1)]
   unsafe struct IdtvChannel
   {
     public short U0; // always 1
     public short RecordLength; // 60 + length of channel name
     public short U4; // always 6
-    public fixed byte U6[10]; // all 00
+    public fixed byte U6[3]; // all 00
+    public ushort U9; // 0 = sat, 18 = cable ?
+    public fixed byte U11[5]; // all 00
     public uint Freq; // Hz for DVB-C/T, kHz for DVB-S
     public uint SymRate; // in Sym/s, like 22000000
     public short U24; // always 100
     public short U26; // always 0
     public short U28; // always 0
     public short ProgNr;
-    public fixed byte U32[4]; // e.g. 0a 01 00 00
+    public short Lcn; // maybe?
+    public fixed byte U32[2]; // e.g. 0a 01 00 00
     public Flags Flags;
     public fixed byte U38[4]; // 12 07 01 02
     public short Tsid;
     public short Onid;
     public short Sid;
-    public fixed byte U48[16];
+    public fixed byte U48[4];
+    public uint InternalProviderFlag2; // seems like all sat channels are in the 20000-29999 range, dvb-c in 30000-39999
+    public fixed byte U56[8];
     //public fixed byte ChannelName[RecordLength - 60]; // pseudo-C# description of variable length channel name UTF8 data at end of structure
   }
 
@@ -70,18 +77,21 @@ internal class IdtvChannelSerializer : SerializerBase
   private readonly string dbFile;
   private readonly string binFile;
   private Dictionary<int, ChannelInfo> channelDict = new(); // maps record-index of .bin file to Channel object created from .db file
+  private byte[] binFileData;
   private List<int> binFileRecordOffsets = new();
 
   private readonly StringBuilder log = new();
 
   #region ctor()
-  public IdtvChannelSerializer(string inputFile) : base(inputFile)
+  public IdtvChannelSerializer(string hotelBin) : base(hotelBin)
   {
-    dbFile = inputFile;
-    binFile = Path.Combine(Path.GetDirectoryName(dbFile), "channel", "idtvChannel.bin");
+    var dir = Path.Combine(Path.GetDirectoryName(hotelBin), "mnt/vendor/tvdata/database");
+    dbFile = Path.Combine(dir, "tv.db");
+    binFile = Path.Combine(dir, "channel", "idtvChannel.bin");
 
     this.Features.CanSaveAs = false;
     this.Features.FavoritesMode = FavoritesMode.Flags;
+    this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
 
     this.DataRoot.AddChannelList(new ChannelList(SignalSource.Antenna | SignalSource.MaskTvRadioData, "Antenna"));
     this.DataRoot.AddChannelList(new ChannelList(SignalSource.Cable | SignalSource.MaskTvRadioData, "Cable"));
@@ -89,6 +99,7 @@ internal class IdtvChannelSerializer : SerializerBase
     foreach (var list in this.DataRoot.ChannelLists)
     {
       var names = list.VisibleColumnFieldNames;
+      names.Remove(nameof(ChannelInfo.Hidden)); // the TV's "hide" function actually works like "skip", only removing it from zapping, but allowing direct number input
       names.Remove(nameof(ChannelInfo.ShortName));
       names.Remove(nameof(ChannelInfo.Satellite));
       names.Remove(nameof(ChannelInfo.PcrPid));
@@ -178,8 +189,8 @@ internal class IdtvChannelSerializer : SerializerBase
       ch.Hidden = !r.GetBoolean(cols["searchable"]);
       ch.Encrypted = r.GetBoolean(cols["scrambled"]);
 
-      ch.OriginalNetworkId = r.GetInt16(cols["original_network_id"]);
-      ch.TransportStreamId = r.GetInt16(cols["transport_stream_id"]);
+      ch.OriginalNetworkId = r.GetInt32(cols["original_network_id"]);
+      ch.TransportStreamId = r.GetInt32(cols["transport_stream_id"]);
       ch.ServiceId = r.GetInt32(cols["service_id"]);
       ch.FreqInMhz = r.GetInt64(cols["internal_provider_flag1"]) / 1000; // for DVB-S it is in MHz, for DVB-C/T it is in kHz
       if (ch.FreqInMhz >= 13000)
@@ -197,6 +208,9 @@ internal class IdtvChannelSerializer : SerializerBase
       var list = this.DataRoot.GetChannelList(signalSource);
       this.DataRoot.AddChannel(list, ch);
 
+      if (channelDict.TryGetValue(ch.RecordOrder, out var otherChannel))
+        throw new FileLoadException($"tv.db channel _ids {otherChannel.RecordIndex} ({otherChannel.Name}) and {ch.RecordIndex} ({ch.Name}) both reference same idtvChannel.bin record {ch.RecordOrder}\n"+ 
+                                    "Please make sure to search satellite channels first and cable/antenna afterwards.");
       channelDict.Add(ch.RecordOrder, ch);
     }
   }
@@ -205,19 +219,19 @@ internal class IdtvChannelSerializer : SerializerBase
   #region ReadIdtvChannelsBin()
   private void ReadIdtvChannelsBin()
   {
+    this.binFileData = File.ReadAllBytes(this.binFile);
+
     // verify MD5 checksum
-    var data = File.ReadAllBytes(this.binFile);
     var md5 = MD5.Create();
-    var hash = md5.ComputeHash(data, 24, data.Length - 24);
+    var hash = md5.ComputeHash(binFileData, 24, binFileData.Length - 24);
     int i;
     for (i = 0; i < 16; i++)
     {
-      if (data[8 + i] != hash[i])
+      if (binFileData[8 + i] != hash[i])
         throw new FileLoadException("Invalid MD5 checksum in " + binFile);
     }
 
-
-    using var strm = new MemoryStream(data);
+    using var strm = new MemoryStream(binFileData);
     using var r = new BinaryReader(strm);
 
     r.ReadBytes(2 + 2); // 00 00, 4b 09
@@ -226,8 +240,10 @@ internal class IdtvChannelSerializer : SerializerBase
     r.ReadBytes(16); // md5
     i = 0;
 
+    log.AppendLine($"#\tname\tprogNr\tonid-tsid-sid\tflags\tlcn\tipf2");
+
     var structSize = Marshal.SizeOf<IdtvChannel>();
-    while (strm.Position + structSize <= data.Length)
+    while (strm.Position + structSize <= binFileData.Length)
     {
       var off = strm.Position;
       binFileRecordOffsets.Add((int)off);
@@ -245,7 +261,7 @@ internal class IdtvChannelSerializer : SerializerBase
       var progNr = chan.ProgNr;
       var name = Encoding.UTF8.GetString(r.ReadBytes(chan.RecordLength - 60));
 
-      log.AppendLine($"{i}\t{name}\t{progNr}\t{chan.Onid}-{chan.Tsid}-{chan.Sid}\t{(ushort)chan.Flags:X4}");
+      log.AppendLine($"{i}\t{name}\t{progNr}\t{chan.Onid}-{chan.Tsid}-{chan.Sid}\t{(ushort)chan.Flags:X4}\t{chan.Lcn}\t{chan.InternalProviderFlag2}");
 
       if (channelDict.TryGetValue(i, out var ch))
       {
@@ -260,8 +276,8 @@ internal class IdtvChannelSerializer : SerializerBase
 
         if (ch.Encrypted != ((chan.Flags & Flags.Encrypted) != 0))
           throw new FileLoadException($"mismatching crypt-flag between tv.db _id {ch.RecordIndex} ({ch.Encrypted}) and idtvChannel.bin record {i}");
-        if (ch.Hidden != ((chan.Flags & Flags.Hidden) != 0))
-          throw new FileLoadException($"mismatching hide-flag between tv.db _id {ch.RecordIndex} ({ch.Hidden}) and idtvChannel.bin record {i}");
+        if (ch.Skip != ((chan.Flags & Flags.Skip) != 0))
+          throw new FileLoadException($"mismatching browsable-flag between tv.db _id {ch.RecordIndex} ({ch.Skip}) and idtvChannel.bin record {i}");
         if ((ch.Favorites == 0) != ((chan.Flags & Flags.IsFavorite) == 0))
           throw new FileLoadException($"mismatching favorites-info between tv.db _id {ch.RecordIndex} ({ch.Favorites}) and idtvChannel.bin record {i}");
 
@@ -292,9 +308,9 @@ internal class IdtvChannelSerializer : SerializerBase
   public override void Save(string tvOutputFile)
   {
     // saving the list requires to:
-    // - physically reorder the .bin file and update fields inside the data records
+    // - update fields inside the data records and physically reorder the records
     // - updating records in the .db file
-    // - updating this loaders internal data in channelDict, binFileRecordOffsets and channelInfo.RecordOrder for consecutive save operations to work
+    // - updating all channel record indexes in this loader's internal data in channelDict, binFileRecordOffsets and channelInfo.RecordOrder for consecutive save operations to work
 
     GetNewIdtvChannelBinRecordOrder(out var newToOld, out var oldToNew);
 
@@ -310,8 +326,17 @@ internal class IdtvChannelSerializer : SerializerBase
     newToOld = new List<int>(binFileRecordOffsets.Count);
     for (int i = 0, c=this.binFileRecordOffsets.Count; i<c; i++)
       newToOld.Add(i);
+
+    var offFreq = (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.Freq));
     newToOld.Sort((a, b) =>
     {
+      // all sat channels must come first before cable/antenna channels
+      var freq1 = BitConverter.ToUInt32(this.binFileData, binFileRecordOffsets[a] + offFreq);
+      var freq2 = BitConverter.ToUInt32(this.binFileData, binFileRecordOffsets[b] + offFreq);
+      var c = (freq1 < 14000000 ? 0 : 1).CompareTo(freq2 < 14000000 ? 0 : 1); // hack: Sat has values below 14 000 000 (in kHz), Cable/antenna above (in Hz)
+      if (c != 0)
+        return c;
+
       this.channelDict.TryGetValue(a, out var ch1);
       this.channelDict.TryGetValue(b, out var ch2);
       if (ch1 == null && ch2 == null)
@@ -321,7 +346,7 @@ internal class IdtvChannelSerializer : SerializerBase
       if (ch1 == null)
         return +1;
 
-      var c = ch1.SignalSource.CompareTo(ch2.SignalSource); // group by DVB-C/T/S and TV/Radio/Data
+      c = ((int)ch1.SignalSource).CompareTo((int)ch2.SignalSource); // group TV/Radio/Data
       if (c != 0)
         return c;
       c = ch1.NewProgramNr.CompareTo(ch2.NewProgramNr);
@@ -341,64 +366,70 @@ internal class IdtvChannelSerializer : SerializerBase
   #region SaveIdtvChannelBin()
   private void SaveIdtvChannelBin(IList<int> newToOld)
   {
-    var data = UpdateIdtvChannelBinRecords();
-
-    data = ReorderBinFileRecords(data, newToOld);
+    UpdateIdtvChannelBinRecords();
+    ReorderBinFileRecords(newToOld);
 
     // update MD5 checksum
     var md5 = MD5.Create();
-    var checksum = md5.ComputeHash(data, 8 + 16, data.Length - 8 - 16);
-    Array.Copy(checksum, 0, data, 8, 16);
+    var checksum = md5.ComputeHash(binFileData, 8 + 16, binFileData.Length - 8 - 16);
+    Array.Copy(checksum, 0, binFileData, 8, 16);
 
-    File.WriteAllBytes(binFile, data);
+    File.WriteAllBytes(binFile, binFileData);
   }
   #endregion
   
   #region UpdateIdtvChannelBinRecords()
-  private byte[] UpdateIdtvChannelBinRecords()
+  private void UpdateIdtvChannelBinRecords()
   {
     // in-place update of the old .bin file data
 
     var offProgNr = (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.ProgNr));
     var offFlags = (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.Flags));
 
-    var data = File.ReadAllBytes(this.binFile);
-    var w = new BinaryWriter(new MemoryStream(data));
+    var w = new BinaryWriter(new MemoryStream(this.binFileData));
 
     foreach (var list in this.DataRoot.ChannelLists)
     {
       foreach (var ch in list.Channels)
       {
+        if (ch.IsProxy)
+          continue;
         var filePosition = this.binFileRecordOffsets[ch.RecordOrder];
         w.Seek(filePosition + offProgNr, SeekOrigin.Begin);
-        w.Write((ushort)ch.NewProgramNr);
+        //w.Write(ch.NewProgramNr > 0 ? (ushort)ch.NewProgramNr : (ushort)0xFFFE); // deleted channels have -2 / 0xFFFE
+        w.Write(ch.NewProgramNr);
 
 
         // update flags
         var off = filePosition + offFlags;
-        var flags = BitConverter.ToUInt16(data, off);
+        var flags = BitConverter.ToUInt16(this.binFileData, off);
         if (ch.Favorites == 0)
           flags = (ushort)(flags & ~(ushort)Flags.IsFavorite);
         else
           flags = (ushort)(flags | (ushort)Flags.IsFavorite);
-        if (ch.Hidden)
-          flags = (ushort)(flags | (ushort)Flags.Hidden);
+        
+        if (ch.Skip)
+          flags = (ushort)(flags | (ushort)Flags.Skip);
         else
-          flags = (ushort)(flags & ~(ushort)Flags.Hidden);
+          flags = (ushort)(flags & ~(ushort)Flags.Skip);
+
+        if (ch.IsDeleted)
+          flags |= (ushort)Flags.Deleted;
+
+        flags |= (ushort)Flags.CustomProgNr;
         w.Seek(filePosition + offFlags, SeekOrigin.Begin);
         w.Write(flags);
       }
     }
 
     w.Flush();
-    return data;
   }
   #endregion
 
   #region ReorderBinFileRecords()
-  private byte[] ReorderBinFileRecords(byte[] binFileData, IList<int> newToOld)
+  private void ReorderBinFileRecords(IList<int> newToOld)
   {
-    using var mem = new MemoryStream(binFileData.Length);
+    using var mem = new MemoryStream(this.binFileData.Length);
     mem.Write(binFileData, 0, 8 + 16); // copy header
 
     var newOffsets = new List<int>(newToOld.Count);
@@ -416,7 +447,6 @@ internal class IdtvChannelSerializer : SerializerBase
 
     binFileData = new byte[mem.Length];
     Array.Copy(mem.GetBuffer(), 0, binFileData, 0, mem.Length);
-    return binFileData;
   }
   #endregion
 
@@ -430,11 +460,11 @@ internal class IdtvChannelSerializer : SerializerBase
     using var trans = db.BeginTransaction();
 
     using var upd = db.CreateCommand();
-    upd.CommandText = "update channels set display_number=@progNr, browsable=@browseable, searchable=@searchable, locked=@locked, favorite=@fav, channel_index=@recIdx where _id=@id";
+    upd.CommandText = "update channels set display_number=@progNr, browsable=@browseable, locked=@locked, favorite=@fav, channel_index=@recIdx where _id=@id"; // searchable=@searchable, 
     upd.Parameters.Add("@id", SqliteType.Integer);
     upd.Parameters.Add("@progNr", SqliteType.Text);
     upd.Parameters.Add("@browseable", SqliteType.Integer);
-    upd.Parameters.Add("@searchable", SqliteType.Integer);
+    //upd.Parameters.Add("@searchable", SqliteType.Integer);
     upd.Parameters.Add("@locked", SqliteType.Integer);
     upd.Parameters.Add("@fav", SqliteType.Integer);
     upd.Parameters.Add("@recIdx", SqliteType.Integer);
@@ -464,7 +494,7 @@ internal class IdtvChannelSerializer : SerializerBase
           upd.Parameters["@id"].Value = ch.RecordIndex;
           upd.Parameters["@progNr"].Value = ch.NewProgramNr;
           upd.Parameters["@browseable"].Value = !ch.Skip;
-          upd.Parameters["@searchable"].Value = !ch.Hidden;
+          //upd.Parameters["@searchable"].Value = !ch.Hidden;
           upd.Parameters["@locked"].Value = ch.Lock;
           upd.Parameters["@fav"].Value = (int)ch.Favorites;
           upd.Parameters["@recIdx"].Value = newRecordIndex;
