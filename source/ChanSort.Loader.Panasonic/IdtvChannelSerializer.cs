@@ -133,11 +133,11 @@ internal class IdtvChannelSerializer : SerializerBase
     }
     catch (SqliteException)
     {
-      // when the USB stick is removed without going through the menu and "safely remove USB", the DB is often corrupted and can't be opened
+      // when the USB stick is removed without properly ejecting it, the .db file is often corrupted, causing an exception when running the first query
       View.Default.MessageBox(
         "The Panasonic tv.db file in this channel list is corrupted and can't be loaded.\n\n"+
-        "This very often happens when the USB stick is unplugged from the TV without using the TV menu to \"safely remove USB device\" before.\n" +
-        "Please export the list again and use this menu before unplugging the stick from the TV.");
+        "After using the Hotel Menu's \"TV to USB\", press HOME / Notifications / your USB stick / Eject.\n" +
+        "This will properly finish all write operations so the stick can be unplugged safely without data loss.");
       //throw new FileLoadException("Corrupt database file");
       return;
     }

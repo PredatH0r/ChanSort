@@ -1,9 +1,13 @@
 ﻿ChanSort Change Log 
 ===================
 
-TBA
+2022-10-06
+- added support for Android based Panasonic LS and LX 500-700 series (lists with a /mnt/.../tv.db file)
+- fixed reference list dialog now showing any controls on small screens with and large scaling factor
 - fixed "NullReferenceException" while applying a reference list based on a SQLite database file 
   (\*.db or Samsung .zip) which contained NULL values for channel names instead of empty strings.
+- function to remove backup files (so that the next "File / Save" operation will create a new backup)
+- updated Hotbird 13.0E / Tivùsat reference lists for Italy
 
 2022-07-03
 - experimental support for Grundig and ChangHong atv\_cmdb.bin files (analog antenna and cable TV)
