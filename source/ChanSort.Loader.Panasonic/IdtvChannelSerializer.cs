@@ -276,8 +276,8 @@ internal class IdtvChannelSerializer : SerializerBase
 
         if (ch.Encrypted != ((chan.Flags & Flags.Encrypted) != 0))
           throw new FileLoadException($"mismatching crypt-flag between tv.db _id {ch.RecordIndex} ({ch.Encrypted}) and idtvChannel.bin record {i}");
-        if (ch.Skip != ((chan.Flags & Flags.Skip) != 0))
-          throw new FileLoadException($"mismatching browsable-flag between tv.db _id {ch.RecordIndex} ({ch.Skip}) and idtvChannel.bin record {i}");
+        if (ch.Skip != ((chan.Flags & Flags.Skip) != 0)) // it seems running a DVB-C search will alter the "browsable" flag of already existing DVB-S channels
+          log.AppendLine($"mismatching browsable-flag between tv.db _id {ch.RecordIndex} ({ch.Skip}) and idtvChannel.bin record {i}");
         if ((ch.Favorites == 0) != ((chan.Flags & Flags.IsFavorite) == 0))
           throw new FileLoadException($"mismatching favorites-info between tv.db _id {ch.RecordIndex} ({ch.Favorites}) and idtvChannel.bin record {i}");
 
