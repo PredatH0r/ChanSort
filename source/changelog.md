@@ -1,9 +1,19 @@
 ﻿ChanSort Change Log 
 ===================
 
+2022-11-22
+- fixed "Export to Excel" (copies the list as tab-separated text into clipboard)
+- included latest translation to Polish (thanks to J.D.)
+- reorganized File menu and tool bar
+- allow renaming channels in SatcoDX channel lists (\*.sdx)
+- improved support for Panasonic LS 500 / LX 700 series
+
+2022-11-14
+- fixed issue loading Loewe servicelist.xml file containing empty service-ids
+
 2022-10-06
 - added support for Android based Panasonic LS and LX 500-700 series (lists with a /mnt/.../tv.db file)
-- fixed reference list dialog now showing any controls on small screens with and large scaling factor
+- fixed reference list dialog not showing any controls on small screens with and large scaling factor
 - fixed "NullReferenceException" while applying a reference list based on a SQLite database file 
   (\*.db or Samsung .zip) which contained NULL values for channel names instead of empty strings.
 - function to remove backup files (so that the next "File / Save" operation will create a new backup)

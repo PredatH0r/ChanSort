@@ -16,7 +16,7 @@ namespace ChanSort.Loader.SatcoDX
 
     public Serializer(string inputFile) : base(inputFile)
     {
-      this.Features.ChannelNameEdit = ChannelNameEditMode.None;
+      this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.Physically;
       this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = false;
@@ -79,19 +79,22 @@ namespace ChanSort.Loader.SatcoDX
         this.FileName = tvOutputFile;
       }
 
-      using (var file = new FileStream(tvOutputFile, FileMode.Create))
+      using var file = new FileStream(tvOutputFile, FileMode.Create);
+      byte[] buffer = null;
+      foreach (var channel in this.allChannels.GetChannelsByNewOrder())
       {
-        foreach (var channel in this.allChannels.GetChannelsByNewOrder())
-        {
-          // when a reference list was applied, the list may contain proxy entries for deleted channels, which must be ignored
-          if (channel.IsProxy || channel.IsDeleted)
-            continue;
-          if (channel is Channel realChannel)
-            file.Write(this.content, realChannel.FileOffset, realChannel.Length + 1);
-        }
+        // when a reference list was applied, the list may contain proxy entries for deleted channels, which must be ignored
+        if (channel.IsProxy || channel.IsDeleted)
+          continue;
+        if (channel is not Channel realChannel)
+          continue;
 
-        file.Write(this.content, this.trailingDataPos, this.content.Length - this.trailingDataPos);
+        buffer ??= new byte[realChannel.Length + 1];
+        realChannel.Export(buffer, this.DefaultEncoding);
+        file.Write(buffer, 0, buffer.Length);
       }
+
+      file.Write(this.content, this.trailingDataPos, this.content.Length - this.trailingDataPos);
     }
 
     #endregion
@@ -106,7 +109,7 @@ namespace ChanSort.Loader.SatcoDX
       get => base.DefaultEncoding;
       set
       {
-        if (value == this.DefaultEncoding)
+        if (ReferenceEquals(value, this.DefaultEncoding))
           return;
         base.DefaultEncoding = value;
 

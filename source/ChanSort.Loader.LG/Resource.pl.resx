@@ -153,7 +153,7 @@ Starsze oprogramowanie LG dla modeli telewizorów opartych na webOS nie obsługu
 
 Listy kanałów LG można zaimportować z powrotem do telewizora TYLKO, jeśli podczas wyszukiwania kanałów w telewizorze wybrano specjalne opcje:
 - Dostawca: MUSI być żaden/inny (NIE wybieraj dostawcy telewizji kablowej ani Astry 19.2E)
-- Blindscan: MUSI być wybrany
+- Wyszukiwanie na ślepo: MUSI być wybrany
 - Wyszukiwanie sieci: opcjonalne (można wybrać)
 
 Telewizor nie przetworzy listy poprawnie, jeśli te kroki nie zostaną wykonane!</value>

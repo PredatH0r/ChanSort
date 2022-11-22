@@ -108,5 +108,22 @@ namespace ChanSort.Loader.SatcoDX
       this.ShortName = shortName.TrimEnd();
     }
     #endregion
+
+    #region Export()
+    public void Export(byte[] buffer, Encoding encoding)
+    {
+      Array.Copy(this.data, this.FileOffset, buffer, 0, this.Length + 1);
+      if (!this.IsNameModified)
+        return;
+
+      // 43-50 + 115-126 in version 103 or 115-131 in version 105: channel name
+      var bytes = encoding.GetBytes(this.Name);
+      Tools.MemSet(buffer, 43, 32, 8);
+      Tools.MemSet(buffer, 115, 32, buffer.Length - 115 -1);
+      Array.Copy(bytes, 0, buffer, 43, Math.Min(bytes.Length, 8));
+      if (bytes.Length > 8)
+        Array.Copy(bytes, 8, buffer, 115, Math.Min(bytes.Length - 8, this.Length - 115 - 1));
+    }
+    #endregion
   }
 }

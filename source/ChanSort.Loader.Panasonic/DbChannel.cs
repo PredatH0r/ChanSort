@@ -12,7 +12,9 @@ namespace ChanSort.Loader.Panasonic
     internal bool NonAscii;
     internal bool ValidUtf8 = true;
 
-    #region ctor()
+    internal int InternalProviderFlag2;
+
+    #region ctor(IDataReader, ...)
     internal DbChannel(IDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Encoding encoding)
     {
       this.RecordIndex = r.GetInt32(field["rowid"]);
@@ -59,6 +61,12 @@ namespace ChanSort.Loader.Panasonic
         this.ReadDvbData(r, field, dataRoot, buffer, len);
     }
 
+    #endregion
+
+    #region ctor(SignalSource, ...)
+    public DbChannel(SignalSource signalSource, long id, int progNr, string name) : base(signalSource, id, progNr, name)
+    {
+    }
     #endregion
 
     #region ParseFavorites

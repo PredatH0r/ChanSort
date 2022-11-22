@@ -276,7 +276,7 @@
     <value>gridLeft</value>
   </data>
   <data name="&gt;&gt;gridLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.8313.22695, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.8359.22033, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gridLeft.Parent" xml:space="preserve">
     <value>grpOutputList</value>
@@ -413,12 +413,6 @@
   <data name="miDeleteBackup.Caption" xml:space="preserve">
     <value>Delete backup files</value>
   </data>
-  <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>File &amp;information...</value>
-  </data>
-  <data name="miFileInformation.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
-    <value>30</value>
-  </data>
   <data name="miSave.Caption" xml:space="preserve">
     <value>&amp;Save</value>
   </data>
@@ -430,15 +424,6 @@
   </data>
   <data name="miSaveAs.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>33</value>
-  </data>
-  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Apply order from a reference list...</value>
-  </data>
-  <data name="miOpenReferenceFile.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
-    <value>23</value>
-  </data>
-  <data name="miAddFromRefList.Caption" xml:space="preserve">
-    <value>Add channels from reference list...</value>
   </data>
   <data name="miSaveReferenceFile.Caption" xml:space="preserve">
     <value>Save reference list...</value>
@@ -452,11 +437,26 @@
   <data name="miExcelExport.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>32</value>
   </data>
+  <data name="miOpenReferenceFile.Caption" xml:space="preserve">
+    <value>Apply order from a reference list...</value>
+  </data>
+  <data name="miOpenReferenceFile.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="miAddFromRefList.Caption" xml:space="preserve">
+    <value>Add channels from reference list...</value>
+  </data>
   <data name="miPrint.Caption" xml:space="preserve">
     <value>&amp;Print...</value>
   </data>
   <data name="miPrint.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>34</value>
+  </data>
+  <data name="miFileInformation.Caption" xml:space="preserve">
+    <value>File &amp;information...</value>
+  </data>
+  <data name="miFileInformation.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
+    <value>30</value>
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
     <value>&amp;Quit</value>
@@ -1240,7 +1240,7 @@
     <value>gviewLeft</value>
   </data>
   <data name="&gt;&gt;gviewLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.8313.22695, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.8359.22033, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;colIndex1.Name" xml:space="preserve">
     <value>colIndex1</value>
@@ -1324,13 +1324,13 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.8313.22695, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.8359.22033, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
   </data>
   <data name="&gt;&gt;gviewRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.8313.22695, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.8359.22033, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;colIndex.Name" xml:space="preserve">
     <value>colIndex</value>
@@ -1570,6 +1570,12 @@
     <value>miRestoreOriginal</value>
   </data>
   <data name="&gt;&gt;miRestoreOriginal.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v22.1, Version=22.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;miDeleteBackup.Name" xml:space="preserve">
+    <value>miDeleteBackup</value>
+  </data>
+  <data name="&gt;&gt;miDeleteBackup.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v22.1, Version=22.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;miFileInformation.Name" xml:space="preserve">
@@ -2094,12 +2100,6 @@
   <data name="&gt;&gt;timerSelectFocusedRow.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;miDeleteBackup.Name" xml:space="preserve">
-    <value>miDeleteBackup</value>
-  </data>
-  <data name="&gt;&gt;miDeleteBackup.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v22.1, Version=22.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
@@ -2107,7 +2107,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v22.1, Version=22.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>10/05/2022 12:50:36</value>
+    <value>11/20/2022 12:41:24</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -2997,7 +2997,7 @@
     <value>gridRight</value>
   </data>
   <data name="&gt;&gt;gridRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.8313.22695, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.8359.22033, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gridRight.Parent" xml:space="preserve">
     <value>grpInputList</value>

@@ -92,7 +92,8 @@ namespace ChanSort.Api
         this.channelByProgNr.TryGetValue(ci.OldProgramNr, out other);
         if (other != null)
         {
-          warning2 = string.Format(Resources.ChannelList_ProgramNrAssignedToMultipleChannels,
+          var format = Resources.ChannelList_ProgramNrAssignedToMultipleChannels.Replace("{1}", "{1,5}");
+          warning2 = string.Format(format,
                                   this.ShortCaption, ci.OldProgramNr, other.RecordIndex, other.Name, ci.RecordIndex, ci.Name);
           ++duplicateProgNrCount;
           isDupeProgNr = true;

@@ -2035,18 +2035,18 @@ namespace ChanSort.Ui
         {
           if (channel.IsDeleted || channel.NewProgramNr == -1)
             continue;
-          sb.Append(list.ShortCaption).Append(sep);
+          sb.Append(list.ShortCaption?.Replace("\0", "")).Append(sep);
           sb.Append(channel.NewProgramNr).Append(sep);
-          sb.Append('"').Append(channel.Name).Append('"').Append(sep);
+          sb.Append(channel.Name?.Replace("\0", "")).Append(sep);
           sb.Append(channel.Favorites).Append(sep);
           sb.Append(channel.Lock ? "L" : "").Append(sep);
           sb.Append(channel.Skip ? "S" : "").Append(sep);
           sb.Append(channel.Hidden ? "H" : "").Append(sep);
-          sb.Append(channel.Encrypted == null ? "?" : channel.Encrypted.Value ? "C" : "").Append(sep);
-          sb.Append('"').Append(channel.Satellite).Append('"').Append(sep);
+          sb.Append(channel.Encrypted == true ? "C" : "").Append(sep);
+          sb.Append(channel.Satellite?.Replace("\0", "")).Append(sep);
           sb.Append(channel.ChannelOrTransponder).Append(sep);
           sb.Append(channel.FreqInMhz).Append(sep);
-          sb.Append(channel.Polarity).Append(sep);
+          sb.Append(channel.Polarity == '\0' ? "" : channel.Polarity).Append(sep);
           sb.Append(channel.SymbolRate).Append(sep);
           sb.Append(channel.OriginalNetworkId).Append(sep);
           sb.Append(channel.TransportStreamId).Append(sep);
@@ -2059,7 +2059,8 @@ namespace ChanSort.Ui
       }
 
       Clipboard.Clear();
-      Clipboard.SetData(DataFormats.Text, sb.ToString());
+      Clipboard.SetText(sb.ToString());
+
       XtraMessageBox.Show(this,
         Resources.MainForm_ExportExcelList_Message,
         this.miExcelExport.Caption,

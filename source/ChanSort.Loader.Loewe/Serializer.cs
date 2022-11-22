@@ -366,8 +366,10 @@ class Serializer : SerializerBase
   {
     var a = e.Attributes;
     var listId = int.Parse(a["FavoriteId"].InnerText);
-    var serviceId = int.Parse(a["ServiceId"].InnerText);
-    var lcn = int.Parse(a["Lcn"].InnerText);
+    if (!int.TryParse(a["ServiceId"].InnerText, out var serviceId))
+      return;
+    if (!int.TryParse(a["Lcn"].InnerText, out var lcn))
+      return;
 
     if (!this.channelsById.TryGetValue(serviceId, out var c))
       return;

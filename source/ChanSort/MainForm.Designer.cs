@@ -115,6 +115,7 @@
       this.miOpen = new DevExpress.XtraBars.BarButtonItem();
       this.miReload = new DevExpress.XtraBars.BarButtonItem();
       this.miRestoreOriginal = new DevExpress.XtraBars.BarButtonItem();
+      this.miDeleteBackup = new DevExpress.XtraBars.BarButtonItem();
       this.miFileInformation = new DevExpress.XtraBars.BarButtonItem();
       this.miSave = new DevExpress.XtraBars.BarButtonItem();
       this.miSaveAs = new DevExpress.XtraBars.BarButtonItem();
@@ -220,7 +221,6 @@
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
       this.timerSelectFocusedRow = new System.Windows.Forms.Timer(this.components);
-      this.miDeleteBackup = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
       this.splitContainerControl1.Panel1.SuspendLayout();
@@ -1142,12 +1142,9 @@
       this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.miFile),
             new DevExpress.XtraBars.LinkPersistInfo(this.miOpen),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile),
             new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSave, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miPrint, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSave),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miPrint),
             new DevExpress.XtraBars.LinkPersistInfo(this.miEdit, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.mnuFavSet),
             new DevExpress.XtraBars.LinkPersistInfo(this.miLockOn),
@@ -1180,14 +1177,14 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miReload),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRestoreOriginal),
             new DevExpress.XtraBars.LinkPersistInfo(this.miDeleteBackup),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miFileInformation),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSave, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miAddFromRefList),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
             new DevExpress.XtraBars.LinkPersistInfo(this.miExcelExport),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miPrint),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miAddFromRefList),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miPrint, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miFileInformation),
             new DevExpress.XtraBars.LinkPersistInfo(this.miQuit, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miRecentFiles, true)});
       this.miFile.Name = "miFile";
@@ -1223,6 +1220,13 @@
                 | System.Windows.Forms.Keys.R));
       this.miRestoreOriginal.Name = "miRestoreOriginal";
       this.miRestoreOriginal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miRestoreOriginal_ItemClick);
+      // 
+      // miDeleteBackup
+      // 
+      resources.ApplyResources(this.miDeleteBackup, "miDeleteBackup");
+      this.miDeleteBackup.Id = 117;
+      this.miDeleteBackup.Name = "miDeleteBackup";
+      this.miDeleteBackup.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miDeleteBackup_ItemClick);
       // 
       // miFileInformation
       // 
@@ -2221,13 +2225,6 @@
       // timerSelectFocusedRow
       // 
       this.timerSelectFocusedRow.Tick += new System.EventHandler(this.timerSelectFocusedRow_Tick);
-      // 
-      // miDeleteBackup
-      // 
-      resources.ApplyResources(this.miDeleteBackup, "miDeleteBackup");
-      this.miDeleteBackup.Id = 117;
-      this.miDeleteBackup.Name = "miDeleteBackup";
-      this.miDeleteBackup.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miDeleteBackup_ItemClick);
       // 
       // MainForm
       // 
