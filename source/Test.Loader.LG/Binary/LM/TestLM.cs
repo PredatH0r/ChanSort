@@ -69,7 +69,7 @@ namespace Test.Loader.LG.Binary
       Assert.AreEqual(0, orf2.NewProgramNr);
 
       // save and reload
-      ser.Save(tempFile);
+      ser.Save();
       ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       data = ser.DataRoot;

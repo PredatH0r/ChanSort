@@ -594,7 +594,7 @@ namespace ChanSort.Loader.Sony
 
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       // sdbT
       if (this.channeListNodes.TryGetValue(SignalSource.DvbT, out var nodes))
@@ -659,7 +659,7 @@ namespace ChanSort.Loader.Sony
       xml = xml.Substring(0, i0 + 1) + hexCrc + xml.Substring(i1);
 
       var enc = new UTF8Encoding(false, false);
-      File.WriteAllText(tvOutputFile, xml, enc);
+      File.WriteAllText(this.FileName, xml, enc);
     }
     #endregion
 

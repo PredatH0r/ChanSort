@@ -149,7 +149,7 @@ namespace ChanSort.Loader.Panasonic
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       var sec = ini.GetSection("channel_list.xml");
       var reorder = sec?.GetBool("reorderRecordsByChannelNumber", true) ?? true;
@@ -194,8 +194,7 @@ namespace ChanSort.Loader.Panasonic
       var xml = stringWriter.ToString();
       xml = UnescapeXmlChars(xml); // create same broken XML as the original export with unescaped entities
       xml = xml.Replace(" />", "/>"); // original file has no space before the element end
-      File.WriteAllText(tvOutputFile, xml, xmlSettings.Encoding);
-      this.FileName = tvOutputFile;
+      File.WriteAllText(this.FileName, xml, xmlSettings.Encoding);
     }
 
     #endregion

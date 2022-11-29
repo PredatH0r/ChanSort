@@ -1,9 +1,7 @@
 ﻿//#define LOCK_LCN_LISTS
 
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
 using ChanSort.Api;
@@ -143,7 +141,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     public override void Load()
     {
-      using (var conn = new SqliteConnection("Data Source=" + this.FileName))
+      using (var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False"))
       {
         conn.Open();
         using var cmd = conn.CreateCommand();
@@ -466,60 +464,46 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       Editor.SequentializeFavPos(this.channelLists[6], 4);
 
-      if (tvOutputFile != this.FileName)
-        File.Copy(this.FileName, tvOutputFile, true);
-      
+      using var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False");
+      conn.Open();
+      using var trans = conn.BeginTransaction();
+      using var cmd = conn.CreateCommand();
+      cmd.Transaction = trans;
       try
       {
-        using var conn = new SqliteConnection("Data Source=" + tvOutputFile);
-        conn.Open();
-        using var trans = conn.BeginTransaction();
-        using var cmd = conn.CreateCommand();
-        cmd.Transaction = trans;
-        try
-        {
-          this.CreateFavTables(cmd);
+        this.CreateFavTables(cmd);
 
-          // must truncate and re-fill this table because there is a unique primary key constraint on a data column that needs to be edited
-          if (this.hasCamelCaseFavSchema)
+        // must truncate and re-fill this table because there is a unique primary key constraint on a data column that needs to be edited
+        if (this.hasCamelCaseFavSchema)
+        {
+          for (int i = 1; i <= 4; i++)
           {
-            for (int i = 1; i <= 4; i++)
-            {
-              cmd.CommandText = $"delete from fav_{i}";
-              cmd.ExecuteNonQuery();
-            }
+            cmd.CommandText = $"delete from fav_{i}";
+            cmd.ExecuteNonQuery();
           }
+        }
 
 #if !LOCK_LCN_LISTS
-          this.ResetLcn(cmd);
+        this.ResetLcn(cmd);
 #endif
-          foreach (var list in this.DataRoot.ChannelLists)
-          {
-            if (list.ReadOnly || list.IsMixedSourceFavoritesList)
-              continue;
-            foreach (var ci in list.Channels)
-              this.UpdateChannel(cmd, ci as Channel);
-          }
-
-          trans.Commit();
-          this.FileName = tvOutputFile;
-        }
-        catch
+        foreach (var list in this.DataRoot.ChannelLists)
         {
-          trans.Rollback();
-          throw;
+          if (list.ReadOnly || list.IsMixedSourceFavoritesList)
+            continue;
+          foreach (var ci in list.Channels)
+            this.UpdateChannel(cmd, ci as Channel);
         }
+
+        trans.Commit();
       }
-      finally
+      catch
       {
-        // force closing the file and releasing the locks
-        SqliteConnection.ClearAllPools();
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
+        trans.Rollback();
+        throw;
       }
     }
     #endregion

@@ -391,7 +391,7 @@ class Serializer : SerializerBase
 
   #region Save()
 
-  public override void Save(string tvOutputFile)
+  public override void Save()
   {
     var fav = this.doc["servicelist"]["favorites"];
     var elements = fav.GetElementsByTagName("favorite-item");
@@ -456,8 +456,7 @@ class Serializer : SerializerBase
     foreach (XmlNode item in lcn)
       fav.AppendChild(item);
 
-    doc.Save(tvOutputFile);
-    this.FileName = tvOutputFile;
+    doc.Save(this.FileName);
   }
   
   #endregion

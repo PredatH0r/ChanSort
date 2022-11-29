@@ -183,7 +183,7 @@ internal class IdtvChannelSerializer : SerializerBase
     if (!File.Exists(binFile))
       throw LoaderException.Fail("expected file not found: " + binFile);
 
-    string connString = "Data Source=" + this.dbFile;
+    string connString = $"Data Source={this.dbFile};Pooling=False";
     using var db = new SqliteConnection(connString);
     db.Open();
     using var cmd = db.CreateCommand();
@@ -409,7 +409,7 @@ internal class IdtvChannelSerializer : SerializerBase
 
 
   #region Save()
-  public override void Save(string tvOutputFile)
+  public override void Save()
   {
     // saving the list requires to:
     // - update fields inside the .bin file data records and physically reorder the records
@@ -593,66 +593,56 @@ internal class IdtvChannelSerializer : SerializerBase
   #region SaveTvDb()
   private void SaveTvDb(IDictionary<ushort, int> newChannelIndexMap)
   {
-    try
+    string connString = $"Data Source={this.dbFile};Pooling=False";
+    using var db = new SqliteConnection(connString);
+    db.Open();
+
+    using var trans = db.BeginTransaction();
+
+    using var upd = db.CreateCommand();
+    upd.CommandText = "update channels set display_number=@progNr, browsable=@browseable, locked=@locked, favorite=@fav, channel_index=@recIdx where _id=@id"; // searchable=@searchable, 
+    upd.Parameters.Add("@id", SqliteType.Integer);
+    upd.Parameters.Add("@progNr", SqliteType.Text);
+    upd.Parameters.Add("@browseable", SqliteType.Integer);
+    //upd.Parameters.Add("@searchable", SqliteType.Integer);
+    upd.Parameters.Add("@locked", SqliteType.Integer);
+    upd.Parameters.Add("@fav", SqliteType.Integer);
+    upd.Parameters.Add("@recIdx", SqliteType.Integer);
+    //upd.Parameters.Add("@ipf2", SqliteType.Integer);
+    upd.Prepare();
+
+    using var del = db.CreateCommand();
+    del.CommandText = "delete from channels where _id=@id";
+    del.Parameters.Add("@id", SqliteType.Integer);
+    del.Prepare();
+
+    foreach (var list in this.DataRoot.ChannelLists)
     {
-      string connString = "Data Source=" + this.dbFile;
-      using var db = new SqliteConnection(connString);
-      db.Open();
-
-      using var trans = db.BeginTransaction();
-
-      using var upd = db.CreateCommand();
-      upd.CommandText = "update channels set display_number=@progNr, browsable=@browseable, locked=@locked, favorite=@fav, channel_index=@recIdx where _id=@id"; // searchable=@searchable, 
-      upd.Parameters.Add("@id", SqliteType.Integer);
-      upd.Parameters.Add("@progNr", SqliteType.Text);
-      upd.Parameters.Add("@browseable", SqliteType.Integer);
-      //upd.Parameters.Add("@searchable", SqliteType.Integer);
-      upd.Parameters.Add("@locked", SqliteType.Integer);
-      upd.Parameters.Add("@fav", SqliteType.Integer);
-      upd.Parameters.Add("@recIdx", SqliteType.Integer);
-      //upd.Parameters.Add("@ipf2", SqliteType.Integer);
-      upd.Prepare();
-
-      using var del = db.CreateCommand();
-      del.CommandText = "delete from channels where _id=@id";
-      del.Parameters.Add("@id", SqliteType.Integer);
-      del.Prepare();
-
-      foreach (var list in this.DataRoot.ChannelLists)
+      foreach (var ch in list.Channels)
       {
-        foreach (var ch in list.Channels)
+        if (ch is not DbChannel dbc)
+          continue;
+        if (ch.NewProgramNr < 0 || ch.IsDeleted)
         {
-          if (ch is not DbChannel dbc)
-            continue;
-          if (ch.NewProgramNr < 0 || ch.IsDeleted)
-          {
-            del.Parameters["@id"].Value = ch.RecordIndex;
-            del.ExecuteNonQuery();
-          }
-          else
-          {
-            upd.Parameters["@id"].Value = ch.RecordIndex;
-            upd.Parameters["@progNr"].Value = ch.NewProgramNr;
-            upd.Parameters["@browseable"].Value = !ch.Skip;
-            //upd.Parameters["@searchable"].Value = !ch.Hidden;
-            upd.Parameters["@locked"].Value = ch.Lock;
-            upd.Parameters["@fav"].Value = (int)ch.Favorites;
-            upd.Parameters["@recIdx"].Value = newChannelIndexMap[(ushort)dbc.InternalProviderFlag2];
-            //upd.Parameters["@ipf2"].Value = (int)(ushort)dbc.InternalProviderFlag2; // fix broken short/ushort/int sign extension
-            upd.ExecuteNonQuery();
-          }
+          del.Parameters["@id"].Value = ch.RecordIndex;
+          del.ExecuteNonQuery();
+        }
+        else
+        {
+          upd.Parameters["@id"].Value = ch.RecordIndex;
+          upd.Parameters["@progNr"].Value = ch.NewProgramNr;
+          upd.Parameters["@browseable"].Value = !ch.Skip;
+          //upd.Parameters["@searchable"].Value = !ch.Hidden;
+          upd.Parameters["@locked"].Value = ch.Lock;
+          upd.Parameters["@fav"].Value = (int)ch.Favorites;
+          upd.Parameters["@recIdx"].Value = newChannelIndexMap[(ushort)dbc.InternalProviderFlag2];
+          //upd.Parameters["@ipf2"].Value = (int)(ushort)dbc.InternalProviderFlag2; // fix broken short/ushort/int sign extension
+          upd.ExecuteNonQuery();
         }
       }
+    }
 
-      trans.Commit();
-    }
-    finally
-    {
-      // force closing the file and releasing the locks
-      SqliteConnection.ClearAllPools();
-      GC.Collect();
-      GC.WaitForPendingFinalizers();
-    }
+    trans.Commit();
   }
   #endregion
 

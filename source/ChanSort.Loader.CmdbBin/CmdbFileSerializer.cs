@@ -273,10 +273,8 @@ namespace ChanSort.Loader.CmdbBin
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      // save-as is not supported, the tvOutputFile is ignored
-
       foreach (var path in this.files)
       {
         var name = Path.GetFileName(path).ToLowerInvariant();
@@ -331,7 +329,7 @@ namespace ChanSort.Loader.CmdbBin
         }
       }
 
-      File.WriteAllBytes(this.FileName, data);
+      File.WriteAllBytes(path, data);
     }
     #endregion
 

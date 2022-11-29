@@ -46,26 +46,24 @@ namespace ChanSort.Api
 
     public override void Load()
     {
-      using (var stream = new StreamReader(this.FileName))
-      {
-        var lineNr = 0;
+      using var stream = new StreamReader(this.FileName);
+      var lineNr = 0;
         
-        var line = stream.ReadLine();
-        if (line != null && line.StartsWith("--------") && line.Contains(" Program Data!--------"))
-          throw LoaderException.TryNext("ignoring .csv file with Sharp/Dyon/Blaupunkt/Hisense header line");
+      var line = stream.ReadLine();
+      if (line != null && line.StartsWith("--------") && line.Contains(" Program Data!--------"))
+        throw LoaderException.TryNext("ignoring .csv file with Sharp/Dyon/Blaupunkt/Hisense header line");
 
-        try
+      try
+      {
+        while (line != null)
         {
-          while (line != null)
-          {
-            this.ReadChannel(line, ++lineNr);
-            line = stream.ReadLine();
-          }
+          this.ReadChannel(line, ++lineNr);
+          line = stream.ReadLine();
         }
-        catch (Exception ex)
-        {
-          throw LoaderException.TryNext($"Error in reference file line #{lineNr}: {line}", ex);
-        }
+      }
+      catch (Exception ex)
+      {
+        throw LoaderException.TryNext($"Error in reference file line #{lineNr}: {line}", ex);
       }
     }
 
@@ -314,18 +312,15 @@ namespace ChanSort.Api
 
     #region Save()
 
-    public override void Save(string tvDataFile)
+    public override void Save()
     {
-      Save(tvDataFile, this.DataRoot);
-      this.FileName = tvDataFile;
+      Save(this.FileName, this.DataRoot);
     }
 
     public static void Save(string tvDataFile, DataRoot dataRoot)
     {
-      using (var stream = new StreamWriter(tvDataFile))
-      {
-        Save(stream, dataRoot);
-      }
+      using var stream = new StreamWriter(tvDataFile);
+      Save(stream, dataRoot);
     }
 
     public static void Save(TextWriter stream, DataRoot dataRoot, bool includeDeletedChannels = true)

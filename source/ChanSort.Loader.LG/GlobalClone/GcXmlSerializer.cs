@@ -52,10 +52,8 @@ namespace ChanSort.Loader.GlobalClone
           throw LoaderException.Fail("Invalid GlobalClone/XML file format. Maybe a binary xx*.TLL file?");
         textContent = ReplaceInvalidXmlCharacters(textContent);
         var settings = new XmlReaderSettings { CheckCharacters = false };
-        using (var reader = XmlReader.Create(new StringReader(textContent), settings))
-        {
-          doc.Load(reader);
-        }
+        using var reader = XmlReader.Create(new StringReader(textContent), settings);
+        doc.Load(reader);
       }
       catch
       {
@@ -354,41 +352,39 @@ namespace ChanSort.Loader.GlobalClone
       // A 3 byte UTF-8 envelope is used to encode 2 input bytes: 1110aaaa 10bbbbcc 10ccdddd represents the 16bit little endian integer aaaabbbbccccdddd, which represents bytes ccccdddd, aaaabbbb
       // If a remaining byte is >= 0x80, it is encoded in a 2 byte UTF-8 envelope: 110000aa 10aabbbb represents the byte aaaabbbb
       // If a remaining byte is < 0x80, it is encoded directly into a 1 byte UTF-8 char. (This can cause invalid XML files for values < 0x20.)
-      using (MemoryStream ms = new MemoryStream(40))
+      using MemoryStream ms = new MemoryStream(40);
+      for (int i = 0, c = bytes.Length; i < c; i++)
       {
-        for (int i = 0, c = bytes.Length; i < c; i++)
+        int b0 = bytes[i + 0];
+        if (b0 >= 0xE0) // 3-byte UTF envelope for 2 input bytes
         {
-          int b0 = bytes[i + 0];
-          if (b0 >= 0xE0) // 3-byte UTF envelope for 2 input bytes
-          {
-            int b1 = bytes[i + 1];
-            int b2 = bytes[i + 2];
-            int ch1 = ((b1 & 0x03) << 6) | (b2 & 0x3F);
-            int ch2 = ((b0 & 0x0F) << 4) | ((b1 & 0x3C) >> 2);
-            ms.WriteByte((byte) ch1);
-            ms.WriteByte((byte) ch2);
-            i += 2;
-          }
-          else if (b0 >= 0xC0) // 2-byte UTF envelope for 1 input byte >= 0x80
-          {
-            int b1 = bytes[i + 1];
-            int ch = ((b0 & 0x03) << 6) | (b1 & 0x3F);
-            ms.WriteByte((byte)ch);
-            i++;
-          }
-          else if (b0 < 0x80) // 1-byte UTF envelope for 1 input byte < 0x80
-            ms.WriteByte(bytes[i]);
+          int b1 = bytes[i + 1];
+          int b2 = bytes[i + 2];
+          int ch1 = ((b1 & 0x03) << 6) | (b2 & 0x3F);
+          int ch2 = ((b0 & 0x0F) << 4) | ((b1 & 0x3C) >> 2);
+          ms.WriteByte((byte) ch1);
+          ms.WriteByte((byte) ch2);
+          i += 2;
         }
+        else if (b0 >= 0xC0) // 2-byte UTF envelope for 1 input byte >= 0x80
+        {
+          int b1 = bytes[i + 1];
+          int ch = ((b0 & 0x03) << 6) | (b1 & 0x3F);
+          ms.WriteByte((byte)ch);
+          i++;
+        }
+        else if (b0 < 0x80) // 1-byte UTF envelope for 1 input byte < 0x80
+          ms.WriteByte(bytes[i]);
+      }
 
-        string longName, shortName;
-        this.dvbStringDecoder.GetChannelNames(ms.GetBuffer(), 0, (int)ms.Length, out longName, out shortName);
-        return longName;
-      }      
+      string longName, shortName;
+      this.dvbStringDecoder.GetChannelNames(ms.GetBuffer(), 0, (int)ms.Length, out longName, out shortName);
+      return longName;
     }
     #endregion
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       foreach (var list in this.DataRoot.ChannelLists)
       {
@@ -485,22 +481,20 @@ namespace ChanSort.Loader.GlobalClone
       settings.OmitXmlDeclaration = true;
       settings.IndentChars = "";
       settings.CheckCharacters = false;
-      using (StringWriter sw = new StringWriter())
-      using (XmlWriter xw = XmlWriter.Create(sw, settings))
-      {
-        doc.Save(xw);
-        xw.Flush();
-        string xml = RestoreInvalidXmlCharacters(sw.ToString());
-        xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n" + xml;
-        xml = xml.Replace("<ATV></ATV>\r\n", "<ATV>\r\n</ATV>\r\n");
-        xml = xml.Replace("<DTV></DTV>\r\n", "<DTV>\r\n</DTV>\r\n");
-        xml = xml.Replace("<hexAszTkgsMessage type=\"0\"></hexAszTkgsMessage>", "<hexAszTkgsMessage type=\"0\"> </hexAszTkgsMessage>");
-        xml = xml.Replace("<aszTkgsMessage type=\"0\"></aszTkgsMessage>", "<aszTkgsMessage type=\"0\"> </aszTkgsMessage>");
+      using StringWriter sw = new StringWriter();
+      using XmlWriter xw = XmlWriter.Create(sw, settings);
+      doc.Save(xw);
+      xw.Flush();
+      string xml = RestoreInvalidXmlCharacters(sw.ToString());
+      xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n" + xml;
+      xml = xml.Replace("<ATV></ATV>\r\n", "<ATV>\r\n</ATV>\r\n");
+      xml = xml.Replace("<DTV></DTV>\r\n", "<DTV>\r\n</DTV>\r\n");
+      xml = xml.Replace("<hexAszTkgsMessage type=\"0\"></hexAszTkgsMessage>", "<hexAszTkgsMessage type=\"0\"> </hexAszTkgsMessage>");
+      xml = xml.Replace("<aszTkgsMessage type=\"0\"></aszTkgsMessage>", "<aszTkgsMessage type=\"0\"> </aszTkgsMessage>");
 
-        if (!xml.EndsWith("\r\n"))
-          xml += "\r\n";
-        File.WriteAllText(tvOutputFile, xml, settings.Encoding);
-      }
+      if (!xml.EndsWith("\r\n"))
+        xml += "\r\n";
+      File.WriteAllText(this.FileName, xml, settings.Encoding);
     }
     #endregion
 

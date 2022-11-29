@@ -45,7 +45,7 @@ namespace ChanSort.Loader.Samsung.Zip
       {
         try
         {
-          using var conn = new SqliteConnection("Data Source=" + this.TempPath + "\\sat");
+          using var conn = new SqliteConnection($"Data Source={(this.TempPath + "\\sat")};Pooling=False");
           conn.Open();
           this.ReadSatDatabase(conn);
         }
@@ -62,13 +62,13 @@ namespace ChanSort.Loader.Samsung.Zip
       foreach (var filePath in files)
       {
         var filename = Path.GetFileName(filePath) ?? "";
-        if (filename.StartsWith("vconf_"))
+        if (filename.StartsWith("vconf_") || filename.EndsWith("-shm"))
           continue;
 
         FileType type;
         try
         {
-          using var conn = new SqliteConnection("Data Source=" + filePath);
+          using var conn = new SqliteConnection($"Data Source={filePath};Pooling=False");
           conn.Open();
           using (var cmd = conn.CreateCommand())
           {
@@ -131,12 +131,10 @@ namespace ChanSort.Loader.Samsung.Zip
     #region ReadSatDatabase()
     private void ReadSatDatabase(SqliteConnection conn)
     {
-      using (var cmd = conn.CreateCommand())
-      {
-        this.RepairCorruptedDatabaseImage(cmd);
-        this.ReadSatellites(cmd);
-        this.ReadTransponders(cmd);
-      }
+      using var cmd = conn.CreateCommand();
+      this.RepairCorruptedDatabaseImage(cmd);
+      this.ReadSatellites(cmd);
+      this.ReadTransponders(cmd);
     }
     #endregion
 
@@ -144,19 +142,17 @@ namespace ChanSort.Loader.Samsung.Zip
     private void ReadSatellites(IDbCommand cmd)
     {
       cmd.CommandText = "select distinct satId, cast(satName as blob), satPos, satDir from SAT";
-      using (var r = cmd.ExecuteReader())
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
       {
-        while (r.Read())
-        {
-          Satellite sat = new Satellite(r.GetInt32(0));
-          int pos = Math.Abs(r.GetInt32(2));
-          // 171027 - ohuseyinoglu: For user-defined satellites, the direction may be -1
-          // (and not just 1 for "E", 0 for "W")
-          int dir = r.GetInt32(3);
-          sat.OrbitalPosition = $"{pos / 10}.{pos % 10}{(dir == 1 ? "E" : dir == 0 ? "W" : "")}";
-          sat.Name = ReadUtf16(r, 1);
-          this.DataRoot.AddSatellite(sat);
-        }
+        Satellite sat = new Satellite(r.GetInt32(0));
+        int pos = Math.Abs(r.GetInt32(2));
+        // 171027 - ohuseyinoglu: For user-defined satellites, the direction may be -1
+        // (and not just 1 for "E", 0 for "W")
+        int dir = r.GetInt32(3);
+        sat.OrbitalPosition = $"{pos / 10}.{pos % 10}{(dir == 1 ? "E" : dir == 0 ? "W" : "")}";
+        sat.Name = ReadUtf16(r, 1);
+        this.DataRoot.AddSatellite(sat);
       }
     }
     #endregion
@@ -165,21 +161,19 @@ namespace ChanSort.Loader.Samsung.Zip
     private void ReadTransponders(IDbCommand cmd)
     {
       cmd.CommandText = "select satId, tpFreq, tpPol, tpSr, tpId from SAT_TP";
-      using (var r = cmd.ExecuteReader())
+      using var r = cmd.ExecuteReader();
+      while (r.Read())
       {
-        while (r.Read())
-        {
-          // 171027 - ohuseyinoglu: tpId is the primary key of this table, we should be able to use it as "id/dict. index"
-          // It will also be our lookup value for the CHNL table
-          int id = r.GetInt32(4);
-          Transponder tp = new Transponder(id);
-          tp.FrequencyInMhz = (decimal)r.GetInt32(1) / 1000;
-          tp.Number = id;
-          tp.Polarity = r.GetInt32(2) == 0 ? 'H' : 'V';
-          tp.Satellite = this.DataRoot.Satellites.TryGet(r.GetInt32(0));
-          tp.SymbolRate = r.GetInt32(3);
-          this.DataRoot.AddTransponder(tp.Satellite, tp);
-        }
+        // 171027 - ohuseyinoglu: tpId is the primary key of this table, we should be able to use it as "id/dict. index"
+        // It will also be our lookup value for the CHNL table
+        int id = r.GetInt32(4);
+        Transponder tp = new Transponder(id);
+        tp.FrequencyInMhz = (decimal)r.GetInt32(1) / 1000;
+        tp.Number = id;
+        tp.Polarity = r.GetInt32(2) == 0 ? 'H' : 'V';
+        tp.Satellite = this.DataRoot.Satellites.TryGet(r.GetInt32(0));
+        tp.SymbolRate = r.GetInt32(3);
+        this.DataRoot.AddTransponder(tp.Satellite, tp);
       }
     }
     #endregion
@@ -189,13 +183,11 @@ namespace ChanSort.Loader.Samsung.Zip
     private void ReadChannelDatabase(SqliteConnection conn, string dbPath, FileType fileType)
     {
       this.channelById.Clear();
-      using (var cmd = conn.CreateCommand())
-      {
-        var providers = fileType == FileType.ChannelDbDvb ? this.ReadProviders(cmd) : null;
-        var channelList = this.ReadChannels(cmd, dbPath, providers, fileType);
-        this.ReadFavorites(cmd);
-        this.dbPathByChannelList.Add(channelList, dbPath);
-      }
+      using var cmd = conn.CreateCommand();
+      var providers = fileType == FileType.ChannelDbDvb ? this.ReadProviders(cmd) : null;
+      var channelList = this.ReadChannels(cmd, dbPath, providers, fileType);
+      this.ReadFavorites(cmd);
+      this.dbPathByChannelList.Add(channelList, dbPath);
     }
     #endregion
 
@@ -293,15 +285,14 @@ namespace ChanSort.Loader.Samsung.Zip
         return SignalSource.IP|SignalSource.Digital;
       var signalSource = fileType == FileType.ChannelDbAnalog ? SignalSource.Analog : SignalSource.Digital;
       cmd.CommandText = "select distinct chType from CHNL";
-      using (var r = cmd.ExecuteReader())
+      using var r = cmd.ExecuteReader();
+      if (r.Read())
       {
-        if (r.Read())
-        {
-          var ss = ChTypeToSignalSource(r.GetInt32(0));
-          if (ss != 0)
-            signalSource = ss;
-        }
+        var ss = ChTypeToSignalSource(r.GetInt32(0));
+        if (ss != 0)
+          signalSource = ss;
       }
+
       return signalSource;
     }
 
@@ -476,7 +467,7 @@ namespace ChanSort.Loader.Samsung.Zip
 
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       foreach (var channelList in this.DataRoot.ChannelLists)
       {
@@ -484,40 +475,29 @@ namespace ChanSort.Loader.Samsung.Zip
         SaveChannelList(channelList, dbPath);
       }
 
-      // force closing the file and releasing the locks
-      GC.Collect();
-      GC.WaitForPendingFinalizers();
-
-      this.ZipToOutputFile(tvOutputFile);
+      this.ZipToOutputFile();
     }
     #endregion
 
     #region SaveChannelList()
     private void SaveChannelList(ChannelList channelList, string dbPath)
     {
-      try
+      using var conn = new SqliteConnection($"Data Source={dbPath};Pooling=False");
+      conn.Open();
+      using (var trans = conn.BeginTransaction())
       {
-        using var conn = new SqliteConnection("Data Source=" + dbPath);
-        conn.Open();
-        using (var trans = conn.BeginTransaction())
-        {
-          using var cmdUpdateSrv = PrepareUpdateCommand(conn);
-          using var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0);
-          using var cmdInsertFav = PrepareInsertFavCommand(conn);
-          using var cmdUpdateFav = PrepareUpdateFavCommand(conn);
-          using var cmdDeleteFav = PrepareDeleteFavCommand(conn);
-          Editor.SequentializeFavPos(channelList, 5);
-          this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
-          trans.Commit();
-        }
+        using var cmdUpdateSrv = PrepareUpdateCommand(conn);
+        using var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0);
+        using var cmdInsertFav = PrepareInsertFavCommand(conn);
+        using var cmdUpdateFav = PrepareUpdateFavCommand(conn);
+        using var cmdDeleteFav = PrepareDeleteFavCommand(conn);
+        Editor.SequentializeFavPos(channelList, 5);
+        this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
+        trans.Commit();
+      }
 
-        using var cmd = conn.CreateCommand();
-        this.RepairCorruptedDatabaseImage(cmd);
-      }
-      finally
-      {
-        SqliteConnection.ClearAllPools();
-      }
+      using var cmd = conn.CreateCommand();
+      this.RepairCorruptedDatabaseImage(cmd);
     }
 
     #endregion

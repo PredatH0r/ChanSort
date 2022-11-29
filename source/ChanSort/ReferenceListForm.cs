@@ -344,26 +344,24 @@ namespace ChanSort.Ui
       bool overwrite = true;
       if (target.ChannelList.GetChannelsByNewOrder().Any(ch => ch.GetPosition(target.PosIndex) != -1))
       {
-        using (var dlg = new ActionBoxDialog(Resources.ReferenceListForm_btnApply_ConflictHandling))
+        using var dlg = new ActionBoxDialog(Resources.ReferenceListForm_btnApply_ConflictHandling);
+        dlg.AddAction(Resources.ReferenceListForm_btnApply_Click_Clear, DialogResult.OK, dlg.EmptyList);
+        dlg.AddAction(Resources.ReferenceListForm_btnApply_Click_Overwrite, DialogResult.Yes, dlg.Overwrite);
+        dlg.AddAction(Resources.ReferenceListForm_btnApply_Click_Keep, DialogResult.No, dlg.CopyList);
+        dlg.AddAction(closeButtonText[1], DialogResult.Cancel, dlg.Cancel);
+        switch (dlg.ShowDialog(this))
         {
-          dlg.AddAction(Resources.ReferenceListForm_btnApply_Click_Clear, DialogResult.OK, dlg.EmptyList);
-          dlg.AddAction(Resources.ReferenceListForm_btnApply_Click_Overwrite, DialogResult.Yes, dlg.Overwrite);
-          dlg.AddAction(Resources.ReferenceListForm_btnApply_Click_Keep, DialogResult.No, dlg.CopyList);
-          dlg.AddAction(closeButtonText[1], DialogResult.Cancel, dlg.Cancel);
-          switch (dlg.ShowDialog(this))
-          {
-            case DialogResult.OK:
-              target.ChannelList.Channels.ForEach(ch => ch.SetPosition(target.PosIndex, -1));
-              break;
-            case DialogResult.Yes:
-              //overwrite = true;
-              break;
-            case DialogResult.No:
-              overwrite = false;
-              break;
-            case DialogResult.Cancel:
-              return;
-          }
+          case DialogResult.OK:
+            target.ChannelList.Channels.ForEach(ch => ch.SetPosition(target.PosIndex, -1));
+            break;
+          case DialogResult.Yes:
+            //overwrite = true;
+            break;
+          case DialogResult.No:
+            overwrite = false;
+            break;
+          case DialogResult.Cancel:
+            return;
         }
       }
 

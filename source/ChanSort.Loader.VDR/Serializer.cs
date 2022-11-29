@@ -42,15 +42,9 @@ namespace ChanSort.Loader.VDR
     #endregion
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      if (tvOutputFile != FileName)
-      {
-        File.Copy(FileName, tvOutputFile);
-        FileName = tvOutputFile;
-      }
-
-      using var file = new StreamWriter(tvOutputFile);
+      using var file = new StreamWriter(this.FileName);
       foreach (var channel in allChannels.GetChannelsByNewOrder())
       {
         // when a reference list was applied, the list may contain proxy entries for deleted channels, which must be ignored

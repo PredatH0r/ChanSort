@@ -72,7 +72,7 @@ namespace Test.Loader.Hisense.ServicelistDb
 
 
       // save and reload
-      ser.Save(tempFile);
+      ser.Save();
       ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       data = ser.DataRoot;

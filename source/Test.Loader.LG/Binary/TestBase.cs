@@ -15,7 +15,7 @@ namespace Test.Loader.LG.Binary
   [TestClass]
   public class TestBase
   {
-    protected readonly string tempFile = Path.GetTempFileName();
+    protected string tempFile;
 
     #region ExecuteTest()
     protected void ExecuteTest(string modelAndBaseName)
@@ -29,8 +29,9 @@ namespace Test.Loader.LG.Binary
       var baseName = Path.GetFileNameWithoutExtension(modelAndBaseName);
 
       // load the TLL file
+      tempFile = baseName + ".TLL.in";
       var plugin = new LgPlugin();
-      var serializer = (TllFileSerializer)plugin.CreateSerializer(baseName + ".TLL.in");
+      var serializer = (TllFileSerializer)plugin.CreateSerializer(tempFile);
       serializer.IsTesting = true;
       serializer.Load();
 
@@ -53,8 +54,8 @@ namespace Test.Loader.LG.Binary
         }
       }
 
-      // save TLL file and compate to reference file
-      serializer.Save(tempFile);
+      // save TLL file and compare to reference file
+      serializer.Save();
       AssertBinaryFileContent(tempFile, baseName + ".TLL.out");
     }
     #endregion
@@ -97,6 +98,9 @@ namespace Test.Loader.LG.Binary
     #region AssertBinaryFileContent()
     protected void AssertBinaryFileContent(string actualFile, string expectedFile)
     {
+      if (StringComparer.InvariantCultureIgnoreCase.Equals(actualFile, expectedFile)) 
+        throw new ArgumentException("input and verification file must not be the same");
+
       var actual = File.ReadAllBytes(actualFile);
       var expected = File.ReadAllBytes(expectedFile);
       Assert.AreEqual(expected.Length, actual.Length);
@@ -144,13 +148,16 @@ namespace Test.Loader.LG.Binary
           File.Move(testDataDir + "\\" + basename + ".TLL", destFileName);
       }
 
-      // save .csv.in file (with ref list of original .TLL.in)
-      TllFileSerializer tll = new TllFileSerializer(destFileName);
+      var outPath = testDataDir + "\\" + basename + ".TLL.out";
+      File.Copy(destFileName, outPath, true);
+
+      TllFileSerializer tll = new TllFileSerializer(outPath);
       tll.IsTesting = true;
       tll.Load();
       tll.DataRoot.ApplyCurrentProgramNumbers();
       if (moveChannels)
       {
+        // save .csv.in file (with ref list of original .TLL.in)
         using (var writer = new StringWriter())
         {
           CsvRefListSerializer.Save(writer, tll.DataRoot);
@@ -178,7 +185,7 @@ namespace Test.Loader.LG.Binary
       {
         tll.CleanUpChannelData();
       }
-      tll.Save(testDataDir + "\\" + basename + ".TLL.out");
+      tll.Save();
     }
     #endregion
   }

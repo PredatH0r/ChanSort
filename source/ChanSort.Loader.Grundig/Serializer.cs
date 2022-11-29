@@ -300,10 +300,8 @@ namespace ChanSort.Loader.Grundig
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      // "Save As..." is not supported by this loader
-
       foreach (var list in this.DataRoot.ChannelLists)
         this.UpdateChannelList(list);
 

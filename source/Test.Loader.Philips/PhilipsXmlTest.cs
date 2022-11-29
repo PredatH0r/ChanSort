@@ -87,7 +87,7 @@ namespace Test.Loader.Philips
 
 
       // save and reload
-      ser.Save(tempFile);
+      ser.Save();
       ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       data = ser.DataRoot;

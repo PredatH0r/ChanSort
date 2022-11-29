@@ -904,7 +904,7 @@ Due to issues with most recent LG firmwares such lists can no longer be modified
     // Saving ====================================
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       int newAnalogChannelCount;
       int newDvbctChannelCount;
@@ -928,36 +928,34 @@ Due to issues with most recent LG firmwares such lists can no longer be modified
       if (this.dvbsSubblockCrcOffset != null)
         this.UpdateDvbsChecksums();
 
-      using (var file = new BinaryWriter(new FileStream(tvOutputFile, FileMode.Create, FileAccess.Write)))
-      {
-        // header
-        file.Write(this.fileContent, 0, this.analogBlockOffset);
+      using var file = new BinaryWriter(new FileStream(this.FileName, FileMode.Create, FileAccess.Write));
+      // header
+      file.Write(this.fileContent, 0, this.analogBlockOffset);
 
-        // analog
-        file.Write(newAnalogChannelCount*this.actChannelSize + 4);
-        file.Write(newAnalogChannelCount);
-        file.Write(fileContent, this.analogBlockOffset + 8, newAnalogChannelCount*this.actChannelSize);
+      // analog
+      file.Write(newAnalogChannelCount*this.actChannelSize + 4);
+      file.Write(newAnalogChannelCount);
+      file.Write(fileContent, this.analogBlockOffset + 8, newAnalogChannelCount*this.actChannelSize);
 
-        // firmware
-        file.Write(fileContent, this.firmwareBlockOffset, this.firmwareBlockSize + 4);
+      // firmware
+      file.Write(fileContent, this.firmwareBlockOffset, this.firmwareBlockSize + 4);
 
-        // hospitality models extra block
-        if (hospitalityBlockOffset != 0)
-          file.Write(fileContent, this.hospitalityBlockOffset, this.hospitalityBlockSize + 4);
+      // hospitality models extra block
+      if (hospitalityBlockOffset != 0)
+        file.Write(fileContent, this.hospitalityBlockOffset, this.hospitalityBlockSize + 4);
 
-        // DVB-CT
-        file.Write(newDvbctChannelCount*this.actChannelSize + 4);
-        file.Write(newDvbctChannelCount);
-        file.Write(fileContent, this.dvbctBlockOffset + 8, newDvbctChannelCount * this.actChannelSize);
+      // DVB-CT
+      file.Write(newDvbctChannelCount*this.actChannelSize + 4);
+      file.Write(newDvbctChannelCount);
+      file.Write(fileContent, this.dvbctBlockOffset + 8, newDvbctChannelCount * this.actChannelSize);
 
-        // DVB-S
-        if (this.dvbsBlockOffset != 0)
-          file.Write(fileContent, this.dvbsBlockOffset, this.dvbsBlockSize + 4);
+      // DVB-S
+      if (this.dvbsBlockOffset != 0)
+        file.Write(fileContent, this.dvbsBlockOffset, this.dvbsBlockSize + 4);
 
-        // rest (including settings)
-        if (this.settingsBlockOffset != 0)
-          file.Write(fileContent, this.settingsBlockOffset, fileContent.Length - this.settingsBlockOffset);                
-      }
+      // rest (including settings)
+      if (this.settingsBlockOffset != 0)
+        file.Write(fileContent, this.settingsBlockOffset, fileContent.Length - this.settingsBlockOffset);
     }
     #endregion
 

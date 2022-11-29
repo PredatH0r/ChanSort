@@ -32,11 +32,13 @@ namespace Test.Loader.CmdbBin
       zdf.Name = "ZDF";
       zdf.IsNameModified = true;
 
+      ser.DataRoot.ApplyCurrentProgramNumbers();
+
       var ed = new Editor();
       ed.DataRoot = ser.DataRoot;
       ed.ChannelList = list;
       ed.SetSlotNumber(new[] { ard }, 1, false, true );
-      ser.Save(null);
+      ser.Save();
 
       // load modified file again and verify changes
       ser = new CmdbFileSerializer(path);

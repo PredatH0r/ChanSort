@@ -274,9 +274,9 @@ namespace ChanSort.Loader.M3u
     #endregion
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      using var file = new StreamWriter(new FileStream(tvOutputFile, FileMode.Create), this.overrideEncoding ?? this.DefaultEncoding);
+      using var file = new StreamWriter(new FileStream(this.FileName, FileMode.Create), this.overrideEncoding ?? this.DefaultEncoding);
       file.NewLine = this.newLine;
 
       foreach(var line in this.headerLines)
@@ -303,8 +303,6 @@ namespace ChanSort.Loader.M3u
 
       foreach(var line in this.trailingLines)
         file.WriteLine(line);
-
-      this.FileName = tvOutputFile;
     }
     #endregion
 

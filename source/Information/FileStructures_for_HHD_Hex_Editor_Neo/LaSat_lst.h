@@ -2,6 +2,7 @@
 
 // CRCs are calculated MSB first (left-shift with initial mask 0x80000000), polynomial 0x04C11DB7, init-value 0xFFFFFFFF and exit-XOR 0x00000000
 
+
 public struct LaSat
 {
 	int32 dataBlockLength;

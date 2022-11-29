@@ -292,7 +292,7 @@ namespace ChanSort.Loader.GlobalClone
     // saving
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       this.UpdateJsonDoc();
 
@@ -307,8 +307,7 @@ namespace ChanSort.Loader.GlobalClone
       var json = EscapeXml(sw.ToString());
       sb.Append(json);
       sb.Append(xmlSuffix);
-      File.WriteAllText(tvOutputFile, sb.ToString());
-      this.FileName = tvOutputFile;
+      File.WriteAllText(this.FileName, sb.ToString());
     }
     #endregion
 

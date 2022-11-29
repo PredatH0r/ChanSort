@@ -90,19 +90,17 @@ namespace ChanSort.Api
 
     private static bool SetValue(string keyPath, string name, string value, bool force = false)
     {
-      using (var key = Registry.CurrentUser.CreateSubKey(keyPath))
+      using var key = Registry.CurrentUser.CreateSubKey(keyPath);
+      var currentValue = key.GetValue(name) as string;
+      var nameExists = currentValue != null;
+      if (nameExists)
       {
-        var currentValue = key.GetValue(name) as string;
-        var nameExists = currentValue != null;
-        if (nameExists)
-        {
-          if (currentValue == value || !force)
-            return false;
-        }
-
-        key.SetValue(name, value);
-        return true;
+        if (currentValue == value || !force)
+          return false;
       }
+
+      key.SetValue(name, value);
+      return true;
     }
 
     public static void DeleteAssociations(IEnumerable<string> extensions)
@@ -117,15 +115,13 @@ namespace ChanSort.Api
 
       void DeleteValue(string keyPath, string name)
       {
-        using (var key = Registry.CurrentUser.OpenSubKey(keyPath, true))
+        using var key = Registry.CurrentUser.OpenSubKey(keyPath, true);
+        if (key != null)
         {
-          if (key != null)
-          {
-            if (name == null)
-              key.SetValue(null, "");
-            else
-              key.DeleteValue(name, false);
-          }
+          if (name == null)
+            key.SetValue(null, "");
+          else
+            key.DeleteValue(name, false);
         }
       }
     }

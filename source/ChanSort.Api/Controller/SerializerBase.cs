@@ -84,7 +84,7 @@ namespace ChanSort.Api
     }
 
     public abstract void Load();
-    public abstract void Save(string tvOutputFile);
+    public abstract void Save();
 
     public virtual Encoding DefaultEncoding
     {
@@ -165,11 +165,10 @@ namespace ChanSort.Api
       ZipFile.ExtractToDirectory(this.FileName, this.TempPath);
     }
 
-    protected void ZipToOutputFile(string tvOutputFile, bool compress = true)
+    protected void ZipToOutputFile(bool compress = true)
     {
-      File.Delete(tvOutputFile);
-      ZipFile.CreateFromDirectory(this.TempPath, tvOutputFile, compress ? CompressionLevel.Optimal : CompressionLevel.NoCompression, false);
-      this.FileName = tvOutputFile;
+      File.Delete(this.FileName);
+      ZipFile.CreateFromDirectory(this.TempPath, this.FileName, compress ? CompressionLevel.Optimal : CompressionLevel.NoCompression, false);
     }
     #endregion
 
@@ -199,6 +198,7 @@ namespace ChanSort.Api
       var path = this.TempPath;
       if (string.IsNullOrEmpty(path))
         return;
+
       try
       {
         if (Directory.Exists(path))

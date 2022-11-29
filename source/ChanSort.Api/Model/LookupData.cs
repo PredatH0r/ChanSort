@@ -65,21 +65,19 @@ namespace ChanSort.Api
       string file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "lookup.csv");
       if (!File.Exists(file))
         return;
-      using (var reader = new StreamReader(file, System.Text.Encoding.UTF8))
+      using var reader = new StreamReader(file, System.Text.Encoding.UTF8);
+      string line;
+      while ((line = reader.ReadLine()) != null)
       {
-        string line;
-        while ((line = reader.ReadLine()) != null)
+        var fields = CsvFile.Parse(line, ';');
+        if (fields.Count == 0)
+          continue;
+        switch (fields[0].ToLowerInvariant())
         {
-          var fields = CsvFile.Parse(line, ';');
-          if (fields.Count == 0)
-            continue;
-          switch (fields[0].ToLowerInvariant())
-          {
-            case "onid": this.ParseNetwork(fields); break;
-            case "transp": this.ParseTransponder(fields); break;
-            case "dvbc": this.ParseDvbcChannel(fields); break;
-            case "servicetype": this.ParseServiceType(fields); break;
-          }
+          case "onid": this.ParseNetwork(fields); break;
+          case "transp": this.ParseTransponder(fields); break;
+          case "dvbc": this.ParseDvbcChannel(fields); break;
+          case "servicetype": this.ParseServiceType(fields); break;
         }
       }
     }

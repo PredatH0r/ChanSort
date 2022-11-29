@@ -300,11 +300,9 @@ namespace ChanSort.Loader.Sharp
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      this.FileName = tvOutputFile;
-
-      using var file = new StreamWriter(new FileStream(tvOutputFile, FileMode.Create), this.encoding);
+      using var file = new StreamWriter(new FileStream(this.FileName, FileMode.Create), this.encoding);
       
       // write original header
       for (int i=0; i<3; i++)

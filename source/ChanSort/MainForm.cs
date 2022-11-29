@@ -677,22 +677,21 @@ namespace ChanSort.Ui
       if (this.DataRoot == null || !this.DataRoot.NeedsSaving)
         return true;
 
-      using (var dlg = new ActionBoxDialog(Resources.MainForm_PromptSaveAndContinue_Question))
+      using var dlg = new ActionBoxDialog(Resources.MainForm_PromptSaveAndContinue_Question);
+      dlg.AddAction(Resources.MainForm_PromptSaveAndContinue_Save, DialogResult.Yes, dlg.Save);
+      dlg.AddAction(Resources.MainForm_PromptSaveAndContinue_Discard, DialogResult.No, dlg.Discard);
+      dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
+      switch (dlg.ShowDialog(this))
       {
-        dlg.AddAction(Resources.MainForm_PromptSaveAndContinue_Save, DialogResult.Yes, dlg.Save);
-        dlg.AddAction(Resources.MainForm_PromptSaveAndContinue_Discard, DialogResult.No, dlg.Discard);
-        dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
-        switch (dlg.ShowDialog(this))
-        {
-          case DialogResult.Yes:
-            this.SaveFiles();
-            break;
-          case DialogResult.No:
-            break;
-          case DialogResult.Cancel:
-            return false;
-        }
+        case DialogResult.Yes:
+          this.SaveFiles();
+          break;
+        case DialogResult.No:
+          break;
+        case DialogResult.Cancel:
+          return false;
       }
+
       return true;
     }
 
@@ -849,22 +848,20 @@ namespace ChanSort.Ui
     private void ShowSaveFileDialog()
     {
       var extension = Path.GetExtension(this.currentTvFile) ?? ".";
-      using (var dlg = new SaveFileDialog())
+      using var dlg = new SaveFileDialog();
+      dlg.InitialDirectory = Path.GetDirectoryName(this.currentTvFile);
+      dlg.FileName = Path.GetFileName(this.currentTvFile);
+      dlg.AddExtension = true;
+      dlg.DefaultExt = extension;
+      dlg.Filter = string.Format(Resources.MainForm_FileDialog_SaveFileFilter, extension);
+      dlg.FilterIndex = 0;
+      dlg.ValidateNames = true;
+      dlg.RestoreDirectory = true;
+      dlg.OverwritePrompt = true;
+      if (dlg.ShowDialog() == DialogResult.OK)
       {
-        dlg.InitialDirectory = Path.GetDirectoryName(this.currentTvFile);
-        dlg.FileName = Path.GetFileName(this.currentTvFile);
-        dlg.AddExtension = true;
-        dlg.DefaultExt = extension;
-        dlg.Filter = string.Format(Resources.MainForm_FileDialog_SaveFileFilter, extension);
-        dlg.FilterIndex = 0;
-        dlg.ValidateNames = true;
-        dlg.RestoreDirectory = true;
-        dlg.OverwritePrompt = true;
-        if (dlg.ShowDialog() == DialogResult.OK)
-        {
-          this.SetFileName(dlg.FileName);
-          this.SaveFiles();
-        }
+        this.SetFileName(dlg.FileName);
+        this.SaveFiles();
       }
     }
 
@@ -1045,7 +1042,7 @@ namespace ChanSort.Ui
           }
         }
 
-        this.currentTvSerializer.Save(this.currentTvFile);
+        this.currentTvSerializer.Save();
         this.DataRoot.ValidateAfterSave();
       }
       finally
@@ -1545,12 +1542,10 @@ namespace ChanSort.Ui
 
     private void ShowCharsetForm()
     {
-      using (var form = new CharsetForm(this.defaultEncoding))
-      {
-        form.Location = new Point(this.Location.X + 30, this.Location.Y + 70);
-        form.EncodingChanged += this.charsetForm_EncodingChanged;
-        form.ShowDialog(this);
-      }
+      using var form = new CharsetForm(this.defaultEncoding);
+      form.Location = new Point(this.Location.X + 30, this.Location.Y + 70);
+      form.EncodingChanged += this.charsetForm_EncodingChanged;
+      form.ShowDialog(this);
     }
 
     #endregion
@@ -2158,8 +2153,8 @@ namespace ChanSort.Ui
 
     private void Print()
     {
-      using (var dlg = new ReportOptionsDialog(this.CurrentChannelList, this.subListIndex))
-        dlg.ShowDialog(this);
+      using var dlg = new ReportOptionsDialog(this.CurrentChannelList, this.subListIndex);
+      dlg.ShowDialog(this);
     }
 
     #endregion

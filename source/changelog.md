@@ -1,6 +1,13 @@
 ﻿ChanSort Change Log 
 ===================
 
+2022-11-29
+- fixed saving of modified cmdb_\*.bin channel lists
+- removed "Save as" function (which was disabled for most channel list formats)
+- added "Convert list" menu item which gives a hint on how to use reference lists instead
+- added functions for easy swapping in 1-list-view (mark for swapping, swap with marked)
+- LOTS of internal changes
+
 2022-11-22
 - fixed "Export to Excel" (copies the list as tab-separated text into clipboard)
 - included latest translation to Polish (thanks to J.D.)

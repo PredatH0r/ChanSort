@@ -35,13 +35,11 @@ namespace ChanSort.Ui.Printing
       Config.Default.PrintColumnCount = (int)this.spinColumnCount.Value;
       Config.Default.Save();
 
-      using (var font = new Font(this.fontEdit1.Text, (float)this.spinFontSize.Value))
-      using (var report = new ChannelListReport(this.channelList, this.subListIndex, this.rbSortByName.Checked, font, (int)this.spinColumnCount.Value))
-      using (ReportPrintTool printTool = new ReportPrintTool(report))
-      {
-        printTool.ShowPreviewDialog();
-        printTool.ShowPreview(UserLookAndFeel.Default);
-      }
+      using var font = new Font(this.fontEdit1.Text, (float)this.spinFontSize.Value);
+      using var report = new ChannelListReport(this.channelList, this.subListIndex, this.rbSortByName.Checked, font, (int)this.spinColumnCount.Value);
+      using ReportPrintTool printTool = new ReportPrintTool(report);
+      printTool.ShowPreviewDialog();
+      printTool.ShowPreview(UserLookAndFeel.Default);
     }
   }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using ChanSort.Api;
 using Microsoft.Data.Sqlite;
@@ -54,7 +53,7 @@ namespace ChanSort.Loader.Toshiba
       else
         workingDir = Path.GetDirectoryName(this.FileName);
 
-      var sysDataConnString = "Data Source=" + this.workingDir + FILE_dvbSysData_db;
+      var sysDataConnString = $"Data Source={this.workingDir + FILE_dvbSysData_db};Pooling=false";
       using (var conn = new SqliteConnection(sysDataConnString))
       {
         conn.Open();
@@ -64,7 +63,7 @@ namespace ChanSort.Loader.Toshiba
         ReadTransponders(cmd);
       }
 
-      var mainDataConnString = "Data Source=" + this.workingDir + FILE_dvbMainData_db;
+      var mainDataConnString = $"Data Source={this.workingDir + FILE_dvbMainData_db};Pooling=False";
       using (var conn = new SqliteConnection(mainDataConnString))
       {
         conn.Open();
@@ -72,7 +71,7 @@ namespace ChanSort.Loader.Toshiba
         ReadCryptInfo(cmd);
       }
 
-      var channelConnString = "Data Source=" + this.workingDir + FILE_chmgt_db;
+      var channelConnString = $"Data Source={this.workingDir + FILE_chmgt_db};Pooling=False";
       using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();
@@ -259,13 +258,11 @@ namespace ChanSort.Loader.Toshiba
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      try
+      var channelConnString = $"Data Source={this.workingDir + FILE_chmgt_db};Pooling=False";
+      using (var conn = new SqliteConnection(channelConnString))
       {
-        var channelConnString = "Data Source=" + this.workingDir + FILE_chmgt_db;
-        using var conn = new SqliteConnection(channelConnString);
-
         conn.Open();
         using var trans = conn.BeginTransaction();
         using var cmd = conn.CreateCommand();
@@ -280,16 +277,9 @@ namespace ChanSort.Loader.Toshiba
         cmd.Transaction = null;
         RepairCorruptedDatabaseImage(cmd);
       }
-      finally
-      {
-        // force closing the file and releasing the locks
-        SqliteConnection.ClearAllPools();
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-      }
 
       if (Path.GetExtension(this.FileName).ToLowerInvariant() == ".zip")
-        ZipToOutputFile(tvOutputFile);
+        ZipToOutputFile();
     }
 
     #endregion

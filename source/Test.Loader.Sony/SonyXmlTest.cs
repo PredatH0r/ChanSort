@@ -110,7 +110,7 @@ namespace Test.Loader.Sony
 
 
       // save and reload
-      ser.Save(tempFile);
+      ser.Save();
       ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       data = ser.DataRoot;
@@ -156,7 +156,7 @@ namespace Test.Loader.Sony
 
 
       // save and reload
-      ser.Save(tempFile);
+      ser.Save();
       ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       data = ser.DataRoot;

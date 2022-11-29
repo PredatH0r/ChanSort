@@ -597,7 +597,7 @@ namespace ChanSort.Loader.Philips
         return;
       this.dataFilePaths.Add(dbPath);
       
-      using var conn = new SqliteConnection($"Data Source={dbPath}");
+      using var conn = new SqliteConnection($"Data Source={dbPath};Pooling=False");
       conn.Open();
       using var cmd = conn.CreateCommand();
 
@@ -669,7 +669,7 @@ namespace ChanSort.Loader.Philips
         }
       }
 
-      using var conn = new SqliteConnection($"Data Source={tvDb}");
+      using var conn = new SqliteConnection($"Data Source={tvDb};Pooling=False");
       conn.Open();
       using var cmd = conn.CreateCommand();
       cmd.CommandText = "select _id, display_number, display_name, original_network_id, transport_stream_id, service_id, service_type from channels";
@@ -729,7 +729,7 @@ namespace ChanSort.Loader.Philips
       this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
       this.Features.MaxFavoriteLists = 4;
 
-      using var conn = new SqliteConnection($"Data Source={listDb}");
+      using var conn = new SqliteConnection($"Data Source={listDb};Pooling=False");
       conn.Open();
       using var cmd = conn.CreateCommand();
 
@@ -787,7 +787,7 @@ namespace ChanSort.Loader.Philips
       this.Features.MaxFavoriteLists = 8;
       this.Features.AllowGapsInFavNumbers = false;
 
-      using var conn = new SqliteConnection($"Data Source={listDb}");
+      using var conn = new SqliteConnection($"Data Source={listDb};Pooling=False");
       conn.Open();
 
       // older versions of ChanSort wrote invalid "list_id" values starting at 0 instead of 1 and going past 8.
@@ -842,7 +842,7 @@ namespace ChanSort.Loader.Philips
     // saving
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       var dir = Path.GetDirectoryName(this.FileName) ?? "";
       var channellib = Path.Combine(dir, "channellib");
@@ -1095,7 +1095,7 @@ namespace ChanSort.Loader.Philips
       if (!File.Exists(dbPath))
         return;
 
-      using var conn = new SqliteConnection($"Data Source={dbPath}");
+      using var conn = new SqliteConnection($"Data Source={dbPath};Pooling=False");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();
@@ -1134,7 +1134,7 @@ namespace ChanSort.Loader.Philips
       if (!File.Exists(tvDb))
         return;
 
-      using var conn = new SqliteConnection($"Data Source={tvDb}");
+      using var conn = new SqliteConnection($"Data Source={tvDb};Pooling=False");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();
@@ -1175,7 +1175,7 @@ namespace ChanSort.Loader.Philips
       if (!File.Exists(listDb) || this.channelsById.Count == 0)
         return;
 
-      using var conn = new SqliteConnection($"Data Source={listDb}");
+      using var conn = new SqliteConnection($"Data Source={listDb};Pooling=False");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();
@@ -1238,7 +1238,7 @@ namespace ChanSort.Loader.Philips
       if (!File.Exists(listDb))
         return;
 
-      using var conn = new SqliteConnection($"Data Source={listDb}");
+      using var conn = new SqliteConnection($"Data Source={listDb};Pooling=False");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();

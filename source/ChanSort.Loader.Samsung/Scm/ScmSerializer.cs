@@ -267,19 +267,17 @@ namespace ChanSort.Loader.Samsung.Scm
         series = validCandidates[0];
       else
       {
-        using (var dlg = Api.View.Default?.CreateActionBox(""))
-        {
-          if (dlg == null) // during unit testing
-            return false;
-          dlg.Message = "File type could not be detected automatically.\nPlease choose the model series of your TV:";
-          foreach(var cand in validCandidates)
-            dlg.AddAction("Series " + cand, cand);
-          dlg.AddAction("Cancel", 0);
-          dlg.ShowDialog();
-          if (dlg.SelectedAction == 0)
-            return false;
-          series = (char)dlg.SelectedAction;
-        }
+        using var dlg = Api.View.Default?.CreateActionBox("");
+        if (dlg == null) // during unit testing
+          return false;
+        dlg.Message = "File type could not be detected automatically.\nPlease choose the model series of your TV:";
+        foreach(var cand in validCandidates)
+          dlg.AddAction("Series " + cand, cand);
+        dlg.AddAction("Cancel", 0);
+        dlg.ShowDialog();
+        if (dlg.SelectedAction == 0)
+          return false;
+        series = (char)dlg.SelectedAction;
       }
 
       this.modelConstants.TryGetValue("Series:" + series, out this.c);
@@ -653,7 +651,7 @@ namespace ChanSort.Loader.Samsung.Scm
     #endregion
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       var zip = Path.Combine(this.TempPath, this.baseFolder);
       this.SaveChannels(zip, "map-AirA", this.avbtChannels, this.avbtFileContent);
@@ -670,7 +668,7 @@ namespace ChanSort.Loader.Samsung.Scm
       this.SaveChannels(zip, "map-CanalDigitalSatD", this.canalDigitalChannels, this.canalDigitalFileContent);
       this.SaveChannels(zip, "map-DigitalPlusD", this.digitalPlusChannels, this.digitalPlusFileContent);
       this.SaveChannels(zip, "map-CyfraPlusD", this.cyfraPlusChannels, this.cyfraPlusFileContent);
-      this.ZipToOutputFile(tvOutputFile, true);
+      this.ZipToOutputFile(true);
     }
     #endregion
 
@@ -681,10 +679,8 @@ namespace ChanSort.Loader.Samsung.Scm
         return;
 
       string tempFilePath = Path.Combine(zip, fileName);
-      using (var stream = new FileStream(tempFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-      {
-        this.WriteChannels(channels, fileContent, stream);
-      }
+      using var stream = new FileStream(tempFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+      this.WriteChannels(channels, fileContent, stream);
     }
     #endregion
 

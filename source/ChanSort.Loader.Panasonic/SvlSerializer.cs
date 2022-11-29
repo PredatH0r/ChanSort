@@ -74,7 +74,7 @@ namespace ChanSort.Loader.Panasonic
 
       this.CreateDummySatellites();
 
-      string channelConnString = "Data Source=" + this.workFile;
+      string channelConnString = $"Data Source={this.workFile};Pooling=False";
       using var conn = new SqliteConnection(channelConnString);
       conn.Open();
       using var cmd = conn.CreateCommand();
@@ -112,15 +112,13 @@ namespace ChanSort.Loader.Panasonic
     #region GetCypherMode()
     private CypherMode GetCypherMode(string file)
     {
-      using (var stream = File.OpenRead(file))
-      using (var rdr = new BinaryReader(stream))
-      {
-        uint value = (uint)rdr.ReadInt32();
-        if (value == 0x694C5153) return CypherMode.None; // "SQLi"
-        if (value == 0x42445350) return CypherMode.HeaderAndChecksum; // "PSDB"
-        if (value == 0xA07DCB50) return CypherMode.Encryption;
-        return CypherMode.Unknown;
-      }
+      using var stream = File.OpenRead(file);
+      using var rdr = new BinaryReader(stream);
+      uint value = (uint)rdr.ReadInt32();
+      if (value == 0x694C5153) return CypherMode.None; // "SQLi"
+      if (value == 0x42445350) return CypherMode.HeaderAndChecksum; // "PSDB"
+      if (value == 0xA07DCB50) return CypherMode.Encryption;
+      return CypherMode.Unknown;
     }
     #endregion
 
@@ -297,15 +295,11 @@ order by s.ntype,major_channel
 
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      this.FileName = tvOutputFile;
-
-      try
+      string channelConnString = $"Data Source={this.workFile};Pooling=False";
+      using (var conn = new SqliteConnection(channelConnString))
       {
-        string channelConnString = "Data Source=" + this.workFile;
-        using var conn = new SqliteConnection(channelConnString);
-
         conn.Open();
         using var trans = conn.BeginTransaction();
         using var cmd = conn.CreateCommand();
@@ -321,13 +315,6 @@ order by s.ntype,major_channel
 
         cmd.Transaction = null;
         this.RepairCorruptedDatabaseImage(cmd);
-      }
-      finally
-      {
-        // force closing the file and releasing the locks
-        SqliteConnection.ClearAllPools();
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
       }
 
       this.WriteCypheredFile();

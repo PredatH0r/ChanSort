@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using ChanSort.Api;
 using Microsoft.Data.Sqlite;
 
@@ -115,7 +114,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
 
     public override void Load()
     {
-      using (var conn = new SqliteConnection("Data Source=" + FileName))
+      using (var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False"))
       {
         conn.Open();
         using (var cmd = conn.CreateCommand())
@@ -444,41 +443,27 @@ left outer join {dbSchema.DvbServiceTable} digs on digs.ServiceId=s.Pid
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      if (tvOutputFile != FileName)
-        File.Copy(FileName, tvOutputFile, true);
-
+      using var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False");
+      conn.Open();
+      using var trans = conn.BeginTransaction();
+      using var cmd = conn.CreateCommand();
       try
       {
-        using var conn = new SqliteConnection("Data Source=" + tvOutputFile);
-        conn.Open();
-        using var trans = conn.BeginTransaction();
-        using var cmd = conn.CreateCommand();
-        try
-        {
 #if !LOCK_LCN_LISTS
-            ResetLcn(cmd);
+          ResetLcn(cmd);
 #endif
-          UpdateServices(cmd);
-          UpdatePhysicalChannelLists(cmd);
-          UpdateUserFavoriteLists(cmd);
+        UpdateServices(cmd);
+        UpdatePhysicalChannelLists(cmd);
+        UpdateUserFavoriteLists(cmd);
 
-          trans.Commit();
-          FileName = tvOutputFile;
-        }
-        catch
-        {
-          trans.Rollback();
-          throw;
-        }
+        trans.Commit();
       }
-      finally
+      catch
       {
-        // force closing the file and releasing the locks
-        SqliteConnection.ClearAllPools();
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
+        trans.Rollback();
+        throw;
       }
     }
 

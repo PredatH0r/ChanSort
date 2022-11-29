@@ -471,7 +471,7 @@ namespace ChanSort.Loader.Philips
     public override IEnumerable<string> GetDataFilePaths() => this.dbFileByList.Values.Union(this.flashFileByList.Values).Select(tup => tup.Item1);
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       // update *.db files
       foreach (var listAndFile in this.dbFileByList)

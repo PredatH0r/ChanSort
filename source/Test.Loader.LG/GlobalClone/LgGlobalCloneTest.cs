@@ -89,7 +89,7 @@ namespace Test.Loader.LG
 
 
       // save and reload
-      ser.Save(tempFile);
+      ser.Save();
       ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       data = ser.DataRoot;
@@ -131,7 +131,7 @@ namespace Test.Loader.LG
       srf2.NewProgramNr = 1971;
 
       // save and reload
-      ser.Save(tempFile);
+      ser.Save();
       ser = plugin.CreateSerializer(tempFile);
       ser.Load();
       data = ser.DataRoot;
@@ -147,7 +147,7 @@ namespace Test.Loader.LG
       // restore original program numbers and save
       srf1.NewProgramNr = 1971;
       srf2.NewProgramNr = 1972;
-      ser.Save(tempFile);
+      ser.Save();
 
       // undo expected changes to the file
       var changed = File.ReadAllText(tempFile, Encoding.UTF8);

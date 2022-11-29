@@ -268,10 +268,8 @@ namespace ChanSort.Loader.Philips
         var xml = fileData.textContent;
         if (fileData.formatVersion == FormatVersion.RepairXml)
           xml = xml.Replace("&", "&amp;"); // Philips exports broken XML with unescaped & instead of &amp;
-        using (var reader = XmlReader.Create(new StringReader(xml), settings))
-        {
-          fileData.doc.Load(reader);
-        }
+        using var reader = XmlReader.Create(new StringReader(xml), settings);
+        fileData.doc.Load(reader);
       }
       catch
       {
@@ -580,10 +578,8 @@ namespace ChanSort.Loader.Philips
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      // "Save As..." is not supported by this loader
-
       foreach (var list in this.DataRoot.ChannelLists)
       {
         if (list.IsMixedSourceFavoritesList)

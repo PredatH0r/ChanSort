@@ -51,11 +51,11 @@ namespace Test.Loader.LG.Binary
 
       // save TLL file and compare to reference file
       serializer.CleanUpChannelData();
-      serializer.Save(tempFile);
+      serializer.Save();
       if (generateReferenceFile)
-        File.Copy(tempFile, TestUtils.GetSolutionBaseDir() + "\\Test.Loader.LG\\" + modelAndBaseName + ".TLL.out", true);
+        File.Copy(serializer.FileName, TestUtils.GetSolutionBaseDir() + "\\Test.Loader.LG\\" + modelAndBaseName + ".TLL.out", true);
       else
-        AssertBinaryFileContent(tempFile, baseName + ".TLL.out");      
+        AssertBinaryFileContent(serializer.FileName, baseName + ".TLL.out");      
     }
   }
 }

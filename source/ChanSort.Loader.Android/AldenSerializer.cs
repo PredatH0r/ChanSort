@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.Data.Sqlite;
@@ -88,7 +87,7 @@ namespace ChanSort.Loader.Android
     #region Load()
     public override void Load()
     {
-      using var conn = new SqliteConnection($"Data Source={this.FileName}");
+      using var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False");
       conn.Open();
       using var cmd = conn.CreateCommand();
 
@@ -161,11 +160,9 @@ namespace ChanSort.Loader.Android
     /// <summary>
     /// The "tv.db" file was reported to exist as early as in ChannelMap_25 format and has been seen in formats 30 and 45 too
     /// </summary>
-    public override void Save(string outputFile)
+    public override void Save()
     {
-      this.FileName = outputFile;
-
-      using var conn = new SqliteConnection($"Data Source={outputFile}");
+      using var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();

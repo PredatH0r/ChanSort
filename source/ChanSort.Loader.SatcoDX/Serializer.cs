@@ -71,15 +71,9 @@ namespace ChanSort.Loader.SatcoDX
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      if (tvOutputFile != this.FileName)
-      {
-        File.Copy(this.FileName, tvOutputFile);
-        this.FileName = tvOutputFile;
-      }
-
-      using var file = new FileStream(tvOutputFile, FileMode.Create);
+      using var file = new FileStream(this.FileName, FileMode.Create);
       byte[] buffer = null;
       foreach (var channel in this.allChannels.GetChannelsByNewOrder())
       {

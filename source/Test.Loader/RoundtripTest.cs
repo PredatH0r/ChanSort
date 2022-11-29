@@ -64,7 +64,7 @@ namespace Test.Loader
       foreach (var l in root.ChannelLists)
         l.ReadOnly = false;
 
-      ser.Save(tempFile);
+      ser.Save();
 
 
       ser = plugin.CreateSerializer(tempFile);

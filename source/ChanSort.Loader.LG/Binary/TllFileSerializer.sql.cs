@@ -67,19 +67,15 @@ from channel c inner join chanseq s on s.listid=c.listid and s.slot=c.slot
       if (list == null || list.Count == 0)
         return;
 
-      using (var conn = SqlClientFactory.Instance.CreateConnection())
-      {
-        conn.ConnectionString = "server=(local);database=ChanSort;Integrated Security=true";
-        conn.Open();
+      using var conn = SqlClientFactory.Instance.CreateConnection();
+      conn.ConnectionString = "server=(local);database=ChanSort;Integrated Security=true";
+      conn.Open();
 
-        using (var cmd = conn.CreateCommand())
-        {
-          var listId = InsertListData(cmd);
+      using var cmd = conn.CreateCommand();
+      var listId = InsertListData(cmd);
 
-          InsertChannelLinkedList(cmd, listId);
-          InsertChannelData(cmd, listId);
-        }
-      }
+      InsertChannelLinkedList(cmd, listId);
+      InsertChannelData(cmd, listId);
     }
     #endregion
 

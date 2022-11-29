@@ -358,7 +358,7 @@ namespace ChanSort.Loader.Enigma2
 
     #region Save()
 
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
       for (int favIndex = 0; favIndex < this.favListFileNames.Count; favIndex++)
       {

@@ -67,7 +67,7 @@ namespace ChanSort.Loader.Toshiba
     #region Load()
     public override void Load()
     {
-      string sysDataConnString = "Data Source=" + this.FileName;
+      string sysDataConnString = $"Data Source={this.FileName};Pooling=False";
       using var conn = new SqliteConnection(sysDataConnString);
       conn.Open();
       
@@ -206,27 +206,22 @@ left outer join ChanDataTable ac on ac.handle=a.m_channel_no
 
 
     #region Save()
-    public override void Save(string tvOutputFile)
+    public override void Save()
     {
-      if (tvOutputFile != this.FileName)
+      string channelConnString = $"Data Source={this.FileName};Pooling=False";
+      using (var conn = new SqliteConnection(channelConnString))
       {
-        File.Copy(this.FileName, tvOutputFile, true);
-        this.FileName = tvOutputFile;
+        conn.Open();
+        using var trans = conn.BeginTransaction();
+        using var cmd = conn.CreateCommand();
+        using var cmd2 = conn.CreateCommand();
+
+        this.WriteChannels(cmd, cmd2, this.channels);
+        trans.Commit();
+
+        cmd.Transaction = null;
+        this.RepairCorruptedDatabaseImage(cmd);
       }
-
-      string channelConnString = "Data Source=" + this.FileName;
-      using var conn = new SqliteConnection(channelConnString);
-      conn.Open();
-      using var trans = conn.BeginTransaction();
-      using var cmd = conn.CreateCommand();
-      using var cmd2 = conn.CreateCommand();
-
-      this.WriteChannels(cmd, cmd2, this.channels);
-      trans.Commit();
-
-      cmd.Transaction = null;
-      this.RepairCorruptedDatabaseImage(cmd);
-      conn.Close();
 
       // copy settingsDB.db to settingsDBBackup.db
       var backupFile = GetBackupFilePath();
