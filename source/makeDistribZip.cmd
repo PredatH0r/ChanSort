@@ -18,9 +18,13 @@ xcopy /idy debug\Microsoft.Data.Sqlite.dll "%target%"
 xcopy /idy debug\SQLitePCLRaw.*.dll "%target%"
 xcopy /idy debug\System.Memory.dll "%target%"
 xcopy /idy debug\System.Runtime.CompilerServices.Unsafe.dll "%target%"
-mkdir "%target%\runtimes" 2>nul
-xcopy /sidy debug\runtimes\* "%target%\runtimes"
 
+mkdir "%target%\runtimes" 2>nul
+rem xcopy /sidy debug\runtimes\* "%target%\runtimes"
+xcopy /idys packages\SQLitePCLRaw.lib.e_sqlite3.2.1.2\runtimes\win-arm "%target%\runtimes\win-arm"
+xcopy /idys packages\SQLitePCLRaw.lib.e_sqlite3.2.1.2\runtimes\win-arm64 "%target%\runtimes\win-arm64"
+xcopy /idys packages\SQLitePCLRaw.lib.e_sqlite3.2.1.2\runtimes\win-x86 "%target%\runtimes\win-x86"
+xcopy /idys packages\SQLitePCLRaw.lib.e_sqlite3.2.1.2\runtimes\win-x64 "%target%\runtimes\win-x64"
 
 xcopy /idy debug\Newtonsoft.Json.dll "%target%"
 xcopy /idy debug\Lookup.csv "%target%"
