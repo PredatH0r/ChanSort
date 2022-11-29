@@ -76,7 +76,6 @@ namespace ChanSort.Loader.Philips
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = false;
       this.Features.DeleteMode = DeleteMode.NotSupported;
-      this.Features.CanSaveAs = false;
       this.Features.CanHaveGaps = false;
       this.Features.FavoritesMode = FavoritesMode.Flags; // satellite favorites are stored in a separate file that may support independent sorting, but DVB C/T only have a flag
       this.Features.MaxFavoriteLists = 1; // Map45 format will change this

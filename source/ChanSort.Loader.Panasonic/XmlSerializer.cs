@@ -41,7 +41,6 @@ namespace ChanSort.Loader.Panasonic
       this.Features.CanLockChannels = false;
       this.Features.CanHideChannels = false;
       this.Features.DeleteMode = DeleteMode.NotSupported;
-      this.Features.CanSaveAs = true;
       this.Features.AllowGapsInFavNumbers = true;
       this.Features.CanEditFavListNames = false;
 

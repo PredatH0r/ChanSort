@@ -44,7 +44,6 @@ namespace ChanSort.Loader.Android
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
       this.Features.DeleteMode = DeleteMode.Physically;
-      this.Features.CanSaveAs = true;
       this.Features.CanHaveGaps = true; // at least the DVB-S Data list had gaps
       this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
       this.Features.MaxFavoriteLists = 1;

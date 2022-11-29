@@ -31,7 +31,6 @@ namespace ChanSort.Loader.Grundig
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
       this.Features.DeleteMode = DeleteMode.Physically;
-      this.Features.CanSaveAs = false;
       this.Features.AllowGapsInFavNumbers = false;
       this.Features.CanEditFavListNames = false;
       this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;

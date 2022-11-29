@@ -154,7 +154,6 @@ internal class IdtvChannelSerializer : SerializerBase
     dbFile = Path.Combine(dir, "tv.db");
     binFile = Path.Combine(dir, "channel", "idtvChannel.bin");
 
-    this.Features.CanSaveAs = false;
     this.Features.FavoritesMode = FavoritesMode.Flags;
     this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
 

@@ -40,7 +40,6 @@ namespace ChanSort.Loader.Enigma2
       this.Features.CanHideChannels = false;
       this.Features.FavoritesMode = FavoritesMode.MixedSource;
       this.Features.MaxFavoriteLists = 0; // dynamically added
-      this.Features.CanSaveAs = false;
 
       this.channels.IsMixedSourceFavoritesList = true;
       this.DataRoot.AddChannelList(this.channels);

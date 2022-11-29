@@ -106,7 +106,6 @@ namespace ChanSort.Loader.Philips
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
       this.Features.DeleteMode = DeleteMode.NotSupported;
-      this.Features.CanSaveAs = false;
       this.Features.AllowGapsInFavNumbers = false;
       this.Features.CanEditFavListNames = true;
 
