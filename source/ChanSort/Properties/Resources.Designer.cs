@@ -165,7 +165,7 @@ namespace ChanSort.Ui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy channel list: Order the channels the same way as in a reference list.
+        ///   Looks up a localized string similar to Apply template: Order the channels the same way as in another list.
         /// </summary>
         internal static string MainForm_InitInitialChannelOrder_ReferenceList {
             get {
@@ -283,6 +283,33 @@ namespace ChanSort.Ui.Properties {
         internal static string MainForm_LoadTvDataFile_FileNotFound_Message {
             get {
                 return ResourceManager.GetString("MainForm_LoadTvDataFile_FileNotFound_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no DIRECT way to convert a channel list to a different format, but you can:
+        ///
+        ///- run a channel search on your second TV,
+        ///- export the list to USB,
+        ///- open that list in ChanSort,
+        ///- choose &quot;Apply template&quot;,
+        ///- select this list here as the template.
+        ///
+        ///If the two TVs use similar sub-lists for Antenna/Cable/Sat/TV/radio, the order can be applied automatically.
+        ///Otherwise manual input is needed to assign TV/radio channels to specific starting numbers..
+        /// </summary>
+        internal static string MainForm_miConvert_MessageBody {
+            get {
+                return ResourceManager.GetString("MainForm_miConvert_MessageBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert channel list.
+        /// </summary>
+        internal static string MainForm_miConvert_MessageHeader {
+            get {
+                return ResourceManager.GetString("MainForm_miConvert_MessageHeader", resourceCulture);
             }
         }
         

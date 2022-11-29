@@ -57,8 +57,8 @@ namespace Test.Loader.CmdbBin
     public void TestChangHongDvbS()
     {
       // load existing file and make assertions
-      TestUtils.DeploymentItem(@"Test.Loader.CmdbBin\TestFiles\TestChangHongDvbS\atv_cmdb_cable.bin");
-      var path = TestUtils.DeploymentItem(@"Test.Loader.CmdbBin\TestFiles\TestChangHongDvbS\dtv_cmdb_2.bin");
+      TestUtils.DeploymentItem(@"Test.Loader.CmdbBin\TestFiles\ChangHongDvbS\atv_cmdb_cable.bin");
+      var path = TestUtils.DeploymentItem(@"Test.Loader.CmdbBin\TestFiles\ChangHongDvbS\dtv_cmdb_2.bin");
       var ser = new CmdbFileSerializer(path);
       ser.Load();
       ser.DataRoot.ApplyCurrentProgramNumbers();

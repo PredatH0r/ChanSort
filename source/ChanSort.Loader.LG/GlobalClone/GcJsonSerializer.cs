@@ -68,7 +68,7 @@ namespace ChanSort.Loader.GlobalClone
       }
 
       if (json == null)
-        throw new FileLoadException($"File does not contain a {startTag}...{endTag} node");
+        throw LoaderException.Fail($"File does not contain a {startTag}...{endTag} node");
 
       this.doc = JObject.Parse(json);
       LoadSatellites();
@@ -87,7 +87,7 @@ namespace ChanSort.Loader.GlobalClone
         switch (dlg.SelectedAction)
         {
           case 0:
-            throw new FileLoadException(ChanSort.Loader.LG.Resource.LG_BlindscanInfo_Rejected);
+            throw LoaderException.Fail(ChanSort.Loader.LG.Resource.LG_BlindscanInfo_Rejected);
           case 1:
             System.Diagnostics.Process.Start("https://github.com/PredatH0r/ChanSort/discussions/207");
             break;
@@ -200,7 +200,7 @@ namespace ChanSort.Loader.GlobalClone
     private void LoadChannels()
     {
       if (this.doc["channelList"] == null)
-        throw new FileLoadException("JSON does not contain a channelList node");
+        throw LoaderException.Fail("JSON does not contain a channelList node");
 
       var dec = new DvbStringDecoder(this.DefaultEncoding);
       int i = 0;

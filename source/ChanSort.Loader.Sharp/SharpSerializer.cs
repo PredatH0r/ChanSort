@@ -246,7 +246,7 @@ namespace ChanSort.Loader.Sharp
           }
         }
       }
-      throw new FileLoadException("File does not contain the expected 3 header lines");
+      throw LoaderException.Fail("File does not contain the expected 3 header lines");
     }
 
     #endregion

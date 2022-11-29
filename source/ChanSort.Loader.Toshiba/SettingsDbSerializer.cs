@@ -83,7 +83,7 @@ namespace ChanSort.Loader.Toshiba
       }
 
       if (!this.tableNames.Contains("easisertable"))
-        throw new FileLoadException("File doesn't contain the expected tables");
+        throw LoaderException.TryNext("File doesn't contain the expected tables");
 
       this.ReadSatellites(cmd);
       this.ReadTransponders(cmd);

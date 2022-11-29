@@ -99,7 +99,7 @@ namespace ChanSort.Loader.Panasonic
       if (root is XmlDeclaration)
         root = root.NextSibling;
       if (fail || root == null || root.LocalName != "ChannelList" || !root.HasChildNodes || root.ChildNodes[0].LocalName != "ChannelInfo")
-        throw new FileLoadException("File is not a supported Panasonic XML file");
+        throw LoaderException.TryNext("File is not a supported Panasonic XML file");
 
       foreach (XmlNode child in root.ChildNodes)
       {

@@ -124,7 +124,7 @@
   <data name="gridLeft.EmbeddedNavigator.AccessibleName" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <assembly alias="DevExpress.Data.v22.1" name="DevExpress.Data.v22.1, Version=22.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.Data.v22.1" name="DevExpress.Data.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="gridLeft.EmbeddedNavigator.AllowHtmlTextInToolTip" type="DevExpress.Utils.DefaultBoolean, DevExpress.Data.v22.1">
     <value>Default</value>
   </data>
@@ -144,14 +144,14 @@
   <data name="gridLeft.EmbeddedNavigator.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>0, 0</value>
   </data>
-  <assembly alias="DevExpress.XtraEditors.v22.1" name="DevExpress.XtraEditors.v22.1, Version=22.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.XtraEditors.v22.1" name="DevExpress.XtraEditors.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="gridLeft.EmbeddedNavigator.TextLocation" type="DevExpress.XtraEditors.NavigatorButtonsTextLocation, DevExpress.XtraEditors.v22.1">
     <value>Center</value>
   </data>
   <data name="gridLeft.EmbeddedNavigator.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <assembly alias="DevExpress.Utils.v22.1" name="DevExpress.Utils.v22.1, Version=22.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.Utils.v22.1" name="DevExpress.Utils.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="gridLeft.EmbeddedNavigator.ToolTipIconType" type="DevExpress.Utils.ToolTipIconType, DevExpress.Utils.v22.1">
     <value>None</value>
   </data>
@@ -237,13 +237,16 @@
   <data name="miRestoreOriginal.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>Datei&amp;information...</value>
+  <data name="miDeleteBackup.Caption" xml:space="preserve">
+    <value>Sicherheitskopie löschen</value>
   </data>
-  <data name="miFileInformation.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+  <data name="miDeleteBackup.ImageOptions.ImageIndex" type="System.Int32, mscorlib">
     <value>-1</value>
   </data>
-  <data name="miFileInformation.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+  <data name="miDeleteBackup.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
+  <data name="miDeleteBackup.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
   <data name="miSave.Caption" xml:space="preserve">
@@ -255,13 +258,31 @@
   <data name="miSave.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="miSaveAs.Caption" xml:space="preserve">
-    <value>Speichern &amp;unter...</value>
+  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
+    <value>Vorlagedatei exportieren...</value>
   </data>
-  <data name="miSaveAs.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+  <data name="miSaveReferenceFile.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
     <value>-1</value>
   </data>
-  <data name="miSaveAs.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+  <data name="miSaveReferenceFile.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="miConvert.Caption" xml:space="preserve">
+    <value>Senderliste konvertieren...</value>
+  </data>
+  <data name="miConvert.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
+  <data name="miConvert.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="miExcelExport.Caption" xml:space="preserve">
+    <value>Excel liste exportieren...</value>
+  </data>
+  <data name="miExcelExport.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
+  <data name="miExcelExport.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
   <data name="miOpenReferenceFile.Caption" xml:space="preserve">
@@ -285,24 +306,6 @@
   <data name="miAddFromRefList.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="miSaveReferenceFile.Caption" xml:space="preserve">
-    <value>Vorlagedatei exportieren...</value>
-  </data>
-  <data name="miSaveReferenceFile.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
-    <value>-1</value>
-  </data>
-  <data name="miSaveReferenceFile.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="miExcelExport.Caption" xml:space="preserve">
-    <value>Excel liste exportieren...</value>
-  </data>
-  <data name="miExcelExport.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
-    <value>-1</value>
-  </data>
-  <data name="miExcelExport.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="miPrint.Caption" xml:space="preserve">
     <value>&amp;Drucken...</value>
   </data>
@@ -310,6 +313,15 @@
     <value>-1</value>
   </data>
   <data name="miPrint.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="miFileInformation.Caption" xml:space="preserve">
+    <value>Datei&amp;information...</value>
+  </data>
+  <data name="miFileInformation.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
+  <data name="miFileInformation.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
@@ -382,6 +394,27 @@
     <value>-1</value>
   </data>
   <data name="miRemove.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="miMarkForSwapping.Caption" xml:space="preserve">
+    <value>Für Tausch vormerken</value>
+  </data>
+  <data name="miMarkForSwapping.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
+  <data name="miMarkForSwapping.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="miSwapWithMarked.Caption" xml:space="preserve">
+    <value>Mit vorgemerktem Sender tauschen</value>
+  </data>
+  <data name="miSwapWithMarked.Hint" xml:space="preserve">
+    <value>Tauscht den Senderplatz mit dem vorgemerkten Sender</value>
+  </data>
+  <data name="miSwapWithMarked.ImageOptions.LargeImageIndex" type="System.Int32, mscorlib">
+    <value>-1</value>
+  </data>
+  <data name="miSwapWithMarked.ImageOptions.SvgImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
   <data name="miRenameChannel.Caption" xml:space="preserve">
@@ -1059,11 +1092,11 @@
   <data name="bar1.Text" xml:space="preserve">
     <value>Werkzeuge</value>
   </data>
-  <assembly alias="DevExpress.XtraBars.v22.1" name="DevExpress.XtraBars.v22.1, Version=22.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.XtraBars.v22.1" name="DevExpress.XtraBars.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v22.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMS4xLCBWZXJzaW9uPTIx
-        LjEuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMi4xLCBWZXJzaW9uPTIy
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
@@ -1072,8 +1105,8 @@
   </data>
   <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v22.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMS4xLCBWZXJzaW9uPTIx
-        LjEuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMi4xLCBWZXJzaW9uPTIy
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
@@ -1082,8 +1115,8 @@
   </data>
   <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v22.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMS4xLCBWZXJzaW9uPTIx
-        LjEuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMi4xLCBWZXJzaW9uPTIy
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
         X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
@@ -1092,8 +1125,8 @@
   </data>
   <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v22.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMS4xLCBWZXJzaW9uPTIx
-        LjEuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMi4xLCBWZXJzaW9uPTIy
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
         X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
@@ -1102,8 +1135,8 @@
   </data>
   <data name="barManager1.Categories4" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v22.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMS4xLCBWZXJzaW9uPTIx
-        LjEuNS4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyMi4xLCBWZXJzaW9uPTIy
+        LjEuNi4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
         ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
         bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAADUFjY2Vzc2liaWxpdHkE/P///wtTeXN0ZW0uR3VpZAsA
         AAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICeIvz
@@ -1433,8 +1466,5 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   </data>
   <data name="grpInputList.Text" xml:space="preserve">
     <value>Alle Sender</value>
-  </data>
-  <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Audio\nPID</value>
   </data>
 </root>

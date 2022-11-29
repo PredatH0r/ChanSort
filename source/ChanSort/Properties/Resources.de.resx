@@ -297,4 +297,19 @@ Mögliche Ursachen sind USB-Sticks, die mit NTFS formatiert sind (FAT32 sollte i
 TVs exportieren oft defekte Dateien auf USB Sticks, die mit NTFS formatiert sind.
 Bitte versuchen Sie, die Senderliste auf einen Stick mit FAT32 Formatierung zu exportieren.</value>
   </data>
+  <data name="MainForm_miConvert_MessageBody" xml:space="preserve">
+    <value>Es gibt keinen DIREKTEN Weg, um eine Senderliste in ein anderes Format zu konvertieren, aber Sie KÖNNEN:
+
+- einen Sendersuchlauf auf dem zweiten TV ausführen,
+- die Liste auf USB exportieren,
+- die Liste in ChanSort öffnen,
+- die Option "Vorlage übernehmen" auswählen
+- die aktuelle Liste als Vorlage auswählen.
+
+Wenn die beiden TVs ähnliche Unterlisten für Antenne/Kabel/Sat/TV/Radio verwenden, kann die Übernahme automatisch erfolgen.
+Anderfalls ist eine manuelle Eingabe nötig um TV- und Radio-Sendern bestimmte Startnummern zuzuweisen.</value>
+  </data>
+  <data name="MainForm_miConvert_MessageHeader" xml:space="preserve">
+    <value>Senderliste konvertieren</value>
+  </data>
 </root>

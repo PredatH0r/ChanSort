@@ -78,7 +78,7 @@ namespace ChanSort.Loader.Grundig
         this.LoadFile(fullPath);
       }
       if (this.fileDataList.Count == 0)
-        throw new FileLoadException("No dvb*_config.xml files found in folder structure");
+        throw LoaderException.TryNext("No dvb*_config.xml files found in folder structure");
     }
     #endregion
 
@@ -134,7 +134,7 @@ namespace ChanSort.Loader.Grundig
       while (root.LocalName == "#whitespace")
         root = root.NextSibling;
       if (fail || root == null || root.LocalName != "CONFIG")
-        throw new FileLoadException("\"" + fileName + "\" is not a supported Grundig XML file");
+        throw LoaderException.Fail("\"" + fileName + "\" is not a supported Grundig XML file");
 
       int transponderId = 0;
       int chanId = 0;

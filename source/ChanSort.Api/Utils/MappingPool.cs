@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 
 namespace ChanSort.Api
 {
@@ -37,7 +36,7 @@ namespace ChanSort.Api
 
       T mapping;
       if (!mappings.TryGetValue(id, out mapping) && throwException)
-        throw new FileLoadException(string.Format(ERR_unknownACTChannelDataLength, this.caption, id));
+        throw LoaderException.Fail(string.Format(ERR_unknownACTChannelDataLength, this.caption, id));
 
       if (mapping != null && this.DefaultEncoding != null)
         mapping.DefaultEncoding = this.DefaultEncoding;

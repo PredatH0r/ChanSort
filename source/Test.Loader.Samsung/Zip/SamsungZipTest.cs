@@ -1,4 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System;
+using System.Linq;
+using System.Text;
+using ChanSort;
 using ChanSort.Api;
 using ChanSort.Loader.Samsung;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -6,13 +12,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test.Loader.Samsung.Zip
 {
   [TestClass]
-  public class SamsungZipTest
+  public class SamsungZipTest : LoaderTestBase
   {
     #region TestSatChannelsAddedToCorrectLists
     [TestMethod]
     public void TestSatChannelsAddedToCorrectLists()
     {
-      this.TestChannelsAddedToCorrectLists("Channel_list_T-KTSUDEUC-1007.1.zip", SignalSource.DvbS, 1323, 878, 380, 4008, "Humax ESD 160C");
+      TestChannelsAddedToCorrectLists("Channel_list_T-KTSUDEUC-1007.1.zip", SignalSource.DvbS, 1323, 878, 380, 4008, "Humax ESD 160C");
     }
     #endregion
 
@@ -20,7 +26,7 @@ namespace Test.Loader.Samsung.Zip
     [TestMethod]
     public void TestCableChannelsAddedToCorrectLists()
     {
-      this.TestChannelsAddedToCorrectLists("Channel_list_T-KTMDEUC-1132.6.zip", SignalSource.DvbC, 146, 65, 75, 4008, "Humax 160C");
+      TestChannelsAddedToCorrectLists("Channel_list_T-KTMDEUC-1132.6.zip", SignalSource.DvbC, 146, 65, 75, 4008, "Humax 160C");
     }
     #endregion
 
@@ -28,7 +34,7 @@ namespace Test.Loader.Samsung.Zip
     [TestMethod]
     public void TestAntennaChannelsAddedToCorrectLists()
     {
-      this.TestChannelsAddedToCorrectLists("Channel_list_T-KTSUDEUC-1007.2.zip", SignalSource.DvbT, 77, 71, 4, 3995, "Irdeto Code 4");
+      TestChannelsAddedToCorrectLists("Channel_list_T-KTSUDEUC-1007.2.zip", SignalSource.DvbT, 77, 71, 4, 3995, "Irdeto Code 4");
     }
     #endregion
 
@@ -113,5 +119,136 @@ namespace Test.Loader.Samsung.Zip
       RoundtripTest.TestChannelAndFavListEditing(tempFile, new SamsungPlugin());
     }
     #endregion
+
+
+    // unstructured test crawling through all files in the sample directories
+
+    #region InitExpectedSamsungData()
+    private Dictionary<string, ExpectedData> InitExpectedSamsungData()
+    {
+      var expected = new ExpectedData[]
+                       {
+                         //new ExpectedData(@"catmater_B\Clone.scm", 31, 272, 0, 0, 0) ,
+                         //new ExpectedData(@"easy2003_B\easy2003_B.scm", 0, 0, 1225, 0, 0) ,
+                         //new ExpectedData(@"_Manu_C\channel_list_LE40C650_1001.scm", 0, 9, 0, 0, 0) 
+                       };
+
+      var dict = new Dictionary<string, ExpectedData>(StringComparer.InvariantCultureIgnoreCase);
+      foreach (var entry in expected)
+        dict[entry.File] = entry;
+      return dict;
+    }
+
+    #endregion
+
+    #region TestSamsungScmLoader()
+    [TestMethod]
+    [DeploymentItem("ChanSort.Loader.Samsung\\ChanSort.Loader.Samsung.ini")]
+    public void TestSamsungZipLoader()
+    {
+      var expectedData = InitExpectedSamsungData();
+      SamsungPlugin plugin = new SamsungPlugin();
+
+      StringBuilder errors = new StringBuilder();
+      var list = FindAllFiles("TestFiles_Samsung", "*.zip");
+      var models = new Dictionary<string, string>();
+      foreach (var file in list)
+      {
+        var lower = file.ToLowerInvariant();
+        if (lower.Contains("clone.zip") || lower.Contains("__broken"))
+          continue;
+
+        Debug.Print("Testing " + file);
+        try
+        {
+          var serializer = plugin.CreateSerializer(file) as ChanSort.Loader.Samsung.Zip.DbSerializer;
+          Assert.IsNotNull(serializer, "No Serializer for " + file);
+
+          serializer.Load();
+
+          var fileName = Path.GetFileName(file) ?? "";
+          var model = GetSamsungModel(file);
+          var analogAirList = serializer.DataRoot.GetChannelList(SignalSource.AnalogT | SignalSource.Tv);
+          var analogCableList = serializer.DataRoot.GetChannelList(SignalSource.AnalogC | SignalSource.Tv);
+          var digitalAirList = serializer.DataRoot.GetChannelList(SignalSource.DvbT | SignalSource.Tv);
+          var digitalCableList = serializer.DataRoot.GetChannelList(SignalSource.DvbC | SignalSource.Tv);
+          var satChannelList = serializer.DataRoot.GetChannelList(SignalSource.DvbS | SignalSource.Tv);
+          var primeChannelList = serializer.DataRoot.GetChannelList(SignalSource.CablePrimeD | SignalSource.Tv);
+          var hdplusChannelList = serializer.DataRoot.GetChannelList(SignalSource.HdPlusD | SignalSource.Tv);
+          var freesatChannelList = serializer.DataRoot.GetChannelList(SignalSource.FreesatD | SignalSource.Tv);
+          var tivusatChannelList = serializer.DataRoot.GetChannelList(SignalSource.TivuSatD | SignalSource.Tv);
+          var iptvChannelList = serializer.DataRoot.GetChannelList(SignalSource.IP | SignalSource.Tv);
+
+          string key = serializer.FileFormatVersion +
+            "\t" + model +
+            "\t" + (analogAirList != null && analogAirList.Count > 0) +
+            "\t" + (analogCableList != null && analogCableList.Count > 0) +
+            "\t" + (digitalAirList != null && digitalAirList.Count > 0) +
+            "\t" + (digitalCableList != null && digitalCableList.Count > 0) +
+            "\t" + (primeChannelList != null && primeChannelList.Count > 0) +
+            "\t" + (satChannelList != null && satChannelList.Count > 0) +
+            "\t" + (hdplusChannelList != null && hdplusChannelList.Count > 0) +
+            "\t" + (freesatChannelList != null && freesatChannelList.Count > 0) +
+            "\t" + (tivusatChannelList != null && tivusatChannelList.Count > 0) +
+            "\t" + (iptvChannelList != null && iptvChannelList.Count > 0);
+          string relPath = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + fileName;
+          models[key] = serializer.FileFormatVersion +
+            "\t" + model +
+            "\t" + (analogAirList == null ? 0 : analogAirList.Count) +
+            "\t" + (analogCableList == null ? 0 : analogCableList.Count) +
+            "\t" + (digitalAirList == null ? 0 : digitalAirList.Count) +
+            "\t" + (digitalCableList == null ? 0 : digitalCableList.Count) +
+            "\t" + (primeChannelList == null ? 0 : primeChannelList.Count) +
+            "\t" + (satChannelList == null ? 0 : satChannelList.Count) +
+            "\t" + (hdplusChannelList == null ? 0 : hdplusChannelList.Count) +
+            "\t" + (freesatChannelList == null ? 0 : freesatChannelList.Count) +
+            "\t" + (tivusatChannelList == null ? 0 : tivusatChannelList.Count) +
+            "\t" + (iptvChannelList == null ? 0 : iptvChannelList.Count) +
+            "\t" + relPath;
+
+          Assert.IsFalse(serializer.DataRoot.IsEmpty, "No channels loaded from " + file);
+
+          ExpectedData exp;
+          key = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + Path.GetFileName(file);
+          if (expectedData.TryGetValue(key, out exp))
+          {
+            var analogTv = serializer.DataRoot.GetChannelList(SignalSource.AnalogC);
+            var dtvTv = serializer.DataRoot.GetChannelList(SignalSource.DvbC);
+            var satTv = serializer.DataRoot.GetChannelList(SignalSource.DvbS);
+            expectedData.Remove(key);
+            if (exp.AnalogChannels != 0 || analogTv != null)
+              Assert.AreEqual(exp.AnalogChannels, analogTv.Channels.Count, file + ": analog");
+            if (exp.DtvChannels != 0 || dtvTv != null)
+              Assert.AreEqual(exp.DtvChannels, dtvTv.Channels.Count, file + ": DTV");
+            if (exp.SatChannels != 0 || satTv != null)
+              Assert.AreEqual(exp.SatChannels, satTv.Channels.Count, file + ": Sat");
+          }
+        }
+        catch (Exception ex)
+        {
+          if (ex is LoaderException lex && lex.Recovery == LoaderException.RecoveryMode.TryNext)
+            continue;
+          errors.AppendLine();
+          errors.AppendLine();
+          errors.AppendLine(file);
+          errors.AppendLine(ex.ToString());
+        }
+      }
+
+      foreach (var model in models.OrderBy(e => e.Key))
+        Debug.WriteLine(model.Value);
+
+      if (expectedData.Count > 0)
+        Assert.Fail("Some files were not tested: " + expectedData.Keys.Aggregate((prev, cur) => prev + "," + cur));
+      Assert.AreEqual("", errors.ToString());
+    }
+
+    private string GetSamsungModel(string filePath)
+    {
+      string fileName = Path.GetFileNameWithoutExtension(filePath) ?? "";
+      return fileName.StartsWith("channel_list_") ? fileName.Substring(13, fileName.IndexOf('_', 14) - 13) : fileName;
+    }
+    #endregion
+
   }
 }

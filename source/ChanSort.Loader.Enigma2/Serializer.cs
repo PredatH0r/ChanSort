@@ -99,12 +99,12 @@ namespace ChanSort.Loader.Enigma2
     {
       var path = Path.Combine(Path.GetDirectoryName(this.FileName), "lamedb");
       if (!File.Exists(path))
-        throw new FileLoadException($"Could not find required file \"{path}\"");
+        throw LoaderException.Fail($"Could not find required file \"{path}\"");
 
       using var r = new StreamReader(File.OpenRead(path), utf8WithoutBom);
       var line = r.ReadLine();
       if (line != "eDVB services /4/")
-        throw new FileLoadException($"lamedb version 4 is required");
+        throw LoaderException.Fail($"lamedb version 4 is required");
 
       string mode = null;
       Transponder tp = null;

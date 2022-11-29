@@ -232,7 +232,7 @@ Do you want to open the download website?</value>
     <value>Modify current list: Start with current list and modify it as needed</value>
   </data>
   <data name="MainForm_InitInitialChannelOrder_ReferenceList" xml:space="preserve">
-    <value>Copy channel list: Order the channels the same way as in a reference list</value>
+    <value>Apply template: Order the channels the same way as in another list</value>
   </data>
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Question" xml:space="preserve">
     <value>What should happen to unsorted channels?</value>
@@ -300,5 +300,20 @@ or firmware upgrades without running a new channel scan.
     <value>The file is not a valid .zip archive.
 TVs often export corrupted files to USB sticks formatted with the NTFS file system.
 Please try exporting to a stick formatted with FAT32</value>
+  </data>
+  <data name="MainForm_miConvert_MessageBody" xml:space="preserve">
+    <value>There is no DIRECT way to convert a channel list to a different format, but you can:
+
+- run a channel search on your second TV,
+- export the list to USB,
+- open that list in ChanSort,
+- choose "Apply template",
+- select this list here as the template.
+
+If the two TVs use similar sub-lists for Antenna/Cable/Sat/TV/radio, the order can be applied automatically.
+Otherwise manual input is needed to assign TV/radio channels to specific starting numbers.</value>
+  </data>
+  <data name="MainForm_miConvert_MessageHeader" xml:space="preserve">
+    <value>Convert channel list</value>
   </data>
 </root>

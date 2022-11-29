@@ -169,7 +169,7 @@ namespace ChanSort.Loader.Philips
       }
       else
       {
-        throw new FileLoadException("Only Philips channel list format version 1.x and 25-45 are supported by this loader");
+        throw LoaderException.Fail("Only Philips channel list format version 1.x and 25-45 are supported by this loader");
       }
 
       // for a proper ChanSort backup/restore with .bak files, the Philips _backup.dat files must also be included
@@ -234,7 +234,7 @@ namespace ChanSort.Loader.Philips
           mapping.SetDword("offChecksum", 0);
           var crc = FaultyCrc32(data, mapping.BaseOffset + mapping.GetConst("offChecksum", 0), recordSize);
           if (crc != checksum)
-            throw new FileLoadException($"Invalid CRC in record {i} in {path}");
+            throw LoaderException.Fail($"Invalid CRC in record {i} in {path}");
         }
 
         var ch = new Channel(list.SignalSource & SignalSource.MaskAntennaCableSat, i, progNr, channelName);
@@ -326,7 +326,7 @@ namespace ChanSort.Loader.Philips
         recordSize = BitConverter.ToInt32(data, 8);
         recordCount = BitConverter.ToInt32(data, 12);
         if (data.Length != 20 + recordCount * recordSize)
-          throw new FileLoadException("Unsupported file content: " + path);
+          throw LoaderException.Fail("Unsupported file content: " + path);
       }
       else
       {
@@ -336,7 +336,7 @@ namespace ChanSort.Loader.Philips
         recordSize = 156; // Map45
         recordCount = BitConverter.ToInt32(data, 8);
         if (data.Length != 12 + recordCount * recordSize)
-          throw new FileLoadException("Unsupported file content: " + path);
+          throw LoaderException.Fail("Unsupported file content: " + path);
       }
 
 
@@ -442,7 +442,7 @@ namespace ChanSort.Loader.Philips
         var crcObj = new Crc32(false, Crc32.NormalPoly);
         var crc = ~crcObj.CalcCrc32(data, 0, data.Length - 4);
         if (checksum != crc)
-          throw new FileLoadException("Invalid CRC32 in " + path);
+          throw LoaderException.Fail("Invalid CRC32 in " + path);
       }
 
 
@@ -456,7 +456,7 @@ namespace ChanSort.Loader.Philips
         // 12 bytes header, then a "next/prev" table, then the service records, then a CRC32
         // the "next/prev" table is a ring-list, every entry consists of 2 ushorts with the next and previous channel, wrapping around on the ends
         if (data.Length != 12 + recordCount * 4 + recordCount * recordSize + 4)
-          throw new FileLoadException("Unsupported file content: " + path);
+          throw LoaderException.Fail("Unsupported file content: " + path);
       }
 
       this.dataFilePaths.Add(path);

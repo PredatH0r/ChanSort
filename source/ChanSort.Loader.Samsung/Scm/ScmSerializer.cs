@@ -160,7 +160,7 @@ namespace ChanSort.Loader.Samsung.Scm
       if (DetectModelFromFileName()) return;
       if (DetectModelFromCloneInfoFile(tempDir)) return;
       if (DetectModelFromContentFileLengths(tempDir)) return;
-      throw new FileLoadException("Unable to determine TV model from file content or name");
+      throw LoaderException.Fail("Unable to determine TV model from file content or name");
     }
     #endregion
 
@@ -554,7 +554,7 @@ namespace ChanSort.Loader.Samsung.Scm
           this.DataRoot.Satellites.Add(satMapping.SatelliteNr, satellite);
         }
         else if (satMapping.MagicMarker != 'E')
-          throw new FileLoadException("Unknown SatDataBase.dat format");
+          throw LoaderException.Fail("Unknown SatDataBase.dat format");
 
         satMapping.BaseOffset += this.c.dvbsSatelliteLength;
       }

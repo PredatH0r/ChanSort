@@ -50,7 +50,7 @@ namespace ChanSort.Loader.GlobalClone
         this.doc = new XmlDocument();
         string textContent = File.ReadAllText(this.FileName, Encoding.UTF8);
         if (textContent[0] != '<')
-          throw new FileLoadException("Invalid GlobalClone/XML file format. Maybe a binary xx*.TLL file?", this.FileName);
+          throw LoaderException.Fail("Invalid GlobalClone/XML file format. Maybe a binary xx*.TLL file?");
         textContent = ReplaceInvalidXmlCharacters(textContent);
         var settings = new XmlReaderSettings { CheckCharacters = false };
         using (var reader = XmlReader.Create(new StringReader(textContent), settings))
@@ -67,7 +67,7 @@ namespace ChanSort.Loader.GlobalClone
       if (root is XmlDeclaration)
         root = root.NextSibling;
       if (fail || root == null || root.LocalName != "TLLDATA")
-        throw new FileLoadException("\"" + this.FileName + "\" is not a supported GlobalClone XML file");
+        throw LoaderException.Fail("\"" + this.FileName + "\" is not a supported GlobalClone XML file");
 
       foreach (XmlNode child in root.ChildNodes)
       {

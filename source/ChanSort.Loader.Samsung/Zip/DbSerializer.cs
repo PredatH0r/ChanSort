@@ -12,7 +12,7 @@ namespace ChanSort.Loader.Samsung.Zip
   /// <summary>
   /// Loader for Samsung J/K/M/N/R/Q series .zip files (2015 - 2020)
   /// </summary>
-  class DbSerializer : SerializerBase
+  internal class DbSerializer : SerializerBase
   {
     private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
     private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
@@ -44,7 +44,7 @@ namespace ChanSort.Loader.Samsung.Zip
         this.UnzipFileToTempFolder();
         if (File.Exists(this.TempPath + "\\sat"))
         {
-          try
+//          try
           {
             using (var conn = new SqliteConnection("Data Source=" + this.TempPath + "\\sat"))
             {
@@ -52,14 +52,14 @@ namespace ChanSort.Loader.Samsung.Zip
               this.ReadSatDatabase(conn);
             }
           }
-          catch
-          {
-          }
+  //        catch
+          //{
+          //}
         }
 
         var files = Directory.GetFiles(this.TempPath, "*.");
         if (files.Length == 0)
-          throw new FileLoadException("The Samsung .zip channel list archive does not contain any supported files.");
+          throw LoaderException.TryNext("The Samsung .zip channel list archive does not contain any supported files.");
 
         foreach (var filePath in files)
         {

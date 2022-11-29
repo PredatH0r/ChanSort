@@ -145,7 +145,7 @@ namespace ChanSort.Loader.Philips
       }
 
       if (!validList)
-        throw new FileLoadException(this.FileName + " is not a supported Philips Repair/channel_db_ver.db channel list");
+        throw LoaderException.TryNext(this.FileName + " is not a supported Philips Repair/channel_db_ver.db channel list");
 
       foreach (var channelList in this.DataRoot.ChannelLists)
       {
@@ -206,7 +206,7 @@ namespace ChanSort.Loader.Philips
       var expectedChecksum = BitConverter.ToUInt16(data, offChecksum);
       var actualChecksum = (UInt16)CalcChecksum(data, 0, offChecksum);
       if (actualChecksum != expectedChecksum)
-        throw new FileLoadException($"File {path} contains invalid checksum. Expected {expectedChecksum:x4} but calculated {actualChecksum:x4}");
+        throw LoaderException.Fail($"File {path} contains invalid checksum. Expected {expectedChecksum:x4} but calculated {actualChecksum:x4}");
 
       channelRecordLength = lenEntry;
       
@@ -302,7 +302,7 @@ namespace ChanSort.Loader.Philips
       var expectedChecksum = BitConverter.ToUInt32(data, data.Length - 4);
       var actualChecksum = CalcChecksum(data, 0, data.Length - 4);
       if (actualChecksum != expectedChecksum)
-        throw new FileLoadException($"File {path} contains invalid checksum. Expected {expectedChecksum:x8} but calculated {actualChecksum:x8}");
+        throw LoaderException.Fail($"File {path} contains invalid checksum. Expected {expectedChecksum:x8} but calculated {actualChecksum:x8}");
 
       var settings = this.ini.GetSection(sectionName + ":" + dbChannelRecordLength, true);
       var mapping = new DataMapping(settings, data);

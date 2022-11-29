@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Text;
 using ChanSort.Api;
 
@@ -23,9 +22,9 @@ namespace ChanSort.Loader.SatcoDX
       this.RecordOrder = this.OldProgramNr = pos + 1;
 
       if (!line.StartsWith("SATCODX"))
-        throw new FileLoadException("Only SAT channels are supported");
+        throw LoaderException.Fail("Only SAT channels are supported");
       if (line.Length < 106)
-        throw new FileLoadException("Unrecognized channel format");
+        throw LoaderException.Fail("Unrecognized channel format");
 
       // 10-27: satellite name
       this.Satellite = line.Substring(10, 18);

@@ -146,7 +146,7 @@ namespace ChanSort.Loader.Sony
       if (root is XmlDeclaration)
         root = root.NextSibling;
       if (fail || root == null || root.LocalName != "SdbRoot")
-        throw new FileLoadException("\"" + this.FileName + "\" is not a supported Sony XML file");
+        throw LoaderException.TryNext("\"" + this.FileName + "\" is not a supported Sony XML file");
 
       foreach (XmlNode child in root.ChildNodes)
       {
@@ -196,7 +196,7 @@ namespace ChanSort.Loader.Sony
       }
 
       if (SupportedFormatVersions.IndexOf(" " + this.format + " ", StringComparison.Ordinal) < 0)
-        throw new FileLoadException("Unsupported file format version: " + this.format);
+        throw LoaderException.TryNext("Unsupported file format version: " + this.format);
 
       foreach(XmlNode child in node.ChildNodes)
       {
@@ -259,7 +259,7 @@ namespace ChanSort.Loader.Sony
     #region ReadTransponder()
     private void ReadTransponder(XmlNode node, int idAdjustment, string dvbSystem)
     {
-      var mux = node["Multiplex"] ?? throw new FileLoadException("Missing Multiplex XML element");
+      var mux = node["Multiplex"] ?? throw LoaderException.Fail("Missing Multiplex XML element");
 
       var transpList = new List<Transponder>();
 
@@ -331,7 +331,7 @@ namespace ChanSort.Loader.Sony
     #region ReadServicesE110()
     private void ReadServicesE110(XmlNode node, SignalSource signalSource, int idAdjustment)
     {
-      var serviceNode = node["Service"] ?? throw new FileLoadException("Missing Service XML element");
+      var serviceNode = node["Service"] ?? throw LoaderException.Fail("Missing Service XML element");
       var svcData = SplitLines(serviceNode);
       var dvbData = SplitLines(serviceNode["dvb_info"]);
 
@@ -415,10 +415,10 @@ namespace ChanSort.Loader.Sony
     #region ReadServices()
     private void ReadServices(XmlNode node, SignalSource signalSource, int idAdjustment)
     {
-      var serviceNode = node["Service"] ?? throw new FileLoadException("Missing Service XML element");
+      var serviceNode = node["Service"] ?? throw LoaderException.Fail("Missing Service XML element");
       var svcData = SplitLines(serviceNode);
 
-      var progNode = node["Programme"] ?? throw new FileLoadException("Missing Programme XML element");
+      var progNode = node["Programme"] ?? throw LoaderException.Fail("Missing Programme XML element");
       var progData = SplitLines(progNode);
 
       // remember the nodes that need to be updated when saving

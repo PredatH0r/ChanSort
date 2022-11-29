@@ -45,7 +45,7 @@ namespace Test.Loader.Samsung.Scm
       var models = new Dictionary<string, string>();
       foreach (var file in list)
       {
-        if (file.Contains("Apu TV")) // files in this dir are renamed and the format can't be detected automatically
+        if (file.Contains("Apu TV") || file.Contains("__broken"))
           continue;
 
         Debug.Print("Testing " + file);
@@ -67,6 +67,7 @@ namespace Test.Loader.Samsung.Scm
           var hdplusChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.HdPlusD | ChanSort.Api.SignalSource.Tv);
           var freesatChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.FreesatD | ChanSort.Api.SignalSource.Tv);
           var tivusatChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.TivuSatD | ChanSort.Api.SignalSource.Tv);
+          var iptvChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.IP | SignalSource.Tv);
 
           string key = serializer.Series + 
             "\t" + model +
@@ -83,6 +84,7 @@ namespace Test.Loader.Samsung.Scm
             "\t" + (hdplusChannelList != null && hdplusChannelList.Count > 0) +
             "\t" + (freesatChannelList != null && freesatChannelList.Count > 0) +
             "\t" + (tivusatChannelList != null && tivusatChannelList.Count > 0) +
+            "\t" + (iptvChannelList != null && iptvChannelList.Count > 0) +
             "\t" + serializer.SatDatabaseVersion;
           string relPath = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + fileName;
           models[key] = serializer.Series + 
@@ -101,6 +103,7 @@ namespace Test.Loader.Samsung.Scm
             "\t" + (hdplusChannelList == null ? 0 : hdplusChannelList.Count) +
             "\t" + (freesatChannelList == null ? 0 : freesatChannelList.Count) +
             "\t" + (tivusatChannelList == null ? 0 : tivusatChannelList.Count) +
+            "\t" + (iptvChannelList == null ? 0 : iptvChannelList.Count) +
             "\t" + relPath;
 
           Assert.IsFalse(serializer.DataRoot.IsEmpty, "No channels loaded from " + file);

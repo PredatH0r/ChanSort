@@ -130,7 +130,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
 
           // make sure this .db file contains the required tables
           if (dbSchema == null || !tableNames.Contains("service") || !tableNames.Contains("tuner"))
-            throw new FileLoadException("File doesn't contain the expected tables");
+            throw LoaderException.Fail("File doesn't contain the expected tables");
 
           LoadLists(cmd);
           LoadTunerData(cmd);

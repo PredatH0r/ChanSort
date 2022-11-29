@@ -100,6 +100,7 @@ namespace ChanSort.Ui
       this.rawImageCollection.Images.SetKeyName(47, "0047.png");
       this.rawImageCollection.Images.SetKeyName(48, "0048.png");
       this.rawImageCollection.Images.SetKeyName(49, "0049.png");
+      this.rawImageCollection.Images.SetKeyName(50, "0050.png");
       ((System.ComponentModel.ISupportInitialize)(this.rawImageCollection)).EndInit();
 
     }

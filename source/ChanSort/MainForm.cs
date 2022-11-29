@@ -58,6 +58,9 @@ namespace ChanSort.Ui
     private int ignoreEvents;
     private bool adjustWindowLocationOnScale = true;
     private string lastOpenedFile;
+    private ChannelList swapMarkList;
+    private int swapMarkSubList;
+    private ChannelInfo swapMarkChannel;
 
     #region ctor()
 
@@ -343,6 +346,9 @@ namespace ChanSort.Ui
         this.Editor.ChannelList = null;
         this.gridRight.DataSource = null;
         this.gridLeft.DataSource = null;
+        this.swapMarkList = null;
+        this.swapMarkSubList = 0;
+        this.swapMarkChannel = null;
         this.FillChannelListTabs();
 
         //this.SetControlsEnabled(!this.dataRoot.IsEmpty);
@@ -580,20 +586,34 @@ namespace ChanSort.Ui
         catch (Exception ex)
         {
           serializer?.Dispose();
-          var errMsg = ex is FileLoadException ? ex.Message : ex.ToString(); // FileLoadExceptions are normal when a Loader does not support a file. No stack trace needed
-          errorMsgs.AppendLine($"{plugin.PluginName}: {errMsg}\n\n");
-          if (ex is ArgumentException)
+
+          string authoritveErrorMsg = null;
+          string informativeErrorMsg = null;
+
+          if (ex is LoaderException lex)
           {
-            var msg = ex.ToString();
-            if (msg.Contains("ZipFile..ctor()"))
-            {
-              XtraMessageBox.Show(this, string.Format(Resources.MainForm_LoadTll_InvalidZip, inputFileName));
-              return null;
-            }
+            if (lex.Recovery == LoaderException.RecoveryMode.Fail)
+              authoritveErrorMsg = ex.Message;
+            else
+              informativeErrorMsg = ex.Message;
           }
+          else if (ex is ArgumentException && ex.ToString().Contains("ZipFile..ctor()")) // broken .zip file can't be handled by any loader
+            authoritveErrorMsg = string.Format(Resources.MainForm_LoadTll_InvalidZip, inputFileName);
+          else
+            informativeErrorMsg = ex is FileLoadException ? ex.Message : ex.ToString();
+
+
+          if (authoritveErrorMsg != null)
+          {
+            XtraMessageBox.Show(this, authoritveErrorMsg);
+            return null;
+          }
+
+          // historically FileLoadExceptions were thrown deliberately by a loader to display a message (without stack trace) and proceed with the next loader
+          // other exceptions should display the stack trace for support purposes
+          errorMsgs.AppendLine($"{plugin.PluginName}: {informativeErrorMsg}\n\n");
         }
       }
-
 
       XtraMessageBox.Show(this, string.Format(Resources.MainForm_LoadTll_SerializerNotFound, inputFileName) + "\n\n" + errorMsgs);
       return null;
@@ -1766,7 +1786,7 @@ namespace ChanSort.Ui
         this.miRestoreOriginal.Enabled = fileLoaded && this.GetPathOfMissingBackupFile() == null;
         this.miDeleteBackup.Enabled = fileLoaded;
         this.miSave.Enabled = fileLoaded;
-        this.miSaveAs.Enabled = fileLoaded && this.currentTvSerializer.Features.CanSaveAs;
+        this.miConvert.Enabled = fileLoaded;
         this.miOpenReferenceFile.Enabled = fileLoaded;
         this.miSaveReferenceFile.Enabled = fileLoaded;
         this.miExcelExport.Enabled = fileLoaded;
@@ -1787,6 +1807,9 @@ namespace ChanSort.Ui
       this.miMoveUp.Visibility = visLeft;
       this.miMoveDown.Visibility = visLeft;
 
+      this.miMarkForSwapping.Enabled = mayEdit && sel.Count == 1;
+      this.miMarkForSwapping.Down = swapMarkChannel != null;
+      this.miSwapWithMarked.Enabled = mayEdit && swapMarkList != null && this.CurrentChannelList == swapMarkList;
       this.miSkipOn.Enabled = this.miSkipOff.Enabled = this.currentTvSerializer?.Features.CanSkipChannels ?? false;
       this.miLockOn.Enabled = this.miLockOff.Enabled = this.currentTvSerializer?.Features.CanLockChannels ?? false;
       this.miHideOn.Enabled = this.miHideOff.Enabled = this.currentTvSerializer?.Features.CanHideChannels ?? false;
@@ -2004,6 +2027,68 @@ namespace ChanSort.Ui
       this.lastFocusedGrid.ShowEditor();
     }
 
+    #endregion
+
+    #region MarkForSwapping(), SwapWithMarked()
+    private void MarkForSwapping()
+    {
+      this.miMarkForSwapping.Down = false;
+
+      GridView gv;
+      if (this.gridLeft.ContainsFocus)
+        gv = this.gviewLeft;
+      else if (this.gridRight.ContainsFocus)
+        gv = this.gviewRight;
+      else
+        return;
+
+      var channel = (ChannelInfo)gv.FocusedRowObject;
+      if (channel == this.swapMarkChannel)
+      {
+        this.swapMarkList = null;
+        this.swapMarkSubList = 0;
+        this.swapMarkChannel = null;
+      }
+      else
+      {
+        this.swapMarkList = this.CurrentChannelList;
+        this.swapMarkSubList = this.SubListIndex;
+        this.swapMarkChannel = channel;
+        this.miMarkForSwapping.Down = true;
+      }
+
+      this.RefreshGrids();
+    }
+
+    private void SwapWithMarked()
+    {
+      if (this.swapMarkList == null || this.swapMarkList != this.CurrentChannelList || this.swapMarkSubList != this.subListIndex)
+        return;
+
+      GridView gv;
+      if (this.gridLeft.ContainsFocus)
+        gv = this.gviewLeft;
+      else if (this.gridRight.ContainsFocus)
+        gv = this.gviewRight;
+      else
+        return;
+
+      var chanB = (ChannelInfo)gv.FocusedRowObject;
+      if (chanB == null || chanB == this.swapMarkChannel)
+        return;
+
+      var nrA = this.swapMarkChannel.NewProgramNr;
+      var nrB = chanB.NewProgramNr;
+      if (nrA < 0 || nrB < 0)
+        return;
+
+      this.gviewLeft.BeginDataUpdate();
+      this.gviewRight.BeginDataUpdate();
+      this.swapMarkChannel.NewProgramNr = chanB.NewProgramNr;
+      chanB.NewProgramNr = nrA;
+      this.gviewRight.EndDataUpdate();
+      this.gviewLeft.EndDataUpdate();
+    }
     #endregion
 
     #region CleanupChannelData()
@@ -2478,6 +2563,9 @@ namespace ChanSort.Ui
         e.Appearance.ForeColor = Color.Blue;
         e.Appearance.Options.UseForeColor = true;
       }
+
+      if (channel == swapMarkChannel)
+        e.Appearance.FontStyleDelta |= FontStyle.Strikeout;
     }
 
     #endregion
@@ -2652,6 +2740,10 @@ namespace ChanSort.Ui
           e.Appearance.Options.UseForeColor = true;
         }
       }
+
+
+      if (channel == swapMarkChannel)
+        e.Appearance.FontStyleDelta |= FontStyle.Strikeout;
     }
 
     #endregion
@@ -3205,9 +3297,9 @@ namespace ChanSort.Ui
       TryExecute(this.SaveFiles);
     }
 
-    private void miSaveAs_ItemClick(object sender, ItemClickEventArgs e)
+    private void miConvert_ItemClick(object sender, ItemClickEventArgs e)
     {
-      TryExecute(this.ShowSaveFileDialog);
+      XtraMessageBox.Show(this, Resources.MainForm_miConvert_MessageBody, Resources.MainForm_miConvert_MessageHeader);
     }
 
     private void miSaveReferenceFile_ItemClick(object sender, ItemClickEventArgs e)
@@ -3302,6 +3394,20 @@ namespace ChanSort.Ui
     {
       this.TryExecute(this.RenameChannel);
     }
+
+    #region miMarkForSwapping_ItemClick
+    private void miMarkForSwapping_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      this.TryExecute(this.MarkForSwapping);
+    }
+    #endregion
+
+    #region miSwapWithMarked_ItemClick
+    private void miSwapWithMarked_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      this.TryExecute(this.SwapWithMarked);
+    }
+    #endregion
 
     private void miSort_ItemClick(object sender, ItemClickEventArgs e)
     {
@@ -3796,6 +3902,6 @@ namespace ChanSort.Ui
       }
     }
 
-    #endregion
+        #endregion
   }
 }

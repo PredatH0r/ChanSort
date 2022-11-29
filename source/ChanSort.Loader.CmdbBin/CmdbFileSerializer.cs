@@ -69,7 +69,7 @@ namespace ChanSort.Loader.CmdbBin
       }
 
       if (!this.loaded)
-        throw new FileLoadException("\"" + this.FileName + "\" does not belong to a supported dtv_cmdb_* file system");
+        throw LoaderException.Fail("\"" + this.FileName + "\" does not belong to a supported dtv_cmdb_* file system");
     }
     #endregion
 

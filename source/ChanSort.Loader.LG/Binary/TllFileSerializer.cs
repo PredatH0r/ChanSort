@@ -162,11 +162,11 @@ namespace ChanSort.Loader.LG.Binary
 
       long fileSize = new FileInfo(this.FileName).Length;
       if (fileSize > MaxFileSize)
-        throw new FileLoadException(string.Format(ERR_fileTooBig, fileSize, MaxFileSize), this.FileName);
+        throw LoaderException.Fail(string.Format(ERR_fileTooBig, fileSize, MaxFileSize));
 
       this.fileContent = File.ReadAllBytes(this.FileName);
       if (this.fileContent[0] == '<')
-        throw new FileLoadException("Invalid binary TLL file format. Maybe a GlobalClone/XML file?", this.FileName);
+        throw LoaderException.Fail("Invalid binary TLL file format. Maybe a GlobalClone/XML file?");
 
       int off = 0;
 
@@ -240,7 +240,7 @@ Due to issues with most recent LG firmwares such lists can no longer be modified
     private void ReadFileHeader(ref int off)
     {
       if (fileContent.Length < 4)
-        throw new FileLoadException(ERR_modelUnknown);
+        throw LoaderException.Fail(ERR_modelUnknown);
       var magic = BitConverter.ToUInt32(fileContent, off);
       if (magic == 0x5A5A5A5A || magic == 0xA5A5A5A5)
         off += 4;
@@ -386,7 +386,7 @@ Due to issues with most recent LG firmwares such lists can no longer be modified
     {
       long len = BitConverter.ToUInt32(fileContent, off);
       if (len < minSize || off + 4 + len > fileContent.Length)
-        throw new FileLoadException(ERR_modelUnknown);
+        throw LoaderException.Fail(ERR_modelUnknown);
       return (int)len;
     }
     #endregion
@@ -395,10 +395,10 @@ Due to issues with most recent LG firmwares such lists can no longer be modified
     private int GetActChannelRecordSize(int off, int blockSize, int channelCount)
     {
       if ((blockSize - 4) % channelCount != 0)
-        throw new FileLoadException(ERR_modelUnknown);
+        throw LoaderException.Fail(ERR_modelUnknown);
       int recordSize = (blockSize - 4) / channelCount;
       if (off + channelCount * recordSize > fileContent.Length)
-        throw new FileLoadException(ERR_modelUnknown);
+        throw LoaderException.Fail(ERR_modelUnknown);
       return recordSize;
     }
     #endregion
@@ -477,7 +477,7 @@ Due to issues with most recent LG firmwares such lists can no longer be modified
         uint fileCrc = BitConverter.ToUInt32(fileContent, off);
         uint calcCrc = Crc32.Reversed.CalcCrc32(fileContent, off + 4, subblockLength);
         if (fileCrc != calcCrc)
-          throw new FileLoadException(string.Format(ERR_wrongChecksum, fileCrc, calcCrc));
+          throw LoaderException.Fail(string.Format(ERR_wrongChecksum, fileCrc, calcCrc));
         off += 4 + subblockLength;
       }
     }

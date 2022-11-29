@@ -150,7 +150,7 @@ namespace ChanSort.Loader.Hisense.ChannelDb
         this.LoadTableNames(cmd);
 
         if (!tableNames.Contains("svl_1") && !tableNames.Contains("svl_2") && !tableNames.Contains("svl_3"))
-          throw new FileLoadException("File doesn't contain svl_* tables");
+          throw LoaderException.Fail("File doesn't contain svl_* tables");
 
         this.LoadSatelliteData(cmd);
         this.LoadTslData(cmd);

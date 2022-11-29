@@ -97,7 +97,7 @@ namespace ChanSort.Loader.Android
       {
         cmd.CommandText = $"select count(1) from sqlite_master where type='table' and name='{table}'";
         if ((long)cmd.ExecuteScalar() == 0)
-          throw new FileLoadException(ERR_UnknownFormat);
+          throw LoaderException.TryNext(ERR_UnknownFormat);
       }
 
       var columns = "_id, type, service_type, original_network_id, transport_stream_id, service_id, display_number, display_name, browsable, searchable, locked, "

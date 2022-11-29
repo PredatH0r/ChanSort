@@ -75,21 +75,17 @@ namespace ChanSort.Loader.Panasonic
       this.CreateDummySatellites();
 
       string channelConnString = "Data Source=" + this.workFile;
-      using (var conn = new SqliteConnection(channelConnString))
-      {
-        conn.Open();
-        using (var cmd = conn.CreateCommand())
-        {
-          RepairCorruptedDatabaseImage(cmd);
-          InitCharacterEncoding(cmd);
+      using var conn = new SqliteConnection(channelConnString);
+      conn.Open();
+      using var cmd = conn.CreateCommand();
+      RepairCorruptedDatabaseImage(cmd);
+      InitCharacterEncoding(cmd);
 
-          cmd.CommandText = "SELECT count(1) FROM sqlite_master WHERE type = 'table' and name in ('SVL', 'TSL')";
-          if (Convert.ToInt32(cmd.ExecuteScalar()) != 2)
-            throw new FileLoadException("File doesn't contain the expected TSL/SVL tables");
+      cmd.CommandText = "SELECT count(1) FROM sqlite_master WHERE type = 'table' and name in ('SVL', 'TSL')";
+      if (Convert.ToInt32(cmd.ExecuteScalar()) != 2)
+        throw LoaderException.TryNext("File doesn't contain the expected TSL/SVL tables");
 
-          this.ReadChannels(cmd);
-        }
-      }
+      this.ReadChannels(cmd);
     }
     #endregion
 
@@ -98,7 +94,7 @@ namespace ChanSort.Loader.Panasonic
     {
       this.cypherMode = this.GetCypherMode(this.FileName);
       if (cypherMode == CypherMode.Unknown)
-        throw new FileLoadException(ERR_UnknownFormat);
+        throw LoaderException.TryNext(ERR_UnknownFormat);
       if (cypherMode == CypherMode.None)
         return this.FileName;
 
@@ -137,7 +133,7 @@ namespace ChanSort.Loader.Panasonic
       byte[] fileContent = File.ReadAllBytes(input);
 
       if (!encrypt && this.CalcChecksum(fileContent, fileContent.Length) != 0)
-        throw new FileLoadException("Checksum validation failed");
+        throw LoaderException.Fail("Checksum validation failed");
 
       int chiffre = 0x0388;
       int step = 0;
@@ -167,12 +163,12 @@ namespace ChanSort.Loader.Panasonic
     {
       var data = File.ReadAllBytes(inputFile);
       if (this.CalcChecksum(data, data.Length) != 0)
-        throw new FileLoadException("Checksum validation failed");
+        throw LoaderException.Fail("Checksum validation failed");
 
       int offset;
       if (!this.ValidateFileSize(data, ByteOrder.BigEndian, out offset) && 
           !this.ValidateFileSize(data, ByteOrder.LittleEndian, out offset))
-        throw new FileLoadException("File size validation failed");
+        throw LoaderException.Fail("File size validation failed");
 
       using (var stream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
       stream.Write(data, offset, data.Length - offset - 4);

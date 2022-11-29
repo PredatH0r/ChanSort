@@ -17,7 +17,7 @@ namespace ChanSort.Loader.Android
       if (file.StartsWith("dvr_rtk_tv") && file.EndsWith(".db"))
         return new AldenSerializer(inputFile);
 
-      throw new FileLoadException(SerializerBase.ERR_UnknownFormat);
+      throw LoaderException.TryNext(SerializerBase.ERR_UnknownFormat);
     }
   }
 }

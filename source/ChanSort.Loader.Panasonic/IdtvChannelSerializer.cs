@@ -180,9 +180,9 @@ internal class IdtvChannelSerializer : SerializerBase
   public override void Load()
   {
     if (!File.Exists(dbFile))
-      throw new FileLoadException("expected file not found: " + dbFile);
+      throw LoaderException.Fail("expected file not found: " + dbFile);
     if (!File.Exists(binFile))
-      throw new FileLoadException("expected file not found: " + binFile);
+      throw LoaderException.Fail("expected file not found: " + binFile);
 
     string connString = "Data Source=" + this.dbFile;
     using var db = new SqliteConnection(connString);
@@ -194,7 +194,7 @@ internal class IdtvChannelSerializer : SerializerBase
       cmd.CommandText = "SELECT count(1) FROM sqlite_master WHERE type = 'table' and name in ('android_metadata', 'channels')";
       var result = Convert.ToInt32(cmd.ExecuteScalar()); // if the database file is corrupted, the execption will be thrown here and not when opening it
       if (result != 2)
-        throw new FileLoadException("File doesn't contain the expected android_metadata/channels tables");
+        throw LoaderException.Fail("File doesn't contain the expected android_metadata/channels tables");
     }
     catch (SqliteException)
     {
@@ -223,7 +223,7 @@ internal class IdtvChannelSerializer : SerializerBase
     for (i = 0; i < 16; i++)
     {
       if (binFileData[8 + i] != hash[i])
-        throw new FileLoadException("Invalid MD5 checksum in " + binFile);
+        throw LoaderException.Fail("Invalid MD5 checksum in " + binFile);
     }
 
     using var strm = new MemoryStream(binFileData);
@@ -256,7 +256,7 @@ internal class IdtvChannelSerializer : SerializerBase
         var key = (ushort)chan.InternalProviderFlag2;
 
         if (this.binChannelByInternalProviderFlag2.TryGetValue(key, out var ch))
-          throw new FileLoadException($"{binFile} channel records {ch.Index} and {i} have duplicate internal_provider_flag2 value {key}.");
+          throw LoaderException.Fail($"{binFile} channel records {ch.Index} and {i} have duplicate internal_provider_flag2 value {key}.");
 
         this.binChannelByInternalProviderFlag2.Add(key, new BinChannelEntry(i, chan, name, off));
 
@@ -274,7 +274,7 @@ internal class IdtvChannelSerializer : SerializerBase
     }
 
     if (i < numRecords)
-      throw new FileLoadException($"idtvChannel contains only {i} data records, but expected {numRecords}");
+      throw LoaderException.Fail($"idtvChannel contains only {i} data records, but expected {numRecords}");
   }
   #endregion
 
@@ -368,7 +368,7 @@ internal class IdtvChannelSerializer : SerializerBase
 
       // validate consistency between .db and .bin (multiple .db rows can reference the same .bin record)
       if (!this.binChannelByInternalProviderFlag2.TryGetValue((ushort)ch.InternalProviderFlag2, out var idtvEntry))
-        throw new FileLoadException($"{list.ShortCaption} channel with _id {ch.RecordIndex} refers to non-existing idtvChannel.bin record with internal_provider_flag2 {ch.InternalProviderFlag2}");
+        throw LoaderException.Fail($"{list.ShortCaption} channel with _id {ch.RecordIndex} refers to non-existing idtvChannel.bin record with internal_provider_flag2 {ch.InternalProviderFlag2}");
       ValidateChannelData(ch, idtvEntry);
     }
   }
@@ -388,13 +388,13 @@ internal class IdtvChannelSerializer : SerializerBase
 
     //var progNr = chan.ProgNr;
     //if (ch.OldProgramNr != progNr) // multiple .db rows with different display_number can reference the same .db row, so skip this check
-    //  throw new FileLoadException($"mismatching display_number between tv.db _id {ch.RecordIndex} ({ch.OldProgramNr}) and idtvChannel.bin record {i} ({progNr})");
+    //  throw new LoaderException.Fail($"mismatching display_number between tv.db _id {ch.RecordIndex} ({ch.OldProgramNr}) and idtvChannel.bin record {i} ({progNr})");
     if (ch.Name != name)
-      throw new FileLoadException($"mismatching name between tv.db _id {ch.RecordIndex} ({ch.Name}) and idtvChannel.bin record {i} ({name})");
+      throw LoaderException.Fail($"mismatching name between tv.db _id {ch.RecordIndex} ({ch.Name}) and idtvChannel.bin record {i} ({name})");
     if (Math.Abs(ch.FreqInMhz - freq) > 2)
-      throw new FileLoadException($"mismatching frequency between tv.db _id {ch.RecordIndex} ({ch.FreqInMhz}) and idtvChannel.bin record {i} ({freq})");
+      throw LoaderException.Fail($"mismatching frequency between tv.db _id {ch.RecordIndex} ({ch.FreqInMhz}) and idtvChannel.bin record {i} ({freq})");
     if (Math.Abs(ch.SymbolRate - symRate) > 2)
-      throw new FileLoadException($"mismatching symbol rate between tv.db _id {ch.RecordIndex} ({ch.SymbolRate}) and idtvChannel.bin record {i} ({symRate})");
+      throw LoaderException.Fail($"mismatching symbol rate between tv.db _id {ch.RecordIndex} ({ch.SymbolRate}) and idtvChannel.bin record {i} ({symRate})");
 
     if (ch.Encrypted != ((chan.Flags & Flags.Encrypted) != 0))
       log.AppendLine($"mismatching crypt-flag between tv.db _id {ch.RecordIndex} ({ch.Encrypted}) and idtvChannel.bin record {i}");

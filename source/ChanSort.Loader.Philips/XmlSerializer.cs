@@ -209,7 +209,7 @@ namespace ChanSort.Loader.Philips
           this.LoadFile(fullPath);
         }
         if (this.fileDataList.Count == 0)
-          throw new FileLoadException("No XML files found in folder structure");
+          throw LoaderException.TryNext("No XML files found in folder structure");
       }
       else
       {
@@ -285,7 +285,7 @@ namespace ChanSort.Loader.Philips
       if (root?.LocalName == "ECSM")
         root = root.FirstChild;
       if (fail || root == null || (root.LocalName != "ChannelMap" && root.LocalName != "FavoriteListMAP"))
-        throw new FileLoadException("\"" + fileName + "\" is not a supported Philips XML file");
+        throw LoaderException.TryNext("\"" + fileName + "\" is not a supported Philips XML file");
 
       int rowId = 0;
       ChannelList curList = null;
@@ -312,8 +312,8 @@ namespace ChanSort.Loader.Philips
 
     private ChannelList DetectFormatAndFeatures(FileData file, XmlNode node)
     {
-      var setupNode = node["Setup"] ?? throw new FileLoadException("Missing Setup XML element");
-      var bcastNode = node["Broadcast"] ?? throw new FileLoadException("Missing Broadcast XML element");
+      var setupNode = node["Setup"] ?? throw LoaderException.Fail("Missing Setup XML element");
+      var bcastNode = node["Broadcast"] ?? throw LoaderException.Fail("Missing Broadcast XML element");
 
       var fname = Path.GetFileNameWithoutExtension(file.path).ToLowerInvariant();
       var medium = bcastNode.GetAttribute("medium");
@@ -359,7 +359,7 @@ namespace ChanSort.Loader.Philips
         hasEncrypt = setupNode.HasAttribute("Scramble") || setupNode.HasAttribute("Scrambled");
       }
       else
-        throw new FileLoadException("Unknown data format");
+        throw LoaderException.Fail("Unknown data format");
 
       ChannelList chList = null;
       switch (medium)
@@ -420,8 +420,8 @@ namespace ChanSort.Loader.Philips
     #region ReadChannel()
     private void ReadChannel(FileData file, ChannelList curList, XmlNode node, int rowId)
     {
-      var setupNode = node["Setup"] ?? throw new FileLoadException("Missing Setup XML element");
-      var bcastNode = node["Broadcast"] ?? throw new FileLoadException("Missing Broadcast XML element");
+      var setupNode = node["Setup"] ?? throw LoaderException.Fail("Missing Setup XML element");
+      var bcastNode = node["Broadcast"] ?? throw LoaderException.Fail("Missing Broadcast XML element");
       var data = new Dictionary<string,string>(StringComparer.InvariantCultureIgnoreCase);
       foreach (var n in new[] {setupNode, bcastNode})
       {

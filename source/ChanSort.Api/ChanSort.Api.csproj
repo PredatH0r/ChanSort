@@ -73,6 +73,7 @@
     <Compile Include="Controller\ISerializerPlugin.cs" />
     <Compile Include="Controller\TxtRefListSerializer.cs" />
     <Compile Include="Controller\RefListSerializerPlugin.cs" />
+    <Compile Include="LoaderException.cs" />
     <Compile Include="Model\ChannelList.cs" />
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\LnbConfig.cs" />

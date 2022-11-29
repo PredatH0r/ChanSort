@@ -20,6 +20,10 @@ namespace ChanSort.Loader.Toshiba
       if (name == "settingsdb.db")
         return new SettingsDbSerializer(inputFile);
 
+      if (name == "settingsdb_enc.db")
+        throw LoaderException.Fail("settingsDB_enc.db files can't be edited due to the encryption that was introduced via Firmware-Update.\n" +
+                                    "This affects TV models based on the Vestel hard-/firmware from various brands like Panasonic, Toshiba, Nokia, Nabo, ...");
+
       // selecting a chmgt.db, dvbMainData.db or dvbSysData.db directly -> use hotelopt_type001.bin instead
       if (ext == ".db")
       {
@@ -39,7 +43,7 @@ namespace ChanSort.Loader.Toshiba
           return null;
 
         // "Acropolis" format with chmgt_type001\*.txt is not supported
-        throw new FileLoadException(string.Format(SerializerBase.ERR_UnsupportedFormat, "Euro*.txt"));
+        throw LoaderException.Fail(string.Format(SerializerBase.ERR_UnsupportedFormat, "Euro*.txt"));
       }
 
       // chmgt.db folder structure in a .zip file (for backward-compatibility with older ChanSort versions)
@@ -56,13 +60,13 @@ namespace ChanSort.Loader.Toshiba
 
       // Hotel\tcl_clone_user.bin
       if (name.StartsWith("tcl_clone_") && name.EndsWith(".bin"))
-        throw new FileLoadException(string.Format(SerializerBase.ERR_UnsupportedFormat, "tcl_clone_user.bin"));
+        throw LoaderException.Fail(string.Format(SerializerBase.ERR_UnsupportedFormat, "tcl_clone_user.bin"));
 
       // HOTEL_*.bin
       if (name.StartsWith("hotel_") && name.EndsWith(".bin"))
-        throw new FileLoadException(string.Format(SerializerBase.ERR_UnsupportedFormat, "HOTEL_*.bin"));
+        throw LoaderException.Fail(string.Format(SerializerBase.ERR_UnsupportedFormat, "HOTEL_*.bin"));
 
-      throw new FileLoadException(SerializerBase.ERR_UnknownFormat);
+      throw LoaderException.TryNext(SerializerBase.ERR_UnknownFormat);
     }
   }
 }

@@ -61,7 +61,7 @@ namespace ChanSort.Loader.M3u
       var rdr = new StreamReader(new MemoryStream(content), overrideEncoding ?? this.DefaultEncoding);
       string line = rdr.ReadLine()?.TrimEnd();
       if (line == null || !(line == "#EXTM3U" || line.StartsWith("#EXTM3U ")))
-        throw new FileLoadException("Unsupported .m3u file: " + this.FileName);
+        throw LoaderException.Fail("Unsupported .m3u file: " + this.FileName);
 
       this.headerLines.Add(line);
 

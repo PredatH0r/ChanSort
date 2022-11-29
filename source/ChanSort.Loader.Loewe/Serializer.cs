@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -127,19 +126,19 @@ class Serializer : SerializerBase
     doc.Load(this.FileName);
     var sl = doc["servicelist"];
     if (sl == null)
-      throw new FileLoadException("expected root element <servicelist>");
+      throw LoaderException.TryNext("expected root element <servicelist>");
 
     var tuners = sl["tuners"];
     if (tuners == null)
-      throw new FileLoadException("missing <tuners> list");
+      throw LoaderException.TryNext("missing <tuners> list");
 
     var services = sl["services"];
     if (services == null)
-      throw new FileLoadException("missing <services> list");
+      throw LoaderException.TryNext("missing <services> list");
     
     var favorites = sl["favorites"];
     if (favorites == null)
-      throw new FileLoadException("missing <favorites> list");
+      throw LoaderException.TryNext("missing <favorites> list");
 
     LoadTuners(tuners);
     LoadServices(services);

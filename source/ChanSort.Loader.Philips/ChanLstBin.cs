@@ -136,7 +136,7 @@ namespace ChanSort.Loader.Philips
           switch (dlg.SelectedAction)
           {
             case 0:
-              throw new FileLoadException("Aborted due to checksum errors");
+              throw LoaderException.Fail("Aborted due to checksum errors");
           }
         }
       }

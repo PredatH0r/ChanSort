@@ -52,7 +52,7 @@ namespace ChanSort.Api
         
         var line = stream.ReadLine();
         if (line != null && line.StartsWith("--------") && line.Contains(" Program Data!--------"))
-          throw new FileLoadException("ignoring .csv file with Sharp/Dyon/Blaupunkt/Hisense header line");
+          throw LoaderException.TryNext("ignoring .csv file with Sharp/Dyon/Blaupunkt/Hisense header line");
 
         try
         {
@@ -64,7 +64,7 @@ namespace ChanSort.Api
         }
         catch (Exception ex)
         {
-          throw new FileLoadException($"Error in reference file line #{lineNr}: {line}", ex);
+          throw LoaderException.TryNext($"Error in reference file line #{lineNr}: {line}", ex);
         }
       }
     }
