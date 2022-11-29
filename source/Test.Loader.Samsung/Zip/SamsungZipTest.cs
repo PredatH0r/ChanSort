@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test.Loader.Samsung.Zip
 {
   [TestClass]
-  public class SamsungZipTest : LoaderTestBase
+  public class SamsungZipTest
   {
     #region TestSatChannelsAddedToCorrectLists
     [TestMethod]
@@ -81,6 +81,7 @@ namespace Test.Loader.Samsung.Zip
       // Pr# 418 = ORF2E 
 
       var dvbs = data.GetChannelList(SignalSource.DvbS);
+      Assert.IsNotNull(dvbs);
       var orf2e = dvbs.Channels.FirstOrDefault(ch => ch.Name == "ORF2E");
       Assert.IsNotNull(orf2e);
       Assert.AreEqual(418, orf2e.OldProgramNr);
@@ -124,16 +125,16 @@ namespace Test.Loader.Samsung.Zip
     // unstructured test crawling through all files in the sample directories
 
     #region InitExpectedSamsungData()
-    private Dictionary<string, ExpectedData> InitExpectedSamsungData()
+    private Dictionary<string, LoaderTestBase.ExpectedData> InitExpectedSamsungData()
     {
-      var expected = new ExpectedData[]
+      var expected = new LoaderTestBase.ExpectedData[]
                        {
                          //new ExpectedData(@"catmater_B\Clone.scm", 31, 272, 0, 0, 0) ,
                          //new ExpectedData(@"easy2003_B\easy2003_B.scm", 0, 0, 1225, 0, 0) ,
                          //new ExpectedData(@"_Manu_C\channel_list_LE40C650_1001.scm", 0, 9, 0, 0, 0) 
                        };
 
-      var dict = new Dictionary<string, ExpectedData>(StringComparer.InvariantCultureIgnoreCase);
+      var dict = new Dictionary<string, LoaderTestBase.ExpectedData>(StringComparer.InvariantCultureIgnoreCase);
       foreach (var entry in expected)
         dict[entry.File] = entry;
       return dict;
@@ -141,21 +142,22 @@ namespace Test.Loader.Samsung.Zip
 
     #endregion
 
-    #region TestSamsungScmLoader()
+    #region TestSamsungZipLoader()
     [TestMethod]
-    [DeploymentItem("ChanSort.Loader.Samsung\\ChanSort.Loader.Samsung.ini")]
     public void TestSamsungZipLoader()
     {
       var expectedData = InitExpectedSamsungData();
       SamsungPlugin plugin = new SamsungPlugin();
 
+      TestUtils.DeploymentItem("ChanSort.Loader.Samsung\\ChanSort.Loader.Samsung.ini");
+
       StringBuilder errors = new StringBuilder();
-      var list = FindAllFiles("TestFiles_Samsung", "*.zip");
+      var list = LoaderTestBase.FindAllFiles("TestFiles_Samsung", "*.zip");
       var models = new Dictionary<string, string>();
       foreach (var file in list)
       {
         var lower = file.ToLowerInvariant();
-        if (lower.Contains("clone.zip") || lower.Contains("__broken"))
+        if (lower.Contains("clone") || lower.Contains("__broken"))
           continue;
 
         Debug.Print("Testing " + file);
@@ -208,7 +210,7 @@ namespace Test.Loader.Samsung.Zip
 
           Assert.IsFalse(serializer.DataRoot.IsEmpty, "No channels loaded from " + file);
 
-          ExpectedData exp;
+          LoaderTestBase.ExpectedData exp;
           key = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + Path.GetFileName(file);
           if (expectedData.TryGetValue(key, out exp))
           {

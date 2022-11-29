@@ -449,26 +449,36 @@ left outer join {dbSchema.DvbServiceTable} digs on digs.ServiceId=s.Pid
       if (tvOutputFile != FileName)
         File.Copy(FileName, tvOutputFile, true);
 
-      using var conn = new SqliteConnection("Data Source=" + tvOutputFile);
-      conn.Open();
-      using var trans = conn.BeginTransaction();
-      using var cmd = conn.CreateCommand();
       try
       {
+        using var conn = new SqliteConnection("Data Source=" + tvOutputFile);
+        conn.Open();
+        using var trans = conn.BeginTransaction();
+        using var cmd = conn.CreateCommand();
+        try
+        {
 #if !LOCK_LCN_LISTS
             ResetLcn(cmd);
 #endif
-        UpdateServices(cmd);
-        UpdatePhysicalChannelLists(cmd);
-        UpdateUserFavoriteLists(cmd);
+          UpdateServices(cmd);
+          UpdatePhysicalChannelLists(cmd);
+          UpdateUserFavoriteLists(cmd);
 
-        trans.Commit();
-        FileName = tvOutputFile;
+          trans.Commit();
+          FileName = tvOutputFile;
+        }
+        catch
+        {
+          trans.Rollback();
+          throw;
+        }
       }
-      catch
+      finally
       {
-        trans.Rollback();
-        throw;
+        // force closing the file and releasing the locks
+        SqliteConnection.ClearAllPools();
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
       }
     }
 

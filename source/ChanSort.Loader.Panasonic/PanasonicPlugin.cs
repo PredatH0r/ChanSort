@@ -40,7 +40,7 @@ namespace ChanSort.Loader.Panasonic
       }
 
       // old svl.db / svl.bin formats
-      return new Serializer(inputFile);
+      return new SvlSerializer(inputFile);
     }
   }
 }

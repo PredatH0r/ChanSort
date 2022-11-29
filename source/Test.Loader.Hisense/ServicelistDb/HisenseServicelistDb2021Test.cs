@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Runtime.InteropServices;
 using ChanSort.Api;
 using ChanSort.Loader.Hisense;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

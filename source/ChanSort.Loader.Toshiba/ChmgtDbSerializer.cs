@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using ChanSort.Api;
 using Microsoft.Data.Sqlite;
@@ -260,9 +261,11 @@ namespace ChanSort.Loader.Toshiba
 
     public override void Save(string tvOutputFile)
     {
-      var channelConnString = "Data Source=" + this.workingDir + FILE_chmgt_db;
-      using (var conn = new SqliteConnection(channelConnString))
+      try
       {
+        var channelConnString = "Data Source=" + this.workingDir + FILE_chmgt_db;
+        using var conn = new SqliteConnection(channelConnString);
+
         conn.Open();
         using var trans = conn.BeginTransaction();
         using var cmd = conn.CreateCommand();
@@ -276,6 +279,13 @@ namespace ChanSort.Loader.Toshiba
 
         cmd.Transaction = null;
         RepairCorruptedDatabaseImage(cmd);
+      }
+      finally
+      {
+        // force closing the file and releasing the locks
+        SqliteConnection.ClearAllPools();
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
       }
 
       if (Path.GetExtension(this.FileName).ToLowerInvariant() == ".zip")

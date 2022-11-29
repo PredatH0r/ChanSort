@@ -37,70 +37,60 @@ namespace ChanSort.Loader.Samsung.Zip
 
 
     #region Load()
+
     public override void Load()
     {
-      try
+      this.UnzipFileToTempFolder();
+      if (File.Exists(this.TempPath + "\\sat"))
       {
-        this.UnzipFileToTempFolder();
-        if (File.Exists(this.TempPath + "\\sat"))
+        try
         {
-//          try
-          {
-            using (var conn = new SqliteConnection("Data Source=" + this.TempPath + "\\sat"))
-            {
-              conn.Open();
-              this.ReadSatDatabase(conn);
-            }
-          }
-  //        catch
-          //{
-          //}
+          using var conn = new SqliteConnection("Data Source=" + this.TempPath + "\\sat");
+          conn.Open();
+          this.ReadSatDatabase(conn);
         }
-
-        var files = Directory.GetFiles(this.TempPath, "*.");
-        if (files.Length == 0)
-          throw LoaderException.TryNext("The Samsung .zip channel list archive does not contain any supported files.");
-
-        foreach (var filePath in files)
+        catch
         {
-          var filename = Path.GetFileName(filePath) ?? "";
-          if (filename.StartsWith("vconf_"))
-            continue;
-          try
-          {
-            using (var conn = new SqliteConnection("Data Source=" + filePath))
-            {
-              FileType type;
-              conn.Open();
-              using (var cmd = conn.CreateCommand())
-              {
-                this.RepairCorruptedDatabaseImage(cmd);
-                type = this.DetectFileType(cmd);
-              }
-
-              switch (type)
-              {
-                case FileType.SatDb: 
-                  break;
-                case FileType.ChannelDbAnalog:
-                case FileType.ChannelDbDvb:
-                case FileType.ChannelDbIp:
-                  ReadChannelDatabase(conn, filePath, type);
-                  break;
-              }
-            }
-          }
-          catch
-          {
-          }
+          // not all files in the folder are SQLite databases
         }
       }
-      finally
+
+      var files = Directory.GetFiles(this.TempPath, "*.");
+      if (files.Length == 0)
+        throw LoaderException.TryNext("The Samsung .zip channel list archive does not contain any supported files.");
+
+      foreach (var filePath in files)
       {
-        // force closing the file and releasing the locks
-        //SqliteConnection.ClearAllPools(); 
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
+        var filename = Path.GetFileName(filePath) ?? "";
+        if (filename.StartsWith("vconf_"))
+          continue;
+
+        FileType type;
+        try
+        {
+          using var conn = new SqliteConnection("Data Source=" + filePath);
+          conn.Open();
+          using (var cmd = conn.CreateCommand())
+          {
+            this.RepairCorruptedDatabaseImage(cmd);
+            type = this.DetectFileType(cmd);
+          }
+
+          switch (type)
+          {
+            case FileType.SatDb:
+              break;
+            case FileType.ChannelDbAnalog:
+            case FileType.ChannelDbDvb:
+            case FileType.ChannelDbIp:
+              ReadChannelDatabase(conn, filePath, type);
+              break;
+          }
+        }
+        catch
+        {
+          // ignore non-SQLite files in the folder
+        }
       }
     }
     #endregion
@@ -495,7 +485,6 @@ namespace ChanSort.Loader.Samsung.Zip
       }
 
       // force closing the file and releasing the locks
-      //SqliteConnection.ClearAllPools();
       GC.Collect();
       GC.WaitForPendingFinalizers();
 
@@ -506,22 +495,29 @@ namespace ChanSort.Loader.Samsung.Zip
     #region SaveChannelList()
     private void SaveChannelList(ChannelList channelList, string dbPath)
     {
-      using var conn = new SqliteConnection("Data Source=" + dbPath);
-      conn.Open();
-      using (var trans = conn.BeginTransaction())
+      try
       {
-        using var cmdUpdateSrv = PrepareUpdateCommand(conn);
-        using var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0);
-        using var cmdInsertFav = PrepareInsertFavCommand(conn);
-        using var cmdUpdateFav = PrepareUpdateFavCommand(conn);
-        using var cmdDeleteFav = PrepareDeleteFavCommand(conn);
-        Editor.SequentializeFavPos(channelList, 5);
-        this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
-        trans.Commit();
-      }
+        using var conn = new SqliteConnection("Data Source=" + dbPath);
+        conn.Open();
+        using (var trans = conn.BeginTransaction())
+        {
+          using var cmdUpdateSrv = PrepareUpdateCommand(conn);
+          using var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0);
+          using var cmdInsertFav = PrepareInsertFavCommand(conn);
+          using var cmdUpdateFav = PrepareUpdateFavCommand(conn);
+          using var cmdDeleteFav = PrepareDeleteFavCommand(conn);
+          Editor.SequentializeFavPos(channelList, 5);
+          this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
+          trans.Commit();
+        }
 
-      using var cmd = conn.CreateCommand();
-      this.RepairCorruptedDatabaseImage(cmd);
+        using var cmd = conn.CreateCommand();
+        this.RepairCorruptedDatabaseImage(cmd);
+      }
+      finally
+      {
+        SqliteConnection.ClearAllPools();
+      }
     }
 
     #endregion

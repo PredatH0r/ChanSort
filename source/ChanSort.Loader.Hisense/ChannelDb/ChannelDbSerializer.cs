@@ -1,6 +1,7 @@
 ﻿//#define LOCK_LCN_LISTS
 
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -471,51 +472,59 @@ namespace ChanSort.Loader.Hisense.ChannelDb
 
       if (tvOutputFile != this.FileName)
         File.Copy(this.FileName, tvOutputFile, true);
-
-      using var conn = new SqliteConnection("Data Source=" + tvOutputFile);
-      conn.Open();
-      using var trans = conn.BeginTransaction();
-      using var cmd = conn.CreateCommand();
-      cmd.Transaction = trans;
+      
       try
       {
-        this.CreateFavTables(cmd);
-        
-        // must truncate and re-fill this table because there is a unique primary key constraint on a data column that needs to be edited
-        if (this.hasCamelCaseFavSchema)
+        using var conn = new SqliteConnection("Data Source=" + tvOutputFile);
+        conn.Open();
+        using var trans = conn.BeginTransaction();
+        using var cmd = conn.CreateCommand();
+        cmd.Transaction = trans;
+        try
         {
-          for (int i = 1; i <= 4; i++)
+          this.CreateFavTables(cmd);
+
+          // must truncate and re-fill this table because there is a unique primary key constraint on a data column that needs to be edited
+          if (this.hasCamelCaseFavSchema)
           {
-            cmd.CommandText = $"delete from fav_{i}";
-            cmd.ExecuteNonQuery();
+            for (int i = 1; i <= 4; i++)
+            {
+              cmd.CommandText = $"delete from fav_{i}";
+              cmd.ExecuteNonQuery();
+            }
           }
-        }
 
 #if !LOCK_LCN_LISTS
-        this.ResetLcn(cmd);
+          this.ResetLcn(cmd);
 #endif
-        foreach (var list in this.DataRoot.ChannelLists)
-        {
-          if (list.ReadOnly || list.IsMixedSourceFavoritesList)
-            continue;
-          foreach (var ci in list.Channels)
-            this.UpdateChannel(cmd, ci as Channel);
-        }
+          foreach (var list in this.DataRoot.ChannelLists)
+          {
+            if (list.ReadOnly || list.IsMixedSourceFavoritesList)
+              continue;
+            foreach (var ci in list.Channels)
+              this.UpdateChannel(cmd, ci as Channel);
+          }
 
-        trans.Commit();
-        this.FileName = tvOutputFile;
+          trans.Commit();
+          this.FileName = tvOutputFile;
+        }
+        catch
+        {
+          trans.Rollback();
+          throw;
+        }
       }
-      catch
+      finally
       {
-        trans.Rollback();
-        throw;
+        // force closing the file and releasing the locks
+        SqliteConnection.ClearAllPools();
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
       }
     }
-
     #endregion
 
     #region CreateFavTables()
-
     private void CreateFavTables(SqliteCommand cmd)
     {
       for (int i = 1; i <= 4; i++)

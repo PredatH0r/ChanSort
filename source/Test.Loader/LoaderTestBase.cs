@@ -30,15 +30,15 @@ namespace Test.Loader
 
     #region Helper Methods
 
-    protected IEnumerable<string> FindAllFiles(string baseDir, string mask)
+    public static IEnumerable<string> FindAllFiles(string baseDir, string mask)
     {
-      string path = this.GetTestFileDirectory(baseDir);
+      string path = GetTestFileDirectory(baseDir);
       List<string> files = new List<string>();
-      this.GetFilesRecursively(path, mask, files);
+      GetFilesRecursively(path, mask, files);
       return files;
     }
 
-    protected string GetTestFileDirectory(string baseDir)
+    private static string GetTestFileDirectory(string baseDir)
     {
       string exeDir = Assembly.GetExecutingAssembly().Location;
       while (!string.IsNullOrEmpty(exeDir))
@@ -51,11 +51,11 @@ namespace Test.Loader
       throw new FileNotFoundException("No 'TestFiles' directory found");
     }
 
-    private void GetFilesRecursively(string path, string mask, List<string> files)
+    private static void GetFilesRecursively(string path, string mask, List<string> files)
     {
       files.AddRange(Directory.GetFiles(path, mask));
       foreach (var dir in Directory.GetDirectories(path))
-        this.GetFilesRecursively(dir, mask, files);
+        GetFilesRecursively(dir, mask, files);
     }
     #endregion
   }

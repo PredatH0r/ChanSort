@@ -12,7 +12,7 @@ namespace Test.Loader
     #region DeploymentItem()
 
     /// <summary>
-    /// DeploymentItemAttribute doesn't work with the combination of VS2010, ReSharper 7.1.3, Target Framework 3.5
+    /// Replacement for [DeploymentItemAttribute], which doesn't work with VS2010 + ReSharper
     /// </summary>
     public static string DeploymentItem(string file)
     {

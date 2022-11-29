@@ -10,7 +10,7 @@ namespace ChanSort.Loader.Panasonic
 {
   internal enum ByteOrder { BigEndian, LittleEndian }
 
-  class Serializer : SerializerBase
+  class SvlSerializer : SerializerBase
   {
     private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT, "Analog Antenna");
     private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC, "Analog Cable");
@@ -38,7 +38,7 @@ namespace ChanSort.Loader.Panasonic
     }
 
     #region ctor()
-    public Serializer(string inputFile) : base(inputFile)
+    public SvlSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.None; // due to the chaos with binary data inside the "sname" string column, writing back a name has undesired side effects
       this.Features.DeleteMode = DeleteMode.Physically;
@@ -171,7 +171,7 @@ namespace ChanSort.Loader.Panasonic
         throw LoaderException.Fail("File size validation failed");
 
       using (var stream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
-      stream.Write(data, offset, data.Length - offset - 4);
+        stream.Write(data, offset, data.Length - offset - 4);
 
       this.fileHeader = new byte[offset];
       Array.Copy(data, 0, this.fileHeader, 0, offset);
@@ -301,12 +301,15 @@ order by s.ntype,major_channel
     {
       this.FileName = tvOutputFile;
 
-      string channelConnString = "Data Source=" + this.workFile;
-      using (var conn = new SqliteConnection(channelConnString))
+      try
       {
+        string channelConnString = "Data Source=" + this.workFile;
+        using var conn = new SqliteConnection(channelConnString);
+
         conn.Open();
         using var trans = conn.BeginTransaction();
         using var cmd = conn.CreateCommand();
+        cmd.Transaction = trans;
         this.WriteChannels(cmd, this.avbtChannels);
         this.WriteChannels(cmd, this.avbcChannels);
         this.WriteChannels(cmd, this.dvbtChannels);
@@ -318,6 +321,13 @@ order by s.ntype,major_channel
 
         cmd.Transaction = null;
         this.RepairCorruptedDatabaseImage(cmd);
+      }
+      finally
+      {
+        // force closing the file and releasing the locks
+        SqliteConnection.ClearAllPools();
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
       }
 
       this.WriteCypheredFile();

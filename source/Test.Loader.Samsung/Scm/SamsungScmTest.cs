@@ -12,19 +12,19 @@ using ChanSort.Loader.Samsung.Scm;
 namespace Test.Loader.Samsung.Scm
 {
   [TestClass]
-  public class SamsungScmTest : LoaderTestBase
+  public class SamsungScmTest
   {
     #region InitExpectedSamsungData()
-    private Dictionary<string, ExpectedData> InitExpectedSamsungData()
+    private Dictionary<string, LoaderTestBase.ExpectedData> InitExpectedSamsungData()
     {
       var expected = new[]
                        {
-                         new ExpectedData(@"catmater_B\Clone.scm", 31, 272, 0, 0, 0) ,
-                         new ExpectedData(@"easy2003_B\easy2003_B.scm", 0, 0, 1225, 0, 0) ,
+                         new LoaderTestBase.ExpectedData(@"catmater_B\Clone.scm", 31, 272, 0, 0, 0) ,
+                         new LoaderTestBase.ExpectedData(@"easy2003_B\easy2003_B.scm", 0, 0, 1225, 0, 0) ,
                          //new ExpectedData(@"_Manu_C\channel_list_LE40C650_1001.scm", 0, 9, 0, 0, 0) 
                        };
 
-      var dict = new Dictionary<string, ExpectedData>(StringComparer.InvariantCultureIgnoreCase);
+      var dict = new Dictionary<string, LoaderTestBase.ExpectedData>(StringComparer.InvariantCultureIgnoreCase);
       foreach (var entry in expected)
         dict[entry.File] = entry;
       return dict;
@@ -41,7 +41,7 @@ namespace Test.Loader.Samsung.Scm
       SamsungPlugin plugin = new SamsungPlugin();
 
       StringBuilder errors = new StringBuilder();
-      var list = this.FindAllFiles("TestFiles_Samsung", "*.scm");
+      var list = LoaderTestBase.FindAllFiles("TestFiles_Samsung", "*.scm");
       var models = new Dictionary<string, string>();
       foreach (var file in list)
       {
@@ -108,7 +108,7 @@ namespace Test.Loader.Samsung.Scm
 
           Assert.IsFalse(serializer.DataRoot.IsEmpty, "No channels loaded from " + file);
 
-          ExpectedData exp;
+          LoaderTestBase.ExpectedData exp;
           key = Path.GetFileName(Path.GetDirectoryName(file)) + "\\" + Path.GetFileName(file);
           if (expectedData.TryGetValue(key, out exp))
           {

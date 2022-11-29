@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChanSort.Loader.LG;
 using ChanSort.Loader.LG.Binary;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test.Loader
 {
@@ -22,7 +22,7 @@ namespace Test.Loader
       var plugin = new LgPlugin();
 
       StringBuilder errors = new StringBuilder();
-      var list = this.FindAllFiles("TestFiles_LG", "*.tll");
+      var list = FindAllFiles("TestFiles_LG", "*.tll");
       var models = new Dictionary<string,string>();
       var firmwareSize = new Dictionary<int, string>();
       foreach(var file in list)
