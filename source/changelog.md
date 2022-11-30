@@ -1,6 +1,11 @@
 ﻿ChanSort Change Log 
 ===================
 
+2022-11-30
+- fixed Samsung .zip lists changing channel names to "Chinese" characters in the saved file
+  (caused by a breaking change in the new version of the Microsoft.Data.Sqlite library)
+- changing channel names in Samsung \*\_1242.zip format is disabled due to new Sqlite library
+
 2022-11-29
 - fixed saving of modified cmdb_\*.bin channel lists
 - removed "Save as" function (which was disabled for most channel list formats)

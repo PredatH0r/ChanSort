@@ -206,6 +206,7 @@ namespace Test.Loader.Samsung.Zip
             "\t" + (freesatChannelList == null ? 0 : freesatChannelList.Count) +
             "\t" + (tivusatChannelList == null ? 0 : tivusatChannelList.Count) +
             "\t" + (iptvChannelList == null ? 0 : iptvChannelList.Count) +
+            "\t" + serializer.EncodingInfo +
             "\t" + relPath;
 
           Assert.IsFalse(serializer.DataRoot.IsEmpty, "No channels loaded from " + file);

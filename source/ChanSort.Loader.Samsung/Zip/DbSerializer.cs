@@ -10,13 +10,45 @@ using ChanSort.Api;
 namespace ChanSort.Loader.Samsung.Zip
 {
   /// <summary>
-  /// Loader for Samsung J/K/M/N/R/Q series .zip files (2015 - 2020)
+  /// Loader for Samsung .zip files starting with model J in 2015 (and still valid as of 2022 for current models)
+  ///
+  /// The .zip file contains various SQLite database files without file extensions.
+  /// 
+  /// In theory SQLite is neutral to bit-ness (32/64) and endian-ness (MSB/LSB first) and should handle strings without issues.
+  /// SQLite also has a dynamic type system, allowing individual row values to have a different type than the column's default.
+  /// All observed Samsung databases are set to encoding "UTF-16le".
+  /// 
+  /// Samsung somehow manages to store strings in columns/cells with data type TEXT in reversed UTF16 byte-order (as BE instead LE).
+  /// Reading such a TEXT column returns an object of type "string" looking Chinese due to the swapped high/low-order bytes
+  /// One solution is to explicitly cast the column to BLOB in the query and manually decode it as UTF16BE. (Always works)
+  /// Another approach is to encode the string to a byte[] and decode it again as UTF16BE. (This doesn't work for format 1242)
+  ///
+  /// While it's easy to ready strings by casting them to BLOBs, there is a severe catch writing strings to the database.
+  /// Saving a byte[] as BLOB changes the value's data type in the database to BLOB and the TV receives byte[] instead of string - booom!
+  /// Saving a byte[] as TEXT leads to automatic conversion in the Sqlite library, decoding it as UTF16LE and writing it in LE byte-order - booom!
+  /// The hack is to pass a "Chinese"-ified string to the DB, manually swapping byte order through chained LE-encode + BE-decode
+  /// That does NOT work for format 1242 though.
+  /// 
+  /// Up until Microsoft.Data.Sqlite version 5.0.8 with SQLitePCLRaw 2.0.4 a workaround was to pass the SQL parameter as BLOB
+  /// with the expected byte order and cast the value to TEXT in the SQL update statement.
+  /// With Microsoft.Data.Sqlite version 7.0.0 and SQLitePCLRaw 2.1.2 this no longer work and the TEXT value ends up in the
+  /// database column as a readable UTF16-LE string instead of the expected reversed UTF16-BE. 
+  ///
+  /// Format "1242"
+  /// 
+  /// To make things even more complicated, there is file format version _1242, which stores channel names not as UTF16, but
+  /// instead as a raw byte sequence that encodes 16 UTF16BE bits in 3 byte UTF8 sequences, which also looks "Chinese".
+  /// In this format it is not possible to query the string as TEXT and then later re-encode/decode in code, because the
+  /// DB library already corrupts the raw data in the returned string with invalid-utf16-characters at the end (0xFD, 0xFF).
+  /// This format can only be read properly by casting the TEXT column to BLOB in the query.
+  /// There is NO WAY with Microsoft.Data.Sqlite 7.0.0 to store an arbitrary byte sequence and keep its data type TEXT.
+  /// Therefore changing channel names is disabled for this format and no updates are made to string values.
   /// </summary>
   internal class DbSerializer : SerializerBase
   {
-    private readonly Dictionary<long, DbChannel> channelById = new Dictionary<long, DbChannel>();
-    private readonly Dictionary<ChannelList, string> dbPathByChannelList = new Dictionary<ChannelList, string>();
-    private readonly List<string> tableNames = new List<string>();
+    private readonly Dictionary<long, DbChannel> channelById = new();
+    private readonly Dictionary<ChannelList, string> dbPathByChannelList = new();
+    private readonly List<string> tableNames = new();
     private Encoding encoding;
 
     private enum FileType { Unknown, SatDb, ChannelDbDvb, ChannelDbAnalog, ChannelDbIp }
@@ -373,17 +405,24 @@ namespace ChanSort.Loader.Samsung.Zip
     {
       if (r.IsDBNull(fieldIndex))
         return null;
-      byte[] nameBytes = new byte[200];
-      
-      // Microsoft.Data.SqlDataReader (and the underlying native DLLs) are bugged and throw a memory access violation when using r.GetBytes(...)
-      // nameLen = (int)r.GetBytes(fieldIndex, 0, nameBytes, 0, nameBytes.Length);
-      
-      int nameLen = 0; 
+      byte[] nameBytes = new byte[1000];
+
+      // Microsoft.Data.SqlDataReader (and the underlying native DLLs) are throwing a memory access violation when using r.GetBytes(...)
+      //int nameLen = (int)r.GetBytes(fieldIndex, 0, nameBytes, 0, nameBytes.Length);
+
+      int nameLen = 0;
       var obj = r.GetValue(fieldIndex);
-      if (obj is byte[] buffer)
+      if (obj is byte[] buffer) // DB returned a BLOB in correct byte order
       {
         nameBytes = buffer;
         nameLen = buffer.Length;
+      }
+      else if (obj is string str)
+      {
+        // SQLite library decoded the stored utf16be as utf16le, making everything look Chinese due to reversed byte order
+        // a 1242 format file with utf16be-inside-utf8-envelope encoding can also be decoded this way, but depending on the string length, the last 1-3 characters may be garbled
+        nameBytes = Encoding.Unicode.GetBytes(str);
+        nameLen = nameBytes.Length;
       }
 
       this.encoding ??= AutoDetectUtf16Encoding(nameBytes, nameLen);
@@ -397,8 +436,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #region AutoDetectUtf16Endian()
     private Encoding AutoDetectUtf16Encoding(byte[] nameBytes, int nameLen)
     {
-      if (this.DefaultEncoding is UnicodeEncoding)
-        return this.DefaultEncoding;
+      //return Encoding.BigEndianUnicode;
 
       int evenBytesZero = 0;
       int oddBytesZero = 0;
@@ -418,12 +456,14 @@ namespace ChanSort.Loader.Samsung.Zip
       if (evenBytesZero + oddBytesZero == nameLen)
         return null;
 
+      // in case of the 1242 format with 16 bits UTF16BE encoded inside 3-byte UTF8 sequences, every raw data byte has a value > 128
       if (bytesAbove128 + 1 >= nameLen)
       {
-        //this.Features.ChannelNameEdit = ChannelNameEditMode.None; // unclear if the encoder produces byte sequences that the TV can decode again
+        this.Features.ChannelNameEdit = ChannelNameEditMode.None; // impossible to write the arbitrary byte sequence needed and at the same time maintain data type TEXT
         return new Utf16InsideUtf8EnvelopeEncoding();
       }
 
+      // so far only UTF16BE has been seen across all sample files
       return evenBytesZero >= oddBytesZero ? Encoding.BigEndianUnicode : Encoding.Unicode;
     }
 
@@ -463,6 +503,17 @@ namespace ChanSort.Loader.Samsung.Zip
         base.DefaultEncoding = value;
       }
     }
+    #endregion
+
+    #region EncodingInfo
+    /// <summary>
+    /// The actually used encoding to decypher utf-8, utf16-le, utf16-be and utf16-inside-utf8-envelope
+    /// </summary>
+    internal string EncodingInfo => 
+      this.encoding == Encoding.BigEndianUnicode ? "uc16be" : 
+      this.encoding == Encoding.Unicode ? "uc16le" : 
+      this.encoding is Utf16InsideUtf8EnvelopeEncoding ? "16in8" : 
+      this.encoding.GetType().Name;
     #endregion
 
 
@@ -508,7 +559,7 @@ namespace ChanSort.Loader.Samsung.Zip
     {
       var canUpdateNames = this.Features.ChannelNameEdit != ChannelNameEditMode.None;
       var cmd = conn.CreateCommand();
-      var updateSrvName = canUpdateNames ? ", srvName=cast(@srvname as varchar)" : "";
+      var updateSrvName = canUpdateNames ? ", srvName=@srvname" : "";
       cmd.CommandText = "update SRV set major=@nr, lockMode=@lock, hideGuide=@hidden, hidden=@hidden, numSel=@numsel" + updateSrvName + "  where srvId=@id";
       cmd.Parameters.Add("@id", SqliteType.Integer);
       cmd.Parameters.Add("@nr", SqliteType.Integer);
@@ -516,7 +567,8 @@ namespace ChanSort.Loader.Samsung.Zip
       cmd.Parameters.Add("@hidden", SqliteType.Integer);
       cmd.Parameters.Add("@numsel", SqliteType.Integer);
       if (canUpdateNames)
-        cmd.Parameters.Add("@srvname", SqliteType.Blob);
+        cmd.Parameters.Add("@srvname", SqliteType.Text);
+
       cmd.Prepare();
       return cmd;
     }
@@ -597,7 +649,7 @@ namespace ChanSort.Loader.Samsung.Zip
         cmdUpdateSrv.Parameters["@hidden"].Value = channel.Hidden;
         cmdUpdateSrv.Parameters["@numsel"].Value = !channel.Skip;
         if (canUpdateNames)
-          cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? (object)DBNull.Value : encoding.GetBytes(channel.Name);
+          cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? (object)DBNull.Value : encoding.GetString(Encoding.Unicode.GetBytes(channel.Name)); // convert string => UTF16LE => string with flipped byte order (looking "Chinese")
         cmdUpdateSrv.ExecuteNonQuery();
 
         // update favorites
