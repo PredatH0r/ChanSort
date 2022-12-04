@@ -1,6 +1,12 @@
 ﻿ChanSort Change Log 
 ===================
 
+2022-12-04
+- fixed: various .xml file formats could not be loaded anymore
+- channels can also be swapped now be directly selecting two rows and clicking on "swap"
+- swapping mark (strike through) is now automatically removed after swapping
+- swapping is now recognized as a change and will prompt to save the list on exit
+
 2022-11-30
 - fixed Samsung .zip lists changing channel names to "Chinese" characters in the saved file
   (caused by a breaking change in the new version of the Microsoft.Data.Sqlite library)

@@ -166,7 +166,7 @@ namespace ChanSort.Loader.LG.Binary
 
       this.fileContent = File.ReadAllBytes(this.FileName);
       if (this.fileContent[0] == '<')
-        throw LoaderException.Fail("Invalid binary TLL file format. Maybe a GlobalClone/XML file?");
+        throw LoaderException.TryNext("Invalid binary TLL file format. Maybe a GlobalClone/XML file?");
 
       int off = 0;
 

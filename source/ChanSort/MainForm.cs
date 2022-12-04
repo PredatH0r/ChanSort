@@ -1804,7 +1804,7 @@ namespace ChanSort.Ui
 
       this.miMarkForSwapping.Enabled = mayEdit && sel.Count == 1;
       this.miMarkForSwapping.Down = swapMarkChannel != null;
-      this.miSwapWithMarked.Enabled = mayEdit && swapMarkList != null && this.CurrentChannelList == swapMarkList;
+      this.miSwapWithMarked.Enabled = mayEdit && (sel.Count == 2 || swapMarkList != null && this.CurrentChannelList == swapMarkList);
       this.miSkipOn.Enabled = this.miSkipOff.Enabled = this.currentTvSerializer?.Features.CanSkipChannels ?? false;
       this.miLockOn.Enabled = this.miLockOff.Enabled = this.currentTvSerializer?.Features.CanLockChannels ?? false;
       this.miHideOn.Enabled = this.miHideOff.Enabled = this.currentTvSerializer?.Features.CanHideChannels ?? false;
@@ -2057,9 +2057,6 @@ namespace ChanSort.Ui
 
     private void SwapWithMarked()
     {
-      if (this.swapMarkList == null || this.swapMarkList != this.CurrentChannelList || this.swapMarkSubList != this.subListIndex)
-        return;
-
       GridView gv;
       if (this.gridLeft.ContainsFocus)
         gv = this.gviewLeft;
@@ -2069,6 +2066,26 @@ namespace ChanSort.Ui
         return;
 
       var chanB = (ChannelInfo)gv.FocusedRowObject;
+
+      if (this.swapMarkList == null || this.swapMarkList != this.CurrentChannelList || this.swapMarkSubList != this.subListIndex)
+      {
+        if (gv.SelectedRowsCount != 2)
+          return;
+
+        // allow implicit selection of 2 channels to swap
+        var sel = GetSelectedChannels(gv);
+        if (sel[0] == chanB)
+          this.swapMarkChannel = sel[1];
+        else if (sel[1] == chanB)
+          this.swapMarkChannel = sel[0];
+        else
+          return;
+
+        this.swapMarkList = this.CurrentChannelList;
+        this.swapMarkSubList = this.subListIndex;
+      }
+
+
       if (chanB == null || chanB == this.swapMarkChannel)
         return;
 
@@ -2079,10 +2096,20 @@ namespace ChanSort.Ui
 
       this.gviewLeft.BeginDataUpdate();
       this.gviewRight.BeginDataUpdate();
+      
       this.swapMarkChannel.NewProgramNr = chanB.NewProgramNr;
       chanB.NewProgramNr = nrA;
+
+      this.miMarkForSwapping.Down = false;
+      this.swapMarkList = null;
+      this.swapMarkSubList = -1;
+      this.swapMarkChannel = null;
+
       this.gviewRight.EndDataUpdate();
       this.gviewLeft.EndDataUpdate();
+      
+      this.DataRoot.NeedsSaving = true;
+
     }
     #endregion
 
