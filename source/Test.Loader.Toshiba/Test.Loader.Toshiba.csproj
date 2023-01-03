@@ -24,7 +24,7 @@
     <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.*" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.0" />
     <PackageReference Include="Microsoft.TestPlatform.AdapterUtilities" Version="17.4.0" />
