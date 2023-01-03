@@ -1,68 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\packages\NUnit.3.13.3\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>
-    </ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F943DBFE-D3C3-4885-A38B-375148012FEC}</ProjectGuid>
+    <TargetFramework>net48</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Test.Loader.LG</RootNamespace>
-    <AssemblyName>Test.Loader.LG</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="nunit.framework, Version=3.13.3.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.13.3\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
+    <Reference Update="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
@@ -72,71 +22,21 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Binary\CS\TestCS.cs" />
-    <Compile Include="Binary\DM\TestDM.cs" />
-    <Compile Include="Binary\LA\TestLA.cs" />
-    <Compile Include="Binary\LD\TestLD.cs" />
-    <Compile Include="Binary\LE\TestLE.cs" />
-    <Compile Include="Binary\LK\TestLK.cs" />
-    <Compile Include="Binary\LM\TestLM.cs" />
-    <Compile Include="Binary\LN\TestLN.cs" />
-    <Compile Include="Binary\LP\TestLP.cs" />
-    <Compile Include="Binary\LS\TestLS.cs" />
-    <Compile Include="Binary\LT\TestLT.cs" />
-    <Compile Include="Binary\LV\TestLV.cs" />
-    <Compile Include="Binary\LW\TestLW.cs" />
-    <Compile Include="Binary\LX\TestLX.cs" />
-    <Compile Include="Binary\PM\TestPM.cs" />
-    <Compile Include="Binary\PN\TestPN.cs" />
-    <Compile Include="Binary\PT\TestPT.cs" />
-    <Compile Include="GlobalClone\LgGlobalCloneTest.cs" />
-    <Compile Include="Binary\TestBase.cs" />
-    <Compile Include="Binary\LH\TestLH.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Binary\DvbsCleanup\TestDvbsCleanup.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Binary\LH\xxLH3000-ZA00002.TLL.in">
+    <None Update="Binary\LH\xxLH3000-ZA00002.TLL.in">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="GlobalClone\GlobalClone00001.TLL" />
-    <None Include="GlobalClone\GlobalClone00002.TLL" />
-    <None Include="GlobalClone\GlobalClone00003.TLL" />
-    <None Include="GlobalClone\GlobalClone00201.TLL" />
-    <None Include="GlobalClone\GlobalClone200-inner.json" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
-      <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
-      <Name>ChanSort.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj">
-      <Project>{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}</Project>
-      <Name>ChanSort.Loader.LG</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Test.Loader\Test.Loader.csproj">
-      <Project>{68cfcb2f-b52a-43a1-aa5c-5d64a1d655d2}</Project>
-      <Name>Test.Loader</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj" />
+    <ProjectReference Include="..\Test.Loader\Test.Loader.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="GlobalClone.xml" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.3\build\NUnit.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+  </ItemGroup>
 </Project>

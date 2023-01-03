@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort", "ChanSort\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4E68F218-5135-4D92-8C17-14FAA5D4CBF3} = {4E68F218-5135-4D92-8C17-14FAA5D4CBF3}
 		{74A18C6F-09FF-413E-90D9-827066FA5B36} = {74A18C6F-09FF-413E-90D9-827066FA5B36}
@@ -16,9 +16,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort", "ChanSort\ChanSo
 		{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB} = {D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Api", "ChanSort.Api\ChanSort.Api.csproj", "{DCCFFA08-472B-4D17-BB90-8F513FC01392}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Api", "ChanSort.Api\ChanSort.Api.csproj", "{DCCFFA08-472B-4D17-BB90-8F513FC01392}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.LG", "ChanSort.Loader.LG\ChanSort.Loader.LG.csproj", "{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.LG", "ChanSort.Loader.LG\ChanSort.Loader.LG.csproj", "{E972D8A1-2F5F-421C-AC91-CFF45E5191BE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67AED502-8AEB-45F2-9B95-AC42B6A5D2C4}"
 	ProjectSection(SolutionItems) = preProject
@@ -30,75 +30,76 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\readme_de.md = ..\readme_de.md
 		..\readme_pl.md = ..\readme_pl.md
 		..\readme_tr-TR.md = ..\readme_tr-TR.md
+		Solution.props = Solution.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader", "Test.Loader\Test.Loader.csproj", "{68CFCB2F-B52A-43A1-AA5C-5D64A1D655D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Samsung", "ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj", "{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Samsung", "ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj", "{A1C9A98D-368A-44E8-9B7F-7EACA46C9EC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Toshiba", "ChanSort.Loader.Toshiba\ChanSort.Loader.Toshiba.csproj", "{F6F02792-07F1-48D5-9AF3-F945CA5E3931}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Toshiba", "ChanSort.Loader.Toshiba\ChanSort.Loader.Toshiba.csproj", "{F6F02792-07F1-48D5-9AF3-F945CA5E3931}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Panasonic", "ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj", "{68DA8072-3A29-4076-9F64-D66F38349585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Panasonic", "ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj", "{68DA8072-3A29-4076-9F64-D66F38349585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.LG", "Test.Loader.LG\Test.Loader.LG.csproj", "{F943DBFE-D3C3-4885-A38B-375148012FEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.LG", "Test.Loader.LG\Test.Loader.LG.csproj", "{F943DBFE-D3C3-4885-A38B-375148012FEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.VDR", "ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj", "{74A18C6F-09FF-413E-90D9-827066FA5B36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.VDR", "ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj", "{74A18C6F-09FF-413E-90D9-827066FA5B36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Hisense", "ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj", "{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Hisense", "ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj", "{D093E7EE-D3AD-4E7B-AF82-C6918CA017FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Samsung", "Test.Loader.Samsung\Test.Loader.Samsung.csproj", "{1ED68A9B-6698-4609-B9E6-8E08B6055F2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.Samsung", "Test.Loader.Samsung\Test.Loader.Samsung.csproj", "{1ED68A9B-6698-4609-B9E6-8E08B6055F2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.SatcoDX", "ChanSort.Loader.SatcoDX\ChanSort.Loader.SatcoDX.csproj", "{E6279FF8-362A-41E6-AC0D-D0861D43F01C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.SatcoDX", "ChanSort.Loader.SatcoDX\ChanSort.Loader.SatcoDX.csproj", "{E6279FF8-362A-41E6-AC0D-D0861D43F01C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Sony", "ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj", "{70E29C6B-B926-4859-9548-23375BF1E1B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Sony", "ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj", "{70E29C6B-B926-4859-9548-23375BF1E1B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Panasonic", "Test.Loader.Panasonic\Test.Loader.Panasonic.csproj", "{D1E4454F-DB09-402D-AD87-1E3BD17266A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.Panasonic", "Test.Loader.Panasonic\Test.Loader.Panasonic.csproj", "{D1E4454F-DB09-402D-AD87-1E3BD17266A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Hisense", "Test.Loader.Hisense\Test.Loader.Hisense.csproj", "{2717DB4C-7E94-4277-A880-FC2571096E74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.Hisense", "Test.Loader.Hisense\Test.Loader.Hisense.csproj", "{2717DB4C-7E94-4277-A880-FC2571096E74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Philips", "Test.Loader.Philips\Test.Loader.Philips.csproj", "{0A162099-DA92-426A-AB70-36F88F9E5DC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.Philips", "Test.Loader.Philips\Test.Loader.Philips.csproj", "{0A162099-DA92-426A-AB70-36F88F9E5DC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.SatcoDX", "Test.Loader.SatcoDX\Test.Loader.SatcoDX.csproj", "{C0528858-F32D-4C0C-8EC8-CEDB53C01402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.SatcoDX", "Test.Loader.SatcoDX\Test.Loader.SatcoDX.csproj", "{C0528858-F32D-4C0C-8EC8-CEDB53C01402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Sony", "Test.Loader.Sony\Test.Loader.Sony.csproj", "{F732435A-0188-456C-8F06-7FBA1842FB35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.Sony", "Test.Loader.Sony\Test.Loader.Sony.csproj", "{F732435A-0188-456C-8F06-7FBA1842FB35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Toshiba", "Test.Loader.Toshiba\Test.Loader.Toshiba.csproj", "{D7B71F40-C941-4364-A25F-8D41B384507A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.Toshiba", "Test.Loader.Toshiba\Test.Loader.Toshiba.csproj", "{D7B71F40-C941-4364-A25F-8D41B384507A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.VDR", "Test.Loader.VDR\Test.Loader.VDR.csproj", "{AED060F0-495C-494C-89C2-7A96A0FA3762}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.VDR", "Test.Loader.VDR\Test.Loader.VDR.csproj", "{AED060F0-495C-494C-89C2-7A96A0FA3762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.M3u", "ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj", "{484028B6-3AAE-4F7E-A88A-76BEEB70203B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.M3u", "ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj", "{484028B6-3AAE-4F7E-A88A-76BEEB70203B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Philips", "ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj", "{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Philips", "ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj", "{1F52B5EC-A2F1-4E53-9E1A-4658296C5BB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spikes", "Spike.LgWebOs5\Spikes.csproj", "{32EFB306-DEF8-4488-B1AE-46D5B183C373}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spikes", "Spike.LgWebOs5\Spikes.csproj", "{32EFB306-DEF8-4488-B1AE-46D5B183C373}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Grundig", "ChanSort.Loader.Grundig\ChanSort.Loader.Grundig.csproj", "{4D5AF0A3-1B96-42C8-910D-0C4852EA22F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Grundig", "ChanSort.Loader.Grundig\ChanSort.Loader.Grundig.csproj", "{4D5AF0A3-1B96-42C8-910D-0C4852EA22F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.M3u", "Test.Loader.M3u\Test.Loader.M3u.csproj", "{052692BF-D782-4888-B34D-89D6B1379340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.M3u", "Test.Loader.M3u\Test.Loader.M3u.csproj", "{052692BF-D782-4888-B34D-89D6B1379340}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Enigma2", "ChanSort.Loader.Enigma2\ChanSort.Loader.Enigma2.csproj", "{4AD7F77E-617C-4741-82AE-E7A41C85EE4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Enigma2", "ChanSort.Loader.Enigma2\ChanSort.Loader.Enigma2.csproj", "{4AD7F77E-617C-4741-82AE-E7A41C85EE4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Api", "Test.Api\Test.Api.csproj", "{6733CFE6-C86A-4BD6-817C-292E0638CE4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Api", "Test.Api\Test.Api.csproj", "{6733CFE6-C86A-4BD6-817C-292E0638CE4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Enigma2", "Test.Loader.Enigma2\Test.Loader.Enigma2.csproj", "{8C342A81-387E-403D-9140-17C4A4C4292E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.Enigma2", "Test.Loader.Enigma2\Test.Loader.Enigma2.csproj", "{8C342A81-387E-403D-9140-17C4A4C4292E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Grundig", "Test.Loader.Grundig\Test.Loader.Grundig.csproj", "{48D99DF3-018D-4B3F-BB22-5C7F6F6A7E77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.Grundig", "Test.Loader.Grundig\Test.Loader.Grundig.csproj", "{48D99DF3-018D-4B3F-BB22-5C7F6F6A7E77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Sharp", "ChanSort.Loader.Sharp\ChanSort.Loader.Sharp.csproj", "{4E68F218-5135-4D92-8C17-14FAA5D4CBF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Sharp", "ChanSort.Loader.Sharp\ChanSort.Loader.Sharp.csproj", "{4E68F218-5135-4D92-8C17-14FAA5D4CBF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.Sharp", "Test.Loader.Sharp\Test.Loader.Sharp.csproj", "{DF1A8F81-CE9B-499E-9258-27F346B32A8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.Sharp", "Test.Loader.Sharp\Test.Loader.Sharp.csproj", "{DF1A8F81-CE9B-499E-9258-27F346B32A8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.LG.UI", "ChanSort.Loader.LG.UI\ChanSort.Loader.LG.UI.csproj", "{321DEB9D-9F28-47B3-8B90-EE036B5F0019}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.LG.UI", "ChanSort.Loader.LG.UI\ChanSort.Loader.LG.UI.csproj", "{321DEB9D-9F28-47B3-8B90-EE036B5F0019}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.CmdbBin", "ChanSort.Loader.CmdbBin\ChanSort.Loader.CmdbBin.csproj", "{B594DDA4-7BD5-450E-B648-668E0F659813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.CmdbBin", "ChanSort.Loader.CmdbBin\ChanSort.Loader.CmdbBin.csproj", "{B594DDA4-7BD5-450E-B648-668E0F659813}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Android", "ChanSort.Loader.Android\ChanSort.Loader.Android.csproj", "{5088DB0D-6BDE-4678-8C50-A14E6A294A45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Android", "ChanSort.Loader.Android\ChanSort.Loader.Android.csproj", "{5088DB0D-6BDE-4678-8C50-A14E6A294A45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Loewe", "ChanSort.Loader.Loewe\ChanSort.Loader.Loewe.csproj", "{D4B9399D-5609-4F87-A4BA-5B35983A981B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Loewe", "ChanSort.Loader.Loewe\ChanSort.Loader.Loewe.csproj", "{D4B9399D-5609-4F87-A4BA-5B35983A981B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Loader.CmdbBin", "Test.Loader.CmdbBin\Test.Loader.CmdbBin.csproj", "{3B7C25DF-645B-4ACF-8528-27EF40FAF91F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Loader.CmdbBin", "Test.Loader.CmdbBin\Test.Loader.CmdbBin.csproj", "{3B7C25DF-645B-4ACF-8528-27EF40FAF91F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Unsupported", "ChanSort.Loader.Unsupported\ChanSort.Loader.Unsupported.csproj", "{D7C32DAE-5D77-46A0-BC16-C95D9C7EFDD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.Unsupported", "ChanSort.Loader.Unsupported\ChanSort.Loader.Unsupported.csproj", "{D7C32DAE-5D77-46A0-BC16-C95D9C7EFDD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

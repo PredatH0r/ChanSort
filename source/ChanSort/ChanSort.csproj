@@ -1,65 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Solution.props"/>
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <TargetFramework>net48</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChanSort.Ui</RootNamespace>
-    <AssemblyName>ChanSort</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>..\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
     <OutputPath>..\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>..\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
@@ -69,560 +37,129 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Drawing.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.Charts.v22.1.Core">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Charts.v22.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.CodeParser.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.CodeParser.v22.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Office.v22.1.Core, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Pdf.v22.1.Core, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.Data.Desktop.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Data.Desktop.v22.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v22.1.Export, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.Data.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Data.v22.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Printing.v22.1.Core, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.Drawing.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Drawing.v22.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v22.1.Core, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Data.Desktop.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.Office.v22.1.Core">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Office.v22.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.Pdf.v22.1.Core">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Pdf.v22.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v22.1.UI, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.PivotGrid.v22.1.Core">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.PivotGrid.v22.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.Printing.v22.1.Core">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Printing.v22.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.RichEdit.v22.1.Core">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.RichEdit.v22.1.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraGrid.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DevExpress.RichEdit.v22.1.Export">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.RichEdit.v22.1.Export.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Charts.v22.1.Core, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraCharts.v22.1.Wizard, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraCharts.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.PivotGrid.v22.1.Core, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Sparkline.v22.1.Core, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.CodeParser.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v22.1.Extensions, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="DevExpress.Sparkline.v22.1.Core">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Sparkline.v22.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Utils.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v22.1.UI">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Utils.v22.1.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraBars.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraCharts.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v22.1.Wizard">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraCharts.v22.1.Wizard.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraEditors.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraGrid.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraPrinting.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraReports.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v22.1.Extensions">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraReports.v22.1.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.configuration" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ActionBox.Designer.cs">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BrowserHelper.cs" />
-    <Compile Include="Printing\ChannelListReport.cs">
+    <Compile Update="Printing\ChannelListReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Printing\ChannelListReport.Designer.cs">
-      <DependentUpon>ChannelListReport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GlobalImageCollection.cs">
+    <Compile Update="GlobalImageCollection.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="InfoBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="InfoBox.Designer.cs">
-      <DependentUpon>InfoBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Printing\ReportOptionsDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Printing\ReportOptionsDialog.Designer.cs">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.pt.Designer.cs">
-      <DependentUpon>Resources.pt.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Config.cs" />
-    <Compile Include="ReferenceListForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ReferenceListForm.Designer.cs">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Settings.cs" />
-    <Compile Include="SkinPickerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SkinPickerForm.Designer.cs">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TextInputForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TextInputForm.Designer.cs">
-      <DependentUpon>TextInputForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UpdateCheck.cs" />
-    <Compile Include="WaitForm1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WaitForm1.Designer.cs">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AboutForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutForm.Designer.cs">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CharsetForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CharsetForm.Designer.cs">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Win32.cs" />
-    <Compile Include="XGrid\XGridControl.cs">
+    <Compile Update="XGrid\XGridControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="XGrid\XGridView.cs">
+    <Compile Update="XGrid\XGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="XGrid\XGridView.LayoutPersister.cs">
+    <Compile Update="XGrid\XGridView.LayoutPersister.cs">
       <SubType>Component</SubType>
     </Compile>
-    <EmbeddedResource Include="AboutForm.cs.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutForm.de.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutForm.es.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutForm.hu.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutForm.pl.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutForm.pt.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutForm.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutForm.ro.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutForm.ru.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AboutForm.tr.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.cs.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.de.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.es.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.hu.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.pl.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.pt.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.ro.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.ru.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionBox.tr.resx">
-      <DependentUpon>ActionBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.cs.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.de.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.es.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.hu.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.pl.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.pt.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.ro.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.ru.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CharsetForm.tr.resx">
-      <DependentUpon>CharsetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GlobalImageCollection.resx">
-      <DependentUpon>GlobalImageCollection.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="InfoBox.resx">
-      <DependentUpon>InfoBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.cs.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.de.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.es.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.hu.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.pl.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.pt.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.ro.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.ru.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.tr.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ChannelListReport.resx">
-      <DependentUpon>ChannelListReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.cs.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.de.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.es.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.hu.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.pl.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.pt.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.ro.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.ru.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Printing\ReportOptionsDialog.tr.resx">
-      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.cs.resx" />
-    <EmbeddedResource Include="Properties\Resources.es.resx" />
-    <EmbeddedResource Include="Properties\Resources.hu.resx" />
-    <EmbeddedResource Include="Properties\Resources.pl.resx" />
-    <EmbeddedResource Include="Properties\Resources.pt.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.pt.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="Properties\Resources.de.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.de.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.ro.resx" />
-    <EmbeddedResource Include="Properties\Resources.ru.resx" />
-    <EmbeddedResource Include="Properties\Resources.tr.resx" />
-    <EmbeddedResource Include="ReferenceListForm.cs.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceListForm.de.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceListForm.es.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceListForm.hu.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceListForm.pl.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceListForm.pt.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceListForm.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceListForm.ro.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceListForm.ru.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceListForm.tr.resx">
-      <DependentUpon>ReferenceListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.cs.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.de.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.es.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.hu.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.pl.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.pt.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.ro.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.ru.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SkinPickerForm.tr.resx">
-      <DependentUpon>SkinPickerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TextInputForm.resx">
-      <DependentUpon>TextInputForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.cs.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.de.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.es.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.hu.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.pl.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.pt.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.ro.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.ru.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WaitForm1.tr.resx">
-      <DependentUpon>WaitForm1.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="app.config" />
-    <None Include="app.manifest" />
-    <None Include="Properties\DataSources\ChannelInfo.datasource" />
-    <None Include="Properties\DataSources\ChanSort.Api.ChannelList.datasource" />
-    <None Include="Properties\DataSources\System.Text.EncodingInfo.datasource" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
-      <Project>{DCCFFA08-472B-4D17-BB90-8F513FC01392}</Project>
-      <Name>ChanSort.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Android\ChanSort.Loader.Android.csproj">
-      <Project>{5088db0d-6bde-4678-8c50-a14e6a294a45}</Project>
-      <Name>ChanSort.Loader.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.CmdbBin\ChanSort.Loader.CmdbBin.csproj">
-      <Project>{b594dda4-7bd5-450e-b648-668e0f659813}</Project>
-      <Name>ChanSort.Loader.CmdbBin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Enigma2\ChanSort.Loader.Enigma2.csproj">
-      <Project>{4ad7f77e-617c-4741-82ae-e7a41c85ee4d}</Project>
-      <Name>ChanSort.Loader.Enigma2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Grundig\ChanSort.Loader.Grundig.csproj">
-      <Project>{4d5af0a3-1b96-42c8-910d-0c4852ea22f4}</Project>
-      <Name>ChanSort.Loader.Grundig</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj">
-      <Project>{d093e7ee-d3ad-4e7b-af82-c6918ca017fb}</Project>
-      <Name>ChanSort.Loader.Hisense</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.LG.UI\ChanSort.Loader.LG.UI.csproj">
-      <Project>{321deb9d-9f28-47b3-8b90-ee036b5f0019}</Project>
-      <Name>ChanSort.Loader.LG.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj">
-      <Project>{e972d8a1-2f5f-421c-ac91-cff45e5191be}</Project>
-      <Name>ChanSort.Loader.LG</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Loewe\ChanSort.Loader.Loewe.csproj">
-      <Project>{d4b9399d-5609-4f87-a4ba-5b35983a981b}</Project>
-      <Name>ChanSort.Loader.Loewe</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj">
-      <Project>{484028b6-3aae-4f7e-a88a-76beeb70203b}</Project>
-      <Name>ChanSort.Loader.M3u</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj">
-      <Project>{68da8072-3a29-4076-9f64-d66f38349585}</Project>
-      <Name>ChanSort.Loader.Panasonic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj">
-      <Project>{1f52b5ec-a2f1-4e53-9e1a-4658296c5bb5}</Project>
-      <Name>ChanSort.Loader.Philips</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj">
-      <Project>{a1c9a98d-368a-44e8-9b7f-7eaca46c9ec5}</Project>
-      <Name>ChanSort.Loader.Samsung</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.SatcoDX\ChanSort.Loader.SatcoDX.csproj">
-      <Project>{e6279ff8-362a-41e6-ac0d-d0861d43f01c}</Project>
-      <Name>ChanSort.Loader.SatcoDX</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Sharp\ChanSort.Loader.Sharp.csproj">
-      <Project>{4e68f218-5135-4d92-8c17-14faa5d4cbf3}</Project>
-      <Name>ChanSort.Loader.Sharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj">
-      <Project>{70e29c6b-b926-4859-9548-23375bf1e1b5}</Project>
-      <Name>ChanSort.Loader.Sony</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Toshiba\ChanSort.Loader.Toshiba.csproj">
-      <Project>{f6f02792-07f1-48d5-9af3-f945ca5e3931}</Project>
-      <Name>ChanSort.Loader.Toshiba</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.Unsupported\ChanSort.Loader.Unsupported.csproj">
-      <Project>{d7c32dae-5d77-46a0-bc16-c95d9c7efdd5}</Project>
-      <Name>ChanSort.Loader.Unsupported</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj">
-      <Project>{74a18c6f-09ff-413e-90d9-827066fa5b36}</Project>
-      <Name>ChanSort.Loader.VDR</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Android\ChanSort.Loader.Android.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.CmdbBin\ChanSort.Loader.CmdbBin.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Enigma2\ChanSort.Loader.Enigma2.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Grundig\ChanSort.Loader.Grundig.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.LG.UI\ChanSort.Loader.LG.UI.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Loewe\ChanSort.Loader.Loewe.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.SatcoDX\ChanSort.Loader.SatcoDX.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Sharp\ChanSort.Loader.Sharp.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Toshiba\ChanSort.Loader.Toshiba.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Unsupported\ChanSort.Loader.Unsupported.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="app.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Donate.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\paypal-button.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ReferenceLists\at_astra192E_orf-freehd.txt">
+    <None Update="ReferenceLists\at_astra192E_orf-freehd.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\at_liwest.txt">
+    <None Update="ReferenceLists\at_liwest.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\de_astra192E_hisense_freehd.txt">
+    <None Update="ReferenceLists\de_astra192E_hisense_freehd.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\de_astra192E_hisense_hdplus.txt">
+    <None Update="ReferenceLists\de_astra192E_hisense_hdplus.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -632,48 +169,46 @@
     </Content>
     <Content Include="Resources\btn_donateCC_LG.png" />
     <Content Include="Resources\btn_donateCC_LG_de.png" />
-    <None Include="ReferenceLists\it_hotbird130E_tivusat_EasyHD_&amp;_FTA.txt">
+    <None Update="ReferenceLists\it_hotbird130E_tivusat_EasyHD_&amp;_FTA.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\BE_Telenet_CI+_Module.txt">
+    <None Update="ReferenceLists\BE_Telenet_CI+_Module.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\ch_astra192E_hotbird130E_freehd.txt">
+    <None Update="ReferenceLists\ch_astra192E_hotbird130E_freehd.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\ch_astra192E_hotbird130E_hdplus.txt">
+    <None Update="ReferenceLists\ch_astra192E_hotbird130E_hdplus.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\de_unitymedia_nrw.txt">
+    <None Update="ReferenceLists\de_unitymedia_nrw.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\de_vodafone_KabelTV_Berlin.txt">
+    <None Update="ReferenceLists\de_vodafone_KabelTV_Berlin.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\gb_astra282E_freesat.txt">
+    <None Update="ReferenceLists\gb_astra282E_freesat.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\gb_astra282E_freesat_EastAnglia_StartAt1.txt">
+    <None Update="ReferenceLists\gb_astra282E_freesat_EastAnglia_StartAt1.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\gb_astra282E_sky.txt">
+    <None Update="ReferenceLists\gb_astra282E_sky.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ReferenceLists\ru_eutelsat36E_tricolor.txt">
+    <None Update="ReferenceLists\ru_eutelsat36E_tricolor.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="ActionImages.resx" />
+  </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>$(ProjectDir)..\deployLibs.cmd $(TargetDir)
+    <PostBuildEvent>
+      $(MSBuildProjectDirectory)\..\deployLibs.cmd $(TargetDir)
 </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

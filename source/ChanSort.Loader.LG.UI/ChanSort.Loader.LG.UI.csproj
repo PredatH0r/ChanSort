@@ -1,147 +1,46 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Solution.props"/>
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{321DEB9D-9F28-47B3-8B90-EE036B5F0019}</ProjectGuid>
+    <TargetFramework>net48</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChanSort.Loader.LG.UI</RootNamespace>
-    <AssemblyName>ChanSort.Loader.LG.UI</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>..\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
     <OutputPath>..\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.Desktop.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.Desktop.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Data.Desktop.v22.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Drawing.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Printing.v22.1.Core, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Data.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v22.1, Version=22.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <Reference Include="DevExpress.Data.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Data.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Drawing.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Drawing.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v22.1.Core">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Printing.v22.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Utils.v22.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v22.1">
+      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraEditors.v22.1.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="LgUserInterfaceFactory.cs" />
-    <Compile Include="TvSettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TvSettingsForm.Designer.cs">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PresetProgramNrDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PresetProgramNrDialog.Designer.cs">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="PresetProgramNrDialog.cs.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.de.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.es.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.hu.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.pl.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.pt.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.ro.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.ru.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresetProgramNrDialog.tr.resx">
-      <DependentUpon>PresetProgramNrDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.cs.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.de.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.es.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.hu.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.pl.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.pt.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.ro.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.ru.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TvSettingsForm.tr.resx">
-      <DependentUpon>TvSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj">
-      <Project>{dccffa08-472b-4d17-bb90-8f513fc01392}</Project>
-      <Name>ChanSort.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj">
-      <Project>{e972d8a1-2f5f-421c-ac91-cff45e5191be}</Project>
-      <Name>ChanSort.Loader.LG</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
