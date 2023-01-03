@@ -233,14 +233,9 @@ namespace ChanSort.Api
       Favorites favMask = 0;
       foreach (Favorites fav in Enum.GetValues(typeof (Favorites)))
       {
-        foreach (char c in value)
-        {
-          if (c == fav.ToString()[0])
-          {
-            favMask |= fav;
-            break;
-          }
-        }
+        var favChar = fav.ToString()[0];
+        if (value.IndexOf(favChar) >= 0)
+          favMask |= fav;
       }
       return favMask;
     }

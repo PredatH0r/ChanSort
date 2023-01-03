@@ -72,6 +72,9 @@ namespace ChanSort.Ui
 
       InitializeComponent();
 
+      //this.repositoryItemCheckedComboBoxEdit1.SetFlags(typeof(Favorites));
+      //this.repositoryItemCheckedComboBoxEdit2.SetFlags(typeof(Favorites));
+
       base.DoubleBuffered = true;
 
       var version = this.GetType().Assembly.GetName().Version;
@@ -516,6 +519,7 @@ namespace ChanSort.Ui
         regex += "]*";
       this.repositoryItemCheckedComboBoxEdit1.Mask.EditMask = regex;
       this.repositoryItemCheckedComboBoxEdit2.Mask.EditMask = regex;
+      
       this.repositoryItemCheckedComboBoxEdit1.ReadOnly = this.repositoryItemCheckedComboBoxEdit2.ReadOnly = favorites == 0;
       
       this.tabSubList.BeginUpdate();
@@ -2374,11 +2378,26 @@ namespace ChanSort.Ui
 
     private void gview_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
     {
-      var channel = (ChannelInfo) e.Row;
-      if (e.Column.FieldName == "Position")
-        e.Value = channel.GetPosition(this.subListIndex);
-      else if (e.Column.FieldName == "OldPosition")
-        e.Value = channel.GetOldPosition(this.subListIndex);
+      var field = e.Column.FieldName;
+
+      if (e.IsGetData)
+      {
+        var channel = (ChannelInfo)e.Row;
+        if (field == "Position")
+          e.Value = channel.GetPosition(this.subListIndex);
+        else if (field == "OldPosition")
+          e.Value = channel.GetOldPosition(this.subListIndex);
+        else if (field == colFavorites.FieldName)
+          e.Value = GetFavString(channel.Favorites);
+      }
+      else
+      {
+        if (e.Column.FieldName == colFavorites.FieldName)
+        {
+          var channel = (ChannelInfo)e.Row;
+          channel.Favorites = ChannelInfo.ParseFavString(e.Value?.ToString() ?? "");
+        }
+      }
     }
 
     #endregion
@@ -2561,19 +2580,6 @@ namespace ChanSort.Ui
 
     #endregion
 
-    #region gviewLeft_CustomColumnDisplayText
-
-    private void gviewLeft_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
-    {
-      if (e.Column == this.colOutFav)
-      {
-        if (e.Value is Favorites fav)
-          e.DisplayText = GetFavString(fav);
-      }
-    }
-
-    #endregion
-
     #region gviewLeft_RowCellStyle
 
     private void gviewLeft_RowCellStyle(object sender, RowCellStyleEventArgs e)
@@ -2742,11 +2748,6 @@ namespace ChanSort.Ui
         if (!(e.Value is int)) return;
         if ((int) e.Value == -1)
           e.DisplayText = string.Empty;
-      }
-      else if (e.Column == this.colFavorites)
-      {
-        if (e.Value is Favorites fav)
-          e.DisplayText = GetFavString(fav);
       }
     }
 

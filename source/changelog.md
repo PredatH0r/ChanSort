@@ -1,9 +1,12 @@
 ﻿ChanSort Change Log 
 ===================
 
-TBA
+2023-01-03
+- added support for TCL / Thomson \*.tar channel lists (containing DtvData.db and satellite.db)
+- fixed text input for "Favorites" column (where applicable)
 - fixed: menu "settings / allow editing predefined lists (DANGEROUS)" unlocked the edit functions
   in the user interface, but changes to those lists were not saved to disk.
+- changed build process to use MSBuild project files (to allow future switch to .NET 7 or 8)
 
 2022-12-04
 - fixed: various .xml file formats could not be loaded anymore

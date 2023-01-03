@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\Solution.props"/>
+  <Import Project="..\Solution.props" />
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -142,6 +142,7 @@
     <ProjectReference Include="..\ChanSort.Loader.SatcoDX\ChanSort.Loader.SatcoDX.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Sharp\ChanSort.Loader.Sharp.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Sony\ChanSort.Loader.Sony.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.TCL\ChanSort.Loader.TCL.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Toshiba\ChanSort.Loader.Toshiba.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Unsupported\ChanSort.Loader.Unsupported.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj" />

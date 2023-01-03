@@ -114,7 +114,7 @@ namespace ChanSort.Loader.Philips
         //if (length > 0x0140000)
         //  length = 0x0140000;
 
-        var actualCrc = Crc16.Calc(data, 0, length);
+        var actualCrc = Crc16.Modbus(data, 0, length);
         if (actualCrc != expectedCrc)
         {
           var msg = $"chanLst.bin: stored CRC for {entry.Key} is {expectedCrc:X4} but calculated {actualCrc:X4}";
@@ -160,7 +160,7 @@ namespace ChanSort.Loader.Philips
         var length = data.Length;
         if (VersionMajor < 12 && length > 0x6000)
           length = 0x6000; // there might be another cap at 0x013FA000 + 0x6000 in some versions
-        var crc = Crc16.Calc(data, 0, length);
+        var crc = Crc16.Modbus(data, 0, length);
         var off = entry.Value;
         content[off] = (byte) crc;
         content[off + 1] = (byte) (crc >> 8);

@@ -181,8 +181,8 @@ left outer join ChanDataTable ac on ac.handle=a.m_channel_no
         // DVB
         if (!r.IsDBNull(ixD + 0))
         {
-          channel.OriginalNetworkId = r.GetInt32(ixD + 0) & 0x1FFF;
-          channel.TransportStreamId = r.GetInt32(ixD + 1) & 0x1FFF;
+          channel.OriginalNetworkId = r.GetInt32(ixD + 0) & 0x7FFF;
+          channel.TransportStreamId = r.GetInt32(ixD + 1) & 0x7FFF;
           channel.ServiceId = r.GetInt32(ixD + 2) & 0x1FFF;
           channel.ServiceType = r.GetInt32(ixD + 3) & 0x1FFF;
           channel.Provider = r.GetString(ixD + 5);

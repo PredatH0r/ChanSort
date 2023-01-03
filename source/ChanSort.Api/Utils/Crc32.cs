@@ -12,7 +12,7 @@
 
     public static Crc32 Normal = new Crc32(true, NormalPoly);
     public static Crc32 Reversed = new Crc32(false, NormalPoly);
-    private static readonly byte[] BitReversedBytes = new byte[256];
+    internal static readonly byte[] BitReversedBytes = new byte[256];
 
     private readonly uint[] crc32Table;
     private readonly bool msbFirst;
