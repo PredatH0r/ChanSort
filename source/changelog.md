@@ -3,6 +3,7 @@
 
 2023-01-03
 - added support for TCL / Thomson \*.tar channel lists (containing DtvData.db and satellite.db)
+- updated hotbird reference list for Italy
 - fixed text input for "Favorites" column (where applicable)
 - fixed: menu "settings / allow editing predefined lists (DANGEROUS)" unlocked the edit functions
   in the user interface, but changes to those lists were not saved to disk.
