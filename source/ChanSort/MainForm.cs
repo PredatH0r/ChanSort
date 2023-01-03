@@ -648,6 +648,7 @@ namespace ChanSort.Ui
       this.currentPlugin = plugin;
       this.currentTvSerializer = serializer;
       this.DataRoot = serializer.DataRoot;
+      this.ApplyReadOnlyOverride();
       this.AddFileToMruList(serializer.FileName);
       this.UpdateMruMenu();
 
@@ -2210,7 +2211,16 @@ namespace ChanSort.Ui
     }
     #endregion
 
-    
+    #region ApplyReadOnlyOverride()
+    private void ApplyReadOnlyOverride()
+    {
+      if (this.miAllowEditPredefinedLists.Down)
+      {
+        foreach (var list in this.DataRoot.ChannelLists)
+          list.ReadOnly = false;
+      }
+    }
+    #endregion
 
     // UI events
 
@@ -3078,6 +3088,7 @@ namespace ChanSort.Ui
     {
       TryExecute(() =>
       {
+        this.ApplyReadOnlyOverride();
         this.UpdateGridReadOnly();
         this.UpdateMenu();
       });

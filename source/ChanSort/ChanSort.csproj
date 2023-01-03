@@ -594,6 +594,10 @@
       <Project>{f6f02792-07f1-48d5-9af3-f945ca5e3931}</Project>
       <Name>ChanSort.Loader.Toshiba</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ChanSort.Loader.Unsupported\ChanSort.Loader.Unsupported.csproj">
+      <Project>{d7c32dae-5d77-46a0-bc16-c95d9c7efdd5}</Project>
+      <Name>ChanSort.Loader.Unsupported</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj">
       <Project>{74a18c6f-09ff-413e-90d9-827066fa5b36}</Project>
       <Name>ChanSort.Loader.VDR</Name>

@@ -1,6 +1,10 @@
 ﻿ChanSort Change Log 
 ===================
 
+TBA
+- fixed: menu "settings / allow editing predefined lists (DANGEROUS)" unlocked the edit functions
+  in the user interface, but changes to those lists were not saved to disk.
+
 2022-12-04
 - fixed: various .xml file formats could not be loaded anymore
 - channels can also be swapped now be directly selecting two rows and clicking on "swap"
