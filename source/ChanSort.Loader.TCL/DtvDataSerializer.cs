@@ -10,14 +10,16 @@ using SharpCompress.Writers.Tar;
 namespace ChanSort.Loader.TCL
 {
   /*
-   * This class loads TCL / Thomson .tar files containing DtvData.db and satellite.db SQLite databases.
+   * This class loads TCL / Thomson channel lists from a directory or a .tar file containing cloneCRC.bin, DtvData.db and satellite.db.
    *
    * None of the sample files contained more than a single input source (DVB-C/T/S), so for the time being this loader puts everything into a single list
    */
   class DtvDataSerializer : SerializerBase
   {
     private readonly ChannelList channels = new (SignalSource.All, "All");
+    private string dbDir;
     private string dtvFile;
+    private string satFile;
     private string crcFile;
 
     private readonly HashSet<string> tableNames = new();
@@ -68,57 +70,65 @@ namespace ChanSort.Loader.TCL
     #region Load()
     public override void Load()
     {
+      PrepareWorkingDirectory();
+      ValidateCrc();
+      ReadSattelliteDb();
+      ReadDtvDataDb();
+    }
+    #endregion
+    
+    #region PrepareWorkingDirectory()
+    /// <summary>
+    /// this.FileName might be
+    /// - a .tar file containing database/cloneCRC.bin, database/userdata/DtvData.db, database/userdata/satellite.db
+    /// - a .db file in a folder with DtvData.db and satellite.db and a cloneCRC.bin in either the same dir or the parent dir
+    /// Other situations have already been handled in the <see cref="TclPlugin"/>
+    /// </summary>
+    private void PrepareWorkingDirectory()
+    {
+      var ext = Path.GetExtension(this.FileName).ToLowerInvariant();
+      if (ext == ".tar")
+      {
+        UntarToTempDir();
+        this.crcFile = Path.Combine(this.TempPath, "database", "cloneCRC.bin");
+        this.dbDir = Path.Combine(this.TempPath, "database", "userdata");
+      }
+      else if (ext == ".db")
+      {
+        this.dbDir = Path.GetDirectoryName(this.FileName);
+        this.crcFile = Path.Combine(this.dbDir, "cloneCRC.bin");
+        if (!File.Exists(crcFile))
+          this.crcFile = Path.Combine(Path.GetDirectoryName(this.dbDir), "cloneCRC.bin");
+      }
+      else
+        throw LoaderException.TryNext("unrecognized TCL/Thomson directory structure");
+
+      this.dtvFile = Path.Combine(dbDir, "DtvData.db");
+      if (!File.Exists(dtvFile))
+        throw LoaderException.TryNext("Missing DtvData.db file");
+
+      this.satFile = Path.Combine(dbDir, "satellite.db");
+      if (!File.Exists(satFile))
+        satFile = null;
+
+      if (!File.Exists(crcFile))
+        crcFile = null;
+    }
+    #endregion
+
+    #region UntarToTempDir()
+    private void UntarToTempDir()
+    {
       using var tar = TarArchive.Open(this.FileName);
       var rdr = tar.ExtractAllEntries();
       this.TempPath = Path.Combine(Path.GetTempPath(), "ChanSort_" + DateTime.Now.ToString("yyyyMMdd-HHmmss"));
       Directory.CreateDirectory(this.TempPath);
-      rdr.WriteAllToDirectory(this.TempPath, new ExtractionOptions { ExtractFullPath=true });
-
-      this.crcFile = Path.Combine(this.TempPath, "database", "cloneCRC.bin");
-      var dbDir = Path.Combine(this.TempPath, "database", "userdata");
-      this.dtvFile = Path.Combine(dbDir, "DtvData.db");
-      var satFile = Path.Combine(dbDir, "satellite.db");
-
-      if (!File.Exists(dtvFile) || !File.Exists(satFile))
-        throw LoaderException.TryNext("DtvData.db or satellite.db missing");
-
-      ValidateCrc(satFile);
-
-      string satConnString = $"Data Source={satFile};Pooling=False";
-      using (var conn = new SqliteConnection(satConnString))
-      {
-        conn.Open();
-        using var cmd = conn.CreateCommand();
-        this.RepairCorruptedDatabaseImage(cmd);
-
-        cmd.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table'";
-        using (var r = cmd.ExecuteReader())
-        {
-          while (r.Read())
-            this.tableNames.Add(r.GetString(0).ToLowerInvariant());
-        }
-
-        if (!this.tableNames.Contains("sateliteinfotbl") || !this.tableNames.Contains("transponderinfotbl"))
-          throw LoaderException.TryNext("File doesn't contain the expected tables");
-
-        this.ReadSatellites(cmd);
-      }
-
-      string dtvConnString = $"Data Source={dtvFile};Pooling=False";
-      using (var conn = new SqliteConnection(dtvConnString))
-      {
-        conn.Open();
-        using var cmd = conn.CreateCommand();
-        this.RepairCorruptedDatabaseImage(cmd);
-
-        this.ReadTransponders(cmd);
-        this.ReadChannels(cmd);
-      }
+      rdr.WriteAllToDirectory(this.TempPath, new ExtractionOptions { ExtractFullPath = true });
     }
     #endregion
 
     #region ValidateCrc()
-    private void ValidateCrc(string satFile)
+    private void ValidateCrc()
     {
       if (!File.Exists(crcFile)) 
         return;
@@ -136,19 +146,62 @@ namespace ChanSort.Loader.TCL
         //throw LoaderException.Fail(msg);
       }
 
-      data = File.ReadAllBytes(satFile);
-      actual = crc.Calc(data);
-      expected = BitConverter.ToUInt16(crcData, 4);
-      if (actual != expected)
+      if (satFile != null)
       {
-        var msg = $"Invalid CRC16-CCITT check sum for {satFile}. Expected {expected:X4} but calculated {actual:X4}";
-        protocol.AppendLine(msg);
-        //throw LoaderException.Fail(msg);
+        data = File.ReadAllBytes(satFile);
+        actual = crc.Calc(data);
+        expected = BitConverter.ToUInt16(crcData, 4);
+        if (actual != expected)
+        {
+          var msg = $"Invalid CRC16-CCITT check sum for {satFile}. Expected {expected:X4} but calculated {actual:X4}";
+          protocol.AppendLine(msg);
+          //throw LoaderException.Fail(msg);
+        }
       }
     }
 
     #endregion
-    
+
+    #region ReadSattelliteDb()
+    private void ReadSattelliteDb()
+    {
+      if (this.satFile == null)
+        return;
+      string satConnString = $"Data Source={satFile};Pooling=False";
+      using var conn = new SqliteConnection(satConnString);
+      conn.Open();
+      using var cmd = conn.CreateCommand();
+      this.RepairCorruptedDatabaseImage(cmd);
+
+      cmd.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table'";
+      using (var r = cmd.ExecuteReader())
+      {
+        while (r.Read())
+          this.tableNames.Add(r.GetString(0).ToLowerInvariant());
+      }
+
+      if (!this.tableNames.Contains("sateliteinfotbl") || !this.tableNames.Contains("transponderinfotbl"))
+        throw LoaderException.TryNext("File doesn't contain the expected tables");
+
+      this.ReadSatellites(cmd);
+    }
+
+    #endregion
+
+    #region ReadDtvDataDb()
+    private void ReadDtvDataDb()
+    {
+      string dtvConnString = $"Data Source={dtvFile};Pooling=False";
+      using var conn = new SqliteConnection(dtvConnString);
+      conn.Open();
+      using var cmd = conn.CreateCommand();
+      this.RepairCorruptedDatabaseImage(cmd);
+
+      this.ReadTransponders(cmd);
+      this.ReadChannels(cmd);
+    }
+    #endregion
+
     #region RepairCorruptedDatabaseImage()
     private void RepairCorruptedDatabaseImage(SqliteCommand cmd)
     {
@@ -285,7 +338,8 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
 
       UpdateCrc();
 
-      WriteToTar();
+      if (Path.GetExtension(this.FileName).ToLowerInvariant() == ".tar")
+        WriteToTar();
     }
     #endregion
 
@@ -329,9 +383,14 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
     #endregion
 
     #region UpdateCrc
+    /// <summary>
+    /// update CRC in cloneCRC.bin
+    /// </summary>
     private void UpdateCrc()
     {
-      // update cloneCRC.bin in temp folder
+      if (this.crcFile == null)
+        return;
+
       var dtvData = File.ReadAllBytes(dtvFile);
       var crc = Crc16.CCITT.Calc(dtvData);
       var crcData = File.ReadAllBytes(this.crcFile);

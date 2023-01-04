@@ -7,6 +7,7 @@ namespace ChanSort.Loader.M3u
    {
      public List<string> Lines { get; }
      public int ExtInfTrackNameIndex { get; set; }
+     public int ExtInfParamIndex { get; set; }
 
      public Channel(int index, int progNr, string name, List<string> lines) : base(SignalSource.IP, index, progNr, name)
      {

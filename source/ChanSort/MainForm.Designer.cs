@@ -117,6 +117,7 @@
       this.miRestoreOriginal = new DevExpress.XtraBars.BarButtonItem();
       this.miDeleteBackup = new DevExpress.XtraBars.BarButtonItem();
       this.miSave = new DevExpress.XtraBars.BarButtonItem();
+      this.miSaveAs = new DevExpress.XtraBars.BarButtonItem();
       this.miSaveReferenceFile = new DevExpress.XtraBars.BarButtonItem();
       this.miConvert = new DevExpress.XtraBars.BarButtonItem();
       this.miExcelExport = new DevExpress.XtraBars.BarButtonItem();
@@ -1133,9 +1134,10 @@
             this.miDeleteBackup,
             this.miMarkForSwapping,
             this.miSwapWithMarked,
-            this.miConvert});
+            this.miConvert,
+            this.miSaveAs});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 121;
+      this.barManager1.MaxItemId = 122;
       this.barManager1.ShowFullMenus = true;
       this.barManager1.ShortcutItemClick += new DevExpress.XtraBars.ShortcutItemClickEventHandler(this.barManager1_ShortcutItemClick);
       // 
@@ -1188,6 +1190,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miRestoreOriginal),
             new DevExpress.XtraBars.LinkPersistInfo(this.miDeleteBackup),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSave, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
             new DevExpress.XtraBars.LinkPersistInfo(this.miConvert),
             new DevExpress.XtraBars.LinkPersistInfo(this.miExcelExport),
@@ -1248,6 +1251,13 @@
       this.miSave.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S));
       this.miSave.Name = "miSave";
       this.miSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSave_ItemClick);
+      // 
+      // miSaveAs
+      // 
+      resources.ApplyResources(this.miSaveAs, "miSaveAs");
+      this.miSaveAs.Id = 121;
+      this.miSaveAs.Name = "miSaveAs";
+      this.miSaveAs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveAs_ItemClick);
       // 
       // miSaveReferenceFile
       // 
@@ -2516,6 +2526,7 @@
         private DevExpress.XtraBars.BarButtonItem miMarkForSwapping;
         private DevExpress.XtraBars.BarButtonItem miSwapWithMarked;
         private DevExpress.XtraBars.BarButtonItem miConvert;
-    }
+    private DevExpress.XtraBars.BarButtonItem miSaveAs;
+  }
 }
 

@@ -308,6 +308,10 @@ namespace ChanSort.Ui
         this.currentRefFile = Path.Combine(Path.GetDirectoryName(this.currentTvFile) ?? "",
           Path.GetFileNameWithoutExtension(this.currentTvFile) + ".txt");
       }
+
+      if (this.currentTvSerializer != null)
+        this.currentTvSerializer.SaveAsFileName = tvDataFile;
+
       this.Text = this.title + "  -  " + this.currentTvFile;
     }
 
@@ -358,6 +362,7 @@ namespace ChanSort.Ui
         this.UpdateFavoritesEditor(this.DataRoot.SupportedFavorites);
         this.colEncrypted.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.EncryptedFlagEdit;
         this.colAudioPid.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.CanEditAudioPid;
+        this.colShortName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.AllowShortNameEdit;
         this.UpdateMenu(true);
 
         if (this.DataRoot.Warnings.Length > 0 && this.miShowWarningsAfterLoad.Checked)
@@ -1796,6 +1801,8 @@ namespace ChanSort.Ui
         this.mnuGotoChannelList.Enabled = fileLoaded;
         this.mnuGotoFavList.Enabled = fileLoaded;
         this.miGotoLeftList.Enabled = this.miGotoRightList.Enabled = fileLoaded;
+        this.miSaveAs.Enabled = fileLoaded && this.currentTvSerializer.Features.CanSaveAs;
+        this.miSaveAs.Visibility = miSaveAs.Enabled ? BarItemVisibility.Always : BarItemVisibility.Never;
       }
 
       this.miAddChannel.Enabled = mayEdit; // && isRight;
@@ -3331,6 +3338,11 @@ namespace ChanSort.Ui
       TryExecute(this.SaveFiles);
     }
 
+    private void miSaveAs_ItemClick(object sender, ItemClickEventArgs e)
+    {
+      TryExecute(this.ShowSaveFileDialog);
+    }
+
     private void miConvert_ItemClick(object sender, ItemClickEventArgs e)
     {
       XtraMessageBox.Show(this, Resources.MainForm_miConvert_MessageBody, Resources.MainForm_miConvert_MessageHeader);
@@ -3936,6 +3948,6 @@ namespace ChanSort.Ui
       }
     }
 
-        #endregion
+    #endregion
   }
 }

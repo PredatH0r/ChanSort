@@ -30,6 +30,7 @@ namespace ChanSort.Api
       public ChannelNameEditMode ChannelNameEdit { get; set; }
       public bool CleanUpChannelData { get; set; }
       public bool DeviceSettings { get; set; }
+      public bool CanSaveAs { get; set; }
       public bool CanSkipChannels { get; set; } = true;
       public bool CanLockChannels { get; set; } = true;
       public bool CanHideChannels { get; set; } = true;
@@ -67,12 +68,14 @@ namespace ChanSort.Api
       public bool CanEditFavListNames { get; set; }
 
       public bool CanEditAudioPid { get; set; }
+      public bool AllowShortNameEdit { get; set; }
     }
     #endregion
 
     private Encoding defaultEncoding;
 
     public string FileName { get; protected set; }
+    public string SaveAsFileName { get; set; }
     public DataRoot DataRoot { get; protected set; }
     public SupportedFeatures Features { get; } = new SupportedFeatures();
 

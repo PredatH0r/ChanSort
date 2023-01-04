@@ -30,16 +30,18 @@ namespace ChanSort.Loader.M3u
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.Physically;
       this.Features.FavoritesMode = FavoritesMode.None;
+      this.Features.CanSaveAs = true;
       this.Features.CanLockChannels = false;
       this.Features.CanSkipChannels = false;
       this.Features.CanHideChannels = false;
+      this.Features.AllowShortNameEdit = true;
 
       this.DataRoot.AddChannelList(this.allChannels);
 
       base.DefaultEncoding = new UTF8Encoding(false);
       this.allChannels.VisibleColumnFieldNames = new List<string>()
       {
-        "+OldPosition", "+Position", "+Name", "+SatPosition", "+Source", "+FreqInMhz", "+Polarity", "+SymbolRate", "+Satellite", "+Provider", "+Debug"
+        "+OldPosition", "+Position", "+Name", "+SatPosition", "+Source", "+FreqInMhz", "+Polarity", "+SymbolRate", "+Satellite", "+Provider", "+Debug", "+ShortName"
       };
     }
     #endregion
@@ -122,12 +124,14 @@ namespace ChanSort.Loader.M3u
     {
       int progNr = 0;
       string name = "";
+      string paramStr = null;
+      int extInfParamIndex = -1;
 
       int extInfTrackNameIndex = -1;
       if (extInfLine != null)
       {
         bool extInfContainsProgNr = false;
-        ParseExtInf(extInfLine, out name, out extInfTrackNameIndex, out var param);
+        ParseExtInf(extInfLine, out name, out extInfTrackNameIndex, out paramStr, out extInfParamIndex, out var param);
         if (name != "")
         {
           var match = ExtInfTrackName.Match(name);
@@ -153,6 +157,8 @@ namespace ChanSort.Loader.M3u
       chan.Uid = uriLine;
       chan.ExtInfTrackNameIndex = extInfTrackNameIndex;
       chan.Provider = group;
+      chan.ShortName = paramStr;
+      chan.ExtInfParamIndex = extInfParamIndex;
 
       try
       {
@@ -212,10 +218,12 @@ namespace ChanSort.Loader.M3u
     /// parse track name from lines that may look like:
     /// #EXTINF:&lt;length&gt;[ key="value" ...],&lt;TrackName&gt;
     /// </summary>
-    private void ParseExtInf(string extInfLine, out string name, out int nameIndex, out Dictionary<string,string> param)
+    private void ParseExtInf(string extInfLine, out string name, out int nameIndex, out string paramString, out int paramIndex, out Dictionary<string,string> param)
     {
       name = "";
       nameIndex = -1;
+      paramString = "";
+      paramIndex = -1;
       param = new Dictionary<string, string>();
       bool inQuote = false;
       var key = "";
@@ -232,7 +240,10 @@ namespace ChanSort.Loader.M3u
             break;
           case ExtInfParsePhase.Length:
             if (ch == ' ')
+            {
               phase = ExtInfParsePhase.Key;
+              paramIndex = i;
+            }
             else if (ch == ',')
             {
               phase = ExtInfParsePhase.Name;
@@ -253,12 +264,12 @@ namespace ChanSort.Loader.M3u
               param[key] = value;
               key = "";
               value = "";
-
             }
             else if (ch == ',' && !inQuote)
             {
-              phase = ExtInfParsePhase.Name;
               param[key] = value;
+              phase = ExtInfParsePhase.Name;
+              nameIndex = i + 1;
             }
             else
               value += ch;
@@ -269,6 +280,9 @@ namespace ChanSort.Loader.M3u
             break;
         }
       }
+
+      if (paramIndex >= 0 && nameIndex >= 0)
+        paramString = extInfLine.Substring(paramIndex + 1, nameIndex - paramIndex - 2);
     }
 
     #endregion
@@ -276,6 +290,9 @@ namespace ChanSort.Loader.M3u
     #region Save()
     public override void Save()
     {
+      if (!string.IsNullOrEmpty(this.SaveAsFileName))
+        this.FileName = this.SaveAsFileName;
+
       using var file = new StreamWriter(new FileStream(this.FileName, FileMode.Create), this.overrideEncoding ?? this.DefaultEncoding);
       file.NewLine = this.newLine;
 
@@ -285,19 +302,25 @@ namespace ChanSort.Loader.M3u
       foreach (ChannelInfo channel in this.allChannels.GetChannelsByNewOrder())
       {
         // when a reference list was applied, the list may contain proxy entries for deleted channels, which must be ignored
-        if (channel is Channel chan && !channel.IsDeleted)
+        if (channel is not Channel chan || channel.IsDeleted) 
+          continue;
+
+        foreach (var line in chan.Lines)
         {
-          foreach (var line in chan.Lines)
+          if (line.StartsWith("#EXTINF:"))
           {
-            if (line.StartsWith("#EXTINF:"))
-            {
-              var progNrPrefix = this.allChannelsPrefixedWithProgNr ? chan.NewProgramNr + ". " : "";
-              var linePrefix = chan.ExtInfTrackNameIndex >= 0 ? line.Substring(0, chan.ExtInfTrackNameIndex) : "";
-              file.WriteLine($"{linePrefix}{progNrPrefix}{chan.Name}");
-            }
-            else
-              file.WriteLine(line);
+            var progNrPrefix = this.allChannelsPrefixedWithProgNr ? chan.NewProgramNr + ". " : "";
+            string linePrefix;
+            if (chan.ExtInfParamIndex >= 0)
+              linePrefix = line.Substring(0, chan.ExtInfParamIndex) + " " + chan.ShortName + ",";
+            else if (chan.ExtInfTrackNameIndex >= 0)
+              linePrefix = line.Substring(0, chan.ExtInfTrackNameIndex);
+            else 
+              linePrefix = "#EXTINF:-1,";
+            file.WriteLine($"{linePrefix}{progNrPrefix}{chan.Name}");
           }
+          else
+            file.WriteLine(line);
         }
       }
 

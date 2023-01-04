@@ -94,6 +94,10 @@ Servicemenu: MENU 1147 / MENU 11471147 / SOURCE 2580
 - Modelle die Dateien mit Namen dvb\*_config.xml exportieren.
 - Modelle die eine cvt_database.dat Datei exportieren, z.B. 24 GHB 5944: siehe "Sharp"
 
+<a name="tcl"/>TCL, Thomson
+---
+- Modelle die eine .tar Datei exportieren, in der DtvData.db und satellite.db enthalten sind
+
 <a name="satcodx"/>SatcoDX (Lieferant für ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)
 ---
 Mehrere Marken nutzen die gleiche Hardware für DVB-S und exportieren .sdx Dateien

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using ChanSort.Api;
 using ChanSort.Loader.M3u;
@@ -8,8 +9,9 @@ namespace Test.Loader.M3u
   [TestClass]
   public class M3uTest
   {
+    #region TestReading()
     [TestMethod]
-    public void TestMethod1()
+    public void TestReading()
     {
       var m3uFile = TestUtils.DeploymentItem("Test.Loader.M3u\\TestFiles\\example.m3u");
       var refFile = TestUtils.DeploymentItem("Test.Loader.M3u\\TestFiles\\example-ref.txt");
@@ -49,6 +51,28 @@ namespace Test.Loader.M3u
       Assert.AreEqual(1, chans[5].NewProgramNr);
       Assert.AreEqual(2, chans[4].NewProgramNr);
     }
+    #endregion
+
+    #region TestSavingKeepsExtinfTags()
+    [TestMethod]
+    public void TestSavingKeepsExtinfTags()
+    {
+      var m3uFile = TestUtils.DeploymentItem("Test.Loader.M3u\\TestFiles\\extinftags.m3u");
+
+      var orig = File.ReadAllText(m3uFile);
+
+      var loader = new M3uPlugin();
+      var ser = loader.CreateSerializer(m3uFile);
+      ser.Load();
+      ser.Save();
+      
+      var text = File.ReadAllText(m3uFile);
+
+      orig = orig.Replace("\r", "").TrimEnd();
+      text = text.Replace("\r", "").TrimEnd();
+      NUnit.Framework.Assert.AreEqual(orig, text);
+    }
+    #endregion
 
     #region TestChannelAndFavListEditing
     [TestMethod]
@@ -58,6 +82,5 @@ namespace Test.Loader.M3u
       RoundtripTest.TestChannelAndFavListEditing(tempFile, new M3uPlugin());
     }
     #endregion
-
   }
 }

@@ -1,6 +1,13 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-01-04
+- TCL/Thomson: improved file detection (.tar file or directory containing DtvData.db, 
+  satellite.db, cloneCRC.bin)
+- m3u: #EXTINF tag data is displayed in "Short Name" column and can be edited
+- m3u: fixed saving #EXTINF lines containing tag data
+- m3u: readded "File / Save as" menu item (but not for other types of lists)
+
 2023-01-03
 - added support for TCL / Thomson \*.tar channel lists (containing DtvData.db and satellite.db)
 - updated hotbird reference list for Italy

@@ -94,6 +94,10 @@ Do not make any changes in the service menu, as this could damage your TV. Only 
 - Models that export files named dvb\*_config.xml.
 - Models that export a cvt_database.dat file, e.g. 24 GHB 5944: see [Sharp](#Sharp)
 
+<a name="tcl"/>TCL, Thomson
+---
+- Models that export a .tar file containing DtvData.db and satellite.db
+
 <a name="satcodx"/>SatcoDX (supplier for ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)
 ---
 Various brands use the same hardware for DVB-S, which exports .sdx files 
