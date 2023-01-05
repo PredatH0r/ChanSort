@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <None Update="ChanSort.Loader.DBM.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

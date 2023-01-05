@@ -5,7 +5,7 @@ struct s_Transponder
   var off0 = current_offset;
   dword Freq;
   byte unk1[4];
-  dword SymRate;
+  word SymRate;
   var off1 = current_offset;
 
   byte unk[36 - (off1 - off0)];

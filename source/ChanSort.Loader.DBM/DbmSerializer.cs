@@ -7,21 +7,20 @@ using ChanSort.Api;
 namespace ChanSort.Loader.DBM
 {
   /*
-
-
+  Loads .DBM binary channel lists from Xoro, TechniSat, ...
+  There are different variants for DVB-S, DVB-C, ... which require specific configuration entries in ChanSort.Loader.DBM.ini
   */
   public class DbmSerializer : SerializerBase
   {
+    private byte[] data;
+
     private readonly IniFile ini;
     private IniFile.Section sec;
     private DataMapping mapping;
-    private readonly ChannelList allChannels = new ChannelList(SignalSource.All, "All");
-
-    private byte[] data;
-    private int fileSize;
-
-    private readonly StringBuilder logMessages = new StringBuilder();
-   
+    private bool isDvbS;
+    
+    private readonly ChannelList allChannels = new(SignalSource.All, "All");
+    private readonly StringBuilder logMessages = new();
 
     #region ctor()
     public DbmSerializer(string inputFile) : base(inputFile)
@@ -60,28 +59,27 @@ namespace ChanSort.Loader.DBM
     public override void Load()
     {
       var info = new FileInfo(this.FileName);
-      this.fileSize = (int)info.Length;
-
-      this.sec = ini.GetSection("dbm:" + this.fileSize);
+      this.sec = ini.GetSection("dbm:" + info.Length);
       if (sec == null)
         throw LoaderException.Fail($"No configuration for .DBM files with size {info.Length} in .ini file");
 
-      if (!sec.GetBool("isDvbS"))
+      this.isDvbS = sec.GetBool("isDvbS");
+      if (!isDvbS)
         allChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Satellite));
 
       this.data = File.ReadAllBytes(this.FileName);
       this.mapping = new DataMapping(sec);
       this.mapping.SetDataPtr(data, 0);
 
-      ValidateChecksum(data, sec);
-
-      LoadTransponder(sec, data);
-      LoadChannels(sec, data);
+      ValidateChecksum();
+      LoadSatellites();
+      LoadTransponder();
+      LoadChannels();
     }
     #endregion
 
     #region ValidateChecksum()
-    private void ValidateChecksum(byte[] data, IniFile.Section sec)
+    private void ValidateChecksum()
     {
       var expectedChecksum = BitConverter.ToUInt16(data, 0);
       var calculatedChecksum = CalcChecksum(data, sec.GetInt("offData"), (int)mapping.GetDword("offDataLength"));
@@ -91,18 +89,47 @@ namespace ChanSort.Loader.DBM
         throw LoaderException.Fail(msg);
       }
     }
+    #endregion
 
+    #region LoadSatellites()
+    private void LoadSatellites()
+    {
+      if (!this.isDvbS)
+        return;
+
+      var num = sec.GetInt("numSatellite");
+      var offBitmap = sec.GetInt("offSatelliteBitmap");
+
+      mapping.SetDataPtr(data, sec.GetInt("offSatelliteData"));
+      var recordSize = sec.GetInt("lenSatelliteData");
+
+      for (int i = 0; i < num; i++)
+      {
+        if ((data[offBitmap + i / 8] & (1 << (i & 0x07))) != 0)
+        {
+          var s = new Satellite(i);
+          s.Name = mapping.GetString("offSatName", sec.GetInt("lenSatName"));
+          var pos = mapping.GetWord("offOrbitalPos");
+          var suffix = pos <= 180 ? "E" : "W";
+          if (pos >= 180 && pos <= 360)
+            pos = (ushort)(360 - pos);
+          s.OrbitalPosition = $"{pos / 10}.{pos % 10}{suffix}";
+          this.DataRoot.AddSatellite(s);
+        }
+
+        mapping.BaseOffset += recordSize;
+      }
+    }
     #endregion
 
     #region LoadTransponder()
 
-    private void LoadTransponder(IniFile.Section sec, byte[] data)
+    private void LoadTransponder()
     {
       var num = sec.GetInt("numTransponder");
       var offBitmap = sec.GetInt("offTransponderBitmap");
 
-      var map = new DataMapping(ini.GetSection("transponder:" + this.fileSize));
-      map.SetDataPtr(data, sec.GetInt("offTransponderData"));
+      mapping.SetDataPtr(data, sec.GetInt("offTransponderData"));
       var recordSize = sec.GetInt("lenTransponderData");
 
       for (int i = 0; i < num; i++)
@@ -110,26 +137,26 @@ namespace ChanSort.Loader.DBM
         if ((data[offBitmap + i / 8] & (1 << (i & 0x07))) != 0)
         {
           var t = new Transponder(i);
-          t.FrequencyInMhz = (decimal)map.GetDword("offFreq") / 1000;
-          t.SymbolRate = (int)map.GetDword("offSymRate");
+          t.FrequencyInMhz = (decimal)mapping.GetDword("offFreq");
+          if (!isDvbS)
+            t.FrequencyInMhz /= 1000;
+          t.SymbolRate = (int)mapping.GetWord("offSymRate");
           this.DataRoot.AddTransponder(null, t);
         }
 
-        map.BaseOffset += recordSize;
+        mapping.BaseOffset += recordSize;
       }
     }
     #endregion
 
     #region LoadChannels()
 
-    private void LoadChannels(IniFile.Section sec, byte[] data)
+    private void LoadChannels()
     {
       var num = sec.GetInt("numChannel");
       var offBitmap = sec.GetInt("offChannelBitmap");
 
-      var sec2 = ini.GetSection("channel:" + this.fileSize);
-      var map = new DataMapping(sec2);
-      map.SetDataPtr(data, sec.GetInt("offChannelData"));
+      mapping.SetDataPtr(data, sec.GetInt("offChannelData"));
       var recordSize = sec.GetInt("lenChannelData");
 
       var dec = new DvbStringDecoder(this.DefaultEncoding);
@@ -139,17 +166,17 @@ namespace ChanSort.Loader.DBM
         if ((data[offBitmap + i / 8] & (1 << (i & 0x07))) != 0)
         {
           var c = new ChannelInfo(SignalSource.Any, i, -1, null);
-          dec.GetChannelNames(data, map.BaseOffset + sec2.GetInt("offName"), sec2.GetInt("lenName"), out var longName, out var shortName);
+          dec.GetChannelNames(data, mapping.BaseOffset + sec.GetInt("offName"), sec.GetInt("lenName"), out var longName, out var shortName);
           c.Name = longName;
           c.ShortName = shortName;
-          c.OldProgramNr = map.GetWord("offProgNr") + 1;
-          c.OriginalNetworkId = map.GetWord("offOnid");
-          c.TransportStreamId = map.GetWord("offTsid");
-          c.ServiceId = map.GetWord("offSid");
-          c.PcrPid = map.GetWord("offPcrPid");
-          c.VideoPid = map.GetWord("offVideoPid");
+          c.OldProgramNr = mapping.GetWord("offProgNr") + 1;
+          c.OriginalNetworkId = mapping.GetWord("offOnid");
+          c.TransportStreamId = mapping.GetWord("offTsid");
+          c.ServiceId = mapping.GetWord("offSid");
+          c.PcrPid = mapping.GetWord("offPcrPid");
+          c.VideoPid = mapping.GetWord("offVideoPid");
 
-          var transpIdx = map.GetByte("offTransponderIndex");
+          var transpIdx = isDvbS ? mapping.GetWord("offTransponderIndex") : mapping.GetByte("offTransponderIndex");
           var tp = this.DataRoot.Transponder.TryGet(transpIdx);
           if (tp != null)
           {
@@ -157,10 +184,16 @@ namespace ChanSort.Loader.DBM
             c.SymbolRate = tp.SymbolRate;
           }
 
+          if (isDvbS && this.DataRoot.Satellites.TryGetValue(mapping.GetWord("offSatelliteIndex"), out var sat))
+          {
+            c.Satellite = sat.Name;
+            c.SatPosition = sat.OrbitalPosition;
+          }
+
           this.DataRoot.AddChannel(this.allChannels, c);
         }
 
-        map.BaseOffset += recordSize;
+        mapping.BaseOffset += recordSize;
       }
     }
     #endregion
@@ -170,19 +203,18 @@ namespace ChanSort.Loader.DBM
     #region Save()
     public override void Save()
     {
-      var sec2 = ini.GetSection("channel:" + this.fileSize);
-      var map = new DataMapping(sec2);
       var baseOffset = sec.GetInt("offChannelData");
-      map.SetDataPtr(data, baseOffset);
       var recordSize = sec.GetInt("lenChannelData");
 
       foreach (var chan in this.allChannels.Channels)
       {
-        if (chan.IsProxy) continue;
-        map.BaseOffset = baseOffset + (int)chan.RecordIndex * recordSize;
-        map.SetWord("offProgNr", chan.NewProgramNr - 1);
+        if (chan.IsProxy) 
+          continue;
+        mapping.BaseOffset = baseOffset + (int)chan.RecordIndex * recordSize;
+        mapping.SetWord("offProgNr", chan.NewProgramNr - 1);
       }
 
+      mapping.BaseOffset = 0;
       var calculatedChecksum = CalcChecksum(data, sec.GetInt("offData"), (int)mapping.GetDword("offDataLength"));
       mapping.SetWord("offChecksum", calculatedChecksum);
       File.WriteAllBytes(this.FileName, this.data);
@@ -203,7 +235,6 @@ namespace ChanSort.Loader.DBM
       return (ushort)sum;
     }
     #endregion
-
 
     // framework support methods
 
