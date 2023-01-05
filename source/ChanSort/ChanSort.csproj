@@ -129,6 +129,7 @@
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Android\ChanSort.Loader.Android.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.CmdbBin\ChanSort.Loader.CmdbBin.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.DBM\ChanSort.Loader.DBM.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Enigma2\ChanSort.Loader.Enigma2.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Grundig\ChanSort.Loader.Grundig.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj" />
