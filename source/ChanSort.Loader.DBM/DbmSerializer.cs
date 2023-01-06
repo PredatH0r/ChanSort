@@ -26,13 +26,13 @@ namespace ChanSort.Loader.DBM
     public DbmSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.None;
-      this.Features.CanSkipChannels = false;
-      this.Features.CanLockChannels = false;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = false;
       this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanHaveGaps = false;
-      this.Features.FavoritesMode = FavoritesMode.None;
-      this.Features.MaxFavoriteLists = 0;
+      this.Features.FavoritesMode = FavoritesMode.Flags;
+      this.Features.MaxFavoriteLists = 4;
       this.Features.AllowGapsInFavNumbers = false;
       this.Features.CanEditFavListNames = false;
 
@@ -45,7 +45,7 @@ namespace ChanSort.Loader.DBM
         list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
         list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
         list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ServiceType));
-        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ServiceTypeName));
+        list.VisibleColumnFieldNames.Add(nameof(ChannelInfo.ServiceTypeName));
       }
 
       string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
@@ -175,6 +175,14 @@ namespace ChanSort.Loader.DBM
           c.ServiceId = mapping.GetWord("offSid");
           c.PcrPid = mapping.GetWord("offPcrPid");
           c.VideoPid = mapping.GetWord("offVideoPid");
+          c.Skip = mapping.GetFlag("Skip", false);
+          c.Lock = mapping.GetFlag("Lock", false);
+          var serviceType = mapping.GetByte("offServiceType");
+          c.ServiceTypeName = serviceType == 1 ? "TV" : serviceType == 2 ? "Radio" : "";
+
+          var fav = mapping.GetByte("offFavorites");
+          fav = (byte)(((fav >> 1) & 0x0E) | (fav & 0x01)); // A=1, B=4, C=8, D=16
+          c.Favorites = (Favorites)fav;
 
           var transpIdx = isDvbS ? mapping.GetWord("offTransponderIndex") : mapping.GetByte("offTransponderIndex");
           var tp = this.DataRoot.Transponder.TryGet(transpIdx);

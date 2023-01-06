@@ -1,6 +1,11 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-01-06
+- added support for numerous .DBM file formats used by DVB-C and DVB-S receivers based on 
+  MStar chips. Known brands to use this format include Xoro, TechniSat, Strong, Comag and
+  many more. (If your file isn't recoginezed, please send it to me to add support for it)
+
 2023-01-04
 - TCL/Thomson: improved file detection (.tar file or directory containing DtvData.db, 
   satellite.db, cloneCRC.bin)
