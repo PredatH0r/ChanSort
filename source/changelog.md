@@ -1,6 +1,12 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-01-06_1450
+- .HDB: added support for "Hide"-flag, added Skip/Lock/Fav for TechniSat DVB-C file format
+
+2023-01-06_1420
+- fixed TCL .tar files: now saving names as BLOB instead of VARCHAR(64)
+
 2023-01-06
 - added support for numerous .DBM file formats used by DVB-C and DVB-S receivers based on 
   MStar chips. Known brands to use this format include Xoro, TechniSat, Strong, Comag and

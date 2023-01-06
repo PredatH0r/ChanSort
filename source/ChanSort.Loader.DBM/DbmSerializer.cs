@@ -28,7 +28,7 @@ namespace ChanSort.Loader.DBM
       this.Features.ChannelNameEdit = ChannelNameEditMode.None;
       this.Features.CanSkipChannels = true;
       this.Features.CanLockChannels = true;
-      this.Features.CanHideChannels = false;
+      this.Features.CanHideChannels = true;
       this.Features.DeleteMode = DeleteMode.NotSupported;
       this.Features.CanHaveGaps = false;
       this.Features.FavoritesMode = FavoritesMode.Flags;
@@ -64,8 +64,19 @@ namespace ChanSort.Loader.DBM
         throw LoaderException.Fail($"No configuration for .DBM files with size {info.Length} in .ini file");
 
       this.isDvbS = sec.GetBool("isDvbS");
-      if (!isDvbS)
+      if (isDvbS)
+      {
+        allChannels.ShortCaption = "DVB-S";
+        allChannels.SignalSource &= ~SignalSource.MaskAntennaCableSat;
+        allChannels.SignalSource |= SignalSource.Sat;
+      }
+      else
+      {
+        allChannels.ShortCaption = "DVB-C";
+        allChannels.SignalSource &= ~SignalSource.MaskAntennaCableSat;
+        allChannels.SignalSource |= SignalSource.Cable;
         allChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Satellite));
+      }
 
       this.data = File.ReadAllBytes(this.FileName);
       this.mapping = new DataMapping(sec);
@@ -165,7 +176,11 @@ namespace ChanSort.Loader.DBM
       {
         if ((data[offBitmap + i / 8] & (1 << (i & 0x07))) != 0)
         {
-          var c = new ChannelInfo(SignalSource.Any, i, -1, null);
+          var serviceType = mapping.GetByte("offServiceType");
+          var src = serviceType == 1 ? SignalSource.Tv : serviceType == 2 ? SignalSource.Radio : SignalSource.Data;
+          src |= SignalSource.Digital;
+          src |= isDvbS ? SignalSource.Sat : SignalSource.Cable;
+          var c = new ChannelInfo(src, i, -1, null);
           dec.GetChannelNames(data, mapping.BaseOffset + sec.GetInt("offName"), sec.GetInt("lenName"), out var longName, out var shortName);
           c.Name = longName;
           c.ShortName = shortName;
@@ -175,9 +190,9 @@ namespace ChanSort.Loader.DBM
           c.ServiceId = mapping.GetWord("offSid");
           c.PcrPid = mapping.GetWord("offPcrPid");
           c.VideoPid = mapping.GetWord("offVideoPid");
+          c.Hidden = mapping.GetFlag("Hide", false);
           c.Skip = mapping.GetFlag("Skip", false);
           c.Lock = mapping.GetFlag("Lock", false);
-          var serviceType = mapping.GetByte("offServiceType");
           c.ServiceTypeName = serviceType == 1 ? "TV" : serviceType == 2 ? "Radio" : "";
 
           var fav = mapping.GetByte("offFavorites");
@@ -220,6 +235,14 @@ namespace ChanSort.Loader.DBM
           continue;
         mapping.BaseOffset = baseOffset + (int)chan.RecordIndex * recordSize;
         mapping.SetWord("offProgNr", chan.NewProgramNr - 1);
+        mapping.SetFlag("Skip", chan.Skip);
+        mapping.SetFlag("Lock", chan.Lock);
+        mapping.SetFlag("Hide", chan.Hidden);
+        var fav = (int)mapping.GetByte("offFavorites");
+        fav &= ~0x1D;
+        var newFav = (int)chan.Favorites;
+        fav |= (byte)((newFav & 0x01) | ((newFav & 0xFE) << 1)); // A=1, B=4, C=8, D=16
+        mapping.SetByte("offFavorites", fav);
       }
 
       mapping.BaseOffset = 0;

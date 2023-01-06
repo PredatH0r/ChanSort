@@ -31,7 +31,7 @@ namespace ChanSort.Api
     }
 
     public string ShortCaption { get; set; }
-    public SignalSource SignalSource { get; }
+    public SignalSource SignalSource { get; set; }
     public IList<ChannelInfo> Channels { get; } = new List<ChannelInfo>();
 
     public int Count => Channels.Count;

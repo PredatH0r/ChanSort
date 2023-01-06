@@ -42,6 +42,7 @@ enum e_Favorites : byte
 
 enum e_Flags : byte
 {
+  Hide=0x04,
   Skip=0x08,
   Lock=0x10
 };
@@ -97,7 +98,7 @@ public struct DBM
   switch (GetDocumentSize())
   {
   case 163772:
-    // TechniSat DVB-C vodafone.DBM
+    // TechniSat DVB-C TS_Programmliste_06_01.DBM
     satBitmapLength = 0;
     satRecordCount = 0;
     satRecordLength = 84;

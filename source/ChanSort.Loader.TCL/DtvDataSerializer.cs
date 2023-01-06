@@ -1,11 +1,17 @@
-﻿using System.Text;
+﻿#define Win10_TAR
+#define TestBuild
+
+using System.Diagnostics;
+using System.Text;
 using Microsoft.Data.Sqlite;
 using ChanSort.Api;
+#if !Win10_TAR
 using SharpCompress.Archives;
 using SharpCompress.Archives.Tar;
 using SharpCompress.Common;
 using SharpCompress.Readers;
 using SharpCompress.Writers.Tar;
+#endif
 
 namespace ChanSort.Loader.TCL
 {
@@ -29,7 +35,11 @@ namespace ChanSort.Loader.TCL
     public DtvDataSerializer(string inputFile) : base(inputFile)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
+#if TestBuild
+      this.Features.DeleteMode = DeleteMode.NotSupported;
+#else
       this.Features.DeleteMode = DeleteMode.Physically;
+#endif
       this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = false;
       this.Features.CanHideChannels = true;
@@ -119,11 +129,22 @@ namespace ChanSort.Loader.TCL
     #region UntarToTempDir()
     private void UntarToTempDir()
     {
-      using var tar = TarArchive.Open(this.FileName);
-      var rdr = tar.ExtractAllEntries();
       this.TempPath = Path.Combine(Path.GetTempPath(), "ChanSort_" + DateTime.Now.ToString("yyyyMMdd-HHmmss"));
       Directory.CreateDirectory(this.TempPath);
+
+#if Win10_TAR
+      var psi = new ProcessStartInfo("tar");
+      psi.UseShellExecute = true;
+      psi.WindowStyle = ProcessWindowStyle.Hidden;
+      psi.WorkingDirectory = this.TempPath;
+      psi.Arguments = $"xf \"{this.FileName}\"";
+      var proc = Process.Start(psi);
+      proc.WaitForExit();
+#else
+      using var tar = TarArchive.Open(this.FileName);
+      var rdr = tar.ExtractAllEntries();
       rdr.WriteAllToDirectory(this.TempPath, new ExtractionOptions { ExtractFullPath = true });
+#endif
     }
     #endregion
 
@@ -171,7 +192,6 @@ namespace ChanSort.Loader.TCL
       using var conn = new SqliteConnection(satConnString);
       conn.Open();
       using var cmd = conn.CreateCommand();
-      this.RepairCorruptedDatabaseImage(cmd);
 
       cmd.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table'";
       using (var r = cmd.ExecuteReader())
@@ -195,18 +215,9 @@ namespace ChanSort.Loader.TCL
       using var conn = new SqliteConnection(dtvConnString);
       conn.Open();
       using var cmd = conn.CreateCommand();
-      this.RepairCorruptedDatabaseImage(cmd);
 
       this.ReadTransponders(cmd);
       this.ReadChannels(cmd);
-    }
-    #endregion
-
-    #region RepairCorruptedDatabaseImage()
-    private void RepairCorruptedDatabaseImage(SqliteCommand cmd)
-    {
-      cmd.CommandText = "REINDEX";
-      cmd.ExecuteNonQuery();
     }
     #endregion
 
@@ -327,13 +338,16 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         conn.Open();
         using var trans = conn.BeginTransaction();
         using var cmd = conn.CreateCommand();
+#if TestBuild
+        SqliteCommand cmd2 = null;
+#else
         using var cmd2 = conn.CreateCommand();
+#endif
 
         this.WriteChannels(cmd, cmd2, this.channels);
         trans.Commit();
 
         cmd.Transaction = null;
-        this.RepairCorruptedDatabaseImage(cmd);
       }
 
       UpdateCrc();
@@ -346,17 +360,25 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
     #region WriteChannels()
     private void WriteChannels(SqliteCommand cmd, SqliteCommand cmdDelete, ChannelList channelList)
     {
-      cmd.CommandText = "update PrograminfoTbl set ProgNum=@nr, ServiceName=@name, unlockedFlag=@hide, EditFlag=(EditFlag & 0xFFFFFFFE) | @editflag where u32Index=@handle";
+      cmd.CommandText = "update PrograminfoTbl set ProgNum=@nr"
+#if !TestBuild      
+        + ", ServiceName=@name, unlockedFlag=@hide, EditFlag=(EditFlag & 0xFFFFFFFE) | @editflag"
+#endif
+        + " where u32Index=@handle";
       cmd.Parameters.Add("@handle", SqliteType.Integer);
       cmd.Parameters.Add("@nr", SqliteType.Integer);
-      cmd.Parameters.Add("@name", SqliteType.Text);
+#if !TestBuild
+      cmd.Parameters.Add("@name", SqliteType.Blob, 64);
       cmd.Parameters.Add("@hide", SqliteType.Integer);
       cmd.Parameters.Add("@editflag", SqliteType.Integer);
+#endif
       cmd.Prepare();
 
-      cmdDelete.CommandText = @"delete from PrograminfoTbl where u32Index=@handle;";
-      cmdDelete.Parameters.Add("@handle", SqliteType.Integer);
-      cmdDelete.Prepare();
+#if !TestBuild
+      //cmdDelete.CommandText = @"delete from PrograminfoTbl where u32Index=@handle;";
+      //cmdDelete.Parameters.Add("@handle", SqliteType.Integer);
+      //cmdDelete.Prepare();
+#endif
 
       foreach (ChannelInfo channel in channelList.Channels)
       {
@@ -365,17 +387,24 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
 
         if (channel.IsDeleted)
         {
+#if !TestBuild
           cmdDelete.Parameters["@handle"].Value = channel.RecordIndex;
           cmdDelete.ExecuteNonQuery();
+#endif
         }
         else
         {
           channel.UpdateRawData();
           cmd.Parameters["@handle"].Value = channel.RecordIndex;
           cmd.Parameters["@nr"].Value = channel.NewProgramNr;
-          cmd.Parameters["@name"].Value = channel.Name;
+#if !TestBuild
+          var bytes = Encoding.UTF8.GetBytes(channel.Name);
+          var blob = new byte[64];
+          Tools.MemCopy(bytes, 0, blob, 0, 64);
+          cmd.Parameters["@name"].Value = blob;
           cmd.Parameters["@hide"].Value = channel.Hidden;
           cmd.Parameters["@editflag"].Value = channel.Favorites == 0 ? 0 : 0x0001;
+#endif
           cmd.ExecuteNonQuery();
         }
       }
@@ -405,9 +434,19 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
     {
       // delete old .tar file and create a new one from temp dir
       File.Delete(this.FileName);
+#if Win10_TAR
+      var psi = new ProcessStartInfo("tar");
+      psi.UseShellExecute = true;
+      psi.WindowStyle = ProcessWindowStyle.Hidden;
+      psi.WorkingDirectory = this.TempPath;
+      psi.Arguments = $"cf \"{this.FileName}\" *";
+      var proc = Process.Start(psi);
+      proc.WaitForExit();
+#else
       using var tar = TarArchive.Create();
       tar.AddAllFromDirectory(this.TempPath);
       tar.SaveTo(this.FileName, new TarWriterOptions(CompressionType.None, true));
+#endif
     }
     #endregion
   }

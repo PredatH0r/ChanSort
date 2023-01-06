@@ -82,11 +82,23 @@ namespace ChanSort.Api
 
     public static void MemCopy(byte[] source, int sourceIndex, byte[] dest, int destIndex, int count)
     {
+      if (destIndex + count > dest.Length)
+        count = dest.Length - destIndex;
+      if (count <= 0)
+        return;
+      if (sourceIndex + count > source.Length)
+        count = source.Length - sourceIndex;
+      if (count <= 0)
+        return;
       Array.Copy(source, sourceIndex, dest, destIndex, count);
     }
 
     public static void MemSet(this byte[] data, int offset, byte value, int count)
     {
+      if (offset + count > data.Length)
+        count = data.Length - offset;
+      if (count <= 0)
+        return;
       for (int i = 0; i < count; i++)
         data[offset++] = value;
     }
