@@ -1,6 +1,10 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-01-08
+- TCL/Thomson .tar: custom implementation for reading/writing .tar archives, preserving all 
+  unix file metadata (based on "old-GNU" .tar flavor, like the files exported by the TV)
+
 2023-01-06_1450
 - .HDB: added support for "Hide"-flag, added Skip/Lock/Fav for TechniSat DVB-C file format
 

@@ -1,11 +1,14 @@
-﻿#define Win10_TAR
-#define TestBuild
+﻿//#define Win10_TAR
+#define GNU_TAR
+//#define TestBuild
 
-using System.Diagnostics;
 using System.Text;
 using Microsoft.Data.Sqlite;
 using ChanSort.Api;
-#if !Win10_TAR
+#if Win10_TAR
+using System.Diagnostics;
+#elif GNU_TAR
+#else
 using SharpCompress.Archives;
 using SharpCompress.Archives.Tar;
 using SharpCompress.Common;
@@ -30,6 +33,10 @@ namespace ChanSort.Loader.TCL
 
     private readonly HashSet<string> tableNames = new();
     private readonly StringBuilder protocol = new();
+
+#if GNU_TAR
+    private GnuTar gnuTar;
+#endif
 
     #region ctor()
     public DtvDataSerializer(string inputFile) : base(inputFile)
@@ -140,6 +147,9 @@ namespace ChanSort.Loader.TCL
       psi.Arguments = $"xf \"{this.FileName}\"";
       var proc = Process.Start(psi);
       proc.WaitForExit();
+#elif GNU_TAR
+      this.gnuTar = new GnuTar();
+      gnuTar.ExtractToDirectory(this.FileName, this.TempPath);
 #else
       using var tar = TarArchive.Open(this.FileName);
       var rdr = tar.ExtractAllEntries();
@@ -442,6 +452,8 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
       psi.Arguments = $"cf \"{this.FileName}\" *";
       var proc = Process.Start(psi);
       proc.WaitForExit();
+#elif GNU_TAR
+      this.gnuTar.UpdateFromDirectory(this.FileName);
 #else
       using var tar = TarArchive.Create();
       tar.AddAllFromDirectory(this.TempPath);
