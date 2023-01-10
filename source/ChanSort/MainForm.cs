@@ -1399,7 +1399,11 @@ namespace ChanSort.Ui
         foreach (var rowHandle in gview.GetSelectedRows())
         {
           if (gview.IsDataRow(rowHandle))
-            channels.Add((ChannelInfo) gview.GetRow(rowHandle));
+          {
+            var chan = (ChannelInfo)gview.GetRow(rowHandle); // this method get called while updating the grid, resulting in NULL objects to be returned
+            if (chan != null)
+              channels.Add(chan);
+          }
         }
       }
 

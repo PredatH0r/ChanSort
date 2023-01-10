@@ -385,9 +385,9 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
       cmd.Prepare();
 
 #if !TestBuild
-      //cmdDelete.CommandText = @"delete from PrograminfoTbl where u32Index=@handle;";
-      //cmdDelete.Parameters.Add("@handle", SqliteType.Integer);
-      //cmdDelete.Prepare();
+      cmdDelete.CommandText = @"delete from PrograminfoTbl where u32Index=@handle;";
+      cmdDelete.Parameters.Add("@handle", SqliteType.Integer);
+      cmdDelete.Prepare();
 #endif
 
       foreach (ChannelInfo channel in channelList.Channels)
