@@ -224,7 +224,9 @@ internal class GnuTar
     strm.Write("        "u8.ToArray(), 0, 8); // placeholder for checksum
     strm.WriteByte((byte)e.TypeFlag);
     WriteString(strm, e.LinkName, 100, this.Encoding);
-    strm.Write(Encoding.ASCII.GetBytes(e.Magic), 0, 6);
+    var bytes = Encoding.ASCII.GetBytes(e.Magic);
+    strm.Write(bytes, 0, Math.Min(bytes.Length, 6));
+    strm.Write(Padding, 0, 6 - bytes.Length);
     WriteString(strm, e.Version, 2);
     WriteString(strm, e.Username, 32);
     WriteString(strm, e.Groupname, 32);

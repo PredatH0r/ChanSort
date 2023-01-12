@@ -73,6 +73,10 @@ Sistem Gereksinimleri
 - winetricks'i başlatın, wineprefix'i seçin ya da oluşturun (32 bit ya da 64 bit), "Install Windows DLL or component"i seçin ve "dotnet48" paketini yükleyin, bu sırada çıkan düzinelerce uyarı mesajını görmezden gelin
 - ChanSort.exe'ye sağ tıklayın ve "open with", "all applications", "A wine application" sırasınca seçin
 
+**Mac**
+- macOS doğrudan desteklenmez, ancak Mac'te Windows 10/11 ile bir VM kurmak için Parallels veya UTM kullanabilirsiniz
+- m1/ARM CPU'lu Mac'ler için talimatlar: https://history-computer.com/how-to-run-windows-on-m1-macs/
+
 **Donanım**:
 - TV'niz ile PC'niz arasında kanal listesini aktarabilmek için USB bellek/SD-kart. En azından 32 GB bir bellek şiddetle tavsiye olunur. (Bazı TV'ler çöplerini NTFS dosya ssitemine yazar ve exFAT'ı desteklemezler bile.)
 

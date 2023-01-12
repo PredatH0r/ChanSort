@@ -1,20 +1,8 @@
-﻿//#define Win10_TAR
-#define GNU_TAR
-//#define TestBuild
+﻿//#define TestBuild
 
 using System.Text;
 using Microsoft.Data.Sqlite;
 using ChanSort.Api;
-#if Win10_TAR
-using System.Diagnostics;
-#elif GNU_TAR
-#else
-using SharpCompress.Archives;
-using SharpCompress.Archives.Tar;
-using SharpCompress.Common;
-using SharpCompress.Readers;
-using SharpCompress.Writers.Tar;
-#endif
 
 namespace ChanSort.Loader.TCL
 {
@@ -22,9 +10,22 @@ namespace ChanSort.Loader.TCL
    * This class loads TCL / Thomson channel lists from a directory or a .tar file containing cloneCRC.bin, DtvData.db and satellite.db.
    *
    * None of the sample files contained more than a single input source (DVB-C/T/S), so for the time being this loader puts everything into a single list
+   *
+   * When a channel is hidden through the TV's menu, it will result in: EditFlag |= 0x08, unlockedFlag=1, IsSkipped=1
+   * When a channel is added to favorites, it will: EditFlag |= 0x01, IsFavor=1, but will keep FavChannelNo=65535
+   *
    */
   class DtvDataSerializer : SerializerBase
   {
+    private const int CrcMaxDataLength = 0x4B000;
+
+    [Flags]
+    enum EditFlags
+    {
+      Favorite = 0x01,
+      Skip = 0x08
+    }
+
     private readonly ChannelList channels = new (SignalSource.All, "All");
     private string dbDir;
     private string dtvFile;
@@ -34,9 +35,7 @@ namespace ChanSort.Loader.TCL
     private readonly HashSet<string> tableNames = new();
     private readonly StringBuilder protocol = new();
 
-#if GNU_TAR
-    private GnuTar gnuTar;
-#endif
+    private GnuTar tar;
 
     #region ctor()
     public DtvDataSerializer(string inputFile) : base(inputFile)
@@ -45,19 +44,18 @@ namespace ChanSort.Loader.TCL
 #if TestBuild
       this.Features.DeleteMode = DeleteMode.NotSupported;
 #else
-      this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
 #endif
-      this.Features.CanSkipChannels = false;
-      this.Features.CanLockChannels = false;
+      this.Features.CanSkipChannels = true;
+      this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
       this.Features.FavoritesMode = FavoritesMode.Flags;
       this.Features.MaxFavoriteLists = 1;
 
       this.DataRoot.AddChannelList(this.channels);
-      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Skip));
-      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
       channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
       channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
+      channels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.ServiceType));
       channels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Source));
     }
     #endregion
@@ -139,22 +137,8 @@ namespace ChanSort.Loader.TCL
       this.TempPath = Path.Combine(Path.GetTempPath(), "ChanSort_" + DateTime.Now.ToString("yyyyMMdd-HHmmss"));
       Directory.CreateDirectory(this.TempPath);
 
-#if Win10_TAR
-      var psi = new ProcessStartInfo("tar");
-      psi.UseShellExecute = true;
-      psi.WindowStyle = ProcessWindowStyle.Hidden;
-      psi.WorkingDirectory = this.TempPath;
-      psi.Arguments = $"xf \"{this.FileName}\"";
-      var proc = Process.Start(psi);
-      proc.WaitForExit();
-#elif GNU_TAR
-      this.gnuTar = new GnuTar();
-      gnuTar.ExtractToDirectory(this.FileName, this.TempPath);
-#else
-      using var tar = TarArchive.Open(this.FileName);
-      var rdr = tar.ExtractAllEntries();
-      rdr.WriteAllToDirectory(this.TempPath, new ExtractionOptions { ExtractFullPath = true });
-#endif
+      this.tar = new GnuTar();
+      tar.ExtractToDirectory(this.FileName, this.TempPath);
     }
     #endregion
 
@@ -168,13 +152,13 @@ namespace ChanSort.Loader.TCL
       var crc = Crc16.CCITT;
 
       var data = File.ReadAllBytes(dtvFile);
-      var actual = crc.Calc(data);
+      var actual = crc.Calc(data, 0, Math.Min(data.Length, CrcMaxDataLength));
       var expected = BitConverter.ToUInt16(crcData, 2);
       if (actual != expected)
       {
         var msg = $"Invalid CRC16-CCITT check sum for {dtvFile}. Expected {expected:X4} but calculated {actual:X4}";
         protocol.AppendLine(msg);
-        //throw LoaderException.Fail(msg);
+        throw LoaderException.Fail(msg);
       }
 
       if (satFile != null)
@@ -186,7 +170,7 @@ namespace ChanSort.Loader.TCL
         {
           var msg = $"Invalid CRC16-CCITT check sum for {satFile}. Expected {expected:X4} but calculated {actual:X4}";
           protocol.AppendLine(msg);
-          //throw LoaderException.Fail(msg);
+          throw LoaderException.Fail(msg);
         }
       }
     }
@@ -287,12 +271,14 @@ namespace ChanSort.Loader.TCL
     #region ReadChannels()
     private void ReadChannels(SqliteCommand cmd)
     {
-      cmd.CommandText = $@"
+      cmd.CommandText = @"
 select 
   p.u32Index, p.ProgNum, p.ServiceName, p.ShortServiceName, p.ServiceID, p.VideoType, p.PCRPID, p.VideoPID, p.unlockedFlag, p.LCN, p.LCNAssignmentType, p.EditFlag,
   m.OriginalNetworkId, m.TransportStreamId, m.Freq, m.SymbolRate,
-  c.RouteName
+  c.RouteName,
+  a.RealServiceType, a.IsScramble, a.VisibleFlag, a.IsDelete, a.IsSkipped, a.IsLock, a.IsFavor, a.IsRename, a.IsMove, a.NumSelectFlag, a.FavChannelNo
 from ProgramInfoTbl p 
+left outer join AtrributeTbl a on a.u32index=p.u32index
 left outer join MuxInfoTbl m on m.u16MuxTblID=p.u16MuxTblID
 left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
 ";
@@ -303,7 +289,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         var handle = r.GetInt32(0);
         var oldProgNr = r.GetInt32(1);
         if (oldProgNr == 65535)
-          continue;
+          oldProgNr = -1;
 
         var name = r.GetString(2)?.TrimEnd(' ', '\0');
         ChannelInfo channel = new ChannelInfo(0, handle, oldProgNr, name);
@@ -314,13 +300,15 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         channel.PcrPid = r.GetInt32(6);
         channel.VideoPid = r.GetInt32(7);
         channel.Hidden = r.GetBoolean(8);
-        var edit = r.GetInt32(11);
-        channel.Favorites = (edit & 0x01) != 0 ? Favorites.A : 0;
-        channel.AddDebug($"LCN={r.GetValue(9)}, AT={r.GetValue(10)}, Edit={edit:x4}");
+        var edit = (EditFlags)r.GetInt32(11);
+        channel.Favorites = (edit & EditFlags.Favorite) != 0 ? Favorites.A : 0;
+        channel.Skip = (edit & EditFlags.Skip) != 0;
+        channel.AddDebug($"LCN={r.GetValue(9)}, edit={(int)edit:x4}");
 
         // DVB
         var ixD = 12;
         var ixC = ixD + 4;
+        var ixA = ixC + 1;
         if (!r.IsDBNull(ixD))
         {
           channel.OriginalNetworkId = r.GetInt32(ixD + 0);
@@ -332,7 +320,24 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
           channel.Source = r.GetString(ixC);
         }
 
-        if (!channel.IsDeleted)
+        // AtrributeTbl (actual typo in the TV's table name!)
+        if (!r.IsDBNull(ixA))
+        {
+          channel.ServiceType = r.GetInt32(ixA + 0);
+          channel.ServiceTypeName = LookupData.Instance.GetServiceTypeDescription(channel.ServiceType);
+          channel.SignalSource |= LookupData.Instance.IsRadioTvOrData(channel.ServiceType);
+          channel.Encrypted = r.GetInt32(ixA + 1) != 0;
+          channel.Hidden = !r.GetBoolean(ixA + 2);
+          channel.IsDeleted |= r.GetBoolean(ixA + 3);
+          channel.Skip |= r.GetBoolean(ixA + 4);
+          channel.Lock = r.GetBoolean(ixA + 5);
+          if (r.GetBoolean(ixA + 6))
+            channel.Favorites |= Favorites.A;
+          channel.IsNameModified = r.GetBoolean(ixA + 7);
+          channel.AddDebug($", FavChannelNo={r.GetInt32(ixA + 10)}");
+        }
+
+        //if (!channel.IsDeleted)
           this.DataRoot.AddChannel(this.channels, channel);
       }
     }
@@ -348,11 +353,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         conn.Open();
         using var trans = conn.BeginTransaction();
         using var cmd = conn.CreateCommand();
-#if TestBuild
-        SqliteCommand cmd2 = null;
-#else
         using var cmd2 = conn.CreateCommand();
-#endif
 
         this.WriteChannels(cmd, cmd2, this.channels);
         trans.Commit();
@@ -368,11 +369,11 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SqliteCommand cmd, SqliteCommand cmdDelete, ChannelList channelList)
+    private void WriteChannels(SqliteCommand cmd, SqliteCommand cmdAttrib, ChannelList channelList)
     {
       cmd.CommandText = "update PrograminfoTbl set ProgNum=@nr"
 #if !TestBuild      
-        + ", ServiceName=@name, unlockedFlag=@hide, EditFlag=(EditFlag & 0xFFFFFFFE) | @editflag"
+        + ", ServiceName=@name, unlockedFlag=@hide, EditFlag=(EditFlag & " + ~(EditFlags.Favorite | EditFlags.Skip) + ") | @editflag"
 #endif
         + " where u32Index=@handle";
       cmd.Parameters.Add("@handle", SqliteType.Integer);
@@ -385,9 +386,16 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
       cmd.Prepare();
 
 #if !TestBuild
-      cmdDelete.CommandText = @"delete from PrograminfoTbl where u32Index=@handle;";
-      cmdDelete.Parameters.Add("@handle", SqliteType.Integer);
-      cmdDelete.Prepare();
+      cmdAttrib.CommandText = @"update AtrributeTbl set VisibleFlag=@vis, IsDelete=@del, IsMove=IsMove | @mov, IsSkipped=@skip, IsLock=@lock, IsRename=@ren, IsFavor=@fav where u32Index=@handle;";
+      cmdAttrib.Parameters.Add("@handle", SqliteType.Integer);
+      cmdAttrib.Parameters.Add("@vis", SqliteType.Integer);
+      cmdAttrib.Parameters.Add("@del", SqliteType.Integer);
+      cmdAttrib.Parameters.Add("@mov", SqliteType.Integer);
+      cmdAttrib.Parameters.Add("@skip", SqliteType.Integer);
+      cmdAttrib.Parameters.Add("@lock", SqliteType.Integer);
+      cmdAttrib.Parameters.Add("@ren", SqliteType.Integer);
+      cmdAttrib.Parameters.Add("@fav", SqliteType.Integer);
+      cmdAttrib.Prepare();
 #endif
 
       foreach (ChannelInfo channel in channelList.Channels)
@@ -395,28 +403,28 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         if (channel.IsProxy) // ignore reference list proxy channels
           continue;
 
-        if (channel.IsDeleted)
-        {
+        channel.UpdateRawData();
+        cmd.Parameters["@handle"].Value = channel.RecordIndex;
+        cmd.Parameters["@nr"].Value = channel.IsDeleted ? 65535 : channel.NewProgramNr;
 #if !TestBuild
-          cmdDelete.Parameters["@handle"].Value = channel.RecordIndex;
-          cmdDelete.ExecuteNonQuery();
+        var bytes = Encoding.UTF8.GetBytes(channel.Name);
+        var blob = new byte[64];
+        Tools.MemCopy(bytes, 0, blob, 0, 64);
+        cmd.Parameters["@name"].Value = blob;
+        cmd.Parameters["@hide"].Value = channel.Hidden;
+        cmd.Parameters["@editflag"].Value = (int)( (channel.Favorites == 0 ? 0 : EditFlags.Favorite) | (channel.Skip ? EditFlags.Skip : 0) );
+
+        cmdAttrib.Parameters["@handle"].Value = channel.RecordIndex;
+        cmdAttrib.Parameters["@vis"].Value = channel.Hidden ? 0 : 1;
+        cmdAttrib.Parameters["@del"].Value = channel.IsDeleted ? 1 : 0;
+        cmdAttrib.Parameters["@skip"].Value = channel.Skip ? 1 : 0;
+        cmdAttrib.Parameters["@lock"].Value = channel.Lock ? 1 : 0;
+        cmdAttrib.Parameters["@ren"].Value = channel.IsNameModified ? 1 : 0;
+        cmdAttrib.Parameters["@mov"].Value = channel.OldProgramNr != channel.NewProgramNr ? 1 : 0;
+        cmdAttrib.Parameters["@fav"].Value = channel.Favorites != 0 ? 1 : 0;
+        cmdAttrib.ExecuteNonQuery();
 #endif
-        }
-        else
-        {
-          channel.UpdateRawData();
-          cmd.Parameters["@handle"].Value = channel.RecordIndex;
-          cmd.Parameters["@nr"].Value = channel.NewProgramNr;
-#if !TestBuild
-          var bytes = Encoding.UTF8.GetBytes(channel.Name);
-          var blob = new byte[64];
-          Tools.MemCopy(bytes, 0, blob, 0, 64);
-          cmd.Parameters["@name"].Value = blob;
-          cmd.Parameters["@hide"].Value = channel.Hidden;
-          cmd.Parameters["@editflag"].Value = channel.Favorites == 0 ? 0 : 0x0001;
-#endif
-          cmd.ExecuteNonQuery();
-        }
+        cmd.ExecuteNonQuery();
       }
     }
     #endregion
@@ -431,7 +439,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         return;
 
       var dtvData = File.ReadAllBytes(dtvFile);
-      var crc = Crc16.CCITT.Calc(dtvData);
+      var crc = Crc16.CCITT.Calc(dtvData, 0, Math.Min(dtvData.Length, CrcMaxDataLength));
       var crcData = File.ReadAllBytes(this.crcFile);
       crcData[2] = (byte)(crc & 0xFF);
       crcData[3] = (byte)(crc >> 8);
@@ -444,21 +452,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
     {
       // delete old .tar file and create a new one from temp dir
       File.Delete(this.FileName);
-#if Win10_TAR
-      var psi = new ProcessStartInfo("tar");
-      psi.UseShellExecute = true;
-      psi.WindowStyle = ProcessWindowStyle.Hidden;
-      psi.WorkingDirectory = this.TempPath;
-      psi.Arguments = $"cf \"{this.FileName}\" *";
-      var proc = Process.Start(psi);
-      proc.WaitForExit();
-#elif GNU_TAR
-      this.gnuTar.UpdateFromDirectory(this.FileName);
-#else
-      using var tar = TarArchive.Create();
-      tar.AddAllFromDirectory(this.TempPath);
-      tar.SaveTo(this.FileName, new TarWriterOptions(CompressionType.None, true));
-#endif
+      this.tar.UpdateFromDirectory(this.FileName);
     }
     #endregion
   }

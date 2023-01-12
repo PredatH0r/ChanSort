@@ -78,6 +78,10 @@ System requirements
   "Install Windows DLL or component" and install the "dotnet48" package and ignore dozens of message boxes
 - right-click on ChanSort.exe and select "open with", "all applications", "A wine application"
 
+**Mac**
+- macOS is not directly supported, but you can use Parallels or UTM to set up a VM with Windows 10/11 on the Mac
+- instructions for Macs with m1/ARM CPU: https://history-computer.com/how-to-run-windows-on-m1-macs/
+
 **Hardware**:
 - USB stick/SD-card to transfer the channel list between your TV and PC. A stick <= 32 GB with FAT32 file system 
 is STRONGLY recommended. (Some TVs write garbage to NTFS and don't support exFAT at all)
