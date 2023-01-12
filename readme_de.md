@@ -55,6 +55,7 @@ hier nicht angeführt ist, könnte es trotzdem funktiontionieren:
 - [Sony](source/fileformats_de.md#sony)
 - [Hisense](source/fileformats_de.md#hisense)
 - [Panasonic](source/fileformats_de.md#panasonic)
+- [TCL](source/fileformats_de.md#tcl)
 - [Philips](source/fileformats_de.md#philips)
 - [Sharp, Dyon, Blaupunkt, Hisense, Changhong, Grundig, alphatronics, JTC Genesis, ...](source/fileformats_de.md#sharp)
 - [Toshiba](source/fileformats_de.md#toshiba)

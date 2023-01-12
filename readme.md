@@ -55,6 +55,7 @@ it may work anyway:
 - [Sony](source/fileformats.md#sony)
 - [Hisense](source/fileformats.md#hisense)
 - [Panasonic](source/fileformats.md#panasonic)
+- [TCL](source/fileformats.md#tcl)
 - [Philips](source/fileformats.md#philips)
 - [Sharp, Dyon, Blaupunkt, Hisense, Changhong, Grundig, alphatronics, JTC Genesis, ...](source/fileformats.md#sharp)
 - [Toshiba](source/fileformats.md#toshiba)
@@ -63,6 +64,7 @@ it may work anyway:
 - [VDR](source/fileformats.md#vdr)
 - [SAT>IP m3u](source/fileformats.md#m3u)
 - [Enigma2](source/fileformats.md#enigma2)
+
 
 System requirements
 -------------------

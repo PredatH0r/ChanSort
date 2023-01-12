@@ -52,6 +52,14 @@ Besonderen Dank verdient Hisense für die Bereitstellung von technischen Informat
 Die meisten Viera-Modelle seit 2011 mit Senderlisten im Format
 - svl.bin
 - svl.db
+- Android-TVs der LXS600 und LXW700 Serie mit mnt/vendor/tvdata/database/tv.db Datei
+- NICHT unterstützt: Modelle auf Vestel Plattform, z.B. JXW600 mit CLONE00001/settingsDB\_enc.db
+- NICHT unterstützt: Modelle auf MediaTek(?) Plattform, z.B. JXW600 mit hotel\_setup/Channel\_list/channel\_list.bin
+
+<a name="tcl"/>TCL
+---
+TVs die ein .tar Archiv mit enthaltener database/cloneCRC.bin und database/usedata/DtvData.db Datei exportieren  
+(Diverse TCL Android / Google TV modelle)
 
 <a name="philips"/>Philips
 ---

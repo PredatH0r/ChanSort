@@ -52,6 +52,14 @@ Special thanks to Hisense for supporting ChanSort with technical information and
 Most Viera models since 2011 with channel list formats
 - svl.bin 
 - svl.db 
+- Android-TVs of LXS600 and LXW700 series with mnt/vendor/tvdata/database/tv.db file
+- NOT supported: models on Vestel plattform, e.g. JXW600 with CLONE00001/settingsDB\_enc.db
+- NOT supported: models on MediaTek(?) plattform, e.g. JXW600 with hotel\_setup/Channel\_list/channel\_list.bin
+
+<a name="tcl"/>TCL
+---
+TVs exporting a .tar archive containing a database/cloneCRC.bin and database/usedata/DtvData.db file  
+(Various TCL Android / Google TV models)
 
 <a name="philips"/>Philips
 ---

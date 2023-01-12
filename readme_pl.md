@@ -55,6 +55,7 @@ to może i tak zadziałać:
 - [Sony](source/fileformats.md#sony)
 - [Hisense](source/fileformats.md#hisense)
 - [Panasonic](source/fileformats.md#panasonic)
+- [TCL](source/fileformats.md#tcl)
 - [Philips](source/fileformats.md#philips)
 - [Sharp, Dyon, Blaupunkt, Hisense, Changhong, Grundig, alphatronics, JTC Genesis, ...](source/fileformats.md#sharp)
 - [Toshiba](source/fileformats.md#toshiba)
