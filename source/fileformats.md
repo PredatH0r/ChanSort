@@ -56,7 +56,7 @@ Most Viera models since 2011 with channel list formats
 - NOT supported: models on Vestel plattform, e.g. JXW600 with CLONE00001/settingsDB\_enc.db
 - NOT supported: models on MediaTek(?) plattform, e.g. JXW600 with hotel\_setup/Channel\_list/channel\_list.bin
 
-<a name="tcl"/>TCL
+<a name="tcl"/>TCL / Thomson
 ---
 TVs exporting a .tar archive containing a database/cloneCRC.bin and database/usedata/DtvData.db file  
 (Various TCL Android / Google TV models)
@@ -102,13 +102,13 @@ Do not make any changes in the service menu, as this could damage your TV. Only 
 - Models that export files named dvb\*_config.xml.
 - Models that export a cvt_database.dat file, e.g. 24 GHB 5944: see [Sharp](#Sharp)
 
-<a name="tcl"/>TCL, Thomson
----
-- Models that export a .tar file containing DtvData.db and satellite.db
-
 <a name="satcodx"/>SatcoDX (supplier for ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)
 ---
 Various brands use the same hardware for DVB-S, which exports .sdx files 
+
+<a name="dbm"/>Xoro, TechniSat, Strong, ...
+---
+Various brands use the same hardware for DVB-S and DVB-C receivers, which export variations of .DBM-files
 
 <a name="vdr"/>VDR (Linux Video Disk Recorder)
 ---

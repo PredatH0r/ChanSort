@@ -61,6 +61,7 @@ hier nicht angeführt ist, könnte es trotzdem funktiontionieren:
 - [Toshiba](source/fileformats_de.md#toshiba)
 - [Grundig](source/fileformats_de.md#grundig)
 - [SatcoDX: ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken, ...](source/fileformats_de.md#satcodx)
+- [DBM: Xoro, Strong, TechniSat, ...](source/fileformats_de.md#dbm)
 - [VDR](source/fileformats_de.md#vdr)
 - [SAT>IP m3u](source/fileformats_de.md#m3u)
 - [Enigma2](source/fileformats_de.md#enigma2)
