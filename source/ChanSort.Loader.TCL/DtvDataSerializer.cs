@@ -11,9 +11,10 @@ namespace ChanSort.Loader.TCL
    *
    * None of the sample files contained more than a single input source (DVB-C/T/S), so for the time being this loader puts everything into a single list
    *
-   * When a channel is hidden through the TV's menu, it will result in: EditFlag |= 0x08, unlockedFlag=1, IsSkipped=1
    * When a channel is added to favorites, it will: EditFlag |= 0x01, IsFavor=1, but will keep FavChannelNo=65535
-   *
+   * When a channel is hidden through the TV's menu, it will result in: EditFlag |= 0x08, IsSkipped=1
+   * When a channel is deleted in the menu: EditFlag |= 0x10, IsDelete=1, but it will keep its unique ProgNum
+   * When a channel is moved in the menu: EditFlag |= 0x02, but no change to IsMove(=0)
    */
   class DtvDataSerializer : SerializerBase
   {
@@ -23,7 +24,11 @@ namespace ChanSort.Loader.TCL
     enum EditFlags
     {
       Favorite = 0x01,
-      Skip = 0x08
+      CustomProgNum = 0x02,
+      Skip = 0x08,
+      Delete = 0x10,
+
+      AllKnown = Favorite|CustomProgNum|Skip|Delete
     }
 
     private readonly ChannelList channels = new (SignalSource.All, "All");
@@ -371,22 +376,24 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
     #region WriteChannels()
     private void WriteChannels(SqliteCommand cmd, SqliteCommand cmdAttrib, ChannelList channelList)
     {
+      // what the TV shows as "hide" in the menu is actually "skip" in the database
+
       cmd.CommandText = "update PrograminfoTbl set ProgNum=@nr"
 #if !TestBuild      
-        + ", ServiceName=@name, unlockedFlag=@hide, EditFlag=(EditFlag & " + ~(EditFlags.Favorite | EditFlags.Skip) + ") | @editflag"
+        + ", ServiceName=@name, EditFlag=(EditFlag & " + ~(EditFlags.AllKnown) + ") | @editflag" // unlockedFlag=@hide,
 #endif
         + " where u32Index=@handle";
       cmd.Parameters.Add("@handle", SqliteType.Integer);
       cmd.Parameters.Add("@nr", SqliteType.Integer);
 #if !TestBuild
       cmd.Parameters.Add("@name", SqliteType.Blob, 64);
-      cmd.Parameters.Add("@hide", SqliteType.Integer);
+      //cmd.Parameters.Add("@hide", SqliteType.Integer);
       cmd.Parameters.Add("@editflag", SqliteType.Integer);
 #endif
       cmd.Prepare();
 
 #if !TestBuild
-      cmdAttrib.CommandText = @"update AtrributeTbl set VisibleFlag=@vis, IsDelete=@del, IsMove=IsMove | @mov, IsSkipped=@skip, IsLock=@lock, IsRename=@ren, IsFavor=@fav where u32Index=@handle;";
+      cmdAttrib.CommandText = @"update AtrributeTbl set VisibleFlag=@vis, IsDelete=@del, IsSkipped=@skip, IsLock=@lock, IsRename=@ren, IsFavor=@fav where u32Index=@handle;"; // IsMove=IsMove|@mov,
       cmdAttrib.Parameters.Add("@handle", SqliteType.Integer);
       cmdAttrib.Parameters.Add("@vis", SqliteType.Integer);
       cmdAttrib.Parameters.Add("@del", SqliteType.Integer);
@@ -411,8 +418,17 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         var blob = new byte[64];
         Tools.MemCopy(bytes, 0, blob, 0, 64);
         cmd.Parameters["@name"].Value = blob;
-        cmd.Parameters["@hide"].Value = channel.Hidden;
-        cmd.Parameters["@editflag"].Value = (int)( (channel.Favorites == 0 ? 0 : EditFlags.Favorite) | (channel.Skip ? EditFlags.Skip : 0) );
+        //cmd.Parameters["@hide"].Value = channel.Hidden;
+        EditFlags flags = 0;
+        if (channel.Favorites != 0)
+          flags |= EditFlags.Favorite;
+        if (channel.Skip)
+          flags |= EditFlags.Skip;
+        if (channel.IsDeleted)
+          flags |= EditFlags.Delete;
+        else
+          flags |= EditFlags.CustomProgNum;
+        cmd.Parameters["@editflag"].Value = (int)flags;
 
         cmdAttrib.Parameters["@handle"].Value = channel.RecordIndex;
         cmdAttrib.Parameters["@vis"].Value = channel.Hidden ? 0 : 1;
@@ -420,7 +436,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         cmdAttrib.Parameters["@skip"].Value = channel.Skip ? 1 : 0;
         cmdAttrib.Parameters["@lock"].Value = channel.Lock ? 1 : 0;
         cmdAttrib.Parameters["@ren"].Value = channel.IsNameModified ? 1 : 0;
-        cmdAttrib.Parameters["@mov"].Value = channel.OldProgramNr != channel.NewProgramNr ? 1 : 0;
+        //cmdAttrib.Parameters["@mov"].Value = 1;
         cmdAttrib.Parameters["@fav"].Value = channel.Favorites != 0 ? 1 : 0;
         cmdAttrib.ExecuteNonQuery();
 #endif
