@@ -12,7 +12,7 @@ namespace ChanSort.Loader.TCL
    * None of the sample files contained more than a single input source (DVB-C/T/S), so for the time being this loader puts everything into a single list
    *
    * When a channel is added to favorites, it will: EditFlag |= 0x01, IsFavor=1, but will keep FavChannelNo=65535
-   * When a channel is hidden through the TV's menu, it will result in: EditFlag |= 0x08, IsSkipped=1
+   * When a channel is hidden through the TV's menu, it will result in: EditFlag |= 0x08, IsSkipped=1, leaving "VisibleFlag" unchanged (=1)
    * When a channel is deleted in the menu: EditFlag |= 0x10, IsDelete=1, but it will keep its unique ProgNum
    * When a channel is moved in the menu: EditFlag |= 0x02, but no change to IsMove(=0)
    */
@@ -25,13 +25,15 @@ namespace ChanSort.Loader.TCL
     {
       Favorite = 0x01,
       CustomProgNum = 0x02,
-      Skip = 0x08,
+      Hidden = 0x08,
       Delete = 0x10,
 
-      AllKnown = Favorite|CustomProgNum|Skip|Delete
+      AllKnown = Favorite|CustomProgNum|Hidden|Delete
     }
 
-    private readonly ChannelList channels = new (SignalSource.All, "All");
+    private readonly ChannelList dvbT = new(SignalSource.Antenna | SignalSource.MaskTvRadioData|SignalSource.Digital, "DVB-T");
+    private readonly ChannelList dvbC = new(SignalSource.Cable | SignalSource.MaskTvRadioData | SignalSource.Digital, "DVB-C");
+    private readonly ChannelList dvbS = new(SignalSource.Sat | SignalSource.MaskTvRadioData | SignalSource.Digital, "DVB-S");
     private string dbDir;
     private string dtvFile;
     private string satFile;
@@ -51,17 +53,22 @@ namespace ChanSort.Loader.TCL
 #else
       this.Features.DeleteMode = DeleteMode.FlagWithoutPrNr;
 #endif
-      this.Features.CanSkipChannels = true;
+      this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
       this.Features.FavoritesMode = FavoritesMode.Flags;
       this.Features.MaxFavoriteLists = 1;
 
-      this.DataRoot.AddChannelList(this.channels);
-      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
-      channels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
-      channels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.ServiceType));
-      channels.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Source));
+      this.DataRoot.AddChannelList(this.dvbT);
+      this.DataRoot.AddChannelList(this.dvbC);
+      this.DataRoot.AddChannelList(this.dvbS);
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
+        list.VisibleColumnFieldNames.Add(nameof(ChannelInfo.ServiceType));
+        list.VisibleColumnFieldNames.Add(nameof(ChannelInfo.Source));
+      }
     }
     #endregion
 
@@ -297,17 +304,16 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
           oldProgNr = -1;
 
         var name = r.GetString(2)?.TrimEnd(' ', '\0');
-        ChannelInfo channel = new ChannelInfo(0, handle, oldProgNr, name);
+        ChannelInfo channel = new ChannelInfo(SignalSource.Digital, handle, oldProgNr, name);
         channel.ShortName = r.GetString(3).TrimEnd(' ', '\0');
         channel.ServiceId = r.GetInt32(4);
         var vtype = r.GetInt32(5);
         channel.ServiceTypeName = vtype == 1 ? "SD-TV" : vtype == 4 ? "HD-TV" : vtype == 6 ? "UHD-TV" : null;
         channel.PcrPid = r.GetInt32(6);
         channel.VideoPid = r.GetInt32(7);
-        channel.Hidden = r.GetBoolean(8);
         var edit = (EditFlags)r.GetInt32(11);
         channel.Favorites = (edit & EditFlags.Favorite) != 0 ? Favorites.A : 0;
-        channel.Skip = (edit & EditFlags.Skip) != 0;
+        channel.Hidden = (edit & EditFlags.Hidden) != 0;
         channel.AddDebug($"LCN={r.GetValue(9)}, edit={(int)edit:x4}");
 
         // DVB
@@ -322,8 +328,20 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
           channel.SymbolRate = r.GetInt32(ixD + 3);
           if (channel.FreqInMhz > 10000)
             channel.FreqInMhz = (int) channel.FreqInMhz;
-          channel.Source = r.GetString(ixC);
         }
+
+        // get signal source from CurCIOPSerType table
+        if (r.IsDBNull(ixC))
+          continue;
+        channel.Source = r.GetString(ixC);
+        if (channel.Source == "dvbc")
+          channel.SignalSource |= SignalSource.Cable;
+        else if (channel.Source == "dvbt")
+          channel.SignalSource |= SignalSource.Antenna;
+        else if (channel.Source == "dvbs")
+          channel.SignalSource |= SignalSource.Sat;
+        else
+          continue;
 
         // AtrributeTbl (actual typo in the TV's table name!)
         if (!r.IsDBNull(ixA))
@@ -332,9 +350,8 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
           channel.ServiceTypeName = LookupData.Instance.GetServiceTypeDescription(channel.ServiceType);
           channel.SignalSource |= LookupData.Instance.IsRadioTvOrData(channel.ServiceType);
           channel.Encrypted = r.GetInt32(ixA + 1) != 0;
-          channel.Hidden = !r.GetBoolean(ixA + 2);
           channel.IsDeleted |= r.GetBoolean(ixA + 3);
-          channel.Skip |= r.GetBoolean(ixA + 4);
+          channel.Hidden |= r.GetBoolean(ixA + 4);
           channel.Lock = r.GetBoolean(ixA + 5);
           if (r.GetBoolean(ixA + 6))
             channel.Favorites |= Favorites.A;
@@ -342,8 +359,11 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
           channel.AddDebug($", FavChannelNo={r.GetInt32(ixA + 10)}");
         }
 
-        //if (!channel.IsDeleted)
-          this.DataRoot.AddChannel(this.channels, channel);
+        if (!channel.IsDeleted)
+        {
+          var list = this.DataRoot.GetChannelList(channel.SignalSource);
+          this.DataRoot.AddChannel(list, channel);
+        }
       }
     }
     #endregion
@@ -360,7 +380,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         using var cmd = conn.CreateCommand();
         using var cmd2 = conn.CreateCommand();
 
-        this.WriteChannels(cmd, cmd2, this.channels);
+        this.WriteChannels(cmd, cmd2);
         trans.Commit();
 
         cmd.Transaction = null;
@@ -374,7 +394,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SqliteCommand cmd, SqliteCommand cmdAttrib, ChannelList channelList)
+    private void WriteChannels(SqliteCommand cmd, SqliteCommand cmdAttrib)
     {
       // what the TV shows as "hide" in the menu is actually "skip" in the database
 
@@ -387,17 +407,14 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
       cmd.Parameters.Add("@nr", SqliteType.Integer);
 #if !TestBuild
       cmd.Parameters.Add("@name", SqliteType.Blob, 64);
-      //cmd.Parameters.Add("@hide", SqliteType.Integer);
       cmd.Parameters.Add("@editflag", SqliteType.Integer);
 #endif
       cmd.Prepare();
 
 #if !TestBuild
-      cmdAttrib.CommandText = @"update AtrributeTbl set VisibleFlag=@vis, IsDelete=@del, IsSkipped=@skip, IsLock=@lock, IsRename=@ren, IsFavor=@fav where u32Index=@handle;"; // IsMove=IsMove|@mov,
+      cmdAttrib.CommandText = @"update AtrributeTbl set IsDelete=@del, IsSkipped=@skip, IsLock=@lock, IsRename=@ren, IsFavor=@fav where u32Index=@handle;"; // IsMove=IsMove|@mov,
       cmdAttrib.Parameters.Add("@handle", SqliteType.Integer);
-      cmdAttrib.Parameters.Add("@vis", SqliteType.Integer);
       cmdAttrib.Parameters.Add("@del", SqliteType.Integer);
-      cmdAttrib.Parameters.Add("@mov", SqliteType.Integer);
       cmdAttrib.Parameters.Add("@skip", SqliteType.Integer);
       cmdAttrib.Parameters.Add("@lock", SqliteType.Integer);
       cmdAttrib.Parameters.Add("@ren", SqliteType.Integer);
@@ -405,42 +422,42 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
       cmdAttrib.Prepare();
 #endif
 
-      foreach (ChannelInfo channel in channelList.Channels)
+      foreach (var channelList in this.DataRoot.ChannelLists)
       {
-        if (channel.IsProxy) // ignore reference list proxy channels
-          continue;
+        foreach (ChannelInfo channel in channelList.Channels)
+        {
+          if (channel.IsProxy) // ignore reference list proxy channels
+            continue;
 
-        channel.UpdateRawData();
-        cmd.Parameters["@handle"].Value = channel.RecordIndex;
-        cmd.Parameters["@nr"].Value = channel.IsDeleted ? 65535 : channel.NewProgramNr;
+          channel.UpdateRawData();
+          cmd.Parameters["@handle"].Value = channel.RecordIndex;
+          cmd.Parameters["@nr"].Value = channel.IsDeleted ? 65535 : channel.NewProgramNr;
 #if !TestBuild
-        var bytes = Encoding.UTF8.GetBytes(channel.Name);
-        var blob = new byte[64];
-        Tools.MemCopy(bytes, 0, blob, 0, 64);
-        cmd.Parameters["@name"].Value = blob;
-        //cmd.Parameters["@hide"].Value = channel.Hidden;
-        EditFlags flags = 0;
-        if (channel.Favorites != 0)
-          flags |= EditFlags.Favorite;
-        if (channel.Skip)
-          flags |= EditFlags.Skip;
-        if (channel.IsDeleted)
-          flags |= EditFlags.Delete;
-        else
-          flags |= EditFlags.CustomProgNum;
-        cmd.Parameters["@editflag"].Value = (int)flags;
+          var bytes = Encoding.UTF8.GetBytes(channel.Name);
+          var blob = new byte[64];
+          Tools.MemCopy(bytes, 0, blob, 0, 64);
+          cmd.Parameters["@name"].Value = blob;
+          EditFlags flags = 0;
+          if (channel.Favorites != 0)
+            flags |= EditFlags.Favorite;
+          if (channel.Hidden)
+            flags |= EditFlags.Hidden;
+          if (channel.IsDeleted)
+            flags |= EditFlags.Delete;
+          else
+            flags |= EditFlags.CustomProgNum;
+          cmd.Parameters["@editflag"].Value = (int)flags;
 
-        cmdAttrib.Parameters["@handle"].Value = channel.RecordIndex;
-        cmdAttrib.Parameters["@vis"].Value = channel.Hidden ? 0 : 1;
-        cmdAttrib.Parameters["@del"].Value = channel.IsDeleted ? 1 : 0;
-        cmdAttrib.Parameters["@skip"].Value = channel.Skip ? 1 : 0;
-        cmdAttrib.Parameters["@lock"].Value = channel.Lock ? 1 : 0;
-        cmdAttrib.Parameters["@ren"].Value = channel.IsNameModified ? 1 : 0;
-        //cmdAttrib.Parameters["@mov"].Value = 1;
-        cmdAttrib.Parameters["@fav"].Value = channel.Favorites != 0 ? 1 : 0;
-        cmdAttrib.ExecuteNonQuery();
+          cmdAttrib.Parameters["@handle"].Value = channel.RecordIndex;
+          cmdAttrib.Parameters["@del"].Value = channel.IsDeleted ? 1 : 0;
+          cmdAttrib.Parameters["@skip"].Value = channel.Hidden ? 1 : 0;
+          cmdAttrib.Parameters["@lock"].Value = channel.Lock ? 1 : 0;
+          cmdAttrib.Parameters["@ren"].Value = channel.IsNameModified ? 1 : 0;
+          cmdAttrib.Parameters["@fav"].Value = channel.Favorites != 0 ? 1 : 0;
+          cmdAttrib.ExecuteNonQuery();
 #endif
-        cmd.ExecuteNonQuery();
+          cmd.ExecuteNonQuery();
+        }
       }
     }
     #endregion

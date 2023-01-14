@@ -12,15 +12,18 @@ namespace ChanSort.Loader.VisionEdge4K
    * Currently only "satellite_transponder_table" is supported, but there are databases with additional "cable_transponder_table" and "terrestrial_transponder_table" tables.
    * All these transponder tables have tp_id values starting at 0, which makes it unclear how to reference them from within program_table.
    * The guess is that program_table.tp_type=0 means satellite.
+   *
+   * The disp_order stored in the database is not used directly by the STB. Instead it only orders the DB results by it and creates internal lists for each satellite, all starting at 1.
    */
   class VisionEdge4KSerializer : SerializerBase
   {
-    private readonly ChannelList channels = new (SignalSource.All, "All");
-    private readonly ChannelList favs = new (SignalSource.All, "Fav") { IsMixedSourceFavoritesList = true };
-
     private readonly HashSet<string> tableNames = new();
     private readonly List<int> favListIds = new();
     private readonly Dictionary<int, int> favListIndexById = new();
+
+    private readonly Dictionary<int, ChannelList> channels = new();
+    private readonly ChannelList favs = new(SignalSource.All, "Fav") { IsMixedSourceFavoritesList = true };
+
 
     #region ctor()
     public VisionEdge4KSerializer(string inputFile) : base(inputFile)
@@ -35,14 +38,6 @@ namespace ChanSort.Loader.VisionEdge4K
 #else
       this.Features.FavoritesMode = FavoritesMode.None;
 #endif
-      this.DataRoot.AddChannelList(this.channels);
-      this.DataRoot.AddChannelList(this.favs);
-      foreach (var list in this.DataRoot.ChannelLists)
-      {
-        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
-        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ShortName));
-        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
-      }
     }
     #endregion
 
@@ -73,6 +68,7 @@ namespace ChanSort.Loader.VisionEdge4K
 #if WITH_FAVORITES
       this.ReadFavorites(cmd);
 #endif
+      this.AdjustColumns();
     }
     #endregion
     
@@ -87,7 +83,7 @@ namespace ChanSort.Loader.VisionEdge4K
     #region ReadSatellites()
     private void ReadSatellites(SqliteCommand cmd)
     {
-      cmd.CommandText = "select id, name, angle from satellite_table";
+      cmd.CommandText = "select id, name, angle from satellite_table order by disp_order";
       using var r = cmd.ExecuteReader();
       while (r.Read())
       {
@@ -108,6 +104,10 @@ namespace ChanSort.Loader.VisionEdge4K
         sat.OrbitalPosition = $"{pos / 10}.{pos % 10}{eastWest}";
         sat.Name = r.GetString(1);
         this.DataRoot.AddSatellite(sat);
+
+        var list = new ChannelList(SignalSource.Sat | SignalSource.Digital | SignalSource.MaskTvRadioData, sat.Name);
+        this.channels.Add(sat.Id, list);
+        this.DataRoot.AddChannelList(list);
       }
     }
     #endregion
@@ -144,9 +144,10 @@ namespace ChanSort.Loader.VisionEdge4K
       cmd.CommandText = @"
 select 
   p.id, p.disp_order, p.name, p.service_id, p.vid_pid, p.pcr_pid, p.vid_type, p.tv_type, p.ca_type, p.lock, p.skip, p.hide,
-  st.sat_id, st.on_id, st.ts_id, st.freq, st.sym_rate
+  st.sat_id, st.on_id, st.ts_id, st.freq, st.pol, st.sym_rate
 from program_table p
-left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id";
+left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id
+order by p.tv_type,p.disp_order";
 
       using var r = cmd.ExecuteReader();
       while (r.Read())
@@ -178,9 +179,11 @@ left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id"
         channel.Hidden = r.GetBoolean(ixP + 11);
 
         // DVB-S
+        int satId = 0;
         if (!r.IsDBNull(ixST + 0))
         {
-          var sat = this.DataRoot.Satellites.TryGet(r.GetInt32(ixST + 0));
+          satId = r.GetInt32(ixST + 0);
+          var sat = this.DataRoot.Satellites.TryGet(satId);
           channel.Satellite = sat?.Name;
           channel.SatPosition = sat?.OrbitalPosition;
           channel.OriginalNetworkId = r.GetInt32(ixST + 1) & 0x7FFF;
@@ -188,11 +191,17 @@ left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id"
           channel.FreqInMhz = r.GetInt32(ixST + 3);
           if (channel.FreqInMhz > 20000) // DVB-S is in MHz already, DVB-C/T in kHz
             channel.FreqInMhz /= 1000;
-          channel.SymbolRate = r.GetInt32(ixST + 4);
+          channel.Polarity = r.GetInt32(ixST + 4) == 0 ? 'H' : 'V';
+          channel.SymbolRate = r.GetInt32(ixST + 5);
         }
 
-        this.DataRoot.AddChannel(this.channels, channel);
-        this.DataRoot.AddChannel(this.favs, channel);
+        var list = this.channels.TryGet(satId);
+        if (list != null)
+        {
+          channel.OldProgramNr = list.Channels.Count + 1;
+          this.DataRoot.AddChannel(list, channel);
+          this.DataRoot.AddChannel(this.favs, channel);
+        }
       }
     }
     #endregion
@@ -201,7 +210,8 @@ left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id"
 
     private void ReadFavorites(SqliteCommand cmd)
     {
-      cmd.CommandText = "select id, fav_name from fav_name_table";
+      this.Features.MaxFavoriteLists = 0;
+      cmd.CommandText = "select id, fav_name from fav_name_table order by id";
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
@@ -214,7 +224,8 @@ left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id"
         }
       }
 
-      cmd.CommandText = "select fav_group_id, prog_id, disp_order, tv_type from fav_prog_table";
+      cmd.CommandText = "select fav_group_id, prog_id, disp_order, tv_type from fav_prog_table order by disp_order";
+      var lastProgNr = new Dictionary<int, int>();
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
@@ -224,8 +235,24 @@ left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id"
             continue;
           if (!this.favListIndexById.TryGetValue(r.GetInt32(0), out var idx))
             continue;
-          chan.SetOldPosition(idx + 1, r.GetInt32(2));
+
+          lastProgNr.TryGetValue(idx, out var nr);
+          lastProgNr[idx] = ++nr;
+          chan.SetOldPosition(idx, nr);
         }
+      }
+    }
+    #endregion
+
+    #region AdjustColumns()
+    private void AdjustColumns()
+    {
+      this.DataRoot.AddChannelList(this.favs);
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ShortName));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
       }
     }
     #endregion
@@ -255,39 +282,44 @@ left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id"
     #region WriteChannels()
     private void WriteChannels(SqliteCommand cmd, SqliteCommand cmdDelete)
     {
-      cmd.CommandText = "update program_table set disp_order=@nr, name=@name, skip=@skip, lock=@lock, hide=@hide where id=@handle";
+      cmd.CommandText = "update program_table set disp_order=@nr, name=@name, skip=@skip, lock=@lock, hide=@hide, fav=@fav where id=@handle";
       cmd.Parameters.Add("@handle", SqliteType.Integer);
       cmd.Parameters.Add("@nr", SqliteType.Integer);
       cmd.Parameters.Add("@name", SqliteType.Text);
       cmd.Parameters.Add("@skip", SqliteType.Integer);
       cmd.Parameters.Add("@lock", SqliteType.Integer);
       cmd.Parameters.Add("@hide", SqliteType.Integer);
+      cmd.Parameters.Add("@fav", SqliteType.Integer);
       cmd.Prepare();
 
       cmdDelete.CommandText = "delete from program_table where id=@handle; delete from fav_prog_table where prog_id=@handle;";
       cmdDelete.Parameters.Add("@handle", SqliteType.Integer);
       cmdDelete.Prepare();
 
-      foreach (ChannelInfo channel in this.channels.Channels)
+      foreach (var list in this.DataRoot.ChannelLists)
       {
-        if (channel.IsProxy) // ignore reference list proxy channels
-          continue;
+        foreach (ChannelInfo channel in list.Channels)
+        {
+          if (channel.IsProxy) // ignore reference list proxy channels
+            continue;
 
-        if (channel.IsDeleted)
-        {
-          cmdDelete.Parameters["@handle"].Value = channel.RecordIndex;
-          cmdDelete.ExecuteNonQuery();
-        }
-        else
-        {
-          channel.UpdateRawData();
-          cmd.Parameters["@handle"].Value = channel.RecordIndex;
-          cmd.Parameters["@nr"].Value = channel.NewProgramNr;
-          cmd.Parameters["@name"].Value = channel.Name;
-          cmd.Parameters["@skip"].Value = channel.Skip ? 1 : 0;
-          cmd.Parameters["@lock"].Value = channel.Lock ? 1 : 0;
-          cmd.Parameters["@hide"].Value = channel.Hidden ? 1 : 0;
-          cmd.ExecuteNonQuery();
+          if (channel.IsDeleted)
+          {
+            cmdDelete.Parameters["@handle"].Value = channel.RecordIndex;
+            cmdDelete.ExecuteNonQuery();
+          }
+          else
+          {
+            channel.UpdateRawData();
+            cmd.Parameters["@handle"].Value = channel.RecordIndex;
+            cmd.Parameters["@nr"].Value = channel.NewProgramNr;
+            cmd.Parameters["@name"].Value = channel.Name;
+            cmd.Parameters["@skip"].Value = channel.Skip ? 1 : 0;
+            cmd.Parameters["@lock"].Value = channel.Lock ? 1 : 0;
+            cmd.Parameters["@hide"].Value = channel.Hidden ? 1 : 0;
+            cmd.Parameters["@fav"].Value = channel.Favorites == 0 ? 0 : 1;
+            cmd.ExecuteNonQuery();
+          }
         }
       }
     }
@@ -306,6 +338,8 @@ left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id"
       cmd.Parameters.Add("@order", SqliteType.Integer);
       cmd.Parameters.Add("@type", SqliteType.Integer);
 
+      int favProgNr = 1; // the TV maintains continuous numbers over all favorite lists, not per-list
+
       int max = this.Features.MaxFavoriteLists;
       foreach (var chan in favs.Channels)
       {
@@ -318,7 +352,7 @@ left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id"
             continue;
           cmd.Parameters["@progid"].Value = chan.RecordIndex;
           cmd.Parameters["@groupid"].Value = this.favListIds[i];
-          cmd.Parameters["@order"].Value = num;
+          cmd.Parameters["@order"].Value = favProgNr++;
           cmd.Parameters["@type"].Value = (chan.SignalSource & SignalSource.Tv) != 0 ? 0 : 1;
           cmd.ExecuteNonQuery();
         }

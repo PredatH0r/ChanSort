@@ -3,7 +3,8 @@
 
 2023-01-14
 - added support for Vision EDGE 4K set-top-box (DVB-S only)
-  (DVB-C/T can be added when I receive a file containing such channels)
+- TCL: separate lists for DVB-C/T/S, each starting at 1
+- TCL: cleaned up "Hide" vs "Skip"
 
 2023-01-12
 - TCL: fixed upload failure due to incorrect checksum when DtvData.db was larger than 307200 bytes
