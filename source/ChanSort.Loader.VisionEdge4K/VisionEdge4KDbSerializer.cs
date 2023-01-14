@@ -1,5 +1,6 @@
 ﻿#define WITH_FAVORITES
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Data.Sqlite;
@@ -21,8 +22,9 @@ namespace ChanSort.Loader.VisionEdge4K
     private readonly List<int> favListIds = new();
     private readonly Dictionary<int, int> favListIndexById = new();
 
-    private readonly Dictionary<int, ChannelList> channels = new();
-    private readonly ChannelList favs = new(SignalSource.All, "Fav") { IsMixedSourceFavoritesList = true };
+    private readonly Dictionary<int, ChannelList> channels = new(); // by satellite-id
+    //private readonly Dictionary<int, ChannelList> favs = new(); // by satellite-id
+    private readonly Dictionary<int, ChannelInfo> channelById = new();
 
 
     #region ctor()
@@ -30,11 +32,13 @@ namespace ChanSort.Loader.VisionEdge4K
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.All;
       this.Features.DeleteMode = DeleteMode.Physically;
+      this.Features.AllowGapsInFavNumbers = false;
+      this.Features.CanHaveGaps = false;
       this.Features.CanSkipChannels = true;
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
 #if WITH_FAVORITES
-      this.Features.FavoritesMode = FavoritesMode.MixedSource;
+      this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
 #else
       this.Features.FavoritesMode = FavoritesMode.None;
 #endif
@@ -107,6 +111,10 @@ namespace ChanSort.Loader.VisionEdge4K
 
         var list = new ChannelList(SignalSource.Sat | SignalSource.Digital | SignalSource.MaskTvRadioData, sat.Name);
         this.channels.Add(sat.Id, list);
+        this.DataRoot.AddChannelList(list);
+
+        list = new ChannelList(SignalSource.Sat | SignalSource.Digital | SignalSource.MaskTvRadioData, sat.Name + " FAV");
+        list.IsMixedSourceFavoritesList = true;
         this.DataRoot.AddChannelList(list);
       }
     }
@@ -183,6 +191,7 @@ order by p.tv_type,p.disp_order";
         if (!r.IsDBNull(ixST + 0))
         {
           satId = r.GetInt32(ixST + 0);
+          channel.RecordOrder = satId; // abusing data field
           var sat = this.DataRoot.Satellites.TryGet(satId);
           channel.Satellite = sat?.Name;
           channel.SatPosition = sat?.OrbitalPosition;
@@ -195,13 +204,15 @@ order by p.tv_type,p.disp_order";
           channel.SymbolRate = r.GetInt32(ixST + 5);
         }
 
+        // add to main channel list
         var list = this.channels.TryGet(satId);
         if (list != null)
         {
           channel.OldProgramNr = list.Channels.Count + 1;
           this.DataRoot.AddChannel(list, channel);
-          this.DataRoot.AddChannel(this.favs, channel);
         }
+
+        this.channelById[(int)channel.RecordIndex] = channel;
       }
     }
     #endregion
@@ -219,26 +230,30 @@ order by p.tv_type,p.disp_order";
           var id = r.GetInt32(0);
           favListIds.Add(id);
           favListIndexById[id] = this.Features.MaxFavoriteLists;
-          this.favs.SetFavListCaption(this.Features.MaxFavoriteLists, r.GetString(1));
+
+          var name = r.GetString(1);
+          foreach (var favList in this.channels.Values)
+            favList.SetFavListCaption(this.Features.MaxFavoriteLists, name);
           ++this.Features.MaxFavoriteLists;
         }
       }
 
       cmd.CommandText = "select fav_group_id, prog_id, disp_order, tv_type from fav_prog_table order by disp_order";
-      var lastProgNr = new Dictionary<int, int>();
+      var lastProgNr = new Dictionary<Tuple<int, int>, int>(); // for each pair of (sat,fav) a separate number sequence
       using (var r = cmd.ExecuteReader())
       {
         while (r.Read())
         {
-          var chan = this.favs.GetChannelById(r.GetInt32(1));
+          var chan = this.channelById.TryGet(r.GetInt32(1));
           if (chan == null)
             continue;
           if (!this.favListIndexById.TryGetValue(r.GetInt32(0), out var idx))
             continue;
 
-          lastProgNr.TryGetValue(idx, out var nr);
-          lastProgNr[idx] = ++nr;
-          chan.SetOldPosition(idx, nr);
+          var key = Tuple.Create(chan.RecordOrder, idx);
+          lastProgNr.TryGetValue(key, out var nr);
+          lastProgNr[key] = ++nr;
+          chan.SetOldPosition(idx + 1, nr);
         }
       }
     }
@@ -247,7 +262,6 @@ order by p.tv_type,p.disp_order";
     #region AdjustColumns()
     private void AdjustColumns()
     {
-      this.DataRoot.AddChannelList(this.favs);
       foreach (var list in this.DataRoot.ChannelLists)
       {
         list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
@@ -298,7 +312,7 @@ order by p.tv_type,p.disp_order";
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        foreach (ChannelInfo channel in list.Channels)
+        foreach (ChannelInfo channel in list.Channels.OrderBy(ch => (ch.SignalSource & SignalSource.Tv) != 0 ? 0 : 1).ThenBy(ch => ch.NewProgramNr))
         {
           if (channel.IsProxy) // ignore reference list proxy channels
             continue;
@@ -338,23 +352,25 @@ order by p.tv_type,p.disp_order";
       cmd.Parameters.Add("@order", SqliteType.Integer);
       cmd.Parameters.Add("@type", SqliteType.Integer);
 
-      int favProgNr = 1; // the TV maintains continuous numbers over all favorite lists, not per-list
-
       int max = this.Features.MaxFavoriteLists;
-      foreach (var chan in favs.Channels)
+      int dispOrder = 1; // the TV maintains continuous numbers over all favorite lists ordered by fav-id and then satellite
+      for (int i = 0; i < max; i++)
       {
-        if (chan.IsProxy)
-          continue;
-        for (int i = 0; i < max; i++)
+        foreach (var list in this.DataRoot.ChannelLists)
         {
-          var num = chan.GetPosition(i + 1);
-          if (num <= 0)
-            continue;
-          cmd.Parameters["@progid"].Value = chan.RecordIndex;
-          cmd.Parameters["@groupid"].Value = this.favListIds[i];
-          cmd.Parameters["@order"].Value = favProgNr++;
-          cmd.Parameters["@type"].Value = (chan.SignalSource & SignalSource.Tv) != 0 ? 0 : 1;
-          cmd.ExecuteNonQuery();
+          foreach (var chan in list.Channels.OrderBy(ch => (ch.SignalSource & SignalSource.Tv) != 0 ? 0 : 1).ThenBy(ch => ch.GetPosition(i + 1)))
+          {
+            if (chan.IsProxy)
+              continue;
+            var num = chan.GetPosition(i + 1);
+            if (num <= 0)
+              continue;
+            cmd.Parameters["@progid"].Value = chan.RecordIndex;
+            cmd.Parameters["@groupid"].Value = this.favListIds[i];
+            cmd.Parameters["@order"].Value = dispOrder++;
+            cmd.Parameters["@type"].Value = (chan.SignalSource & SignalSource.Tv) != 0 ? 0 : 1;
+            cmd.ExecuteNonQuery();
+          }
         }
       }
     }
