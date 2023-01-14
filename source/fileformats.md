@@ -110,6 +110,10 @@ Various brands use the same hardware for DVB-S, which exports .sdx files
 ---
 Various brands use the same hardware for DVB-S and DVB-C receivers, which export variations of .DBM-files
 
+<a name="visionedge"/>VISION EDGE 4K
+---
+database.db file exported by this DVB-S/C/T set-top-box
+
 <a name="vdr"/>VDR (Linux Video Disk Recorder)
 ---
 Supports the channels.conf file format.  

@@ -110,6 +110,10 @@ Mehrere Marken nutzen die gleiche Hardware für DVB-S und exportieren .sdx Dateie
 ---
 Mehrere Marken nutzen die gleiche Hardware für DVB-S und DVB-C Receiver, die .HBM Dateien in unterschiedlichen Varianten exportieren.
 
+<a name="visionedge"/>VISION EDGE 4K
+---
+database.db Datei, die von dieser DVB-S/C/T Set-Top-Box exportiert wird
+
 <a name="vdr"/>VDR (Linux Video Disk Recorder)
 ---
 Unterstützung des channels.conf Dateiformats.  

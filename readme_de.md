@@ -62,6 +62,7 @@ hier nicht angeführt ist, könnte es trotzdem funktiontionieren:
 - [Grundig](source/fileformats_de.md#grundig)
 - [SatcoDX: ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken, ...](source/fileformats_de.md#satcodx)
 - [DBM: Xoro, Strong, TechniSat, ...](source/fileformats_de.md#dbm)
+- [Vision Edge 4K](source/fileformats.md#visionedge)
 - [VDR](source/fileformats_de.md#vdr)
 - [SAT>IP m3u](source/fileformats_de.md#m3u)
 - [Enigma2](source/fileformats_de.md#enigma2)

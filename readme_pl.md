@@ -62,6 +62,7 @@ to może i tak zadziałać:
 - [Grundig](source/fileformats.md#grundig)
 - [SatcoDX: ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken, ...](source/fileformats.md#satcodx)
 - [DBM: Xoro, Strong, TechniSat, ...](source/fileformats.md#dbm)
+- [Vision Edge 4K](source/fileformats.md#visionedge)
 - [VDR](source/fileformats.md#vdr)
 - [SAT>IP m3u](source/fileformats.md#m3u)
 - [Enigma2](source/fileformats.md#enigma2)

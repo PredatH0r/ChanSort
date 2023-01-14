@@ -9,6 +9,7 @@ namespace ChanSort.Api
     private readonly Dictionary<string, IList<ChannelInfo>> channelByUid = new ();
     private readonly Dictionary<int, ChannelInfo> channelByProgNr = new ();
     private readonly Dictionary<string, IList<ChannelInfo>> channelByName = new ();
+    private readonly Dictionary<long, ChannelInfo> channelById = new();
     private int insertProgramNr = 1;
     private int duplicateUidCount;
     private int duplicateProgNrCount;
@@ -115,6 +116,8 @@ namespace ChanSort.Api
       if (ci.ProgramNrPreset != 0)
         ++this.PresetProgramNrCount;
 
+      this.channelById[ci.RecordIndex] = ci;
+
       this.Channels.Add(ci);
       
       return warning2;
@@ -134,6 +137,10 @@ namespace ChanSort.Api
     {
       return this.Caption;
     }
+    #endregion
+
+    #region GetChannelById()
+    public ChannelInfo GetChannelById(long id) => this.channelById.TryGet(id);
     #endregion
 
     #region GetChannelByName()

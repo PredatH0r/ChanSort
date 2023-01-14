@@ -147,6 +147,7 @@
     <ProjectReference Include="..\ChanSort.Loader.Toshiba\ChanSort.Loader.Toshiba.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Unsupported\ChanSort.Loader.Unsupported.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.VDR\ChanSort.Loader.VDR.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.VisionEdge4K\ChanSort.Loader.VisionEdge4K.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="app.ico" />
