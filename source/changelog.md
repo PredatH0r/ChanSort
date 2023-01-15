@@ -1,10 +1,11 @@
 ﻿ChanSort Change Log 
 ===================
 
-2023-01-14
+2023-01-15
 - added support for Vision EDGE 4K set-top-box (DVB-S only)
 - TCL: separate lists for DVB-C/T/S, each starting at 1
 - TCL: cleaned up "Hide" vs "Skip"
+- SDX: showing message when an unsupported, encrypted .sdx file is opened (e.g. from Xoro STB)
 
 2023-01-12
 - TCL: fixed upload failure due to incorrect checksum when DtvData.db was larger than 307200 bytes

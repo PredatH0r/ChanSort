@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.CodeDom;
+using System.IO;
 using System.Linq;
+using System.Text;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Unsupported
@@ -12,18 +14,21 @@ namespace ChanSort.Loader.Unsupported
     public string PluginName => "Unsupported";
     public string FileFilter => "*";
 
+    private string path;
     private string dir;
     private string name;
     private string ext;
 
     public SerializerBase CreateSerializer(string inputFile)
     {
+      path = inputFile;
       dir = Path.GetDirectoryName(inputFile);
       name = Path.GetFileName(inputFile).ToLowerInvariant();
       ext = Path.GetExtension(name);
 
       CheckForMediaTekAndroidBin();
       CheckForVestelEncryptedDb();
+      CheckForSdxEncrypted();
       
       throw LoaderException.TryNext("File is not on the list of explicitly unsupported formats");
     }
@@ -68,5 +73,22 @@ namespace ChanSort.Loader.Unsupported
     }
     #endregion
 
+    #region CheckForSdxEncrypted()
+    /// <summary>
+    /// Not sure if these .sdx files are also from SatcoDX, but they seem to have a 64 byte file header and then either encrypted or
+    /// compressed data that can't be analyzed. One such file came from a Xoro 
+    /// </summary>
+    private void CheckForSdxEncrypted()
+    {
+      using var strm = new FileStream(this.path, FileMode.Open);
+      var buffer = new byte[24];
+      var len = strm.Read(buffer, 0, buffer.Length);
+      if (len < buffer.Length)
+        return;
+      var str = Encoding.ASCII.GetString(buffer, 0, buffer.Length);
+      if (str.StartsWith("CDX\0MSTDatabaseV"))
+        throw LoaderException.Fail("Encrypted SDX channel lists (used by Xoro and others) can't be read/modified with ChanSort.");
+    }
+    #endregion
   }
 }
