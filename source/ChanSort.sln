@@ -105,7 +105,51 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.TCL", "Chan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.DBM", "ChanSort.Loader.DBM\ChanSort.Loader.DBM.csproj", "{C1FF21EB-1CA6-4CE9-8BA8-9FAF71C5D6A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.VisionEdge4K", "ChanSort.Loader.VisionEdge4K\ChanSort.Loader.VisionEdge4K.csproj", "{71ABCE5E-A833-4729-BC30-35FF0AE01DCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.VisionEdge4K", "ChanSort.Loader.VisionEdge4K\ChanSort.Loader.VisionEdge4K.csproj", "{71ABCE5E-A833-4729-BC30-35FF0AE01DCA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HDD Hex Edit Neo", "HDD Hex Edit Neo", "{1BB3A27F-714C-42F0-A14E-8653B9AB8C24}"
+	ProjectSection(SolutionItems) = preProject
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\chansort.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\chansort.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\cvt_database-dat.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\cvt_database-dat.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\dbm.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dbm.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_1-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_1-bin.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_2-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_2-bin.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\get_doc_size.js = Information\FileStructures_for_HHD_Hex_Editor_Neo\get_doc_size.js
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\his-svl.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\his-svl.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\LaSat_lst.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\LaSat_lst.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\panasonic_idtvChannelBin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\panasonic_idtvChannelBin.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_chanLst-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_chanLst-bin.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_dat.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_dat.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_mgr_472.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_mgr_472.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_mgr_476.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_mgr_476.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_mgr_480.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_mgr_480.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_SatelliteDb-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\philips_SatelliteDb-bin.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-map-Analog.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-map-Analog.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-map-Digital.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-map-Digital.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-map-Satellite.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-map-Satellite.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-SatDataBase.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-SatDataBase.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-TransponderDataBase.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\scm-TransponderDataBase.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-084-LP.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-084-LP.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-164_LH3000.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-164_LH3000.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-164_LH_LU_LF.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-164_LH_LU_LF.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-176-LD_LE_LK_LX_LW45_LW54.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-176-LD_LE_LK_LX_LW45_LW54.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-180-PT.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-180-PT.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-184-LH250C.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-184-LH250C.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-184-LV_LW_LK950S.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-184-LV_LW_LK950S.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-188-LM611S.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-188-LM611S.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-192-LM_LS.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-192-LM_LS.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-212-LT.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-212-LT.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-212-PN.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-212-PN.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-224-LN.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-224-LN.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-244-LB550U.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-244-LB550U.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-256-LA.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-256-LA.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-256-LH.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-256-LH.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-256-LY.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-256-LY.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-260-LA.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-260-LA.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-280-LB580.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-280-LB580.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-common.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-common.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-satellite.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-satellite.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1327,6 +1371,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1BB3A27F-714C-42F0-A14E-8653B9AB8C24} = {67AED502-8AEB-45F2-9B95-AC42B6A5D2C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBF1F6CB-9445-4F6C-A69A-15C4DA246814}

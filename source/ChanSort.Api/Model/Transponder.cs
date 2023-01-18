@@ -14,6 +14,8 @@
     public int TransportStreamId { get; set; }
     public SignalSource SignalSource { get; set; }
 
+    public string Name { get; set; }
+
     public Transponder(int id)
     {
       this.id = id;

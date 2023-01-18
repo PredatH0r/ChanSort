@@ -96,7 +96,12 @@ namespace ChanSort.Api
     /// A proxy channel is inserted into the current channel list when there was no match for a reference list channel
     /// </summary>
     public bool IsProxy => this.RecordIndex == -1;
-    
+
+    /// <summary>
+    /// can be used to store the offset of the raw data in the input file, e.g. for re-parsing names with different encoding
+    /// </summary>
+    public int RawDataOffset { get; set; }
+
     /// <summary>
     /// arbitrary information that can be shown in a UI column to assist in analyzing a file format while coding a plugin
     /// </summary>

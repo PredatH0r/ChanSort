@@ -7,7 +7,7 @@ namespace ChanSort.Loader.Hisense
   {
     public string DllName { get; set; }
     public string PluginName => "Hisense (channel.db, servicelist.db)";
-    public string FileFilter => "*.db";
+    public string FileFilter => "*.db;*.bin";
 
     public SerializerBase CreateSerializer(string inputFile)
     {
@@ -19,6 +19,8 @@ namespace ChanSort.Loader.Hisense
       if (name.Contains("servicelist")) // models 2017 and later
         return new ServicelistDb.ServicelistDbSerializer(inputFile);
 
+      if (name.StartsWith("his_") && name.EndsWith(".bin"))
+        return new HisBin.HisBinSerializer(inputFile);
       return null;
     }
   }

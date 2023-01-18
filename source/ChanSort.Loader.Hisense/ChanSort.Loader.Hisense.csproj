@@ -50,4 +50,13 @@
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="C:\Users\horst\.nuget\packages\sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\..\..\runtimes\win-x86\native\e_sqlite3.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="C:\Users\horst\.nuget\packages\sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\..\..\runtimes\win-x64\native\e_sqlite3.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="C:\Users\horst\.nuget\packages\sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\..\..\runtimes\win-arm\native\e_sqlite3.dll" />
+  </ItemGroup>
 </Project>

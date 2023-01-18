@@ -35,3 +35,9 @@ enum ServiceType : byte
 	Option = 211
 };
 
+
+function trim(str)
+{
+	var i = find(str, "\0");
+	return i < 0 ? str : substring(str, 0, i);
+}
