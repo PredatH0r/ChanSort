@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Hisense.HisBin;
@@ -27,16 +30,19 @@ public class HisBinSerializer : SerializerBase
   private readonly ChannelList dvbsChannels = new (SignalSource.DvbS | SignalSource.Tv | SignalSource.Radio, "DVB-S");
   private readonly ChannelList favChannels = new(SignalSource.All, "Fav") { IsMixedSourceFavoritesList = true };
 
+  private string favFileName;
   private byte[] svlFileContent;
   private byte[] tslFileContent;
   private const int MaxFileSize = 4 << 20; // 4 MB
 
+  private int headerRecordSize, svlRecordSize;
   private int tSize, cSize, sSize;
 
   private const string ERR_fileTooBig = "The file size {0} is larger than the allowed maximum of {1}.";
   private const string ERR_badFileFormat = "The content of the file doesn't match the expected format.";
 
-  private DataMapping svlMapping, tslMapping, dvbMapping, favMapping;
+  private IniFile ini;
+  private DataMapping headerMapping, svlMapping, tslMapping, dvbMapping, favMapping;
   private readonly Dictionary<int, Transponder> transponder = new ();
 
   #region ctor()
@@ -70,7 +76,10 @@ public class HisBinSerializer : SerializerBase
   private void ReadConfigurationFromIniFile()
   {
     string iniFile = this.GetType().Assembly.Location.ToLower().Replace(".dll", ".ini");
-    IniFile ini = new IniFile(iniFile);
+    this.ini = new IniFile(iniFile);
+    this.headerMapping = new DataMapping(ini.GetSection("Header"));
+    this.headerRecordSize = headerMapping.Settings.GetInt("RecordSize");
+
     this.svlMapping = new DataMapping(ini.GetSection("SVL_Record"));
     this.svlMapping.DefaultEncoding = this.DefaultEncoding;
     this.tslMapping = new DataMapping(ini.GetSection("TSL_Record"));
@@ -78,6 +87,8 @@ public class HisBinSerializer : SerializerBase
     this.dvbMapping = new DataMapping(ini.GetSection("DVB_Data"));
     this.dvbMapping.DefaultEncoding = this.DefaultEncoding;
     this.favMapping = new DataMapping(ini.GetSection("FAV_Record"));
+
+    this.svlRecordSize = this.svlMapping.Settings.GetInt("RecordSize");
   }
   #endregion
 
@@ -93,7 +104,8 @@ public class HisBinSerializer : SerializerBase
     this.FileName = Path.Combine(dir, basename + "_SVL.BIN");
     this.LoadTslFile(Path.Combine(dir, basename + "_TSL.BIN"));
     this.LoadSvlFile(this.FileName);
-    this.LoadFavFile(Path.Combine(dir, basename + "_FAV.BIN"));
+    this.favFileName = Path.Combine(dir, basename + "_FAV.BIN");
+    this.LoadFavFile(this.favFileName);
   }
 
   #endregion
@@ -172,13 +184,14 @@ public class HisBinSerializer : SerializerBase
   #region ReadHeader()
   private int ReadHeader(byte[] data, ref int off)
   {
-    if (off + 40 > data.Length)
+    if (off + this.headerRecordSize > data.Length)
       throw new FileLoadException(ERR_badFileFormat);
-    var blockSize = BitConverter.ToInt32(data, off + 36);
+    this.headerMapping.SetDataPtr(data, off);
+    var blockSize = (int)this.headerMapping.GetDword("BlockSize");
     if (off + blockSize > data.Length)
       throw new FileLoadException(ERR_badFileFormat);
 
-    off += 40;
+    off += this.headerRecordSize;
     return blockSize;
   }
   #endregion
@@ -378,17 +391,133 @@ public class HisBinSerializer : SerializerBase
   #region Save()
   public override void Save()
   {
-    throw new NotImplementedException();
+    this.svlFileContent = GetNewSvlContent();
+    var favFileContent = GetNewFavContent();
 
-    // TODO
-    // HIS_SVL
-    // - update size in header
-    // - write channels in new physical order
-    // HIS_FAV
+    File.WriteAllBytes(this.FileName, this.svlFileContent);
+    File.WriteAllBytes(this.favFileName, favFileContent);
+  }
+  #endregion
+
+  #region GetNewSvlContent()
+  public byte[] GetNewSvlContent()
+  {
+    using var mem = new MemoryStream(this.svlFileContent.Length);
+    using var writer = new BinaryWriter(mem);
+    writer.Write(this.svlFileContent, 0, this.headerRecordSize * 3);
+    int iList = -1;
+    foreach (var list in this.DataRoot.ChannelLists)
+    {
+      ++iList;
+      if (list.IsMixedSourceFavoritesList)
+        continue;
+      var order = list.Channels.OrderBy(c => c, new DelegateComparer<ChannelInfo>(OrderChannelsComparer)).ToList();
+      int newId = 0;
+      foreach (var channel in order)
+      {
+        var offset = writer.BaseStream.Position;
+        writer.Write(this.svlFileContent, channel.RawDataOffset, svlRecordSize);
+        writer.Flush();
+        svlMapping.SetDataPtr(mem.GetBuffer(), (int)offset);
+        svlMapping.SetWord("RecordId", newId);
+
+        int val = svlMapping.GetWord("ChannelId");
+        val = (val & 0x03) | (channel.NewProgramNr << 2);
+        svlMapping.SetWord("ChannelId", val);
+
+        channel.RecordIndex = ++newId;
+      }
+
+      // update data block size in header
+      headerMapping.SetDataPtr(mem.GetBuffer(), iList * this.headerRecordSize);
+      headerMapping.SetDword("BlockSize", order.Count * svlRecordSize);
+    }
+
+    var buffer = new byte[mem.Length];
+    Tools.MemCopy(mem.GetBuffer(), 0, buffer, 0, (int)mem.Length);
+    return buffer;
+  }
+  #endregion
+
+  #region OrderChannelsComparer()
+  private int OrderChannelsComparer(ChannelInfo a, ChannelInfo b)
+  {
+    // TV before radio before data
+    var v1 = a.SignalSource & SignalSource.MaskTvRadioData;
+    var v2 = b.SignalSource & SignalSource.MaskTvRadioData;
+    var c = v1.CompareTo(v2);
+    if (c != 0)
+      return c;
+
+    // deleted channels to the end
+    if (a.NewProgramNr < 0)
+      return b.NewProgramNr == 0 ? a.RecordOrder.CompareTo(b.RecordOrder) : +1;
+    if (b.NewProgramNr < 0)
+      return -1;
+
+    return a.NewProgramNr.CompareTo(b.NewProgramNr);
+  }
+  #endregion
+
+  #region GetNewFavContent()
+  private byte[] GetNewFavContent()
+  {
+    using var mem = new MemoryStream();
+    using var writer = new BinaryWriter(mem);
+
+    for (int i=0; i<4; i++)
+      writer.Write(0);
+
+    var favRecordSize = favMapping.Settings.GetInt("RecordSize");
+    var tmp = new byte[favRecordSize];
+    favMapping.SetDataPtr(tmp, 0);
+
+    var nameLength = favMapping.Settings.GetInt("ChannelNameLength");
+    var dispNumLength = favMapping.Settings.GetInt("DisplayNumberLength");
+
+    for (int i = 1; i <= 4; i++)
+    {
+      var order = this.favChannels.Channels.Where(ch => ch.GetPosition(i) >= 0).OrderBy(ch => ch.GetPosition(i)).ToList();
+
+      foreach (var channel in order)
+      {
+        tmp.MemSet(0, 0,  tmp.Length);
+        var mask = channel.SignalSource & SignalSource.MaskTvRadioData;
+        var tblId = (mask & SignalSource.Antenna) != 0 ? 1 : (mask & SignalSource.Cable) != 0 ? 2 : 3;
+        favMapping.SetWord("SvlTableId", tblId);
+        favMapping.SetWord("SvlRecordId", (int)channel.RecordIndex);
+        favMapping.SetString("DisplayNumber", channel.GetPosition(i).ToString(), dispNumLength);
+        favMapping.SetString("ChannelName", channel.Name, nameLength);
+        writer.Write(tmp);
+      }
+
+      // update header
+      writer.Flush();
+      var off = mem.Position;
+      mem.Seek((i-1) * 4, SeekOrigin.Begin);
+      writer.Write(order.Count * favRecordSize);
+      writer.Flush();
+      mem.Seek(off, SeekOrigin.Begin);
+    }
+
+    tmp = new byte[mem.Length];
+    Tools.MemCopy(mem.GetBuffer(), 0, tmp, 0, tmp.Length);
+    return tmp;
   }
   #endregion
 
   // Infrastructure ============================
+
+  #region GetDataFilePaths()
+  /// <summary>
+  /// Files that need backup
+  /// </summary>
+  /// <returns></returns>
+  public override IEnumerable<string> GetDataFilePaths()
+  {
+    return new[] { this.FileName, this.favFileName };
+  }
+  #endregion
 
   #region DefaultEncoding
   public override Encoding DefaultEncoding
@@ -422,6 +551,9 @@ public class HisBinSerializer : SerializerBase
       {
         svlMapping.BaseOffset = chan.RawDataOffset;
         chan.Name = ReadString(svlMapping, "Name", nameLength);
+
+        if ((chan.SignalSource & SignalSource.Digital) == 0)
+          continue;
 
         dvbMapping.BaseOffset = chan.RawDataOffset + dvbOffset;
         chan.ShortName = ReadString(dvbMapping, "ShortName", shortNameLength);
