@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Hisense.HisBin;
@@ -19,9 +17,10 @@ namespace ChanSort.Loader.Hisense.HisBin;
  * See also the his-svl.h file in Information/FileStructures_for_HHD_Hex_Editor_Neo
  *
  * Some properties of these lists:
- * - channel records are physically ordered by their program number. All TV channels first, then radio, then data.
+ * - channel records are physically ordered by recordId, but not necessarily by channelId (holding the program number).
+ * - it's unknown if TV, radio, data must be grouped together or if they can be mixed
  * - favorite lists allow mixing channels from different inputs and also radio and TV
- * - character encoding seen as both implicit UTF8 or latin-1
+ * - character encoding is implicit and can be UTF8 or latin-1
  */
 public class HisBinSerializer : SerializerBase
 {
@@ -54,6 +53,9 @@ public class HisBinSerializer : SerializerBase
     this.Features.CanHideChannels = false;
     this.Features.FavoritesMode = FavoritesMode.MixedSource;
     this.Features.MaxFavoriteLists = 4;
+    this.Features.DeleteMode = DeleteMode.Physically;
+    this.Features.CanHaveGaps = false;
+    this.Features.AllowGapsInFavNumbers = false;
     this.ReadConfigurationFromIniFile();
 
     this.DataRoot.AddChannelList(dvbcChannels);
@@ -405,6 +407,15 @@ public class HisBinSerializer : SerializerBase
     using var mem = new MemoryStream(this.svlFileContent.Length);
     using var writer = new BinaryWriter(mem);
     writer.Write(this.svlFileContent, 0, this.headerRecordSize * 3);
+
+    var maskSkip = svlMapping.Settings.GetInt("NwMask_Skip");
+    var maskLock = svlMapping.Settings.GetInt("NwMask_Lock");
+    var maskFav1 = svlMapping.Settings.GetInt("NwMask_Fav1");
+    var maskFav2 = svlMapping.Settings.GetInt("NwMask_Fav2");
+    var maskFav3 = svlMapping.Settings.GetInt("NwMask_Fav3");
+    var maskFav4 = svlMapping.Settings.GetInt("NwMask_Fav4");
+    var maskClear = ~(maskSkip | maskLock | maskFav1 | maskFav2 | maskFav3 | maskFav4);
+
     int iList = -1;
     foreach (var list in this.DataRoot.ChannelLists)
     {
@@ -412,12 +423,15 @@ public class HisBinSerializer : SerializerBase
       if (list.IsMixedSourceFavoritesList)
         continue;
       var order = list.Channels.OrderBy(c => c, new DelegateComparer<ChannelInfo>(OrderChannelsComparer)).ToList();
-      int newId = 0;
+      int newId = 1;
       foreach (var channel in order)
       {
+        // copy original data
         var offset = writer.BaseStream.Position;
         writer.Write(this.svlFileContent, channel.RawDataOffset, svlRecordSize);
         writer.Flush();
+        
+        // prepare to overwrite with some new values
         svlMapping.SetDataPtr(mem.GetBuffer(), (int)offset);
         svlMapping.SetWord("RecordId", newId);
 
@@ -425,7 +439,16 @@ public class HisBinSerializer : SerializerBase
         val = (val & 0x03) | (channel.NewProgramNr << 2);
         svlMapping.SetWord("ChannelId", val);
 
-        channel.RecordIndex = ++newId;
+        var nwMask = (int)svlMapping.GetDword("NwMask") & maskClear;
+        nwMask |= channel.Skip ? 0 : maskSkip; // reverse meaning
+        nwMask |= channel.Lock ? maskLock : 0;
+        nwMask |= (channel.Favorites & Favorites.A) != 0 ? maskFav1 : 0;
+        nwMask |= (channel.Favorites & Favorites.B) != 0 ? maskFav2 : 0;
+        nwMask |= (channel.Favorites & Favorites.C) != 0 ? maskFav3 : 0;
+        nwMask |= (channel.Favorites & Favorites.D) != 0 ? maskFav4 : 0;
+        svlMapping.SetDword("NwMask", nwMask);
+
+        channel.RecordIndex = newId++;
       }
 
       // update data block size in header

@@ -127,7 +127,6 @@ namespace ChanSort.Loader.LG.Binary
     }
     #endregion
 
-    internal byte[] RawDataBuffer { get { return this.rawData; } }
-    internal int RawDataOffset { get { return this.baseOffset; } }
+    internal byte[] RawDataBuffer => this.rawData;
   }
 }
