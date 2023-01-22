@@ -1,6 +1,12 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-01-23
+- added support for Hisense HIS_DVB.BIN channel lists
+
+2023-01-18
+- added support for Hisense HIS_SVL.BIN / HIS_TSL.BIN / HIS_FAV.BIN channel lists
+
 2023-01-15
 - added support for Vision EDGE 4K set-top-box (DVB-S only)
 - TCL: separate lists for DVB-C/T/S, each starting at 1

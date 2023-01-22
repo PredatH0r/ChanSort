@@ -22,7 +22,7 @@ namespace ChanSort.Loader.Hisense.HisBin;
  * - favorite lists allow mixing channels from different inputs and also radio and TV
  * - character encoding is implicit and can be UTF8 or latin-1
  */
-public class HisBinSerializer : SerializerBase
+public class HisSvlBinSerializer : SerializerBase
 {
   private readonly ChannelList dvbtChannels = new (SignalSource.DvbT | SignalSource.Tv | SignalSource.Radio, "DVB-T");
   private readonly ChannelList dvbcChannels = new (SignalSource.DvbC | SignalSource.Tv | SignalSource.Radio, "DVB-C");
@@ -45,7 +45,7 @@ public class HisBinSerializer : SerializerBase
   private readonly Dictionary<int, Transponder> transponder = new ();
 
   #region ctor()
-  public HisBinSerializer(string inputFile) : base(inputFile)
+  public HisSvlBinSerializer(string inputFile) : base(inputFile)
   {
     this.Features.ChannelNameEdit = ChannelNameEditMode.All;
     this.Features.CanSkipChannels = true;

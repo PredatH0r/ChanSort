@@ -115,6 +115,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HDD Hex Edit Neo", "HDD Hex
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_1-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_1-bin.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_2-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_2-bin.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\get_doc_size.js = Information\FileStructures_for_HHD_Hex_Editor_Neo\get_doc_size.js
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\his-dvb.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\his-dvb.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\his-svl.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\his-svl.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\LaSat_lst.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\LaSat_lst.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\panasonic_idtvChannelBin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\panasonic_idtvChannelBin.h

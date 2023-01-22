@@ -19,8 +19,11 @@ namespace ChanSort.Loader.Hisense
       if (name.Contains("servicelist")) // models 2017 and later
         return new ServicelistDb.ServicelistDbSerializer(inputFile);
 
-      if (name.StartsWith("his_") && name.EndsWith(".bin"))
-        return new HisBin.HisBinSerializer(inputFile);
+      if (name.StartsWith("his_dvb") && name.EndsWith(".bin")) // HIS_DVB.BIN
+        return new HisBin.HisDvbBinSerializer(inputFile);
+
+      if (name.StartsWith("his_") && name.EndsWith(".bin")) // HIS_SVL.BIN, HIS_TSL.BIN, HIS_FAV.BIN
+        return new HisBin.HisSvlBinSerializer(inputFile);
       return null;
     }
   }
