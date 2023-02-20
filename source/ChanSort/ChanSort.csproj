@@ -37,71 +37,71 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Charts.v22.1.Core">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Charts.v22.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Charts.v22.2.Core">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Charts.v22.2.Core.dll</HintPath>      
     </Reference>
-    <Reference Include="DevExpress.CodeParser.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.CodeParser.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.CodeParser.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.CodeParser.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Data.Desktop.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.Data.Desktop.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Data.Desktop.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Data.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.Data.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Data.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Drawing.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Drawing.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.Drawing.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Drawing.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Office.v22.1.Core">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Office.v22.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Office.v22.2.Core">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Office.v22.2.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Pdf.v22.1.Core">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Pdf.v22.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Pdf.v22.2.Core">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Pdf.v22.2.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.PivotGrid.v22.1.Core">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.PivotGrid.v22.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.PivotGrid.v22.2.Core">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.PivotGrid.v22.2.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Printing.v22.1.Core">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Printing.v22.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Printing.v22.2.Core">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Printing.v22.2.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v22.1.Core">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.RichEdit.v22.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.RichEdit.v22.2.Core">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.RichEdit.v22.2.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v22.1.Export">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.RichEdit.v22.1.Export.dll</HintPath>
+    <Reference Include="DevExpress.RichEdit.v22.2.Export">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.RichEdit.v22.2.Export.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Sparkline.v22.1.Core">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Sparkline.v22.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Sparkline.v22.2.Core">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Sparkline.v22.2.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Utils.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Utils.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v22.1.UI">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Utils.v22.1.UI.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v22.2.UI">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Utils.v22.2.UI.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraBars.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraBars.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraBars.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraBars.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraCharts.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraCharts.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraCharts.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v22.1.Wizard">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraCharts.v22.1.Wizard.dll</HintPath>
+    <Reference Include="DevExpress.XtraCharts.v22.2.Wizard">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraCharts.v22.2.Wizard.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraEditors.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraEditors.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraEditors.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraGrid.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraGrid.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraGrid.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraGrid.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraPrinting.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraPrinting.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraPrinting.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraReports.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraReports.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraReports.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v22.1.Extensions">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraReports.v22.1.Extensions.dll</HintPath>
+    <Reference Include="DevExpress.XtraReports.v22.2.Extensions">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraReports.v22.2.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Data.Linq" />
@@ -137,6 +137,7 @@
     <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Loewe\ChanSort.Loader.Loewe.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Medion\ChanSort.Loader.Medion.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Samsung\ChanSort.Loader.Samsung.csproj" />

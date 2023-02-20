@@ -111,7 +111,8 @@ namespace ChanSort.Api
 
 
     #region ctor()
-    protected ChannelInfo()
+
+    public ChannelInfo()
     {
       this.OldProgramNr = -1;
       this.NewProgramNr = -1;
@@ -119,6 +120,7 @@ namespace ChanSort.Api
       this.OldFavIndex = new List<int>();
       this.Name = "";
       this.ShortName = "";
+      this.Encrypted = null;
     }
 
     /// <summary>
@@ -131,7 +133,6 @@ namespace ChanSort.Api
       this.RecordOrder = (int)index;
       this.OldProgramNr = oldProgNr;
       this.Name = name;
-      this.Encrypted = null;
     }
 
     /// <summary>
@@ -146,7 +147,6 @@ namespace ChanSort.Api
       this.OldProgramNr = -1;
       this.NewProgramNr = newProgNr;
       this.Name = name;
-      this.Encrypted = null;
     }
     #endregion
 
@@ -396,5 +396,10 @@ namespace ChanSort.Api
       this.FavIndex.Clear();
       this.Favorites = 0;
     }
+  }
+
+  public class ChannelInfo<T> : ChannelInfo
+  {
+    public T ExtraData { get; set; }
   }
 }

@@ -684,4 +684,7 @@
   <data name="colAudioPid.Caption" xml:space="preserve">
     <value>Audio\nPID</value>
   </data>
+  <data name="miConvert.Caption" xml:space="preserve">
+    <value>Przekształć...</value>
+  </data>
 </root>

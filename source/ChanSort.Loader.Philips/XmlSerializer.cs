@@ -552,6 +552,9 @@ namespace ChanSort.Loader.Philips
       if (input == null || !input.StartsWith("0x")) // fallback for unknown input
         return input;
 
+      // according to https://github.com/PredatH0r/ChanSort/issues/347 Philips seems to not use UTF 16, but instead use locale dependent encoding and
+      // writing "0xAA 0x00" to the file for an 8 bit code point. At least for the favorite list captions. Congratulations, well done!
+
       var hexParts = input.Split(' ');
       var buffer = new MemoryStream();
 

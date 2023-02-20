@@ -57,7 +57,7 @@ namespace ChanSort.Ui
       return this.orderByName ? (IComparable) a.Name : a.GetPosition(this.subListIndex);
     }
 
-    private void bandChannelDetail_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+    private void bandChannelDetail_BeforePrint(object sender, System.ComponentModel.CancelEventArgs e)
     {
       var channel = (ChannelInfo) this.repChannels.GetCurrentRow();
       if (channel == null) // happens if there are no data records

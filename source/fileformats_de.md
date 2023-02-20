@@ -44,6 +44,8 @@ Wählen Sie immer "Keiner / Anderer / Alle" aus bzw. "Blindsuche", und nie einen 
 - Einige ältere Modelle wie LTDN40D50TS verwenden die gleichen .csv Dateien wie Sharp. Siehe "Sharp" für eine Anleitung.
 - Smart-Modelle (2016) mit channel.db Dateiformat, z.B. H65M5500  
 - 2017 Modelle mit einem servicelist.db Dateiformat
+- Modelle die eine HIS_DVB.BIN Datei exportieren
+- Modelle die eine Gruppe aus HIS\_FAV.BIN, HIS\_SVL.BIN und HIS\_TSL.BIN Dateien exportieren
 
 Besonderen Dank verdient Hisense für die Bereitstellung von technischen Informationen und einem Testgerät!
 
@@ -54,7 +56,7 @@ Die meisten Viera-Modelle seit 2011 mit Senderlisten im Format
 - svl.db
 - Android-TVs der LXS600 und LXW700 Serie mit mnt/vendor/tvdata/database/tv.db Datei
 - NICHT unterstützt: Modelle auf Vestel Plattform, z.B. JXW600 mit CLONE00001/settingsDB\_enc.db
-- NICHT unterstützt: Modelle auf MediaTek(?) Plattform, z.B. JXW600 mit hotel\_setup/Channel\_list/channel\_list.bin
+- NICHT unterstützt: Modelle auf MediaTek(?) Plattform, z.B. JXW800 mit hotel\_setup/Channel\_list/channel\_list.bin
 
 <a name="tcl"/>TCL / Thomson
 ---
@@ -101,6 +103,12 @@ Servicemenu: MENU 1147 / MENU 11471147 / SOURCE 2580
 ---
 - Modelle die Dateien mit Namen dvb\*_config.xml exportieren.
 - Modelle die eine cvt_database.dat Datei exportieren, z.B. 24 GHB 5944: siehe "Sharp"
+- Modelle die eine Reihe von \*\_cmdb\_\*.bin Dateien exportieren.
+
+<a name="medion"/>
+---
+- Android Smart TVs mit einer "senderliste.txt" Exportdatei (die Textzeilen im JSON-Format enthält), e.g. X15567 (MD 31555)
+- Modelle mit .sdx Listen (siehe SatcoDX)
 
 <a name="satcodx"/>SatcoDX (Lieferant für ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)
 ---

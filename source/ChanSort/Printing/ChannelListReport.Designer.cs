@@ -54,7 +54,7 @@
       // txtHeading
       // 
       this.txtHeading.Dpi = 254F;
-      this.txtHeading.Font = new System.Drawing.Font("Times New Roman", 10F);
+      this.txtHeading.Font = new DevExpress.Drawing.DXFont("Times New Roman", 10F);
       this.txtHeading.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
       this.txtHeading.Name = "txtHeading";
       this.txtHeading.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
@@ -73,7 +73,7 @@
       // BottomMargin
       // 
       this.BottomMargin.Dpi = 254F;
-      this.BottomMargin.Font = new System.Drawing.Font("Arial", 9.75F);
+      this.BottomMargin.Font = new DevExpress.Drawing.DXFont("Arial", 9.75F);
       this.BottomMargin.HeightF = 119.0625F;
       this.BottomMargin.Name = "BottomMargin";
       this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 254F);
@@ -102,12 +102,12 @@
       this.bandChannelDetail.MultiColumn.ColumnSpacing = 50F;
       this.bandChannelDetail.MultiColumn.Mode = DevExpress.XtraReports.UI.MultiColumnMode.UseColumnCount;
       this.bandChannelDetail.Name = "bandChannelDetail";
-      this.bandChannelDetail.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.bandChannelDetail_BeforePrint);
+      this.bandChannelDetail.BeforePrint += new DevExpress.XtraReports.UI.BeforePrintEventHandler(this.bandChannelDetail_BeforePrint);
       // 
       // txtNumber
       // 
       this.txtNumber.Dpi = 254F;
-      this.txtNumber.Font = new System.Drawing.Font("Times New Roman", 8F);
+      this.txtNumber.Font = new DevExpress.Drawing.DXFont("Times New Roman", 8F);
       this.txtNumber.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
       this.txtNumber.Name = "txtNumber";
       this.txtNumber.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
@@ -118,7 +118,7 @@
       // txtChannelName
       // 
       this.txtChannelName.Dpi = 254F;
-      this.txtChannelName.Font = new System.Drawing.Font("Times New Roman", 8F);
+      this.txtChannelName.Font = new DevExpress.Drawing.DXFont("Times New Roman", 8F);
       this.txtChannelName.LocationFloat = new DevExpress.Utils.PointFloat(89.95834F, 0F);
       this.txtChannelName.Name = "txtChannelName";
       this.txtChannelName.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
@@ -139,7 +139,7 @@
             this.repChannels});
       this.DataSource = this.bindingSource1;
       this.Dpi = 254F;
-      this.Margins = new System.Drawing.Printing.Margins(148, 111, 83, 119);
+      this.Margins = new DevExpress.Drawing.DXMargins(148, 111, 83, 119);
       this.PageHeight = 2970;
       this.PageWidth = 2100;
       this.PaperKind = System.Drawing.Printing.PaperKind.A4;

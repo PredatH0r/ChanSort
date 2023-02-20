@@ -20,23 +20,23 @@
     <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.Desktop.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Data.Desktop.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.Data.Desktop.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Data.Desktop.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Data.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.Data.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Data.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Drawing.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Drawing.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.Drawing.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Drawing.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Printing.v22.1.Core">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Printing.v22.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Printing.v22.2.Core">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Printing.v22.2.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.Utils.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Utils.v22.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v22.1">
-      <HintPath>C:\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.XtraEditors.v22.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraEditors.v22.2">
+      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraEditors.v22.2.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

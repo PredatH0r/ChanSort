@@ -81,6 +81,7 @@ System requirements
 - start winetricks, select or create a wineprefix (32 bit or 64 bit), select
   "Install Windows DLL or component" and install the "dotnet48" package and ignore dozens of message boxes
 - right-click on ChanSort.exe and select "open with", "all applications", "A wine application"
+Or using Docker: https://github.com/PredatH0r/ChanSort/issues/285
 
 **Mac**
 - macOS is not directly supported, but you can use Parallels or UTM to set up a VM with Windows 10/11 on the Mac

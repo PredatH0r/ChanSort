@@ -152,6 +152,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HDD Hex Edit Neo", "HDD Hex
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-satellite.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\tll-satellite.h
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChanSort.Loader.Medion", "ChanSort.Loader.Medion\ChanSort.Loader.Medion.csproj", "{171156F2-7000-4EFA-ADA1-61BA82F764DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All_Debug|Any CPU = All_Debug|Any CPU
@@ -1369,6 +1371,36 @@ Global
 		{71ABCE5E-A833-4729-BC30-35FF0AE01DCA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{71ABCE5E-A833-4729-BC30-35FF0AE01DCA}.Release|x86.ActiveCfg = Release|Any CPU
 		{71ABCE5E-A833-4729-BC30-35FF0AE01DCA}.Release|x86.Build.0 = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Debug|x86.ActiveCfg = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Debug|x86.Build.0 = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Release|Any CPU.ActiveCfg = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Release|Any CPU.Build.0 = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Release|x86.ActiveCfg = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.All_Release|x86.Build.0 = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Debug|x86.Build.0 = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.NoDevExpress_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.NoDevExpress_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.NoDevExpress_Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.NoDevExpress_Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.NoDevExpress_Debug|x86.ActiveCfg = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.NoDevExpress_Debug|x86.Build.0 = Debug|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Release|x86.ActiveCfg = Release|Any CPU
+		{171156F2-7000-4EFA-ADA1-61BA82F764DA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

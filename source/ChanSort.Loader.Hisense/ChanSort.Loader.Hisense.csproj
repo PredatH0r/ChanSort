@@ -59,9 +59,4 @@
   <ItemGroup>
     <Content Remove="C:\Users\horst\.nuget\packages\sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net461\..\..\runtimes\win-arm\native\e_sqlite3.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="DevExpress.PivotGrid.v22.1.Core">
-      <HintPath>..\..\..\..\..\Program Files\DevExpress 22.1\Components\Bin\Framework\DevExpress.PivotGrid.v22.1.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>

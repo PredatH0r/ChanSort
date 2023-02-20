@@ -57,6 +57,10 @@ namespace ChanSort.Api
       while ((line = file.ReadLine()) != null)
       {
         ++lineNr;
+
+        if (lineNr == 1 && line.StartsWith("{"))
+          throw LoaderException.TryNext("File is probably a JSON channel list and not a ChanSort reference list");
+
         var parts = line.Split(Separators);
         if (parts.Length < 2)
           continue;

@@ -1,6 +1,10 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-02-20
+- added support for Medion Ultra HD Android Smart TV "senderliste.txt" format,
+  containing lines with JSON data, e.g. Medion X15567 (MD31555) 
+
 2023-01-23
 - added support for Hisense HIS_DVB.BIN channel lists
 

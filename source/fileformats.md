@@ -44,6 +44,8 @@ Always select "none / other / all" and never your cable TV provider or something
 - Some older models like LTDN40D50TS use the same .csv files as Sharp. See [Sharp](#sharp) for instructions.
 - 2016 "Smart" models with a channel.db file, i.e. H65M5500  
 - 2017 models with a servicelist.db file
+- models exporting a HIS_DVB.BIN file
+- models exporting a set of HIS\_FAV.BIN, HIS\_SVL.BIN and HIS\_TSL.BIN files
 
 Special thanks to Hisense for supporting ChanSort with technical information and a test device!
 
@@ -54,7 +56,7 @@ Most Viera models since 2011 with channel list formats
 - svl.db 
 - Android-TVs of LXS600 and LXW700 series with mnt/vendor/tvdata/database/tv.db file
 - NOT supported: models on Vestel plattform, e.g. JXW600 with CLONE00001/settingsDB\_enc.db
-- NOT supported: models on MediaTek(?) plattform, e.g. JXW600 with hotel\_setup/Channel\_list/channel\_list.bin
+- NOT supported: models on MediaTek(?) plattform, e.g. JXW800 with hotel\_setup/Channel\_list/channel\_list.bin
 
 <a name="tcl"/>TCL / Thomson
 ---
@@ -101,6 +103,12 @@ Do not make any changes in the service menu, as this could damage your TV. Only 
 ---
 - Models that export files named dvb\*_config.xml.
 - Models that export a cvt_database.dat file, e.g. 24 GHB 5944: see [Sharp](#Sharp)
+- Models that export a set of \*\_cmdb\_\*.bin files
+
+<a name="medion"/>
+---
+- Android Smart TVs exporting a "senderliste.txt" (containing JSON data lines), e.g. X15567 (MD 31555)
+- Models with .sdx lists (see SatcoDX)
 
 <a name="satcodx"/>SatcoDX (supplier for ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken)
 ---

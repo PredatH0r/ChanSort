@@ -6,7 +6,7 @@ cd /d %~dp0
 set languages=cs de es hu pl pt ro ru tr
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
-set DXversion=22.1
+set DXversion=22.2
 set framework=net48
 set bindir=debug\%framework%
 mkdir "%target%" 2>nul
