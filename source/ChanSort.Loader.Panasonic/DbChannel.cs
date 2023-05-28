@@ -24,6 +24,7 @@ namespace ChanSort.Loader.Panasonic
       {
       }
       int ntype = r.GetInt32(field["ntype"]);
+      DeliveryType = r.GetInt32(field["delivery_type"]); 
       if (ntype == 1)
       {
         this.SignalSource |= SignalSource.DvbS;
@@ -39,7 +40,16 @@ namespace ChanSort.Loader.Panasonic
       else if (ntype == 14)
         this.SignalSource |= SignalSource.AnalogC | SignalSource.Tv;
       else if (ntype == 15)
-        this.SignalSource |= SignalSource.SatIP;
+      {
+          if (DeliveryType == 15)
+              SignalSource |= SignalSource.DVBIPSat;
+          //else if (this.DeliveryType == 0) // Currently no sample for AntennaIP found
+          //    SignalSource |= SignalSource.DVBIPAntenna;
+          else if (DeliveryType == 18) 
+              SignalSource |= SignalSource.DVBIPCable;
+          else 
+              SignalSource |= SignalSource.DVBIPSat;
+      }
 
       byte[] buffer = new byte[1000];
       int len = 0;
@@ -89,6 +99,11 @@ namespace ChanSort.Loader.Panasonic
     {
       this.FreqInMhz = r.IsDBNull(field["freq"]) ? 0 : (decimal)r.GetInt32(field["freq"]) / 1000;
       this.ChannelOrTransponder = Tools.GetAnalogChannelNumber((int)this.FreqInMhz);
+
+      this.PhysicalChannel = r.GetInt32(field["physical_ch"]);
+      this.OriginalNetworkId = r.GetInt32(field["onid"]);
+      this.TransportStreamId = r.GetInt32(field["tsid"]);
+      this.ServiceId = r.GetInt32(field["svcid"]);
     }
     #endregion
 
@@ -161,6 +176,7 @@ namespace ChanSort.Loader.Panasonic
         this.Source = (this.SignalSource & SignalSource.Antenna) != 0 ? "DVB-T" : "DVB-C";
       }
 
+      this.PhysicalChannel = r.GetInt32(field["physical_ch"]); 
       this.OriginalNetworkId = r.GetInt32(field["onid"]);
       this.TransportStreamId = r.GetInt32(field["tsid"]);
       this.ServiceId = r.GetInt32(field["sid"]);

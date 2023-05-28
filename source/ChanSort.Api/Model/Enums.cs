@@ -11,29 +11,90 @@ namespace ChanSort.Api
   [Flags]
   public enum SignalSource
   {
+    // 0x0000 // 0000000000000000
     Any = 0,
 
-    // bit 0-1: analog/digital
-    MaskAnalogDigital = 0x0003,
-    Analog = 0x0001,
-    Digital = 0x0002,
+    // 0x0001 // 0000000000000001
+    Analog = 1,
+    // 0x0002 // 0000000000000010
+    Digital = 2,
+    // 0x0003 // 0000000000000011
+    MaskAnalogDigital = Analog | Digital,                               // bit 0-1: analog/digital
 
-    // bit 3-7: AvInput/Antenna/Cable/Sat/IP
-    MaskAntennaCableSat = 0x00F8,
-    AvInput = 0x0008,
-    Antenna = 0x0010,
-    Cable = 0x0020,
-    Sat = 0x0040,
-    IP = 0x0080,
+    // 0x0008 // 0000000000001000
+    AVInput = 8,
+    AvInput = 8,
+    // 0x0010 // 0000000000010000
+    Antenna = 16,
+    // 0x0020 // 0000000000100000
+    Cable = 32,
+    // 0x0040 // 0000000001000000
+    Sat = 64,
+    // 0x0080 // 0000000010000000
+    IP = 128,
+    // 0x00F8 // 0000000011111000
+    MaskAntennaCableSat = AVInput | Antenna | Cable | Sat | IP,         // bit 3-7: AvInput/Antenna/Cable/Sat/IP
 
-    MaskAdInput = MaskAnalogDigital | MaskAntennaCableSat,
+    // 0x0011 // 0000000000010001
+    AnalogAntenna = Analog + Antenna,
+    AnalogT = Analog + Antenna,
+    // 0x0021 // 0000000000100001
+    AnalogCable = Analog + Cable,
+    AnalogC = Analog + Cable,
+    // 0x0031 // 0000000000110001
+    AnalogAntennaCable = Analog + Antenna + Cable,
+    AnalogCT = Analog + Cable + Antenna,
+    // 0x0041 // 0000000001000001
+    AnalogSat = Analog + Sat,
+    // 0x0012 // 0000000000010010
+    DVBT = Digital + Antenna,
+    DvbT = Digital + Antenna,
+    // 0x0022 // 0000000000100010
+    DVBC = Digital + Cable,
+    DvbC = Digital + Cable,
+    // 0x0032 // 0000000000110010
+    DVBTC = Digital + Antenna + Cable,
+    DvbCT = Digital + Cable + Antenna,
+    // 0x0042 // 0000000001000010
+    DVBS = Digital + Sat,
+    DvbS = Digital + Sat,
+    // 0x0072 // 0000000001110010
+    DVBAll = Digital + Antenna + Cable + Sat,
+    // 0x0092 // 0000000010010010
+    DVBIPAntenna = Digital + Antenna + IP,
+    // 0x00A2 // 0000000010100010
+    DVBIPCable = Digital + Cable + IP,
+    // 0x00C2 // 0000000011000010
+    DVBIPSat = Digital + Sat + IP,
+    SatIP = Digital + Sat + IP,
 
-    // bit 8-10: TV/Radio/Data
-    MaskTvRadioData = 0x0700,
-    Tv = 0x0100,
-    Radio = 0x0200,
-    Data = 0x0400,
-    TvAndData = Tv|Data,
+    // 0x00FB // 0000000011111011
+    AllAnalogDigitalInput = MaskAnalogDigital | MaskAntennaCableSat,
+    // 0x00FB // 0000000011111011
+    MaskAdInput = MaskAnalogDigital | MaskAntennaCableSat,              // bit 0-7: Combination of above
+
+    // 0x0100 // 0000000100000000
+    TV = 256,
+    Tv = 256,
+    // 0x0200 // 0000001000000000
+    Radio = 512,
+    // 0x0400 // 0000010000000000
+    Data = 1024,
+    // 0x0300 // 0000001100000000
+    TVAndRadio = TV | Radio,
+    // 0x0500 // 0000010100000000
+    TVAndData = TV | Data,
+    TvAndData = TV | Data,
+    // 0x0600 // 0000011000000000
+    RadioAndData = Radio | Data,
+    // 0x0700 // 0000011100000000
+    TVAndRadioAndData = TV | Radio | Data,
+    // 0x0700 // 0000011100000000
+    MaskTVRadioData = TV | Radio | Data,                                // bit 8-10: TV/Radio/Data
+    MaskTvRadioData = TV | Radio | Data,
+
+    // 0x07FB // 0000011111111011
+    All = MaskAnalogDigital | MaskAntennaCableSat | MaskTVRadioData,
 
     // bit 12-15: Preset list selector (AstraHD+, Freesat, TivuSat, CanalDigitalSat, ... for Samsung)
     MaskProvider = 0xF000,
@@ -54,15 +115,6 @@ namespace ChanSort.Api
     StandardCable = 0 << 12,
     CablePrime = 1 << 12,
 
-    AnalogC = Analog + Cable,
-    AnalogT = Analog + Antenna,
-    AnalogCT = Analog + Cable + Antenna,
-    DvbC = Digital + Cable,
-    DvbT = Digital + Antenna,
-    DvbCT = Digital + Cable + Antenna,
-    DvbS = Digital + Sat,
-    SatIP = Digital + IP, // must NOT add Sat
-
     CablePrimeD = Digital + Cable + CablePrime,
     HdPlusD = Digital + Sat + AstraHdPlus,
     FreesatD = Digital + Sat + Freesat,
@@ -70,8 +122,6 @@ namespace ChanSort.Api
     CanalDigitalSatD = Digital + Sat + CanalDigital,
     DigitalPlusD = Digital + Sat + DigitalPlus,
     CyfraPlusD = Digital + Sat + CyfraPlus,
-
-    All = MaskAnalogDigital | MaskAntennaCableSat | MaskTvRadioData
   }
   #endregion
 

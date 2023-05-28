@@ -17,7 +17,9 @@ namespace ChanSort.Loader.Panasonic
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
     private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
     private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
-    private readonly ChannelList satipChannels = new ChannelList(SignalSource.SatIP, "SAT>IP");
+    private readonly ChannelList antennaipChannels = new ChannelList(SignalSource.DVBIPAntenna, "ANTENNA>IP");
+    private readonly ChannelList cableipChannels = new ChannelList(SignalSource.DVBIPCable, "CABLE>IP");
+    private readonly ChannelList satipChannels = new ChannelList(SignalSource.DVBIPSat, "SAT>IP");
     private readonly ChannelList freesatChannels = new ChannelList(SignalSource.DvbS | SignalSource.Freesat, "Freesat");
 
     private string workFile;
@@ -231,11 +233,11 @@ namespace ChanSort.Loader.Panasonic
     private void ReadChannels(SqliteCommand cmd)
     {
       string[] fieldNames = { "rowid", "major_channel", "physical_ch","sname", "freq", "skip", "running_status","free_CA_mode","child_lock",
-                            "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "ya_svcid", "delivery" };
+                            "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "ya_svcid", "delivery", "delivery_type" };
       
       const string sql = @"
 select s.rowid,s.major_channel,s.physical_ch,cast(s.sname as blob),t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
-  profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery
+  profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery, ifnull(t.delivery_type, 0)
 from SVL s 
 left outer join TSL t on s.ntype=t.ntype and s.physical_ch=t.physical_ch and s.tsid=t.tsid
 order by s.ntype,major_channel
@@ -309,6 +311,8 @@ order by s.ntype,major_channel
         this.WriteChannels(cmd, this.dvbtChannels);
         this.WriteChannels(cmd, this.dvbcChannels);
         this.WriteChannels(cmd, this.dvbsChannels);
+        this.WriteChannels(cmd, this.antennaipChannels);
+        this.WriteChannels(cmd, this.cableipChannels);
         this.WriteChannels(cmd, this.satipChannels);
         this.WriteChannels(cmd, this.freesatChannels);
         trans.Commit();
@@ -327,7 +331,7 @@ order by s.ntype,major_channel
       if (channelList.Channels.Count == 0)
         return;
 
-      cmd.CommandText = "update SVL set major_channel=@progNr, sname=@sname, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
+      cmd.CommandText = "update SVL set major_channel=@progNr, sname=@sname, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip, free_CA_mode=@encr where rowid=@rowid";
       cmd.Parameters.Clear();
       cmd.Parameters.Add("@rowid", SqliteType.Integer);
       cmd.Parameters.Add("@progNr", SqliteType.Integer);
@@ -338,6 +342,7 @@ order by s.ntype,major_channel
       cmd.Parameters.Add("@fav4", SqliteType.Integer);
       cmd.Parameters.Add("@lock", SqliteType.Integer);
       cmd.Parameters.Add("@skip", SqliteType.Integer);
+      cmd.Parameters.Add("@encr", SqliteType.Integer); 
       cmd.Prepare();
       foreach (ChannelInfo channelInfo in channelList.Channels)
       {
@@ -354,6 +359,7 @@ order by s.ntype,major_channel
           cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.GetPosition(fav+1));
         cmd.Parameters["@lock"].Value = channel.Lock;
         cmd.Parameters["@skip"].Value = channel.Skip;
+        cmd.Parameters["@encr"].Value = channel.Encrypted;
         cmd.ExecuteNonQuery();
       }
 
@@ -367,6 +373,21 @@ order by s.ntype,major_channel
         {
           cmd.Parameters["@rowid"].Value = channel.RecordIndex;
           cmd.ExecuteNonQuery();
+
+          // remove unassigned/deleted transponders from TSL table
+          // add. info: only digital transponders should be deleted as import
+          //            generates error when no analog transponders are found
+          cmd.CommandText = "DELETE FROM TSL WHERE physical_ch=@physical_ch AND tsid=@tsid AND physical_ch NOT IN ( SELECT physical_ch FROM SVL WHERE physical_ch IS NOT NULL ) ";
+          cmd.Parameters.Clear();
+          cmd.Parameters.Add(new SqliteParameter("@physical_ch", DbType.Int32));
+          cmd.Parameters.Add(new SqliteParameter("@tsid", DbType.Int32));
+
+          if ((channel.SignalSource & SignalSource.Digital) != 0)
+          {
+              cmd.Parameters["@physical_ch"].Value = channel.PhysicalChannel;
+              cmd.Parameters["@tsid"].Value = channel.TransportStreamId;
+              cmd.ExecuteNonQuery();
+          }
         }
       }
     }
