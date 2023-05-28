@@ -42,13 +42,13 @@ namespace ChanSort.Loader.Panasonic
       else if (ntype == 15)
       {
           if (DeliveryType == 15)
-              SignalSource |= SignalSource.DVBIPSat;
+              this.SignalSource |= SignalSource.DVBIPSat;
           //else if (this.DeliveryType == 0) // Currently no sample for AntennaIP found
-          //    SignalSource |= SignalSource.DVBIPAntenna;
-          else if (DeliveryType == 18) 
-              SignalSource |= SignalSource.DVBIPCable;
-          else 
-              SignalSource |= SignalSource.DVBIPSat;
+          //    this.SignalSource |= SignalSource.DVBIPAntenna;
+          else if (DeliveryType == 18)
+              this.SignalSource |= SignalSource.DVBIPCable;
+          else
+              this.SignalSource |= SignalSource.DVBIPSat;
       }
 
       byte[] buffer = new byte[1000];

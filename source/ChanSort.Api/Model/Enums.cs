@@ -30,10 +30,11 @@ namespace ChanSort.Api
     Cable = 32,
     // 0x0040 // 0000000001000000
     Sat = 64,
-    // 0x0080 // 0000000010000000
+    // 0x0078 // 0000000001111000
+    MaskAntennaCableSat = AVInput | Antenna | Cable | Sat,              // bit 3-6: AvInput/Antenna/Cable/Sat
+
+    // 0x0080 // 0000000010000000                                       // bit 7: ANTENNA>IP/CABLE>IP/SAT>IP
     IP = 128,
-    // 0x00F8 // 0000000011111000
-    MaskAntennaCableSat = AVInput | Antenna | Cable | Sat | IP,         // bit 3-7: AvInput/Antenna/Cable/Sat/IP
 
     // 0x0011 // 0000000000010001
     AnalogAntenna = Analog + Antenna,

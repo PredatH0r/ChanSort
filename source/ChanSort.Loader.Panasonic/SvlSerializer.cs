@@ -56,6 +56,8 @@ namespace ChanSort.Loader.Panasonic
       this.DataRoot.AddChannelList(this.dvbtChannels);
       this.DataRoot.AddChannelList(this.dvbcChannels);
       this.DataRoot.AddChannelList(this.dvbsChannels);
+      this.DataRoot.AddChannelList(this.antennaipChannels);
+      this.DataRoot.AddChannelList(this.cableipChannels);
       this.DataRoot.AddChannelList(this.satipChannels);
       this.DataRoot.AddChannelList(this.freesatChannels);
 
