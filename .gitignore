@@ -4,3 +4,4 @@ source/ChanSort.opensdf
 /source/packages/
 /source/ChanSort.Loader.PhilipsBin/DllClient.cs
 *.wsuo
+/.vs
