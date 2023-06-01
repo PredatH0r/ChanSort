@@ -1,6 +1,12 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-06-01
+- Panasonic LS 500 / LX 700 series: support for new firmware which doesn't export a hotel.bin file.
+- Loewe servicelist.xml (and maybe some other .xml files) larger than 2 000 000 bytes were
+  not loaded.
+- Enigma/Linux lists can now also be opened by selecting a .tv or .radio file (not just lamedb)
+
 2023-02-20
 - added support for Medion Ultra HD Android Smart TV "senderliste.txt" format,
   containing lines with JSON data, e.g. Medion X15567 (MD31555) 

@@ -21,6 +21,9 @@ namespace ChanSort.Loader.LG
       if (content.Contains("<TLLDATA>"))
         return new GlobalClone.GcXmlSerializer(inputFile);
 
+      if (content.StartsWith("<"))
+        throw LoaderException.TryNext("File is not a binary LG .TLL file");
+
       return new Binary.TllFileSerializer(inputFile) { IsTesting = this.IsTesting };
     }
 

@@ -13,10 +13,10 @@ namespace ChanSort.Loader.Hisense
     {
       var name = Path.GetFileName(inputFile).ToLowerInvariant();
 
-      if (name.Contains("channel")) // UHD models 2015-2016
+      if (name.Contains("channel") && name.EndsWith(".db")) // UHD models 2015-2016
         return new ChannelDb.ChannelDbSerializer(inputFile);
 
-      if (name.Contains("servicelist")) // models 2017 and later
+      if (name.Contains("servicelist") && name.EndsWith(".db")) // models 2017 and later
         return new ServicelistDb.ServicelistDbSerializer(inputFile);
 
       if (name.StartsWith("his_dvb") && name.EndsWith(".bin")) // HIS_DVB.BIN

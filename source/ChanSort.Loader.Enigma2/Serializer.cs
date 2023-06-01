@@ -38,6 +38,8 @@ namespace ChanSort.Loader.Enigma2
       this.Features.CanSkipChannels = false;
       this.Features.CanLockChannels = false;
       this.Features.CanHideChannels = false;
+      this.Features.CanHaveGaps = false;
+      this.Features.AllowGapsInFavNumbers = false;
       this.Features.FavoritesMode = FavoritesMode.MixedSource;
       this.Features.MaxFavoriteLists = 0; // dynamically added
 

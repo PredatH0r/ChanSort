@@ -495,7 +495,7 @@ namespace ChanSort.Ui
       this.repositoryItemCheckedComboBoxEdit2.Items.Clear();
       var regex = "[";
       var favCount = 0;
-      for (var favMask = (ulong)favorites; (favMask & 1) != 0; favMask >>= 1)
+      for (int i = 0; i < this.currentTvSerializer.Features.MaxFavoriteLists; i++)
       {
         var c = (char) ('A' + favCount);
         ++favCount;
@@ -2552,6 +2552,17 @@ namespace ChanSort.Ui
       var selectedChannels = this.GetSelectedChannels(this.dragDropInfo.SourceView);
       int newProgNr;
       var dropPos = dropChannel.GetPosition(this.subListIndex);
+      if (this.dragDropInfo.EditMode == EditMode.Swap)
+        newProgNr = dropPos;
+      else if (this.dragDropInfo.EditMode == EditMode.InsertBefore)
+      {
+
+      }
+      else
+      {
+
+      }
+
       if (this.dragDropInfo.EditMode != EditMode.InsertAfter || !this.cbCloseGap.Checked)
         newProgNr = dropPos;
       else

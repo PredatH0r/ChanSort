@@ -16,7 +16,7 @@ namespace ChanSort.Loader.Panasonic;
  * Serializer for the 2022/2023 Android based Panasonic LS 500, LX 700 series file format
  *
  * The format uses a directory tree with
- * /hotel.bin (irrelevant content)
+ * /hotel.bin (irrelevant content, no longer exists after a firmware update in 2023)
  * /mnt/vendor/tvdata/database/tv.db Sqlite database
  * /mnt/vendor/tvdata/database/channel/idtvChannel.bin
  *
@@ -148,9 +148,9 @@ internal class IdtvChannelSerializer : SerializerBase
   private readonly StringBuilder log = new();
 
   #region ctor()
-  public IdtvChannelSerializer(string hotelBin) : base(hotelBin)
+  public IdtvChannelSerializer(string tvDb) : base(tvDb)
   {
-    var dir = Path.Combine(Path.GetDirectoryName(hotelBin), "mnt/vendor/tvdata/database");
+    var dir = Path.GetDirectoryName(tvDb);
     dbFile = Path.Combine(dir, "tv.db");
     binFile = Path.Combine(dir, "channel", "idtvChannel.bin");
 
