@@ -108,7 +108,7 @@ namespace ChanSort.Loader.VisionEdge4K
         sat.Name = r.GetString(1);
         this.DataRoot.AddSatellite(sat);
 
-        var list = new ChannelList(SignalSource.Sat | SignalSource.Digital | SignalSource.MaskTvRadioData, sat.Name);
+        var list = new ChannelList(SignalSource.Sat | SignalSource.Dvb | SignalSource.MaskTvRadioData, sat.Name);
         this.channels.Add(sat.Id, list);
         this.DataRoot.AddChannelList(list);
       }

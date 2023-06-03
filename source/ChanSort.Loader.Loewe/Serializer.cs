@@ -261,7 +261,7 @@ class Serializer : SerializerBase
     if (!this.channelsById.TryGetValue(id, out var c))
       return;
     c.ServiceId = int.Parse(a["Sid"].InnerText);
-    c.SignalSource |= SignalSource.Digital;
+    c.SignalSource |= SignalSource.Dvb;
     
     var transponderId = int.Parse(a["TunerId"].InnerText);
     var t = DataRoot.Transponder.TryGet(transponderId);

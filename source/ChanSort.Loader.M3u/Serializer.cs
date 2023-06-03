@@ -16,7 +16,7 @@ namespace ChanSort.Loader.M3u
   class Serializer : SerializerBase
   {
     private static readonly Regex ExtInfTrackName = new Regex(@"^(?:(\d+). )?(.*)$");
-    private readonly ChannelList allChannels = new ChannelList(SignalSource.IP, "All");
+    private readonly ChannelList allChannels = new ChannelList(SignalSource.IpAll, "All");
 
     private Encoding overrideEncoding;
     private string newLine = "\r\n";

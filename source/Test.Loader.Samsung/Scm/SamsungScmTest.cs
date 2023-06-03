@@ -41,7 +41,7 @@ namespace Test.Loader.Samsung.Scm
       SamsungPlugin plugin = new SamsungPlugin();
 
       StringBuilder errors = new StringBuilder();
-      var list = LoaderTestBase.FindAllFiles("TestFiles_Samsung", "*.scm");
+      var list = LoaderTestBase.FindAllFiles("TestFiles\\TestFiles_Samsung", "*.scm");
       var models = new Dictionary<string, string>();
       foreach (var file in list)
       {
@@ -67,7 +67,7 @@ namespace Test.Loader.Samsung.Scm
           var hdplusChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.HdPlusD | ChanSort.Api.SignalSource.Tv);
           var freesatChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.FreesatD | ChanSort.Api.SignalSource.Tv);
           var tivusatChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.TivuSatD | ChanSort.Api.SignalSource.Tv);
-          var iptvChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.IP | SignalSource.Tv);
+          var iptvChannelList = serializer.DataRoot.GetChannelList(ChanSort.Api.SignalSource.Ip | SignalSource.Tv);
 
           string key = serializer.Series + 
             "\t" + model +

@@ -14,6 +14,14 @@ namespace ChanSort.Loader.Panasonic
 
     internal int InternalProviderFlag2;
 
+    public int PhysicalChannel { get; set; }
+
+    /// <summary>
+    /// delivery number to seperate dvbc/dvbt/dvbs from cableip/antennaip/satip
+    /// </summary>
+    public int DeliveryType { get; set; }
+
+
     #region ctor(IDataReader, ...)
     internal DbChannel(IDataReader r, IDictionary<string, int> field, DataRoot dataRoot, Encoding encoding)
     {
@@ -24,6 +32,7 @@ namespace ChanSort.Loader.Panasonic
       {
       }
       int ntype = r.GetInt32(field["ntype"]);
+      this.DeliveryType = r.GetInt32(field["delivery_type"]);
       if (ntype == 1)
       {
         this.SignalSource |= SignalSource.DvbS;
@@ -39,7 +48,16 @@ namespace ChanSort.Loader.Panasonic
       else if (ntype == 14)
         this.SignalSource |= SignalSource.AnalogC | SignalSource.Tv;
       else if (ntype == 15)
-        this.SignalSource |= SignalSource.SatIP;
+      {
+        if (this.DeliveryType == 15)
+          this.SignalSource |= SignalSource.IpSat;
+        // else if (this.DeliveryType == 0) // currently no sample for IpAntenna found
+        //  this.SignalSource |= SignalSource.IpAntenna;
+        else if (this.DeliveryType == 18)
+          this.SignalSource |= SignalSource.IpCable;
+        else
+          this.SignalSource |= SignalSource.IpSat;
+      }
 
       byte[] buffer = new byte[1000];
       int len = 0;
@@ -89,6 +107,11 @@ namespace ChanSort.Loader.Panasonic
     {
       this.FreqInMhz = r.IsDBNull(field["freq"]) ? 0 : (decimal)r.GetInt32(field["freq"]) / 1000;
       this.ChannelOrTransponder = Tools.GetAnalogChannelNumber((int)this.FreqInMhz);
+
+      this.PhysicalChannel = r.GetInt32(field["physical_ch"]);
+      this.OriginalNetworkId = r.GetInt32(field["onid"]);
+      this.TransportStreamId = r.GetInt32(field["tsid"]);
+      this.ServiceId = r.GetInt32(field["sid"]);
     }
     #endregion
 
@@ -99,11 +122,14 @@ namespace ChanSort.Loader.Panasonic
       this.SignalSource |= LookupData.Instance.IsRadioTvOrData(stype);
       this.ServiceType = stype;
 
-      int freq = r.IsDBNull(field["freq"]) ? 0 : r.GetInt32(field["freq"]);
+      decimal freq = r.IsDBNull(field["freq"]) ? 0 : r.GetInt32(field["freq"]);
       if ((this.SignalSource & SignalSource.Sat) != 0)
       {
+        // SAT>IP has the freq value in units of 100Hz (so divide by 10k to get MHz), DVB>S has the value already in MHz
 // ReSharper disable PossibleLossOfFraction
-        this.FreqInMhz = freq/10;
+        this.FreqInMhz = (int)(freq/10);
+        if (this.FreqInMhz > 15000) // must be some satellite frequency in kHz instead of MHz, so convert
+          this.FreqInMhz /= 1000;
 // ReSharper restore PossibleLossOfFraction
 
         if (deliveryLength >= 12)
@@ -161,6 +187,7 @@ namespace ChanSort.Loader.Panasonic
         this.Source = (this.SignalSource & SignalSource.Antenna) != 0 ? "DVB-T" : "DVB-C";
       }
 
+      this.PhysicalChannel = r.GetInt32(field["physical_ch"]); 
       this.OriginalNetworkId = r.GetInt32(field["onid"]);
       this.TransportStreamId = r.GetInt32(field["tsid"]);
       this.ServiceId = r.GetInt32(field["sid"]);

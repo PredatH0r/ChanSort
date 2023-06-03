@@ -238,7 +238,7 @@ namespace ChanSort.Loader.GlobalClone
 
         ch.TransportStreamId = (int)node["TSID"];
 
-        if ((ch.SignalSource & SignalSource.Digital) != 0)
+        if ((ch.SignalSource & SignalSource.Dvb) != 0)
         {
           var transSystem = (string) node["transSystem"];
 

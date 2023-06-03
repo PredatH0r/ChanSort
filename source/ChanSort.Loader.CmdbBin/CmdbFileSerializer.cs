@@ -309,7 +309,7 @@ namespace ChanSort.Loader.CmdbBin
 
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        if ((list.SignalSource & (SignalSource.MaskAnalogDigital | SignalSource.MaskAntennaCableSat)) != sourceMask)
+        if ((list.SignalSource & (SignalSource.MaskBcastSystem | SignalSource.MaskBcastMedium)) != sourceMask)
           continue;
         foreach (var chan in list.Channels)
         {

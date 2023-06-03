@@ -373,7 +373,7 @@ namespace ChanSort.Loader.Grundig
           continue; 
         if (ch.NewProgramNr < 0)
         {
-          if ((ch.SignalSource & SignalSource.Digital) != 0)
+          if ((ch.SignalSource & SignalSource.Dvb) != 0)
             ch.IsDeleted = true;
           else
           {
@@ -406,7 +406,7 @@ namespace ChanSort.Loader.Grundig
         att["f"+i].Value = Math.Max(0, ch.GetPosition(i)).ToString(); // convert -1 to 0
       att["skp"].InnerText = ch.Skip ? "1" : "0";
       att["lck"].InnerText = ch.Lock ? "1" : "0";
-      if ((ch.SignalSource & SignalSource.Digital) != 0)
+      if ((ch.SignalSource & SignalSource.Dvb) != 0)
         att["vis"].InnerText = ch.Hidden ? "0" : "1";
       else
         att["hid"].InnerText = ch.Hidden ? "1" : "0";

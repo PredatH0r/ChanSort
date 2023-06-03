@@ -121,12 +121,13 @@ namespace ChanSort.Api
         SignalSource s = 0;
         var code = parts[5];
         if (code[0] == 'A') s |= SignalSource.Analog;
-        else if (code[0] == 'D') s |= SignalSource.Digital;
+        else if (code[0] == 'D') s |= SignalSource.Dvb;
+        else if (code[0] == 'I') s |= SignalSource.Ip;
 
         if (code[1] == 'A') s |= SignalSource.Antenna;
         else if (code[1] == 'C') s |= SignalSource.Cable;
         else if (code[1] == 'S') s |= SignalSource.Sat;
-        else if (code[1] == 'I') s |= SignalSource.IP;
+        else if (code[1] == 'I') s |= SignalSource.IpSat; // legacy value with the assumption that IP was mutually exclusive to antenna/cable/sat
 
         if (code[2] == 'T') s |= SignalSource.Tv;
         else if (code[2] == 'R') s |= SignalSource.Radio;
@@ -189,10 +190,16 @@ namespace ChanSort.Api
         sb.Append("DVB-C");
       else if ((signalSource & SignalSource.DvbS) == SignalSource.DvbS)
         sb.Append("DVB-S");
-      else if ((signalSource & SignalSource.IP) == SignalSource.IP)
-        sb.Append("IP");
-      else if ((signalSource & SignalSource.Digital) == SignalSource.Digital)
+      else if ((signalSource & SignalSource.IpAntenna) == SignalSource.IpAntenna)
+        sb.Append("IP-T");
+      else if ((signalSource & SignalSource.IpCable) == SignalSource.IpCable)
+        sb.Append("IP-C");
+      else if ((signalSource & SignalSource.IpSat) == SignalSource.IpSat)
+        sb.Append("IP-S");
+      else if ((signalSource & SignalSource.Dvb) == SignalSource.Dvb)
         sb.Append("DVB");
+      else if ((signalSource & SignalSource.Ip) == SignalSource.Ip)
+        sb.Append("IP");
       else if ((signalSource & SignalSource.Analog) == SignalSource.Analog)
         sb.Append("Analog");
 
@@ -272,17 +279,20 @@ namespace ChanSort.Api
     {
       var sb = new StringBuilder();
       if ((signalSource & SignalSource.Analog) != 0) sb.Append('A');
-      else sb.Append('D');
+      else if ((signalSource & SignalSource.Dvb) != 0) sb.Append('D');
+      else if ((signalSource & SignalSource.Ip) != 0) sb.Append('I');
+      else sb.Append(' ');
 
       if ((signalSource & SignalSource.Antenna) != 0) sb.Append('A');
       else if ((signalSource & SignalSource.Cable) != 0) sb.Append('C');
       else if ((signalSource & SignalSource.Sat) != 0) sb.Append('S');
-      else sb.Append("I");
+      else sb.Append(' '); // "I" is no longer exported as it is now considered a broadcast system option rather than a broadcast medium
 
       if ((signalSource & SignalSource.Radio) != 0) sb.Append('R');
+      else if ((signalSource & SignalSource.Data) != 0) sb.Append('D');
       else sb.Append('T');
 
-      sb.Append((int) signalSource >> 12);
+      sb.Append((int) signalSource >> 12); // preset list (Astra HD+, FreeSat, ...)
       return sb.ToString();
     }
 

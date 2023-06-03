@@ -68,7 +68,7 @@ namespace Spike.PhilipsXml
             lastNr = c.OldProgramNr;
             hasFav |= c.GetOldPosition(1) != -1;
             var s = c.SignalSource;
-            var i0 = (s & SignalSource.Antenna) != 0 ? 1 : (s & SignalSource.Cable) != 0 ? 2 : (s & SignalSource.Sat) != 0 ? 3 : (s & SignalSource.IP) != 0 ? 4 : 0;
+            var i0 = (s & SignalSource.Antenna) != 0 ? 1 : (s & SignalSource.Cable) != 0 ? 2 : (s & SignalSource.Sat) != 0 ? 3 : (s & SignalSource.Ip) != 0 ? 4 : 0;
             var i1 = (s & SignalSource.Tv) != 0 ? 1 : (s & SignalSource.Radio) != 0 ? 2 : (s & SignalSource.Data) != 0 ? 3 : 0;
             ++chanCountBySrc[i0, i1];
             ++srcSum[i0];

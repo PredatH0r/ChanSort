@@ -299,7 +299,7 @@ namespace ChanSort.Loader.Samsung.Zip
     private ChannelList CreateChannelList(SignalSource signalSource, string name)
     {
       var list = new ChannelList(signalSource, name);
-      if ((list.SignalSource & SignalSource.IP) != 0)
+      if ((list.SignalSource & SignalSource.Ip) != 0)
       {
         list.VisibleColumnFieldNames = new List<string>
         {
@@ -314,8 +314,8 @@ namespace ChanSort.Loader.Samsung.Zip
     private static SignalSource DetectSignalSource(IDbCommand cmd, FileType fileType)
     {
       if (fileType == FileType.ChannelDbIp)
-        return SignalSource.IP|SignalSource.Digital;
-      var signalSource = fileType == FileType.ChannelDbAnalog ? SignalSource.Analog : SignalSource.Digital;
+        return SignalSource.Ip;
+      var signalSource = fileType == FileType.ChannelDbAnalog ? SignalSource.Analog : SignalSource.Dvb;
       cmd.CommandText = "select distinct chType from CHNL";
       using var r = cmd.ExecuteReader();
       if (r.Read())
@@ -538,7 +538,7 @@ namespace ChanSort.Loader.Samsung.Zip
       using (var trans = conn.BeginTransaction())
       {
         using var cmdUpdateSrv = PrepareUpdateCommand(conn);
-        using var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Digital) != 0);
+        using var cmdDeleteSrv = PrepareDeleteCommand(conn, (channelList.SignalSource & SignalSource.Dvb) != 0);
         using var cmdInsertFav = PrepareInsertFavCommand(conn);
         using var cmdUpdateFav = PrepareUpdateFavCommand(conn);
         using var cmdDeleteFav = PrepareDeleteFavCommand(conn);

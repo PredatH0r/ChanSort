@@ -18,7 +18,7 @@ namespace ChanSort.Loader.Enigma2
   {
     private static readonly Encoding utf8WithoutBom = new UTF8Encoding(false);
 
-    private ChannelList channels = new ChannelList(SignalSource.Digital, "All Channels");
+    private ChannelList channels = new ChannelList(SignalSource.Dvb, "All Channels");
 
     private readonly List<string> favListFileNames = new();
     private readonly Dictionary<string, Transponder> transponderByLamedbId = new();
@@ -181,7 +181,7 @@ namespace ChanSort.Loader.Enigma2
         return;
 
       var ch = new Channel();
-      ch.SignalSource = SignalSource.Digital;
+      ch.SignalSource = SignalSource.Dvb;
 
       // line 1: SID:DvbNamespace:TSID:ONID:ServiceType:ServiceNumber
       var parts = line.Split(':');

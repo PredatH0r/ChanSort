@@ -223,8 +223,8 @@ namespace ChanSort.Ui
       var src = list?.SignalSource ?? 0;
       var sb = new StringBuilder();
 
-      var sigSource = new[] {SignalSource.Antenna, SignalSource.Cable, SignalSource.Sat, SignalSource.IP, SignalSource.Analog, SignalSource.Digital, SignalSource.Tv, SignalSource.Radio, SignalSource.Data};
-      var infoText = Resources.ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio.Split(',');
+      var sigSource = new[] {SignalSource.Antenna, SignalSource.Cable, SignalSource.Sat, SignalSource.Ip, SignalSource.Analog, SignalSource.Dvb, SignalSource.Tv, SignalSource.Radio, SignalSource.Data};
+      var infoText = Resources.ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio.Split(',').Select(txt => txt.Trim()).ToArray();
       var controls = new[] {cbAntenna, cbCable, cbSat, cbIp, cbAnalog, cbDigital, cbTv, cbRadio, cbData };
 
       for (int i = 0, c = sigSource.Length; i < c; i++)
@@ -252,14 +252,13 @@ namespace ChanSort.Ui
       var ss = ch.SignalSource;
       if (source)
       {
-        if ((ss & SignalSource.MaskAntennaCableSat) != 0 && 
-            !(this.cbAntenna.Checked && (ss & SignalSource.Antenna) != 0 || this.cbCable.Checked && (ss & SignalSource.Cable) != 0 || this.cbSat.Checked && (ss & SignalSource.Sat) != 0 ||
-            this.cbIp.Checked && (ss & SignalSource.IP) != 0))
+        if ((ss & SignalSource.MaskBcastMedium) != 0 && 
+            !(this.cbAntenna.Checked && (ss & SignalSource.Antenna) != 0 || this.cbCable.Checked && (ss & SignalSource.Cable) != 0 || this.cbSat.Checked && (ss & SignalSource.Sat) != 0))
           return false;
       }
 
-      if ((ss & SignalSource.MaskAnalogDigital) != 0 &&
-        !(this.cbAnalog.Checked && (ss & SignalSource.Analog) != 0 || this.cbDigital.Checked && (ss & SignalSource.Digital) != 0))
+      if ((ss & SignalSource.MaskBcastSystem) != 0 &&
+        !(this.cbAnalog.Checked && (ss & SignalSource.Analog) != 0 || this.cbDigital.Checked && (ss & SignalSource.Dvb) != 0) || this.cbIp.Checked && (ss & SignalSource.Ip) != 0)
         return false;
 
       if ((ss & SignalSource.MaskTvRadioData) != 0 &&

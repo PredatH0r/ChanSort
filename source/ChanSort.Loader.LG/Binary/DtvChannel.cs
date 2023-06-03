@@ -15,7 +15,7 @@ namespace ChanSort.Loader.LG.Binary
 
     public DtvChannel(int slot, DataMapping data) : base(data)
     {
-      var signalSource = SignalSource.Digital;
+      var signalSource = SignalSource.Dvb;
       signalSource |= data.GetByte(_SignalSource) == 1 ? SignalSource.Antenna : SignalSource.Cable;
       this.InitCommonData(slot, signalSource, data);
       this.InitDvbData(data);

@@ -31,7 +31,7 @@ namespace ChanSort.Loader.SatcoDX
 
       // 28: channel type
       var type = line[28];
-      this.SignalSource = SignalSource.Digital | SignalSource.Sat | (type == 'T' ? SignalSource.Tv : type == 'R' ? SignalSource.Radio : 0);
+      this.SignalSource = SignalSource.Dvb | SignalSource.Sat | (type == 'T' ? SignalSource.Tv : type == 'R' ? SignalSource.Radio : 0);
       this.ServiceTypeName = type == 'T' ? "TV" : type == 'R' ? "Radio" : type == 'D' ? "Data" : "Other";
 
       // 29-32: broadcast system

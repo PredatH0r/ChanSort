@@ -152,7 +152,7 @@ namespace Test.Loader.Samsung.Zip
       TestUtils.DeploymentItem("ChanSort.Loader.Samsung\\ChanSort.Loader.Samsung.ini");
 
       StringBuilder errors = new StringBuilder();
-      var list = LoaderTestBase.FindAllFiles("TestFiles_Samsung", "*.zip");
+      var list = LoaderTestBase.FindAllFiles("TestFiles\\TestFiles_Samsung", "*.zip");
       var models = new Dictionary<string, string>();
       foreach (var file in list)
       {
@@ -179,7 +179,7 @@ namespace Test.Loader.Samsung.Zip
           var hdplusChannelList = serializer.DataRoot.GetChannelList(SignalSource.HdPlusD | SignalSource.Tv);
           var freesatChannelList = serializer.DataRoot.GetChannelList(SignalSource.FreesatD | SignalSource.Tv);
           var tivusatChannelList = serializer.DataRoot.GetChannelList(SignalSource.TivuSatD | SignalSource.Tv);
-          var iptvChannelList = serializer.DataRoot.GetChannelList(SignalSource.IP | SignalSource.Tv);
+          var iptvChannelList = serializer.DataRoot.GetChannelList(SignalSource.Ip | SignalSource.Tv);
 
           string key = serializer.FileFormatVersion +
             "\t" + model +

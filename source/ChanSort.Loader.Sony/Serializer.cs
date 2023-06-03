@@ -222,7 +222,7 @@ namespace ChanSort.Loader.Sony
       {
         foreach (var list in this.DataRoot.ChannelLists)
         {
-          if ((list.SignalSource & (SignalSource.MaskAdInput | SignalSource.MaskProvider)) == signalSource)
+          if ((list.SignalSource & (SignalSource.MaskBcast | SignalSource.MaskProvider)) == signalSource)
             list.ReadOnly = true;
         }
       }

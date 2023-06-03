@@ -236,7 +236,7 @@ namespace ChanSort.Loader.Philips
             throw LoaderException.Fail($"Invalid CRC in record {i} in {path}");
         }
 
-        var ch = new Channel(list.SignalSource & SignalSource.MaskAntennaCableSat, i, progNr, channelName);
+        var ch = new Channel(list.SignalSource & SignalSource.MaskBcastMedium, i, progNr, channelName);
         ch.Id = mapping.GetWord("offId"); // only relevant for ChannelMap45
         if (chanLstBin.VersionMajor <= 11)
           ch.FreqInMhz = (decimal) mapping.GetWord("offFreqTimes16") / 16;
@@ -244,7 +244,7 @@ namespace ChanSort.Loader.Philips
         {
           ch.FreqInMhz = mapping.GetDword("offFreq") / 1000;
           ch.Encrypted = mapping.GetDword("offEncrypted") != 0;
-          ch.SignalSource |= mapping.GetDword("offIsDigital") == 0 ? SignalSource.Analog : SignalSource.Digital;
+          ch.SignalSource |= mapping.GetDword("offIsDigital") == 0 ? SignalSource.Analog : SignalSource.Dvb;
           if (mapping.GetDword("offServiceType") == 2)
           {
             ch.SignalSource |= SignalSource.Radio;
@@ -477,7 +477,7 @@ namespace ChanSort.Loader.Philips
     {
       var transponderId = mapping.GetWord("offTransponderIndex");
       var progNr = mapping.GetWord("offProgNr");
-      var ch = new Channel(list.SignalSource & SignalSource.MaskAntennaCableSat, recordIndex, progNr, "");
+      var ch = new Channel(list.SignalSource & SignalSource.MaskBcastMedium, recordIndex, progNr, "");
 
       // deleted channels must be kept in the list because their records must also be physically reordered when saving the list
       if (progNr == 0xFFFF || transponderId == 0xFFFF)
@@ -508,7 +508,7 @@ namespace ChanSort.Loader.Philips
       }
       else
       {
-        ch.SignalSource |= mapping.GetWord("offIsDigital") == 0 ? SignalSource.Analog : SignalSource.Digital;
+        ch.SignalSource |= mapping.GetWord("offIsDigital") == 0 ? SignalSource.Analog : SignalSource.Dvb;
         ch.Name = Encoding.Unicode.GetString(mapping.Data, mapping.BaseOffset + mapping.GetConst("offName", 0), mapping.GetConst("lenName", 0)).TrimEnd('\0');
         ch.FreqInMhz = (decimal)mapping.GetDword("offFreq") / 1000;
         ch.Encrypted = mapping.GetDword("offEncrypted") != 0;
@@ -603,9 +603,9 @@ namespace ChanSort.Loader.Philips
 
       var queries = new[]
       {
-        new Tuple<SignalSource,string,string>(SignalSource.Analog | (list.SignalSource & SignalSource.MaskAntennaCableSat), "AnalogTable", 
+        new Tuple<SignalSource,string,string>(SignalSource.Analog | (list.SignalSource & SignalSource.MaskBcastMedium), "AnalogTable", 
           "select Dbindex, Frequency, 0, 0, 0, ChannelName, PresetNumber from AnalogTable order by Dbindex"),
-        new Tuple<SignalSource,string,string>(SignalSource.Digital  | (list.SignalSource & SignalSource.MaskAntennaCableSat), "DigSrvTable", 
+        new Tuple<SignalSource,string,string>(SignalSource.Dvb  | (list.SignalSource & SignalSource.MaskBcastMedium), "DigSrvTable", 
           "select Dbindex, Frequency, OriginalNetworkId, Tsid, ServiceId, ChannelName, PresetNumber from DigSrvTable order by Dbindex")
       };
 

@@ -67,13 +67,13 @@ namespace ChanSort.Loader.DBM
       if (isDvbS)
       {
         allChannels.ShortCaption = "DVB-S";
-        allChannels.SignalSource &= ~SignalSource.MaskAntennaCableSat;
+        allChannels.SignalSource &= ~SignalSource.MaskBcastMedium;
         allChannels.SignalSource |= SignalSource.Sat;
       }
       else
       {
         allChannels.ShortCaption = "DVB-C";
-        allChannels.SignalSource &= ~SignalSource.MaskAntennaCableSat;
+        allChannels.SignalSource &= ~SignalSource.MaskBcastMedium;
         allChannels.SignalSource |= SignalSource.Cable;
         allChannels.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Satellite));
       }
@@ -178,7 +178,7 @@ namespace ChanSort.Loader.DBM
         {
           var serviceType = mapping.GetByte("offServiceType");
           var src = serviceType == 1 ? SignalSource.Tv : serviceType == 2 ? SignalSource.Radio : SignalSource.Data;
-          src |= SignalSource.Digital;
+          src |= SignalSource.Dvb;
           src |= isDvbS ? SignalSource.Sat : SignalSource.Cable;
           var c = new ChannelInfo(src, i, -1, null);
           dec.GetChannelNames(data, mapping.BaseOffset + sec.GetInt("offName"), sec.GetInt("lenName"), out var longName, out var shortName);

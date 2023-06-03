@@ -215,7 +215,7 @@ namespace ChanSort.Loader.GlobalClone
         if (itemNode.LocalName != "ITEM")
           continue;
         ++i;
-        var ch = new GcChannel<XmlNode>(analog ? SignalSource.AnalogCT | SignalSource.Tv : SignalSource.Digital, i, itemNode);
+        var ch = new GcChannel<XmlNode>(analog ? SignalSource.AnalogCT | SignalSource.Tv : SignalSource.Dvb, i, itemNode);
         this.ParseChannelInfoNodes(itemNode, ch);
 
         var list = this.DataRoot.GetChannelList(ch.SignalSource);

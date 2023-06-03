@@ -252,7 +252,7 @@ lub aktualizacje oprogramowania układowego bez uruchamiania nowego skanowania k
 (Nowe oprogramowanie w telewizorze może nie być w stanie przetworzyć danych starego kanału podczas eksportu.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antena, telewizja kablowa, satelitarna, IP, analogowa, cyfrowa, TV, radio, dane</value>
+    <value>Antena, telewizja kablowa, satelitarna, IP, analogowa, DVB, TV, radio, dane</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
     <value>Jak chcesz sobie z tym poradzić, gdy Pr# jest już zajęty na liście docelowej?</value>

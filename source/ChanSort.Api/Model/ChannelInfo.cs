@@ -156,9 +156,9 @@ namespace ChanSort.Api
     {
       if ((signalSource & SignalSource.Analog) != 0)
         return "A-0-" + (int)(freqInMhz * 20) + "-0";
-      if ((signalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Sat)
+      if ((signalSource & SignalSource.MaskBcastMedium) == SignalSource.Sat)
         return "S" + /*this.SatPosition + */ "-" + onid + "-" + tsid + "-" + sid;
-      if ((signalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Antenna || (signalSource & SignalSource.MaskAntennaCableSat) == SignalSource.Cable)
+      if ((signalSource & SignalSource.MaskBcastMedium) == SignalSource.Antenna || (signalSource & SignalSource.MaskBcastMedium) == SignalSource.Cable)
       {
         // ChannelOrTransponder is needed for DVB-T where the same ONID+TSID+SID can be received from 2 different radio transmitters, but on different frequencies/channels
         if (string.IsNullOrEmpty(channelOrTransponder))

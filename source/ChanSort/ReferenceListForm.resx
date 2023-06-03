@@ -590,7 +590,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>1</value>
   </data>
   <data name="cbIp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 59</value>
+    <value>284, 85</value>
   </data>
   <data name="cbIp.Properties.Caption" xml:space="preserve">
     <value>IP (Network)</value>
@@ -599,7 +599,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>82, 18</value>
   </data>
   <data name="cbIp.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>13</value>
   </data>
   <data name="&gt;&gt;cbIp.Name" xml:space="preserve">
     <value>cbIp</value>
@@ -716,7 +716,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>59, 13</value>
   </data>
   <data name="labelControl9.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>10</value>
   </data>
   <data name="labelControl9.Text" xml:space="preserve">
     <value>Signal Type:</value>
@@ -743,7 +743,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>54, 18</value>
   </data>
   <data name="cbAnalog.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>11</value>
   </data>
   <data name="&gt;&gt;cbAnalog.Name" xml:space="preserve">
     <value>cbAnalog</value>
@@ -761,13 +761,13 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>204, 84</value>
   </data>
   <data name="cbDigital.Properties.Caption" xml:space="preserve">
-    <value>Digital</value>
+    <value>DVB</value>
   </data>
   <data name="cbDigital.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 18</value>
+    <value>40, 18</value>
   </data>
   <data name="cbDigital.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>12</value>
   </data>
   <data name="&gt;&gt;cbDigital.Name" xml:space="preserve">
     <value>cbDigital</value>
@@ -1126,8 +1126,5 @@ This step can be repeated as needed.</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v22.2, Version=22.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="checkEdit1.Properties.Caption" xml:space="preserve">
-    <value>Data/Other</value>
   </data>
 </root>

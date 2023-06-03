@@ -258,7 +258,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
             trans.Source = "DVB-T2";
             break;
           default:
-            trans.SignalSource = SignalSource.Digital;
+            trans.SignalSource = SignalSource.Dvb;
             break;
         }
 
@@ -425,7 +425,7 @@ left outer join {dbSchema.DvbServiceTable} digs on digs.ServiceId=s.Pid
               ci.Source = list.ShortCaption;
             if (ci.IsDeleted)
               ci.OldProgramNr = -1;
-            if ((ci.SignalSource & (SignalSource.MaskAntennaCableSat | SignalSource.MaskAnalogDigital)) == SignalSource.DvbS)
+            if ((ci.SignalSource & (SignalSource.MaskBcastMedium | SignalSource.MaskBcastSystem)) == SignalSource.DvbS)
               ci.Satellite = list.ShortCaption;
 
             DataRoot.AddChannel(list, ci);

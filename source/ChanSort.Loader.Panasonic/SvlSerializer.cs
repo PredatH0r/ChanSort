@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Microsoft.Data.Sqlite;
 using ChanSort.Api;
+using System.Runtime.Remoting.Channels;
 
 namespace ChanSort.Loader.Panasonic
 {
@@ -12,13 +13,15 @@ namespace ChanSort.Loader.Panasonic
 
   class SvlSerializer : SerializerBase
   {
-    private readonly ChannelList avbtChannels = new ChannelList(SignalSource.AnalogT, "Analog Antenna");
-    private readonly ChannelList avbcChannels = new ChannelList(SignalSource.AnalogC, "Analog Cable");
-    private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
-    private readonly ChannelList dvbcChannels = new ChannelList(SignalSource.DvbC, "DVB-C");
-    private readonly ChannelList dvbsChannels = new ChannelList(SignalSource.DvbS, "DVB-S");
-    private readonly ChannelList satipChannels = new ChannelList(SignalSource.SatIP, "SAT>IP");
-    private readonly ChannelList freesatChannels = new ChannelList(SignalSource.DvbS | SignalSource.Freesat, "Freesat");
+    private readonly ChannelList avbtChannels = new (SignalSource.AnalogT, "Analog Antenna");
+    private readonly ChannelList avbcChannels = new (SignalSource.AnalogC, "Analog Cable");
+    private readonly ChannelList dvbtChannels = new (SignalSource.DvbT, "DVB-T");
+    private readonly ChannelList dvbcChannels = new (SignalSource.DvbC, "DVB-C");
+    private readonly ChannelList dvbsChannels = new (SignalSource.DvbS, "DVB-S");
+    private readonly ChannelList antIpChannels = new(SignalSource.IpAntenna, "Antenna>IP");
+    private readonly ChannelList cabIpChannels = new(SignalSource.IpCable, "Cable>IP");
+    private readonly ChannelList satIpChannels = new (SignalSource.IpSat, "SAT>IP");
+    private readonly ChannelList freesatChannels = new (SignalSource.DvbS | SignalSource.Freesat, "Freesat");
 
     private string workFile;
     private CypherMode cypherMode;
@@ -54,7 +57,9 @@ namespace ChanSort.Loader.Panasonic
       this.DataRoot.AddChannelList(this.dvbtChannels);
       this.DataRoot.AddChannelList(this.dvbcChannels);
       this.DataRoot.AddChannelList(this.dvbsChannels);
-      this.DataRoot.AddChannelList(this.satipChannels);
+      this.DataRoot.AddChannelList(this.antIpChannels);
+      this.DataRoot.AddChannelList(this.cabIpChannels);
+      this.DataRoot.AddChannelList(this.satIpChannels);
       this.DataRoot.AddChannelList(this.freesatChannels);
 
       // hide columns for fields that don't exist in Panasonic channel list
@@ -231,11 +236,11 @@ namespace ChanSort.Loader.Panasonic
     private void ReadChannels(SqliteCommand cmd)
     {
       string[] fieldNames = { "rowid", "major_channel", "physical_ch","sname", "freq", "skip", "running_status","free_CA_mode","child_lock",
-                            "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "ya_svcid", "delivery" };
+                            "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "ya_svcid", "delivery", "delivery_type" };
       
       const string sql = @"
 select s.rowid,s.major_channel,s.physical_ch,cast(s.sname as blob),t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
-  profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery
+  profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery,ifnull(t.delivery_type, 0)
 from SVL s 
 left outer join TSL t on s.ntype=t.ntype and s.physical_ch=t.physical_ch and s.tsid=t.tsid
 order by s.ntype,major_channel
@@ -309,7 +314,9 @@ order by s.ntype,major_channel
         this.WriteChannels(cmd, this.dvbtChannels);
         this.WriteChannels(cmd, this.dvbcChannels);
         this.WriteChannels(cmd, this.dvbsChannels);
-        this.WriteChannels(cmd, this.satipChannels);
+        this.WriteChannels(cmd, this.antIpChannels);
+        this.WriteChannels(cmd, this.cabIpChannels);
+        this.WriteChannels(cmd, this.satIpChannels);
         this.WriteChannels(cmd, this.freesatChannels);
         trans.Commit();
 
@@ -327,7 +334,8 @@ order by s.ntype,major_channel
       if (channelList.Channels.Count == 0)
         return;
 
-      cmd.CommandText = "update SVL set major_channel=@progNr, sname=@sname, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, child_lock=@lock, skip=@skip where rowid=@rowid";
+      cmd.CommandText = "update SVL set major_channel=@progNr, sname=@sname, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, " +
+                        "child_lock=@lock, skip=@skip, free_CA_mode=@encr where rowid=@rowid";
       cmd.Parameters.Clear();
       cmd.Parameters.Add("@rowid", SqliteType.Integer);
       cmd.Parameters.Add("@progNr", SqliteType.Integer);
@@ -338,6 +346,7 @@ order by s.ntype,major_channel
       cmd.Parameters.Add("@fav4", SqliteType.Integer);
       cmd.Parameters.Add("@lock", SqliteType.Integer);
       cmd.Parameters.Add("@skip", SqliteType.Integer);
+      cmd.Parameters.Add("@encr", SqliteType.Integer);
       cmd.Prepare();
       foreach (ChannelInfo channelInfo in channelList.Channels)
       {
@@ -354,6 +363,7 @@ order by s.ntype,major_channel
           cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.GetPosition(fav+1));
         cmd.Parameters["@lock"].Value = channel.Lock;
         cmd.Parameters["@skip"].Value = channel.Skip;
+        cmd.Parameters["@encr"].Value = channel.Encrypted;
         cmd.ExecuteNonQuery();
       }
 
@@ -369,6 +379,13 @@ order by s.ntype,major_channel
           cmd.ExecuteNonQuery();
         }
       }
+
+      // remove unassigned/deleted transponders from TSL table
+      // add. info: only digital transponders should be deleted as import
+      //            generates error when no analog transponders are found
+      cmd.CommandText = "delete from TSL where onid<>0 and physical_ch not in (select physical_ch from SVL where physical_ch is not null)";
+      cmd.Parameters.Clear();
+      cmd.ExecuteNonQuery();
     }
     #endregion
 

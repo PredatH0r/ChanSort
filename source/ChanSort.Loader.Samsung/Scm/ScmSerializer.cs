@@ -709,7 +709,7 @@ namespace ChanSort.Loader.Samsung.Scm
     {
       foreach (var list in this.DataRoot.ChannelLists)
       {
-        if ((list.SignalSource & SignalSource.Digital) == 0)
+        if ((list.SignalSource & SignalSource.Dvb) == 0)
           continue;
         var listOfChannels = new List<ChannelInfo>(list.Channels);
         foreach (var chan in listOfChannels)

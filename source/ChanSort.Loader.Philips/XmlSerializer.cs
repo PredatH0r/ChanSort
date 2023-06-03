@@ -428,7 +428,7 @@ namespace ChanSort.Loader.Philips
 
       if (!data.ContainsKey("UniqueID") || !int.TryParse(data["UniqueID"], out var uniqueId)) // UniqueId only exists in ChannelMap_105 and later
         uniqueId = rowId;
-      var chan = new Channel(curList.SignalSource & SignalSource.MaskAdInput, rowId, uniqueId, setupNode);
+      var chan = new Channel(curList.SignalSource & SignalSource.MaskBcast, rowId, uniqueId, setupNode);
       chan.OldProgramNr = -1;
       chan.IsDeleted = false;
       if (file.formatVersion == FormatVersion.RepairXml)
@@ -436,9 +436,9 @@ namespace ChanSort.Loader.Philips
       else if (file.formatVersion == FormatVersion.ChannelMapXml)
         this.ParseChannelMapXml(data, chan);
 
-      if ((chan.SignalSource & SignalSource.MaskAdInput) == SignalSource.DvbT)
+      if ((chan.SignalSource & SignalSource.MaskBcast) == SignalSource.DvbT)
         chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
-      else if ((chan.SignalSource & SignalSource.MaskAdInput) == SignalSource.DvbC)
+      else if ((chan.SignalSource & SignalSource.MaskBcast) == SignalSource.DvbC)
         chan.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(chan.FreqInMhz);
 
       DataRoot.AddChannel(curList, chan);

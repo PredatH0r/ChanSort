@@ -31,9 +31,9 @@ namespace ChanSort.Loader.TCL
       AllKnown = Favorite|CustomProgNum|Hidden|Delete
     }
 
-    private readonly ChannelList dvbT = new(SignalSource.Antenna | SignalSource.MaskTvRadioData|SignalSource.Digital, "DVB-T");
-    private readonly ChannelList dvbC = new(SignalSource.Cable | SignalSource.MaskTvRadioData | SignalSource.Digital, "DVB-C");
-    private readonly ChannelList dvbS = new(SignalSource.Sat | SignalSource.MaskTvRadioData | SignalSource.Digital, "DVB-S");
+    private readonly ChannelList dvbT = new(SignalSource.Antenna | SignalSource.MaskTvRadioData|SignalSource.Dvb, "DVB-T");
+    private readonly ChannelList dvbC = new(SignalSource.Cable | SignalSource.MaskTvRadioData | SignalSource.Dvb, "DVB-C");
+    private readonly ChannelList dvbS = new(SignalSource.Sat | SignalSource.MaskTvRadioData | SignalSource.Dvb, "DVB-S");
     private string dbDir;
     private string dtvFile;
     private string satFile;
@@ -304,7 +304,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
           oldProgNr = -1;
 
         var name = r.GetString(2)?.TrimEnd(' ', '\0');
-        ChannelInfo channel = new ChannelInfo(SignalSource.Digital, handle, oldProgNr, name);
+        ChannelInfo channel = new ChannelInfo(SignalSource.Dvb, handle, oldProgNr, name);
         channel.ShortName = r.GetString(3).TrimEnd(' ', '\0');
         channel.ServiceId = r.GetInt32(4);
         var vtype = r.GetInt32(5);

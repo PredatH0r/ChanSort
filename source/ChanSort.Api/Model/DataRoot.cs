@@ -94,9 +94,9 @@ namespace ChanSort.Api
       {
         var listMask = list.SignalSource;
 
-        if ((searchMask & SignalSource.MaskAnalogDigital) != 0 && (listMask & SignalSource.MaskAnalogDigital & searchMask) == 0) // digital/analog
+        if ((searchMask & SignalSource.MaskBcastSystem) != 0 && (listMask & SignalSource.MaskBcastSystem & searchMask) == 0) // analog/dvb/ip
           continue;
-        if ((searchMask & SignalSource.MaskAntennaCableSat) != 0 && (listMask & SignalSource.MaskAntennaCableSat & searchMask) == 0) // air/cable/sat/ip
+        if ((searchMask & SignalSource.MaskBcastMedium) != 0 && (listMask & SignalSource.MaskBcastMedium & searchMask) == 0) // air/cable/sat
           continue;
         if ((searchMask & SignalSource.MaskTvRadioData) != 0 && (listMask & SignalSource.MaskTvRadioData & searchMask) == 0) // tv/radio/data
           continue;

@@ -102,7 +102,7 @@ public class MedionSerializer : SerializerBase
         ch.SignalSource |= SignalSource.Analog;
         break;
       case 2:
-        ch.SignalSource |= SignalSource.Digital;
+        ch.SignalSource |= SignalSource.Dvb;
         break;
     }
 

@@ -781,7 +781,7 @@ namespace ChanSort.Ui
         if ((this.currentTvSerializer.Features.ChannelNameEdit & ChannelNameEditMode.Analog) != 0)
           src |= SignalSource.Analog;
         if ((this.currentTvSerializer.Features.ChannelNameEdit & ChannelNameEditMode.Digital) != 0)
-          src |= SignalSource.Digital;
+          src |= SignalSource.Dvb;
         this.colName.OptionsColumn.AllowEdit = this.colOutName.OptionsColumn.AllowEdit = (channelList.SignalSource & src) != 0;
 
         if (this.DataRoot.MixedSourceFavorites)
@@ -1654,30 +1654,30 @@ namespace ChanSort.Ui
       if (col == this.colPrNr) return this.subListIndex > 0;
 
       if (col == this.colChannelOrTransponder) return (source & SignalSource.Sat) == 0;
-      if (col == this.colShortName) return (source & SignalSource.Digital) != 0;
-      if (col == this.colEncrypted) return (source & SignalSource.Digital) != 0;
-      if (col == this.colServiceId) return (source & SignalSource.Digital) != 0;
-      if (col == this.colPcrPid) return (source & SignalSource.Digital) != 0;
-      if (col == this.colVideoPid) return (source & SignalSource.Digital) != 0;
-      if (col == this.colAudioPid) return (source & SignalSource.Digital) != 0;
+      if (col == this.colShortName) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colEncrypted) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colServiceId) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colPcrPid) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colVideoPid) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colAudioPid) return (source & SignalSource.Dvb) != 0;
       //if (col == this.colServiceType) return (source & SignalSource.Digital) != 0;
-      if (col == this.colServiceTypeName) return (source & SignalSource.Digital) != 0;
-      if (col == this.colTransportStreamId) return (source & SignalSource.Digital) != 0;
-      if (col == this.colNetworkName) return (source & SignalSource.Digital) != 0;
-      if (col == this.colNetworkOperator) return (source & SignalSource.Digital) != 0;
-      if (col == this.colProvider) return (source & SignalSource.Digital) != 0;
+      if (col == this.colServiceTypeName) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colTransportStreamId) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colNetworkName) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colNetworkOperator) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colProvider) return (source & SignalSource.Dvb) != 0;
       if (col == this.colSatellite) return (source & SignalSource.Sat) != 0;
-      if (col == this.colNetworkId) return (source & SignalSource.Digital) != 0;
-      if (col == this.colSymbolRate) return (source & SignalSource.Digital) != 0;
-      if (col == this.colSkip) return (source & SignalSource.Digital) != 0 && this.DataRoot.CanSkip;
-      if (col == this.colLock) return (source & SignalSource.Digital) != 0 && this.DataRoot.CanLock;
-      if (col == this.colHidden) return (source & SignalSource.Digital) != 0 && this.DataRoot.CanHide;
+      if (col == this.colNetworkId) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colSymbolRate) return (source & SignalSource.Dvb) != 0;
+      if (col == this.colSkip) return (source & SignalSource.Dvb) != 0 && this.DataRoot.CanSkip;
+      if (col == this.colLock) return (source & SignalSource.Dvb) != 0 && this.DataRoot.CanLock;
+      if (col == this.colHidden) return (source & SignalSource.Dvb) != 0 && this.DataRoot.CanHide;
       if (col == this.colIndex) return col.Visible;
       if (col == this.colUid) return col.Visible;
       if (col == this.colDebug) return col.Visible;
       if (col == this.colSignalSource) return col.Visible;
       if (col == this.colLogicalIndex) return col.Visible;
-      if (col == this.colPolarity) return (source & SignalSource.Sat) != 0 || (source & SignalSource.IP) != 0;
+      if (col == this.colPolarity) return (source & SignalSource.Sat) != 0;
 
       return true;
     }

@@ -210,7 +210,7 @@ public class HisSvlBinSerializer : SerializerBase
 
     var broadcastDataOffset = svlMapping.Settings.GetInt("BroadcastSystemData");
     var nameLength = svlMapping.Settings.GetInt("NameLength");
-    var source = channels.SignalSource & (SignalSource.MaskAnalogDigital | SignalSource.MaskAntennaCableSat);
+    var source = channels.SignalSource & (SignalSource.MaskBcastSystem | SignalSource.MaskBcastMedium);
     for (int i = 0; i < channelCount; i++)
     {
       svlMapping.SetDataPtr(svlFileContent, off);
@@ -317,7 +317,7 @@ public class HisSvlBinSerializer : SerializerBase
       ci.ServiceId = dvbMapping.GetWord("Sid");
     }
 
-    if ((ci.SignalSource & (SignalSource.MaskAnalogDigital | SignalSource.MaskAntennaCableSat)) == SignalSource.DvbC)
+    if ((ci.SignalSource & (SignalSource.MaskBcastSystem | SignalSource.MaskBcastMedium)) == SignalSource.DvbC)
     {
       ci.OriginalNetworkId = dvbMapping.GetWord("DvbcOnid");
       ci.TransportStreamId = dvbMapping.GetWord("DvbcTsid");
@@ -575,7 +575,7 @@ public class HisSvlBinSerializer : SerializerBase
         svlMapping.BaseOffset = chan.RawDataOffset;
         chan.Name = ReadString(svlMapping, "Name", nameLength);
 
-        if ((chan.SignalSource & SignalSource.Digital) == 0)
+        if ((chan.SignalSource & SignalSource.Dvb) == 0)
           continue;
 
         dvbMapping.BaseOffset = chan.RawDataOffset + dvbOffset;

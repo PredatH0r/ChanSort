@@ -38,7 +38,7 @@ namespace ChanSort.Loader.Samsung.Zip
         this.Polarity = tp.Polarity;
       }
 
-      if ((this.SignalSource & SignalSource.Digital) != 0)
+      if ((this.SignalSource & SignalSource.Dvb) != 0)
         this.ReadDvbData(r, field, loader, providers);
       else
         this.ReadAnalogData(r, field);

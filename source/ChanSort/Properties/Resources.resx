@@ -267,7 +267,7 @@ or firmware upgrades without running a new channel scan.
 (The new software in the TV might be unable to process the old channel data during the export.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antenna,Cable,Sat,IP,Analog,Digital,TV,Radio,Data</value>
+    <value>Antenna,Cable,Sat,IP,Analog,DVB,TV,Radio,Data</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
     <value>How do you want to handle it when a Pr# is already taken in the target list?</value>

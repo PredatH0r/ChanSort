@@ -259,7 +259,7 @@ A tipikus ok, ha az USB memóriakártya NTFS fájlrendszerű (próbáljon inkáb
 (Előfordulhat, hogy az új szoftver a TV-ben nem tudja feldolgozni a régi csatornaadatokat az exportálás során.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antenna,Kábel,Műhold,IP,Analóg,Digitális,TV,Rádió,Adat</value>
+    <value>Antenna,Kábel,Műhold,IP,Analóg,DVB,TV,Rádió,Adat</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
     <value>Hogyan szeretné kezelni, ha egy Pr# már szerepel a céllistában?</value>

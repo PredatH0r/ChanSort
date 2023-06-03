@@ -13,27 +13,29 @@ namespace ChanSort.Api
   {
     Any = 0,
 
-    // bit 0-1: analog/digital
-    MaskAnalogDigital = 0x0003,
+    // bit 0-1, 7: analog/dvb/ip
     Analog = 0x0001,
-    Digital = 0x0002,
+    Dvb = 0x0002,
+    Ip = 0x0080,
+    MaskBcastSystem = Analog | Dvb | Ip,
 
-    // bit 3-7: AvInput/Antenna/Cable/Sat/IP
-    MaskAntennaCableSat = 0x00F8,
+    // bit 3-6: AvInput/Antenna/Cable/Sat
     AvInput = 0x0008,
     Antenna = 0x0010,
     Cable = 0x0020,
     Sat = 0x0040,
-    IP = 0x0080,
+    MaskBcastMedium = AvInput | Antenna | Cable | Sat,
 
-    MaskAdInput = MaskAnalogDigital | MaskAntennaCableSat,
+
+    MaskBcast = MaskBcastSystem | MaskBcastMedium,
+
 
     // bit 8-10: TV/Radio/Data
-    MaskTvRadioData = 0x0700,
     Tv = 0x0100,
     Radio = 0x0200,
     Data = 0x0400,
-    TvAndData = Tv|Data,
+    MaskTvRadioData = Tv | Radio | Data,
+    TvAndData = Tv | Data,
 
     // bit 12-15: Preset list selector (AstraHD+, Freesat, TivuSat, CanalDigitalSat, ... for Samsung)
     MaskProvider = 0xF000,
@@ -54,24 +56,32 @@ namespace ChanSort.Api
     StandardCable = 0 << 12,
     CablePrime = 1 << 12,
 
-    AnalogC = Analog + Cable,
-    AnalogT = Analog + Antenna,
-    AnalogCT = Analog + Cable + Antenna,
-    DvbC = Digital + Cable,
-    DvbT = Digital + Antenna,
-    DvbCT = Digital + Cable + Antenna,
-    DvbS = Digital + Sat,
-    SatIP = Digital + IP, // must NOT add Sat
+    // some predefined combinations
 
-    CablePrimeD = Digital + Cable + CablePrime,
-    HdPlusD = Digital + Sat + AstraHdPlus,
-    FreesatD = Digital + Sat + Freesat,
-    TivuSatD = Digital + Sat + TivuSat,
-    CanalDigitalSatD = Digital + Sat + CanalDigital,
-    DigitalPlusD = Digital + Sat + DigitalPlus,
-    CyfraPlusD = Digital + Sat + CyfraPlus,
+    AnalogC = Analog | Cable,
+    AnalogT = Analog | Antenna,
+    AnalogCT = Analog | Cable | Antenna,
+    DvbC = Dvb | Cable,
+    DvbT = Dvb | Antenna,
+    DvbCT = Dvb | Cable | Antenna,
+    DvbS = Dvb | Sat,
 
-    All = MaskAnalogDigital | MaskAntennaCableSat | MaskTvRadioData
+    IpAntenna = Ip | Antenna,
+    IpCable = Ip | Cable,
+    IpSat = Ip | Sat,
+    IpAll = Ip | Antenna | Cable | Sat,
+
+
+
+    CablePrimeD = Dvb | Cable | CablePrime,
+    HdPlusD = Dvb | Sat | AstraHdPlus,
+    FreesatD = Dvb | Sat | Freesat,
+    TivuSatD = Dvb | Sat | TivuSat,
+    CanalDigitalSatD = Dvb | Sat | CanalDigital,
+    DigitalPlusD = Dvb | Sat | DigitalPlus,
+    CyfraPlusD = Dvb | Sat | CyfraPlus,
+
+    All = MaskBcastSystem | MaskBcastMedium | MaskTvRadioData
   }
   #endregion
 
