@@ -37,71 +37,71 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Charts.v22.2.Core">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Charts.v22.2.Core.dll</HintPath>      
+    <Reference Include="DevExpress.Charts.v23.1.Core">
+            
     </Reference>
-    <Reference Include="DevExpress.CodeParser.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.CodeParser.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.CodeParser.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Data.Desktop.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.Data.Desktop.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.Data.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Data.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.Data.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.Drawing.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Drawing.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.Drawing.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.Office.v22.2.Core">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Office.v22.2.Core.dll</HintPath>
+    <Reference Include="DevExpress.Office.v23.1.Core">
+      
     </Reference>
-    <Reference Include="DevExpress.Pdf.v22.2.Core">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Pdf.v22.2.Core.dll</HintPath>
+    <Reference Include="DevExpress.Pdf.v23.1.Core">
+      
     </Reference>
-    <Reference Include="DevExpress.PivotGrid.v22.2.Core">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.PivotGrid.v22.2.Core.dll</HintPath>
+    <Reference Include="DevExpress.PivotGrid.v23.1.Core">
+      
     </Reference>
-    <Reference Include="DevExpress.Printing.v22.2.Core">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Printing.v22.2.Core.dll</HintPath>
+    <Reference Include="DevExpress.Printing.v23.1.Core">
+      
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v22.2.Core">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.RichEdit.v22.2.Core.dll</HintPath>
+    <Reference Include="DevExpress.RichEdit.v23.1.Core">
+      
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v22.2.Export">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.RichEdit.v22.2.Export.dll</HintPath>
+    <Reference Include="DevExpress.RichEdit.v23.1.Export">
+      
     </Reference>
-    <Reference Include="DevExpress.Sparkline.v22.2.Core">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Sparkline.v22.2.Core.dll</HintPath>
+    <Reference Include="DevExpress.Sparkline.v23.1.Core">
+      
     </Reference>
-    <Reference Include="DevExpress.Utils.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Utils.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.Utils.v22.2.UI">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Utils.v22.2.UI.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v23.1.UI">
+      
     </Reference>
-    <Reference Include="DevExpress.XtraBars.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraBars.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.XtraBars.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraCharts.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.XtraCharts.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v22.2.Wizard">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraCharts.v22.2.Wizard.dll</HintPath>
+    <Reference Include="DevExpress.XtraCharts.v23.1.Wizard">
+      
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraEditors.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.XtraEditors.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.XtraGrid.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraGrid.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.XtraGrid.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraPrinting.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.XtraPrinting.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraReports.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.XtraReports.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v22.2.Extensions">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraReports.v22.2.Extensions.dll</HintPath>
+    <Reference Include="DevExpress.XtraReports.v23.1.Extensions">
+      
     </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Data.Linq" />
@@ -205,6 +205,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="DevExpress.Charts" Version="23.1.4" />
+    <PackageReference Include="DevExpress.CodeParser" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Data.Desktop" Version="23.1.4" />
+    <PackageReference Include="DevExpress.PivotGrid.Core" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Reporting.Core" Version="23.1.4" />
+    <PackageReference Include="DevExpress.RichEdit.Core" Version="23.1.4" />
+    <PackageReference Include="DevExpress.RichEdit.Export" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Sparkline.Core" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Utils" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Utils.UI" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Win.Reporting" Version="23.1.4" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>

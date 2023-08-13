@@ -142,7 +142,7 @@
       this.Margins = new DevExpress.Drawing.DXMargins(148, 111, 83, 119);
       this.PageHeight = 2970;
       this.PageWidth = 2100;
-      this.PaperKind = System.Drawing.Printing.PaperKind.A4;
+      this.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.A4;
       this.ReportUnit = DevExpress.XtraReports.UI.ReportUnit.TenthsOfAMillimeter;
       this.SnapGridSize = 25F;
       this.Version = "19.2";

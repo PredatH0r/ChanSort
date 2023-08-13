@@ -1,6 +1,9 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-08-13
+- added support for a Hisense HIS_SVL.BIN variant with different data layout
+
 2023-06-01
 - Panasonic LS 500 / LX 700 series: support for new firmware which doesn't export a hotel.bin file.
 - Loewe servicelist.xml (and maybe some other .xml files) larger than 2 000 000 bytes were

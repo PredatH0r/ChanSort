@@ -6,7 +6,7 @@ namespace ChanSort.Loader.Hisense
   public class HisensePlugin : ISerializerPlugin
   {
     public string DllName { get; set; }
-    public string PluginName => "Hisense (channel.db, servicelist.db)";
+    public string PluginName => "Hisense (channel.db, servicelist.db, his_*.bin)";
     public string FileFilter => "*.db;*.bin";
 
     public SerializerBase CreateSerializer(string inputFile)

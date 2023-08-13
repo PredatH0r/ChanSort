@@ -12,7 +12,7 @@ namespace ChanSort.Loader.Hisense.HisBin;
  *
  * This binary format is based on a customized MediaTek format, which means that there may be many incompatible
  * variants that can't be identified and distinguished easily.
- * This loader only supports the known Hisense variant with 304 bytes per channel in HIS_SVL.BIN.
+ * This loader only supports the known HiSense variants with 264 and 304 bytes per channel in HIS_SVL.BIN.
  *
  * See also the his-svl.h file in Information/FileStructures_for_HHD_Hex_Editor_Neo
  *
@@ -34,6 +34,7 @@ public class HisSvlBinSerializer : SerializerBase
   private byte[] tslFileContent;
   private const int MaxFileSize = 4 << 20; // 4 MB
 
+  private bool readDvbData;
   private int headerRecordSize, svlRecordSize;
   private int tSize, cSize, sSize;
 
@@ -82,15 +83,9 @@ public class HisSvlBinSerializer : SerializerBase
     this.headerMapping = new DataMapping(ini.GetSection("Header"));
     this.headerRecordSize = headerMapping.Settings.GetInt("RecordSize");
 
-    this.svlMapping = new DataMapping(ini.GetSection("SVL_Record"));
-    this.svlMapping.DefaultEncoding = this.DefaultEncoding;
-    this.tslMapping = new DataMapping(ini.GetSection("TSL_Record"));
-    this.tslMapping.DefaultEncoding = this.DefaultEncoding;
     this.dvbMapping = new DataMapping(ini.GetSection("DVB_Data"));
     this.dvbMapping.DefaultEncoding = this.DefaultEncoding;
     this.favMapping = new DataMapping(ini.GetSection("FAV_Record"));
-
-    this.svlRecordSize = this.svlMapping.Settings.GetInt("RecordSize");
   }
   #endregion
 
@@ -104,12 +99,48 @@ public class HisSvlBinSerializer : SerializerBase
     var i = name.LastIndexOf('_');
     var basename = i < 0 ? name : name.Substring(0, i);
     this.FileName = Path.Combine(dir, basename + "_SVL.BIN");
-    this.LoadTslFile(Path.Combine(dir, basename + "_TSL.BIN"));
-    this.LoadSvlFile(this.FileName);
+    var tslName = Path.Combine(dir, basename + "_TSL.BIN");
     this.favFileName = Path.Combine(dir, basename + "_FAV.BIN");
+
+    DetectFormatVersionFromContent(tslName);
+
+    this.LoadTslFile(tslName);
+    this.LoadSvlFile(this.FileName);
     this.LoadFavFile(this.favFileName);
   }
+  #endregion
 
+  #region DetectFormatVersionFromContent()
+  private void DetectFormatVersionFromContent(string tslName)
+  {
+    var svlLen = new FileInfo(this.FileName).Length;
+    var tslLen = new FileInfo(tslName).Length;
+    IniFile.Section candidate = null;
+    foreach (var section in this.ini.Sections)
+    {
+      if (!section.Name.StartsWith("Version"))
+        continue;
+      if ((tslLen - this.headerRecordSize * 3) % section.GetInt("TSL_Record") != 0)
+        continue;
+      if ((svlLen - this.headerRecordSize * 3) % section.GetInt("SVL_Record") != 0)
+        continue;
+      if (candidate != null)
+        throw LoaderException.Fail("Unable to uniquely infer file format from its content");
+      candidate = section;
+    }
+
+    if (candidate == null)
+      throw LoaderException.Fail("File content doesn't match any known SVL/TSL/FAV.bin data format versions");
+
+    var tslRecordSize = candidate.GetInt("TSL_Record");
+    this.svlRecordSize = candidate.GetInt("SVL_Record");
+    this.readDvbData = candidate.GetBool("ReadDvb");
+
+    this.svlMapping = new DataMapping(ini.GetSection("SVL_Record:" + this.svlRecordSize));
+    this.svlMapping.DefaultEncoding = this.DefaultEncoding;
+    this.tslMapping = new DataMapping(ini.GetSection("TSL_Record:" + tslRecordSize));
+    this.tslMapping.DefaultEncoding = this.DefaultEncoding;
+  }
   #endregion
 
   #region LoadTslFile()
@@ -154,7 +185,7 @@ public class HisSvlBinSerializer : SerializerBase
       if (trans.OriginalNetworkId == 0) // some files have Onid=0 but provide a Nid, which seems to be the Onid
         trans.OriginalNetworkId = tslMapping.GetWord("Nid");
       trans.TransportStreamId = tslMapping.GetWord("Tsid");
-      trans.Name = tslMapping.GetString("Name", tslMapping.Settings.GetInt("NameLength"));
+      trans.Name = tslMapping.GetString("Name", tslMapping.Settings.GetInt("NameSize"));
       var z = trans.Name.IndexOf('\0');
       if (z >= 0)
         trans.Name = trans.Name.Substring(0, z);
@@ -209,7 +240,7 @@ public class HisSvlBinSerializer : SerializerBase
       return;
 
     var broadcastDataOffset = svlMapping.Settings.GetInt("BroadcastSystemData");
-    var nameLength = svlMapping.Settings.GetInt("NameLength");
+    var nameLength = svlMapping.Settings.GetInt("NameSize");
     var source = channels.SignalSource & (SignalSource.MaskBcastSystem | SignalSource.MaskBcastMedium);
     for (int i = 0; i < channelCount; i++)
     {
@@ -250,6 +281,7 @@ public class HisSvlBinSerializer : SerializerBase
     ci.Name = ReadString(svlMapping, "Name", nameLength);
 
     var serviceType = svlMapping.GetByte("ServiceType");
+    ci.ServiceType = serviceType;
     if (serviceType == 1)
     {
       ci.SignalSource |= SignalSource.Tv;
@@ -307,6 +339,8 @@ public class HisSvlBinSerializer : SerializerBase
   #region ReadDvbData()
   private void ReadDvbData(ChannelInfo ci)
   {
+    if (!this.readDvbData)
+      return;
     var mask = dvbMapping.GetDword("LinkageMask");
     var tsFlag = dvbMapping.Settings.GetInt("LinkageMask_Ts");
 
@@ -328,11 +362,14 @@ public class HisSvlBinSerializer : SerializerBase
     else if ((ci.SignalSource & SignalSource.DvbC) == SignalSource.DvbC)
       ci.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(ci.FreqInMhz).ToString();
 
-    ci.ServiceType = dvbMapping.GetByte("ServiceType");
-    if (ci.ServiceType != 0)
+    var serviceType = dvbMapping.GetByte("ServiceType");
+    if (serviceType != 0)
+    {
+      ci.ServiceType = serviceType;
       ci.ServiceTypeName = LookupData.Instance.GetServiceTypeDescription(ci.ServiceType);
+    }
 
-    ci.ShortName = dvbMapping.GetString("ShortName", dvbMapping.Settings.GetInt("ShortNameLength"));
+    ci.ShortName = dvbMapping.GetString("ShortName", dvbMapping.Settings.GetInt("ShortNameSize"));
   }
   #endregion
 
@@ -358,7 +395,7 @@ public class HisSvlBinSerializer : SerializerBase
       favListSizes[i] = BitConverter.ToInt32(content, i * 4);
 
     var recSize = favMapping.Settings.GetInt("RecordSize");
-    var dispNumLen = favMapping.Settings.GetInt("DisplayNumberLength");
+    var dispNumLen = favMapping.Settings.GetInt("DisplayNumberSize");
     favMapping.SetDataPtr(content, 16 - recSize);
     for (int i = 0; i < 4; i++)
     {
@@ -495,8 +532,8 @@ public class HisSvlBinSerializer : SerializerBase
     var tmp = new byte[favRecordSize];
     favMapping.SetDataPtr(tmp, 0);
 
-    var nameLength = favMapping.Settings.GetInt("ChannelNameLength");
-    var dispNumLength = favMapping.Settings.GetInt("DisplayNumberLength");
+    var nameLength = favMapping.Settings.GetInt("ChannelNameSize");
+    var dispNumLength = favMapping.Settings.GetInt("DisplayNumberSize");
 
     for (int i = 1; i <= 4; i++)
     {
@@ -551,10 +588,14 @@ public class HisSvlBinSerializer : SerializerBase
       if (value == this.DefaultEncoding)
         return;
       base.DefaultEncoding = value;
-      this.svlMapping.DefaultEncoding = value;
-      this.tslMapping.DefaultEncoding = value;
+
       this.dvbMapping.DefaultEncoding = value;
-      this.ReparseNames();
+      if (this.svlMapping != null)
+      {
+        this.svlMapping.DefaultEncoding = value;
+        this.tslMapping.DefaultEncoding = value;
+        this.ReparseNames();
+      }
     }
   }
   #endregion
@@ -562,8 +603,8 @@ public class HisSvlBinSerializer : SerializerBase
   #region ReparseNames()
   private void ReparseNames()
   {
-    var nameLength = svlMapping.Settings.GetInt("NameLength");
-    var shortNameLength = dvbMapping.Settings.GetInt("ShortNameLength");
+    var nameLength = svlMapping.Settings.GetInt("NameSize");
+    var shortNameLength = dvbMapping.Settings.GetInt("ShortNameSize");
     var dvbOffset = svlMapping.Settings.GetInt("BroadcastSystemData");
 
     foreach (var list in this.DataRoot.ChannelLists)

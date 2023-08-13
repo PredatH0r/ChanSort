@@ -16,27 +16,33 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="DevExpress.Data.Desktop" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Printing.Core" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Utils" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Win" Version="23.1.4" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.Desktop.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Data.Desktop.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.Data.Desktop.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.Data.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Data.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.Data.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.Drawing.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Drawing.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.Drawing.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.Printing.v22.2.Core">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Printing.v22.2.Core.dll</HintPath>
+    <Reference Include="DevExpress.Printing.v23.1.Core">
+      
     </Reference>
-    <Reference Include="DevExpress.Utils.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.Utils.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v23.1">
+      
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v22.2">
-      <HintPath>C:\Program Files\DevExpress 22.2\Components\Bin\Framework\DevExpress.XtraEditors.v22.2.dll</HintPath>
+    <Reference Include="DevExpress.XtraEditors.v23.1">
+      
     </Reference>
   </ItemGroup>
 </Project>
