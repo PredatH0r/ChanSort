@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,16 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="progressPanel1.Caption" xml:space="preserve">
-    <value>Chvíli strpení</value>
+  <data name="Load_NoChannelsMsg" xml:space="preserve">
+    <value>Questo file di elenco canali non contiene dati.
+Molto probabilmente durante la configurazione iniziale del televisore è stato selezionato un elenco di canali predefinito. Tali elenchi non vengono esportati e non possono essere modificati sulla TV o sul PC.
+Per ottenere un elenco che può essere modificato sul tuo PC, devi ripristinare il televisore alle impostazioni di fabbrica e selezionare l'opzione 'Altro' durante l'impostazione del canale satellitare.</value>
   </data>
-  <data name="progressPanel1.Description" xml:space="preserve">
-    <value>Vytváří se datový soubor televizoru...</value>
-  </data>
-  <data name="progressPanel1.Text" xml:space="preserve">
-    <value>progressPanel1</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Form1</value>
+  <data name="Load_NoChannelsCaption" xml:space="preserve">
+    <value>Nessun canale trovato</value>
   </data>
 </root>

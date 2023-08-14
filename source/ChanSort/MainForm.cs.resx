@@ -609,4 +609,58 @@
   <data name="colAudioPid.Caption" xml:space="preserve">
     <value>Audio\nPID</value>
   </data>
+  <data name="miFavASet.Caption" xml:space="preserve">
+    <value>&amp;A</value>
+  </data>
+  <data name="miFavBSet.Caption" xml:space="preserve">
+    <value>&amp;B</value>
+  </data>
+  <data name="miFavCSet.Caption" xml:space="preserve">
+    <value>&amp;C</value>
+  </data>
+  <data name="miFavDSet.Caption" xml:space="preserve">
+    <value>&amp;D</value>
+  </data>
+  <data name="miFavESet.Caption" xml:space="preserve">
+    <value>&amp;E</value>
+  </data>
+  <data name="miFavAUnset.Caption" xml:space="preserve">
+    <value>&amp;A</value>
+  </data>
+  <data name="miFavBUnset.Caption" xml:space="preserve">
+    <value>&amp;B</value>
+  </data>
+  <data name="miFavCUnset.Caption" xml:space="preserve">
+    <value>&amp;C</value>
+  </data>
+  <data name="miFavDUnset.Caption" xml:space="preserve">
+    <value>&amp;D</value>
+  </data>
+  <data name="miFavEUnset.Caption" xml:space="preserve">
+    <value>&amp;E</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>&amp;Jazyk</value>
+  </data>
+  <data name="miEnglish.Caption" xml:space="preserve">
+    <value>&amp;English</value>
+  </data>
+  <data name="miGerman.Caption" xml:space="preserve">
+    <value>&amp;Deutsch</value>
+  </data>
+  <data name="miPortuguese.Caption" xml:space="preserve">
+    <value>Português</value>
+  </data>
+  <data name="miRussian.Caption" xml:space="preserve">
+    <value>ру́сский</value>
+  </data>
+  <data name="mnuInputSource.Caption" xml:space="preserve">
+    <value>mnuInputSource</value>
+  </data>
+  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+    <value>&amp;Filtr levého seznamu</value>
+  </data>
+  <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
+    <value>\d{1,4}</value>
+  </data>
 </root>

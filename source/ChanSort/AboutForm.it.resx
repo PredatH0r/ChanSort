@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,16 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="progressPanel1.Caption" xml:space="preserve">
-    <value>Chvíli strpení</value>
+  <data name="lblWebsite.Text" xml:space="preserve">
+    <value>Sito web del progetto</value>
   </data>
-  <data name="progressPanel1.Description" xml:space="preserve">
-    <value>Vytváří se datový soubor televizoru...</value>
+  <data name="lnkDownload.EditValue" xml:space="preserve">
+    <value>http://github.com/PredatH0r/ChanSort</value>
   </data>
-  <data name="progressPanel1.Text" xml:space="preserve">
-    <value>progressPanel1</value>
+  <data name="lnkEmail.EditValue" xml:space="preserve">
+    <value>horst@beham.biz</value>
+  </data>
+  <data name="lblAuthor.Text" xml:space="preserve">
+    <value>Autore programma:</value>
+  </data>
+  <data name="lblLicense.Text" xml:space="preserve">
+    <value>Licenza:</value>
+  </data>
+  <data name="lnkLicense.EditValue" xml:space="preserve">
+    <value>GNU GPLv3</value>
+  </data>
+  <data name="lblCredits.Text" xml:space="preserve">
+    <value>Crediti:</value>
+  </data>
+  <data name="btnClose.Text" xml:space="preserve">
+    <value>Chiudi</value>
+  </data>
+  <data name="txtAuthor.Text" xml:space="preserve">
+    <value>Horst Beham</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Form1</value>
+    <value>Su ChanSort</value>
   </data>
 </root>

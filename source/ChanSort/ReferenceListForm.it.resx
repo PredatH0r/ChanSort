@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,16 +117,125 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="progressPanel1.Caption" xml:space="preserve">
-    <value>Chvíli strpení</value>
+  <data name="labelControl1.Text" xml:space="preserve">
+    <value>File elenco di riferimento:</value>
   </data>
-  <data name="progressPanel1.Description" xml:space="preserve">
-    <value>Vytváří se datový soubor televizoru...</value>
+  <data name="edFile.EditValue" xml:space="preserve">
+    <value>← premere il pulsante per selezionare un file</value>
   </data>
-  <data name="progressPanel1.Text" xml:space="preserve">
-    <value>progressPanel1</value>
+  <data name="labelControl2.Text" xml:space="preserve">
+    <value>Scegli un file che contenga l'ordine dei canali che desideri applicare all'elenco corrente.
+Puoi utilizzare uno degli elenchi predefiniti di ChanSort (TXT, CHL, CSV)
+o un file di dati da un'altra TV (SCM, TLL, DB, BIN, …)</value>
+  </data>
+  <data name="rbAuto.Properties.Caption" xml:space="preserve">
+    <value>Riordina automaticamente tutti gli elenchi nel file TV</value>
+  </data>
+  <data name="rbManual.Properties.Caption" xml:space="preserve">
+    <value>Riordino avanzato</value>
+  </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Lista di referenze:</value>
+  </data>
+  <data name="labelControl4.Text" xml:space="preserve">
+    <value>Elenco degli obiettivi:</value>
+  </data>
+  <data name="cbTv.Properties.Caption" xml:space="preserve">
+    <value>TV</value>
+  </data>
+  <data name="cbRadio.Properties.Caption" xml:space="preserve">
+    <value>Radio</value>
+  </data>
+  <data name="labelControl5.Text" xml:space="preserve">
+    <value>Inizia da Pr#:</value>
+  </data>
+  <data name="labelControl6.Text" xml:space="preserve">
+    <value>(ad es. lasciare che i canali radio inizino a 5000 per evitare conflitti con i numeri dei canali TV)</value>
+  </data>
+  <data name="comboPrNr.EditValue" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboPrNr.Properties.Items" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboPrNr.Properties.Items1" xml:space="preserve">
+    <value>100</value>
+  </data>
+  <data name="comboPrNr.Properties.Items2" xml:space="preserve">
+    <value>500</value>
+  </data>
+  <data name="comboPrNr.Properties.Items3" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items4" xml:space="preserve">
+    <value>2000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items5" xml:space="preserve">
+    <value>5000</value>
+  </data>
+  <data name="comboPrNr.Properties.Items6" xml:space="preserve">
+    <value>7000</value>
+  </data>
+  <data name="cbConsecutive.Properties.Caption" xml:space="preserve">
+    <value>Utilizzare numeri consecutivi (rimuovere gli spazi dalla lista di riferimento Pr#)</value>
+  </data>
+  <data name="cbIp.Properties.Caption" xml:space="preserve">
+    <value>IP (rete)</value>
+  </data>
+  <data name="cbSat.Properties.Caption" xml:space="preserve">
+    <value>Satellite</value>
+  </data>
+  <data name="labelControl11.Text" xml:space="preserve">
+    <value>Ingresso:</value>
+  </data>
+  <data name="cbAntenna.Properties.Caption" xml:space="preserve">
+    <value>Antenna</value>
+  </data>
+  <data name="cbCable.Properties.Caption" xml:space="preserve">
+    <value>Cavo</value>
+  </data>
+  <data name="labelControl9.Text" xml:space="preserve">
+    <value>Tipo di segnale</value>
+  </data>
+  <data name="cbAnalog.Properties.Caption" xml:space="preserve">
+    <value>Analogico</value>
+  </data>
+  <data name="cbDigital.Properties.Caption" xml:space="preserve">
+    <value>Digitale</value>
+  </data>
+  <data name="labelControl7.Text" xml:space="preserve">
+    <value>Tipo di canale</value>
+  </data>
+  <data name="btnApply.Text" xml:space="preserve">
+    <value>Applica</value>
+  </data>
+  <data name="grpManual.Text" xml:space="preserve">
+    <value>grpManuale</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="btnClose.Text" xml:space="preserve">
+    <value>Chiudi/Annulla</value>
+  </data>
+  <data name="linkWiki.Text" xml:space="preserve">
+    <value>Apri ChanSort Wiki per ulteriori informazioni e per scaricare le liste di riferimento</value>
+  </data>
+  <data name="groupControl1.Text" xml:space="preserve">
+    <value>1. Selezionare il file dell'elenco di riferimento</value>
+  </data>
+  <data name="labelControl10.Text" xml:space="preserve">
+    <value>Se la TV e il file di riferimento contengono più elenchi o utilizzano un raggruppamento diverso, è possibile applicare parti selezionate dell'elenco di riferimento a un elenco di destinazione.
+Questo passaggio può essere ripetuto secondo necessità.</value>
+  </data>
+  <data name="labelControl8.Text" xml:space="preserve">
+    <value>Questa opzione è disponibile solo quando il file TV e l'elenco di riferimento sono organizzati allo stesso modo.
+(vale a dire gli stessi sottoelenchi per le combinazioni di Antenna/Cavo/Sat, TV/Radio, Analogico/Digitale)</value>
+  </data>
+  <data name="groupControl2.Text" xml:space="preserve">
+    <value>2. Metti ordine nel tuo file TV</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Form1</value>
+    <value>Applica elenco di riferimento</value>
   </data>
 </root>

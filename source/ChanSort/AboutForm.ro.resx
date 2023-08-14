@@ -135,4 +135,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Despre ChanSort</value>
   </data>
+  <data name="txtAuthor.Text" xml:space="preserve">
+    <value>Horst Beham</value>
+  </data>
 </root>

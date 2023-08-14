@@ -1467,4 +1467,25 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   <data name="grpInputList.Text" xml:space="preserve">
     <value>Alle Sender</value>
   </data>
+  <data name="lblHotkeyLeft.Text" xml:space="preserve">
+    <value>F3: Filter | F4: Liste | -: nach oben | +: nach unten | Entf: entfernen</value>
+  </data>
+  <data name="miSaveAs.Caption" xml:space="preserve">
+    <value>Speichern &amp;unter...</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>&amp;Sprache</value>
+  </data>
+  <data name="miGotoLeftFilter.Caption" xml:space="preserve">
+    <value>Filterzeile in der &amp;linken Liste</value>
+  </data>
+  <data name="miRightListFilter.Caption" xml:space="preserve">
+    <value>Filterzeile in der &amp;rechten Liste</value>
+  </data>
+  <data name="lblHotkeyRight.Text" xml:space="preserve">
+    <value>F5: Filter | F6: Liste | Eingabe: übernehmen</value>
+  </data>
+  <data name="btnClearRightFilter.Text" xml:space="preserve">
+    <value>FIlter</value>
+  </data>
 </root>

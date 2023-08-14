@@ -3,7 +3,7 @@ setlocal
 setlocal enabledelayedexpansion
 
 cd /d %~dp0
-set languages=cs de es hu pl pt ro ru tr
+set languages=cs de es hu it pl pt ro ru tr
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
 set DXversion=23.1
@@ -101,11 +101,11 @@ goto:eof
 :copyLangDll
 set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
-set source="d:\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.resources.dll"
+set source="c:\daten\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
 set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
-set source="d:\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
+set source="c:\daten\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
 if exist %source% xcopy /idy %source% "%target%\%2"
 goto:eof
 

@@ -12,7 +12,7 @@ namespace ChanSort.Loader.Hisense.HisBin;
  *
  * This binary format is based on a customized MediaTek format, which means that there may be many incompatible
  * variants that can't be identified and distinguished easily.
- * This loader only supports the known HiSense variants with 264 and 304 bytes per channel in HIS_SVL.BIN.
+ * This loader supports 2 known versions with 264 and 304 bytes per channel in HIS_SVL.BIN, which also differ in TSL and FAV file layouts
  *
  * See also the his-svl.h file in Information/FileStructures_for_HHD_Hex_Editor_Neo
  *
@@ -32,6 +32,7 @@ public class HisSvlBinSerializer : SerializerBase
   private string favFileName;
   private byte[] svlFileContent;
   private byte[] tslFileContent;
+  private byte[] favFileContent;
   private const int MaxFileSize = 4 << 20; // 4 MB
 
   private bool readDvbData;
@@ -42,7 +43,7 @@ public class HisSvlBinSerializer : SerializerBase
   private const string ERR_badFileFormat = "The content of the file doesn't match the expected format.";
 
   private IniFile ini;
-  private DataMapping headerMapping, svlMapping, tslMapping, dvbMapping, favMapping;
+  private DataMapping headerMapping, svlMapping, tslMapping, dvbMapping, favHeaderMapping, favMapping;
   private readonly Dictionary<int, Transponder> transponder = new ();
 
   #region ctor()
@@ -82,10 +83,6 @@ public class HisSvlBinSerializer : SerializerBase
     this.ini = new IniFile(iniFile);
     this.headerMapping = new DataMapping(ini.GetSection("Header"));
     this.headerRecordSize = headerMapping.Settings.GetInt("RecordSize");
-
-    this.dvbMapping = new DataMapping(ini.GetSection("DVB_Data"));
-    this.dvbMapping.DefaultEncoding = this.DefaultEncoding;
-    this.favMapping = new DataMapping(ini.GetSection("FAV_Record"));
   }
   #endregion
 
@@ -115,6 +112,7 @@ public class HisSvlBinSerializer : SerializerBase
   {
     var svlLen = new FileInfo(this.FileName).Length;
     var tslLen = new FileInfo(tslName).Length;
+    var favLen = new FileInfo(this.favFileName).Length;
     IniFile.Section candidate = null;
     foreach (var section in this.ini.Sections)
     {
@@ -124,22 +122,29 @@ public class HisSvlBinSerializer : SerializerBase
         continue;
       if ((svlLen - this.headerRecordSize * 3) % section.GetInt("SVL_Record") != 0)
         continue;
+      if (favLen != 0 && (favLen - section.GetInt("FAV_Header")) % section.GetInt("FAV_Record") != 0)
+        continue;
       if (candidate != null)
         throw LoaderException.Fail("Unable to uniquely infer file format from its content");
       candidate = section;
     }
 
     if (candidate == null)
-      throw LoaderException.Fail("File content doesn't match any known SVL/TSL/FAV.bin data format versions");
+      throw LoaderException.Fail("File content doesn't match any known SVL/TSL/FAV.bin format versions");
 
-    var tslRecordSize = candidate.GetInt("TSL_Record");
     this.svlRecordSize = candidate.GetInt("SVL_Record");
     this.readDvbData = candidate.GetBool("ReadDvb");
 
-    this.svlMapping = new DataMapping(ini.GetSection("SVL_Record:" + this.svlRecordSize));
-    this.svlMapping.DefaultEncoding = this.DefaultEncoding;
-    this.tslMapping = new DataMapping(ini.GetSection("TSL_Record:" + tslRecordSize));
+    this.tslMapping = new DataMapping(ini.GetSection("TSL_Record:" + candidate.Name));
     this.tslMapping.DefaultEncoding = this.DefaultEncoding;
+    this.svlMapping = new DataMapping(ini.GetSection("SVL_Record:" + candidate.Name));
+    this.svlMapping.DefaultEncoding = this.DefaultEncoding;
+    this.dvbMapping = new DataMapping(ini.GetSection("DVB_Data:" + candidate.Name));
+    this.dvbMapping.DefaultEncoding = this.DefaultEncoding;
+    this.favHeaderMapping = new DataMapping(ini.GetSection("FAV_Header:" + candidate.Name));
+    this.favHeaderMapping.DefaultEncoding = this.DefaultEncoding;
+    this.favMapping = new DataMapping(ini.GetSection("FAV_Record:" + candidate.Name));
+    this.favMapping.DefaultEncoding = this.DefaultEncoding;
   }
   #endregion
 
@@ -389,17 +394,29 @@ public class HisSvlBinSerializer : SerializerBase
   {
     if (!File.Exists(filename))
       return;
-    var content = File.ReadAllBytes(filename);
-    var favListSizes = new int[4];
-    for (int i = 0; i < 4; i++)
-      favListSizes[i] = BitConverter.ToInt32(content, i * 4);
+    var content = this.favFileContent = File.ReadAllBytes(filename);
 
+    int[] favCount = new int[4];
     var recSize = favMapping.Settings.GetInt("RecordSize");
+    favHeaderMapping.SetDataPtr(content, 0);
+    if (favHeaderMapping.Settings.GetInt("SizeFav1", -1) >= 0)
+    {
+      for (int i = 0; i < 4; i++)
+        favCount[i] = BitConverter.ToInt32(content, i * 4) / recSize;
+    }
+    else if (favHeaderMapping.Settings.GetInt("CountFav1", -1) >= 0)
+    {
+      for (int i = 0; i < 4; i++)
+        favCount[i] = favHeaderMapping.GetWord("CountFav" + (i+1));
+    }
+    else
+      return;
+
     var dispNumLen = favMapping.Settings.GetInt("DisplayNumberSize");
-    favMapping.SetDataPtr(content, 16 - recSize);
+    favMapping.SetDataPtr(content, favHeaderMapping.Settings.GetInt("RecordSize") - recSize);
     for (int i = 0; i < 4; i++)
     {
-      for (int j = 0, c = favListSizes[i] / recSize; j < c; j++)
+      for (int j = 0, c = favCount[i]; j < c; j++)
       {
         favMapping.BaseOffset += recSize;
 
@@ -525,8 +542,7 @@ public class HisSvlBinSerializer : SerializerBase
     using var mem = new MemoryStream();
     using var writer = new BinaryWriter(mem);
 
-    for (int i=0; i<4; i++)
-      writer.Write(0);
+    writer.Write(this.favFileContent, 0, this.favHeaderMapping.Settings.GetInt("RecordSize"));
 
     var favRecordSize = favMapping.Settings.GetInt("RecordSize");
     var tmp = new byte[favRecordSize];
@@ -552,12 +568,11 @@ public class HisSvlBinSerializer : SerializerBase
       }
 
       // update header
-      writer.Flush();
-      var off = mem.Position;
-      mem.Seek((i-1) * 4, SeekOrigin.Begin);
-      writer.Write(order.Count * favRecordSize);
-      writer.Flush();
-      mem.Seek(off, SeekOrigin.Begin);
+      favHeaderMapping.SetDataPtr(mem.GetBuffer(), 0); // the MemStream buffer gets reallocated while adding data
+      if (favHeaderMapping.Settings.Keys.Contains("SizeFav1"))
+        favHeaderMapping.SetDword("SizeFav" + i, order.Count * favRecordSize);
+      else if (favHeaderMapping.Settings.Keys.Contains("CountFav1"))
+        favHeaderMapping.SetWord("CountFav" + i, order.Count);
     }
 
     tmp = new byte[mem.Length];
@@ -589,11 +604,12 @@ public class HisSvlBinSerializer : SerializerBase
         return;
       base.DefaultEncoding = value;
 
-      this.dvbMapping.DefaultEncoding = value;
       if (this.svlMapping != null)
       {
         this.svlMapping.DefaultEncoding = value;
         this.tslMapping.DefaultEncoding = value;
+        this.dvbMapping.DefaultEncoding = value;
+        this.favMapping.DefaultEncoding = value;
         this.ReparseNames();
       }
     }

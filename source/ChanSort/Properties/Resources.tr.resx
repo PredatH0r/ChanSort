@@ -259,7 +259,7 @@ veya yeni bir kanal taraması yapmadan ürün yazılımını güncelleyin.
 (TV'deki yeni yazılım dışa aktarma sırasında eski kanal verilerini işleyemeyebilir.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Anten,Kablo,Uydu,IP,Analog,DVB,TV,Radyo,Veri</value>
+    <value>Anten,Kablo,Uydu,IP,Analog,Digital,TV,Radyo,Veri</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
     <value>Hedef listesinden bir Pr# alındığında bunu nasıl ele almak istersiniz?</value>

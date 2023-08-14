@@ -373,4 +373,10 @@
   <data name="colAudioPid.Caption" xml:space="preserve">
     <value>Audio\nPID</value>
   </data>
+  <data name="colOutLock.ToolTip" xml:space="preserve">
+    <value>Parental lock</value>
+  </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>&amp;Idioma</value>
+  </data>
 </root>

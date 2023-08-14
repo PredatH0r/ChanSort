@@ -111,9 +111,7 @@
     <Compile Update="Printing\ChannelListReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="GlobalImageCollection.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="GlobalImageCollection.cs" />
     <Compile Update="XGrid\XGridControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -215,6 +213,7 @@
     <PackageReference Include="DevExpress.Sparkline.Core" Version="23.1.4" />
     <PackageReference Include="DevExpress.Utils" Version="23.1.4" />
     <PackageReference Include="DevExpress.Utils.UI" Version="23.1.4" />
+    <PackageReference Include="DevExpress.Win" Version="23.1.4" />
     <PackageReference Include="DevExpress.Win.Reporting" Version="23.1.4" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>

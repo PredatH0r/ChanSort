@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Reflection;
 using DevExpress.Utils;
+using DevExpress.XtraEditors;
 
 namespace ChanSort.Ui
 {
@@ -16,7 +17,7 @@ namespace ChanSort.Ui
   /// that are used globally throughout the solution
   /// </summary>
   [ToolboxItem(false)]
-  public class GlobalImageCollectionHolder : Component
+  public class GlobalImageCollectionHolder : XtraForm //Component - DX23.1 it must be an XtraForm because the context menu for editing the collections is missing in the Designer
   {
     private IContainer components;
     private ImageCollection rawImageCollection;
@@ -46,6 +47,7 @@ namespace ChanSort.Ui
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlobalImageCollectionHolder));
       this.rawImageCollection = new DevExpress.Utils.ImageCollection(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.rawImageCollection)).BeginInit();
+      this.SuspendLayout();
       // 
       // rawImageCollection
       // 
@@ -101,7 +103,14 @@ namespace ChanSort.Ui
       this.rawImageCollection.Images.SetKeyName(48, "0048.png");
       this.rawImageCollection.Images.SetKeyName(49, "0049.png");
       this.rawImageCollection.Images.SetKeyName(50, "0050.png");
+      this.rawImageCollection.Images.SetKeyName(51, "0051.png");
+      // 
+      // GlobalImageCollectionHolder
+      // 
+      this.ClientSize = new System.Drawing.Size(298, 268);
+      this.Name = "GlobalImageCollectionHolder";
       ((System.ComponentModel.ISupportInitialize)(this.rawImageCollection)).EndInit();
+      this.ResumeLayout(false);
 
     }
 

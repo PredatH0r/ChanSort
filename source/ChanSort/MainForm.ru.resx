@@ -714,4 +714,7 @@
   <data name="miFontXxLarge.Caption" xml:space="preserve">
     <value>XXL - Segoe UI 12пт</value>
   </data>
+  <data name="barSubItem1.Caption" xml:space="preserve">
+    <value>Язык</value>
+  </data>
 </root>

@@ -1,11 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
 using ChanSort.Api;
 
 namespace ChanSort.Loader.Samsung.Zip
 {
   internal class DbChannel : ChannelInfo
   {
+    private dynamic jsonMeta;
+    private Encoding encoding;
+    public bool JsonModified { get; private set; }
+
     #region ctor()
     internal DbChannel(IDataReader r, IDictionary<string, int> field, DbSerializer loader, Dictionary<long, string> providers, Satellite sat, Transponder tp)
     {
@@ -40,9 +47,10 @@ namespace ChanSort.Loader.Samsung.Zip
 
       if ((this.SignalSource & SignalSource.Dvb) != 0)
         this.ReadDvbData(r, field, loader, providers);
-      else
+      else if ((this.SignalSource & SignalSource.Analog) != 0)
         this.ReadAnalogData(r, field);
-
+      if (field.ContainsKey("jsonMeta"))
+        this.ReadIpData(r, field, loader);
       base.IsDeleted = this.OldProgramNr == -1;
     }
 
@@ -70,6 +78,63 @@ namespace ChanSort.Loader.Samsung.Zip
       if (!r.IsDBNull(field["provId"]))
         this.Provider = providers.TryGet(r.GetInt64(field["provId"]));
       this.AddDebug(r.GetInt32(field["lcn"]).ToString());
+    }
+    #endregion
+
+    #region ReadIpData()
+
+    private void ReadIpData(IDataReader r, IDictionary<string, int> field, DbSerializer loader)
+    {
+      var json = loader.ReadUtf16(r, field["jsonMeta"]);
+      if (json != null)
+      {
+        var s = JsonSerializer.Create();
+        dynamic obj = s.Deserialize(new JsonTextReader(new StringReader(json)));
+        this.encoding = loader.DefaultEncoding;
+        this.jsonMeta = obj;
+        this.JsonDefaultUrl = obj?.default_url;
+        this.JsonLogoUrl = obj?.logo_url;
+      }
+    }
+    #endregion
+
+    #region JsonDefaultUrl
+    public string JsonDefaultUrl
+    {
+      get => jsonMeta?.default_url;
+      set
+      {
+        if (jsonMeta == null || value == (string)jsonMeta.default_url.Value)
+          return;
+        jsonMeta.default_url = value;
+        JsonModified = true;
+      }
+    }
+    #endregion
+
+    #region JsonLogoUrl
+    public string JsonLogoUrl
+    {
+      get => jsonMeta?.logo_url;
+      set
+      {
+        if (jsonMeta == null || value == (string)jsonMeta.logo_url.Value)
+          return;
+        jsonMeta.logo_url = value;
+        JsonModified = true;
+      }
+    }
+    #endregion
+
+    #region GetRawJson()
+    public byte[] GetRawJson()
+    {
+      var s = JsonSerializer.Create();
+      using var w = new StringWriter();
+      s.Serialize(new JsonTextWriter(w), this.jsonMeta);
+      w.Flush();
+      var rawJson = Encoding.BigEndianUnicode.GetBytes(w.ToString());
+      return rawJson;
     }
     #endregion
   }

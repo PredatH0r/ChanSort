@@ -261,6 +261,8 @@ namespace ChanSort.Loader.Samsung.Zip
                             };
       if (fileType == FileType.ChannelDbDvb)
         fieldNames.AddRange(new[] {"onid", "tsid", "vidPid", "provId", "cast(shrtSrvName as blob) shrtSrvName", "lcn"}); // SRV_DVB
+      if (fileType == FileType.ChannelDbIp)
+        fieldNames.AddRange(new [] {"cast(jsonMeta as blob) jsonMeta"});
 
       var sql = this.BuildQuery(table, fieldNames);
       var fields = this.GetFieldMap(fieldNames);
@@ -303,7 +305,7 @@ namespace ChanSort.Loader.Samsung.Zip
       {
         list.VisibleColumnFieldNames = new List<string>
         {
-          "OldPosition", "Position", "PrNr", "Name", "Favorites", "SymbolRate"
+          "OldPosition", "Position", "PrNr", "Name", "Favorites", "SymbolRate", "+JsonDefaultUrl", "+JsonLogoUrl"
         };
       }
       return list;
@@ -542,8 +544,9 @@ namespace ChanSort.Loader.Samsung.Zip
         using var cmdInsertFav = PrepareInsertFavCommand(conn);
         using var cmdUpdateFav = PrepareUpdateFavCommand(conn);
         using var cmdDeleteFav = PrepareDeleteFavCommand(conn);
+        using var cmdUpdateIp = (channelList.SignalSource & SignalSource.Ip) != 0 ? PrepareUpdateIpCommand(conn) : null;
         Editor.SequentializeFavPos(channelList, 5);
-        this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, channelList);
+        this.WriteChannels(cmdUpdateSrv, cmdDeleteSrv, cmdInsertFav, cmdUpdateFav, cmdDeleteFav, cmdUpdateIp, channelList);
         trans.Commit();
       }
 
@@ -569,6 +572,16 @@ namespace ChanSort.Loader.Samsung.Zip
       if (canUpdateNames)
         cmd.Parameters.Add("@srvname", SqliteType.Text);
 
+      cmd.Prepare();
+      return cmd;
+    }
+
+    private SqliteCommand PrepareUpdateIpCommand(SqliteConnection conn)
+    {
+      var cmd = conn.CreateCommand();
+      cmd.CommandText = "update SRV_IP set jsonMeta=@jsonMeta where srvId=@id";
+      cmd.Parameters.Add("@id", SqliteType.Integer);
+      cmd.Parameters.Add("@jsonMeta", SqliteType.Blob);
       cmd.Prepare();
       return cmd;
     }
@@ -623,7 +636,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #endregion
 
     #region WriteChannels()
-    private void WriteChannels(SqliteCommand cmdUpdateSrv, SqliteCommand cmdDeleteSrv, SqliteCommand cmdInsertFav, SqliteCommand cmdUpdateFav, SqliteCommand cmdDeleteFav, 
+    private void WriteChannels(SqliteCommand cmdUpdateSrv, SqliteCommand cmdDeleteSrv, SqliteCommand cmdInsertFav, SqliteCommand cmdUpdateFav, SqliteCommand cmdDeleteFav, SqliteCommand cmdUpdateIp,
       ChannelList channelList, bool analog = false)
     {
       bool canUpdateNames = this.Features.ChannelNameEdit != ChannelNameEditMode.None;
@@ -651,6 +664,13 @@ namespace ChanSort.Loader.Samsung.Zip
         if (canUpdateNames)
           cmdUpdateSrv.Parameters["@srvname"].Value = channel.Name == null ? (object)DBNull.Value : encoding.GetString(Encoding.Unicode.GetBytes(channel.Name)); // convert string => UTF16LE => string with flipped byte order (looking "Chinese")
         cmdUpdateSrv.ExecuteNonQuery();
+
+        if (cmdUpdateIp != null && channel.JsonModified)
+        {
+          cmdUpdateIp.Parameters["@id"].Value = channel.RecordIndex;
+          cmdUpdateIp.Parameters["@jsonMeta"].Value = channel.GetRawJson();
+          cmdUpdateIp.ExecuteNonQuery();
+        }
 
         // update favorites
         for (int i=0, mask=1; i<5; i++, mask <<= 1)

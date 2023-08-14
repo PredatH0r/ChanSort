@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -118,514 +118,115 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="colIndex1.Caption" xml:space="preserve">
-    <value>Pr. index</value>
+    <value>Indice Pr.</value>
   </data>
   <data name="colOutServiceType.Caption" xml:space="preserve">
-    <value>Tip de\nserviciu</value>
+    <value>Tipo di servizio</value>
   </data>
   <data name="colOutSlot.Caption" xml:space="preserve">
-    <value>New\nPos</value>
+    <value>Nuova pos</value>
   </data>
   <data name="colOutSlot.ToolTip" xml:space="preserve">
-    <value>Numărul nou de program</value>
+    <value>Nuovo numero di programma</value>
   </data>
   <data name="colOutName.Caption" xml:space="preserve">
-    <value>Numele canalului</value>
+    <value>Nome canale</value>
   </data>
   <data name="colOutFav.Caption" xml:space="preserve">
-    <value>Favorite</value>
+    <value>Favoriti</value>
   </data>
   <data name="colUid1.Caption" xml:space="preserve">
     <value>UID</value>
   </data>
   <data name="colOutLock.Caption" xml:space="preserve">
-    <value>Blocare</value>
+    <value>Blocca</value>
   </data>
   <data name="colOutLock.ToolTip" xml:space="preserve">
-    <value>Blocare\nparentală</value>
+    <value>Blocco parentale</value>
   </data>
   <data name="colOutSkip.Caption" xml:space="preserve">
-    <value>Sări</value>
+    <value>Salta</value>
   </data>
   <data name="colOutHide.Caption" xml:space="preserve">
-    <value>Ascunde</value>
+    <value>Nascondi</value>
   </data>
   <data name="lblHotkeyLeft.Text" xml:space="preserve">
-    <value>F3: Filtru | F4: Listă | -: mută sus |+: mută jos | Del: șterge</value>
+    <value>F3: Filtro | F4: Lista | -: muovi su | +: muovi giù| Can: rimuovi</value>
   </data>
   <data name="pageProgNr.Text" xml:space="preserve">
     <value>Pr#</value>
   </data>
   <data name="grpSubList.Text" xml:space="preserve">
-    <value>Sub-listă</value>
+    <value>Sottolista</value>
   </data>
   <data name="miFile.Caption" xml:space="preserve">
-    <value>&amp;Fişier</value>
+    <value>&amp;File</value>
   </data>
   <data name="miOpen.Caption" xml:space="preserve">
-    <value>&amp;Deschide fișierul de date TV ...</value>
+    <value>Apri file dati TV...</value>
   </data>
   <data name="miReload.Caption" xml:space="preserve">
-    <value>&amp;Reîncarcă</value>
+    <value>&amp;Ricarica</value>
   </data>
   <data name="miRestoreOriginal.Caption" xml:space="preserve">
-    <value>Restabiliți backupul</value>
+    <value>Ripristinare il backup</value>
   </data>
   <data name="miFileInformation.Caption" xml:space="preserve">
-    <value>Fișier &amp;informații ...</value>
+    <value>File &amp;informazioni…</value>
   </data>
   <data name="miSave.Caption" xml:space="preserve">
-    <value>&amp;Salvați</value>
+    <value>&amp;Salva</value>
   </data>
   <data name="miSaveAs.Caption" xml:space="preserve">
-    <value>Salvează &amp;ca...</value>
+    <value>Salva con…</value>
   </data>
   <data name="miOpenReferenceFile.Caption" xml:space="preserve">
-    <value>Aplică ordine dintr-o listă de referință ...</value>
+    <value>Applicare l'ordine da un elenco di riferimento…</value>
   </data>
   <data name="miAddFromRefList.Caption" xml:space="preserve">
-    <value>Adăugați canale din lista de referințe ...</value>
+    <value>Aggiungi canali dall'elenco di riferimento…</value>
   </data>
   <data name="miSaveReferenceFile.Caption" xml:space="preserve">
-    <value>Salvați lista de referințe ...</value>
+    <value>Salva elenco referenze…</value>
   </data>
   <data name="miExcelExport.Caption" xml:space="preserve">
-    <value>Exportați lista Excel ...</value>
+    <value>Esporta elenco Excel…</value>
   </data>
   <data name="miPrint.Caption" xml:space="preserve">
-    <value>&amp;Imprimare...</value>
+    <value>Stam&amp;pa</value>
   </data>
   <data name="miQuit.Caption" xml:space="preserve">
-    <value>&amp;Ieșire</value>
+    <value>&amp;Esci</value>
   </data>
   <data name="miRecentFiles.Caption" xml:space="preserve">
-    <value>Fisiere recente</value>
+    <value>File recenti</value>
   </data>
   <data name="miEdit.Caption" xml:space="preserve">
-    <value>&amp;Editați</value>
+    <value>&amp;Modifica</value>
   </data>
   <data name="miAddChannel.Caption" xml:space="preserve">
-    <value>&amp;Adaugă canale</value>
+    <value>&amp;Aggiungi canali</value>
   </data>
   <data name="miRemove.Caption" xml:space="preserve">
-    <value>&amp;Eliminați canalele</value>
+    <value>&amp;Rimuovi canali</value>
   </data>
   <data name="miRenameChannel.Caption" xml:space="preserve">
-    <value>Redenumiți canalul</value>
+    <value>Rinomina canali</value>
   </data>
   <data name="miSort.Caption" xml:space="preserve">
-    <value>Sor&amp;tați canalele în ordine alfabetică</value>
+    <value>Ordina i canali in ordine alfabe&amp;tico</value>
   </data>
   <data name="miRenum.Caption" xml:space="preserve">
-    <value>Re&amp;numără canale</value>
+    <value>Ri&amp;numerare i canali</value>
   </data>
   <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
-    <value>Renumără favorite după Pr#</value>
+    <value>Rinumerare i preferiti per Pr#</value>
   </data>
   <data name="miRenumFavByPrNr.Hint" xml:space="preserve">
-    <value>Utilizează același Pr# în toate listele de canale și favorite</value>
+    <value>Utilizza lo stesso Pr# in tutti gli elenchi di canali e preferiti</value>
   </data>
   <data name="mnuFavSet.Caption" xml:space="preserve">
-    <value>Adauga la &amp;favorite</value>
-  </data>
-  <data name="mnuFavUnset.Caption" xml:space="preserve">
-    <value>Eliminați din Favorite</value>
-  </data>
-  <data name="miLockOn.Caption" xml:space="preserve">
-    <value>&amp;Blocați canalul: activat</value>
-  </data>
-  <data name="miLockOff.Caption" xml:space="preserve">
-    <value>Blocați canalul: oprit</value>
-  </data>
-  <data name="miSkipOn.Caption" xml:space="preserve">
-    <value>&amp;Sări canalul: activat</value>
-  </data>
-  <data name="miSkipOff.Caption" xml:space="preserve">
-    <value>Sări canalul: oprit</value>
-  </data>
-  <data name="miHideOn.Caption" xml:space="preserve">
-    <value>&amp;Ascunde canalul: activat</value>
-  </data>
-  <data name="miHideOff.Caption" xml:space="preserve">
-    <value>Ascunde canalul: oprit</value>
-  </data>
-  <data name="barSubItem2.Caption" xml:space="preserve">
-    <value>TV-Set</value>
-  </data>
-  <data name="miTvSettings.Caption" xml:space="preserve">
-    <value>Setarea dispozitivului...</value>
-  </data>
-  <data name="miCleanupChannels.Caption" xml:space="preserve">
-    <value>Curățați datele canalului</value>
-  </data>
-  <data name="miCleanupChannels.Hint" xml:space="preserve">
-    <value>Reorganizați înregistrările de canale și eliminați duplicatele</value>
-  </data>
-  <data name="mnuOptions.Caption" xml:space="preserve">
-    <value>&amp;Setări</value>
-  </data>
-  <data name="mnuLanguages.Caption" xml:space="preserve">
-    <value>&amp;Limba</value>
-  </data>
-  <data name="mnuCharset.Caption" xml:space="preserve">
-    <value>&amp;Set de caractere</value>
-  </data>
-  <data name="miCharsetForm.Caption" xml:space="preserve">
-    <value>Toate seturile de &amp;caractere ...</value>
-  </data>
-  <data name="miIsoCharSets.Caption" xml:space="preserve">
-    <value>Seturi de caractere ISO</value>
-  </data>
-  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
-    <value>Afișați avertismente după încărcarea fișierului</value>
-  </data>
-  <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
-    <value>Afișați automat avertismentele după deschiderea unui fișier</value>
-  </data>
-  <data name="miAllowEditPredefinedLists.Caption" xml:space="preserve">
-    <value>Permiteți editarea listelor predefinite (PERICOL)</value>
-  </data>
-  <data name="miAllowEditPredefinedLists.Hint" xml:space="preserve">
-    <value>Este posibil ca televizorul să funcționeze defectuos când editați o listă cu numere de canal predefinite</value>
-  </data>
-  <data name="mnuAccessibility.Caption" xml:space="preserve">
-    <value>&amp;Accesibilitate</value>
-  </data>
-  <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
-    <value>Deschide un submeniu pentru selectarea sursei de intrare. Acest meniu poate fi activat direct cu tasta F1</value>
-  </data>
-  <data name="mnuGotoChannelList.Caption" xml:space="preserve">
-    <value>Selectați și sursa de &amp;intrare</value>
-  </data>
-  <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
-    <value>Deschide un submeniu pentru programul de selecție a listei favorite. Acest meniu poate fi activat direct cu ajutorul tastei Shift+F1</value>
-  </data>
-  <data name="mnuGotoFavList.Caption" xml:space="preserve">
-    <value>Selectați programul/lista &amp;favorită</value>
-  </data>
-  <data name="mnuFavList.Caption" xml:space="preserve">
-    <value>mnuFavList</value>
-  </data>
-  <data name="miSelectFavList0.Caption" xml:space="preserve">
-    <value>Lista de programe</value>
-  </data>
-  <data name="miSelectFavListA.Caption" xml:space="preserve">
-    <value>Favorite A</value>
-  </data>
-  <data name="miSelectFavListB.Caption" xml:space="preserve">
-    <value>Favorite B</value>
-  </data>
-  <data name="miSelectFavListC.Caption" xml:space="preserve">
-    <value>Favorite C</value>
-  </data>
-  <data name="miSelectFavListD.Caption" xml:space="preserve">
-    <value>Favorite D</value>
-  </data>
-  <data name="miSelectFavListE.Caption" xml:space="preserve">
-    <value>Favorite E</value>
-  </data>
-  <data name="miSearch.Caption" xml:space="preserve">
-    <value>Filtru de listă &amp;stânga</value>
-  </data>
-  <data name="miGotoLeftList.Caption" xml:space="preserve">
-    <value>Listă stânga</value>
-  </data>
-  <data name="miRightListFilter.Caption" xml:space="preserve">
-    <value>Filtru de listă &amp;dreapta</value>
-  </data>
-  <data name="miGotoRightList.Caption" xml:space="preserve">
-    <value>Listă dreapta</value>
-  </data>
-  <data name="mnuHelp.Caption" xml:space="preserve">
-    <value>&amp;Ajutor</value>
-  </data>
-  <data name="miWiki.Caption" xml:space="preserve">
-    <value>Wiki</value>
-  </data>
-  <data name="miOpenWebsite.Caption" xml:space="preserve">
-    <value>Site-ul ChanSort...</value>
-  </data>
-  <data name="miAbout.Caption" xml:space="preserve">
-    <value>&amp;Despre ChanSort...</value>
-  </data>
-  <data name="bar1.Text" xml:space="preserve">
-    <value>Unelte</value>
-  </data>
-  <data name="miMoveUp.Caption" xml:space="preserve">
-    <value>Mută ​​în sus</value>
-  </data>
-  <data name="miMoveDown.Caption" xml:space="preserve">
-    <value>Mută ​​în jos</value>
-  </data>
-  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
-    <value>schimb</value>
-  </data>
-  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
-    <value>după</value>
-  </data>
-  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
-    <value>inainte de</value>
-  </data>
-  <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
-    <value>Închideți spațiul atunci când mutați/ ștergeți un canal</value>
-  </data>
-  <data name="cbCloseGap.ToolTip" xml:space="preserve">
-    <value>Când este activ, toate canalele după cea curentă vor fi automat renumerotate</value>
-  </data>
-  <data name="lblInsertMode.Text" xml:space="preserve">
-    <value>Modul de inserare:</value>
-  </data>
-  <data name="pageEmpty.Text" xml:space="preserve">
-    <value>Nu există listă de canale</value>
-  </data>
-  <data name="lblSetProgramNr.Text" xml:space="preserve">
-    <value>Set Pos:</value>
-  </data>
-  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
-    <value>Numărul programului pentru operațiile de inserare și setare</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ChanSort {0} - Editorul de canale TV</value>
-  </data>
-  <data name="btnToggleLock.Text" xml:space="preserve">
-    <value>Comutați blocarea parentală</value>
-  </data>
-  <data name="btnToggleLock.ToolTip" xml:space="preserve">
-    <value>Blocare parentală</value>
-  </data>
-  <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
-    <value>Comutați pe Favorite E</value>
-  </data>
-  <data name="btnToggleFavE.Text" xml:space="preserve">
-    <value>E±</value>
-  </data>
-  <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
-    <value>Comutați pe Favorite D</value>
-  </data>
-  <data name="btnToggleFavD.Text" xml:space="preserve">
-    <value>±D</value>
-  </data>
-  <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
-    <value>Comutați pe Favorite C</value>
-  </data>
-  <data name="btnToggleFavC.Text" xml:space="preserve">
-    <value>±C</value>
-  </data>
-  <data name="btnToggleFavB.AccessibleDescription" xml:space="preserve">
-    <value>Comutați pe Favorite B</value>
-  </data>
-  <data name="btnToggleFavB.Text" xml:space="preserve">
-    <value>±B</value>
-  </data>
-  <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
-    <value>Comutați pe Favorite A</value>
-  </data>
-  <data name="btnToggleFavA.Text" xml:space="preserve">
-    <value>±A</value>
-  </data>
-  <data name="btnClearLeftFilter.AccessibleDescription" xml:space="preserve">
-    <value>Eliminați criteriile de filtrare a canalelor din lista de canale sortate</value>
-  </data>
-  <data name="btnClearLeftFilter.Text" xml:space="preserve">
-    <value>Filtru</value>
-  </data>
-  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
-    <value>Resetați filtrul</value>
-  </data>
-  <data name="btnRenum.Text" xml:space="preserve">
-    <value>Redenumiți secvențial canalele selectate</value>
-  </data>
-  <data name="btnRenum.ToolTip" xml:space="preserve">
-    <value>Redenumiți canalele selectate</value>
-  </data>
-  <data name="btnDown.Text" xml:space="preserve">
-    <value>Mutați canalul selectat în jos</value>
-  </data>
-  <data name="btnDown.ToolTip" xml:space="preserve">
-    <value>Mutați canalele selectate în jos</value>
-  </data>
-  <data name="btnUp.Text" xml:space="preserve">
-    <value>Mutați canalul selectat în sus</value>
-  </data>
-  <data name="btnUp.ToolTip" xml:space="preserve">
-    <value>Mutați canalele selectate în sus</value>
-  </data>
-  <data name="btnRemoveLeft.Text" xml:space="preserve">
-    <value>Eliminați canalele selectate din lista sortată</value>
-  </data>
-  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
-    <value>Eliminați canalele selectate</value>
-  </data>
-  <data name="grpOutputList.Text" xml:space="preserve">
-    <value>Canale sortate</value>
-  </data>
-  <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="colIndex.Caption" xml:space="preserve">
-    <value>Pr. index</value>
-  </data>
-  <data name="colSlotOld.Caption" xml:space="preserve">
-    <value>Postul\nvechi</value>
-  </data>
-  <data name="colSlotOld.ToolTip" xml:space="preserve">
-    <value>Nr. vechi</value>
-  </data>
-  <data name="colSlotNew.Caption" xml:space="preserve">
-    <value>Postul\nnou</value>
-  </data>
-  <data name="colSlotNew.ToolTip" xml:space="preserve">
-    <value>Nr. nou</value>
-  </data>
-  <data name="colSource.Caption" xml:space="preserve">
-    <value>Sursă</value>
-  </data>
-  <data name="colName.Caption" xml:space="preserve">
-    <value>Numele canalului</value>
-  </data>
-  <data name="colShortName.Caption" xml:space="preserve">
-    <value>Nume\nscurt</value>
-  </data>
-  <data name="colFavorites.Caption" xml:space="preserve">
-    <value>Favorite</value>
-  </data>
-  <data name="colLock.Caption" xml:space="preserve">
-    <value>Blocat</value>
-  </data>
-  <data name="colSkip.Caption" xml:space="preserve">
-    <value>Sări</value>
-  </data>
-  <data name="colHidden.Caption" xml:space="preserve">
-    <value>Ascunde</value>
-  </data>
-  <data name="colEncrypted.Caption" xml:space="preserve">
-    <value>Codificare</value>
-  </data>
-  <data name="colEncrypted.ToolTip" xml:space="preserve">
-    <value>Codificat</value>
-  </data>
-  <data name="colServiceType.Caption" xml:space="preserve">
-    <value>ID Tip\nserviciu</value>
-  </data>
-  <data name="colServiceTypeName.Caption" xml:space="preserve">
-    <value>Tip de\nserviciu</value>
-  </data>
-  <data name="colFreqInMhz.Caption" xml:space="preserve">
-    <value>Frecvența\n(MHz)</value>
-  </data>
-  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
-    <value>Canal/\nTransp</value>
-  </data>
-  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
-    <value>Numărul canalului sau al transponderului</value>
-  </data>
-  <data name="colSatellite.Caption" xml:space="preserve">
-    <value>Satelit</value>
-  </data>
-  <data name="colNetworkId.Caption" xml:space="preserve">
-    <value>Rețea\n(ONID)</value>
-  </data>
-  <data name="colTransportStreamId.Caption" xml:space="preserve">
-    <value>ID TS</value>
-  </data>
-  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
-    <value>ID Flux de transport</value>
-  </data>
-  <data name="colServiceId.Caption" xml:space="preserve">
-    <value>ID\nServiciu</value>
-  </data>
-  <data name="colVideoPid.Caption" xml:space="preserve">
-    <value>Video\nPID</value>
-  </data>
-  <data name="colSymbolRate.Caption" xml:space="preserve">
-    <value>Rată\nsimbol</value>
-  </data>
-  <data name="colPolarity.Caption" xml:space="preserve">
-    <value>Polaritate</value>
-  </data>
-  <data name="colNetworkName.Caption" xml:space="preserve">
-    <value>Numele\nretelei</value>
-  </data>
-  <data name="colNetworkOperator.Caption" xml:space="preserve">
-    <value>Operatorul\nrețelei</value>
-  </data>
-  <data name="colProvider.Caption" xml:space="preserve">
-    <value>Furnizor de</value>
-  </data>
-  <data name="colUid.Caption" xml:space="preserve">
-    <value>Uid</value>
-  </data>
-  <data name="colLogicalIndex.Caption" xml:space="preserve">
-    <value>Order</value>
-  </data>
-  <data name="colSignalSource.Caption" xml:space="preserve">
-    <value>Sursă de\nsemnal</value>
-  </data>
-  <data name="lblHotkeyRight.Text" xml:space="preserve">
-    <value>F5: Filtru | F6: Listă | Enter: adăugați</value>
-  </data>
-  <data name="lblPredefinedList.Text" xml:space="preserve">
-    <value>Aceasta este o listă predefinită și nu poate fi editată.</value>
-  </data>
-  <data name="lblPredefinedList.ToolTip" xml:space="preserve">
-    <value>În timpul configurării televizorului dvs. ați selectat o listă de canale predefinită.
-Modificarea unei astfel de liste ar duce la defectarea televizorului.
-Rulați o scanare completă a canalelor pe televizor și nu selectați niciun
-furnizor specific, satelit sau liste de țări.</value>
-  </data>
-  <data name="btnRemoveRight.Text" xml:space="preserve">
-    <value>Ștergeți canalele selectate din lista sortată</value>
-  </data>
-  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
-    <value>Ștergeți canalele selectate din lista sortată</value>
-  </data>
-  <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
-    <value>Adăugați toate canalele nesortate la sfârșitul listei</value>
-  </data>
-  <data name="btnAddAll.Text" xml:space="preserve">
-    <value>&lt;&lt; Adaugă toate</value>
-  </data>
-  <data name="btnAddAll.ToolTip" xml:space="preserve">
-    <value>Adăugați toate canalele nesortate la sfârșitul listei</value>
-  </data>
-  <data name="btnClearRightFilter.AccessibleDescription" xml:space="preserve">
-    <value>Ștergeți criteriile de filtrare a canalelor din lista de canale completă</value>
-  </data>
-  <data name="btnClearRightFilter.Text" xml:space="preserve">
-    <value>Filtru</value>
-  </data>
-  <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
-    <value>Resetați filtrul</value>
-  </data>
-  <data name="btnAdd.Text" xml:space="preserve">
-    <value>Adăugați canalele selectate în lista sortată</value>
-  </data>
-  <data name="btnAdd.ToolTip" xml:space="preserve">
-    <value>Adăugați canalele selectate în lista sortată</value>
-  </data>
-  <data name="grpInputList.Text" xml:space="preserve">
-    <value>Canalele originale</value>
-  </data>
-  <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
-    <value>Panel2</value>
-  </data>
-  <data name="splitContainerControl1.Text" xml:space="preserve">
-    <value>splitContainerControl1</value>
-  </data>
-  <data name="btnToggleFavF.AccessibleDescription" xml:space="preserve">
-    <value>Comutați pe Favorite F</value>
-  </data>
-  <data name="btnToggleFavG.AccessibleDescription" xml:space="preserve">
-    <value>Comutați pe Favorite G</value>
-  </data>
-  <data name="btnToggleFavH.AccessibleDescription" xml:space="preserve">
-    <value>Comutați pe Favorite H</value>
-  </data>
-  <data name="miTheme.Caption" xml:space="preserve">
-    <value>Schema de culori...</value>
-  </data>
-  <data name="colAudioPid.Caption" xml:space="preserve">
-    <value>Audio\nPID</value>
+    <value>Aggiungi ai pre&amp;feriti</value>
   </data>
   <data name="miFavASet.Caption" xml:space="preserve">
     <value>&amp;A</value>
@@ -642,6 +243,9 @@ furnizor specific, satelit sau liste de țări.</value>
   <data name="miFavESet.Caption" xml:space="preserve">
     <value>&amp;E</value>
   </data>
+  <data name="mnuFavUnset.Caption" xml:space="preserve">
+    <value>Rimuovi dai Preferiti</value>
+  </data>
   <data name="miFavAUnset.Caption" xml:space="preserve">
     <value>&amp;A</value>
   </data>
@@ -657,34 +261,415 @@ furnizor specific, satelit sau liste de țări.</value>
   <data name="miFavEUnset.Caption" xml:space="preserve">
     <value>&amp;E</value>
   </data>
+  <data name="miLockOn.Caption" xml:space="preserve">
+    <value>&amp;Blocca canale: attivo</value>
+  </data>
+  <data name="miLockOff.Caption" xml:space="preserve">
+    <value>Blocca canale: disattivato</value>
+  </data>
+  <data name="miSkipOn.Caption" xml:space="preserve">
+    <value>&amp;Salta canale: attivo</value>
+  </data>
+  <data name="miSkipOff.Caption" xml:space="preserve">
+    <value>Salta canale: disattivato</value>
+  </data>
+  <data name="miHideOn.Caption" xml:space="preserve">
+    <value>Nascondi canale: attivo</value>
+  </data>
+  <data name="miHideOff.Caption" xml:space="preserve">
+    <value>Nascondi canale: disattivato</value>
+  </data>
+  <data name="barSubItem2.Caption" xml:space="preserve">
+    <value>TV-Set</value>
+  </data>
+  <data name="miTvSettings.Caption" xml:space="preserve">
+    <value>Impostazioni del dispositivo...</value>
+  </data>
+  <data name="miCleanupChannels.Caption" xml:space="preserve">
+    <value>Pulisci i dati del canale</value>
+  </data>
+  <data name="miCleanupChannels.Hint" xml:space="preserve">
+    <value>Riorganizza i record dei canali e rimuovi i duplicati</value>
+  </data>
+  <data name="mnuOptions.Caption" xml:space="preserve">
+    <value>Impo&amp;stazioni</value>
+  </data>
   <data name="barSubItem1.Caption" xml:space="preserve">
-    <value>&amp;Limba</value>
+    <value>&amp;Lingua</value>
   </data>
   <data name="miEnglish.Caption" xml:space="preserve">
-    <value>&amp;Engleză</value>
+    <value>Inglese</value>
   </data>
   <data name="miGerman.Caption" xml:space="preserve">
-    <value>&amp;Deutsch</value>
+    <value>Tedesco</value>
   </data>
   <data name="miPortuguese.Caption" xml:space="preserve">
-    <value>Português</value>
+    <value>Portoghese</value>
   </data>
   <data name="miRussian.Caption" xml:space="preserve">
-    <value>русский</value>
+    <value>Russo</value>
   </data>
   <data name="miCzech.Caption" xml:space="preserve">
-    <value>Česky</value>
+    <value>Ceco</value>
   </data>
   <data name="miRomână.Caption" xml:space="preserve">
-    <value>Română</value>
+    <value>Rumeno</value>
+  </data>
+  <data name="mnuCharset.Caption" xml:space="preserve">
+    <value>Set di &amp;caratteri</value>
+  </data>
+  <data name="miCharsetForm.Caption" xml:space="preserve">
+    <value>Tutti i set di &amp;caratteri...</value>
+  </data>
+  <data name="miIsoCharSets.Caption" xml:space="preserve">
+    <value>Set di caratteri ISO</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Caption" xml:space="preserve">
+    <value>Mostra avvisi dopo il caricamento del file</value>
+  </data>
+  <data name="miShowWarningsAfterLoad.Hint" xml:space="preserve">
+    <value>Mostra automaticamente eventuali avvisi dopo l'apertura di un file</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Caption" xml:space="preserve">
+    <value>Consenti la modifica di elenchi predefiniti (PERICOLOSO)</value>
+  </data>
+  <data name="miAllowEditPredefinedLists.Hint" xml:space="preserve">
+    <value>Il televisore potrebbe non funzionare correttamente quando si modifica un elenco con numeri di canale predefiniti</value>
+  </data>
+  <data name="mnuAccessibility.Caption" xml:space="preserve">
+    <value>&amp;Accessibilità</value>
+  </data>
+  <data name="mnuGotoChannelList.AccessibleDescription" xml:space="preserve">
+    <value>Apre un sottomenu per la selezione della sorgente di ingresso. Questo menu può essere attivato direttamente con il tasto F1</value>
+  </data>
+  <data name="mnuGotoChannelList.Caption" xml:space="preserve">
+    <value>Seleziona sorgente di &amp;ingresso</value>
   </data>
   <data name="mnuInputSource.Caption" xml:space="preserve">
-    <value>mnuInputSource</value>
+    <value>mnu Sorgente di ingresso</value>
+  </data>
+  <data name="mnuGotoFavList.AccessibleDescription" xml:space="preserve">
+    <value>Apre un sottomenu per il programma di selezione dell'elenco dei preferiti. Questo menu può essere attivato direttamente con il tasto Maiusc+F1</value>
+  </data>
+  <data name="mnuGotoFavList.Caption" xml:space="preserve">
+    <value>Seleziona il programma/l'elenco dei preferiti</value>
+  </data>
+  <data name="mnuFavList.Caption" xml:space="preserve">
+    <value>mnu Lista favoriti</value>
+  </data>
+  <data name="miSelectFavList0.Caption" xml:space="preserve">
+    <value>Lista programmi</value>
+  </data>
+  <data name="miSelectFavListA.Caption" xml:space="preserve">
+    <value>Favoriti A</value>
+  </data>
+  <data name="miSelectFavListB.Caption" xml:space="preserve">
+    <value>Favoriti B</value>
+  </data>
+  <data name="miSelectFavListC.Caption" xml:space="preserve">
+    <value>Favoriti C</value>
+  </data>
+  <data name="miSelectFavListD.Caption" xml:space="preserve">
+    <value>Favoriti D</value>
+  </data>
+  <data name="miSelectFavListE.Caption" xml:space="preserve">
+    <value>Favoriti E</value>
   </data>
   <data name="miGotoLeftFilter.Caption" xml:space="preserve">
-    <value>Filtru de listă &amp;stânga</value>
+    <value>Fi&amp;ltro elenco a sinistra</value>
+  </data>
+  <data name="miGotoLeftList.Caption" xml:space="preserve">
+    <value>Elenco di sinistra</value>
+  </data>
+  <data name="miRightListFilter.Caption" xml:space="preserve">
+    <value>Filt&amp;ro elenco a destra</value>
+  </data>
+  <data name="miGotoRightList.Caption" xml:space="preserve">
+    <value>Elenco a destra</value>
+  </data>
+  <data name="mnuHelp.Caption" xml:space="preserve">
+    <value>Aiuto</value>
+  </data>
+  <data name="miWiki.Caption" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="miOpenWebsite.Caption" xml:space="preserve">
+    <value>Sito web ChanSort…</value>
+  </data>
+  <data name="miAbout.Caption" xml:space="preserve">
+    <value>Info Ch&amp;anSort</value>
+  </data>
+  <data name="bar1.Text" xml:space="preserve">
+    <value>Strumenti</value>
+  </data>
+  <data name="miMoveUp.Caption" xml:space="preserve">
+    <value>Sposta in su</value>
+  </data>
+  <data name="miMoveDown.Caption" xml:space="preserve">
+    <value>Sposta in giù</value>
+  </data>
+  <data name="rbInsertSwap.Properties.Caption" xml:space="preserve">
+    <value>Scambio</value>
+  </data>
+  <data name="rbInsertAfter.Properties.Caption" xml:space="preserve">
+    <value>dopo</value>
+  </data>
+  <data name="rbInsertBefore.Properties.Caption" xml:space="preserve">
+    <value>prima</value>
+  </data>
+  <data name="cbCloseGap.Properties.Caption" xml:space="preserve">
+    <value>Chiudere il divario quando si sposta/elimina un canale</value>
+  </data>
+  <data name="cbCloseGap.ToolTip" xml:space="preserve">
+    <value>Quando attivo, tutti i canali successivi a quello corrente verranno automaticamente rinumerati</value>
+  </data>
+  <data name="lblInsertMode.Text" xml:space="preserve">
+    <value>Modalità di inserimento:</value>
+  </data>
+  <data name="pageEmpty.Text" xml:space="preserve">
+    <value>Nessun elenco di canali</value>
+  </data>
+  <data name="lblSetProgramNr.Text" xml:space="preserve">
+    <value>Imposta posizione:</value>
+  </data>
+  <data name="lblSetProgramNr.ToolTip" xml:space="preserve">
+    <value>N. di programma per le operazioni di inserimento e impostazione</value>
   </data>
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>ChanSort {0} - TV Editor dell'elenco dei canali</value>
+  </data>
+  <data name="btnToggleLock.Text" xml:space="preserve">
+    <value>Attiva il blocco parentale</value>
+  </data>
+  <data name="btnToggleLock.ToolTip" xml:space="preserve">
+    <value>Blocco parentale</value>
+  </data>
+  <data name="btnToggleFavE.AccessibleDescription" xml:space="preserve">
+    <value>Attiva i favoriti E</value>
+  </data>
+  <data name="btnToggleFavE.Text" xml:space="preserve">
+    <value>±E</value>
+  </data>
+  <data name="btnToggleFavD.AccessibleDescription" xml:space="preserve">
+    <value>Attiva i favoriti D</value>
+  </data>
+  <data name="btnToggleFavD.Text" xml:space="preserve">
+    <value>±D</value>
+  </data>
+  <data name="btnToggleFavC.AccessibleDescription" xml:space="preserve">
+    <value>Attiva i favoriti C</value>
+  </data>
+  <data name="btnToggleFavC.Text" xml:space="preserve">
+    <value>±C</value>
+  </data>
+  <data name="btnToggleFavB.AccessibleDescription" xml:space="preserve">
+    <value>Attiva i favoriti B</value>
+  </data>
+  <data name="btnToggleFavB.Text" xml:space="preserve">
+    <value>±B</value>
+  </data>
+  <data name="btnToggleFavA.AccessibleDescription" xml:space="preserve">
+    <value>Attiva i favoriti A</value>
+  </data>
+  <data name="btnToggleFavA.Text" xml:space="preserve">
+    <value>±A</value>
+  </data>
+  <data name="btnClearLeftFilter.AccessibleDescription" xml:space="preserve">
+    <value>Rimuove i criteri di filtro dei canali dall'elenco dei canali ordinati</value>
+  </data>
+  <data name="btnClearLeftFilter.Text" xml:space="preserve">
+    <value>Filtro</value>
+  </data>
+  <data name="btnClearLeftFilter.ToolTip" xml:space="preserve">
+    <value>Reimposta filtro</value>
+  </data>
+  <data name="btnRenum.Text" xml:space="preserve">
+    <value>Rinumerare i canali selezionati in sequenza</value>
+  </data>
+  <data name="btnRenum.ToolTip" xml:space="preserve">
+    <value>Rinumerare i canali selezionati in sequenza</value>
+  </data>
+  <data name="btnDown.Text" xml:space="preserve">
+    <value>Sposta il canale selezionato verso il basso</value>
+  </data>
+  <data name="btnDown.ToolTip" xml:space="preserve">
+    <value>Sposta i canali selezionati verso il basso</value>
+  </data>
+  <data name="btnUp.Text" xml:space="preserve">
+    <value>Sposta il canale selezionato in alto</value>
+  </data>
+  <data name="btnUp.ToolTip" xml:space="preserve">
+    <value>Sposta i canali selezionati in alto</value>
+  </data>
+  <data name="btnRemoveLeft.Text" xml:space="preserve">
+    <value>Rimuove i canali selezionati dall'elenco ordinato</value>
+  </data>
+  <data name="btnRemoveLeft.ToolTip" xml:space="preserve">
+    <value>Rimuovi i canali selezionati</value>
+  </data>
+  <data name="grpOutputList.Text" xml:space="preserve">
+    <value>Canali ordinati</value>
+  </data>
+  <data name="splitContainerControl1.Panel1.Text" xml:space="preserve">
+    <value>Pannello1</value>
+  </data>
+  <data name="colIndex.Caption" xml:space="preserve">
+    <value>Indice del programma</value>
+  </data>
+  <data name="colSlotOld.Caption" xml:space="preserve">
+    <value>Vecchia Pos.</value>
+  </data>
+  <data name="colSlotOld.ToolTip" xml:space="preserve">
+    <value>Vecchia Posizione</value>
+  </data>
+  <data name="colSlotNew.Caption" xml:space="preserve">
+    <value>Nuova Pos.</value>
+  </data>
+  <data name="colSlotNew.ToolTip" xml:space="preserve">
+    <value>Nuova Posizione</value>
+  </data>
+  <data name="colSource.Caption" xml:space="preserve">
+    <value>Sorgente</value>
+  </data>
+  <data name="colPrNr.Caption" xml:space="preserve">
+    <value>Pr#</value>
+  </data>
+  <data name="colName.Caption" xml:space="preserve">
+    <value>Nome canale</value>
+  </data>
+  <data name="colShortName.Caption" xml:space="preserve">
+    <value>Nome breve</value>
+  </data>
+  <data name="colFavorites.Caption" xml:space="preserve">
+    <value>Favoriti</value>
+  </data>
+  <data name="colLock.Caption" xml:space="preserve">
+    <value>Bloccato</value>
+  </data>
+  <data name="colSkip.Caption" xml:space="preserve">
+    <value>Salta</value>
+  </data>
+  <data name="colHidden.Caption" xml:space="preserve">
+    <value>Nascondi</value>
+  </data>
+  <data name="colEncrypted.Caption" xml:space="preserve">
+    <value>Cripta</value>
+  </data>
+  <data name="colEncrypted.ToolTip" xml:space="preserve">
+    <value>Crittografato</value>
+  </data>
+  <data name="colServiceType.Caption" xml:space="preserve">
+    <value>ID del tipo di servizio</value>
+  </data>
+  <data name="colServiceTypeName.Caption" xml:space="preserve">
+    <value>Tipo di servizio</value>
+  </data>
+  <data name="colFreqInMhz.Caption" xml:space="preserve">
+    <value>Frequenza (Mhz)</value>
+  </data>
+  <data name="colChannelOrTransponder.Caption" xml:space="preserve">
+    <value>Canale/ Transp</value>
+  </data>
+  <data name="colChannelOrTransponder.ToolTip" xml:space="preserve">
+    <value>Numero canale o transponder</value>
+  </data>
+  <data name="colSatellite.Caption" xml:space="preserve">
+    <value>Satellite</value>
+  </data>
+  <data name="colNetworkId.Caption" xml:space="preserve">
+    <value>Rete (ONID)</value>
+  </data>
+  <data name="colTransportStreamId.Caption" xml:space="preserve">
+    <value>TS ID</value>
+  </data>
+  <data name="colTransportStreamId.ToolTip" xml:space="preserve">
+    <value>Transport Stream ID</value>
+  </data>
+  <data name="colServiceId.Caption" xml:space="preserve">
+    <value>Service ID</value>
+  </data>
+  <data name="colVideoPid.Caption" xml:space="preserve">
+    <value>Video ID</value>
+  </data>
+  <data name="colAudioPid.Caption" xml:space="preserve">
+    <value>Audio ID</value>
+  </data>
+  <data name="colSymbolRate.Caption" xml:space="preserve">
+    <value>Symbol rate</value>
+  </data>
+  <data name="colPolarity.Caption" xml:space="preserve">
+    <value>Polarità</value>
+  </data>
+  <data name="colNetworkName.Caption" xml:space="preserve">
+    <value>Nome rete</value>
+  </data>
+  <data name="colNetworkOperator.Caption" xml:space="preserve">
+    <value>Operatore rete</value>
+  </data>
+  <data name="colProvider.Caption" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="colUid.Caption" xml:space="preserve">
+    <value>Uid</value>
+  </data>
+  <data name="colLogicalIndex.Caption" xml:space="preserve">
+    <value>Ordine</value>
+  </data>
+  <data name="colSignalSource.Caption" xml:space="preserve">
+    <value>Sorgente del segnale</value>
+  </data>
+  <data name="lblHotkeyRight.Text" xml:space="preserve">
+    <value>F5: Filtro | F6: Lista | Invio: agg</value>
+  </data>
+  <data name="lblPredefinedList.Text" xml:space="preserve">
+    <value>Questo è un elenco predefinito e non può essere modificato.</value>
+  </data>
+  <data name="lblPredefinedList.ToolTip" xml:space="preserve">
+    <value>Durante la configurazione del televisore è stato selezionato un elenco di canali predefinito.
+La modifica di tale elenco causerebbe il malfunzionamento della TV.
+Eseguire una scansione completa dei canali sulla TV e non selezionarne nessuno
+elenchi di fornitori, satelliti o paesi specifici.</value>
+  </data>
+  <data name="btnRemoveRight.Text" xml:space="preserve">
+    <value>Rimuove i canali selezionati dall'elenco ordinato</value>
+  </data>
+  <data name="btnRemoveRight.ToolTip" xml:space="preserve">
+    <value>Rimuove i canali selezionati dall'elenco ordinato</value>
+  </data>
+  <data name="btnAddAll.AccessibleDescription" xml:space="preserve">
+    <value>Aggiungi tutti i canali attualmente non ordinati alla fine dell'elenco</value>
+  </data>
+  <data name="btnAddAll.Text" xml:space="preserve">
+    <value>&lt;&lt; Agg. Tutti</value>
+  </data>
+  <data name="btnAddAll.ToolTip" xml:space="preserve">
+    <value>Aggiungi tutti i canali attualmente non ordinati alla fine dell'elenco</value>
+  </data>
+  <data name="btnClearRightFilter.AccessibleDescription" xml:space="preserve">
+    <value>Rimuovi i criteri di filtro del canale dall'elenco completo dei canali</value>
+  </data>
+  <data name="btnClearRightFilter.Text" xml:space="preserve">
+    <value>Filtro</value>
+  </data>
+  <data name="btnClearRightFilter.ToolTip" xml:space="preserve">
+    <value>Reimposta filtro</value>
+  </data>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>Aggiungi i canali selezionati all'elenco ordinato</value>
+  </data>
+  <data name="btnAdd.ToolTip" xml:space="preserve">
+    <value>Aggiungi i canali selezionati all'elenco ordinato</value>
+  </data>
+  <data name="grpInputList.Text" xml:space="preserve">
+    <value>Canali originali</value>
+  </data>
+  <data name="splitContainerControl1.Panel2.Text" xml:space="preserve">
+    <value>Pannello2</value>
+  </data>
+  <data name="splitContainerControl1.Text" xml:space="preserve">
+    <value>controllo del contenitore diviso 1</value>
   </data>
 </root>

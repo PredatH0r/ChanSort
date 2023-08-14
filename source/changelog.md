@@ -1,8 +1,11 @@
 ﻿ChanSort Change Log 
 ===================
 
-2023-08-13
+2023-08-14
+- added italian translation
+- update polish translation
 - added support for a Hisense HIS_SVL.BIN variant with different data layout
+- Samsung .zip: allow editing stream and logo URLs for IP-channels
 
 2023-06-01
 - Panasonic LS 500 / LX 700 series: support for new firmware which doesn't export a hotel.bin file.

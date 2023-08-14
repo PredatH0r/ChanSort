@@ -27,6 +27,7 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraReports.Design;
 using DevExpress.XtraTab;
 
 namespace ChanSort.Ui
@@ -1610,6 +1611,22 @@ namespace ChanSort.Ui
       {
         col.VisibleIndex = GetGridColumnVisibility(col) ? visIndex++ : -1;
       }
+
+      // add custom columns used in the current channel list
+      foreach (var field in this.CurrentChannelList.VisibleColumnFieldNames)
+      {
+        if (!field.StartsWith("+"))
+          continue;
+        var col = gview.Columns[field];
+        if (col != null)
+          continue;
+        col = gview.Columns.AddField(field);
+        col.Caption = field.Substring(1);
+        col.FieldName = field;
+        col.UnboundDataType = typeof(string);
+        col.VisibleIndex = visIndex++;
+      }
+
       --this.ignoreEvents;
     }
     #endregion
@@ -2400,6 +2417,12 @@ namespace ChanSort.Ui
           e.Value = channel.GetOldPosition(this.subListIndex);
         else if (field == colFavorites.FieldName)
           e.Value = GetFavString(channel.Favorites);
+        else if (field.StartsWith("+")) // custom loader-specific column
+        {
+          var pi = e.Row.GetType().GetProperty(field.Substring(1));
+          if (pi != null && pi.CanRead)
+            e.Value = pi.GetValue(e.Row);
+        }
       }
       else
       {
@@ -2407,6 +2430,13 @@ namespace ChanSort.Ui
         {
           var channel = (ChannelInfo)e.Row;
           channel.Favorites = ChannelInfo.ParseFavString(e.Value?.ToString() ?? "");
+        }
+        else if (field.StartsWith("+"))
+        {
+          var pi = e.Row.GetType().GetProperty(field.Substring(1));
+          if (pi != null && pi.CanWrite)
+            pi.SetValue(e.Row, e.Value);
+
         }
       }
     }

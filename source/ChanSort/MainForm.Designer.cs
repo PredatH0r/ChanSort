@@ -156,6 +156,7 @@
       this.miCzech = new DevExpress.XtraBars.BarButtonItem();
       this.miGerman = new DevExpress.XtraBars.BarButtonItem();
       this.miSpanish = new DevExpress.XtraBars.BarButtonItem();
+      this.miLangIt = new DevExpress.XtraBars.BarButtonItem();
       this.miHungarian = new DevExpress.XtraBars.BarButtonItem();
       this.miPolski = new DevExpress.XtraBars.BarButtonItem();
       this.miPortuguese = new DevExpress.XtraBars.BarButtonItem();
@@ -1135,9 +1136,10 @@
             this.miMarkForSwapping,
             this.miSwapWithMarked,
             this.miConvert,
-            this.miSaveAs});
+            this.miSaveAs,
+            this.miLangIt});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 122;
+      this.barManager1.MaxItemId = 123;
       this.barManager1.ShowFullMenus = true;
       this.barManager1.ShortcutItemClick += new DevExpress.XtraBars.ShortcutItemClickEventHandler(this.barManager1_ShortcutItemClick);
       // 
@@ -1602,6 +1604,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miCzech),
             new DevExpress.XtraBars.LinkPersistInfo(this.miGerman),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSpanish),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miLangIt),
             new DevExpress.XtraBars.LinkPersistInfo(this.miHungarian),
             new DevExpress.XtraBars.LinkPersistInfo(this.miPolski),
             new DevExpress.XtraBars.LinkPersistInfo(this.miPortuguese),
@@ -1652,6 +1655,16 @@
       this.miSpanish.Name = "miSpanish";
       this.miSpanish.Tag = "es-ES";
       this.miSpanish.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
+      // 
+      // miLangIt
+      // 
+      this.miLangIt.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miLangIt, "miLangIt");
+      this.miLangIt.Id = 122;
+      this.miLangIt.ImageOptions.ImageIndex = ((int)(resources.GetObject("miLangIt.ImageOptions.ImageIndex")));
+      this.miLangIt.Name = "miLangIt";
+      this.miLangIt.Tag = "it-IT";
+      this.miLangIt.DownChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.miLanguage_DownChanged);
       // 
       // miHungarian
       // 
@@ -2527,6 +2540,7 @@
         private DevExpress.XtraBars.BarButtonItem miSwapWithMarked;
         private DevExpress.XtraBars.BarButtonItem miConvert;
     private DevExpress.XtraBars.BarButtonItem miSaveAs;
+    private DevExpress.XtraBars.BarButtonItem miLangIt;
   }
 }
 

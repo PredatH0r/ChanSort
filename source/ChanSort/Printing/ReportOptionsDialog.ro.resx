@@ -138,4 +138,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Opțiunile de imprimare</value>
   </data>
+  <data name="fontEdit1.EditValue" xml:space="preserve">
+    <value>Tahoma</value>
+  </data>
 </root>

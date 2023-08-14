@@ -16,6 +16,7 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="PhilipsXmlStatsCollector.cs" />
     <None Include="WebOs5StatsCollector.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -24,10 +25,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="PhilipsXmlStatsCollector.cs" />
     <Compile Remove="WebOs5StatsCollector.cs" />
   </ItemGroup>
 </Project>
