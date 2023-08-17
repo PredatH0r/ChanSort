@@ -1,4 +1,6 @@
-﻿namespace ChanSort.Ui
+﻿using DevExpress.Utils;
+
+namespace ChanSort.Ui
 {
   partial class ReferenceListForm
   {

@@ -1,6 +1,9 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-08-17
+- fixed error when opening the reference list dialog
+
 2023-08-14
 - added italian translation
 - update polish translation

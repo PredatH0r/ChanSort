@@ -764,7 +764,7 @@ or a data file from another TV (SCM, TLL, DB, BIN, ...)</value>
     <value>Digital</value>
   </data>
   <data name="cbDigital.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 18</value>
+    <value>50, 18</value>
   </data>
   <data name="cbDigital.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -1126,17 +1126,5 @@ This step can be repeated as needed.</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v23.1, Version=23.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
-  <data name="edFile.Properties.Buttons8" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="groupControl1.Text" xml:space="preserve">
-    <value>1. Select reference list file</value>
-  </data>
-  <data name="groupControl2.Text" xml:space="preserve">
-    <value>2. Bring order to your TV file</value>
-  </data>
-  <data name="checkEdit1.Properties.Caption" xml:space="preserve">
-    <value>Data/Other</value>
   </data>
 </root>
