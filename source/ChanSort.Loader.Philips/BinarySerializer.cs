@@ -11,7 +11,7 @@ namespace ChanSort.Loader.Philips
 {
   /*
 
-  This loader handles the file format versions 1.x (*Table and *.dat files), version 25.x-45.x (*Db.bin files + tv.db and list.db)
+  This loader handles the file format versions 1.x, 2.0 (*Table and *.dat files), version 25.x-45.x (*Db.bin files + tv.db and list.db)
   Version 30.x and 45.x were tested, version 25 is untested due to the lack of any sample files. Based on what I read online, the files are pretty much the 
   same as with Format 45.
 
@@ -458,13 +458,17 @@ namespace ChanSort.Loader.Philips
           throw LoaderException.Fail("Unsupported file content: " + path);
       }
 
+      var channelCount = recordCount;
+      if (version == 2)
+        channelCount = BitConverter.ToInt16(data, 2); // number of used channels
+
       this.dataFilePaths.Add(path);
 
       var dvbStringDecoder = new DvbStringDecoder(this.DefaultEncoding);
 
       var mapping = new DataMapping(this.ini.GetSection(mappingName));
       mapping.SetDataPtr(data, 12 + (chanLstBin.VersionMajor <= 11 ? recordCount * 4 : 0));
-      for (int i = 0; i < recordCount; i++, mapping.BaseOffset += recordSize)
+      for (int i = 0; i < channelCount; i++, mapping.BaseOffset += recordSize)
       {
         var ch = LoadDvbsChannel(list, mapping, i, dvbStringDecoder);
         this.DataRoot.AddChannel(list, ch);
@@ -542,8 +546,11 @@ namespace ChanSort.Loader.Philips
         ch.Satellite = t.Satellite?.Name;
         if (t.OriginalNetworkId != 0)
           ch.OriginalNetworkId = t.OriginalNetworkId;
-        if (t.TransportStreamId != 0)
-          ch.TransportStreamId = t.TransportStreamId;
+        if (chanLstBin.VersionMajor != 2)
+        {
+          if (t.TransportStreamId != 0) // does not work in version 2.0
+            ch.TransportStreamId = t.TransportStreamId;
+        }
       }
 
       return ch;

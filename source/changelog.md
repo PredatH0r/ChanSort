@@ -1,6 +1,10 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-09-17
+- added support for Philips Repair channel list format 2.0
+- added experimental support for amdb\*.db Android STB channel lists
+
 2023-08-17
 - fixed error when opening the reference list dialog
 

@@ -133,7 +133,7 @@ namespace ChanSort.Loader.Philips
 
       if (majorVersion == 0 || majorVersion >= 100 && majorVersion <= 115)
         return new XmlSerializer(inputFile);
-      if (majorVersion == 1 || majorVersion == 30 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
+      if (majorVersion == 1 || majorVersion == 2 || majorVersion == 30 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
         return new BinarySerializer(inputFile);
       if (majorVersion == -1)
         return new DbSerializer(inputFile);
