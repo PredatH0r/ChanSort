@@ -5,7 +5,6 @@ using System.IO;
 using System.Text;
 using Microsoft.Data.Sqlite;
 using ChanSort.Api;
-using System.Runtime.Remoting.Channels;
 
 namespace ChanSort.Loader.Panasonic
 {
@@ -103,7 +102,7 @@ namespace ChanSort.Loader.Panasonic
       if (cypherMode == CypherMode.None)
         return this.FileName;
 
-      this.TempPath = Path.GetTempFileName();
+      this.TempPath = Path.Combine(Path.GetDirectoryName(this.FileName) ?? "", Path.GetFileNameWithoutExtension(this.FileName) + "_decrypted.db"); //Path.GetTempFileName();
       this.DeleteTempPath();
 
       if (cypherMode == CypherMode.Encryption)
@@ -120,9 +119,9 @@ namespace ChanSort.Loader.Panasonic
       using var stream = File.OpenRead(file);
       using var rdr = new BinaryReader(stream);
       uint value = (uint)rdr.ReadInt32();
-      if (value == 0x694C5153) return CypherMode.None; // "SQLi"
-      if (value == 0x42445350) return CypherMode.HeaderAndChecksum; // "PSDB"
-      if (value == 0xA07DCB50) return CypherMode.Encryption;
+      if (value == 0x694C5153) return CypherMode.None; // "SQLi", already decrypted svl.db or svl.bin
+      if (value == 0x42445350) return CypherMode.HeaderAndChecksum; // "PSDB" - svl.bin
+      if (value == 0xA07DCB50) return CypherMode.Encryption; // svl.db
       return CypherMode.Unknown;
     }
     #endregion

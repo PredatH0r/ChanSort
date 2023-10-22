@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ChanSort.Api
 {
+  /// <summary>
+  /// This class reads .txt files where each line has the format: progNr;name;onid-tsid-sid
+  /// </summary>
   public class TxtRefListSerializer : SerializerBase
   {
     private static readonly char[] Separators = { ';' };
@@ -68,7 +71,7 @@ namespace ChanSort.Api
         if (!int.TryParse(parts[0], out progNr))
           continue;
 
-        var channel = new ChannelInfo(SignalSource.All, lineNr, progNr, parts[1]);
+        var channel = new ChannelInfo(SignalSource.Any, lineNr, progNr, parts[1]);
         if (parts.Length >= 3)
         {
           var subParts = parts[2].Split('-');
@@ -84,7 +87,6 @@ namespace ChanSort.Api
           }
         }
         this.DataRoot.AddChannel(this.allChannels, channel);
-        lineNr++;
       }
     }
 

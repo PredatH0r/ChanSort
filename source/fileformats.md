@@ -51,12 +51,21 @@ Special thanks to Hisense for supporting ChanSort with technical information and
 
 <a name="panasonic"/>Panasonic
 ---
-Most Viera models since 2011 with channel list formats
+**Android-TVs** come with different internal hardware, firmware and file formats, so support depends on the model.
+- mnt/vendor/tvdata/database/tv.db file (LSW500 and LXW700 series)
+- channellist.txt (MX700, MZ800)
+- channels.sdx ("fire-OS" MXW834)
+- NOT supported: CLONE00001/settingsDB\_enc.db (JXW600)
+- NOT supported: hotel\_setup/Channel\_list/channel\_list.bin (JXW800)
+On some models you can export/import the list by selecting "Input: Cable" (or any other TV source), then
+open the menu, Channels, Export/Import.
+Other models require to use the secret hotel menu: Menu / Picture / Picture Mode / User Defined / Contrast / 6x ok.
+
+**Viera** models since 2011 with channel list formats
 - svl.bin 
-- svl.db 
-- Android-TVs of LXS600 and LXW700 series with mnt/vendor/tvdata/database/tv.db file
-- NOT supported: models on Vestel plattform, e.g. JXW600 with CLONE00001/settingsDB\_enc.db
-- NOT supported: models on MediaTek(?) plattform, e.g. JXW800 with hotel\_setup/Channel\_list/channel\_list.bin
+- svl.db (JZT1500, ...)
+To export/import files on Viera models, format the USB stick with FAT32 and create an empty file or directory 
+named hotel.pwd. After plugging in the stick on the TV enter 4850 for TV->USB or 4851 for USB->TV
 
 <a name="tcl"/>TCL / Thomson
 ---

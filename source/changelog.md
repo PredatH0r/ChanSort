@@ -1,6 +1,15 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-10-22
+- fixed loading .txt reference lists
+- added support for HB\_DATABASE\_\*.DBM channel lists with file size 74303
+  (e.g. Renkforce 1510 C HD, Telestar digiHD TC 7)
+- added support for dtv_cmdb_2.bin files with file size 2731173
+  (e.g. Dijitsu Android TV with LD-M538 board)
+- improved experimental support for amdb\*.db Android STB channel lists
+  (now grouped by TV and radio for each satellite)
+
 2023-09-17
 - added support for Philips Repair channel list format 2.0
 - added experimental support for amdb\*.db Android STB channel lists

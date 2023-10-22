@@ -97,6 +97,20 @@ public struct DBM
 
   switch (GetDocumentSize())
   {
+  case 74303:
+    // Renkforce 1510 C HD, Telestar digiHD TC 7
+    satBitmapLength = 0;
+    satRecordCount = 0;
+    satRecordLength = 84;
+    transponderBitmapLength = 16;
+    transponderRecordCount = 100;
+    transponderRecordLength = 36;
+    unknownDataLength = 22;
+    channelBitmapLength = 50;
+    channelRecordCount = 400;
+    channelRecordLength = 176;
+    bytesBetweenTransponderIndexAndServiceType = 2;
+	break;
   case 163772:
     // TechniSat DVB-C TS_Programmliste_06_01.DBM
     satBitmapLength = 0;

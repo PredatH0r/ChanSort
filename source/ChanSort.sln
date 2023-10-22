@@ -112,6 +112,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HDD Hex Edit Neo", "HDD Hex
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\chansort.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\chansort.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\cvt_database-dat.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\cvt_database-dat.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\dbm.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dbm.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv-cmdb.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv-cmdb.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_1-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_1-bin.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_2-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_2-bin.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\get_doc_size.js = Information\FileStructures_for_HHD_Hex_Editor_Neo\get_doc_size.js

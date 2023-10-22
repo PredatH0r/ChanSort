@@ -51,12 +51,23 @@ Besonderen Dank verdient Hisense für die Bereitstellung von technischen Informat
 
 <a name="panasonic"/>Panasonic
 ---
-Die meisten Viera-Modelle seit 2011 mit Senderlisten im Format
-- svl.bin
-- svl.db
-- Android-TVs der LXS600 und LXW700 Serie mit mnt/vendor/tvdata/database/tv.db Datei
-- NICHT unterstützt: Modelle auf Vestel Plattform, z.B. JXW600 mit CLONE00001/settingsDB\_enc.db
-- NICHT unterstützt: Modelle auf MediaTek(?) Plattform, z.B. JXW800 mit hotel\_setup/Channel\_list/channel\_list.bin
+**Android-TVs** gibt es mit unterschiedlicher interner hardware, firmware und Senderlistenformaten. Unterstützt werden
+- mnt/vendor/tvdata/database/tv.db file (LSW500 and LXW700 series)
+- channellist.txt (MX700, MZ800)
+- channels.sdx ("fire-OS" MXW834)
+- NICHT unterstützt: CLONE00001/settingsDB\_enc.db (JXW600)
+- NICHT unterstützt: hotel\_setup/Channel\_list/channel\_list.bin (JXW800)
+Bei einigen Modellen kann man die Senderliste importieren/exportieren, indem man "Input: Kabel" (oder eine andere TV-Quelle)
+und dann im Menü den Punkt "Kanal".
+Bei anderen Modellen ist eventuell nur der Umweg über das geheime Hotel-Menü möglich:
+Menü / Bild / Bildmodus / Benutzerdefiniert / Kontrast / 6x Ok.
+
+**Viera** Modelle mit Senderlisten im Format
+- svl.bin 
+- svl.db (JZT1500, ...)
+Zum Exportieren/Importieren wird ein USB stickmit FAT32 benötigt, auf dem man eine leere Datei oder ein Verzeichnis
+mit dem Namen "hotel.pwd" erstellt. Nach dem Anstecken an den TV kann man den codes 4850 für TV->USB oder 4851 für
+USB->TV eingeben.
 
 <a name="tcl"/>TCL / Thomson
 ---

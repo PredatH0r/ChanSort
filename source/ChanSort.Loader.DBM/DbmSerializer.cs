@@ -18,6 +18,7 @@ namespace ChanSort.Loader.DBM
     private IniFile.Section sec;
     private DataMapping mapping;
     private bool isDvbS;
+    private bool separateTvRadioData;
     
     private readonly ChannelList allChannels = new(SignalSource.All, "All");
     private readonly StringBuilder logMessages = new();
@@ -36,18 +37,6 @@ namespace ChanSort.Loader.DBM
       this.Features.AllowGapsInFavNumbers = false;
       this.Features.CanEditFavListNames = false;
 
-      this.DataRoot.AddChannelList(this.allChannels);
-
-      foreach (var list in this.DataRoot.ChannelLists)
-      {
-        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
-        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ChannelOrTransponder));
-        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
-        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
-        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ServiceType));
-        list.VisibleColumnFieldNames.Add(nameof(ChannelInfo.ServiceTypeName));
-      }
-
       string iniFile = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".ini");
       this.ini = new IniFile(iniFile);
     }
@@ -62,6 +51,18 @@ namespace ChanSort.Loader.DBM
       this.sec = ini.GetSection("dbm:" + info.Length);
       if (sec == null)
         throw LoaderException.Fail($"No configuration for .DBM files with size {info.Length} in .ini file");
+
+      this.separateTvRadioData = sec.GetBool("separateTvRadioData");
+      if (separateTvRadioData)
+      {
+        this.DataRoot.AddChannelList(new ChannelList(SignalSource.Tv, "TV"));
+        this.DataRoot.AddChannelList(new ChannelList(SignalSource.Radio, "Radio"));
+        this.DataRoot.AddChannelList(new ChannelList(SignalSource.Data, "Data"));
+      }
+      else
+        this.DataRoot.AddChannelList(this.allChannels);
+      AdjustColumns();
+
 
       this.isDvbS = sec.GetBool("isDvbS");
       if (isDvbS)
@@ -86,6 +87,21 @@ namespace ChanSort.Loader.DBM
       LoadSatellites();
       LoadTransponder();
       LoadChannels();
+    }
+    #endregion
+
+    #region AdjustColumns()
+    private void AdjustColumns()
+    {
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ChannelOrTransponder));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
+        list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ServiceType));
+        list.VisibleColumnFieldNames.Add(nameof(ChannelInfo.ServiceTypeName));
+      }
     }
     #endregion
 
@@ -213,7 +229,9 @@ namespace ChanSort.Loader.DBM
             c.SatPosition = sat.OrbitalPosition;
           }
 
-          this.DataRoot.AddChannel(this.allChannels, c);
+          var list = this.DataRoot.GetChannelList(c.SignalSource);
+          if (list != null)
+            this.DataRoot.AddChannel(list, c);
         }
 
         mapping.BaseOffset += recordSize;
