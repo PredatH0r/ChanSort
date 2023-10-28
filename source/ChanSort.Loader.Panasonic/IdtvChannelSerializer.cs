@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using ChanSort.Api;
@@ -23,7 +22,7 @@ namespace ChanSort.Loader.Panasonic;
  * All statements here are based on observation without confirmation from official sources.
  *
  * The .bin file contains all DVB-S, DVB-T and DVB-C channels that were found in a scan. Channels are sorted by source (DVB-S, -T, -C), TV/radio/data and then by display_number (or channel_index).
- * The .db file may contain a subset of DVB channels, particularly omitting data channels, but also contains additional non-DVB channels.
+ * The .db file may contain a subset of DVB channels, particularly omitting (most) data channels, but also contains additional non-DVB channels.
  * The link between DVB channel records in the .db and .bin file is via a common internal_provider_flag2 value.
  * In the .bin file the ipf2 is a unique value, but multiple .db channels may reference the same .bin channel.
  *
@@ -54,58 +53,20 @@ internal class IdtvChannelSerializer : SerializerBase
 
   /*
    The idtvChannel.bin seems to be related to the TV's DVB tuner. 
-   It does not contain some streaming related channels that can be found in tv.db, but contains lots of DVB channels that are not includedin tv.bin (probably filtered out there by country settings)
+   It does not contain some streaming related channels that can be found in tv.db, but contains lots of DVB channels that are not included in tv.db (probably filtered out there by country settings)
    The data records in the .bin are shown in exactly that order in the TV's menu, so they must be physically ordered by the program number.
 
    The .bin file starts with:
    00 00 4b 09
    uint numRecords;
    fixed byte md5Chechsum[16];
-   IdtvChannel channels[numRecords]
+   IdtvChannel channels[numRecords];
+
+   The IdtvChannel data structure has changed between 2022 and 2023 models and is now defined through mapping information in ChanSort.Loader.Panasonic.ini
 
   */
 
-  [Flags]
-  enum Flags : ushort
-  {
-    Encrypted = 0x0002,
-    Radio = 0x04,
-    Data = 0x10,
-    IsFavorite = 0x0080,
-    Deleted = 0x0100, // if really by "user" is uncertain
-    Skip = 0x0400,
-    CustomProgNr = 0x1000
-  }
 
-  [StructLayout(LayoutKind.Sequential, Pack = 1)]
-  unsafe struct IdtvChannel
-  {
-    public short U0; // always 1
-    public ushort RecordLength; // 60 + length of channel name
-    public short U4; // always 6
-    public fixed byte U6[3]; // all 00
-    public ushort U9; // 0 = sat, 18 = cable ?
-    public fixed byte U11[5]; // all 00
-    public uint Freq; // Hz for DVB-C/T, kHz for DVB-S
-    public uint SymRate; // in Sym/s, like 22000000
-    public short U24; // always 100
-    public short U26; // always 0
-    public short U28; // always 0
-    public ushort ProgNr;
-    public short Lcn; // maybe?
-    public fixed byte U32[2]; // e.g. 0a 01 00 00
-    public Flags Flags;
-    public fixed byte U38[4]; // 12 07 01 02
-    public ushort Tsid;
-    public ushort Onid;
-    public ushort Sid;
-    public fixed byte U48[4];
-
-    public int InternalProviderFlag2; // this is a unique .bin record identifier, used in the .db file's "internal_provider_flag2" to reference the .bin record
-                                      
-    public fixed byte U56[8];
-    //public fixed byte ChannelName[RecordLength - 60]; // pseudo-C# description of variable length channel name UTF8 data at end of structure
-  }
   #endregion
 
   #region tv.db channels table
@@ -125,22 +86,27 @@ internal class IdtvChannelSerializer : SerializerBase
   private class BinChannelEntry
   {
     public readonly int Index;
-    public readonly IdtvChannel Channel;
-    public readonly string Name;
     public readonly int StartOffset;
+    public readonly int RecordLength;
+    public readonly string Name;
+    public readonly DataMapping Mapping;
 
-    public BinChannelEntry(int index, IdtvChannel channel, string name, int startOffset)
+    public BinChannelEntry(int index, int startOffset, int recordLength, string name, DataMapping dataMapping)
     {
       this.Index = index;
-      this.Channel = channel;
-      this.Name = name;
       this.StartOffset = startOffset;
+      this.RecordLength = recordLength;
+      this.Name = name;
+      this.Mapping = dataMapping;
     }
   }
   #endregion
 
   private readonly string dbFile;
   private readonly string binFile;
+  private readonly IniFile iniFile;
+  private readonly IniFile.Section iniSec;
+  private readonly MappingPool<DataMapping> pool = new ("DVB");
 
   private byte[] binFileData; // will keep the originally loaded record order as-is, even after saving the file with a different physical record order
   private readonly Dictionary<ushort, BinChannelEntry> binChannelByInternalProviderFlag2 = new();
@@ -150,16 +116,33 @@ internal class IdtvChannelSerializer : SerializerBase
   #region ctor()
   public IdtvChannelSerializer(string tvDb) : base(tvDb)
   {
-    var dir = Path.GetDirectoryName(tvDb);
+    var dir = Path.GetDirectoryName(tvDb) ?? "";
     dbFile = Path.Combine(dir, "tv.db");
     binFile = Path.Combine(dir, "channel", "idtvChannel.bin");
+
+    iniFile = new IniFile("ChanSort.Loader.Panasonic.ini");
+    iniSec = iniFile.GetSection("idtvChannel.bin_DvbRecord");
+    var prefix = "idtvChannel.bin_DvbRecord:";
+    foreach (var sec in iniFile.Sections.Where(sec => sec.Name.StartsWith(prefix)))
+    {
+      var sizes = sec.Name.Substring(prefix.Length).Split(',');
+      var mapping = new DataMapping(sec);
+      foreach (var size in sizes)
+        pool.AddMapping(int.Parse(size), mapping);
+    }
 
     this.Features.FavoritesMode = FavoritesMode.Flags;
     this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
 
-    this.DataRoot.AddChannelList(new ChannelList(SignalSource.Antenna | SignalSource.MaskTvRadioData, "Antenna"));
-    this.DataRoot.AddChannelList(new ChannelList(SignalSource.Cable | SignalSource.MaskTvRadioData, "Cable"));
-    this.DataRoot.AddChannelList(new ChannelList(SignalSource.Sat | SignalSource.MaskTvRadioData, "Sat"));
+    this.DataRoot.AddChannelList(new ChannelList(SignalSource.Antenna | SignalSource.Tv | SignalSource.Radio, "Antenna"));
+    this.DataRoot.AddChannelList(new ChannelList(SignalSource.Cable | SignalSource.Tv | SignalSource.Radio, "Cable"));
+    this.DataRoot.AddChannelList(new ChannelList(SignalSource.Sat | SignalSource.Tv|SignalSource.Radio, "Sat"));
+#if DUMP
+    this.DataRoot.AddChannelList(new ChannelList(SignalSource.Antenna | SignalSource.Data, "Antenna Data"));
+    this.DataRoot.AddChannelList(new ChannelList(SignalSource.Cable | SignalSource.Data, "Cable Data"));
+    this.DataRoot.AddChannelList(new ChannelList(SignalSource.Sat | SignalSource.Data, "Sat Data"));
+#endif
+
     foreach (var list in this.DataRoot.ChannelLists)
     {
       var names = list.VisibleColumnFieldNames;
@@ -215,59 +198,70 @@ internal class IdtvChannelSerializer : SerializerBase
   {
     this.binFileData = File.ReadAllBytes(this.binFile);
 
+    var hdrMapping = new DataMapping(iniFile.GetSection("idtvChannel.bin"), binFileData);
+    var numRecords = hdrMapping.GetWord("offNumRecords");
+    var offMd5 = hdrMapping.GetOffsets("offMD5")[0];
+    var offsetRecords = hdrMapping.GetOffsets("offRecords")[0];
+
     // verify MD5 checksum
     var md5 = MD5.Create();
-    var hash = md5.ComputeHash(binFileData, 24, binFileData.Length - 24);
+    var hash = md5.ComputeHash(binFileData, offsetRecords, binFileData.Length - offsetRecords);
     int i;
     for (i = 0; i < 16; i++)
     {
-      if (binFileData[8 + i] != hash[i])
+      if (binFileData[offMd5 + i] != hash[i])
         throw LoaderException.Fail("Invalid MD5 checksum in " + binFile);
     }
 
-    using var strm = new MemoryStream(binFileData);
-    using var r = new BinaryReader(strm);
-
-    r.ReadBytes(2 + 2); // 00 00, 4b 09
-    var numRecords = r.ReadUInt16();
-    r.ReadBytes(2); // 00 00
-    r.ReadBytes(16); // md5
     i = 0;
 
 #if DUMP
-    log.AppendLine($"#\tname\tprogNr\tonid-tsid-sid\tflags\tlcn\tipf2");
+    log.AppendLine($"#\tname\tprogNr\tonid-tsid-sid\tfrontend\tflags\tlcn\tipf2");
 #endif
 
     // load data records and store them in the binChannelByInternalProviderFlag2 dictionary
-    var structSize = Marshal.SizeOf<IdtvChannel>();
-    while (strm.Position + structSize <= binFileData.Length)
+    var dvbMapping = new DataMapping(iniFile.GetSection("idtvChannel.bin_DvbRecord"));
+    dvbMapping.SetDataPtr(binFileData, offsetRecords);
+    while (dvbMapping.BaseOffset + 4 < binFileData.Length)
     {
-      var off = (int)strm.Position;
+      if (dvbMapping.GetWord("offRecordType") != 1)
+        throw LoaderException.Fail("Unsupported data record type found. Only type 1 (DVB) is supported");
 
-      // C# trickery to read binary data into a structure
-      var bytes = r.ReadBytes(structSize);
-      GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-      try
-      {
-        var chan = Marshal.PtrToStructure<IdtvChannel>(handle.AddrOfPinnedObject());
-        var name = Encoding.UTF8.GetString(r.ReadBytes(chan.RecordLength - 60));
+      var off = dvbMapping.BaseOffset;
+      var len = dvbMapping.GetWord("offRecordSize");
+      var channelNameLengthCustom = dvbMapping.GetByte("offCustomChannelNameLength");
+      var channelNameLengthSystem = dvbMapping.GetByte("offChannelNameLength");
+      dvbMapping.BaseOffset += 4 + len;
 
-        var key = (ushort)chan.InternalProviderFlag2;
+      var structSize = len - channelNameLengthCustom - channelNameLengthSystem;
+      var mapping = pool.GetMapping(structSize);
+      if (mapping == null)
+        throw LoaderException.Fail("Unsupported data record size: " + structSize);
+      
+      mapping.SetDataPtr(binFileData, off);
+      var offName = mapping.GetOffsets("offChannelNames")[0];
+      var nameCustom = Encoding.UTF8.GetString(binFileData, off + offName, channelNameLengthCustom);
+      var nameSystem = Encoding.UTF8.GetString(binFileData, off + offName + channelNameLengthCustom, channelNameLengthSystem);
+      var name = nameCustom != "" ? nameCustom : nameSystem;
+      var key = mapping.GetWord("offInternalProviderFlag2");
 
-        if (this.binChannelByInternalProviderFlag2.TryGetValue(key, out var ch))
-          throw LoaderException.Fail($"{binFile} channel records {ch.Index} and {i} have duplicate internal_provider_flag2 value {key}.");
+      if (this.binChannelByInternalProviderFlag2.TryGetValue(key, out var ch))
+        throw LoaderException.Fail($"{binFile} channel records {ch.Index} and {i} have duplicate internal_provider_flag2 value {key}.");
 
-        this.binChannelByInternalProviderFlag2.Add(key, new BinChannelEntry(i, chan, name, off));
+      var chan = new BinChannelEntry(i, off, len, name, mapping);
+      this.binChannelByInternalProviderFlag2.Add(key, chan);
 
 #if DUMP
-        var progNr = chan.ProgNr;
-        log.AppendLine($"{i}\t{name}\t{progNr}\t{chan.Onid}-{chan.Tsid}-{chan.Sid}\t0x{(ushort)chan.Flags:X4}\t{chan.Lcn}\t{chan.InternalProviderFlag2}");
+      var progNr = chan.Mapping.GetWord("offProgNr");
+      var onid = chan.Mapping.GetWord("offOnid");
+      var tsid = chan.Mapping.GetWord("offTsid");
+      var sid = chan.Mapping.GetWord("offSid");
+      var lcn = chan.Mapping.GetWord("offLcn");
+      var ipf2 = chan.Mapping.GetWord("offInternalProviderFlag2");
+      var frontend = chan.Mapping.GetWord("offFrontendType");
+      var flags = chan.Mapping.GetDword("offFlags");
+      log.AppendLine($"{i}\t{name}\t{progNr}\t{onid}-{tsid}-{sid}\t{frontend}\t0x{flags:X4}\t{lcn}\t{ipf2}");
 #endif
-      }
-      finally
-      {
-        handle.Free();
-      }
 
       ++i;
     }
@@ -280,6 +274,10 @@ internal class IdtvChannelSerializer : SerializerBase
   #region ReadChannelsFromDatabase()
   private void ReadChannelsFromDatabase(SqliteCommand cmd)
   {
+    // repair broken database file
+    cmd.CommandText = "reindex";
+    cmd.ExecuteNonQuery();
+
     cmd.CommandText = "select * from channels where type in ('TYPE_DVB_S','TYPE_DVB_C','TYPE_DVB_T','TYPE_DVB_T2') order by _id";
     using var r = cmd.ExecuteReader();
 
@@ -302,18 +300,22 @@ internal class IdtvChannelSerializer : SerializerBase
       SignalSource signalSource = 0;
       switch (type)
       {
-        case "TYPE_DVB_C":
+        case "TYPE_DVB_C": // input_type=0
           signalSource |= SignalSource.Cable;
           break;
-        case "TYPE_DVB_S":
+        case "TYPE_DVB_S": // input_type=2
           signalSource |= SignalSource.Sat;
           break;
-        case "TYPE_DVB_T":
+        case "TYPE_DVB_T": 
+        case "TYPE_DVB_T2": // input_type=1
           signalSource |= SignalSource.Antenna;
           break;
-        case "TYPE_DVB_T2":
-          signalSource |= SignalSource.Antenna;
-          break;
+        // IP channels are excluded by the query above. They don't have a display_number nor a channel_index nor any other ordering
+        // case "TYPE_PREVIEW": // input_type=10
+        // case "TYPE_OTHER": // input_type=10
+        //default:
+        //  signalSource |= SignalSource.Ip;
+        //  break;
       }
 
       switch (svcType)
@@ -324,7 +326,8 @@ internal class IdtvChannelSerializer : SerializerBase
         case "SERVICE_TYPE_AUDIO_VIDEO":
           signalSource |= SignalSource.Tv;
           break;
-        default:
+        // "SERVICE_TYPE_OTHER":
+        default: 
           signalSource |= SignalSource.Data;
           break;
       }
@@ -332,13 +335,13 @@ internal class IdtvChannelSerializer : SerializerBase
       var ch = new DbChannel(signalSource, id, progNr, name);
       ch.Lock = r.GetBoolean(cols["locked"]);
       ch.Skip = !r.GetBoolean(cols["browsable"]);
-      ch.Hidden = !r.GetBoolean(cols["searchable"]);
+      ch.Hidden = !r.GetBoolean(cols["si_browsable"]);
       ch.Encrypted = r.GetBoolean(cols["scrambled"]);
 
       ch.OriginalNetworkId = r.GetInt32(cols["original_network_id"]);
       ch.TransportStreamId = r.GetInt32(cols["transport_stream_id"]);
       ch.ServiceId = r.GetInt32(cols["service_id"]);
-      ch.FreqInMhz = r.GetInt64(cols["internal_provider_flag1"]) / 1000; // for DVB-S it is in MHz, for DVB-C/T it is in kHz
+      ch.FreqInMhz = (int)(r.GetInt64(cols["internal_provider_flag1"]) / 1000); // for DVB-S it is in MHz, for DVB-C/T it is in kHz
       if (ch.FreqInMhz >= 13000)
         ch.FreqInMhz /= 1000;
       ch.SymbolRate = r.GetInt32(cols["internal_provider_flag4"]) / 1000;
@@ -376,14 +379,14 @@ internal class IdtvChannelSerializer : SerializerBase
   #region ValidateChannelData()
   private void ValidateChannelData(DbChannel ch, BinChannelEntry entry)
   {
-    var chan = entry.Channel;
+    entry.Mapping.SetDataPtr(binFileData, entry.StartOffset);
     var name = entry.Name;
     var i = entry.Index;
 
-    var freq = chan.Freq / 1000;
+    var freq = entry.Mapping.GetDword("offFreq") / 1000;
     if (freq >= 13000)
       freq /= 1000;
-    var symRate = chan.SymRate / 1000;
+    var symRate = entry.Mapping.GetDword("offSymRate") / 1000;
 
     //var progNr = chan.ProgNr;
     //if (ch.OldProgramNr != progNr) // multiple .db rows with different display_number can reference the same .db row, so skip this check
@@ -395,14 +398,16 @@ internal class IdtvChannelSerializer : SerializerBase
     if (Math.Abs(ch.SymbolRate - symRate) > 2)
       throw LoaderException.Fail($"mismatching symbol rate between tv.db _id {ch.RecordIndex} ({ch.SymbolRate}) and idtvChannel.bin record {i} ({symRate})");
 
-    if (ch.Encrypted != ((chan.Flags & Flags.Encrypted) != 0))
+    var flags = (uint)entry.Mapping.GetDword("offFlags");
+    if (ch.Encrypted != ((flags & iniSec.GetInt("maskCrypt")) != 0))
       log.AppendLine($"mismatching crypt-flag between tv.db _id {ch.RecordIndex} ({ch.Encrypted}) and idtvChannel.bin record {i}");
-    if (ch.Skip != ((chan.Flags & Flags.Skip) != 0)) // it seems running a DVB-C search will alter the "browsable" flag of already existing DVB-S channels
+    if (ch.Skip != ((flags & iniSec.GetInt("maskSkip")) != 0)) // it seems running a DVB-C search will alter the "browsable" flag of already existing DVB-S channels
       log.AppendLine($"mismatching browsable-flag between tv.db _id {ch.RecordIndex} ({ch.Skip}) and idtvChannel.bin record {i}");
-    if ((ch.Favorites == 0) != ((chan.Flags & Flags.IsFavorite) == 0))
+    if ((ch.Favorites == 0) != ((flags & iniSec.GetInt("maskFav")) == 0))
       log.AppendLine($"mismatching favorites-info between tv.db _id {ch.RecordIndex} ({ch.Favorites}) and idtvChannel.bin record {i}");
 
-    ch.AddDebug((ushort)chan.Flags);
+    ch.AddDebug(flags);
+    ch.AddDebug(" @" + i);
   }
   #endregion
 
@@ -443,41 +448,49 @@ internal class IdtvChannelSerializer : SerializerBase
     newToOld = this.binChannelByInternalProviderFlag2.Keys.ToList();
     newToOld.Sort((a, b) =>
     {
-      var entry1 = this.binChannelByInternalProviderFlag2[a];
-      var entry2 = this.binChannelByInternalProviderFlag2[b];
+      var binChan1 = this.binChannelByInternalProviderFlag2[a];
+      var binChan2 = this.binChannelByInternalProviderFlag2[b];
 
-      // all sat channels must come first before cable/antenna channels
-      var freq1 = entry1.Channel.Freq;
-      var freq2 = entry2.Channel.Freq;
-      var c = (freq1 < 14000000 ? 0 : 1).CompareTo(freq2 < 14000000 ? 0 : 1); // hack: Sat has values below 14 000 000 (in kHz), Cable/antenna above (in Hz)
+      // channels must be sorted primarily by the frontend (sat, cable, antenna)
+      var m = binChan1.Mapping;
+      m.SetDataPtr(binFileData, binChan1.StartOffset);
+      var frontend1 = m.GetWord("offFrontendType"); // 1=sat, 2=cable, 4=antenna
+      var flags1 = (uint)m.GetDword("offFlags");
+      
+      m = binChan2.Mapping;
+      m.SetDataPtr(binFileData, binChan2.StartOffset);
+      var frontend2 = m.GetWord("offFrontendType");
+      var flags2 = (uint)m.GetDword("offFlags");
+
+      var c = frontend1.CompareTo(frontend2);
       if (c != 0)
         return c;
 
-      channelDict.TryGetValue(a, out var ch1);
-      channelDict.TryGetValue(b, out var ch2);
-
-      // existing channels first (TV, radio), non-existing ones last (data)
-      if (ch1 == null && ch2 == null)
-        return a.CompareTo(b);
-      if (ch2 == null)
-        return -1;
-      if (ch1 == null)
-        return +1;
-
       // group TV/Radio/Data
-      var ss1 = GetSignalSource(ch1, a);
-      var ss2 = GetSignalSource(ch2, b);
+      var ss1 = GetSignalSource(flags1);
+      var ss2 = GetSignalSource(flags2);
       c = ((int)ss1).CompareTo((int)ss2);
       if (c != 0)
         return c;
 
+      channelDict.TryGetValue(a, out var dbChan1);
+      channelDict.TryGetValue(b, out var dbChan2);
+
+      // in tv.db existing channels first (typically TV, radio), non-existing ones last (typically data)
+      if (dbChan1 == null && dbChan2 == null)
+        return binChan1.Index.CompareTo(binChan2.Index); // if neither is in the tv.db, keep their original order
+      if (dbChan2 == null)
+        return -1;
+      if (dbChan1 == null)
+        return +1;
+
       // lower display number first
-      c = ch1.NewProgramNr.CompareTo(ch2.NewProgramNr);
+      c = dbChan1.NewProgramNr.CompareTo(dbChan2.NewProgramNr);
       if (c != 0)
         return c;
 
       // keep previous order
-      return a.CompareTo(b); 
+      return binChan1.Index.CompareTo(binChan2.Index); 
     });
 
     // create reverse mapping
@@ -487,18 +500,15 @@ internal class IdtvChannelSerializer : SerializerBase
 
     channelMap = channelDict;
 
-    SignalSource GetSignalSource(DbChannel channel, ushort internalProviderFlag2)
+    int GetSignalSource(uint flags)
     {
-      if (channel != null)
-        return channel.SignalSource;
-      var binEntry = this.binChannelByInternalProviderFlag2[internalProviderFlag2];
-     
-      var flags = binEntry.Channel.Flags;
-      if ((flags & Flags.Radio) != 0)
-        return SignalSource.Radio;
-      if ((flags & Flags.Data) != 0)
-        return SignalSource.Data;
-      return SignalSource.Tv;
+      if ((flags & iniSec.GetInt("maskHidden")) != 0) // all observed records always had Data and Hidden set together
+        return 3;
+      if ((flags & iniSec.GetInt("maskData")) != 0)
+        return 2;
+      if ((flags & iniSec.GetInt("maskRadio")) != 0)
+        return 1;
+      return 0;
     }
   }
   #endregion
@@ -523,50 +533,36 @@ internal class IdtvChannelSerializer : SerializerBase
   {
     // in-place update of channel data in the initially loaded binFileData
 
-    var offProgNr = (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.ProgNr));
-    var offFlags = (int)Marshal.OffsetOf<IdtvChannel>(nameof(IdtvChannel.Flags));
-
-    var w = new BinaryWriter(new MemoryStream(this.binFileData));
-
     foreach(var entry in channelMap)
     {
-      var dbc = entry.Value;
-
       if (!this.binChannelByInternalProviderFlag2.TryGetValue(entry.Key, out var binEntry))
         continue;
 
-      // update display_number
-      var filePosition = binEntry.StartOffset;
-      w.Seek(filePosition + offProgNr, SeekOrigin.Begin);
-      //w.Write(ch.NewProgramNr > 0 ? (ushort)ch.NewProgramNr : (ushort)0xFFFE); // deleted channels have -2 / 0xFFFE
-      w.Write(dbc.NewProgramNr);
+      var dbc = entry.Value;
 
+      // update display_number
+      binEntry.Mapping.SetDataPtr(binFileData, binEntry.StartOffset);
+      binEntry.Mapping.SetWord("offProgNr", dbc.NewProgramNr); // ch.NewProgramNr > 0 ? (ushort)ch.NewProgramNr : (ushort)0xFFFE); // deleted channels have -2 / 0xFFFE
 
       // update flags
-      var off = filePosition + offFlags;
-      var flags = BitConverter.ToUInt16(this.binFileData, off);
-      if (dbc.Favorites == 0)
-        flags = (ushort)(flags & ~(ushort)Flags.IsFavorite);
-      else
-        flags = (ushort)(flags | (ushort)Flags.IsFavorite);
-
-      if (dbc.Skip)
-        flags = (ushort)(flags | (ushort)Flags.Skip);
-      else
-        flags = (ushort)(flags & ~(ushort)Flags.Skip);
-
-      flags = (ushort)(flags & ~(ushort)Flags.Data); // Sky option channels can transformed from Data to TV and might otherwise be out-of-order in EPG and zapping
-
+      var flags = (uint)binEntry.Mapping.GetDword("offFlags");
+      SetFlag(ref flags, "maskFav", dbc.Favorites != 0);
+      SetFlag(ref flags, "maskSkip", dbc.Skip);
+      //SetFlag(ref flags, "maskData", false); // Sky option channels can mutate from Data to TV and might otherwise be out-of-order in EPG and zapping
       if (dbc.IsDeleted)
-        flags |= (ushort)Flags.Deleted;
-
-      flags |= (ushort)Flags.CustomProgNr;
-
-      w.Seek(filePosition + offFlags, SeekOrigin.Begin);
-      w.Write(flags);
+        SetFlag(ref flags, "maskDeleted", true);
+      SetFlag(ref flags, "maskCustomProgNr", false);
+      binEntry.Mapping.SetDword("offFlags", flags);
     }
-  
-    w.Flush();
+
+    void SetFlag(ref uint data, string maskName, bool set)
+    {
+      var mask = iniSec.GetInt(maskName);
+      if (set)
+        data |= (uint)mask;
+      else
+        data &= ~(uint)mask;
+    }
   }
   #endregion
 
@@ -581,7 +577,7 @@ internal class IdtvChannelSerializer : SerializerBase
       // TODO: this only works as long as channel name editing is not supported
       var entry = this.binChannelByInternalProviderFlag2[ipf2];
       var off = entry.StartOffset;
-      var recordLen = entry.Channel.RecordLength + 4;
+      var recordLen = entry.RecordLength + 4;
       mem.Write(this.binFileData, off, recordLen);
     }
 

@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Microsoft.Data.Sqlite;
 using ChanSort.Api;
 
@@ -142,7 +141,7 @@ namespace ChanSort.Loader.VisionEdge4K
     private void ReadChannels(SqliteCommand cmd)
     {
       int ixP = 0;
-      int ixST = ixP + 12;
+      int ixST = 12;
 
       cmd.CommandText = @"
 select 
