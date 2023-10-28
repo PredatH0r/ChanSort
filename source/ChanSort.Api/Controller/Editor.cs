@@ -524,5 +524,50 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region EnforceTvBeforeRadioBeforeData()
+    public bool EnforceTvBeforeRadioBeforeData()
+    {
+      bool hadOverlaps = false;
+
+      foreach (var list in this.DataRoot.ChannelLists)
+      {
+        // separate channels into lists for TV, radio and data
+        var listByServiceType = new List<ChannelInfo>[3]; // TV/Radio/Data, min/max
+        for (int i = 0; i < 3; i++)
+          listByServiceType[i] = new();
+
+        foreach (var ch in list.Channels)
+        {
+          if (ch.IsDeleted || ch.NewProgramNr < 0 || ch.IsProxy)
+            continue;
+          var serviceType = ch.SignalSource & SignalSource.MaskTvRadioData;
+          var i = serviceType == SignalSource.Tv ? 0 : serviceType == SignalSource.Radio ? 1 : 2;
+          listByServiceType[i].Add(ch);
+        }
+
+        // sort the lists by the new program number
+        for (int i=0; i<3; i++)
+          listByServiceType[i].Sort((a,b) => a.NewProgramNr.CompareTo(b.NewProgramNr));
+
+        // make sure that program numbers are strictly increasing (so that there are no overlaps between the tv/radio/data groups)
+        var lastNr = listByServiceType[0].Count == 0 ? 0 : listByServiceType[0].Last().NewProgramNr;
+        for (var i = 1; i <= 2; i++)
+        {
+          foreach (var ch in listByServiceType[i])
+          {
+            if (ch.NewProgramNr <= lastNr)
+            {
+              ch.NewProgramNr = ++lastNr;
+              hadOverlaps = true;
+            }
+            else
+              lastNr = ch.NewProgramNr;
+          }
+        }
+      }
+
+      return hadOverlaps;
+    }
+    #endregion
   }
 }

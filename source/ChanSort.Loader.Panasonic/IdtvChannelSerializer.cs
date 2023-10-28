@@ -133,6 +133,7 @@ internal class IdtvChannelSerializer : SerializerBase
 
     this.Features.FavoritesMode = FavoritesMode.Flags;
     this.Features.DeleteMode = DeleteMode.FlagWithPrNr;
+    this.Features.EnforceTvBeforeRadioBeforeData = true;
 
     this.DataRoot.AddChannelList(new ChannelList(SignalSource.Antenna | SignalSource.Tv | SignalSource.Radio, "Antenna"));
     this.DataRoot.AddChannelList(new ChannelList(SignalSource.Cable | SignalSource.Tv | SignalSource.Radio, "Cable"));

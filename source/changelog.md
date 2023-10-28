@@ -1,6 +1,10 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-10-28
+- improved tv.db/idtvChannel.bin support (e.g. Panasonic LSW500, LXW700)
+- fixed error when changing "Auto hide/unhide columns" option while no list is loaded
+
 2023-10-22
 - fixed loading .txt reference lists
 - added support for HB\_DATABASE\_\*.DBM channel lists with file size 74303

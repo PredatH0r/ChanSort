@@ -8,6 +8,7 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />

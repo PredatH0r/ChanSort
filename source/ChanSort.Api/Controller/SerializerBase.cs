@@ -37,6 +37,7 @@ namespace ChanSort.Api
       public bool CanHaveGaps { get; set; } = true;
       public bool EncryptedFlagEdit { get; set; }
       public DeleteMode DeleteMode { get; set; } = DeleteMode.NotSupported;
+      public bool EnforceTvBeforeRadioBeforeData { get; set; } = false;
 
 
       public FavoritesMode FavoritesMode

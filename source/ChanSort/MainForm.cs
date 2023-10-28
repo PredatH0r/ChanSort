@@ -891,6 +891,8 @@ namespace ChanSort.Ui
           return;
         if (!this.PromptHandlingOfUnsortedChannels())
           return;
+        if (this.currentTvSerializer.Features.EnforceTvBeforeRadioBeforeData)
+          this.Editor.EnforceTvBeforeRadioBeforeData();
         this.SaveTvDataFile();
         this.DataRoot.NeedsSaving = false;
         this.RefreshGrid(this.gviewLeft, this.gviewRight);
@@ -1613,18 +1615,21 @@ namespace ChanSort.Ui
       }
 
       // add custom columns used in the current channel list
-      foreach (var field in this.CurrentChannelList.VisibleColumnFieldNames)
+      if (this.CurrentChannelList != null)
       {
-        if (!field.StartsWith("+"))
-          continue;
-        var col = gview.Columns[field];
-        if (col != null)
-          continue;
-        col = gview.Columns.AddField(field);
-        col.Caption = field.Substring(1);
-        col.FieldName = field;
-        col.UnboundDataType = typeof(string);
-        col.VisibleIndex = visIndex++;
+        foreach (var field in this.CurrentChannelList.VisibleColumnFieldNames)
+        {
+          if (!field.StartsWith("+"))
+            continue;
+          var col = gview.Columns[field];
+          if (col != null)
+            continue;
+          col = gview.Columns.AddField(field);
+          col.Caption = field.Substring(1);
+          col.FieldName = field;
+          col.UnboundDataType = typeof(string);
+          col.VisibleIndex = visIndex++;
+        }
       }
 
       --this.ignoreEvents;
