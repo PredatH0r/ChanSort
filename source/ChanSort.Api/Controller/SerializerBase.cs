@@ -230,7 +230,7 @@ namespace ChanSort.Api
     }
     #endregion
 
-    #region ParseInt()
+    #region ParseLong()
     protected long ParseLong(string input)
     {
       if (string.IsNullOrWhiteSpace(input))

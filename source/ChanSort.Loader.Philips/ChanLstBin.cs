@@ -58,10 +58,16 @@ namespace ChanSort.Loader.Philips
       off += 4;
 
       if (modelNameLen >= 1)
-        this.ModelName = Encoding.ASCII.GetString(content, off, modelNameLen-1);
+        this.ModelName = Encoding.ASCII.GetString(content, off, modelNameLen).TrimEnd('\0');
       off += modelNameLen;
 
       log?.Invoke($"Philips TV model: {this.ModelName}\nFile format version: {VersionMajor}.{VersionMinor}\n\n");
+
+      if (VersionMajor >= 120)
+      {
+        LoadVersion120OrLater(path);
+        return;
+      }
 
       var baseDir = Path.GetDirectoryName(path) ?? "";
       var relPath = "/channellib/";
@@ -86,19 +92,76 @@ namespace ChanSort.Loader.Philips
         }
       }
 
-      this.Validate(path);
+      this.Validate(path, false);
     }
 
-    private void Validate(string chanLstBinPath)
+    private class V120Info
+    {
+      public readonly int Offset;
+      public readonly string Filename;
+      public readonly int BytesBeforeChecksum;
+      public readonly string SubDir;
+
+      public V120Info(int offset, string filename, int bytesBeforeChecksum, string subDir)
+      {
+        this.Offset = offset;
+        this.Filename = filename;
+        this.BytesBeforeChecksum = bytesBeforeChecksum;
+        this.SubDir = subDir;
+      }
+    }
+
+    private void LoadVersion120OrLater(string path)
+    {
+      // starting with version 120, the chanLst.bin
+      // - no longer includes a 0x00 terminating character as part of the file name
+      // - has a random number of 0x00 bytes following the file name (0-3) (2 after DVBT, 3 after DVBC, 0 after DVBSall, 1 after Favorite)
+      // - only stores 1 byte for the length of "/s2channellib/" instead of 4
+      // - only stores the lower 8 bits of the CRC16-Modbus
+      // This format required a tailor-made implementation with the exact byte layout
+
+      if (content.Length != 118)
+        throw LoaderException.Fail($"chanLst.bin has an unsupported size");
+
+      var entries = new List<V120Info>
+      {
+        new V120Info(0x29, "DVBT.xml", 2, "/channellib/"),
+        new V120Info(0x38, "DVBC.xml", 3, "/channellib/"),
+        new V120Info(0x58, "DVBSall.xml", 0, "/s2channellib/"),
+        new V120Info(0x68, "Favorite.xml", 1, ""),
+      };
+
+
+      foreach(var entry in entries )
+      {
+        var off = entry.Offset;
+        var fileName = Encoding.ASCII.GetString(content, off, entry.Filename.Length);
+        if (fileName != entry.Filename)
+          throw LoaderException.Fail("Entry in chanLst.bin doesn't match expected data");
+        
+        var newPath = entry.SubDir + fileName;
+        crcOffsetByRelPath[newPath] = off + entry.Filename.Length + entry.BytesBeforeChecksum;
+      }
+
+      this.Validate(path, true);
+    }
+
+    private void Validate(string chanLstBinPath, bool onlyLower8Bits)
     {
       var baseDir = Path.GetDirectoryName(chanLstBinPath);
       string errors = "";
       foreach (var entry in crcOffsetByRelPath)
       {
         var crcOffset = entry.Value;
-        var expectedCrc = BitConverter.ToUInt16(this.content, crcOffset);
-        if (expectedCrc == 0)
-          continue;
+        int expectedCrc;
+        if (onlyLower8Bits)
+          expectedCrc = this.content[crcOffset];
+        else
+        {
+          expectedCrc = BitConverter.ToUInt16(this.content, crcOffset);
+          if (expectedCrc == 0)
+            continue;
+        }
 
         var filePath = baseDir + entry.Key;
         if (!File.Exists(filePath))
@@ -115,6 +178,8 @@ namespace ChanSort.Loader.Philips
         //  length = 0x0140000;
 
         var actualCrc = Crc16.Modbus(data, 0, length);
+        if (onlyLower8Bits)
+          actualCrc &= 0x00FF;
         if (actualCrc != expectedCrc)
         {
           var msg = $"chanLst.bin: stored CRC for {entry.Key} is {expectedCrc:X4} but calculated {actualCrc:X4}";
@@ -163,7 +228,8 @@ namespace ChanSort.Loader.Philips
         var crc = Crc16.Modbus(data, 0, length);
         var off = entry.Value;
         content[off] = (byte) crc;
-        content[off + 1] = (byte) (crc >> 8);
+        if (VersionMajor < 120)
+          content[off + 1] = (byte) (crc >> 8);
       }
       File.WriteAllBytes(chanLstBinPath, content);
     }

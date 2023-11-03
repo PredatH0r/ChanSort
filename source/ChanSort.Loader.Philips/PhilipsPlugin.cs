@@ -73,9 +73,13 @@ namespace ChanSort.Loader.Philips
      * e.g. 65PUS8535/12, 55PUS7334/12
      *
      * version 115.0
-     * same as 110.0
+     * same as 105.0
      *
-     * Version 0.1 and 100-115 are XML based and loaded through the XmlSerializer.
+     * version 120.0
+     * same as 105 plus additional ChannelList\MtkChannelList.xml
+     * 
+     *
+     * Version 0.1 and 100-120 are XML based and loaded through the XmlSerializer.
      * Version 1.1 and 1.2 are loaded through the BinSerializer.
      * Version 0.0, 11.1 and 45.1 are not supported yet.
      */
@@ -131,7 +135,7 @@ namespace ChanSort.Loader.Philips
         }
       }
 
-      if (majorVersion == 0 || majorVersion >= 100 && majorVersion <= 115)
+      if (majorVersion == 0 || majorVersion >= 100 && majorVersion <= 120)
         return new XmlSerializer(inputFile);
       if (majorVersion == 1 || majorVersion == 2 || majorVersion == 30 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
         return new BinarySerializer(inputFile);

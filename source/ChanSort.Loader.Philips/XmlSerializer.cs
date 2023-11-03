@@ -426,7 +426,7 @@ namespace ChanSort.Loader.Philips
           data.Add(attr.LocalName, attr.Value);
       }
 
-      if (!data.ContainsKey("UniqueID") || !int.TryParse(data["UniqueID"], out var uniqueId)) // UniqueId only exists in ChannelMap_105 and later
+      if (!data.ContainsKey("UniqueID") || !long.TryParse(data["UniqueID"], out var uniqueId)) // UniqueId only exists in ChannelMap_105 and later
         uniqueId = rowId;
       var chan = new Channel(curList.SignalSource & SignalSource.MaskBcast, rowId, uniqueId, setupNode);
       chan.OldProgramNr = -1;
@@ -478,7 +478,7 @@ namespace ChanSort.Loader.Philips
       chan.RawName = data.TryGet("ChannelName");
       chan.Name = DecodeName(chan.RawName);
       chan.Lock = data.TryGet("ChannelLock") == "1";
-      chan.Hidden = data.TryGet("UserHidden") == "1";
+      chan.Hidden = data.TryGet("UserHidden") == "1"; // can be "3" instead of "0", at least in format 120
       var fav = ParseInt(data.TryGet("FavoriteNumber"));
       chan.SetOldPosition(1, fav == 0 ? -1 : fav);
       chan.OriginalNetworkId = ParseInt(data.TryGet("Onid"));
@@ -487,13 +487,23 @@ namespace ChanSort.Loader.Philips
       chan.FreqInMhz = ParseInt(data.TryGet("Frequency")); ;
       if (chan.FreqInMhz > 2000 && (chan.SignalSource & SignalSource.Sat) == 0)
         chan.FreqInMhz /= 1000;
-      
+
+      // version 120 stores actual DVB ServiceType values, earlier versions only 1=TV, 2=Radio
       var st = ParseInt(data.TryGet("ServiceType"));
-      chan.ServiceTypeName = st == 1 ? "TV" : "Radio";
-      if (st == 1)
-        chan.SignalSource |= SignalSource.Tv;
+      if (chanLstBin != null && chanLstBin.VersionMajor >= 120)
+      {
+        chan.ServiceType = st;
+        chan.ServiceTypeName = LookupData.Instance.GetServiceTypeDescription(st);
+        chan.SignalSource |= LookupData.Instance.IsRadioTvOrData(st);
+      }
       else
-        chan.SignalSource |= SignalSource.Radio;
+      {
+        chan.ServiceTypeName = st == 1 ? "TV" : "Radio";
+        if (st == 1)
+          chan.SignalSource |= SignalSource.Tv;
+        else
+          chan.SignalSource |= SignalSource.Radio;
+      }
 
       chan.Source = (chan.SignalSource & SignalSource.Sat) != 0 ? "DVB-S" : (chan.SignalSource & SignalSource.Cable) != 0 ? "DVB-C" : (chan.SignalSource & SignalSource.Antenna) != 0 ? "DVB-T" : "";
       chan.SignalSource |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType);
@@ -528,19 +538,21 @@ namespace ChanSort.Loader.Philips
           {
             favChannels.Channels.Add(chan);
             for (int i=0; i<this.DataRoot.FavListCount; i++)
-              chan.SetOldPosition(i+1, -1);
+              chan.SetOldPosition(i + 1, -1);
           }
         }
       }
+
+      var startNrBias = (chanLstBin?.VersionMajor ?? 0) >= 120 ? 0 : +1;
 
       foreach (XmlNode child in node.ChildNodes)
       {
         if (child.LocalName == "FavoriteChannel")
         {
-          var uniqueId = ParseInt(child["UniqueID"].InnerText);
+          var uniqueId = ParseLong(child["UniqueID"].InnerText);
           var favNumber = ParseInt(child["FavNumber"].InnerText);
-          var chan = this.favChannels.Channels.FirstOrDefault(ch => ch.RecordIndex == uniqueId);
-          chan?.SetOldPosition(index, favNumber + 1);
+          var chan = this.favChannels.Channels.FirstOrDefault(ch => ch.RecordIndex == uniqueId && ch.GetOldPosition(index) <= 0);
+          chan?.SetOldPosition(index, favNumber + startNrBias);
         }
       }
     }
@@ -555,15 +567,21 @@ namespace ChanSort.Loader.Philips
       // according to https://github.com/PredatH0r/ChanSort/issues/347 Philips seems to not use UTF 16, but instead use locale dependent encoding and
       // writing "0xAA 0x00" to the file for an 8 bit code point. At least for the favorite list captions. Congratulations, well done!
 
+      // In version 120 umlauts in channel names are encoded as 1 byte CP-1252 (= low byte UTF16) code point + 0xFF as the second byte
+
       var hexParts = input.Split(' ');
       var buffer = new MemoryStream();
 
+      bool highByte = false;
       foreach (var part in hexParts)
       {
         if (part == "")
           continue;
         var val = (byte)ParseInt(part);
+        if (highByte && val == 0xff) // hack-around for version 120
+          val = 0;
         buffer.WriteByte(val);
+        highByte = !highByte;
       }
 
       return Encoding.Unicode.GetString(buffer.GetBuffer(), 0, (int) buffer.Length).TrimEnd('\x0');
@@ -573,7 +591,11 @@ namespace ChanSort.Loader.Philips
     #region GetDataFilePaths()
     public override IEnumerable<string> GetDataFilePaths()
     {
-      return this.fileDataList.Select(f => f.path);
+      var list = new List<string>();
+      if (this.chanLstBin != null)
+        list.Add(this.FileName);
+      list.AddRange(this.fileDataList.Select(f => f.path));
+      return list;
     }
     #endregion
 
@@ -596,7 +618,7 @@ namespace ChanSort.Loader.Philips
       // The official Philips Editor 6.61.22 does not reorder the XML nodes and does not change dtv_cmdb_*.bin when editing a ChannelMap_100 folder. But it is unclear if this editor is designed to handle the cmdb flavor.
       
       // A user with a ChannelMap_100 export including a dtv_cmdb_2.bin reported, that the TV shows the reordered list in the menu, but tunes the channels based on the original numbers.
-      // It's unclear if that happenes because the XML was reordered and out-of-sync with the .bin, or if the TV always uses the .bin for tuning and XML edits are moot.
+      // It's unclear if that happens because the XML was reordered and out-of-sync with the .bin, or if the TV always uses the .bin for tuning and XML edits are moot.
       // On top of that this TV messed up Umlauts during the import, despite ChanSort writing the exact same name data in hex-encoded UTF16. The result was as if the string was exported as UTF-8 bytes and then parsed with an 8-bit code page.
       var reorderNodes = this.iniMapSection?.GetBool("reorderRecordsByChannelNumber") ?? false;
 
@@ -666,7 +688,7 @@ namespace ChanSort.Loader.Philips
       }
 
       setup["ChannelLock"].Value = ch.Lock ? "1" : "0";
-      setup["UserHidden"].Value = ch.Hidden ? "1" : "0";
+      setup["UserHidden"].Value = ch.Hidden ? "1" : iniMapSection.GetInt("userHiddenDefaultValue", 0).ToString();
 
       // ChannelMap_100 supports a single fav list and stores the favorite number directly in the channel.
       // The official Philips editor allows to reorder favorites when switched to the "Favourite" list view
@@ -726,18 +748,39 @@ namespace ChanSort.Loader.Philips
             attr.InnerText = (version + 1).ToString();
         }
 
+        var startNrBias = (chanLstBin?.VersionMajor ?? 0) >= 120 ? 0 : -1;
+        var uniqueIdFormat = (chanLstBin?.VersionMajor ?? 0) >= 120 ? "d10" : "d"; // v120 writes 10 digits as uniqueID, including leading zeros
+
         foreach (var ch in favChannels.Channels.OrderBy(ch => ch.GetPosition(index)))
         {
           var nr = ch.GetPosition(index);
           if (nr <= 0)
             continue;
           var uniqueIdNode = favFile.doc.CreateElement("UniqueID");
-          uniqueIdNode.InnerText = ch.RecordIndex.ToString();
+          uniqueIdNode.InnerText = ch.RecordIndex.ToString(uniqueIdFormat);
           var favNrNode = favFile.doc.CreateElement("FavNumber");
-          favNrNode.InnerText = (nr-1).ToString();
+          favNrNode.InnerText = (nr + startNrBias).ToString();
           var channelNode = favFile.doc.CreateElement("FavoriteChannel");
           channelNode.AppendChild(uniqueIdNode);
           channelNode.AppendChild(favNrNode);
+          
+          // Version 120 also stores a <ChannelType> element in the XML
+          if ((chanLstBin?.VersionMajor ?? 0) >= 120)
+          {
+            var chanTypeNode = favFile.doc.CreateElement("ChannelType");
+            string type = null;
+
+            if ((ch.SignalSource & SignalSource.Sat) != 0) type = "TYPE_DVB_S"; // observed
+            else if ((ch.SignalSource & SignalSource.Cable) != 0) type = "TYPE_DVB_C"; // fairly sure
+            else if ((ch.SignalSource & SignalSource.Antenna) != 0) type = "TYPE_DVB_T"; // could also be T2 maybe
+
+            if (type != null)
+            {
+              chanTypeNode.InnerText = type;
+              channelNode.AppendChild(chanTypeNode);
+            }
+          }
+          
           favListNode.AppendChild(channelNode);
         }
       }

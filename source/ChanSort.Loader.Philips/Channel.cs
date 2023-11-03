@@ -10,7 +10,7 @@ namespace ChanSort.Loader.Philips
       this.RecordOrder = (int)index;
     }
 
-    internal Channel(SignalSource source, int order, int rowId, XmlNode setupNode)
+    internal Channel(SignalSource source, int order, long rowId, XmlNode setupNode)
     {
       this.SignalSource = source;
       this.RecordOrder = order;
