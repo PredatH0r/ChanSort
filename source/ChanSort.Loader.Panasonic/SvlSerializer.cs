@@ -102,7 +102,7 @@ namespace ChanSort.Loader.Panasonic
       if (cypherMode == CypherMode.None)
         return this.FileName;
 
-      this.TempPath = Path.Combine(Path.GetDirectoryName(this.FileName) ?? "", Path.GetFileNameWithoutExtension(this.FileName) + "_decrypted.db"); //Path.GetTempFileName();
+      this.TempPath = Path.Combine(Path.GetDirectoryName(this.FileName) ?? "", Path.GetFileNameWithoutExtension(this.FileName) + $"_decrypted_{DateTime.Now:yyMMdd-HHmmss}.db"); //Path.GetTempFileName();
       this.DeleteTempPath();
 
       if (cypherMode == CypherMode.Encryption)

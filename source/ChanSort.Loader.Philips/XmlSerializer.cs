@@ -641,6 +641,7 @@ namespace ChanSort.Loader.Philips
       var padChannelNameBytes = this.iniMapSection?.GetBool("padChannelName", true) ?? true;
       var setFavoriteNumber = this.iniMapSection?.GetBool("setFavoriteNumber", false) ?? false;
       var userReorderChannel = this.iniMapSection?.GetString("userReorderChannel") ?? "";
+      var uppercaseHexDigits = !(this.iniMapSection?.GetBool("dvbXmlLowercaseHexDigits", false) ?? false);
 
       foreach (var channel in list.Channels)
       {
@@ -657,7 +658,7 @@ namespace ChanSort.Loader.Philips
         if (ch.Format == 1)
           this.UpdateRepairXml(ch);
         else if (ch.Format == 2)
-          this.UpdateChannelMapXml(ch, padChannelNameBytes, setFavoriteNumber, userReorderChannel);
+          this.UpdateChannelMapXml(ch, padChannelNameBytes, setFavoriteNumber, userReorderChannel, uppercaseHexDigits);
       }
     }
     #endregion
@@ -673,7 +674,7 @@ namespace ChanSort.Loader.Philips
     #endregion
 
     #region UpdateChannelMapXml()
-    private void UpdateChannelMapXml(Channel ch, bool paddedName, bool setFavoriteNumber, string userReorderChannel)
+    private void UpdateChannelMapXml(Channel ch, bool paddedName, bool setFavoriteNumber, string userReorderChannel, bool uppercaseHexDigits)
     {
       var setup = ch.SetupNode.Attributes;
       setup["ChannelNumber"].Value = ch.NewProgramNr.ToString();
@@ -681,7 +682,7 @@ namespace ChanSort.Loader.Philips
       if (ch.IsNameModified)
       {
 
-        setup["ChannelName"].InnerText = EncodeName(ch.Name, 50, paddedName, paddedName);
+        setup["ChannelName"].InnerText = EncodeName(ch.Name, 50, paddedName, uppercaseHexDigits);
         var attr = setup["UserModifiedName"];
         if (attr != null)
           attr.InnerText = "1";

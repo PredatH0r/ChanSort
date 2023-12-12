@@ -1,6 +1,11 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-12-12
+- fixed Panasonic svl.db / svl.db error "no such table SVL" when saving the list more than once
+- partial support for Philips ChannelMap_120 format. The TV will only import the reordered favorite  
+  list and keeps the order of the main list unchanged!
+
 2023-10-28
 - improved tv.db/idtvChannel.bin support (e.g. Panasonic LSW500, LXW700)
 - fixed error when changing "Auto hide/unhide columns" option while no list is loaded
