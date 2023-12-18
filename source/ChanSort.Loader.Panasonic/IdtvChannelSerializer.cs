@@ -396,7 +396,7 @@ internal class IdtvChannelSerializer : SerializerBase
       throw LoaderException.Fail($"mismatching name between tv.db _id {ch.RecordIndex} ({ch.Name}) and idtvChannel.bin record {i} ({name})");
     if (Math.Abs(ch.FreqInMhz - freq) > 2)
       throw LoaderException.Fail($"mismatching frequency between tv.db _id {ch.RecordIndex} ({ch.FreqInMhz}) and idtvChannel.bin record {i} ({freq})");
-    if (Math.Abs(ch.SymbolRate - symRate) > 2)
+    if ((ch.SignalSource & (SignalSource.DvbC|SignalSource.DvbS)) != 0 && Math.Abs(ch.SymbolRate - symRate) > 2) // DVB-T has symbol rate 0 in the .db file
       throw LoaderException.Fail($"mismatching symbol rate between tv.db _id {ch.RecordIndex} ({ch.SymbolRate}) and idtvChannel.bin record {i} ({symRate})");
 
     var flags = (uint)entry.Mapping.GetDword("offFlags");
