@@ -241,7 +241,7 @@ namespace ChanSort.Loader.Panasonic
 select s.rowid,s.major_channel,s.physical_ch,cast(s.sname as blob),t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
   profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery,ifnull(t.delivery_type, 0)
 from SVL s 
-left outer join TSL t on s.ntype=t.ntype and s.physical_ch=t.physical_ch and s.tsid=t.tsid
+left outer join TSL t on s.ntype=t.ntype and s.physical_ch=t.physical_ch and s.tsid=t.tsid and s.onid=t.onid
 order by s.ntype,major_channel
 ";
       

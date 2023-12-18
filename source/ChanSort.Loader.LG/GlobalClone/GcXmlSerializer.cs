@@ -30,6 +30,7 @@ namespace ChanSort.Loader.GlobalClone
       this.Features.CanSkipChannels = true;
       this.Features.CanLockChannels = true;
       this.Features.CanHideChannels = true;
+      this.Features.FavoritesMode = FavoritesMode.Flags; // will be overwritten when a <favoriteIdx> element is found
 
       this.DataRoot.AddChannelList(this.atvChannels);
       this.DataRoot.AddChannelList(this.dtvTvChannels);
@@ -329,7 +330,7 @@ namespace ChanSort.Loader.GlobalClone
               int n = info.LocalName[11] - 'A';
               var mask = 1 << n;
               this.Features.FavoritesMode = FavoritesMode.OrderedPerSource;
-              this.Features.MaxFavoriteLists = Math.Max(this.Features.MaxFavoriteLists, n);
+              this.Features.MaxFavoriteLists = Math.Max(this.Features.MaxFavoriteLists, n + 1);
               if (((int)ch.Favorites & mask) != 0) // xml element holds bad index data (250) when fav is not set
                 ch.SetOldPosition(n + 1, int.Parse(info.InnerText));
             }

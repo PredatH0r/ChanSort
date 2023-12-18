@@ -2407,6 +2407,35 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region tabSubList_MouseUp
+    private void tabSubList_MouseUp(object sender, MouseEventArgs e)
+    {
+      if (e.Button == MouseButtons.Right)
+      {
+        var list = this.CurrentChannelList;
+        if (list == null)
+          return;
+        if (this.currentTvSerializer?.Features.CanEditFavListNames != true)
+          return;
+        var hit = this.tabSubList.CalcHitInfo(e.Location);
+        if (hit.IsValid && hit.Page != null)
+        {
+          using var dlg = new TextInputForm();
+          dlg.StartPosition = FormStartPosition.Manual;
+          dlg.Location = this.tabSubList.PointToScreen(e.Location);
+          var favIndex = this.tabSubList.TabPages.IndexOf(hit.Page) - 1;
+          dlg.Text = list.GetFavListCaption(favIndex);
+          if (dlg.ShowDialog(this) == DialogResult.OK)
+          {
+            list.SetFavListCaption(favIndex, dlg.Text);
+            hit.Page.Text = list.GetFavListCaption(favIndex, true);
+          }
+        }
+      }
+    }
+
+    #endregion
+
     #region gview_CustomUnboundColumnData
 
     private void gview_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
@@ -3969,33 +3998,6 @@ namespace ChanSort.Ui
     private void grpInputList_Enter(object sender, EventArgs e)
     {
       this.SetActiveGrid(this.gviewRight);
-    }
-
-    #endregion
-
-    #region tabSubList_MouseUp
-    private void tabSubList_MouseUp(object sender, MouseEventArgs e)
-    {
-      if (e.Button == MouseButtons.Right)
-      {
-        var list = this.CurrentChannelList;
-        if (list == null)
-          return;
-        var hit = this.tabSubList.CalcHitInfo(e.Location);
-        if (hit.IsValid && hit.Page != null)
-        {
-          using var dlg = new TextInputForm();
-          dlg.StartPosition = FormStartPosition.Manual;
-          dlg.Location = this.tabSubList.PointToScreen(e.Location);
-          var favIndex = this.tabSubList.TabPages.IndexOf(hit.Page) - 1;
-          dlg.Text = list.GetFavListCaption(favIndex);
-          if (dlg.ShowDialog(this) == DialogResult.OK)
-          {
-            list.SetFavListCaption(favIndex, dlg.Text);
-            hit.Page.Text = list.GetFavListCaption(favIndex, true);
-          }
-        }
-      }
     }
 
     #endregion

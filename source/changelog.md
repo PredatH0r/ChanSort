@@ -1,6 +1,14 @@
 ﻿ChanSort Change Log 
 ===================
 
+2023-12-18
+- fixed loading Panasonic tv.db / idtvChannel.bin lists which contain DVB-T2 channels
+- fixed Panasonic svl.db/svl.bin lists that contained multiple transponder records with the same frequency
+- LG webOS4 lists only showed favorites A-G, missing out H
+- Favorite list names can now only be edited when the file formation actually supports it
+- Added a few missing translations in polish and italian language
+- added experimental support for Xoro DVB-C receiver HB\_DATABASE\_C.HBM format with file size 109720 (108KB)
+
 2023-12-12
 - fixed Panasonic svl.db / svl.db error "no such table SVL" when saving the list more than once
 - partial support for Philips ChannelMap_120 format. The TV will only import the reordered favorite  

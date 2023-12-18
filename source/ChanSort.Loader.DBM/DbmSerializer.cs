@@ -108,6 +108,9 @@ namespace ChanSort.Loader.DBM
     #region ValidateChecksum()
     private void ValidateChecksum()
     {
+      if (mapping.Settings.GetInt("offChecksum") < 0)
+        return;
+
       var expectedChecksum = BitConverter.ToUInt16(data, 0);
       var calculatedChecksum = CalcChecksum(data, sec.GetInt("offData"), (int)mapping.GetDword("offDataLength"));
       if (expectedChecksum != calculatedChecksum)
@@ -263,9 +266,13 @@ namespace ChanSort.Loader.DBM
         mapping.SetByte("offFavorites", fav);
       }
 
-      mapping.BaseOffset = 0;
-      var calculatedChecksum = CalcChecksum(data, sec.GetInt("offData"), (int)mapping.GetDword("offDataLength"));
-      mapping.SetWord("offChecksum", calculatedChecksum);
+      if (mapping.Settings.GetInt("offChecksum") >= 0)
+      {
+        mapping.BaseOffset = 0;
+        var calculatedChecksum = CalcChecksum(data, sec.GetInt("offData"), (int)mapping.GetDword("offDataLength"));
+        mapping.SetWord("offChecksum", calculatedChecksum);
+      }
+
       File.WriteAllBytes(this.FileName, this.data);
     }
     #endregion

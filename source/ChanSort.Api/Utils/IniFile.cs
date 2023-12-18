@@ -121,7 +121,7 @@ namespace ChanSort.Api
         }
 
         int.TryParse(value, out var intValue);
-        return intValue;
+        return sig * intValue;
       }
       #endregion
 

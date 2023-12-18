@@ -60,8 +60,20 @@ struct s_Channel
   word progNrMinus1;
   word lcn;
   byte u3[2];
-  word satelliteIndex;
-  word transponderIndex;
+  union
+  {
+    struct
+    {
+      word satelliteIndex;
+      word transponderIndex;
+    } dvbs;
+    struct
+    {
+      byte transponderIndex;
+      byte unknown;
+      word dummy;
+    } dvbc;
+  } transponder;
   byte u4[bytesBetweenTransponderIndexAndServiceType];
   e_ServiceType serviceType;
   e_Flags flags;
@@ -75,6 +87,7 @@ struct s_Channel
   byte u7[2];
   word pcrPidMaybe;
   word vpidMaybe;
+  word pmt;
 
   var off1 = current_offset;
   byte unk[channelRecordLength - (off1-off0)];
@@ -83,14 +96,16 @@ struct s_Channel
 
 public struct DBM
 {
+  var hasHeader = 1;
   var satBitmapLength = 0;
   var satRecordCount = 0;
   var satRecordLength = 0;
   var transponderBitmapLength = 0;
   var transponderRecordCount = 0;
   var transponderRecordLength = 0;
-  var unknownDataLength = 0;
+  var unknownDataAfterTransponderData = 0;
   var channelBitmapLength = 0;
+  var unknownDataAfterChannelBitmap = 0;
   var channelRecordCount = 0;
   var channelRecordLength = 0;
   var bytesBetweenTransponderIndexAndServiceType = 6;
@@ -101,16 +116,32 @@ public struct DBM
     // Renkforce 1510 C HD, Telestar digiHD TC 7
     satBitmapLength = 0;
     satRecordCount = 0;
-    satRecordLength = 84;
+    satRecordLength = 0;
     transponderBitmapLength = 16;
     transponderRecordCount = 100;
     transponderRecordLength = 36;
-    unknownDataLength = 22;
+    unknownDataAfterTransponderData = 22;
     channelBitmapLength = 50;
     channelRecordCount = 400;
     channelRecordLength = 176;
     bytesBetweenTransponderIndexAndServiceType = 2;
 	break;
+  case 109720:
+    // XORO DVB-C tuner
+    hasHeader = 0;
+    satBitmapLength = 0;
+    satRecordCount = 0;
+    satRecordLength = 0;
+    transponderBitmapLength = 16;
+    transponderRecordCount = 100;
+    transponderRecordLength = 40;
+    unknownDataAfterTransponderData = 22;
+    channelBitmapLength = 78;
+    unknownDataAfterChannelBitmap = 0;
+    channelRecordCount = 600;
+    channelRecordLength = 176;
+    bytesBetweenTransponderIndexAndServiceType = 2;
+    break;
   case 163772:
     // TechniSat DVB-C TS_Programmliste_06_01.DBM
     satBitmapLength = 0;
@@ -119,7 +150,7 @@ public struct DBM
     transponderBitmapLength = 16;
     transponderRecordCount = 100;
     transponderRecordLength = 36;
-    unknownDataLength = 22;
+    unknownDataAfterTransponderData = 22;
     channelBitmapLength = 126;
     channelRecordCount = 1000;
     channelRecordLength = 160;
@@ -133,7 +164,7 @@ public struct DBM
     transponderBitmapLength = 376;
     transponderRecordCount = 3000;
     transponderRecordLength = 36;
-    unknownDataLength = 22;
+    unknownDataAfterTransponderData = 22;
     channelBitmapLength = 502;
     channelRecordCount = 4000;
     channelRecordLength = 164;
@@ -146,7 +177,7 @@ public struct DBM
     transponderBitmapLength = 376;
     transponderRecordCount = 3000;
     transponderRecordLength = 36;
-    unknownDataLength = 20;
+    unknownDataAfterTransponderData = 20;
     channelBitmapLength = 500;
     channelRecordCount = 4000;
     channelRecordLength = 164;
@@ -159,7 +190,7 @@ public struct DBM
     transponderBitmapLength = 376;
     transponderRecordCount = 3000;
     transponderRecordLength = 40;
-    unknownDataLength = 22;
+    unknownDataAfterTransponderData = 22;
     channelBitmapLength = 502;
     channelRecordCount = 4000;
     channelRecordLength = 164;
@@ -172,7 +203,7 @@ public struct DBM
     transponderBitmapLength = 376;
     transponderRecordCount = 3000;
     transponderRecordLength = 36;
-    unknownDataLength = 22;
+    unknownDataAfterTransponderData = 22;
     channelBitmapLength = 626;
     channelRecordCount = 5000;
     channelRecordLength = 164;
@@ -181,9 +212,11 @@ public struct DBM
     $assert(false, "Structure for this file size is not supported");
     break;
   }
-	
-  word BytesumPlus0x55;
-  dword DataLengthForBytesum;
+
+  if (hasHeader != 0) {
+    word BytesumPlus0x55;
+    dword DataLengthForBytesum;
+  }
 
   byte SatelliteBitmap[satBitmapLength];
   s_Satellite SatelliteData[satRecordCount];
@@ -191,9 +224,12 @@ public struct DBM
   byte TransponderBitmap[transponderBitmapLength];
   s_Transponder TransponderData[transponderRecordCount];
 
-  byte unknown[unknownDataLength];
+  byte unknown[unknownDataAfterTransponderData];
 
   byte ChannelBitmap[channelBitmapLength];
+
+  byte unknown2[unknownDataAfterChannelBitmap];
+
   s_Channel ChannelData[channelRecordCount];
 
   byte Extra[*];
