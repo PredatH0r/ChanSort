@@ -179,30 +179,8 @@
   <data name="edFile.Properties.Buttons7" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="edFile.Properties.Buttons8" type="DevExpress.Utils.SuperToolTip, DevExpress.Utils.v23.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFpEZXZFeHByZXNzLlV0aWxzLnYyMy4xLCBWZXJzaW9uPTIzLjEu
-        Ni4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEMAwAAAFlE
-        ZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS42LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVi
-        bGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURldkV4cHJlc3MuVXRpbHMuU3VwZXJUb29s
-        VGlwBQAAAA1BbGxvd0h0bWxUZXh0EUZpeGVkVG9vbFRpcFdpZHRoCkl0ZW1zQ291bnQJaXRlbVR5cGUw
-        BWl0ZW0wBAAABAQfRGV2RXhwcmVzcy5VdGlscy5EZWZhdWx0Qm9vbGVhbgMAAAABCCVEZXZFeHByZXNz
-        LlV0aWxzLlN1cGVyVG9vbFRpcEl0ZW1UeXBlAgAAACFEZXZFeHByZXNzLlV0aWxzLlRvb2xUaXBUaXRs
-        ZUl0ZW0CAAAAAgAAAAX8////H0RldkV4cHJlc3MuVXRpbHMuRGVmYXVsdEJvb2xlYW4BAAAAB3ZhbHVl
-        X18ACAMAAAACAAAAAAEAAAAF+////yVEZXZFeHByZXNzLlV0aWxzLlN1cGVyVG9vbFRpcEl0ZW1UeXBl
-        AQAAAAd2YWx1ZV9fAAgCAAAAAQAAAAkGAAAADAcAAABRU3lzdGVtLkRyYXdpbmcsIFZlcnNpb249NC4w
-        LjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iMDNmNWY3ZjExZDUwYTNhBQYAAAAh
-        RGV2RXhwcmVzcy5VdGlscy5Ub29sVGlwVGl0bGVJdGVtBwAAAA1BbGxvd0h0bWxUZXh0BEljb24MSW1h
-        Z2VPcHRpb25zCkxlZnRJbmRlbnQITWF4V2lkdGgST3duZXJBbGxvd0h0bWxUZXh0BFRleHQEBAQAAAAB
-        H0RldkV4cHJlc3MuVXRpbHMuRGVmYXVsdEJvb2xlYW4DAAAAE1N5c3RlbS5EcmF3aW5nLkljb24HAAAA
-        KERldkV4cHJlc3MuVXRpbHMuVG9vbFRpcEl0ZW1JbWFnZU9wdGlvbnMCAAAACAgBAgAAAAH4/////P//
-        /wIAAAAKCQkAAAAAAAAAPAEAAAAGCgAAAAAFCQAAAChEZXZFeHByZXNzLlV0aWxzLlRvb2xUaXBJdGVt
-        SW1hZ2VPcHRpb25zBQAAAAhJbWFnZVVyaQxTdmdJbWFnZVNpemUJQWxpZ25tZW50CkltYWdlSW5kZXgT
-        SW1hZ2VUb1RleHREaXN0YW5jZQEEBAAAE1N5c3RlbS5EcmF3aW5nLlNpemUHAAAAJkRldkV4cHJlc3Mu
-        VXRpbHMuVG9vbFRpcEltYWdlQWxpZ25tZW50AgAAAAgIAgAAAAkKAAAABfX///8TU3lzdGVtLkRyYXdp
-        bmcuU2l6ZQIAAAAFd2lkdGgGaGVpZ2h0AAAICAcAAAAAAAAAAAAAAAX0////JkRldkV4cHJlc3MuVXRp
-        bHMuVG9vbFRpcEltYWdlQWxpZ25tZW50AQAAAAd2YWx1ZV9fAAgCAAAAAAAAAP////8OAAAACw==
-</value>
+  <data name="edFile.Properties.Buttons8" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="edFile.Properties.Buttons9" type="DevExpress.Utils.ToolTipAnchor, DevExpress.Utils.v23.1">
     <value>Default</value>
