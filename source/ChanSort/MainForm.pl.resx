@@ -250,7 +250,7 @@
     <value>Ponownie &amp; numeruj kanały</value>
   </data>
   <data name="miSort.Caption" xml:space="preserve">
-    <value>Kanały Sor &amp; t alfabetycznie</value>
+    <value>Sortuj &amp;kanały alfabetycznie</value>
   </data>
   <data name="miRenumFavByPrNr.Caption" xml:space="preserve">
     <value>Zmień numerację ulubionych według Pr#</value>
@@ -686,5 +686,14 @@
   </data>
   <data name="miConvert.Caption" xml:space="preserve">
     <value>Przekształć...</value>
+  </data>
+  <data name="miDeleteBackup.Caption" xml:space="preserve">
+    <value>Usuń pliki kopii zapasowej</value>
+  </data>
+  <data name="miMarkForSwapping.Caption" xml:space="preserve">
+    <value>Zaznacz do wymiany</value>
+  </data>
+  <data name="miSwapWithMarked.Caption" xml:space="preserve">
+    <value>Zamień z zaznaczonym</value>
   </data>
 </root>
