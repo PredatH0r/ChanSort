@@ -288,6 +288,95 @@ public struct dtv_cmdb_2_4419
 };
 
 
+// Awox U5600STR TV - 2691KB
+
+#undef channelSize
+#define channelSize 424
+#undef transponderSize
+#define transponderSize 60
+#undef satelliteSize
+#define satelliteSize 64
+
+struct Channel_2691
+{
+	var off0 = current_offset;
+	word channelIndex;
+	byte u1[11];
+	Flags flags;
+	byte u2;
+	ChannelType channelType;
+	word serviceType;
+	word fav;
+	word transponderIndex;
+	DvbId pmtPid;
+	word u3;
+	DvbId pcrPid;
+	DvbId videoPid;
+	word u4;
+	word programNr;
+	word serviceId;
+	byte u5[18];
+	DvbId audioPid;
+	byte u6[90];
+	char name[50];
+	char provider[52];
+	byte unk[channelSize - 4 - (current_offset - off0)];
+	dword bytesum;
+};
+
+struct Transponder_2691
+{
+	var off0 = current_offset;
+	word satelliteIndex;
+	word u1[2];
+	word tsid;
+	word onid;
+	word nid_maybe;
+	word u2;
+	word transpoderNumber;
+	word freqInMhz;
+	byte u3[10];
+	word symrate;
+	byte unk[transponderSize - (current_offset - off0)];
+};
+
+struct Satellite_2691
+{
+	var off0 = current_offset;
+	byte u1[2];
+	char name[32];
+	byte u2[2];
+	word lowFreq;
+	word highFreq;
+	byte unk[satelliteSize - (current_offset - off0)];
+};
+
+public struct dtv_cmdb_2_2691
+{
+	char magic[4];
+	word u1;
+	word u2;
+	byte channelBitmap[752];
+	Channel_2691 channels[6000];
+
+	byte transponderBitmap[376];
+	Transponder_2691 transponder[3000];
+
+	byte unknownBitmap[32];
+	struct {
+		word u1;
+		word onid;
+		byte unknownData[50];
+	} unknown[254];
+
+	byte satelliteBitmap[32];
+	Satellite_2691 satellites[254];
+
+	byte _0x30;
+};
+
+
+
 #undef channelSize
 #define channelSize 256
 #undef transponderSize

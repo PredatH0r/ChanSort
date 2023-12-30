@@ -17,6 +17,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="PhilipsXmlStatsCollector.cs" />
+    <None Include="TechnisatDecrypt.cs" />
     <None Include="WebOs5StatsCollector.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="PhilipsXmlStatsCollector.cs" />
+    <Compile Remove="TechnisatDecrypt.cs" />
     <Compile Remove="WebOs5StatsCollector.cs" />
   </ItemGroup>
 </Project>

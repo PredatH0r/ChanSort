@@ -37,70 +37,70 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Charts.v23.1.Core">
+    <Reference Include="DevExpress.Charts.v23.2.Core">
             
     </Reference>
-    <Reference Include="DevExpress.CodeParser.v23.1">
+    <Reference Include="DevExpress.CodeParser.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v23.1">
+    <Reference Include="DevExpress.Data.Desktop.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.Data.v23.1">
+    <Reference Include="DevExpress.Data.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.Drawing.v23.1">
+    <Reference Include="DevExpress.Drawing.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.Office.v23.1.Core">
+    <Reference Include="DevExpress.Office.v23.2.Core">
       
     </Reference>
-    <Reference Include="DevExpress.Pdf.v23.1.Core">
+    <Reference Include="DevExpress.Pdf.v23.2.Core">
       
     </Reference>
-    <Reference Include="DevExpress.PivotGrid.v23.1.Core">
+    <Reference Include="DevExpress.PivotGrid.v23.2.Core">
       
     </Reference>
-    <Reference Include="DevExpress.Printing.v23.1.Core">
+    <Reference Include="DevExpress.Printing.v23.2.Core">
       
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v23.1.Core">
+    <Reference Include="DevExpress.RichEdit.v23.2.Core">
       
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v23.1.Export">
+    <Reference Include="DevExpress.RichEdit.v23.2.Export">
       
     </Reference>
-    <Reference Include="DevExpress.Sparkline.v23.1.Core">
+    <Reference Include="DevExpress.Sparkline.v23.2.Core">
       
     </Reference>
-    <Reference Include="DevExpress.Utils.v23.1">
+    <Reference Include="DevExpress.Utils.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.Utils.v23.1.UI">
+    <Reference Include="DevExpress.Utils.v23.2.UI">
       
     </Reference>
-    <Reference Include="DevExpress.XtraBars.v23.1">
+    <Reference Include="DevExpress.XtraBars.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v23.1">
+    <Reference Include="DevExpress.XtraCharts.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v23.1.Wizard">
+    <Reference Include="DevExpress.XtraCharts.v23.2.Wizard">
       
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v23.1">
+    <Reference Include="DevExpress.XtraEditors.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.XtraGrid.v23.1">
+    <Reference Include="DevExpress.XtraGrid.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v23.1">
+    <Reference Include="DevExpress.XtraPrinting.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v23.1">
+    <Reference Include="DevExpress.XtraReports.v23.2">
       
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v23.1.Extensions">
+    <Reference Include="DevExpress.XtraReports.v23.2.Extensions">
       
     </Reference>
     <Reference Include="System.configuration" />
@@ -204,18 +204,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.Charts" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.CodeParser" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.Data.Desktop" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.PivotGrid.Core" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.Reporting.Core" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.RichEdit.Core" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.RichEdit.Export" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.Sparkline.Core" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.Utils" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.Utils.UI" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.Win" Version="23.1.7-pre-23323" />
-    <PackageReference Include="DevExpress.Win.Reporting" Version="23.1.7-pre-23323" />
+    <PackageReference Include="DevExpress.Charts" Version="23.2.3" />
+    <PackageReference Include="DevExpress.CodeParser" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Data.Desktop" Version="23.2.3" />
+    <PackageReference Include="DevExpress.PivotGrid.Core" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Reporting.Core" Version="23.2.3" />
+    <PackageReference Include="DevExpress.RichEdit.Core" Version="23.2.3" />
+    <PackageReference Include="DevExpress.RichEdit.Export" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Sparkline.Core" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Utils" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Utils.UI" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Win" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Win.Reporting" Version="23.2.3" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>

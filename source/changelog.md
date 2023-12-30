@@ -1,6 +1,9 @@
 ﻿ChanSort Change Log 
 ===================
 
+TBD
+- added support for Awox U5600STR TV (dtv_cmdb_2.bin with size of 2691 KB)
+
 2023-12-18
 - fixed loading Panasonic tv.db / idtvChannel.bin lists which contain DVB-T2 channels
 - fixed Panasonic svl.db/svl.bin lists that contained multiple transponder records with the same frequency
