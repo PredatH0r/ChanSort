@@ -121,24 +121,24 @@
     <value>Ordina per:</value>
   </data>
   <data name="rbSortByNumber.Properties.Caption" xml:space="preserve">
-    <value>Numero </value>
+    <value>Numero</value>
   </data>
   <data name="rbSortByName.Properties.Caption" xml:space="preserve">
-    <value>Nome </value>
+    <value>Nome</value>
   </data>
   <data name="labelControl2.Text" xml:space="preserve">
     <value>Carattere:</value>
   </data>
-  <data name="fontEdit1.EditValue" xml:space="preserve">
-    <value>Tahoma</value>
-  </data>
   <data name="btnPreview.Text" xml:space="preserve">
-    <value>Anteprima…</value>
+    <value>Anteprima...</value>
   </data>
   <data name="btnCancel.Text" xml:space="preserve">
     <value>Annulla</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Opzioni di stampa</value>
+  </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Colonne:</value>
   </data>
 </root>

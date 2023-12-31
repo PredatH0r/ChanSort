@@ -138,7 +138,7 @@
   <data name="rbSortByNumber.Properties.Caption" xml:space="preserve">
     <value>Číslo</value>
   </data>
-  <data name="fontEdit1.EditValue" xml:space="preserve">
-    <value>Tahoma</value>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Sloupek:</value>
   </data>
 </root>

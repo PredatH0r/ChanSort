@@ -138,4 +138,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Opciones de impresión</value>
   </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Columnas:</value>
+  </data>
 </root>

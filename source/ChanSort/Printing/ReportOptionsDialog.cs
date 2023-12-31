@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using ChanSort.Api;
-using ChanSort.Ui.Properties;
 using DevExpress.LookAndFeel;
 using DevExpress.XtraEditors;
 using DevExpress.XtraReports.UI;

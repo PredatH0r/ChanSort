@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		changelog.md = changelog.md
 		fileformats.md = fileformats.md
 		fileformats_de.md = fileformats_de.md
+		makeDistribZip.cmd = makeDistribZip.cmd
 		..\readme.md = ..\readme.md
 		..\readme_de.md = ..\readme_de.md
 		..\readme_pl.md = ..\readme_pl.md

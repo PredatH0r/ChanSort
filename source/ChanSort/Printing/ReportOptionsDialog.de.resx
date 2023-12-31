@@ -142,4 +142,7 @@
   <data name="rbSortByName.Properties.Caption" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="labelControl3.Text" xml:space="preserve">
+    <value>Spalten:</value>
+  </data>
 </root>

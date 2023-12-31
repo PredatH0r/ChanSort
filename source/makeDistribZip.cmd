@@ -6,14 +6,14 @@ cd /d %~dp0
 set languages=cs de es hu it pl pt ro ru tr
 set curdate=%date:~6,4%-%date:~3,2%-%date:~0,2%
 set target=%cd%\..\..\ChanSort_%curdate%
-set DXversion=23.1
+set DXversion=23.2
 set framework=net48
 set bindir=debug\%framework%
+
 mkdir "%target%" 2>nul
 rem del /s /q "%target%\*"
 xcopy /idy %bindir%\ChanSort.exe* "%target%"
 xcopy /idy %bindir%\ChanSort.*.dll "%target%"
-xcopy /idy %bindir%\ChanSort.ico "%target%"
 xcopy /idy %bindir%\ChanSort.*.ini "%target%"
 
 xcopy /idy %bindir%\Microsoft.*.dll "%target%"
@@ -37,14 +37,14 @@ mkdir "%target%\ReferenceLists" 2>nul
 xcopy /sidy ChanSort\ReferenceLists\* "%target%\ReferenceLists"
 copy /y ..\readme.md "%target%\readme.txt"
 copy /y changelog.md "%target%\changelog.txt"
-for %%f in (Utils Data Data.Desktop DataAccess Drawing Printing XtraPrinting XtraReports XtraEditors XtraBars XtraGrid XtraLayout XtraTreeList) do call :copyDll %%f
+for %%f in (Data Data.Desktop DataAccess Drawing Pdf Printing Utils XtraBars XtraEditors XtraGrid XtraLayout XtraPrinting XtraReports XtraTreeList) do call :copyDll %%f
 call :CodeSigning
 
 cd ..
 del Website\ChanSort.zip 2>nul
 xcopy /idy readme.* %target%
 cd %target%\..
-"c:\program files\7-Zip\7z.exe" a -tzip ChanSort_%curdate%.zip ChanSort_%curdate%
+"c:\program files\7-Zip\7z.exe" a -tzip -mx9 ChanSort_%curdate%.zip ChanSort_%curdate%
 
 
 pause
@@ -85,28 +85,37 @@ for %%f in (%*) do (
   if errorlevel 1 set todo=!todo! "%%f"
 )
 if "%todo%" == "" goto:skipCodeSigning
-%signtool% sign /a /t "http://timestamp.digicert.com" %todo%
+%signtool% sign /n "ABPro Entwicklungs-, Vertriebs- und Wartungs GmbH" /tr "http://timestamp.digicert.com" /td SHA256 %todo%
 :skipCodeSigning
 goto:eof
 
 :copyDll
 echo Copying DevExpress %1
-set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\DevExpress.%1.v%DXversion%.dll"
-if exist %source% xcopy /idy %source% "%target%"
-set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\DevExpress.%1.v%DXversion%.Core.dll"
-if exist %source% xcopy /idy %source% "%target%"
+for %%s in (.dll .Core.dll .Drawing.dll) do call :copyDllFramework %1 %%s
 for %%l in (%languages%) do call :copyLangDll %1 %%l
 goto:eof
 
+:copyDllFramework
+for %%f in (Framework Standard NetCore) do (
+  set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\%%f\DevExpress.%1.v%DXversion%%2"
+  if exist !source! xcopy /iy !source! "%target%" & goto:eof
+)
+goto:eof
+
+
 :copyLangDll
-set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.resources.dll"
-if exist %source% xcopy /idy %source% "%target%\%2"
+for %%s in (.resources.dll .Core.resources.dll) do call :copyLangDllFramework %1 %%s
 set source="c:\daten\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.resources.dll"
-if exist %source% xcopy /idy %source% "%target%\%2"
-set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\Framework\%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
-if exist %source% xcopy /idy %source% "%target%\%2"
+if exist !source! xcopy /idy !source! "%target%\%2"
 set source="c:\daten\downloads\DevExpress\20%DXversion%\DevExpressLocalizedResources_20%DXversion%_%2\DevExpress.%1.v%DXversion%.Core.resources.dll"
-if exist %source% xcopy /idy %source% "%target%\%2"
+if exist !source! xcopy /idy !source! "%target%\%2"
+goto:eof
+
+:copyLangDllFramework
+for %%f in (Framework Standard NetCore) do (
+  set source="C:\Program Files\DevExpress %DXversion%\Components\Bin\%%f\%2\DevExpress.%1.v%DXversion%%2"
+  if exist !source! xcopy /idy !source! "%target%\%2" & goto:eof
+)
 goto:eof
 
 :error

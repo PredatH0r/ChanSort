@@ -1,8 +1,11 @@
 ﻿ChanSort Change Log 
 ===================
 
-TBD
+2023-12-31
 - added support for Awox U5600STR TV (dtv_cmdb_2.bin with size of 2691 KB)
+- fixed digital signature on .exe and .dll files
+- added missing dll needed for print preview
+- added partially missing translations for German and Spanish
 
 2023-12-18
 - fixed loading Panasonic tv.db / idtvChannel.bin lists which contain DVB-T2 channels
