@@ -392,7 +392,7 @@ internal class IdtvChannelSerializer : SerializerBase
     //var progNr = chan.ProgNr;
     //if (ch.OldProgramNr != progNr) // multiple .db rows with different display_number can reference the same .db row, so skip this check
     //  throw new LoaderException.Fail($"mismatching display_number between tv.db _id {ch.RecordIndex} ({ch.OldProgramNr}) and idtvChannel.bin record {i} ({progNr})");
-    if (ch.Name != name)
+    if (ch.Name != name && name.Length > 0) // if receiving DVB-C and DVB-S and then only rescanning DVB-S, the bin file will clear all DVB-C names
       throw LoaderException.Fail($"mismatching name between tv.db _id {ch.RecordIndex} ({ch.Name}) and idtvChannel.bin record {i} ({name})");
     if (Math.Abs(ch.FreqInMhz - freq) > 2)
       throw LoaderException.Fail($"mismatching frequency between tv.db _id {ch.RecordIndex} ({ch.FreqInMhz}) and idtvChannel.bin record {i} ({freq})");

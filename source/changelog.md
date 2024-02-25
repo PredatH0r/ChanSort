@@ -1,6 +1,10 @@
 ﻿ChanSort Change Log 
 ===================
 
+2024-02-25
+- fixed support for Dijitsu channel lists with missing atv\_cmdb\_2.bin file
+- experimental support for Metz channel\_list.xml lists
+
 2023-12-31
 - added support for Awox U5600STR TV (dtv_cmdb_2.bin with size of 2691 KB)
 - fixed digital signature on .exe and .dll files

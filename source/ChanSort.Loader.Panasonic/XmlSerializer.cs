@@ -100,12 +100,14 @@ namespace ChanSort.Loader.Panasonic
       if (fail || root == null || root.LocalName != "ChannelList" || !root.HasChildNodes || root.ChildNodes[0].LocalName != "ChannelInfo")
         throw LoaderException.TryNext("File is not a supported Panasonic XML file");
 
+      string curListName = null;
+      int index = 0;
       foreach (XmlNode child in root.ChildNodes)
       {
         switch (child.LocalName)
         {
           case "ChannelInfo":
-            this.ReadChannel(child);
+            this.ReadChannel(child, index++, ref curListName);
             break;
         }
       }
@@ -137,11 +139,21 @@ namespace ChanSort.Loader.Panasonic
     #endregion
 
     #region ReadChannel()
-    private void ReadChannel(XmlNode node)
+    private void ReadChannel(XmlNode node, int index, ref string curListName)
     {
-      var channelType = node.Attributes?["ChannelType"]?.InnerText;
-      var list = this.GetOrCreateList(channelType);
-      var chan = new XmlChannel(list.Count, node);
+      curListName ??= GetXmlValue(node, "ChannelType");
+
+      var chan = new XmlChannel(index, node);
+
+      // There is no clean indicator that distinguishes between Analog, DVB-C, DVB-T and DVB-S channel list. All nodes are in one flat list
+      // The best guess is to start a new list when the number sequence resets
+      var list = this.GetOrCreateList(curListName);
+      if (list.Count > 0 && chan.OldProgramNr < list.Channels[list.Count - 1].OldProgramNr)
+      {
+        curListName = GetXmlValue(node, "ChannelType") + " " + (DataRoot.ChannelLists.Count() + 1);
+        list = GetOrCreateList(curListName);
+      }
+
       DataRoot.AddChannel(list, chan);
     }
     #endregion
@@ -252,6 +264,23 @@ namespace ChanSort.Loader.Panasonic
     }
     #endregion
 
+    #region GetXmlValue()
+    static string GetXmlValue(XmlNode node, string field)
+    {
+      // old format stored all values as attributes of <ChannelInfo ...>
+      if (node.Attributes != null && node.Attributes.Count > 0)
+        return node.Attributes[field]?.InnerText;
+
+      // new format with meaningful channel names stores all values as child elements
+      foreach (XmlNode child in node.ChildNodes)
+      {
+        if (child is XmlElement elem && elem.LocalName == field)
+          return elem.InnerText;
+      }
+
+      return "";
+    }
+    #endregion
 
     #region class XmlChannel
 
@@ -263,12 +292,15 @@ namespace ChanSort.Loader.Panasonic
       {
         this.Node = node;
 
-        this.OldProgramNr = int.Parse(node.Attributes["ChannelNumber"]?.InnerText);
-        this.Name = node.Attributes["ChannelName"].InnerText;
-        var svlId = node.Attributes["SvlId"].InnerText;
+        this.OldProgramNr = int.Parse(GetXmlValue(node, "ChannelNumber"));
+        this.Name = GetXmlValue(node, "ChannelName");
+        var svlId = GetXmlValue(node, "SvlId");
+        if (svlId == "")
+          svlId = GetXmlValue(node, "SvlRecId");
         this.ShortName = $"SvlId: {svlId}";
+        if (int.TryParse(svlId, out var id))
+          this.RecordOrder = id;
       }
-
     }
     #endregion
   }

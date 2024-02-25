@@ -16,7 +16,7 @@ namespace ChanSort.Loader.CmdbBin
       // ignore Philips ChannelMap_100 channel lists which don't have atv_cmdb.bin and dtv_cmdb_2.bin in the same folder
 
       var anchorFile = Path.Combine(dir, "dtv_cmdb_2.bin");
-      if (File.Exists(anchorFile) && File.Exists(Path.Combine(dir, "atv_cmdb.bin")))
+      if (File.Exists(anchorFile) || File.Exists(Path.Combine(dir, "atv_cmdb.bin")))
         return new CmdbFileSerializer(anchorFile);
 
       return null;

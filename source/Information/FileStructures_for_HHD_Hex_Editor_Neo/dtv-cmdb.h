@@ -94,7 +94,7 @@ struct s_Channel
 };
 
 
-public struct dtv_cmdb_2
+public struct dtv_cmdb_2_unified
 {
   var headerLength = 0;
   var channelBitmapLength = 0;

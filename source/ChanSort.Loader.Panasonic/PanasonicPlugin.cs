@@ -29,7 +29,7 @@ namespace ChanSort.Loader.Panasonic
       if (ext == ".xml")
       {
         var data = File.ReadAllBytes(inputFile);
-        var header = Encoding.ASCII.GetBytes("<ChannelList>\n<ChannelInfo IsModified=");
+        var header = Encoding.ASCII.GetBytes("<ChannelList>\n<ChannelInfo");
         for (int i = 0; i < header.Length; i++)
         {
           if (data[i] != header[i])
