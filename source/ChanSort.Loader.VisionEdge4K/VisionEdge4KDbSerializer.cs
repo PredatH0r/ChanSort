@@ -23,6 +23,7 @@ namespace ChanSort.Loader.VisionEdge4K
 
     private readonly Dictionary<int, ChannelList> channels = new();
     private readonly ChannelList favs = new(SignalSource.All, "Fav") { IsMixedSourceFavoritesList = true };
+    private bool hasCaType;
 
 
     #region ctor()
@@ -143,66 +144,81 @@ namespace ChanSort.Loader.VisionEdge4K
       int ixP = 0;
       int ixST = 12;
 
-      cmd.CommandText = @"
+      this.hasCaType = false;
+      cmd.CommandText = "select * from program_table limit 0";
+      using (var r = cmd.ExecuteReader())
+      {
+        for (int i = 0; i < r.FieldCount; i++)
+        {
+          hasCaType |= r.GetName(i) == "ca_type";
+          if (hasCaType)
+            break;
+        }
+      }
+
+      cmd.CommandText = $@"
 select 
-  p.id, p.disp_order, p.name, p.service_id, p.vid_pid, p.pcr_pid, p.vid_type, p.tv_type, p.ca_type, p.lock, p.skip, p.hide,
+  p.id, p.disp_order, p.name, p.service_id, p.vid_pid, p.pcr_pid, p.vid_type, p.tv_type, {(hasCaType ? "p.ca_type" : "0 ca_type")}, p.lock, p.skip, p.hide,
   st.sat_id, st.on_id, st.ts_id, st.freq, st.pol, st.sym_rate
 from program_table p
 left outer join satellite_transponder_table st on p.tp_type=0 and st.id=p.tp_id
 order by p.tv_type,p.disp_order";
 
-      using var r = cmd.ExecuteReader();
-      while (r.Read())
+      using (var r = cmd.ExecuteReader())
       {
-        var handle = r.GetInt32(ixP + 0);
-        var oldProgNr = r.GetInt32(ixP + 1);
-        var name = r.GetString(ixP + 2);
-        ChannelInfo channel = new ChannelInfo(0, handle, oldProgNr, name);
-        channel.ServiceId = r.GetInt32(ixP + 3) & 0x7FFF;
-        channel.VideoPid = r.GetInt32(ixP + 4);
-        channel.PcrPid = r.GetInt32(ixP + 5);
-        var vidType = r.GetInt32(ixP + 6);
-        var tvType = r.GetInt32(ixP + 7);
-        if (tvType == 0)
+        while (r.Read())
         {
-          channel.ServiceType = vidType;
-          channel.ServiceTypeName = "TV";
-          channel.SignalSource |= SignalSource.Tv;
-        }
-        else
-        {
-          channel.ServiceType = 0;
-          channel.ServiceTypeName = "Radio/Data";
-          channel.SignalSource |= SignalSource.Radio | SignalSource.Data;
-        }
-        channel.Encrypted = r.GetInt32(ixP + 8) != 0;
-        channel.Lock = r.GetBoolean(ixP + 9);
-        channel.Skip = r.GetBoolean(ixP + 10);
-        channel.Hidden = r.GetBoolean(ixP + 11);
+          var handle = r.GetInt32(ixP + 0);
+          var oldProgNr = r.GetInt32(ixP + 1);
+          var name = r.GetString(ixP + 2);
+          ChannelInfo channel = new ChannelInfo(0, handle, oldProgNr, name);
+          channel.ServiceId = r.GetInt32(ixP + 3) & 0x7FFF;
+          channel.VideoPid = r.GetInt32(ixP + 4);
+          channel.PcrPid = r.GetInt32(ixP + 5);
+          var vidType = r.GetInt32(ixP + 6);
+          var tvType = r.GetInt32(ixP + 7);
+          if (tvType == 0)
+          {
+            channel.ServiceType = vidType;
+            channel.ServiceTypeName = "TV";
+            channel.SignalSource |= SignalSource.Tv;
+          }
+          else
+          {
+            channel.ServiceType = 0;
+            channel.ServiceTypeName = "Radio/Data";
+            channel.SignalSource |= SignalSource.Radio | SignalSource.Data;
+          }
 
-        // DVB-S
-        int satId = 0;
-        if (!r.IsDBNull(ixST + 0))
-        {
-          satId = r.GetInt32(ixST + 0);
-          var sat = this.DataRoot.Satellites.TryGet(satId);
-          channel.Satellite = sat?.Name;
-          channel.SatPosition = sat?.OrbitalPosition;
-          channel.OriginalNetworkId = r.GetInt32(ixST + 1) & 0x7FFF;
-          channel.TransportStreamId = r.GetInt32(ixST + 2) & 0x7FFF;
-          channel.FreqInMhz = r.GetInt32(ixST + 3);
-          if (channel.FreqInMhz > 20000) // DVB-S is in MHz already, DVB-C/T in kHz
-            channel.FreqInMhz /= 1000;
-          channel.Polarity = r.GetInt32(ixST + 4) == 0 ? 'H' : 'V';
-          channel.SymbolRate = r.GetInt32(ixST + 5);
-        }
+          channel.Encrypted = r.GetInt32(ixP + 8) != 0;
+          channel.Lock = r.GetBoolean(ixP + 9);
+          channel.Skip = r.GetBoolean(ixP + 10);
+          channel.Hidden = r.GetBoolean(ixP + 11);
 
-        var list = this.channels.TryGet(satId);
-        if (list != null)
-        {
-          channel.OldProgramNr = list.Channels.Count + 1;
-          this.DataRoot.AddChannel(list, channel);
-          this.DataRoot.AddChannel(this.favs, channel);
+          // DVB-S
+          int satId = 0;
+          if (!r.IsDBNull(ixST + 0))
+          {
+            satId = r.GetInt32(ixST + 0);
+            var sat = this.DataRoot.Satellites.TryGet(satId);
+            channel.Satellite = sat?.Name;
+            channel.SatPosition = sat?.OrbitalPosition;
+            channel.OriginalNetworkId = r.GetInt32(ixST + 1) & 0x7FFF;
+            channel.TransportStreamId = r.GetInt32(ixST + 2) & 0x7FFF;
+            channel.FreqInMhz = r.GetInt32(ixST + 3);
+            if (channel.FreqInMhz > 20000) // DVB-S is in MHz already, DVB-C/T in kHz
+              channel.FreqInMhz /= 1000;
+            channel.Polarity = r.GetInt32(ixST + 4) == 0 ? 'H' : 'V';
+            channel.SymbolRate = r.GetInt32(ixST + 5);
+          }
+
+          var list = this.channels.TryGet(satId);
+          if (list != null)
+          {
+            channel.OldProgramNr = list.Channels.Count + 1;
+            this.DataRoot.AddChannel(list, channel);
+            this.DataRoot.AddChannel(this.favs, channel);
+          }
         }
       }
     }
@@ -255,6 +271,8 @@ order by p.tv_type,p.disp_order";
         list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.AudioPid));
         list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.ShortName));
         list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Provider));
+        if (!this.hasCaType)
+          list.VisibleColumnFieldNames.Remove(nameof(ChannelInfo.Encrypted));
       }
     }
     #endregion

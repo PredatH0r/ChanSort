@@ -1,6 +1,10 @@
 ﻿ChanSort Change Log 
 ===================
 
+2024-04-20
+- fixed "DevExpress.Data.UboundColumnDataTypeValidator+InvalidTypeException" error
+- added support for latest "amdb\*.db" format, which no longer contains the "ca_type" column
+
 2024-02-25
 - fixed support for Dijitsu channel lists with missing atv\_cmdb\_2.bin file
 - experimental support for Metz channel\_list.xml lists

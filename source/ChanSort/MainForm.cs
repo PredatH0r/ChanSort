@@ -27,7 +27,6 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
-using DevExpress.XtraReports.Design;
 using DevExpress.XtraTab;
 
 namespace ChanSort.Ui
@@ -1621,6 +1620,8 @@ namespace ChanSort.Ui
         {
           if (!field.StartsWith("+"))
             continue;
+          if (gview.Columns[field.Substring(1)] != null) // ignore "+" for existing columns
+            continue;
           var col = gview.Columns[field];
           if (col != null)
             continue;
@@ -2455,7 +2456,10 @@ namespace ChanSort.Ui
         {
           var pi = e.Row.GetType().GetProperty(field.Substring(1));
           if (pi != null && pi.CanRead)
-            e.Value = pi.GetValue(e.Row);
+          {
+            var value = pi.GetValue(e.Row);
+            e.Value = value?.ToString(); // for the custom "+"-fields the UnboundDataType is set to string
+          }
         }
       }
       else
