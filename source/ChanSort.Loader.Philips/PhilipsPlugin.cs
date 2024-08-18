@@ -94,6 +94,8 @@ namespace ChanSort.Loader.Philips
       var filename = Path.GetFileName(inputFile).ToLowerInvariant();
       if (Regex.IsMatch(filename, @"^CM_.*\.(?:bin|xml)$", RegexOptions.IgnoreCase))
         majorVersion = 0;
+      else if (filename.ToLowerInvariant() == "__chtb_do_not_delete_.xml") // Tornado 32ES1500E format
+        majorVersion = 0;
       else 
       {
         // allow the user to pick pretty much any file within a Repair\ChannelList or PhilipsChannelMaps\ChannelMap_xxx\ChannelList structure to find a chanLst.bin

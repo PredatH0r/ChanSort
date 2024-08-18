@@ -22,8 +22,8 @@
     <ProjectReference Include="..\Test.Loader\Test.Loader.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.5.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.5.2" />
   </ItemGroup>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets')" />
 </Project>

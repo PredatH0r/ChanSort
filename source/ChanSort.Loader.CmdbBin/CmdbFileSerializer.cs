@@ -59,6 +59,9 @@ namespace ChanSort.Loader.CmdbBin
           case "dtv_cmdb_2.bin":
             LoadFile(file, this.dvbsTv, this.dvbsRadio, this.dvbsData);
             break;
+          case "dtv_cmdb_3.bin":
+            LoadFile(file, this.dvbsTv, this.dvbsRadio, this.dvbsData);
+            break;
           case "atv_cmdb.bin":
             LoadFile(file, this.avbtTv, null, null);
             break;
@@ -93,7 +96,7 @@ namespace ChanSort.Loader.CmdbBin
       }
       else
       {
-        LoadBitmappedRecords(data, sec, "dvbs", "Satellite", ReadSatellite);
+        LoadBitmappedRecords(data, sec, "dvbs", "Satellite", ReadSatellite, Encoding.UTF8);
         LoadBitmappedRecords(data, sec, "dvbs", "Transponder", ReadTransponder);
         LoadBitmappedRecords(data, sec, "dvbs", "Channel", (map, index, len) => ReadDigitalChannel(map, tvList, radioList, dataList, index, len));
       }
@@ -116,28 +119,42 @@ namespace ChanSort.Loader.CmdbBin
     #endregion
 
     #region LoadBitmappedRecords()
-    private void LoadBitmappedRecords(byte[] data, IniFile.Section sec, string recordSectionPrefix, string recordType, Action<DataMapping, int, int> readRecord)
+    private void LoadBitmappedRecords(byte[] data, IniFile.Section sec, string recordSectionPrefix, string recordType, Action<DataMapping, int, int> readRecord, Encoding forceEncoding = null)
     {
-      var lenRecord = sec.GetInt($"len{recordType}Record");
-      var map = new DataMapping(this.ini.GetSection($"{recordSectionPrefix}{recordType}:{lenRecord}"));
-      map.DefaultEncoding = this.DefaultEncoding;
+      var lenRecordVariant = sec.GetString($"len{recordType}Record");
+      var p = lenRecordVariant.IndexOf('_');
+      var lenRecord = p < 0 ? int.Parse(lenRecordVariant) : int.Parse(lenRecordVariant.Substring(0, p));
+      var map = new DataMapping(this.ini.GetSection($"{recordSectionPrefix}{recordType}:{lenRecordVariant}"));
+      map.DefaultEncoding = forceEncoding ?? this.DefaultEncoding;
       map.SetDataPtr(data, sec.GetInt($"off{recordType}Record"));
 
       var off = sec.GetInt($"off{recordType}Bitmap");
-      var len = sec.GetInt($"len{recordType}Bitmap");
-      var count = sec.GetInt($"num{recordType}Record", short.MaxValue);
-      int index = 0;
-      for (int i = 0; i < len; i++)
+      if (off >= 0)
       {
-        var b = data[off + i];
-        for (byte mask = 1; mask != 0; mask <<= 1)
+        var len = sec.GetInt($"len{recordType}Bitmap");
+        var count = sec.GetInt($"num{recordType}Record", short.MaxValue);
+        int index = 0;
+        for (int i = 0; i < len; i++)
         {
-          if ((b & mask) != 0)
-            readRecord(map, index, lenRecord);
+          var b = data[off + i];
+          for (byte mask = 1; mask != 0; mask <<= 1)
+          {
+            if ((b & mask) != 0)
+              readRecord(map, index, lenRecord);
+            map.BaseOffset += lenRecord;
+            ++index;
+            if (index >= count)
+              break;
+          }
+        }
+      }
+      else
+      {
+        var count = sec.GetInt($"num{recordType}Record", short.MaxValue);
+        for (int index = 0; index < count; index++)
+        {
+          readRecord(map, index, lenRecord);
           map.BaseOffset += lenRecord;
-          ++index;
-          if (index >= count)
-            break;
         }
       }
     }
@@ -218,6 +235,7 @@ namespace ChanSort.Loader.CmdbBin
       ch.Encrypted = chanMap.GetFlag("Encrypted", false);
       ch.Skip = chanMap.GetFlag("Skip", false);
       ch.Lock = chanMap.GetFlag("Locked", false);
+      ch.IsDeleted = chanMap.GetFlag("Deleted", false);
       ch.Favorites = chanMap.GetFlag("Fav", false) ? Favorites.A : 0;
 
       var off = chanMap.BaseOffset + chanMap.GetOffsets("offName")[0];

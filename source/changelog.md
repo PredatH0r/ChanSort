@@ -1,6 +1,20 @@
 ﻿ChanSort Change Log 
 ===================
 
+2024-08-18
+- added support for dtv_cmdb_3.bin with file size 1323920 (e.g. Grundig 37 VLE 9270 SL)
+- fixed error in the reference list import dialog when using Italian language
+
+2024-06-02
+- fix for Tornado .xml format (setting MajorChanNO to same value as presetNumber)
+
+2024-05-05
+- added support for \*.DBM format with file size 100120 (e.g. XORO 7660)
+- added support for \*.DBM format with file size 862272 (e.g. Orbitech IR440)
+- added support for Tornado \__CHTB\_DO\_NOT\_DELETE\_.xml format
+- fixed error saving newer channel\_list.xml format (used by many brands) which contains data 
+  inside the \<ChannelInfo> as XML elements rather than attributes including a readable \<ChannelName>
+
 2024-04-20
 - fixed "DevExpress.Data.UboundColumnDataTypeValidator+InvalidTypeException" error
 - added support for latest "amdb\*.db" format, which no longer contains the "ca_type" column

@@ -125,7 +125,22 @@ public struct DBM
     channelRecordCount = 400;
     channelRecordLength = 176;
     bytesBetweenTransponderIndexAndServiceType = 2;
-	break;
+	  break;
+  case 100120:
+    // XORO 7660
+    hasHeader = 0;
+    satBitmapLength = 0;
+    satRecordCount = 0;
+    satRecordLength = 0;
+    transponderBitmapLength = 16;
+    transponderRecordCount = 100;
+    transponderRecordLength = 40;
+    unknownDataAfterTransponderData = 22;
+    channelBitmapLength = 78;
+    channelRecordCount = 600;
+    channelRecordLength = 160;
+    bytesBetweenTransponderIndexAndServiceType = 2;
+    break;
   case 109720:
     // XORO DVB-C tuner
     hasHeader = 0;
@@ -194,6 +209,19 @@ public struct DBM
     channelBitmapLength = 502;
     channelRecordCount = 4000;
     channelRecordLength = 164;
+    break;
+  case 862272:
+    // Orbitech IR440 HB_DATABASE_5_3.DBM
+    satBitmapLength = 32;
+    satRecordCount = 254;
+    satRecordLength = 84;
+    transponderBitmapLength = 376;
+    transponderRecordCount = 3000;
+    transponderRecordLength = 40;
+    unknownDataAfterTransponderData = 20;
+    channelBitmapLength = 500;
+    channelRecordCount = 4000;
+    channelRecordLength = 180;
     break;
   case 948368:
     // Comag SL40HD_V1_17_02, Xoro HRS 8520, ...

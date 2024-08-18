@@ -259,7 +259,7 @@ o aggiornamenti del firmware senza eseguire una nuova scansione dei canali.
 (Il nuovo software del televisore potrebbe non essere in grado di elaborare i vecchi dati del canale durante l'esportazione.)</value>
   </data>
   <data name="ReferenceListForm_AntennaCableSatIPAnalogDigitalTVRadio" xml:space="preserve">
-    <value>Antenna,CavoSat,IP,Analogico,Digitale,TV,Radio</value>
+    <value>Antenna,Cavo,Sat,IP,Analogico,Digitale,TV,Radio,Data</value>
   </data>
   <data name="ReferenceListForm_btnApply_ConflictHandling" xml:space="preserve">
     <value>Come vuoi gestirlo quando un Pr # è già presente nell'elenco dei target?</value>

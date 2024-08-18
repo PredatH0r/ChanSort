@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +12,9 @@ using ChanSort.Api;
 namespace ChanSort.Loader.Philips
 {
   /*
-    This loader supports 2 different kinds of XML files from Philips, the first in a "Repair" folder, the others in a "ChannelMap_100" (or later) folder
+    This loader supports 2 different kinds of XML files from Philips, the first in a "Repair" folder, the others in a "ChannelMap_100" (or later) folder.
+    TVs from the "Tornado" brand use a variation of the first (CM_*.xml) format, which wrap the ChannelMap within an extra "TvContents" root element and has 
+    some minor differences within "Broadcast" and "Setup" elements.
 
     Example from Repair\CM_TPM1013E_LA_CK.xml:
     This "Repair" format comes with a visible .BIN file and a .xml file that has file system attributes "hidden" and "system".
@@ -29,11 +32,17 @@ namespace ChanSort.Loader.Philips
   
     <Channel>
     <Setup presetnumber="1" name="Das Erste HD" ></Setup>
-    <Broadcast medium="dvbs" satellitename="Astra1F-1L 19.2E
-    @" frequency="11494" system="west" serviceID="2604" ONID="1" TSID="1019" modulation="8-VSB" symbolrate="22000"></Broadcast>
+    <Broadcast medium="dvbs" satellitename="Astra1F-1L 19.2E" frequency="11494" system="west" serviceID="2604" ONID="1" TSID="1019" modulation="8-VSB" symbolrate="22000"></Broadcast>
     </Channel>
 
   
+    Example from a Tornado __CHTB_DO_NOT_DELETE_.xml file:
+    <Channel>
+			<Broadcast medium="Dvbt" frequency="177500" system="" serviceID="1" ONID="2807" TSID="1" modulation="0" symbolrate="0" bandwidth="7MHz" servicetype="TV" />
+			<Setup presetnumber="1" name="Aloula Ardhia" MajorChanNO="1" Attribute="1107361792" blank="0" skip="0" FreePKG="0" PayPKG1="0" PayPKG2="0" />
+    </Channel>
+
+
     Newer channel lists from Philips contain multiple XML files with a different internal structure, which also varies based on the version number in the ChannelMap_xxx folder name.
     The official Philips Channel Editor 6.61.22 supports the binary file format 1.1 and 1.2 as well as the XML file format "ChannelMap_100" (but not 45, 105 nor 110).
     That editor keeps the channel lines in the .xml file in their original order but changes the ChannelNumber attribute so that the first record may have number 2, the second record may have 1.
@@ -263,7 +272,11 @@ namespace ChanSort.Loader.Philips
           DtdProcessing = DtdProcessing.Ignore
         };
 
-        fileData.formatVersion = Path.GetFileName(fileName).ToLowerInvariant().StartsWith("cm_") ? FormatVersion.RepairXml : FormatVersion.ChannelMapXml; // first guess, will be set based on file content later
+        var fn = Path.GetFileName(fileName).ToLowerInvariant();
+        fileData.formatVersion = // first guess, will be set based on file content later
+          fn.StartsWith("cm_") ? FormatVersion.RepairXml 
+            : fn.StartsWith("__chtb") ? FormatVersion.TornadoChtb
+            : FormatVersion.ChannelMapXml; 
 
         var xml = fileData.textContent;
         if (fileData.formatVersion == FormatVersion.RepairXml)
@@ -281,6 +294,8 @@ namespace ChanSort.Loader.Philips
         root = root.NextSibling;
       if (root?.LocalName == "ECSM")
         root = root.FirstChild;
+      if (root?.LocalName == "TvContents")
+        root = root.ChildNodes.Cast<XmlNode>().FirstOrDefault(n => n?.LocalName == "ChannelMap");
       if (fail || root == null || (root.LocalName != "ChannelMap" && root.LocalName != "FavoriteListMAP"))
         throw LoaderException.TryNext("\"" + fileName + "\" is not a supported Philips XML file");
 
@@ -291,7 +306,7 @@ namespace ChanSort.Loader.Philips
         switch (child.LocalName)
         {
           case "Channel":
-            if (rowId == 0)
+            if (rowId == 0 || fileData.formatVersion == FormatVersion.TornadoChtb)
               curList = this.DetectFormatAndFeatures(fileData, child);
             if (curList != null)
               this.ReadChannel(fileData, curList, child, rowId++);
@@ -326,7 +341,9 @@ namespace ChanSort.Loader.Philips
 
       if (setupNode.HasAttribute("name"))
       {
-        file.formatVersion = FormatVersion.RepairXml;
+        file.formatVersion = setupNode.HasAttribute("MajorChanNO") ? FormatVersion.TornadoChtb: FormatVersion.RepairXml;
+        if (file.formatVersion == FormatVersion.TornadoChtb)
+          file.indent = "\t";
         this.iniMapSection = ini.GetSection("Repair_xml");
         this.Features.FavoritesMode = FavoritesMode.None;
         foreach (var list in this.DataRoot.ChannelLists)
@@ -359,7 +376,7 @@ namespace ChanSort.Loader.Philips
         throw LoaderException.Fail("Unknown data format");
 
       ChannelList chList = null;
-      switch (medium)
+      switch (medium.ToLowerInvariant())
       {
         case "analog":
           chList = this.analogChannels;
@@ -431,7 +448,7 @@ namespace ChanSort.Loader.Philips
       var chan = new Channel(curList.SignalSource & SignalSource.MaskBcast, rowId, uniqueId, setupNode);
       chan.OldProgramNr = -1;
       chan.IsDeleted = false;
-      if (file.formatVersion == FormatVersion.RepairXml)
+      if (file.formatVersion == FormatVersion.RepairXml || file.formatVersion == FormatVersion.TornadoChtb)
         this.ParseRepairXml(data, chan);
       else if (file.formatVersion == FormatVersion.ChannelMapXml)
         this.ParseChannelMapXml(data, chan);
@@ -465,6 +482,7 @@ namespace ChanSort.Loader.Philips
       if (chan.SymbolRate > 100000) // DVB-C/T specify it in Sym/s, DVB-S in kSym/sec
         chan.SymbolRate /= 1000;
       chan.Satellite = data.TryGet("satellitename")?.TrimEnd('@', '\n', '\r'); // the satellitename can have a "\n@" at the end
+      chan.ServiceTypeName = data.TryGet("servicetype"); // only exists in Tornado CHTB format
     }
     #endregion
 
@@ -668,6 +686,10 @@ namespace ChanSort.Loader.Philips
     private void UpdateRepairXml(Channel ch)
     {
       ch.SetupNode.Attributes["presetnumber"].Value = ch.NewProgramNr.ToString();
+
+      if (ch.SetupNode.Attributes["MajorChanNO"] != null) // only in the Tornado CHTB format
+        ch.SetupNode.Attributes["MajorChanNO"].Value = ch.NewProgramNr.ToString();
+
       if (ch.IsNameModified)
         ch.SetupNode.Attributes["name"].Value = ch.Name;
     }
@@ -878,7 +900,7 @@ namespace ChanSort.Loader.Philips
 
     private enum FormatVersion
     {
-      RepairXml = 1, ChannelMapXml = 2
+      RepairXml = 1, ChannelMapXml = 2, TornadoChtb = 3
     }
     #endregion
 

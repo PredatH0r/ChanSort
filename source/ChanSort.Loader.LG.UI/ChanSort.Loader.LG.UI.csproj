@@ -16,10 +16,10 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.Data.Desktop" Version="23.2.4" />
-    <PackageReference Include="DevExpress.Printing.Core" Version="23.2.4" />
-    <PackageReference Include="DevExpress.Utils" Version="23.2.4" />
-    <PackageReference Include="DevExpress.Win" Version="23.2.4" />
+    <PackageReference Include="DevExpress.Data.Desktop" Version="23.2.5" />
+    <PackageReference Include="DevExpress.Printing.Core" Version="23.2.5" />
+    <PackageReference Include="DevExpress.Utils" Version="23.2.5" />
+    <PackageReference Include="DevExpress.Win" Version="23.2.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />

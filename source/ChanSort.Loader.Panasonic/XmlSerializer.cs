@@ -175,9 +175,11 @@ namespace ChanSort.Loader.Panasonic
         {
           if (chan is not XmlChannel ch)
             continue;
-          ch.Node.Attributes["ChannelNumber"].InnerText = ch.NewProgramNr.ToString();
+          SetXmlValue(ch.Node, "ChannelNumber", ch.NewProgramNr.ToString());
+          
           if (setIsModified && ch.NewProgramNr != ch.OldProgramNr)
-            ch.Node.Attributes["IsModified"].InnerText = "1";
+            SetXmlValue(ch.Node, "IsModified", "1");
+
           if (reorder)
           {
             var parent = ch.Node.ParentNode;
@@ -279,6 +281,28 @@ namespace ChanSort.Loader.Panasonic
       }
 
       return "";
+    }
+    #endregion
+
+    #region SetXmlValue()
+    static void SetXmlValue(XmlNode node, string field, string value)
+    {
+      // old format stored all values as attributes of <ChannelInfo ...>
+      if (node.Attributes != null && node.Attributes.Count > 0)
+      {
+        node.Attributes[field].InnerText = value;
+        return;
+      }
+
+      // new format with meaningful channel names stores all values as child elements
+      foreach (XmlNode child in node.ChildNodes)
+      {
+        if (child is XmlElement elem && elem.LocalName == field)
+        {
+          elem.InnerText = value;
+          return;
+        }
+      }
     }
     #endregion
 

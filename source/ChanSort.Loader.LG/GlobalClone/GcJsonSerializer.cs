@@ -283,6 +283,9 @@ namespace ChanSort.Loader.GlobalClone
           }
         }
 
+        ch.AddDebug(node["minorNumber"]?.ToString());
+        //ch.AddDebug(", userEditChNumber=" + node["userEditChNumber"]);
+
         var list = this.DataRoot.GetChannelList(ch.SignalSource);
         this.DataRoot.AddChannel(list, ch);
       }

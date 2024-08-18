@@ -3467,7 +3467,7 @@ namespace ChanSort.Ui
 
       var sb = new StringBuilder();
       foreach (GridColumn col in cols)
-        sb.Append(col.Caption).Append('\t');
+        sb.Append(col.Caption.Replace("\n", " ")).Append('\t');
       sb[sb.Length - 1] = '\n';
       for (int i = 0, c = gview.RowCount; i < c; i++)
       {
@@ -3482,7 +3482,7 @@ namespace ChanSort.Ui
           }
           else
           {
-            var val = gview.GetRowCellDisplayText(i, col);
+            var val = gview.GetRowCellDisplayText(i, col).Replace("\0", "").Trim();
             sb.Append(val).Append('\t');
           }
         }

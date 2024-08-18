@@ -35,8 +35,8 @@
     <Content Include="GlobalClone.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.5.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.5.2" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
   </ItemGroup>
 </Project>
