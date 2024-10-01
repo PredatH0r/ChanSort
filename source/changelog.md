@@ -1,6 +1,11 @@
 ﻿ChanSort Change Log 
 ===================
 
+2024-09-31
+- experimental support for Philips channel list format 125 (with automatic sync to MtkChannelList.xml)
+- experimental support for MtkChannelList.xml (which is part of several MediaTek based Google TVs, e.g. Philips formats 120 and 125)
+- Philips formats 100-125: improved decoding of non-latin characters (turkish, cyrillic, ...)
+
 2024-08-18
 - added support for dtv_cmdb_3.bin with file size 1323920 (e.g. Grundig 37 VLE 9270 SL)
 - fixed error in the reference list import dialog when using Italian language

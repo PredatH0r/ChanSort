@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +7,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using ChanSort.Api;
+using ChanSort.Loader.MediaTek;
 
 namespace ChanSort.Loader.Philips
 {
@@ -56,7 +56,7 @@ namespace ChanSort.Loader.Philips
     Onka does not update chanLst.bin (which isn't required when only DVBS.xml is modified since that file has no checksum in chanLst.bin)
     Nevertheless a user reported that swapping DVB-S channels 1 and 2 with Onka on a TV that uses this xml-only format 110 worked for him.
 
-    There seem to be 3 different flavors or the "100" format:
+    There seem to be 3 different flavors of the "100" format:
     One has only .xml files in the channellib and s2channellib folders, does not indent lines in the .xml files, has a fixed number of bytes for channel and satellite names (padded with 0x00), has no "Scramble" attribute and values 1 and 0 for "Polarization".
     And a version that has dtv_cmdb_*.bin next to the .xml files, uses 4 spaces for indentation, only writes as many bytes for names as needed, has a "Scramble" attribute and uses values 1 and 2 for "Polarization". 
     While the first seems to work fine when XML nodes are reordered by their new programNr, the latter seems to get confused when the .bin and .xml files have different data record orders. This is still under investigation. 
@@ -90,6 +90,11 @@ namespace ChanSort.Loader.Philips
 
     DVB-T and DVB-C share the same number range, so they are treated as a unified logical list
 
+
+    Version 120 and 125 (MediaTek platform for Google TVs) contain an additional MtkChannelList.xml file, which is also used by other brands.
+    This file contains both a readable channel list as XML as well as a base64 encoded Java serialized Blob containing a cl_Zip compressed/encrypted binary channel list.
+    A separate Loader module is used for this file to keep data in-sync.
+
    */
   class XmlSerializer : SerializerBase
   {
@@ -106,6 +111,7 @@ namespace ChanSort.Loader.Philips
     private readonly IniFile ini;
     private IniFile.Section iniMapSection;
     private string polarizationValueForHorizontal = "1";
+    private MediaTek.Serializer mtkSerializer;
 
     #region ctor()
     public XmlSerializer(string inputFile) : base(inputFile)
@@ -169,6 +175,7 @@ namespace ChanSort.Loader.Philips
       // ChannelMap_100/ChannelList/channelFile.bin
       // ChannelMap_105/ChannelList/Favorite.xml
       // ChannelMap_100/ChannelList/satInfo.bin
+      // ChannelMap_120/ChannelList/MtkChannelList.xml
 
       var dataFiles = new[] { @"channellib\DVBC.xml", @"channellib\DVBT.xml", @"s2channellib\DVBS.xml", @"s2channellib\DVBSall.xml", @"Favorite.xml" };
 
@@ -218,6 +225,8 @@ namespace ChanSort.Loader.Philips
         }
         if (this.fileDataList.Count == 0)
           throw LoaderException.TryNext("No XML files found in folder structure");
+
+        LoadAndValidateMtkChannelList(dir);
       }
       else
       {
@@ -491,10 +500,10 @@ namespace ChanSort.Loader.Philips
     {
       chan.Format = 2;
       chan.RawSatellite = data.TryGet("SatelliteName");
-      chan.Satellite = DecodeName(chan.RawSatellite);
+      chan.Satellite = DecodeName(chan.RawSatellite, NameType.Satellite);
       chan.OldProgramNr = ParseInt(data.TryGet("ChannelNumber"));
       chan.RawName = data.TryGet("ChannelName");
-      chan.Name = DecodeName(chan.RawName);
+      chan.Name = DecodeName(chan.RawName, NameType.Channel);
       chan.Lock = data.TryGet("ChannelLock") == "1";
       chan.Hidden = data.TryGet("UserHidden") == "1"; // can be "3" instead of "0", at least in format 120
       var fav = ParseInt(data.TryGet("FavoriteNumber"));
@@ -540,7 +549,7 @@ namespace ChanSort.Loader.Philips
     private void ReadFavList(XmlNode node)
     {
       int index = ParseInt(node.Attributes["Index"].InnerText);
-      string name = DecodeName(node.Attributes["Name"].InnerText);
+      string name = DecodeName(node.Attributes["Name"].InnerText, NameType.FavList);
       this.Features.FavoritesMode = FavoritesMode.MixedSource;
       this.Features.MaxFavoriteLists = Math.Max(this.Features.MaxFavoriteLists, index);
 
@@ -561,48 +570,138 @@ namespace ChanSort.Loader.Philips
         }
       }
 
-      var startNrBias = (chanLstBin?.VersionMajor ?? 0) >= 120 ? 0 : +1;
-
+      int favNr = 0;
       foreach (XmlNode child in node.ChildNodes)
       {
         if (child.LocalName == "FavoriteChannel")
         {
           var uniqueId = ParseLong(child["UniqueID"].InnerText);
-          var favNumber = ParseInt(child["FavNumber"].InnerText);
+          //var favNumber = ParseDecimal(child["FavNumber"].InnerText); // this is a Decimal like "1.5" when the previous "0" was moved behind "1", which makes the new list start at 1 instead of 2
           var chan = this.favChannels.Channels.FirstOrDefault(ch => ch.RecordIndex == uniqueId && ch.GetOldPosition(index) <= 0);
-          chan?.SetOldPosition(index, favNumber + startNrBias);
+          chan?.SetOldPosition(index, ++favNr);
         }
       }
     }
     #endregion
 
     #region DecodeName()
-    private string DecodeName(string input)
+    private string DecodeName(string input, NameType nameType)
     {
       if (input == null || !input.StartsWith("0x")) // fallback for unknown input
         return input;
 
-      // according to https://github.com/PredatH0r/ChanSort/issues/347 Philips seems to not use UTF 16, but instead use locale dependent encoding and
-      // writing "0xAA 0x00" to the file for an 8 bit code point. At least for the favorite list captions. Congratulations, well done!
+      // The Philips encodes names is a complete mess.
+      // Each character is represented as two bytes, with the low byte first and the high second, but this isn't utf16.
+      // All observed files have the "high" byte always as 0x00
+      // If looking only at the odd bytes, this can either be encoded in some random locale, a valid utf8 sequence or 1 byte characters mixed with big-endian utf16 double-bytes characters.
 
-      // In version 120 umlauts in channel names are encoded as 1 byte CP-1252 (= low byte UTF16) code point + 0xFF as the second byte
+      // according to https://github.com/PredatH0r/ChanSort/issues/347 Philips seems use a locale dependent encoding for favorite list names,
+      // writing "0xAA 0x00" to the file for an 8 bit code point. Congratulations, well done!
+
+      // In version 120/125 umlauts in channel names are encoded as 1 byte CP-1252/UTF16 code point + 0xFF as the second byte (i.e. for "Ä" it is 0xC4 0xFF instead of 0xC4 0x00)
+      // Also: 0x62 0x00 0x65 0x00 0x49 0x00 0x4e 0x00 0x20 0x00 0x01 0x00 0x30 0x00 0x5a   - here 0x01 0x00 0x30 0x00 refers to U+0130 (the upper case I with dot), in "beIN İZ"
+
+      // https://github.com/PredatH0r/ChanSort/issues/421: 0x38 0x00 0x20 0x00 0xD0 0x00 0xBA ... seems to contain cyrillic UTF-8 encoding in channel names instead of UTF-16
+
 
       var hexParts = input.Split(' ');
-      var buffer = new MemoryStream();
+      var utf16 = new MemoryStream();
+      var utf8 = new MemoryStream();
 
       bool highByte = false;
+      bool invalidUtf8 = false;
+      byte bigEndianUnicodeHighByte = 0;
+      int bigEndianUnicodeIndex = -1;
       foreach (var part in hexParts)
       {
         if (part == "")
           continue;
         var val = (byte)ParseInt(part);
+        invalidUtf8 |= highByte && val != 0;
         if (highByte && val == 0xff) // hack-around for version 120
           val = 0;
-        buffer.WriteByte(val);
+
+        if (bigEndianUnicodeIndex >= 0) // special handling when a character < 32 was detected, which means we have a messed up "HI 00 LO 00" encoding for an UTF16 character (where HI is < 32)
+        {
+          ++bigEndianUnicodeIndex;
+          if (bigEndianUnicodeIndex == 2)
+          {
+            utf16.WriteByte(val);
+            utf16.WriteByte(bigEndianUnicodeHighByte);
+            bigEndianUnicodeHighByte = 0;
+          }
+          else if (bigEndianUnicodeIndex == 3)
+            bigEndianUnicodeIndex = -1;
+        }
+        else
+        {
+          if (!highByte)
+          {
+            if (val < 32 && val != 0) // a char < 32 is likely the high byte of a "HI 00 LO 00" encoded UTF16 character
+            {
+              bigEndianUnicodeHighByte = val;
+              bigEndianUnicodeIndex = 0;
+              invalidUtf8 = true;
+            }
+            else if (!invalidUtf8)
+              utf8.WriteByte(val);
+          }
+          if (bigEndianUnicodeIndex < 0)
+            utf16.WriteByte(val);
+        }
+
+
         highByte = !highByte;
       }
 
-      return Encoding.Unicode.GetString(buffer.GetBuffer(), 0, (int) buffer.Length).TrimEnd('\x0');
+      // in the FavList the name can be a random locale based on the country setting (other than CP-1252 or U-0000-00FF)
+      if (nameType == NameType.FavList)
+        return this.DefaultEncoding.GetString(utf8.GetBuffer(), 0, (int)utf8.Length).TrimGarbage();
+
+      // e.g. for cyrillic names, where only the low-byte is used for an utf8 encoding while the high-byte is always 0
+      if (!invalidUtf8 && Tools.IsUtf8(utf8.GetBuffer(), 0, (int)utf8.Length))
+        return Encoding.UTF8.GetString(utf8.GetBuffer(), 0, (int)utf8.Length).TrimGarbage();
+
+      return Encoding.Unicode.GetString(utf16.GetBuffer(), 0, (int) utf16.Length).TrimGarbage();
+    }
+    #endregion
+
+    #region LoadAndValidateMtkChannelList()
+    private void LoadAndValidateMtkChannelList(string dir)
+    {
+      var path = Path.Combine(dir, "MtkChannelList.xml");
+      if (!File.Exists(path))
+        return;
+      
+      this.mtkSerializer = new Serializer(path);
+      this.mtkSerializer.Load();
+      foreach (var list1 in this.DataRoot.ChannelLists)
+      {
+        if (list1.Channels.Count == 0 || (list1.SignalSource & SignalSource.Analog) != 0)
+          continue;
+
+        var list2 = mtkSerializer.DataRoot.GetChannelList(list1.SignalSource);
+        if (list2 == null)
+          throw LoaderException.Fail("MtkChannelList.xml doesn't contain a list for " + list1.SignalSource);
+
+        if (list1.Channels.Count != list2.Channels.Count)
+          throw LoaderException.Fail("MtkChannelList.xml contains a different number of channels for " + list1.SignalSource);
+
+        foreach (var ch1 in list1.Channels)
+        {
+          var others = list2.GetChannelByUid(ch1.Uid).Where(c => Math.Abs(ch1.FreqInMhz - c.FreqInMhz) < 2).ToList();
+          if (others.Count == 0)
+            throw LoaderException.Fail("MtkChannelList.xml doesn't contain a matching channel for " + ch1);
+          if (others.Count > 1)
+            throw LoaderException.Fail("MtkChannelList.xml contains multiple matching channel for " + ch1);
+          
+          var ch2 = others[0];
+          if (ch1.OldProgramNr != ch2.OldProgramNr)
+            throw LoaderException.Fail("MtkChannelList.xml contains a different channel number for " + ch1);
+
+          ((Channel)ch1).MtkChannel = ch2;
+        }
+      }
     }
     #endregion
 
@@ -613,6 +712,10 @@ namespace ChanSort.Loader.Philips
       if (this.chanLstBin != null)
         list.Add(this.FileName);
       list.AddRange(this.fileDataList.Select(f => f.path));
+
+      if (this.mtkSerializer != null)
+        list.AddRange(this.mtkSerializer.GetDataFilePaths());
+
       return list;
     }
     #endregion
@@ -634,7 +737,7 @@ namespace ChanSort.Loader.Philips
       // It is unclear whether XML nodes must be sorted by the new program number or kept in the original order. This may be different for the various format versions.
       // Onka, which was made for the ChannelMap_100 flavor that doesn't export dtv_cmdb_2.bin files, reorders the XML nodes and users reported that it works.
       // The official Philips Editor 6.61.22 does not reorder the XML nodes and does not change dtv_cmdb_*.bin when editing a ChannelMap_100 folder. But it is unclear if this editor is designed to handle the cmdb flavor.
-      
+
       // A user with a ChannelMap_100 export including a dtv_cmdb_2.bin reported, that the TV shows the reordered list in the menu, but tunes the channels based on the original numbers.
       // It's unclear if that happens because the XML was reordered and out-of-sync with the .bin, or if the TV always uses the .bin for tuning and XML edits are moot.
       // On top of that this TV messed up Umlauts during the import, despite ChanSort writing the exact same name data in hex-encoded UTF16. The result was as if the string was exported as UTF-8 bytes and then parsed with an 8-bit code page.
@@ -649,6 +752,7 @@ namespace ChanSort.Loader.Philips
       }
 
       this.chanLstBin?.Save(this.FileName);
+      this.mtkSerializer?.Save();
     }
 
     #endregion
@@ -676,7 +780,11 @@ namespace ChanSort.Loader.Philips
         if (ch.Format == 1)
           this.UpdateRepairXml(ch);
         else if (ch.Format == 2)
+        {
           this.UpdateChannelMapXml(ch, padChannelNameBytes, setFavoriteNumber, userReorderChannel, uppercaseHexDigits);
+          if (ch.MtkChannel != null)
+            this.UpdateMtkChannel(ch);
+        }
       }
     }
     #endregion
@@ -747,6 +855,18 @@ namespace ChanSort.Loader.Philips
 
     #endregion
 
+    #region UpdateMtkChannel()
+    private void UpdateMtkChannel(Channel channel)
+    {
+      var mtk = channel.MtkChannel;
+      //mtk.Name = channel.Name;
+      mtk.NewProgramNr = channel.NewProgramNr;
+      mtk.Lock = channel.Lock;
+      mtk.Skip = channel.Skip;
+      mtk.Hidden = channel.Hidden;
+    }
+    #endregion
+
     #region UpdateFavList()
     private void UpdateFavList()
     {
@@ -771,9 +891,9 @@ namespace ChanSort.Loader.Philips
             attr.InnerText = (version + 1).ToString();
         }
 
-        var startNrBias = (chanLstBin?.VersionMajor ?? 0) >= 120 ? 0 : -1;
-        var uniqueIdFormat = (chanLstBin?.VersionMajor ?? 0) >= 120 ? "d10" : "d"; // v120 writes 10 digits as uniqueID, including leading zeros
+        var uniqueIdFormat = (chanLstBin?.VersionMajor ?? 0) == 120 ? "d10" : "d"; // v120 writes 10 digits as uniqueID, including leading zeros; v100,v110 and v125 don't
 
+        int favNr = 0;
         foreach (var ch in favChannels.Channels.OrderBy(ch => ch.GetPosition(index)))
         {
           var nr = ch.GetPosition(index);
@@ -782,13 +902,13 @@ namespace ChanSort.Loader.Philips
           var uniqueIdNode = favFile.doc.CreateElement("UniqueID");
           uniqueIdNode.InnerText = ch.RecordIndex.ToString(uniqueIdFormat);
           var favNrNode = favFile.doc.CreateElement("FavNumber");
-          favNrNode.InnerText = (nr + startNrBias).ToString();
+          favNrNode.InnerText = (++favNr).ToString();
           var channelNode = favFile.doc.CreateElement("FavoriteChannel");
           channelNode.AppendChild(uniqueIdNode);
           channelNode.AppendChild(favNrNode);
           
-          // Version 120 also stores a <ChannelType> element in the XML
-          if ((chanLstBin?.VersionMajor ?? 0) >= 120)
+          // Version 120 also stores a <ChannelType> element in the XML, but not 100, 110, 115, 125
+          if ((chanLstBin?.VersionMajor ?? 0) == 120)
           {
             var chanTypeNode = favFile.doc.CreateElement("ChannelType");
             string type = null;
@@ -902,6 +1022,10 @@ namespace ChanSort.Loader.Philips
     {
       RepairXml = 1, ChannelMapXml = 2, TornadoChtb = 3
     }
+    #endregion
+
+    #region enum NameType
+    private enum NameType { Channel, Satellite, FavList }
     #endregion
 
     #region class FileData

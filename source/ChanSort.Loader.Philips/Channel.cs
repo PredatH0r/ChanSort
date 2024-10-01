@@ -42,5 +42,7 @@ namespace ChanSort.Loader.Philips
     public int FlashFileOffset;
 
     public int DbFileOffset;
+
+    public ChannelInfo MtkChannel;
   }
 }

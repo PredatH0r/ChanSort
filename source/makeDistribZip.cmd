@@ -69,15 +69,14 @@ goto:eof
 
 set oldcd=%cd%
 cd %target%
-call :signBatch ChanSort.exe ChanSort*.dll
-if errorlevel 1 goto :error
-set files=
+set filesToSign=ChanSort.exe ChanSort*.dll
 for %%l in (%languages%) do (
-  call :signBatch "%%l\ChanSort*.dll"
-  if errorlevel 1 goto :error
+  set filesToSign=!filesToSign! "%%l\ChanSort*.dll"
 )
+call :signBatch !filesToSign!
 cd %oldcd%
 goto:eof
+
 :signBatch
 set todo=
 for %%f in (%*) do (

@@ -77,7 +77,9 @@ namespace ChanSort.Loader.Philips
      *
      * version 120.0
      * same as 105 plus additional ChannelList\MtkChannelList.xml
-     * 
+     *
+     * version 125.0
+     * same as 120
      *
      * Version 0.1 and 100-120 are XML based and loaded through the XmlSerializer.
      * Version 1.1 and 1.2 are loaded through the BinSerializer.
@@ -137,7 +139,7 @@ namespace ChanSort.Loader.Philips
         }
       }
 
-      if (majorVersion == 0 || majorVersion >= 100 && majorVersion <= 120)
+      if (majorVersion == 0 || majorVersion >= 100 && majorVersion <= 125)
         return new XmlSerializer(inputFile);
       if (majorVersion == 1 || majorVersion == 2 || majorVersion == 30 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
         return new BinarySerializer(inputFile);

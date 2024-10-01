@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace ChanSort.Api
 {
@@ -149,11 +150,15 @@ namespace ChanSort.Api
     /// <summary>
     /// This method tests whether the binary data can be interpreted as valid UTF-8. If not, it might be encoded with a locale specific encoding
     /// </summary>
-    public static bool IsUtf8(byte[] buffer)
+    public static bool IsUtf8(byte[] buffer, int start=0, int count=-1)
     {
+      if (count < 0)
+        count = buffer.Length - start;
+
       int followBytes = 0;
-      foreach (byte b in buffer)
+      for (int i = start, e=Math.Min(start+count, buffer.Length); i<e; i++)
       {
+        var b = buffer[i];
         if (followBytes > 0)
         {
           if ((b & 0xC0) != 0x80) // follow-up bytes must be 10xx xxxx
@@ -227,6 +232,12 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region TrimGarbage()
+    /// <summary>
+    /// Remove a \0 and everything following it from a string
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
     public static string TrimGarbage(this string input)
     {
       if (input == null) return null;
@@ -235,6 +246,21 @@ namespace ChanSort.Api
         return input.Substring(0, i);
       return input;
     }
+    #endregion
+
+    #region XmlNode: GetElement(), GetElementString(), GetElementInt()
+    public static XmlElement GetElement(this XmlNode node, string localName)
+    {
+      if (node is not XmlElement element)
+        return null;
+      var children = element.GetElementsByTagName(localName, node.NamespaceURI);
+      return children.Count >= 1 ? children[0] as XmlElement : null;
+    }
+
+    public static string GetElementString(this XmlNode node, string localName) => GetElement(node, localName)?.InnerText;
+    public static int GetElementInt(this XmlNode node, string localName, int defaultValue = 0) => int.TryParse(GetElementString(node, localName), out var value) ? value : defaultValue;
+
+    #endregion
 
   }
 }

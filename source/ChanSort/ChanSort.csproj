@@ -136,6 +136,7 @@
     <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Loewe\ChanSort.Loader.Loewe.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.M3u\ChanSort.Loader.M3u.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.MediaTek\ChanSort.Loader.MediaTek.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Medion\ChanSort.Loader.Medion.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj" />

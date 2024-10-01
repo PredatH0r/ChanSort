@@ -242,5 +242,17 @@ namespace ChanSort.Api
       return 0;
     }
     #endregion
+
+    #region ParseDecimal()
+    protected decimal ParseDecimal(string input)
+    {
+      if (string.IsNullOrWhiteSpace(input))
+        return 0;
+      if (decimal.TryParse(input, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value))
+        return value;
+      return 0;
+    }
+    #endregion
+
   }
 }
