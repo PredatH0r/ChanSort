@@ -1,7 +1,11 @@
 ﻿ChanSort Change Log 
 ===================
 
-2024-09-31
+2024-10-02
+- Philips formats 100-125: further improvements/fixes for decoding non-latin characters
+- Sony Bravia 7 (2024) sdb.xml: support to read it as a reference list (the TV will ignore any edits to this file)
+
+2024-10-01
 - experimental support for Philips channel list format 125 (with automatic sync to MtkChannelList.xml)
 - experimental support for MtkChannelList.xml (which is part of several MediaTek based Google TVs, e.g. Philips formats 120 and 125)
 - Philips formats 100-125: improved decoding of non-latin characters (turkish, cyrillic, ...)

@@ -591,74 +591,99 @@ namespace ChanSort.Loader.Philips
         return input;
 
       // The Philips encodes names is a complete mess.
-      // Each character is represented as two bytes, with the low byte first and the high second, but this isn't utf16.
-      // All observed files have the "high" byte always as 0x00
-      // If looking only at the odd bytes, this can either be encoded in some random locale, a valid utf8 sequence or 1 byte characters mixed with big-endian utf16 double-bytes characters.
+      // Two hex digits are combined to an integer with the low byte first and the high byte second.
+      // If the high byte is 0xFF, it is treated as if it were 0x00.
+      // If any of the high bytes is non-zero, the encoding is little-endian utf16.
+      // If all high bytes are 0, some guesswork is needed to decode the sequence of odd bytes. It can be encoded as
+      // - a valid utf8 sequence
+      // - 1 byte per character in some undetermined locale
+      // - 1 byte per character mixed with 2 bytes big-endian utf16 (v125)
 
       // according to https://github.com/PredatH0r/ChanSort/issues/347 Philips seems use a locale dependent encoding for favorite list names,
       // writing "0xAA 0x00" to the file for an 8 bit code point. Congratulations, well done!
 
-      // In version 120/125 umlauts in channel names are encoded as 1 byte CP-1252/UTF16 code point + 0xFF as the second byte (i.e. for "Ä" it is 0xC4 0xFF instead of 0xC4 0x00)
-      // Also: 0x62 0x00 0x65 0x00 0x49 0x00 0x4e 0x00 0x20 0x00 0x01 0x00 0x30 0x00 0x5a   - here 0x01 0x00 0x30 0x00 refers to U+0130 (the upper case I with dot), in "beIN İZ"
+      // Version 100: CAN use little-endian UTF16: 0x11 0x04 0x35 0x04 0x3B 0x04 0x30 0x04 0x40 0x04 0x43 0x04 0x41 0x04 0x4C 0x04 0x20 0x00 0x31 0x00 0x20 0x00 0x48 0x00 0x44 0x00 for "Беларусь 1 HD"
+      // also 100: odd bytes contain UTF8, high are all 0: https://github.com/PredatH0r/ChanSort/issues/421:
+      //   0x38 0x00 0x20 0x00 0xD0 0x00 0xBA 0x00 0xD0 0x00 0xB0 0x00 0xD0 0x00 0xBD 0x00 0xD0 0x00 0xB0 0x00 0xD0 0x00 0xBB 0x00 0x20 0x00 0x48 0x00 0x44 0x00 for "8 канал HD"
 
-      // https://github.com/PredatH0r/ChanSort/issues/421: 0x38 0x00 0x20 0x00 0xD0 0x00 0xBA ... seems to contain cyrillic UTF-8 encoding in channel names instead of UTF-16
+      // Version 120/125: Umlauts in channel names are encoded as 1 byte CP-1252/UTF16 code point + 0xFF as the second byte (i.e. for "Ä" it is 0xC4 0xFF instead of 0xC4 0x00)
+      // Also 125: 0x62 0x00 0x65 0x00 0x49 0x00 0x4e 0x00 0x20 0x00 0x01 0x00 0x30 0x00 0x5a for "beIN İZ" where 0x01 0x00 0x30 0x00 refers to U+0130 "İ"
 
 
-      var hexParts = input.Split(' ');
       var utf16 = new MemoryStream();
       var utf8 = new MemoryStream();
 
-      bool highByte = false;
+      bool isHighByte = false;
+      int intValue = 0;
       bool invalidUtf8 = false;
       byte bigEndianUnicodeHighByte = 0;
-      int bigEndianUnicodeIndex = -1;
+      bool isBigEndianUtf16InOddBytes = false;
+      var hexParts = input.Split(' ');
       foreach (var part in hexParts)
       {
         if (part == "")
           continue;
-        var val = (byte)ParseInt(part);
-        invalidUtf8 |= highByte && val != 0;
-        if (highByte && val == 0xff) // hack-around for version 120
-          val = 0;
-
-        if (bigEndianUnicodeIndex >= 0) // special handling when a character < 32 was detected, which means we have a messed up "HI 00 LO 00" encoding for an UTF16 character (where HI is < 32)
+        var curByte = (byte)ParseInt(part);
+        
+        if (!isHighByte)
         {
-          ++bigEndianUnicodeIndex;
-          if (bigEndianUnicodeIndex == 2)
+          intValue = curByte;
+          isHighByte = true;
+          continue;
+        }
+
+        isHighByte = false;
+        if (curByte == 0xff) // hack-around for version 120 where 0xFFxx is actually a CP1252 code point xx
+          curByte = 0;
+
+        intValue += curByte << 8;
+        invalidUtf8 |= curByte != 0;
+
+        if (intValue == 0) // break when reaching a 0x00 0x00 sequence
+          break;
+
+        if (!invalidUtf8)
+          utf8.WriteByte((byte)intValue);
+
+        if (isBigEndianUtf16InOddBytes) // special handling when a character < 32 was detected, which means we may have a "HI 00 LO 00" encoding for a UTF16 character
+        {
+          if (curByte == 0) // expected case where LO is followed by 00
           {
-            utf16.WriteByte(val);
+            utf16.WriteByte((byte)intValue);
             utf16.WriteByte(bigEndianUnicodeHighByte);
             bigEndianUnicodeHighByte = 0;
           }
-          else if (bigEndianUnicodeIndex == 3)
-            bigEndianUnicodeIndex = -1;
+          else // fallback to write full 4 byte sequence
+          {
+            utf16.WriteByte(bigEndianUnicodeHighByte);
+            utf16.WriteByte(0);
+            utf16.WriteByte((byte)(intValue >> 8));
+            utf16.WriteByte(curByte);
+          }
+
+          isBigEndianUtf16InOddBytes = false;
         }
         else
         {
-          if (!highByte)
+          if (intValue < 32) // an int < 32 is likely the high byte of a "HI 00 LO 00" encoded UTF16 character
           {
-            if (val < 32 && val != 0) // a char < 32 is likely the high byte of a "HI 00 LO 00" encoded UTF16 character
-            {
-              bigEndianUnicodeHighByte = val;
-              bigEndianUnicodeIndex = 0;
-              invalidUtf8 = true;
-            }
-            else if (!invalidUtf8)
-              utf8.WriteByte(val);
+            isBigEndianUtf16InOddBytes = true;
+            bigEndianUnicodeHighByte = (byte)intValue;
+            invalidUtf8 = true;
           }
-          if (bigEndianUnicodeIndex < 0)
-            utf16.WriteByte(val);
+          else
+          {
+            utf16.WriteByte((byte)(intValue & 0xFF));
+            utf16.WriteByte(curByte);
+          }
         }
-
-
-        highByte = !highByte;
       }
 
-      // in the FavList the name can be a random locale based on the country setting (other than CP-1252 or U-0000-00FF)
+      // in the FavList the name can be a random locale based on the country setting (other than CP-1252 or U-0000-00FF, i.e. turkish)
       if (nameType == NameType.FavList)
         return this.DefaultEncoding.GetString(utf8.GetBuffer(), 0, (int)utf8.Length).TrimGarbage();
 
-      // e.g. for cyrillic names, where only the low-byte is used for an utf8 encoding while the high-byte is always 0
+      // best-effort utf8 decoding
       if (!invalidUtf8 && Tools.IsUtf8(utf8.GetBuffer(), 0, (int)utf8.Length))
         return Encoding.UTF8.GetString(utf8.GetBuffer(), 0, (int)utf8.Length).TrimGarbage();
 

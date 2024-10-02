@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -11,8 +10,12 @@ namespace ChanSort.Loader.MediaTek;
 public class Serializer : SerializerBase
 {
   /*
-   * Some Android based TVs export (in addition to the brand specific channel list files) a file named MtkChannelList.xml
-   * Examples are Philips channel list formats 120 and 125
+   * Some Android based TVs export an XML file with the format described below.
+   * Examples are Philips channel list formats 120 and 125 and Sony BRAVIA 7 (2024).
+   * However there are differences between Philips and Sony:
+   * - Sony lacks a number of XML elements
+   * - Sony seems to manage TV, Radio and Data channels internally in separate lists, all starting at 1, while Philips seems to use one combined list with no duplicate major_channel_numbers
+   *
    * <service_list_transfer>
    *   <service_list_infos>
    *     <service_list_info service_list_id="...">
@@ -26,6 +29,9 @@ public class Serializer : SerializerBase
    *         <std_stream_component_type>
    *         <record_id>service://SERVICE_LIST_GENERAL_SATELLITE/[service_list_id]/[major_channel_number]
    *         <visible_service>
+   *
+   *         The following elements exist in the Philips lists but not in the Sony's sdb.xml
+   *
    *         <service_id> SID
    *         <transport_stream_id> TSID
    *         <network_id> NID
@@ -47,13 +53,13 @@ public class Serializer : SerializerBase
   private byte[] content;
   private string textContent;
   private readonly StringBuilder fileInfo = new();
-
-  private readonly Dictionary<string, ChannelList> listsById = new();
+  private readonly bool splitTvRadioData;
 
 
   #region ctor()
-  public Serializer(string inputFile) : base(inputFile)
+  public Serializer(string inputFile, bool separateTvRadioData = false) : base(inputFile)
   {
+    this.splitTvRadioData = separateTvRadioData;
     this.Features.ChannelNameEdit = ChannelNameEditMode.All;
     this.Features.DeleteMode = DeleteMode.NotSupported;
     this.Features.FavoritesMode = FavoritesMode.None;
@@ -134,7 +140,7 @@ public class Serializer : SerializerBase
   #region ReadServiceList()
   private void ReadServiceList(XmlElement node)
   {
-    SignalSource ss = SignalSource.Tv | SignalSource.Radio | SignalSource.Data | SignalSource.Dvb;
+    var ss = SignalSource.Dvb;
     var slt = node.GetAttribute("service_list_type");
     if (slt.Contains("SATELLITE"))
       ss |= SignalSource.Sat;
@@ -143,12 +149,8 @@ public class Serializer : SerializerBase
     else if (slt.Contains("TERR"))
       ss |= SignalSource.Antenna;
 
-
     // service_list_id example: SERVICE_LIST_GENERAL_SATELLITE/17
-    var serviceListId = node.GetAttribute("service_list_id");
-
-    var list = new ChannelList(ss, serviceListId);
-    this.listsById[serviceListId] = list;
+    //var serviceListId = node.GetAttribute("service_list_id");
 
     int idx = 0;
     foreach (var child in node.ChildNodes)
@@ -156,16 +158,14 @@ public class Serializer : SerializerBase
       if (!(child is XmlElement si && si.LocalName == "service_info"))
         continue;
 
-      ReadChannel(si, ss, idx++, list);
+      ReadChannel(si, ss, idx++);
     }
-
-    this.DataRoot.AddChannelList(list);
   }
   #endregion
 
   #region ReadChannel()
 
-  private ChannelInfo ReadChannel(XmlElement si, SignalSource ss, int idx, ChannelList list)
+  private void ReadChannel(XmlElement si, SignalSource ss, int idx)
   {
     // record_id example: service://SERVICE_LIST_GENERAL_SATELLITE/17/1
     var recIdUri = si.GetElementString("record_id") ?? "";
@@ -197,13 +197,28 @@ public class Serializer : SerializerBase
     else if ((ss & SignalSource.Cable) != 0)
       chan.ChannelOrTransponder = LookupData.Instance.GetDvbcTransponder(chan.FreqInMhz).ToString();
 
+
+    if (splitTvRadioData)
+      ss |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType);
+    else
+      ss |= SignalSource.Tv | SignalSource.Radio | SignalSource.Data;
+
+
+    var list = DataRoot.GetChannelList(ss);
+    if (list == null)
+    {
+      var name = (ss & SignalSource.Antenna) != 0 ? "Antenna" : (ss & SignalSource.Cable) != 0 ? "Cable" : (ss & SignalSource.Sat) != 0 ? "Sat" : (ss & SignalSource.Ip) != 0 ? "IP" : "Other";
+      if (splitTvRadioData)
+        name += " " + ((ss & SignalSource.Tv) != 0 ? " TV" : (ss & SignalSource.Radio) != 0 ? " Radio" : " Data");
+        
+      list = new ChannelList(ss, name);
+      this.DataRoot.AddChannelList(list);
+    }
+
     var elements = si.GetElementsByTagName("major_channel_number", si.NamespaceURI);
-    list.ReadOnly |= elements.Count == 1 && elements[0].Attributes["editable", si.NamespaceURI].InnerText == "false";
+    list.ReadOnly |= elements.Count == 1 && elements[0].Attributes!["editable", si.NamespaceURI].InnerText == "false";
 
-  list.AddChannel(chan);
-
-
-    return chan;
+    list.AddChannel(chan);
   }
   #endregion
 
@@ -231,10 +246,11 @@ public class Serializer : SerializerBase
           continue;
 
         var si = ch.Xml;
-        si["major_channel_number"].InnerText = ch.NewProgramNr.ToString();
-        si["service_name"].InnerText = ch.Name;
-        si["lock"].InnerText = ch.Lock ? "1" : "0";
-        si["visible_service"].InnerText = ch.Hidden ? "1" : "3";
+        si["major_channel_number"]!.InnerText = ch.NewProgramNr.ToString();
+        si["service_name"]!.InnerText = ch.Name;
+        si["visible_service"]!.InnerText = ch.Hidden ? "1" : "3";
+        if (si["lock"] != null) // Sony lists don't have this elements
+          si["lock"].InnerText = ch.Lock ? "1" : "0";
       }
     }
 

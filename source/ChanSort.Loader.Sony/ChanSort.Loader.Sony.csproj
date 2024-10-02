@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.MediaTek\ChanSort.Loader.MediaTek.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="ChanSort.Loader.Sony.ini">
