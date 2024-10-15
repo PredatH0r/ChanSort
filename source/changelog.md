@@ -1,6 +1,12 @@
 ﻿ChanSort Change Log 
 ===================
 
+2024-10-15
+- Philips formats 120-125: opening the "MtkChannelList.xml" file will now load/save the whole Philips channel list
+  instead of only loading the data from that particular file.
+- Philips formats 120-125: the main program numbers are now read-only because the TV seems to ignores changes to them.
+  Changes to the favorite lists however are imported correctly.
+
 2024-10-02
 - Philips formats 100-125: further improvements/fixes for decoding non-latin characters
 - Sony Bravia 7 (2024) sdb.xml: support to read it as a reference list (the TV will ignore any edits to this file)

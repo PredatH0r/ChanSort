@@ -227,6 +227,16 @@ namespace ChanSort.Loader.Philips
           throw LoaderException.TryNext("No XML files found in folder structure");
 
         LoadAndValidateMtkChannelList(dir);
+
+        // version 120 and 125 ignore the modified main channel numbers and only take changes from the favorites.xml
+        if ((chanLstBin?.VersionMajor ?? 0) >= 120)
+        {
+          foreach (var list in this.DataRoot.ChannelLists)
+          {
+            if (!list.IsMixedSourceFavoritesList)
+              list.ReadOnly = true;
+          }
+        }
       }
       else
       {
@@ -718,8 +728,12 @@ namespace ChanSort.Loader.Philips
           if (others.Count == 0)
             throw LoaderException.Fail("MtkChannelList.xml doesn't contain a matching channel for " + ch1);
           if (others.Count > 1)
-            throw LoaderException.Fail("MtkChannelList.xml contains multiple matching channel for " + ch1);
-          
+          {
+            others = others.Where(c => c.OldProgramNr == ch1.OldProgramNr).ToList();
+            if (others.Count != 1)
+              throw LoaderException.Fail("MtkChannelList.xml contains multiple matching channel for " + ch1);
+          }
+
           var ch2 = others[0];
           if (ch1.OldProgramNr != ch2.OldProgramNr)
             throw LoaderException.Fail("MtkChannelList.xml contains a different channel number for " + ch1);
