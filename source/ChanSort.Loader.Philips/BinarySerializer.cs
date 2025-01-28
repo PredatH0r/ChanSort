@@ -481,10 +481,11 @@ namespace ChanSort.Loader.Philips
     {
       var transponderId = mapping.GetWord("offTransponderIndex");
       var progNr = mapping.GetWord("offProgNr");
+      var serviceId = mapping.GetWord("offSid");
       var ch = new Channel(list.SignalSource & SignalSource.MaskBcastMedium, recordIndex, progNr, "");
 
       // deleted channels must be kept in the list because their records must also be physically reordered when saving the list
-      if (progNr == 0xFFFF || transponderId == 0xFFFF)
+      if (progNr == 0xFFFF || transponderId == 0xFFFF || serviceId == 0xFFFF)
       {
         ch.IsDeleted = true;
         ch.OldProgramNr = -1;
@@ -1002,6 +1003,8 @@ namespace ChanSort.Loader.Philips
         : list.Channels.OrderBy(c => c.RecordIndex);
       foreach (var ch in channels)
       {
+        if (ch.IsProxy)
+          continue;
         mapping.BaseOffset = baseOffset + i * recordSize;
         Array.Copy(orig, baseOffset + (int)ch.RecordIndex * recordSize, data, mapping.BaseOffset, recordSize);
         if (ch.IsDeleted)

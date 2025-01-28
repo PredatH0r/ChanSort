@@ -7,7 +7,7 @@ namespace ChanSort.Loader.SatcoDX
 {
   internal class Channel : ChannelInfo
   {
-    private byte[] data;
+    private readonly byte[] data;
     public int FileOffset { get; }
     public int Length { get; }
 
@@ -75,7 +75,10 @@ namespace ChanSort.Loader.SatcoDX
       // 102-104: language
       // 106-107: country code
       // 108-110: language code
+
       // 111-114: crypto code
+      if (line.Length >= 115)
+        this.Encrypted = line.Substring(111, 4) == "LCKD";
     }
 
     #endregion

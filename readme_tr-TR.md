@@ -58,6 +58,7 @@ Bu liste nelerin desteklendiğine dair bir örnek teşkil eder, ancak yine de bu
 - [Grundig](source/fileformats.md#grundig)
 - [SatcoDX: ITT, Medion, Nabo, ok., PEAQ, Schaub-Lorenz, Silva-Schneider, Telefunken, ...](source/fileformats.md#satcodx)
 - [DBM: Xoro, Strong, TechniSat, ...](source/fileformats.md#dbm)
+- [Loewe](source/fileformats_de.md#hisense)
 - [Vision Edge 4K](source/fileformats.md#visionedge)
 - [VDR](source/fileformats.md#vdr)
 - [SAT>IP m3u](source/fileformats.md#m3u)

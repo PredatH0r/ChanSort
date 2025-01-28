@@ -13,9 +13,13 @@ namespace ChanSort.Loader.CmdbBin
     private readonly List<string> files = new();
     private readonly ChannelList avbtTv = new (SignalSource.AnalogT | SignalSource.Tv, "Analog Antenna TV");
     private readonly ChannelList avbcTv = new (SignalSource.AnalogC | SignalSource.Tv, "Analog Cable TV");
-    private readonly ChannelList dvbsTv = new (SignalSource.DvbS | SignalSource.Tv, "Sat TV");
-    private readonly ChannelList dvbsRadio = new (SignalSource.DvbS | SignalSource.Radio, "Sat Radio");
-    private readonly ChannelList dvbsData = new (SignalSource.DvbS | SignalSource.Radio, "Sat Data");
+    private readonly ChannelList dvbsTv = new (SignalSource.DvbS | SignalSource.Tv, "Sat TV _2");
+    private readonly ChannelList dvbsRadio = new (SignalSource.DvbS | SignalSource.Radio, "Sat Radio _2");
+    private readonly ChannelList dvbsData = new (SignalSource.DvbS | SignalSource.Radio, "Sat Data _2");
+    private readonly ChannelList dvbsTv3 = new(SignalSource.DvbS | SignalSource.Tv, "Sat TV _3");
+    private readonly ChannelList dvbsRadio3 = new(SignalSource.DvbS | SignalSource.Radio, "Sat Radio _3");
+    private readonly ChannelList dvbsData3 = new(SignalSource.DvbS | SignalSource.Radio, "Sat Data _3");
+
     private DvbStringDecoder dvbStringDecoder;
     private bool loaded;
     private readonly StringBuilder protocol = new ();
@@ -32,6 +36,9 @@ namespace ChanSort.Loader.CmdbBin
       this.DataRoot.AddChannelList(dvbsTv);
       this.DataRoot.AddChannelList(dvbsRadio);
       // this.DataRoot.AddChannelList(dvbsData); // there seem to be multiple data lists with Toshiba TVs which all have their own numbering starting at 1. Better don't show data channels at all than dupes
+      this.DataRoot.AddChannelList(dvbsTv3);
+      this.DataRoot.AddChannelList(dvbsRadio3);
+      // this.DataRoot.AddChannelList(dvbsData3); // there seem to be multiple data lists with Toshiba TVs which all have their own numbering starting at 1. Better don't show data channels at all than dupes
       this.ReadConfigurationFromIniFile();
 
       foreach (var list in this.DataRoot.ChannelLists)
@@ -60,7 +67,7 @@ namespace ChanSort.Loader.CmdbBin
             LoadFile(file, this.dvbsTv, this.dvbsRadio, this.dvbsData);
             break;
           case "dtv_cmdb_3.bin":
-            LoadFile(file, this.dvbsTv, this.dvbsRadio, this.dvbsData);
+            LoadFile(file, this.dvbsTv3, this.dvbsRadio3, this.dvbsData3);
             break;
           case "atv_cmdb.bin":
             LoadFile(file, this.avbtTv, null, null);
@@ -299,7 +306,10 @@ namespace ChanSort.Loader.CmdbBin
         switch (name)
         {
           case "dtv_cmdb_2.bin":
-            SaveDtvCmdb(path, "dvbsChannel", SignalSource.DvbS);
+            SaveDtvCmdb(path, "dvbsChannel", this.dvbsTv, this.dvbsRadio, this.dvbsData);
+            break;
+          case "dtv_cmdb_3.bin":
+            SaveDtvCmdb(path, "dvbsChannel", this.dvbsTv3, this.dvbsRadio3, this.dvbsData3);
             break;
           case "atv_cmdb.bin":
             SaveAtvCmdb(path, "avbChannel", this.avbtTv);
@@ -313,22 +323,22 @@ namespace ChanSort.Loader.CmdbBin
     #endregion
 
     #region SaveDtvCmdb()
-    private void SaveDtvCmdb(string path, string channelSectionName, SignalSource sourceMask)
+    private void SaveDtvCmdb(string path, string channelSectionName, params ChannelList[] lists)
     {
       var data = File.ReadAllBytes(path);
       var name = Path.GetFileName(path).ToLowerInvariant();
       var config = this.ini.GetSection(name + ":" + data.Length);
-      var lenChannelRecord = config.GetInt("lenChannelRecord");
-      var sec = this.ini.GetSection($"{channelSectionName}:{lenChannelRecord}");
+      var strLength = config.GetString("lenChannelRecord");
+      var idx = strLength.IndexOf('_');
+      var lenChannelRecord = int.Parse(idx < 0 ? strLength : strLength.Substring(0, idx));
+      var sec = this.ini.GetSection($"{channelSectionName}:{strLength}");
       sec.Set("offChecksum", lenChannelRecord - 4);
       var mapping = new DataMapping(sec);
       
       var baseOffset = config.GetInt("offChannelRecord");
 
-      foreach (var list in this.DataRoot.ChannelLists)
+      foreach (var list in lists)
       {
-        if ((list.SignalSource & (SignalSource.MaskBcastSystem | SignalSource.MaskBcastMedium)) != sourceMask)
-          continue;
         foreach (var chan in list.Channels)
         {
           mapping.SetDataPtr(data, baseOffset + (int)chan.RecordIndex * lenChannelRecord);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using ChanSort.Api;
@@ -273,7 +274,16 @@ namespace ChanSort.Loader.DBM
         mapping.SetWord("offChecksum", calculatedChecksum);
       }
 
-      File.WriteAllBytes(this.FileName, this.data);
+      if (!sec.GetBool("reorderPhysically"))
+        File.WriteAllBytes(this.FileName, this.data);
+      else
+      {
+        using var strm = new FileStream(this.FileName, FileMode.Create);
+        strm.Write(this.data, 0, baseOffset);
+        foreach (var chan in this.allChannels.Channels.OrderBy(ch => ch.NewProgramNr >= 0 ? ch.NewProgramNr : 1000000 + ch.OldProgramNr))
+          strm.Write(this.data, baseOffset + (int)chan.RecordIndex * recordSize, recordSize);
+        strm.Write(this.data, (int)strm.Position, data.Length - (int)strm.Position);
+      }
     }
     #endregion
 

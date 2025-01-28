@@ -23,6 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort.Loader.LG", "ChanS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67AED502-8AEB-45F2-9B95-AC42B6A5D2C4}"
 	ProjectSection(SolutionItems) = preProject
+		ChanSort.Loader.Samsung\app.config = ChanSort.Loader.Samsung\app.config
 		build.md = build.md
 		changelog.md = changelog.md
 		fileformats.md = fileformats.md
@@ -114,7 +115,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HDD Hex Edit Neo", "HDD Hex
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\chansort.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\chansort.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\cvt_database-dat.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\cvt_database-dat.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\dbm.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dbm.h
-		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv-cmdb.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv-cmdb.h
+		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv-cmdb-3.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv-cmdb-3.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_1-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_1-bin.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_2-bin.h = Information\FileStructures_for_HHD_Hex_Editor_Neo\dtv_cmdb_2-bin.h
 		Information\FileStructures_for_HHD_Hex_Editor_Neo\get_doc_size.js = Information\FileStructures_for_HHD_Hex_Editor_Neo\get_doc_size.js

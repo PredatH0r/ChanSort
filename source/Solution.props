@@ -2,4 +2,12 @@
   <PropertyGroup>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\app.config" Link="app.config" />
+  </ItemGroup>
+  <!-- latest versions of nuget packages where older versions are indirectly included through other libraries; this should avoid a flood of compiler warnings -->
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.6.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0" />
+  </ItemGroup>
 </Project>

@@ -39,11 +39,11 @@ Always select "none / other / all" and never your cable TV provider or something
 - Android-TVs: "sdb.xml" files using format "FormateVer" 1.1.0
 - KDL 2012/2014: "sdb.xml" files using "FormatVer" 1.0.0, 1.1.0 and 1.2.0 
 
-<a name="hisense"/>Hisense
+<a name="hisense"/>Hisense / Loewe
 ---
 - Some older models like LTDN40D50TS use the same .csv files as Sharp. See [Sharp](#sharp) for instructions.
 - 2016 "Smart" models with a channel.db file, i.e. H65M5500  
-- 2017 models with a servicelist.db file
+- Hisense 2017 and Loewe models with a servicelist.db file
 - models exporting a HIS_DVB.BIN file
 - models exporting a set of HIS\_FAV.BIN, HIS\_SVL.BIN and HIS\_TSL.BIN files
 

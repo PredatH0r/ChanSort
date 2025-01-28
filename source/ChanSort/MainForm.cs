@@ -186,7 +186,7 @@ namespace ChanSort.Ui
     internal ChannelList CurrentChannelList { get; private set; }
     internal int SubListIndex => this.subListIndex;
 
-    private GridView EditorGridView => this.miSplitView.Down ? this.gviewLeft : this.gviewRight;
+    private XGridView EditorGridView => this.miSplitView.Down ? this.gviewLeft : this.gviewRight;
 
     #region IsLeftGridSortedByNewProgNr
 
@@ -986,10 +986,18 @@ namespace ChanSort.Ui
         if (list.IsMixedSourceFavoritesList)
           continue;
         var chNr = 1;
-        foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr))
+        foreach (var channel in list.Channels.OrderBy(c => c.NewProgramNr).ToList())
         {
           if (channel.IsDeleted || channel.NewProgramNr < 0)
             continue;
+          
+          if (channel.IsProxy && !testOnly)
+          {
+            // remove proxy channels so they don't cause duplicate numbers
+            list.Channels.Remove(channel);
+            continue;
+          }
+
           if (channel.NewProgramNr == 0 && chNr == 1)
             chNr = 0;
           if (channel.NewProgramNr != chNr)
@@ -3924,8 +3932,17 @@ namespace ChanSort.Ui
     private void btnSearch_Click(object sender, EventArgs e)
     {
       var gview = this.EditorGridView;
+      var col = gview == gviewLeft ? colOutName : colName;
       gview.FocusedRowHandle = GridControl.AutoFilterRowHandle;
-      gview.FocusedColumn = colName;
+      gview.FocusedColumn = col;
+
+      var tt = new ToolTip();
+      tt.IsBalloon = true;
+      var x = gview.ViewInfo.GetColumnLeftCoord(col) + this.ScaleHelper.ScaleHorizontal(10);
+      var ri = gview.ViewInfo.GetGridRowInfo(GridControl.AutoFilterRowHandle);
+      var y = ri.Bounds.Bottom + this.ScaleHelper.ScaleVertical(15);
+      tt.Show("Enter search text here", gridLeft, x, y, 3000);
+
       gview.GridControl.Focus();
       gview.ShowEditor();
     }

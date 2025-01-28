@@ -34,7 +34,6 @@ namespace ChanSort.Loader.SatcoDX
         list.VisibleColumnFieldNames.Remove("Lock");
         list.VisibleColumnFieldNames.Remove("Skip");
         list.VisibleColumnFieldNames.Remove("Hidden");
-        list.VisibleColumnFieldNames.Remove("Encrypted");
         list.VisibleColumnFieldNames.Remove("Favorites");
         list.VisibleColumnFieldNames.Remove("ServiceType");
         list.VisibleColumnFieldNames.Add("ServiceTypeName");
@@ -63,7 +62,7 @@ namespace ChanSort.Loader.SatcoDX
         prevPos = nextPos + 1;
       }
 
-      // SATCODX105 files contain a \0 character to mark the end, followed by an arbitrary number or spaces (or whatever data). We'll preserve it as-is.
+      // SATCODX105 files contain a \0 character to mark the end, followed by an arbitrary number of spaces (or whatever data). We'll preserve it as-is.
       this.trailingDataPos = prevPos;
     }
 

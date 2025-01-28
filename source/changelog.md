@@ -1,6 +1,18 @@
 ﻿ChanSort Change Log 
 ===================
 
+2025-01-11
+- added support for Philips PFL9715K/02 (Repair\\s2channellib\\\*.dat channel list format version 0.1)
+- added support for Grundig dtv\_cmdb\_3.bin channel lists with size of 1270 KB
+- fixed saving of Grundig dtv\_cmdb\_3.bin channel lists with size of 1293 KB
+- updated tivusat reference list
+- fixed issue when saving \*cmdb\_\*.bin channel lists after applying a reference list which contains channels
+  that don't exist in the \*cmdb\_\*.bin
+
+2024-10-28
+- HB\_DATABASE\_mm\_dd.DBM for Strong SRT 7007: added option "reorderPhysically" in ChanSort.Loader.DBM.ini
+  for this particular format to not only change the number but also change the order or data records in the file
+
 2024-10-15
 - Philips formats 120-125: opening the "MtkChannelList.xml" file will now load/save the whole Philips channel list
   instead of only loading the data from that particular file.

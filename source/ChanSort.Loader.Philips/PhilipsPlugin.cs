@@ -93,6 +93,7 @@ namespace ChanSort.Loader.Philips
     public SerializerBase CreateSerializer(string inputFile)
     {
       int majorVersion = int.MinValue;
+      int minorVersion = int.MinValue;
       var filename = Path.GetFileName(inputFile).ToLowerInvariant();
       if (Regex.IsMatch(filename, @"^CM_.*\.(?:bin|xml)$", RegexOptions.IgnoreCase))
         majorVersion = 0;
@@ -110,6 +111,7 @@ namespace ChanSort.Loader.Philips
             inputFile = path;
             var data = File.ReadAllBytes(inputFile);
             majorVersion = BitConverter.ToInt16(data, 2);
+            minorVersion = BitConverter.ToInt16(data, 4);
             break;
           }
 
@@ -139,9 +141,9 @@ namespace ChanSort.Loader.Philips
         }
       }
 
-      if (majorVersion == 0 || majorVersion >= 100 && majorVersion <= 125)
+      if (majorVersion == 0 && minorVersion != 0 || majorVersion >= 100 && majorVersion <= 125)
         return new XmlSerializer(inputFile);
-      if (majorVersion == 1 || majorVersion == 2 || majorVersion == 30 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
+      if (majorVersion is >= 0 and <= 2 || majorVersion == 30 || majorVersion == 45) // || majorVersion == 11 // format version 11  is similar to 1.x, but not (yet) supported
         return new BinarySerializer(inputFile);
       if (majorVersion == -1)
         return new DbSerializer(inputFile);
