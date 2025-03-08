@@ -672,4 +672,7 @@ elenchi di fornitori, satelliti o paesi specifici.</value>
   <data name="splitContainerControl1.Text" xml:space="preserve">
     <value>controllo del contenitore diviso 1</value>
   </data>
+  <data name="mnuFileAdvanced.Caption" xml:space="preserve">
+    <value>Avanzato</value>
+  </data>
 </root>

@@ -696,4 +696,7 @@
   <data name="miSwapWithMarked.Caption" xml:space="preserve">
     <value>Zamień z zaznaczonym</value>
   </data>
+  <data name="mnuFileAdvanced.Caption" xml:space="preserve">
+    <value>Postępowy</value>
+  </data>
 </root>

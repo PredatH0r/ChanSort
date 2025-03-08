@@ -663,4 +663,7 @@
   <data name="txtSetSlot.Properties.Mask.EditMask" xml:space="preserve">
     <value>\d{1,4}</value>
   </data>
+  <data name="mnuFileAdvanced.Caption" xml:space="preserve">
+    <value>Vyspělý</value>
+  </data>
 </root>

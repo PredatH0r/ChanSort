@@ -10,6 +10,7 @@ namespace ChanSort.Loader.SatcoDX
     private readonly byte[] data;
     public int FileOffset { get; }
     public int Length { get; }
+    private bool forceUtf8;
 
     #region ctor()
 
@@ -27,7 +28,7 @@ namespace ChanSort.Loader.SatcoDX
         throw LoaderException.Fail("Unrecognized channel format");
 
       // 10-27: satellite name
-      this.Satellite = line.Substring(10, 18);
+      this.Satellite = line.Substring(10, 18).TrimEnd('\0', ' ', '_');
 
       // 28: channel type
       var type = line[28];
@@ -96,14 +97,19 @@ namespace ChanSort.Loader.SatcoDX
 
       // 43-50 + 115-126 in version 103 or 115-131 in version 105: channel name
       byte[] nameBytes = new byte[8 + 17];
-      var nameLen2 = Math.Min(length - 115, 17); // version 103 has 12 extra bytes for channel name, version 105 has 17
+      int lineEnd = Array.IndexOf(data, (byte)'\x0A', start + 115);
+      var maxLen = lineEnd < 0 ? data.Length - start : lineEnd - start >= 132 ? 17 : 12;
+      var nameLen2 = Math.Min(length - 115, maxLen); // version 103 has 12 extra bytes for channel name, version 105 has 17 (uploaded_service_list.sdx) or 12 (Panasonic Fire-OS Channels.sdx)
       Array.Copy(data, start + 43, nameBytes, 0, 8);
       Array.Copy(data, start + 115, nameBytes, 8, nameLen2);
       
       // I have seen format 103 files using only implicit CP1252 encoding for Umlauts, as well as format 105 with implicit UTF-8/explicit DVB-encoding
       var oldDefaultEncoding = decoder.DefaultEncoding;
       if (nameLen2 > 12)
+      {
         decoder.DefaultEncoding = Encoding.UTF8;
+        this.forceUtf8 = true;
+      }
       decoder.GetChannelNames(nameBytes, 0, nameBytes.Length, out var longName, out var shortName);
       decoder.DefaultEncoding = oldDefaultEncoding;
       this.Name = longName.TrimEnd();
@@ -119,6 +125,8 @@ namespace ChanSort.Loader.SatcoDX
         return;
 
       // 43-50 + 115-126 in version 103 or 115-131 in version 105: channel name
+      if (this.forceUtf8)
+        encoding = Encoding.UTF8;
       var bytes = encoding.GetBytes(this.Name);
       Tools.MemSet(buffer, 43, 32, 8);
       Tools.MemSet(buffer, 115, 32, buffer.Length - 115 -1);

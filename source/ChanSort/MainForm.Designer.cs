@@ -225,6 +225,7 @@
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
       this.timerSelectFocusedRow = new System.Windows.Forms.Timer(this.components);
+      this.mnuFileAdvanced = new DevExpress.XtraBars.BarSubItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
       this.splitContainerControl1.Panel1.SuspendLayout();
@@ -1137,9 +1138,10 @@
             this.miSwapWithMarked,
             this.miConvert,
             this.miSaveAs,
-            this.miLangIt});
+            this.miLangIt,
+            this.mnuFileAdvanced});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 123;
+      this.barManager1.MaxItemId = 124;
       this.barManager1.ShowFullMenus = true;
       this.barManager1.ShortcutItemClick += new DevExpress.XtraBars.ShortcutItemClickEventHandler(this.barManager1_ShortcutItemClick);
       // 
@@ -1192,10 +1194,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miRestoreOriginal),
             new DevExpress.XtraBars.LinkPersistInfo(this.miDeleteBackup),
             new DevExpress.XtraBars.LinkPersistInfo(this.miSave, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miConvert),
             new DevExpress.XtraBars.LinkPersistInfo(this.miExcelExport),
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuFileAdvanced),
             new DevExpress.XtraBars.LinkPersistInfo(this.miOpenReferenceFile, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.miAddFromRefList),
             new DevExpress.XtraBars.LinkPersistInfo(this.miPrint, true),
@@ -2281,6 +2281,16 @@
       // 
       this.timerSelectFocusedRow.Tick += new System.EventHandler(this.timerSelectFocusedRow_Tick);
       // 
+      // mnuFileAdvanced
+      // 
+      resources.ApplyResources(this.mnuFileAdvanced, "mnuFileAdvanced");
+      this.mnuFileAdvanced.Id = 123;
+      this.mnuFileAdvanced.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miConvert),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs)});
+      this.mnuFileAdvanced.Name = "mnuFileAdvanced";
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -2541,6 +2551,7 @@
         private DevExpress.XtraBars.BarButtonItem miConvert;
     private DevExpress.XtraBars.BarButtonItem miSaveAs;
     private DevExpress.XtraBars.BarButtonItem miLangIt;
+    private DevExpress.XtraBars.BarSubItem mnuFileAdvanced;
   }
 }
 

@@ -678,4 +678,7 @@
   <data name="colAudioPid.Caption" xml:space="preserve">
     <value>Audio\nPID</value>
   </data>
+  <data name="mnuFileAdvanced.Caption" xml:space="preserve">
+    <value>Fejlett</value>
+  </data>
 </root>

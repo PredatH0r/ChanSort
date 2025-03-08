@@ -184,6 +184,19 @@ public struct DBM
     channelRecordCount = 4000;
     channelRecordLength = 164;
     break;
+  case 782536:
+    // Vantage VT-80 HD
+    satBitmapLength = 28;
+    satRecordCount = 200;
+    satRecordLength = 88;
+    transponderBitmapLength = 376;
+    transponderRecordCount = 3000;
+    transponderRecordLength = 36;
+    unknownDataAfterTransponderData = 22;
+    channelBitmapLength = 502;
+    channelRecordCount = 4000;
+    channelRecordLength = 164;
+    break;
   case 785256:
     // Strong HB_DATABASE_5_4.DBM
     satBitmapLength = 32;

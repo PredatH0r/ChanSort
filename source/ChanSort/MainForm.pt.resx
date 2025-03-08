@@ -379,4 +379,7 @@
   <data name="barSubItem1.Caption" xml:space="preserve">
     <value>&amp;Idioma</value>
   </data>
+  <data name="mnuFileAdvanced.Caption" xml:space="preserve">
+    <value>Avançado</value>
+  </data>
 </root>

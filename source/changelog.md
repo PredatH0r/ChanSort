@@ -1,6 +1,12 @@
 ﻿ChanSort Change Log 
 ===================
 
+2025-03-08
+- Panasonic Fire-OS Channels.sdx lists: removed trailing underscore and space characters from channel names
+- downgraded SQLite libraries to avoid a memory access violation crash in the SQLitePCL.raw 2.1.10
+- added support for \*.dbm files with size 782536 (e.g. Vantage VT-80 HD)
+- moved "Save as..." and "Export reference list" to a sub menu as they caused frequent confusion with the regular "Save".
+
 2025-01-11
 - added support for Philips PFL9715K/02 (Repair\\s2channellib\\\*.dat channel list format version 0.1)
 - added support for Grundig dtv\_cmdb\_3.bin channel lists with size of 1270 KB

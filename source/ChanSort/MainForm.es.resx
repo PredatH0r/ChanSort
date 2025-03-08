@@ -654,4 +654,7 @@
   <data name="miTheme.Caption" xml:space="preserve">
     <value>Esquema de colores...</value>
   </data>
+  <data name="mnuFileAdvanced.Caption" xml:space="preserve">
+    <value>Avanzado</value>
+  </data>
 </root>

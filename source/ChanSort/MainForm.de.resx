@@ -1488,4 +1488,7 @@ speziellen Anbieter, Satelliten oder Länderlisten aus.</value>
   <data name="btnClearRightFilter.Text" xml:space="preserve">
     <value>FIlter</value>
   </data>
+  <data name="mnuFileAdvanced.Caption" xml:space="preserve">
+    <value>Erweitert</value>
+  </data>
 </root>

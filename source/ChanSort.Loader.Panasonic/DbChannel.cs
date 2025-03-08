@@ -200,8 +200,15 @@ namespace ChanSort.Loader.Panasonic
     /// </summary>
     private void ReadNamesWithEncodingDetection(IDataReader r, IDictionary<string, int> field, Encoding encoding)
     {
-      byte[] buffer = new byte[100];
-      int len = (int)r.GetBytes(field["sname"], 0, buffer, 0, buffer.Length);
+#if true || NoAccessViolationInSQLitePCLRaw
+      // The NuGet packages Microsoft.Data.Sqlite 9.0.0-9.0.2 throw an AccessViolationException and terminate the program when reading a "string" column with GetBytes()
+      byte[] buffer = new byte[300];
+      int len = (int)r.GetBytes(field["sname"], 0, buffer, 0, buffer.Length/3);
+#else
+      var str = r.GetString(field["sname"]);
+      var buffer = Encoding.UTF8.GetBytes(str);
+      var len = buffer.Length;
+#endif
       this.RawName = new byte[len];
       Array.Copy(buffer, 0, this.RawName, 0, len);
       this.ChangeEncoding(encoding);      

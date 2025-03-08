@@ -657,4 +657,7 @@
   <data name="miTheme.Caption" xml:space="preserve">
     <value>Renk uyumu...+X91</value>
   </data>
+  <data name="mnuFileAdvanced.Caption" xml:space="preserve">
+    <value>Gelişmiş</value>
+  </data>
 </root>

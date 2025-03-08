@@ -218,6 +218,8 @@
     <PackageReference Include="DevExpress.Utils.UI" Version="23.2.5" />
     <PackageReference Include="DevExpress.Win" Version="23.2.5" />
     <PackageReference Include="DevExpress.Win.Reporting" Version="23.2.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.13" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.13" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
