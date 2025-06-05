@@ -87,7 +87,7 @@ namespace ChanSort.Loader.Android
     #region Load()
     public override void Load()
     {
-      using var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False");
+      using var conn = new SqliteConnection($"Data Source=\"{this.FileName}\";Pooling=False");
       conn.Open();
       using var cmd = conn.CreateCommand();
 
@@ -162,7 +162,7 @@ namespace ChanSort.Loader.Android
     /// </summary>
     public override void Save()
     {
-      using var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False");
+      using var conn = new SqliteConnection($"Data Source=\"{this.FileName}\";Pooling=False");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();

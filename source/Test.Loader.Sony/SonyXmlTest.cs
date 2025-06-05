@@ -9,6 +9,7 @@ namespace Test.Loader.Sony
   public class SonyXmlTest
   {
     // Android OS seems to use the "FormateVer" XML element, KDL 2012 and 2014 use "FormatVer"
+    // Bravia 7 and 8 (2024, 2025) contain a Mediatek XML inside sdb.xml, just like Philips' "MtkChannelList.xml" with slight differences
 
     #region TestAndroid ... ChannelsAddedToCorrectLists
     [TestMethod]
@@ -51,6 +52,17 @@ namespace Test.Loader.Sony
     }
     #endregion
 
+    #region TestMediatek (Bravia 2024,2025)
+    [TestMethod]
+    public void TestMediatekCableChannelsAddedToCorrectLists()
+    {
+      // there are 237 tv+radio channels in the list, but only a subset has assigned program numbers
+      this.TestChannelsAddedToCorrectLists("mediatek-sdb.xml", SignalSource.DvbC | SignalSource.Tv, 237, 237, 0);
+      this.TestChannelsAddedToCorrectLists("mediatek-sdb.xml", SignalSource.DvbC | SignalSource.Radio, 138, 0, 138);
+      this.TestChannelsAddedToCorrectLists("mediatek-sdb.xml", SignalSource.DvbC | SignalSource.Data, 0, 0, 0);
+    }
+    #endregion
+
 
     #region TestChannelsAddedToCorrectList
     private void TestChannelsAddedToCorrectLists(string fileName, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio, int dataProgramSid = 0, string dataProgramName = null)
@@ -63,7 +75,13 @@ namespace Test.Loader.Sony
       var root = ser.DataRoot;
 
       var list = root.GetChannelList(signalSource);
-      Assert.IsNotNull(list);
+
+      if (list == null)
+      {
+        if (expectedTotal == 0)
+          return;
+        Assert.IsNotNull(list);
+      }
       Assert.AreEqual(expectedTotal, list.Channels.Count);
       Assert.AreEqual(expectedTv, list.Channels.Count(ch => (ch.SignalSource & SignalSource.Tv) != 0));
       Assert.AreEqual(expectedRadio, list.Channels.Count(ch => (ch.SignalSource & SignalSource.Radio) != 0));
@@ -190,6 +208,5 @@ namespace Test.Loader.Sony
       RoundtripTest.TestChannelAndFavListEditing(tempFile, new SonyPlugin());
     }
     #endregion
-
   }
 }

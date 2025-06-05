@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ChanSort.Api;
 using ChanSort.Loader.Hisense;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,6 +9,14 @@ namespace Test.Loader.Hisense.ChannelDb
   [TestClass]
   public class HisenseChannelDbTest
   {
+    static HisenseChannelDbTest()
+    {
+      foreach (var ass in AppDomain.CurrentDomain.GetAssemblies())
+      {
+        System.Diagnostics.Debug.WriteLine(ass.GetName().FullName+ ": GAC=" + ass.GlobalAssemblyCache + "; " + ass.Location);
+      }
+    }
+
     #region TestSatChannelsAddedToCorrectLists
     [TestMethod]
     public void TestSatChannelsAddedToCorrectLists()

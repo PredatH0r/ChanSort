@@ -42,7 +42,7 @@ namespace ChanSort.Loader.Amdb
     #region Load()
     public override void Load()
     {
-      string connString = $"Data Source={this.FileName};Pooling=False";
+      string connString = $"Data Source=\"{this.FileName}\";Pooling=False";
       using var conn = new SqliteConnection(connString);
       conn.Open();
 
@@ -253,7 +253,7 @@ order by t.db_sat_para_id, case p.service_type when 0 then 3 when 1 then 0 when 
     #region Save()
     public override void Save()
     {
-      string channelConnString = $"Data Source={this.FileName};Pooling=False";
+      string channelConnString = $"Data Source=\"{this.FileName}\";Pooling=False";
       using var conn = new SqliteConnection(channelConnString);
       conn.Open();
       using var trans = conn.BeginTransaction();

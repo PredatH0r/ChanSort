@@ -557,6 +557,8 @@ namespace ChanSort.Ui
         return null;
       }
 
+      SetCurrentDirectory(); // make sure .ini files are in the current dir
+
       List<ISerializerPlugin> candidates = new List<ISerializerPlugin>();
       if (hint != null)
         candidates.Add(hint);
@@ -630,6 +632,20 @@ namespace ChanSort.Ui
 
     #endregion
 
+    #region SetCurrentDirectory()
+    /// <summary>
+    /// Sets the current directory to the directory from where the .exe was started.
+    /// This is so that .ini files can be found by loaders
+    /// </summary>
+    internal static void SetCurrentDirectory()
+    {
+      var curDir = Path.GetDirectoryName(typeof(MainForm).Assembly.Location);
+      if (curDir == null)
+        return;
+      Directory.SetCurrentDirectory(curDir);
+    }
+    #endregion
+
     #region LoadTvDataFile()
 
     private bool LoadTvDataFile(ISerializerPlugin plugin, string tvDataFile)
@@ -641,6 +657,8 @@ namespace ChanSort.Ui
           MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         return false;
       }
+      
+      SetCurrentDirectory();
 
       // abort action if there is no currentTvSerializer for the input file
       SerializerBase serializer = this.GetSerializerForFile(tvDataFile, ref plugin);

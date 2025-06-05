@@ -75,7 +75,8 @@ Sistem Gereksinimleri
 - wine (sudo apt-get install wine)
 - winetricks (sudo apt-get install winetricks)
 - winetricks'i başlatın, wineprefix'i seçin ya da oluşturun (32 bit ya da 64 bit), "Install Windows DLL or component"i seçin ve "dotnet48" paketini yükleyin, bu sırada çıkan düzinelerce uyarı mesajını görmezden gelin
-- ChanSort.exe'ye sağ tıklayın ve "open with", "all applications", "A wine application" sırasınca seçin
+- ChanSort.exe'ye sağ tıklayın ve "open with", "all applications", "A wine application" sırasınca seçin  
+Son olarak Ubuntu 24.10, wine-9.0, winetricks 20240105 ile test edildi
 
 **Mac**
 - macOS doğrudan desteklenmez, ancak Mac'te Windows 10/11 ile bir VM kurmak için Parallels veya UTM kullanabilirsiniz

@@ -81,7 +81,9 @@ System requirements
 - winetricks (sudo apt-get install winetricks)
 - start winetricks, select or create a wineprefix (32 bit or 64 bit), select
   "Install Windows DLL or component" and install the "dotnet48" package and ignore dozens of message boxes
-- right-click on ChanSort.exe and select "open with", "all applications", "A wine application"
+- right-click on ChanSort.exe and select "open with", "all applications", "A wine application"  
+Last tested with Ubuntu 24.10, wine-9.0, winetricks 20240105
+
 Or using Docker: https://github.com/PredatH0r/ChanSort/issues/285
 
 **Mac**

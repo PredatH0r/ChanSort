@@ -79,7 +79,8 @@ Wymagania systemowe
 - wino (sudo apt-get install wine)
 - winetricki (sudo apt-get install winetrics)
 - uruchom winetricki, wybierz lub utwórz prefiks wina (32-bitowy lub 64-bitowy), wybierz
-  "Zainstaluj Windows DLL lub komponent" i zainstaluj pakiet "dotnet48" i zignoruj dziesiątki okienek komunikatów- right-click on ChanSort.exe and select "open with", "all applications", "A wine application"
+  "Zainstaluj Windows DLL lub komponent" i zainstaluj pakiet "dotnet48" i zignoruj dziesiątki okienek komunikatów- right-click on ChanSort.exe and select "open with", "all applications", "A wine application"  
+Ostatnio testowano z Ubuntu 24.10, wine-9.0, winetricks 20240105
 
 **Sprzęt komputerowy**:
 - Pamięć USB/karta SD do przesyłania listy kanałów między telewizorem a komputerem. Pendrive <= 32 GB z systemem plików FAT32

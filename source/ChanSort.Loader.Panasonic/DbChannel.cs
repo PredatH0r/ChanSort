@@ -1,4 +1,8 @@
-﻿using System;
+﻿// The NuGet packages Microsoft.Data.Sqlite 9.0.0-9.0.5 throw an AccessViolationException and terminate the program when reading a "string" column with GetBytes()
+// uncomment this #define when using Sqlite < 9.x or when MS fixed the error
+//#define NoAccessViolationInSQLitePCLRaw
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
@@ -200,8 +204,8 @@ namespace ChanSort.Loader.Panasonic
     /// </summary>
     private void ReadNamesWithEncodingDetection(IDataReader r, IDictionary<string, int> field, Encoding encoding)
     {
-#if true || NoAccessViolationInSQLitePCLRaw
-      // The NuGet packages Microsoft.Data.Sqlite 9.0.0-9.0.2 throw an AccessViolationException and terminate the program when reading a "string" column with GetBytes()
+#if NoAccessViolationInSQLitePCLRaw
+      // The NuGet packages Microsoft.Data.Sqlite 9.0.0-9.0.5 throw an AccessViolationException and terminate the program when reading a "string" column with GetBytes()
       byte[] buffer = new byte[300];
       int len = (int)r.GetBytes(field["sname"], 0, buffer, 0, buffer.Length/3);
 #else

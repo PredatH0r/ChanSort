@@ -45,4 +45,8 @@
       
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="System.Memory" Version="4.6.3" />
+    <PackageReference Update="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
+  </ItemGroup>
 </Project>

@@ -45,7 +45,7 @@ namespace Test.Loader.Samsung.Scm
       var models = new Dictionary<string, string>();
       foreach (var file in list)
       {
-        if (file.Contains("Apu TV") || file.Contains("__broken"))
+        if (file.Contains("Apu TV") || file.Contains("__broken") || file.Contains("unsupported"))
           continue;
 
         Debug.Print("Testing " + file);

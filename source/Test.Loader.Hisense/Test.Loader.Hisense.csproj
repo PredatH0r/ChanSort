@@ -1,29 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <OutputPath>..\Debug\</OutputPath>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  <Import Project="..\Solution.props" />
+
+  <PropertyGroup>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" Version="3.8.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.8.3" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.5" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Hisense\ChanSort.Loader.Hisense.csproj" />
     <ProjectReference Include="..\Test.Loader\Test.Loader.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.13" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.13" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.7.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.7.0" />
-  </ItemGroup>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets')" />
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <PostBuildEvent>
-      $(MSBuildProjectDirectory)\..\deployLibs.cmd $(TargetDir)
-</PostBuildEvent>
+    <PostBuildEvent>$(MSBuildProjectDirectory)\..\deployLibs.cmd $(MSBuildProjectDirectory)\bin\$(Configuration)\net48</PostBuildEvent>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 </Project>

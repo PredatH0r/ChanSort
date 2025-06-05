@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Xml;
@@ -229,14 +230,14 @@ namespace ChanSort.Loader.Philips
         LoadAndValidateMtkChannelList(dir);
 
         // version 120 and 125 ignore the modified main channel numbers and only take changes from the favorites.xml
-        if ((chanLstBin?.VersionMajor ?? 0) >= 120)
-        {
-          foreach (var list in this.DataRoot.ChannelLists)
-          {
-            if (!list.IsMixedSourceFavoritesList)
-              list.ReadOnly = true;
-          }
-        }
+        //if ((chanLstBin?.VersionMajor ?? 0) >= 120)
+        //{
+        //  foreach (var list in this.DataRoot.ChannelLists)
+        //  {
+        //    if (!list.IsMixedSourceFavoritesList)
+        //      list.ReadOnly = true;
+        //  }
+        //}
       }
       else
       {
@@ -352,6 +353,8 @@ namespace ChanSort.Loader.Philips
         medium = fname;
       bool hasEncrypt = false;
 
+      var ver = this.chanLstBin?.VersionMajor ?? 0;
+
       foreach (var list in this.DataRoot.ChannelLists)
       {
         list.VisibleColumnFieldNames.Remove("ServiceType");
@@ -417,7 +420,6 @@ namespace ChanSort.Loader.Philips
       if (!hasEncrypt)
         chList?.VisibleColumnFieldNames.Remove("Encrypted");
 
-      var ver = this.chanLstBin?.VersionMajor ?? 0;
       if (ver > 0)
         this.iniMapSection = ini.GetSection("Map" + ver);
 
@@ -765,12 +767,16 @@ namespace ChanSort.Loader.Philips
 
     public override void Save()
     {
+      bool readOnly = false;
       foreach (var list in this.DataRoot.ChannelLists)
       {
         if (list.IsMixedSourceFavoritesList)
           this.UpdateFavList();
         else
+        {
           this.UpdateChannelList(list);
+          readOnly |= list.ReadOnly;
+        }
       }
 
       // It is unclear whether XML nodes must be sorted by the new program number or kept in the original order. This may be different for the various format versions.
@@ -791,7 +797,14 @@ namespace ChanSort.Loader.Philips
       }
 
       this.chanLstBin?.Save(this.FileName);
-      this.mtkSerializer?.Save();
+
+      // save the MtkChannelList.xml for format 120 and 125
+      if (mtkSerializer != null && !readOnly)
+      {
+        foreach (var list in mtkSerializer.DataRoot.ChannelLists) // apply Philips' LCN-ReadOnly to MediaTek's ReadOnly
+          list.ReadOnly = false;
+        this.mtkSerializer.Save();
+      }
     }
 
     #endregion
@@ -799,6 +812,31 @@ namespace ChanSort.Loader.Philips
     #region UpdateChannelList()
     private void UpdateChannelList(ChannelList list)
     {
+      if (list.ReadOnly)
+        return;
+
+#if false
+      // ensure consecutive numbers for channels (seems to be a requirement for successful import of MtkChannelList.xml)
+      if (this.chanLstBin?.VersionMajor is >= 120 and <= 125)
+      {
+        var ordered = list.Channels
+          .Where(c => !c.IsProxy)
+          .OrderBy(c => (c.SignalSource & SignalSource.Tv) != 0 ? 0 : 1)
+          .ThenBy(c => c.NewProgramNr > 0 ? 0 : 1)
+          .ThenBy(c => c.NewProgramNr)
+          .ThenBy(c => c.OldProgramNr)
+          .ToList();
+        int i = 0;
+        foreach (var ch in ordered)
+        {
+          if (ch.IsProxy)
+            list.Channels.Remove(ch);
+          else
+            ch.NewProgramNr = ++i;
+        }
+      }
+#endif
+
       var padChannelNameBytes = this.iniMapSection?.GetBool("padChannelName", true) ?? true;
       var setFavoriteNumber = this.iniMapSection?.GetBool("setFavoriteNumber", false) ?? false;
       var userReorderChannel = this.iniMapSection?.GetString("userReorderChannel") ?? "";
@@ -826,7 +864,7 @@ namespace ChanSort.Loader.Philips
         }
       }
     }
-    #endregion
+#endregion
 
     #region UpdateRepairXml()
 
@@ -898,7 +936,7 @@ namespace ChanSort.Loader.Philips
     private void UpdateMtkChannel(Channel channel)
     {
       var mtk = channel.MtkChannel;
-      //mtk.Name = channel.Name;
+      mtk.Name = channel.Name;
       mtk.NewProgramNr = channel.NewProgramNr;
       mtk.Lock = channel.Lock;
       mtk.Skip = channel.Skip;
@@ -1050,7 +1088,10 @@ namespace ChanSort.Loader.Philips
     #region GetFileInformation()
     public override string GetFileInformation()
     {
-      return base.GetFileInformation() + this.logMessages.Replace("\n", "\r\n");
+      return base.GetFileInformation() 
+             + this.logMessages.Replace("\n", "\r\n")
+             + "\r\n\r\n" 
+             + this.mtkSerializer?.GetFileInformation();
     }
     #endregion
 

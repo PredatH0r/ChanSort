@@ -194,7 +194,7 @@ namespace ChanSort.Loader.TCL
     {
       if (this.satFile == null)
         return;
-      string satConnString = $"Data Source={satFile};Pooling=False";
+      string satConnString = $"Data Source=\"{satFile}\";Pooling=False";
       using var conn = new SqliteConnection(satConnString);
       conn.Open();
       using var cmd = conn.CreateCommand();
@@ -217,7 +217,7 @@ namespace ChanSort.Loader.TCL
     #region ReadDtvDataDb()
     private void ReadDtvDataDb()
     {
-      string dtvConnString = $"Data Source={dtvFile};Pooling=False";
+      string dtvConnString = $"Data Source=\"{dtvFile}\";Pooling=False";
       using var conn = new SqliteConnection(dtvConnString);
       conn.Open();
       using var cmd = conn.CreateCommand();
@@ -372,7 +372,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
     #region Save()
     public override void Save()
     {
-      string channelConnString = $"Data Source={dtvFile};Pooling=False";
+      string channelConnString = $"Data Source=\"{dtvFile}\";Pooling=False";
       using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();

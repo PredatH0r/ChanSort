@@ -53,7 +53,7 @@ namespace ChanSort.Loader.Toshiba
       else
         workingDir = Path.GetDirectoryName(this.FileName);
 
-      var sysDataConnString = $"Data Source={this.workingDir + FILE_dvbSysData_db};Pooling=false";
+      var sysDataConnString = $"Data Source=\"{this.workingDir + FILE_dvbSysData_db}\";Pooling=false";
       using (var conn = new SqliteConnection(sysDataConnString))
       {
         conn.Open();
@@ -63,7 +63,7 @@ namespace ChanSort.Loader.Toshiba
         ReadTransponders(cmd);
       }
 
-      var mainDataConnString = $"Data Source={this.workingDir + FILE_dvbMainData_db};Pooling=False";
+      var mainDataConnString = $"Data Source=\"{this.workingDir + FILE_dvbMainData_db}\";Pooling=False";
       using (var conn = new SqliteConnection(mainDataConnString))
       {
         conn.Open();
@@ -71,7 +71,7 @@ namespace ChanSort.Loader.Toshiba
         ReadCryptInfo(cmd);
       }
 
-      var channelConnString = $"Data Source={this.workingDir + FILE_chmgt_db};Pooling=False";
+      var channelConnString = $"Data Source=\"{this.workingDir + FILE_chmgt_db}\";Pooling=False";
       using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();
@@ -260,7 +260,7 @@ namespace ChanSort.Loader.Toshiba
 
     public override void Save()
     {
-      var channelConnString = $"Data Source={this.workingDir + FILE_chmgt_db};Pooling=False";
+      var channelConnString = $"Data Source=\"{this.workingDir + FILE_chmgt_db}\";Pooling=False";
       using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();

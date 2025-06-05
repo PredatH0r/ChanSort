@@ -61,3 +61,9 @@ struct TLL_SettingsBlock
   dword BlockSize;
   byte Data[BlockSize]; 
 };
+
+struct TLL_DvbID
+{
+  word id : 12;
+  word flags : 4;
+};

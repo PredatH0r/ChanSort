@@ -114,7 +114,7 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
 
     public override void Load()
     {
-      using (var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False"))
+      using (var conn = new SqliteConnection($"Data Source=\"{this.FileName}\";Pooling=False"))
       {
         conn.Open();
         using (var cmd = conn.CreateCommand())
@@ -445,7 +445,7 @@ left outer join {dbSchema.DvbServiceTable} digs on digs.ServiceId=s.Pid
 
     public override void Save()
     {
-      using var conn = new SqliteConnection($"Data Source={this.FileName};Pooling=False");
+      using var conn = new SqliteConnection($"Data Source=\"{this.FileName}\";Pooling=False");
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();

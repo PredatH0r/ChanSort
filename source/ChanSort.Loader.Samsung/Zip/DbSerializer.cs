@@ -77,7 +77,7 @@ namespace ChanSort.Loader.Samsung.Zip
       {
         try
         {
-          using var conn = new SqliteConnection($"Data Source={(this.TempPath + "\\sat")};Pooling=False");
+          using var conn = new SqliteConnection($"Data Source=\"{this.TempPath + "\\sat"}\";Pooling=False");
           conn.Open();
           this.ReadSatDatabase(conn);
         }
@@ -100,7 +100,7 @@ namespace ChanSort.Loader.Samsung.Zip
         FileType type;
         try
         {
-          using var conn = new SqliteConnection($"Data Source={filePath};Pooling=False");
+          using var conn = new SqliteConnection($"Data Source=\"{filePath}\";Pooling=False");
           conn.Open();
           using (var cmd = conn.CreateCommand())
           {
@@ -535,7 +535,7 @@ namespace ChanSort.Loader.Samsung.Zip
     #region SaveChannelList()
     private void SaveChannelList(ChannelList channelList, string dbPath)
     {
-      using var conn = new SqliteConnection($"Data Source={dbPath};Pooling=False");
+      using var conn = new SqliteConnection($"Data Source=\"{dbPath}\";Pooling=False");
       conn.Open();
       using (var trans = conn.BeginTransaction())
       {

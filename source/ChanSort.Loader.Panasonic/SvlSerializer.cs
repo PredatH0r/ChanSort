@@ -78,7 +78,7 @@ namespace ChanSort.Loader.Panasonic
 
       this.CreateDummySatellites();
 
-      string channelConnString = $"Data Source={this.workFile};Pooling=False";
+      string channelConnString = $"Data Source=\"{this.workFile}\";Pooling=False";
       using var conn = new SqliteConnection(channelConnString);
       conn.Open();
       using var cmd = conn.CreateCommand();
@@ -301,7 +301,7 @@ order by s.ntype,major_channel
     #region Save()
     public override void Save()
     {
-      string channelConnString = $"Data Source={this.workFile};Pooling=False";
+      string channelConnString = $"Data Source=\"{this.workFile}\";Pooling=False";
       using (var conn = new SqliteConnection(channelConnString))
       {
         conn.Open();

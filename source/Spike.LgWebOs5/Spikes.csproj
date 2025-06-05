@@ -1,21 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Solution.props" />
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
     <OutputType>Exe</OutputType>
     <RootNamespace>Spike.LgWebOs5</RootNamespace>
     <AssemblyName>Spike.LgWebOs5</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="ChecksumFinder.cs" />
     <None Include="PhilipsXmlStatsCollector.cs" />
     <None Include="TechnisatDecrypt.cs" />
     <None Include="WebOs5StatsCollector.cs" />
@@ -26,12 +18,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.13" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.13" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="ChecksumFinder.cs" />
     <Compile Remove="PhilipsXmlStatsCollector.cs" />
     <Compile Remove="TechnisatDecrypt.cs" />
     <Compile Remove="WebOs5StatsCollector.cs" />

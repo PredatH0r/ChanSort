@@ -28,7 +28,7 @@ namespace Test.Loader
       foreach(var file in list)
       {
         var lfile = file.ToLowerInvariant();
-        if (lfile.Contains("globalclone") || lfile.Contains("atsc") || lfile.Contains("broken") || lfile.Contains("bad") || lfile.Contains("incomplete"))
+        if (lfile.Contains("globalclone") || lfile.Contains("atsc") || lfile.Contains("broken") || lfile.Contains("bad") || lfile.Contains("incomplete") || lfile.Contains("unsupported"))
           continue;
         //Debug.Print("Testing " + file);
         try

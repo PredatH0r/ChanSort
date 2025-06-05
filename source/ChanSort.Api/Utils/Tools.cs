@@ -105,6 +105,30 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region MemComp()
+
+    /// <summary>
+    /// Bytewise comparison of 2 arrays
+    /// </summary>
+    /// <returns>
+    /// &lt;0 if <param name="arr1"></param>[i] &lt; <param name="with"></param>[i] or ends earlier
+    /// </returns>
+    public static int MemComp(byte[] arr1, int idx1, byte[] with)
+    {
+      int i = idx1;
+      int j = 0;
+      int c = Math.Min(with.Length, arr1.Length - idx1);
+      while (j < c)
+      {
+        var v = arr1[i++] - with[j++];
+        if (v != 0)
+          return v;
+      }
+
+      return j - with.Length;
+    }
+    #endregion
+
     #region ReverseByteOrder()
     public static ushort ReverseByteOrder(ushort input)
     {
