@@ -324,7 +324,7 @@ public class Serializer : SerializerBase
     // sort the channels in the recombined lists
     foreach (var list in recombinedLists.Values)
     {
-      XmlNode serviceListInfoNode = null;
+      XmlElement serviceListInfoNode = null;
       foreach (var chan in list.OrderBy(c => c.NewProgramNr).ThenBy(c => c.OldProgramNr).ThenBy(c => c.RecordIndex))
       {
         if (chan is not Channel ch || ch.IsProxy)
@@ -335,9 +335,11 @@ public class Serializer : SerializerBase
         // reorder nodes physically: first remove all, then add them 1-by-1
         if (serviceListInfoNode == null)
         {
-          serviceListInfoNode = si.ParentNode;
+          serviceListInfoNode = (XmlElement)si.ParentNode;
           while (serviceListInfoNode!.HasChildNodes)
             serviceListInfoNode.RemoveChild(serviceListInfoNode.FirstChild);
+
+          serviceListInfoNode.SetAttribute("lcn_type", "LCNS_ENABLED");
         }
         serviceListInfoNode.AppendChild(si);
 

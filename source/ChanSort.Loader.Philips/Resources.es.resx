@@ -120,4 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
+  <data name="InfoRestartAfterImport" xml:space="preserve">
+    <value>¡ATENCIÓN!
+Después de importar la lista de canales a su televisor, cuando aparezca el mensaje "Lista de canales reemplazada", NO PRESIONE OK.
+En su lugar, mientras el mensaje siga en pantalla, desenchufe el televisor de la toma de corriente y vuelva a enchufarlo después de esperar al menos 5 segundos.</value>
+  </data>
 </root>

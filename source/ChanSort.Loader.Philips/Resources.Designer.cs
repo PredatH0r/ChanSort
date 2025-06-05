@@ -19,7 +19,7 @@ namespace ChanSort.Loader.Philips {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -79,7 +79,13 @@ namespace ChanSort.Loader.Philips {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INFO: After importing the list back in your TV, unplug it and plug it back in after a few seconds..
+        ///   Looks up a localized string similar to ATTENTION!
+        ///After importing the channel list back into your TV,
+        ///when the &quot;Channel list was replaced&quot; message appears,
+        ///DO NOT PRESS OK.
+        ///Instead, while the message is still on the screen,
+        ///unplug the TV from the power outlet and plug it back in
+        ///after waiting for at least 5 seconds..
         /// </summary>
         internal static string InfoRestartAfterImport {
             get {

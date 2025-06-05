@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,35 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InfoIgnoreImportError" xml:space="preserve">
-    <value>Телевизор может неправильно сообщать об ошибке импорта, но это можно игнорировать.</value>
-  </data>
   <data name="InfoRestartAfterImport" xml:space="preserve">
-    <value>ВНИМАНИЕ!
-После импорта списка каналов обратно на телевизор,
-когда появится сообщение «Список каналов был заменен»,
-НЕ НАЖИМАЙТЕ OK.
-Вместо этого, пока сообщение все еще отображается на экране,
-отключите телевизор от розетки и включите его снова,
-подождав не менее 5 секунд.</value>
-  </data>
-  <data name="WarningChecksumErrorMsg" xml:space="preserve">
-    <value>ВНИМАНИЕ: В загруженном списке обнаружены ошибки контрольных сумм!
-
-Возможны две ситуации, как это может произойти:
-
-- Повреждён внутренний список каналов телевизора (например, после обновления прошивки)
-   Это можно исправить, снова выполнив сканирование каналов или сбросив настройки телевизора.
-   Затем снова экспортируйте список и откройте его в ChanSort.
-   Попытка отредактировать и импортировать повреждённый файл может привести к некорректной работе телевизора.
-
-- Плохой USB-накопитель (плохие ячейки памяти или несовместимый формат файла)
-   Попробуйте использовать флешку объёмом не больше 16 ГБ, отформатированную в FAT32 (но не в NTFS или exFAT).</value>
-  </data>
-  <data name="WarningChechsumErrorIgnore" xml:space="preserve">
-    <value>Игнорировать ошибку и всё равно редактировать список</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Отмена</value>
+    <value>ATTENZIONE!
+Dopo aver reimportato la lista canali sul televisore,
+quando viene visualizzato il messaggio "Lista canali sostituita",
+NON PREMERE OK.
+Mentre il messaggio è ancora visualizzato sullo schermo,
+scollegare il televisore dalla presa di corrente e ricollegarlo
+dopo aver atteso almeno 5 secondi.</value>
   </data>
 </root>

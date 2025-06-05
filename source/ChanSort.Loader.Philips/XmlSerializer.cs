@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Xml;
@@ -477,7 +476,7 @@ namespace ChanSort.Loader.Philips
       if ((chan.SignalSource & SignalSource.MaskBcast) == SignalSource.DvbT)
         chan.ChannelOrTransponder = LookupData.Instance.GetDvbtTransponder(chan.FreqInMhz).ToString();
       else if ((chan.SignalSource & SignalSource.MaskBcast) == SignalSource.DvbC)
-        chan.ChannelOrTransponder = LookupData.Instance.GetDvbcChannelName(chan.FreqInMhz);
+        chan.ChannelOrTransponder = LookupData.Instance.GetDvbcTransponder(chan.FreqInMhz).ToString();
 
       DataRoot.AddChannel(curList, chan);
     }

@@ -120,4 +120,12 @@
   <data name="Cancel" xml:space="preserve">
     <value>Vazgeç</value>
   </data>
+  <data name="InfoRestartAfterImport" xml:space="preserve">
+    <value>DİKKAT!
+Kanal listesini tekrar televizyonunuza aktardıktan sonra,
+"Kanal listesi değiştirildi" mesajı göründüğünde,
+OK'A BASMAYIN.
+Bunun yerine, mesaj hala ekrandayken,
+TV'nin fişini prizden çekin ve en az 5 saniye bekledikten sonra tekrar takın.</value>
+  </data>
 </root>

@@ -118,7 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InfoRestartAfterImport" xml:space="preserve">
-    <value>INFO: Bitte schalten Sie Ihren Fernseher nach dem Import aus, ziehen den Netzstecker und stecken ihn nach einigen Sekunden wieder an.</value>
+    <value>ACHTUNG!
+Nach dem Import der Senderliste in den TV, 
+wenn die Meldung "Senderliste wurde ersetzt" angezeigt wird,
+DRÜCKEN SIE NICHT auf OK.
+Stattdessen, währen die Meldung am Schirm steht, ziehen Sie den
+Stromstecker aus der Steckdose, und warten Sie mindestens 5 Sek
+bevor sie den Fernseher wieder einstecken.</value>
   </data>
   <data name="InfoIgnoreImportError" xml:space="preserve">
     <value>Ihr Fernseher zeigt eventuell eine Falschmeldung, dass der Import fehlschlug. Dies kann ignoriert werden.</value>

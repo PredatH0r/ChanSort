@@ -211,16 +211,14 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region GetDvbcTransponder()
     public int GetDvbcTransponder(decimal freqInMhz)
     {
       return (int)(freqInMhz - 106) / 8;
     }
+    #endregion
 
-    public decimal GetDvbcFrequency(int channelTransponder)
-    {
-      return channelTransponder * 8 + 106;
-    }
-
+    #region GetDvbcChannelName()
     public string GetDvbcChannelName(decimal freqInMhz)
     {
       // in case the parameter is in Hz or kHz, correct it to MHz to avoid overflow errors. 2 GHz is the largest plausible frequency
@@ -238,5 +236,6 @@ namespace ChanSort.Api
              //?? dvbcChannels.TryGet((int)freqInMhz + 3)
              ?? "";      
     }
+    #endregion
   }
 }

@@ -120,4 +120,13 @@
   <data name="Cancel" xml:space="preserve">
     <value>Storno</value>
   </data>
+  <data name="InfoRestartAfterImport" xml:space="preserve">
+    <value>POZOR!
+Po importu seznamu kanálů zpět do televizoru,
+když se zobrazí zpráva „Seznam kanálů byl nahrazen“,
+NESTISKNĚTE OK.
+Místo toho, dokud je zpráva stále na obrazovce,
+odpojte televizor ze zásuvky a znovu jej zapojte
+po uplynutí alespoň 5 sekund.</value>
+  </data>
 </root>

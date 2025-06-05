@@ -124,7 +124,12 @@
     <value>Lehet, hogy a TV hibásan mutatja, hogy az importálás sikertelen volt, de ezt figyelmen kívül lehet hagyni.</value>
   </data>
   <data name="InfoRestartAfterImport" xml:space="preserve">
-    <value>INFORMÁCIÓ: Miután importálta a listát a TV -be, húzza ki a hálózati csatlakozót, majd néhány másodperc múlva csatlakoztassa újra.</value>
+    <value>FIGYELEM!
+Miután visszaimportálta a csatornalistát a TV-jébe,
+amikor megjelenik a „Csatornalista kicserélve” üzenet,
+NE NYOMJA MEG AZ OK GOMBOT.
+Ehelyett, amíg az üzenet még mindig a képernyőn látható,
+húzza ki a TV-t a konnektorból, majd legalább 5 másodperc várakozás után dugja vissza.</value>
   </data>
   <data name="WarningChecksumErrorMsg" xml:space="preserve">
     <value>FIGYELEM: Ellenőrző összeg hibák voltak a betöltött listában!

@@ -121,7 +121,13 @@
     <value>The TV may incorrectly show that the import failed, but that can be ignored.</value>
   </data>
   <data name="InfoRestartAfterImport" xml:space="preserve">
-    <value>INFO: After importing the list back in your TV, unplug it and plug it back in after a few seconds.</value>
+    <value>ATTENTION!
+After importing the channel list back into your TV,
+when the "Channel list was replaced" message appears,
+DO NOT PRESS OK.
+Instead, while the message is still on the screen,
+unplug the TV from the power outlet and plug it back in
+after waiting for at least 5 seconds.</value>
   </data>
   <data name="WarningChecksumErrorMsg" xml:space="preserve">
     <value>WARNING: There were checksum errors in the loaded list!

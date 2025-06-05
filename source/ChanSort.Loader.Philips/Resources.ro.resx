@@ -120,4 +120,7 @@
   <data name="Cancel" xml:space="preserve">
     <value>Anulare</value>
   </data>
+  <data name="InfoRestartAfterImport" xml:space="preserve">
+    <value>După importarea listei de canale în televizor, când apare mesajul "Import reușit" pe ecran, NU apăsați "OK." În schimb, cât timp mesajul este vizibil, deconectați televizorul de la priza de perete, așteptați cel puțin 5 secunde, apoi conectați-l din nou. Acest pas asigură că lista de canale importată rămâne intactă și fără interferențe.</value>
+  </data>
 </root>
