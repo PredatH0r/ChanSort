@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\Solution.props" />
+  <Import Project="..\ChanSortProject.props" />
   <ItemGroup>
     <None Update="TestFiles\settingsDB.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -21,9 +21,7 @@
   </ItemGroup>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets')" />
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
     <PostBuildEvent>$(MSBuildProjectDirectory)\..\deployLibs.cmd $(TargetDir)
 </PostBuildEvent>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 </Project>

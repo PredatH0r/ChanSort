@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\Solution.props" />
+  <Import Project="..\ChanSortProject.props" />
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj" />
@@ -13,7 +13,6 @@
   </ItemGroup>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets')" />
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
     <PostBuildEvent>
       $(MSBuildProjectDirectory)\..\deployLibs.cmd $(TargetDir)
 </PostBuildEvent>

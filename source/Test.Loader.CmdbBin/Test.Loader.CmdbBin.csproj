@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\ChanSortProject.props" />
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.CmdbBin\ChanSort.Loader.CmdbBin.csproj" />
@@ -9,8 +10,4 @@
     <PackageReference Include="MSTest.TestFramework" Version="3.8.3" />
   </ItemGroup>
   <PropertyGroup />
-  <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
 </Project>

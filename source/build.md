@@ -1,6 +1,6 @@
 Build environment
 ---
-ChanSort is a Microsoft .NET Framework 4.8 application and can be built with Visual Studio 2019.  
+ChanSort is a Microsoft .NET Framework 4.8 application and can be built with Visual Studio 2022.  
 It uses the "Any CPU" target architecture and a version of Microsoft.Data.Sqlite which supports x86, x64 and ARM, so that the
 generated ChanSort.exe can run on any of these CPUs.
 
@@ -14,13 +14,17 @@ Build configurations
 ---
 You can select any of these in the Visual Studio tool bar:
 - **NoDevExpress_Debug**: builds all source projects, except ChanSort and ChanSort.Loader.LG.UI (no license needed) 
-- **All_Debug**: builds all source projects (requires a DevExpress license) 
-- **All_Release**: not used
+- **Debug**: builds all source projects, including the UI projects (requires a DevExpress license) 
+- **Release**: not used
 
 Run your own build
 ---
 The application is designed so that you can add, modify and compile non-UI projects using the "NoDevExpress_Debug" build configuration.
-Simply copy precompiled ChanSort.exe and \*.UI.dll files to your solution's "Debug" folder, e.g. from a [binary release .zip on github](https://github.com/PredatH0r/ChanSort/releases).
+Copy precompiled ChanSort.exe, \*.UI.dll and DevExpress.\*.dll files from a [binary release .zip on github](https://github.com/PredatH0r/ChanSort/releases)
+to your solution's "(ChanSort\\source\\)Debug\\net48" folder.
+
+In case you get compiler errors about missing Nuget packages, open "Tools/Options/Nuget Package Manager/Package Sources" and make sure that
+https://api.nuget.org/v3/index.json is included and no DevExpress sources are disabled (unless you have a DevExpress license).
 
 ChanSort.exe will dynamically load all ChanSort.Loader.*.dll assemblies that it finds in its folder and iterates though classes implementing
 ChanSort.Api.ISerializerPlugin until one successfully loads the file opened by the user.
