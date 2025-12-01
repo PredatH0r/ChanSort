@@ -234,12 +234,28 @@ namespace ChanSort.Loader.Panasonic
     #region ReadChannels()
     private void ReadChannels(SqliteCommand cmd)
     {
-      string[] fieldNames = { "rowid", "major_channel", "physical_ch","sname", "freq", "skip", "running_status","free_CA_mode","child_lock",
+      bool hasDeliveryTypeColumn = false;
+      cmd.CommandText = "pragma table_info(TSL)";
+      using (var r = cmd.ExecuteReader())
+      {
+        while (r.Read())
+        {
+          if (r.GetString(1) == "delivery_type")
+          {
+            hasDeliveryTypeColumn = true;
+            break;
+          }
+        }
+      }
+
+      var fieldNames = new List<string> { "rowid", "major_channel", "physical_ch","sname", "freq", "skip", "running_status","free_CA_mode","child_lock",
                             "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "ya_svcid", "delivery", "delivery_type" };
       
-      const string sql = @"
+      string sql = @"
 select s.rowid,s.major_channel,s.physical_ch,cast(s.sname as blob),t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
-  profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery,ifnull(t.delivery_type, 0)
+  profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery";
+      sql += hasDeliveryTypeColumn ? ",ifnull(t.delivery_type, 0)" : ",0";
+        sql += @"
 from SVL s 
 left outer join TSL t on s.ntype=t.ntype and s.physical_ch=t.physical_ch and s.tsid=t.tsid and s.onid=t.onid
 order by s.ntype,major_channel
@@ -272,10 +288,10 @@ order by s.ntype,major_channel
     #endregion
 
     #region GetFieldMap()
-    private IDictionary<string, int> GetFieldMap(string[] fieldNames)
+    private IDictionary<string, int> GetFieldMap(IList<string> fieldNames)
     {
       Dictionary<string, int> field = new Dictionary<string, int>();
-      for (int i = 0; i < fieldNames.Length; i++)
+      for (int i = 0; i < fieldNames.Count; i++)
         field[fieldNames[i]] = i;
       return field;
     }

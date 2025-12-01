@@ -1,6 +1,9 @@
 ﻿ChanSort Change Log 
 ===================
 
+2025-11-30
+- Panasonic Viera TX-P46Z1E (and similar models): fixed "no such column: t.delivery\_type" error  when loading
+
 2025-03-08
 - Panasonic Fire-OS Channels.sdx lists: removed trailing underscore and space characters from channel names
 - downgraded SQLite libraries to avoid a memory access violation crash in the SQLitePCL.raw 2.1.10

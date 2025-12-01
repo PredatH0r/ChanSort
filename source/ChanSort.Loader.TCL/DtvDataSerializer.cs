@@ -1,11 +1,18 @@
 ﻿//#define TestBuild
+#define MS_SQLite
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Microsoft.Data.Sqlite;
 using ChanSort.Api;
+
+#if MS_SQLite
+using Microsoft.Data.Sqlite;
+#else
+using SqliteConnection = System.Data.SQLite.SQLiteConnection;
+using SqliteCommand = System.Data.SQLite.SQLiteCommand;
+#endif
 
 namespace ChanSort.Loader.TCL
 {
@@ -19,8 +26,18 @@ namespace ChanSort.Loader.TCL
    * When a channel is deleted in the menu: EditFlag |= 0x10, IsDelete=1, but it will keep its unique ProgNum
    * When a channel is moved in the menu: EditFlag |= 0x02, but no change to IsMove(=0)
    */
+
   class DtvDataSerializer : SerializerBase
   {
+#if MS_SQLite
+    private static SqliteType SqliteType_Integer => SqliteType.Integer;
+    private static SqliteType SqliteType_Blob => SqliteType.Blob;
+
+#else
+    private static System.Data.DbType SqliteType_Integer => System.Data.DbType.Int32;
+    private static System.Data.DbType SqliteType_Blob => System.Data.DbType.Binary;
+#endif
+
     private const int CrcMaxDataLength = 0x4B000;
 
     [Flags]
@@ -212,6 +229,13 @@ namespace ChanSort.Loader.TCL
       if (!this.tableNames.Contains("sateliteinfotbl") || !this.tableNames.Contains("transponderinfotbl"))
         throw LoaderException.TryNext("File doesn't contain the expected tables");
 
+      cmd.CommandText = "pragma integrity_check";
+      cmd.ExecuteNonQuery();
+      cmd.CommandText = "reindex SateliteInfoTbl";
+      cmd.ExecuteNonQuery();
+      cmd.CommandText = "reindex";
+      cmd.ExecuteNonQuery();
+
       this.ReadSatellites(cmd);
     }
 
@@ -402,26 +426,26 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
       // what the TV shows as "hide" in the menu is actually "skip" in the database
 
       cmd.CommandText = "update PrograminfoTbl set ProgNum=@nr"
-#if !TestBuild      
+#if !TestBuild
         + ", ServiceName=@name, EditFlag=(EditFlag & " + ~(EditFlags.AllKnown) + ") | @editflag" // unlockedFlag=@hide,
 #endif
         + " where u32Index=@handle";
-      cmd.Parameters.Add("@handle", SqliteType.Integer);
-      cmd.Parameters.Add("@nr", SqliteType.Integer);
+      cmd.Parameters.Add("@handle", SqliteType_Integer);
+      cmd.Parameters.Add("@nr", SqliteType_Integer);
 #if !TestBuild
-      cmd.Parameters.Add("@name", SqliteType.Blob, 64);
-      cmd.Parameters.Add("@editflag", SqliteType.Integer);
+      cmd.Parameters.Add("@name", SqliteType_Blob, 64);
+      cmd.Parameters.Add("@editflag", SqliteType_Integer);
 #endif
       cmd.Prepare();
 
 #if !TestBuild
       cmdAttrib.CommandText = @"update AtrributeTbl set IsDelete=@del, IsSkipped=@skip, IsLock=@lock, IsRename=@ren, IsFavor=@fav where u32Index=@handle;"; // IsMove=IsMove|@mov,
-      cmdAttrib.Parameters.Add("@handle", SqliteType.Integer);
-      cmdAttrib.Parameters.Add("@del", SqliteType.Integer);
-      cmdAttrib.Parameters.Add("@skip", SqliteType.Integer);
-      cmdAttrib.Parameters.Add("@lock", SqliteType.Integer);
-      cmdAttrib.Parameters.Add("@ren", SqliteType.Integer);
-      cmdAttrib.Parameters.Add("@fav", SqliteType.Integer);
+      cmdAttrib.Parameters.Add("@handle", SqliteType_Integer);
+      cmdAttrib.Parameters.Add("@del", SqliteType_Integer);
+      cmdAttrib.Parameters.Add("@skip", SqliteType_Integer);
+      cmdAttrib.Parameters.Add("@lock", SqliteType_Integer);
+      cmdAttrib.Parameters.Add("@ren", SqliteType_Integer);
+      cmdAttrib.Parameters.Add("@fav", SqliteType_Integer);
       cmdAttrib.Prepare();
 #endif
 
