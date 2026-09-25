@@ -283,8 +283,9 @@ namespace ChanSort.Loader.Samsung.Zip
           var sat = tp?.Satellite;
           var channel = new DbChannel(r, fields, this, providers, sat, tp);
 
-          if (channel.OldProgramNr == prevNr) // when there is a SRV_EXT_APP table in the database, the service with the highest ext_app "recState" takes priority
-            continue;
+          // disabled this code after I received another example file with dupe numbers where the TV seems to keep the last channel with a given number in its list. It has a SRV_EXT_APP, but recState is NULL for all channels
+          //if (channel.OldProgramNr == prevNr) // when there is a SRV_EXT_APP table in the database, the service with the highest ext_app "recState" takes priority
+          //  continue;
 
           this.DataRoot.AddChannel(channelList, channel);
           this.channelById.Add(channel.RecordIndex, channel);

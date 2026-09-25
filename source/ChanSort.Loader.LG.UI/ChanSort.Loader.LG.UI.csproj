@@ -5,32 +5,32 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.Data.Desktop" Version="25.1.5" />
-    <PackageReference Include="DevExpress.Printing.Core" Version="25.1.5" />
-    <PackageReference Include="DevExpress.Utils" Version="25.1.5" />
-    <PackageReference Include="DevExpress.Win" Version="25.1.5" />
+    <PackageReference Include="DevExpress.Data.Desktop" Version="25.2.7" />
+    <PackageReference Include="DevExpress.Printing.Core" Version="25.2.7" />
+    <PackageReference Include="DevExpress.Utils" Version="25.2.7" />
+    <PackageReference Include="DevExpress.Win" Version="25.2.7" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.LG\ChanSort.Loader.LG.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.Desktop.v25.1">
+    <Reference Include="DevExpress.Data.Desktop.v25.2">
       
     </Reference>
-    <Reference Include="DevExpress.Data.v25.1">
+    <Reference Include="DevExpress.Data.v25.2">
       
     </Reference>
-    <Reference Include="DevExpress.Drawing.v25.1">
+    <Reference Include="DevExpress.Drawing.v25.2">
       
     </Reference>
-    <Reference Include="DevExpress.Printing.v25.1.Core">
+    <Reference Include="DevExpress.Printing.v25.2.Core">
       
     </Reference>
-    <Reference Include="DevExpress.Utils.v25.1">
+    <Reference Include="DevExpress.Utils.v25.2">
       
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v25.1">
+    <Reference Include="DevExpress.XtraEditors.v25.2">
       
     </Reference>
   </ItemGroup>

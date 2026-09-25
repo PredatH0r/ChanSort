@@ -250,9 +250,12 @@ namespace ChanSort.Loader.Panasonic
 
       var fieldNames = new List<string> { "rowid", "major_channel", "physical_ch","sname", "freq", "skip", "running_status","free_CA_mode","child_lock",
                             "profile1index","profile2index","profile3index","profile4index","stype", "onid", "tsid", "sid", "ntype", "ya_svcid", "delivery", "delivery_type" };
-      
+
+//      string sql = @"
+//select s.rowid,s.major_channel,s.physical_ch,cast(s.sname as blob),t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
+//  profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery";
       string sql = @"
-select s.rowid,s.major_channel,s.physical_ch,cast(s.sname as blob),t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
+select s.rowid,s.major_channel,s.physical_ch,s.sname,t.freq,s.skip,s.running_status,s.free_CA_mode,s.child_lock,
   profile1index,profile2index,profile3index,profile4index,s.stype,s.onid,s.tsid,s.svcid,s.ntype,s.ya_svcid,delivery";
       sql += hasDeliveryTypeColumn ? ",ifnull(t.delivery_type, 0)" : ",0";
         sql += @"
@@ -282,7 +285,7 @@ order by s.ntype,major_channel
         }
       }
 
-      if (this.explicitUtf8 || this.implicitUtf8)
+      //if (this.explicitUtf8 || this.implicitUtf8)
         this.Features.ChannelNameEdit = ChannelNameEditMode.All;
     }
     #endregion
@@ -349,12 +352,17 @@ order by s.ntype,major_channel
       if (channelList.Channels.Count == 0)
         return;
 
-      cmd.CommandText = "update SVL set major_channel=@progNr, sname=@sname, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, " +
+      using var cmd2 = cmd.Connection.CreateCommand();
+      cmd2.Transaction = cmd.Transaction;
+      cmd2.CommandText = "update SVL set sname=@sname where rowid=@rowid";
+      cmd2.Parameters.Add("@sname", SqliteType.Text); // must use "TEXT" (instead of BLOB) to preserve collation / case-insensitive sorting for the TV
+      cmd2.Parameters.Add("@rowid", SqliteType.Integer);
+
+      cmd.CommandText = "update SVL set major_channel=@progNr, profile1index=@fav1, profile2index=@fav2, profile3index=@fav3, profile4index=@fav4, " +
                         "child_lock=@lock, skip=@skip, free_CA_mode=@encr where rowid=@rowid";
       cmd.Parameters.Clear();
       cmd.Parameters.Add("@rowid", SqliteType.Integer);
       cmd.Parameters.Add("@progNr", SqliteType.Integer);
-      cmd.Parameters.Add("@sname", this.implicitUtf8 ? SqliteType.Text : SqliteType.Blob); // must use "TEXT" when possible to preserve collation / case-insensitive sorting for the TV
       cmd.Parameters.Add("@fav1", SqliteType.Integer);
       cmd.Parameters.Add("@fav2", SqliteType.Integer);
       cmd.Parameters.Add("@fav3", SqliteType.Integer);
@@ -371,9 +379,16 @@ order by s.ntype,major_channel
         if (channel.IsDeleted && channel.OldProgramNr >= 0)
           continue;
         channel.UpdateRawData(this.explicitUtf8, this.implicitUtf8);
+
+        if (channel.IsNameModified)
+        {
+          cmd2.Parameters["@rowid"].Value = channel.RecordIndex;
+          cmd2.Parameters["@sname"].Value = "\x15" + channel.Name; // must use a string (not BLOB) to preserve case-insensitive sorting for the TV; 0x15 = DVB UTF8 indicator
+          cmd2.ExecuteNonQuery();
+        }
+
         cmd.Parameters["@rowid"].Value = channel.RecordIndex;
         cmd.Parameters["@progNr"].Value = channel.NewProgramNr;
-        cmd.Parameters["@sname"].Value = this.implicitUtf8 ? channel.Name : channel.RawName; // must use a string when possible to preserve collation / case-insensitive sorting for the TV
         for (int fav = 0; fav < 4; fav++)
           cmd.Parameters["@fav" + (fav + 1)].Value = Math.Max(0, channel.GetPosition(fav+1));
         cmd.Parameters["@lock"].Value = channel.Lock;

@@ -104,7 +104,7 @@ namespace ChanSort.Loader.Samsung.Zip
       get => jsonMeta?.default_url;
       set
       {
-        if (jsonMeta == null || value == (string)jsonMeta.default_url.Value)
+        if (jsonMeta == null || value == (string)jsonMeta.default_url?.Value)
           return;
         jsonMeta.default_url = value;
         JsonModified = true;
@@ -118,7 +118,7 @@ namespace ChanSort.Loader.Samsung.Zip
       get => jsonMeta?.logo_url;
       set
       {
-        if (jsonMeta == null || value == (string)jsonMeta.logo_url.Value)
+        if (jsonMeta == null || value == (string)jsonMeta.logo_url?.Value)
           return;
         jsonMeta.logo_url = value;
         JsonModified = true;

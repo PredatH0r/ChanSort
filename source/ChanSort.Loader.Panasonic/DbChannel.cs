@@ -3,10 +3,13 @@
 //#define NoAccessViolationInSQLitePCLRaw
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using ChanSort.Api;
+
+[assembly: InternalsVisibleTo("Spikes")]
 
 namespace ChanSort.Loader.Panasonic
 {
@@ -209,9 +212,11 @@ namespace ChanSort.Loader.Panasonic
       byte[] buffer = new byte[300];
       int len = (int)r.GetBytes(field["sname"], 0, buffer, 0, buffer.Length/3);
 #else
-      var str = r.GetString(field["sname"]);
-      var buffer = Encoding.UTF8.GetBytes(str);
-      var len = buffer.Length;
+      //var str = r.GetString(field["sname"]);
+      //var buffer = Encoding.UTF8.GetBytes(str);
+      //var len = buffer.Length;
+      byte[] buffer = new byte[300];
+      int len = (int)r.GetBytes(field["sname"], 0, buffer, 0, buffer.Length / 3);
 #endif
       this.RawName = new byte[len];
       Array.Copy(buffer, 0, this.RawName, 0, len);
@@ -371,5 +376,7 @@ namespace ChanSort.Loader.Panasonic
       }
     }
     #endregion
+
+
   }
 }
