@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using ChanSort.Api;
 using ChanSort.Loader.Hisense;
+using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -94,6 +95,51 @@ namespace Test.Loader.Hisense.ServicelistDb
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ServicelistDb\\TestFiles\\" + "servicelist_2021.db");
       RoundtripTest.TestChannelAndFavListEditing(tempFile, new HisensePlugin(), true, 271, 7);
+    }
+    #endregion
+
+    #region TestFavListWithNonNumericName
+
+    [TestMethod]
+    public void TestFavListWithNonNumericName()
+    {
+      // lists starting with "FAV" but not followed by a number must not break loading (#484)
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Hisense\\ServicelistDb\\TestFiles\\servicelist_2021.db");
+      int servId;
+      using (var conn = new SqliteConnection($"Data Source=\"{tempFile}\";Pooling=False"))
+      {
+        conn.Open();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "select ServiceId from ServiceItem where ServiceListId=7 order by ChannelNumber limit 1";
+        servId = (int)(long)cmd.ExecuteScalar();
+        cmd.CommandText = "insert into ServiceList (Pid, Name) values (8, 'FAVORITES')";
+        cmd.ExecuteNonQuery();
+        cmd.CommandText = $"insert into ServiceItem (ServiceId, ServiceListId, ChannelNumber) values ({servId}, 8, 999)";
+        cmd.ExecuteNonQuery();
+      }
+
+      var plugin = new HisensePlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+
+      Assert.IsFalse(data.ChannelLists.Any(l => l.ShortCaption == "FAVORITES"));
+      var list = data.ChannelLists.First(l => l.ShortCaption == "Antenna");
+      Assert.AreEqual(33, list.Channels.Count);
+      var chan = list.Channels.First(ch => ch.RecordIndex == servId);
+      Assert.AreNotEqual(999, chan.OldProgramNr);
+      Assert.AreEqual("Antenna", chan.Source);
+
+      // saving must leave the unknown list untouched
+      ser.Save();
+      using (var conn = new SqliteConnection($"Data Source=\"{tempFile}\";Pooling=False"))
+      {
+        conn.Open();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "select count(*) from ServiceItem where ServiceListId=8";
+        Assert.AreEqual(1L, (long)cmd.ExecuteScalar());
+      }
     }
     #endregion
 

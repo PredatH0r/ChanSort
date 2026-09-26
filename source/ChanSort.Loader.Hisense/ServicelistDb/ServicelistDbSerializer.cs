@@ -189,7 +189,9 @@ namespace ChanSort.Loader.Hisense.ServicelistDb
           else if (name.StartsWith("FAV"))
           {
             // all real user favorite lists are using the "userFavList"
-            favListIdToFavIndex.Add(listId, int.Parse(name.Substring(3)) - 1);
+            // other lists starting with "FAV" (without a number) are not supported and ignored
+            if (int.TryParse(name.Substring(3), out var favNr))
+              favListIdToFavIndex.Add(listId, favNr - 1);
             continue;
           }
 
@@ -398,6 +400,9 @@ left outer join {dbSchema.DvbServiceTable} digs on digs.ServiceId=s.Pid
             continue;
 
           var favListIdx = favListIdToFavIndex.TryGet(favListId, -1);
+          if (favListIdx < 0 && !channelLists.ContainsKey(favListId)) // ignored list
+            continue;
+
           if (favListIdx >= 0)
             ci.SetOldPosition(favListIdx + 1, r.GetInt32(2));
 
