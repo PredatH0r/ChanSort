@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32112.339
+# Visual Studio Version 18
+VisualStudioVersion = 18.10.12217.157 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChanSort", "ChanSort\ChanSort.csproj", "{5FAFDABC-A52F-498C-BD2F-AFFC4119797A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -619,8 +619,8 @@ Global
 		{D7C32DAE-5D77-46A0-BC16-C95D9C7EFDD5}.Release|x64.Build.0 = Release|Any CPU
 		{460D9527-F7EF-4277-9382-FB609A44D66A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{460D9527-F7EF-4277-9382-FB609A44D66A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{460D9527-F7EF-4277-9382-FB609A44D66A}.Debug|x64.ActiveCfg = Debug|x64
-		{460D9527-F7EF-4277-9382-FB609A44D66A}.Debug|x64.Build.0 = Debug|x64
+		{460D9527-F7EF-4277-9382-FB609A44D66A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{460D9527-F7EF-4277-9382-FB609A44D66A}.Debug|x64.Build.0 = Debug|Any CPU
 		{460D9527-F7EF-4277-9382-FB609A44D66A}.NoDevExpress_Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{460D9527-F7EF-4277-9382-FB609A44D66A}.NoDevExpress_Debug|Any CPU.Build.0 = Debug|Any CPU
 		{460D9527-F7EF-4277-9382-FB609A44D66A}.NoDevExpress_Debug|x64.ActiveCfg = Debug|x64

@@ -211,8 +211,9 @@
     <PackageReference Include="DevExpress.Utils.UI" Version="25.2.7" />
     <PackageReference Include="DevExpress.Win" Version="25.2.7" />
     <PackageReference Include="DevExpress.Win.Reporting" Version="25.2.7" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.5" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.12" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.13" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
