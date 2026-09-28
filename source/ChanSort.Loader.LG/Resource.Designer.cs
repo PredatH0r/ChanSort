@@ -171,7 +171,7 @@ namespace ChanSort.Loader.LG {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File size {0} is larger than allowed maxiumum of {1}.
+        ///   Looks up a localized string similar to File size {0} is larger than allowed maximum of {1}.
         /// </summary>
         internal static string TllFileSerializerPlugin_ERR_fileTooBig {
             get {
