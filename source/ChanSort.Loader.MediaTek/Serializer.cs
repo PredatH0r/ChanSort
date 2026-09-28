@@ -180,7 +180,7 @@ public class Serializer : SerializerBase
 
       // handle relevant settings
       if (name == "MultiBank")
-        splitTvRadioData |= value == "SEPARATE_TV_RADIO_DATA";
+        splitTvRadioData |= value == "SEPARATE_TV_RADIO_DATA"; // can also be "COMMON"
       else if (name == "LcnType")
         usesLcn |= value != "LCNS_DISABLED";
     }
@@ -192,15 +192,19 @@ public class Serializer : SerializerBase
   {
     this.serviceDatabaseNode = (XmlElement)xmlNode;
     this.svl = SvlTable.TryLoad(Convert.FromBase64String(xmlNode.InnerText));
+
+    var groupSet = new HashSet<int>();
     if (this.svl != null)
     {
       foreach (var rec in svl.Records)
       {
         svlChannels.Add(rec);
         svlRecordById[SvlTable.GetRecordId(rec)] = rec;
+        groupSet.Add(SvlTable.GetGroup(rec));
       }
 
       this.Features.ChannelNameEdit = ChannelNameEditMode.None; // names live in the binary name pool, untested
+      this.splitTvRadioData = groupSet.Count > 1;
     }
   }
   #endregion
