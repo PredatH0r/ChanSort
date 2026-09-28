@@ -2,29 +2,32 @@
   <Import Project="..\Solution.props" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Spike.LgWebOs5</RootNamespace>
-    <AssemblyName>Spike.LgWebOs5</AssemblyName>
+    <RootNamespace>Spikes</RootNamespace>
+    <AssemblyName>Spikes</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
     <None Include="ChecksumFinder.cs" />
+    <None Include="MediaTekStatsCollector.cs" />
     <None Include="PhilipsXmlStatsCollector.cs" />
     <None Include="TechnisatDecrypt.cs" />
     <None Include="WebOs5StatsCollector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Panasonic\ChanSort.Loader.Panasonic.csproj" />
     <ProjectReference Include="..\ChanSort.Loader.Philips\ChanSort.Loader.Philips.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.5" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="ChecksumFinder.cs" />
+    <Compile Remove="MediaTekStatsCollector.cs" />
     <Compile Remove="PhilipsXmlStatsCollector.cs" />
     <Compile Remove="TechnisatDecrypt.cs" />
     <Compile Remove="WebOs5StatsCollector.cs" />

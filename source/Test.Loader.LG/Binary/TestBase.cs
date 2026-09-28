@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChanSort.Api;
 using ChanSort.Loader.LG;
 using ChanSort.Loader.LG.Binary;
+using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
 namespace Test.Loader.LG.Binary
@@ -115,7 +116,7 @@ namespace Test.Loader.LG.Binary
             sb1.AppendFormat("{0:X2} ", expected[i + j]);
             sb2.AppendFormat("{0:X2} ", actual[i + j]);
           }
-          Assert.Fail("Files differ at index {0}: expected <{1}> but found <{2}>", i, sb1, sb2);
+          Assert.Fail($"Files differ at index {i}: expected <{sb1}> but found <{sb2}>");
         }
       }
     }

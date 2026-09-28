@@ -167,8 +167,7 @@ internal class IdtvChannelSerializer : SerializerBase
     if (!File.Exists(binFile))
       throw LoaderException.Fail("expected file not found: " + binFile);
 
-    string connString = $"Data Source=\"{this.dbFile}\";Pooling=False";
-    using var db = new SqliteConnection(connString);
+    using var db = new SqliteConnection(Tools.SqlConnectionString(this.dbFile));
     db.Open();
     using var cmd = db.CreateCommand();
 
@@ -590,8 +589,7 @@ internal class IdtvChannelSerializer : SerializerBase
   #region SaveTvDb()
   private void SaveTvDb(IDictionary<ushort, int> newChannelIndexMap)
   {
-    string connString = $"Data Source=\"{this.dbFile}\";Pooling=False";
-    using var db = new SqliteConnection(connString);
+    using var db = new SqliteConnection(Tools.SqlConnectionString(this.dbFile));
     db.Open();
 
     using var trans = db.BeginTransaction();

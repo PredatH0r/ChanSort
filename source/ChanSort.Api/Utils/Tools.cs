@@ -286,5 +286,19 @@ namespace ChanSort.Api
 
     #endregion
 
+    #region SqlConnectionString()
+    /// <summary>
+    /// Creates a SQL connection string with special characters in the path properly escaped
+    /// </summary>
+    public static string SqlConnectionString(string path, string format = "Data Source={0}; Pooling=False")
+    {
+      // remove enclosing quotes from format
+      format = format.Replace("\"{0}", "{0}").Replace("{0}\"", "{0}"); 
+      format = format.Replace("\'{0}", "{0}").Replace("{0}\'", "{0}");
+
+      path = "\"" + path.Replace("\"", "\"\"") + "\"";
+      return string.Format(format, path);
+    }
+    #endregion
   }
 }

@@ -4,6 +4,8 @@ using System.Text;
 using ChanSort.Api;
 using ChanSort.Loader.LG;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using Assert = NUnit.Framework.Assert;
 
 namespace Test.Loader.LG
 {

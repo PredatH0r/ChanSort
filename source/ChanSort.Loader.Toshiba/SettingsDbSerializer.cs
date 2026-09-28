@@ -67,8 +67,7 @@ namespace ChanSort.Loader.Toshiba
     #region Load()
     public override void Load()
     {
-      string sysDataConnString = $"Data Source=\"{this.FileName}\";Pooling=False";
-      using var conn = new SqliteConnection(sysDataConnString);
+      using var conn = new SqliteConnection(Tools.SqlConnectionString(this.FileName));
       conn.Open();
       
       using var cmd = conn.CreateCommand();
@@ -208,8 +207,7 @@ left outer join ChanDataTable ac on ac.handle=a.m_channel_no
     #region Save()
     public override void Save()
     {
-      string channelConnString = $"Data Source=\"{this.FileName}\";Pooling=False";
-      using (var conn = new SqliteConnection(channelConnString))
+      using (var conn = new SqliteConnection(Tools.SqlConnectionString(this.FileName)))
       {
         conn.Open();
         using var trans = conn.BeginTransaction();

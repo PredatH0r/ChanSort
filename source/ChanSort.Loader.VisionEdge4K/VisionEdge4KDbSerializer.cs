@@ -47,8 +47,7 @@ namespace ChanSort.Loader.VisionEdge4K
     #region Load()
     public override void Load()
     {
-      string connString = $"Data Source=\"{this.FileName}\";Pooling=False";
-      using var conn = new SqliteConnection(connString);
+      using var conn = new SqliteConnection(Tools.SqlConnectionString(this.FileName));
       conn.Open();
 
       using var cmd = conn.CreateCommand();
@@ -281,8 +280,7 @@ order by p.tv_type,p.disp_order";
     #region Save()
     public override void Save()
     {
-      string channelConnString = $"Data Source=\"{this.FileName}\";Pooling=False";
-      using var conn = new SqliteConnection(channelConnString);
+      using var conn = new SqliteConnection(Tools.SqlConnectionString(this.FileName));
       conn.Open();
       using var trans = conn.BeginTransaction();
       using var cmd = conn.CreateCommand();

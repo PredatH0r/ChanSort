@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using ChanSort.Api;
 using ChanSort.Loader.M3u;
+using NUnit.Framework;
+using Assert=NUnit.Framework.Assert;
 
 namespace Test.Loader.M3u
 {
