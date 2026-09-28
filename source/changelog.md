@@ -1,11 +1,12 @@
 ﻿ChanSort Change Log 
 ===================
 
-2026-09-25
+2026-09-28
 - Samsung .zip: fixed support for lists containing IP-TV channels with a missing "default_url" field
 - Samsung .zip: if there is more than 1 channel with the same program number, then all are shown now.
   Previous versions only showed the first channel for each given number
 - added support for Novaler channel_list.xml file format
+- updated reference lists für Sky on Astra 28.8 and RTL 102.5 on Hotbird 13F
 
 2025-11-30
 - Panasonic Viera TX-P46Z1E (and similar models): fixed "no such column: t.delivery\_type" error  when loading
