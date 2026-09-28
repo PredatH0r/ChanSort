@@ -1,11 +1,11 @@
-﻿using System;
+﻿using ChanSort.Api;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
-using ChanSort.Api;
 
 namespace ChanSort.Loader.MediaTek;
 
@@ -48,7 +48,7 @@ public class Serializer : SerializerBase
    *   <internal>
    *     <summary> (base64 encoded Java serialized binary)
    *     <scan> (base64 encoded Java serialized binary, containing several scan settings)
-   *     <service_database> (base64 encoded Java serialized binary, which contains proprietary MediaTek compressed/encrypted cl_Zip data)
+   *     <service_database> (base64 encoded Java serialized binary, which contains proprietary MediaTek compressed cl_Zip data)
    */
 
   private XmlDocument doc;
@@ -58,6 +58,11 @@ public class Serializer : SerializerBase
   private bool splitTvRadioData; // controlled by the MultiBank setting inside the <scan> Java serialized stream; Philips=false, Sony=true
   private bool usesLcn;
   public readonly Dictionary<string, string> ScanParameters = new();
+
+  private SvlTable svl;
+  private readonly Dictionary<int, byte[]> svlRecordById = new();
+  private XmlElement serviceDatabaseNode;
+  private List<byte[]> svlChannels = new();
 
 
   #region ctor()
@@ -115,12 +120,19 @@ public class Serializer : SerializerBase
       {
         if (childNode.LocalName == "scan")
           ReadScanElement(Convert.FromBase64String(childNode.InnerText));
+        else if (childNode.LocalName == "service_database")
+          ReadServiceDatabase(childNode);
       }
     }
 
     // now read the channels
     if (nodesByName.TryGetValue("service_list_infos", out node))
       ReadServiceListInfos(node);
+
+    // verify that there is a 1:1 mapping between the number of service_info elements and the number of svl records
+    var xmlChannelCount = this.DataRoot.ChannelLists.SelectMany(l => l.Channels).Count();
+    if (svl != null && svl.Records.Count != xmlChannelCount)
+      throw LoaderException.Fail("Mismatching channel count in text and binary data");
   }
   #endregion
 
@@ -134,7 +146,7 @@ public class Serializer : SerializerBase
      * The exact binary data layout is unknown and varies between brands and maybe firmware versions.
      * Some data in it gives clues about LCNs are used and whether a FULL scan was used to setup the channel list, whether TV,radio and data channels are in a combined list or separated, ...
      *
-     * To detectd values, we look for: (uiLen "com.[mediatek|sony].dtv.broadcast.middleware.scan.engine.ScanSettings$<name>") \x00{8} \x12 \x00\x00\x78\x71 \x00\x7e \x00\x?? \x74 (uiLen "<value>")
+     * To detect values, we look for: (uiLen "com.[mediatek|sony].dtv.broadcast.middleware.scan.engine.ScanSettings$<name>") \x00{8} \x12 \x00\x00\x78\x71 \x00\x7e \x00\x?? \x74 (uiLen "<value>")
      */
 
     var str = Encoding.ASCII.GetString(data);
@@ -171,6 +183,24 @@ public class Serializer : SerializerBase
         splitTvRadioData |= value == "SEPARATE_TV_RADIO_DATA";
       else if (name == "LcnType")
         usesLcn |= value != "LCNS_DISABLED";
+    }
+  }
+  #endregion
+
+  #region ReadServiceDatabase()
+  private void ReadServiceDatabase(XmlNode xmlNode)
+  {
+    this.serviceDatabaseNode = (XmlElement)xmlNode;
+    this.svl = SvlTable.TryLoad(Convert.FromBase64String(xmlNode.InnerText));
+    if (this.svl != null)
+    {
+      foreach (var rec in svl.Records)
+      {
+        svlChannels.Add(rec);
+        svlRecordById[SvlTable.GetRecordId(rec)] = rec;
+      }
+
+      this.Features.ChannelNameEdit = ChannelNameEditMode.None; // names live in the binary name pool, untested
     }
   }
   #endregion
@@ -256,7 +286,20 @@ public class Serializer : SerializerBase
       chan.ChannelOrTransponder = LookupData.Instance.GetDvbcTransponder(chan.FreqInMhz).ToString();
 
 
-    if (splitTvRadioData)
+    if (svlRecordById.TryGetValue(recId, out var rec))
+    {
+      chan.ServiceId = SvlTable.GetServiceId(rec);  // Sony XML has no <service_id>, useful for reference lists
+      if (splitTvRadioData)                         // the TV numbers TV/radio/data by the group byte,
+      {                                             // not by sdt_service_type (e.g. types 4, 27, 32 are TV)
+        ss |= SvlTable.GetGroup(rec) switch 
+        {
+          0x81 => SignalSource.Tv,
+          0x82 => SignalSource.Radio,
+          _ => SignalSource.Data
+        };
+      }
+    }
+    else if (splitTvRadioData)
       ss |= LookupData.Instance.IsRadioTvOrData(chan.ServiceType);
     else
       ss |= SignalSource.Tv | SignalSource.Radio | SignalSource.Data;
@@ -278,6 +321,20 @@ public class Serializer : SerializerBase
     var elements = si.GetElementsByTagName("major_channel_number", si.NamespaceURI);
     list.ReadOnly |= elements.Count == 1 && elements[0].Attributes!["editable", si.NamespaceURI].InnerText == "false";
 
+    // validate consistency with svl
+    if (svl != null)
+    {
+      if (idx >= svlChannels.Count)
+        throw LoaderException.Fail($"Text data contains more channels than binary data: >={idx}");
+      var data = svlChannels[idx];
+      if (SvlTable.GetRecordId(data) != chan.RecordIndex)
+        throw LoaderException.Fail($"Inconsistent record id in text and binary data ({chan.RecordIndex} vs {SvlTable.GetRecordId(data)})");
+      if (SvlTable.GetProgramNr(data) != chan.OldProgramNr)
+        throw LoaderException.Fail($"Inconsistent program numbers in text and binary data ({chan.OldProgramNr} vs {SvlTable.GetProgramNr(data)})");
+      if (SvlTable.GetServiceId(data) != chan.ServiceId)
+        throw LoaderException.Fail($"Inconsistent program numbers in text and binary data ({chan.ServiceId} vs {SvlTable.GetServiceId(data)})");
+    }
+
     list.AddChannel(chan);
     chan.SignalSource = ss;
   }
@@ -294,9 +351,29 @@ public class Serializer : SerializerBase
 
   #endregion
 
-
   #region Save()
   public override void Save()
+  {
+    if (this.svl != null)
+      UpdateSvlAndXml();
+    else
+      UpdateXmlOnly();
+
+    var filePath = this.SaveAsFileName ?? this.FileName;
+    var settings = new XmlWriterSettings();
+    settings.Indent = true;
+    settings.Encoding = new UTF8Encoding(false);
+    using var sw = new StringWriter();
+    using var w = XmlWriter.Create(sw, settings);
+    this.doc.WriteTo(w);
+    w.Flush();
+    File.WriteAllText(filePath, sw.ToString().Replace(" />", "/>"), settings.Encoding);
+    this.FileName = filePath;
+  }
+  #endregion
+
+  #region UpdateXmlOnly()
+  private void UpdateXmlOnly()
   {
     // if splitTvRadioData is set, the 3 lists must be recombined and sorted together as a single list; there may still be multiple lists depending on input sources (DVB-T/C/S)
     var recombinedLists = new Dictionary<SignalSource, List<ChannelInfo>>();
@@ -352,14 +429,61 @@ public class Serializer : SerializerBase
           si["lock"].InnerText = ch.Lock ? "1" : "0";
       }
     }
+  }
+  #endregion
 
-    var filePath = this.SaveAsFileName ?? this.FileName;
-    var settings = new XmlWriterSettings();
-    settings.Indent = true;
-    settings.Encoding = new UTF8Encoding(false);
-    using var w = XmlWriter.Create(filePath, settings);
-    this.doc.WriteTo(w);
-    this.FileName = filePath;
+  #region UpdateSvlAndXml()
+  private void UpdateSvlAndXml()
+  {
+    // 1) new numbers into the binary records (adjusts the per-record hash)
+    //    - Map channel -> record by record_id (ch.RecordIndex = record_id from the XML, see ReadChannel),
+    //      never by list position: with split TV/radio/data lists, list positions and record positions differ.
+    //    - NewProgramNr == -1 means "no new number" (unsorted channel). Such channels keep their current number;
+    //      if that collides with a new number, svl.Save() fails with the conflicting record_ids.
+    //      Normally ChanSort appends unsorted channels before saving (DeleteMode.NotSupported).
+    //    - Numbers must be unique per group (TV / radio / data = per list when splitTvRadioData is set).
+    //      The same number may exist once per group: ChanSort's DVB-C test file numbers each group from 1,
+    //      the BRAVIA 8 II DVB-S export uses TV 1.., radio 7201.., data 7587.. Moving a group to another range
+    //      than the TV assigned is untested.
+    foreach (var list in this.DataRoot.ChannelLists)
+    {
+      foreach (var chan in list.Channels)
+      {
+        if (chan is not Channel ch || ch.IsProxy || !svlRecordById.TryGetValue((int)ch.RecordIndex, out var rec))
+          continue;
+        if (ch.NewProgramNr < 1)
+          continue;
+        SvlTable.SetProgramNr(rec, ch.NewProgramNr);
+        ch.Xml["major_channel_number"]!.InnerText = ch.NewProgramNr.ToString();
+        // user_edit_flag and lcn_type were left untouched in the file that the TV accepted
+      }
+    }
+
+    // 2) sort, recompress, fix lengths and checksums
+    var order = svl.Save(out var serviceDatabase);
+
+    // 3) reorder <service_info> elements to match the binary record order
+    var byId = new Dictionary<int, XmlElement>();
+    XmlElement parent = null;
+    foreach (var list in this.DataRoot.ChannelLists)
+    {
+      foreach (var chan in list.Channels)
+      {
+        if (chan is Channel ch && !ch.IsProxy)
+        {
+          byId[(int)ch.RecordIndex] = ch.Xml;
+          parent ??= (XmlElement)ch.Xml.ParentNode;
+        }
+      }
+    }
+
+    foreach (var el in byId.Values)
+      parent!.RemoveChild(el);
+    foreach (var id in order)
+      parent!.AppendChild(byId[id]);
+
+    // 4) Base64 like Java's MIME encoder: 76 chars per line, "\n", trailing "\n"
+    serviceDatabaseNode.InnerText = Convert.ToBase64String(serviceDatabase, Base64FormattingOptions.InsertLineBreaks).Replace("\r\n", "\n") + "\n";
   }
   #endregion
 }
