@@ -1,0 +1,2 @@
+# keep the original mixed line endings (LF inside objects, CRLF between objects)
+*.chl -text

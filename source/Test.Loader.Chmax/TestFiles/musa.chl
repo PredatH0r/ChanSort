@@ -1,0 +1,2939 @@
+{
+  "Type" : "index",
+  "Ver" : 1,
+  "Sat" : 10,
+  "TP" : 14,
+  "ChTV" : 60,
+  "CHRadio" : 20,
+  "FAV" : 8
+}
+{
+  "Type" : "fav",
+  "Index" : 0,
+  "Name" : "News",
+  "TVChs" : [ ],
+  "RadioChs" : [ ]
+}
+{
+  "Type" : "fav",
+  "Index" : 1,
+  "Name" : "Movies",
+  "TVChs" : [ ],
+  "RadioChs" : [ ]
+}
+{
+  "Type" : "fav",
+  "Index" : 2,
+  "Name" : "Music",
+  "TVChs" : [ ],
+  "RadioChs" : [ ]
+}
+{
+  "Type" : "fav",
+  "Index" : 3,
+  "Name" : "Sports",
+  "TVChs" : [ ],
+  "RadioChs" : [ ]
+}
+{
+  "Type" : "fav",
+  "Index" : 4,
+  "Name" : "Education",
+  "TVChs" : [ ],
+  "RadioChs" : [ ]
+}
+{
+  "Type" : "fav",
+  "Index" : 5,
+  "Name" : "Weather",
+  "TVChs" : [ ],
+  "RadioChs" : [ ]
+}
+{
+  "Type" : "fav",
+  "Index" : 6,
+  "Name" : "Children",
+  "TVChs" : [ ],
+  "RadioChs" : [ ]
+}
+{
+  "Type" : "fav",
+  "Index" : 7,
+  "Name" : "Culture",
+  "TVChs" : [ ],
+  "RadioChs" : [ ]
+}
+{
+  "Type" : "sat",
+  "Index" : 0,
+  "Name" : "Eutelsat 16A",
+  "Angle" : 160,
+  "Band" : "KU"
+}
+{
+  "Type" : "sat",
+  "Index" : 1,
+  "Name" : "TurkmenÄlem/MonacoSat",
+  "Angle" : 520,
+  "Band" : "KU"
+}
+{
+  "Type" : "sat",
+  "Index" : 2,
+  "Name" : "Astra 1",
+  "Angle" : 192,
+  "Band" : "KU"
+}
+{
+  "Type" : "sat",
+  "Index" : 3,
+  "Name" : "Intelsat 10-02 - Thor 5/6/7",
+  "Angle" : 3592,
+  "Band" : "KU"
+}
+{
+  "Type" : "sat",
+  "Index" : 4,
+  "Name" : "Türksat 3A/4A",
+  "Angle" : 420,
+  "Band" : "KU"
+}
+{
+  "Type" : "sat",
+  "Index" : 5,
+  "Name" : "Eutelsat 9B",
+  "Angle" : 90,
+  "Band" : "KU"
+}
+{
+  "Type" : "sat",
+  "Index" : 6,
+  "Name" : "Intelsat 20/36",
+  "Angle" : 685,
+  "Band" : "C"
+}
+{
+  "Type" : "sat",
+  "Index" : 7,
+  "Name" : "Hotbird",
+  "Angle" : 130,
+  "Band" : "KU"
+}
+{
+  "Type" : "sat",
+  "Index" : 8,
+  "Name" : "Nilesat 201",
+  "Angle" : 3530,
+  "Band" : "KU"
+}
+{
+  "Type" : "sat",
+  "Index" : 9,
+  "Name" : "AsiaSat 7",
+  "Angle" : 1055,
+  "Band" : "C"
+}
+{
+  "Type" : "tp",
+  "Index" : 0,
+  "SatIndex" : 7,
+  "Freq" : 11258,
+  "SR" : 27500,
+  "Pol" : "H",
+  "FEC" : "3/4",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 1,
+  "SatIndex" : 5,
+  "Freq" : 11996,
+  "SR" : 27500,
+  "Pol" : "V",
+  "FEC" : "3/4",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 2,
+  "SatIndex" : 8,
+  "Freq" : 11277,
+  "SR" : 27500,
+  "Pol" : "V",
+  "FEC" : "2/3",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 3,
+  "SatIndex" : 0,
+  "Freq" : 11387,
+  "SR" : 30000,
+  "Pol" : "H",
+  "FEC" : "",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 4,
+  "SatIndex" : 7,
+  "Freq" : 11900,
+  "SR" : 29900,
+  "Pol" : "H",
+  "FEC" : "5/6",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 5,
+  "SatIndex" : 2,
+  "Freq" : 12402,
+  "SR" : 29700,
+  "Pol" : "V",
+  "FEC" : "2/3",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 6,
+  "SatIndex" : 8,
+  "Freq" : 12418,
+  "SR" : 30000,
+  "Pol" : "H",
+  "FEC" : "3/4",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 7,
+  "SatIndex" : 8,
+  "Freq" : 11843,
+  "SR" : 27500,
+  "Pol" : "H",
+  "FEC" : "5/6",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 8,
+  "SatIndex" : 2,
+  "Freq" : 11318,
+  "SR" : 22000,
+  "Pol" : "V",
+  "FEC" : "5/6",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 9,
+  "SatIndex" : 8,
+  "Freq" : 11766,
+  "SR" : 27500,
+  "Pol" : "H",
+  "FEC" : "5/6",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 10,
+  "SatIndex" : 8,
+  "Freq" : 10815,
+  "SR" : 27500,
+  "Pol" : "H",
+  "FEC" : "7/8",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 11,
+  "SatIndex" : 8,
+  "Freq" : 11637,
+  "SR" : 27500,
+  "Pol" : "V",
+  "FEC" : "5/6",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 12,
+  "SatIndex" : 0,
+  "Freq" : 11554,
+  "SR" : 30000,
+  "Pol" : "H",
+  "FEC" : "3/4",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "tp",
+  "Index" : 13,
+  "SatIndex" : 3,
+  "Freq" : 10716,
+  "SR" : 25000,
+  "Pol" : "H",
+  "FEC" : "3/4",
+  "plsNumber" : 0,
+  "msTp" : 0,
+  "msIsid" : 0,
+  "tsnTp" : 0,
+  "tsnId" : 0
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 0,
+  "TPIndex" : 3,
+  "SID" : 1662,
+  "Name" : "Nova HR HD",
+  "VideoPID" : 262,
+  "PcrPID" : 262,
+  "PmtPID" : 162,
+  "TTXPID" : 562,
+  "Provider" : "Total TV",
+  "CA" : 90,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3621,
+    "Type" : "MPEG-1",
+    "Lang" : "hrv",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 1,
+  "TPIndex" : 0,
+  "SID" : 15202,
+  "Name" : "DMAX Italy HD",
+  "VideoPID" : 502,
+  "PcrPID" : 502,
+  "PmtPID" : 302,
+  "TTXPID" : null,
+  "Provider" : "Warner Bros. Discovery",
+  "CA" : 82,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 721,
+    "Type" : "MPEG-1",
+    "Lang" : "ita",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 722,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 2,
+  "TPIndex" : 3,
+  "SID" : 1664,
+  "Name" : "MRT 3",
+  "VideoPID" : 264,
+  "PcrPID" : 264,
+  "PmtPID" : 164,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3641,
+    "Type" : "MPEG-1",
+    "Lang" : "mkd",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 3,
+  "TPIndex" : 0,
+  "SID" : 15201,
+  "Name" : "Realtime Italy HD",
+  "VideoPID" : 501,
+  "PcrPID" : 501,
+  "PmtPID" : 301,
+  "TTXPID" : null,
+  "Provider" : "Warner Bros. Discovery",
+  "CA" : 82,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 711,
+    "Type" : "MPEG-1",
+    "Lang" : "ita",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 712,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 4,
+  "TPIndex" : 3,
+  "SID" : 1663,
+  "Name" : "Sitel",
+  "VideoPID" : 263,
+  "PcrPID" : 263,
+  "PmtPID" : 163,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 2183,
+    "Type" : "MPEG-2",
+    "Lang" : "mac",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 5,
+  "TPIndex" : 0,
+  "SID" : 15204,
+  "Name" : "K2",
+  "VideoPID" : 504,
+  "PcrPID" : 504,
+  "PmtPID" : 304,
+  "TTXPID" : null,
+  "Provider" : "Warner Bros. Discovery",
+  "CA" : 82,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 741,
+    "Type" : "MPEG-1",
+    "Lang" : "ita",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 742,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 6,
+  "TPIndex" : 3,
+  "SID" : 1666,
+  "Name" : "Cinemania HD",
+  "VideoPID" : 266,
+  "PcrPID" : 266,
+  "PmtPID" : 166,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3661,
+    "Type" : "MPEG-1",
+    "Lang" : "srp",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 7,
+  "TPIndex" : 0,
+  "SID" : 15203,
+  "Name" : "Food Network Italy HD",
+  "VideoPID" : 503,
+  "PcrPID" : 503,
+  "PmtPID" : 303,
+  "TTXPID" : null,
+  "Provider" : "Warner Bros. Discovery",
+  "CA" : 82,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 731,
+    "Type" : "MPEG-1",
+    "Lang" : "ita",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 732,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 8,
+  "TPIndex" : 3,
+  "SID" : 1665,
+  "Name" : "Pikaboo",
+  "VideoPID" : 265,
+  "PcrPID" : 265,
+  "PmtPID" : 165,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3651,
+    "Type" : "MPEG-1",
+    "Lang" : "srp",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 3652,
+    "Type" : "MPEG-1",
+    "Lang" : "hrv",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 3653,
+    "Type" : "MPEG-1",
+    "Lang" : "slv",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 3654,
+    "Type" : "MPEG-1",
+    "Lang" : "mkd",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 3655,
+    "Type" : "MPEG-1",
+    "Lang" : "alb",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 9,
+  "TPIndex" : 0,
+  "SID" : 15206,
+  "Name" : "Animal Planet Poland HD",
+  "VideoPID" : 506,
+  "PcrPID" : 506,
+  "PmtPID" : 306,
+  "TTXPID" : 586,
+  "Provider" : "Warner Bros. Discovery",
+  "CA" : 27,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 761,
+    "Type" : "MPEG-1",
+    "Lang" : "pol",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 762,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 136,
+    "Lang" : "pol",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 10,
+  "TPIndex" : 3,
+  "SID" : 1668,
+  "Name" : "SK 2 SLO",
+  "VideoPID" : 268,
+  "PcrPID" : 268,
+  "PmtPID" : 168,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3681,
+    "Type" : "MPEG-1",
+    "Lang" : "slv",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 11,
+  "TPIndex" : 0,
+  "SID" : 15205,
+  "Name" : "Frisbee",
+  "VideoPID" : 505,
+  "PcrPID" : 505,
+  "PmtPID" : 305,
+  "TTXPID" : null,
+  "Provider" : "Warner Bros. Discovery",
+  "CA" : 82,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 751,
+    "Type" : "MPEG-1",
+    "Lang" : "ita",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 752,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 12,
+  "TPIndex" : 3,
+  "SID" : 1667,
+  "Name" : "Kanal A HD",
+  "VideoPID" : 267,
+  "PcrPID" : 267,
+  "PmtPID" : 167,
+  "TTXPID" : null,
+  "Provider" : "SBB",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3671,
+    "Type" : "MPEG-2",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 13,
+  "TPIndex" : 0,
+  "SID" : 15208,
+  "Name" : "Eurosport 2 Poland HD",
+  "VideoPID" : 508,
+  "PcrPID" : 508,
+  "PmtPID" : 308,
+  "TTXPID" : null,
+  "Provider" : "Warner Bros. Discovery",
+  "CA" : 27,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 781,
+    "Type" : "MPEG-1",
+    "Lang" : "pol",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 782,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 14,
+  "TPIndex" : 0,
+  "SID" : 15207,
+  "Name" : "Eurosport 1 Poland HD",
+  "VideoPID" : 507,
+  "PcrPID" : 507,
+  "PmtPID" : 307,
+  "TTXPID" : null,
+  "Provider" : "Warner Bros. Discovery",
+  "CA" : 27,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 771,
+    "Type" : "MPEG-1",
+    "Lang" : "pol",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 772,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 15,
+  "TPIndex" : 1,
+  "SID" : 620,
+  "Name" : "CGTN-E",
+  "VideoPID" : 4001,
+  "PcrPID" : 4099,
+  "PmtPID" : 4098,
+  "TTXPID" : null,
+  "Provider" : "Globecast",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 4011,
+    "Type" : "MPEG-2",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 16,
+  "TPIndex" : 3,
+  "SID" : 1669,
+  "Name" : "CineStar Comedy",
+  "VideoPID" : 269,
+  "PcrPID" : 269,
+  "PmtPID" : 169,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 90,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3691,
+    "Type" : "MPEG-2",
+    "Lang" : "srp",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 3692,
+    "Type" : "MPEG-2",
+    "Lang" : "hrv",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 4691,
+    "Lang" : "srp",
+    "Type" : 16,
+    "CompPageID" : 1,
+    "AnciPageID" : 1
+  }, {
+    "PID" : 4692,
+    "Lang" : "hrv",
+    "Type" : 16,
+    "CompPageID" : 1,
+    "AnciPageID" : 1
+  }, {
+    "PID" : 4693,
+    "Lang" : "slv",
+    "Type" : 16,
+    "CompPageID" : 1,
+    "AnciPageID" : 1
+  }, {
+    "PID" : 4694,
+    "Lang" : "mkd",
+    "Type" : 16,
+    "CompPageID" : 1,
+    "AnciPageID" : 1
+  }, {
+    "PID" : 4695,
+    "Lang" : "alb",
+    "Type" : 16,
+    "CompPageID" : 1,
+    "AnciPageID" : 1
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 17,
+  "TPIndex" : 0,
+  "SID" : 15209,
+  "Name" : "ID Poland HD",
+  "VideoPID" : 509,
+  "PcrPID" : 509,
+  "PmtPID" : 309,
+  "TTXPID" : 589,
+  "Provider" : "Warner Bros. Discovery",
+  "CA" : 27,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 791,
+    "Type" : "AC3",
+    "Lang" : "pol",
+    "DolbyAC3" : 1
+  }, {
+    "PID" : 792,
+    "Type" : "MPEG-1",
+    "Lang" : "pol",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 793,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 136,
+    "Lang" : "pol",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 18,
+  "TPIndex" : 1,
+  "SID" : 623,
+  "Name" : "CGTN Documentary",
+  "VideoPID" : 4301,
+  "PcrPID" : 4399,
+  "PmtPID" : 4398,
+  "TTXPID" : null,
+  "Provider" : "Globecast",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 4311,
+    "Type" : "MPEG-2",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 19,
+  "TPIndex" : 1,
+  "SID" : 621,
+  "Name" : "CGTN-R",
+  "VideoPID" : 4101,
+  "PcrPID" : 4199,
+  "PmtPID" : 4198,
+  "TTXPID" : null,
+  "Provider" : "Globecast",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 4111,
+    "Type" : "MPEG-2",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 20,
+  "TPIndex" : 1,
+  "SID" : 622,
+  "Name" : "CGTN-A",
+  "VideoPID" : 4201,
+  "PcrPID" : 4299,
+  "PmtPID" : 4298,
+  "TTXPID" : null,
+  "Provider" : "Globecast",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 4211,
+    "Type" : "MPEG-2",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 21,
+  "TPIndex" : 9,
+  "SID" : 490,
+  "Name" : "Al Kahera Wal Nas",
+  "VideoPID" : 3088,
+  "PcrPID" : 3088,
+  "PmtPID" : 200,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3089,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 22,
+  "TPIndex" : 9,
+  "SID" : 491,
+  "Name" : "Test",
+  "VideoPID" : 1003,
+  "PcrPID" : 1003,
+  "PmtPID" : 201,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1004,
+    "Type" : "MPEG-2",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 23,
+  "TPIndex" : 4,
+  "SID" : 4118,
+  "Name" : "Prime Video Sportsbar",
+  "VideoPID" : 170,
+  "PcrPID" : 170,
+  "PmtPID" : 1018,
+  "TTXPID" : null,
+  "Provider" : "SkyItalia",
+  "CA" : 64,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 408,
+    "Type" : "MPEG-2",
+    "Lang" : "ita",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 409,
+    "Type" : "MPEG-2",
+    "Lang" : "und",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 24,
+  "TPIndex" : 3,
+  "SID" : 1671,
+  "Name" : "Nova M",
+  "VideoPID" : 271,
+  "PcrPID" : 271,
+  "PmtPID" : 171,
+  "TTXPID" : 571,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3711,
+    "Type" : "MPEG-1",
+    "Lang" : "srp",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 136,
+    "Lang" : "srp",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 25,
+  "TPIndex" : 3,
+  "SID" : 1670,
+  "Name" : "Lov i Ribolov",
+  "VideoPID" : 270,
+  "PcrPID" : 270,
+  "PmtPID" : 170,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3701,
+    "Type" : "MPEG-1",
+    "Lang" : "srp",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 26,
+  "TPIndex" : 3,
+  "SID" : 1651,
+  "Name" : "SK Fight",
+  "VideoPID" : 251,
+  "PcrPID" : 251,
+  "PmtPID" : 151,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3511,
+    "Type" : "MPEG-1",
+    "Lang" : "hrv",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 27,
+  "TPIndex" : 3,
+  "SID" : 1653,
+  "Name" : "ATV",
+  "VideoPID" : 253,
+  "PcrPID" : 253,
+  "PmtPID" : 153,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3531,
+    "Type" : "MPEG-1",
+    "Lang" : "srp",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 28,
+  "TPIndex" : 3,
+  "SID" : 1652,
+  "Name" : "RTS 3",
+  "VideoPID" : 252,
+  "PcrPID" : 252,
+  "PmtPID" : 152,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3521,
+    "Type" : "MPEG-1",
+    "Lang" : "srp",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 29,
+  "TPIndex" : 3,
+  "SID" : 1655,
+  "Name" : "BRIO",
+  "VideoPID" : 255,
+  "PcrPID" : 255,
+  "PmtPID" : 155,
+  "TTXPID" : null,
+  "Provider" : "SBB",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3551,
+    "Type" : "MPEG-1",
+    "Lang" : "slv",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 30,
+  "TPIndex" : 5,
+  "SID" : 8717,
+  "Name" : "FRANCEINFO:",
+  "VideoPID" : 1710,
+  "PcrPID" : 1710,
+  "PmtPID" : 1700,
+  "TTXPID" : null,
+  "Provider" : "CSAT",
+  "CA" : 7,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1721,
+    "Type" : "AC3",
+    "Lang" : "fra",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ {
+    "PID" : 1743,
+    "Lang" : "fra",
+    "Type" : 32,
+    "CompPageID" : 3,
+    "AnciPageID" : 4
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 31,
+  "TPIndex" : 3,
+  "SID" : 1654,
+  "Name" : "RTRS",
+  "VideoPID" : 254,
+  "PcrPID" : 254,
+  "PmtPID" : 154,
+  "TTXPID" : 554,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3541,
+    "Type" : "MPEG-1",
+    "Lang" : "srp",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 32,
+  "TPIndex" : 5,
+  "SID" : 8718,
+  "Name" : "F3 RHONE ALPES",
+  "VideoPID" : 1810,
+  "PcrPID" : 1810,
+  "PmtPID" : 1800,
+  "TTXPID" : null,
+  "Provider" : "CSAT",
+  "CA" : 3,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1821,
+    "Type" : "AC3",
+    "Lang" : "fra",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 33,
+  "TPIndex" : 2,
+  "SID" : 10,
+  "Name" : "ZAD TV",
+  "VideoPID" : 4071,
+  "PcrPID" : 4071,
+  "PmtPID" : 4070,
+  "TTXPID" : null,
+  "Provider" : "DU",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 4072,
+    "Type" : "MPEG-1",
+    "Lang" : "ara",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 34,
+  "TPIndex" : 3,
+  "SID" : 1657,
+  "Name" : "TV 3 Medias",
+  "VideoPID" : 257,
+  "PcrPID" : 257,
+  "PmtPID" : 157,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3571,
+    "Type" : "MPEG-1",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 35,
+  "TPIndex" : 3,
+  "SID" : 1656,
+  "Name" : "Kino",
+  "VideoPID" : 256,
+  "PcrPID" : 256,
+  "PmtPID" : 156,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3561,
+    "Type" : "MPEG-1",
+    "Lang" : "slv",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 36,
+  "TPIndex" : 2,
+  "SID" : 12,
+  "Name" : "CN ARABIA",
+  "VideoPID" : 4081,
+  "PcrPID" : 4081,
+  "PmtPID" : 4080,
+  "TTXPID" : null,
+  "Provider" : "DU",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 4082,
+    "Type" : "MPEG-1",
+    "Lang" : "ara",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 37,
+  "TPIndex" : 5,
+  "SID" : 8713,
+  "Name" : "MULTISPORTS 3",
+  "VideoPID" : 1310,
+  "PcrPID" : 1310,
+  "PmtPID" : 1300,
+  "TTXPID" : null,
+  "Provider" : "CSAT",
+  "CA" : 3,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1321,
+    "Type" : "AC3",
+    "Lang" : "fra",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 38,
+  "TPIndex" : 13,
+  "SID" : 7925,
+  "Name" : "TV 2 Charlie HD",
+  "VideoPID" : 1725,
+  "PcrPID" : 1725,
+  "PmtPID" : 725,
+  "TTXPID" : 6725,
+  "Provider" : "Telenor",
+  "CA" : 82,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3725,
+    "Type" : "AC3",
+    "Lang" : "dan",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 39,
+  "TPIndex" : 3,
+  "SID" : 1658,
+  "Name" : "MRT 1",
+  "VideoPID" : 258,
+  "PcrPID" : 258,
+  "PmtPID" : 158,
+  "TTXPID" : null,
+  "Provider" : "Total TV",
+  "CA" : 72,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3581,
+    "Type" : "MPEG-2",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 40,
+  "TPIndex" : 5,
+  "SID" : 8714,
+  "Name" : "6TER",
+  "VideoPID" : 1410,
+  "PcrPID" : 1410,
+  "PmtPID" : 1400,
+  "TTXPID" : null,
+  "Provider" : "CSAT",
+  "CA" : 3,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1421,
+    "Type" : "AC3",
+    "Lang" : "fra",
+    "DolbyAC3" : 1
+  }, {
+    "PID" : 1422,
+    "Type" : "AC3",
+    "Lang" : "eng",
+    "DolbyAC3" : 1
+  }, {
+    "PID" : 1423,
+    "Type" : "AC3",
+    "Lang" : "qad",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ {
+    "PID" : 1442,
+    "Lang" : "fra",
+    "Type" : 16,
+    "CompPageID" : 1,
+    "AnciPageID" : 2
+  }, {
+    "PID" : 1443,
+    "Lang" : "fra",
+    "Type" : 32,
+    "CompPageID" : 3,
+    "AnciPageID" : 4
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 41,
+  "TPIndex" : 13,
+  "SID" : 7926,
+  "Name" : "TV 2 News HD",
+  "VideoPID" : 1726,
+  "PcrPID" : 1726,
+  "PmtPID" : 726,
+  "TTXPID" : 6726,
+  "Provider" : "Telenor",
+  "CA" : 82,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3726,
+    "Type" : "AC3",
+    "Lang" : "dan",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 42,
+  "TPIndex" : 5,
+  "SID" : 8715,
+  "Name" : "MULTISPORTS 4",
+  "VideoPID" : 1510,
+  "PcrPID" : 1510,
+  "PmtPID" : 1500,
+  "TTXPID" : null,
+  "Provider" : "CSAT",
+  "CA" : 3,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1521,
+    "Type" : "AC3",
+    "Lang" : "fra",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 43,
+  "TPIndex" : 5,
+  "SID" : 8716,
+  "Name" : "F3 NORD PDC",
+  "VideoPID" : 1610,
+  "PcrPID" : 1610,
+  "PmtPID" : 1600,
+  "TTXPID" : null,
+  "Provider" : "CSAT",
+  "CA" : 3,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1621,
+    "Type" : "AC3",
+    "Lang" : "fra",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 44,
+  "TPIndex" : 5,
+  "SID" : 8710,
+  "Name" : "TEVA",
+  "VideoPID" : 1010,
+  "PcrPID" : 1010,
+  "PmtPID" : 1000,
+  "TTXPID" : null,
+  "Provider" : "CSAT",
+  "CA" : 3,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1021,
+    "Type" : "AC3",
+    "Lang" : "fra",
+    "DolbyAC3" : 1
+  }, {
+    "PID" : 1022,
+    "Type" : "AC3",
+    "Lang" : "eng",
+    "DolbyAC3" : 1
+  }, {
+    "PID" : 1023,
+    "Type" : "AC3",
+    "Lang" : "qad",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ {
+    "PID" : 1042,
+    "Lang" : "fra",
+    "Type" : 16,
+    "CompPageID" : 1,
+    "AnciPageID" : 2
+  }, {
+    "PID" : 1043,
+    "Lang" : "fra",
+    "Type" : 32,
+    "CompPageID" : 3,
+    "AnciPageID" : 4
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 45,
+  "TPIndex" : 5,
+  "SID" : 8711,
+  "Name" : "GOLF+",
+  "VideoPID" : 1110,
+  "PcrPID" : 1110,
+  "PmtPID" : 1100,
+  "TTXPID" : null,
+  "Provider" : "CSAT",
+  "CA" : 3,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1121,
+    "Type" : "AC3",
+    "Lang" : "fra",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ {
+    "PID" : 1143,
+    "Lang" : "fra",
+    "Type" : 32,
+    "CompPageID" : 3,
+    "AnciPageID" : 4
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 46,
+  "TPIndex" : 5,
+  "SID" : 8712,
+  "Name" : "PLANETE+AVENTURE",
+  "VideoPID" : 1210,
+  "PcrPID" : 1210,
+  "PmtPID" : 1200,
+  "TTXPID" : null,
+  "Provider" : "CSAT",
+  "CA" : 7,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "H264",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1221,
+    "Type" : "AC3",
+    "Lang" : "fra",
+    "DolbyAC3" : 1
+  }, {
+    "PID" : 1222,
+    "Type" : "AC3",
+    "Lang" : "eng",
+    "DolbyAC3" : 1
+  } ],
+  "Sub" : [ {
+    "PID" : 1242,
+    "Lang" : "fra",
+    "Type" : 16,
+    "CompPageID" : 1,
+    "AnciPageID" : 2
+  }, {
+    "PID" : 1243,
+    "Lang" : "fra",
+    "Type" : 32,
+    "CompPageID" : 3,
+    "AnciPageID" : 4
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 47,
+  "TPIndex" : 8,
+  "SID" : 29809,
+  "Name" : "M+ Documentales",
+  "VideoPID" : 167,
+  "PcrPID" : 5167,
+  "PmtPID" : 1029,
+  "TTXPID" : 53,
+  "Provider" : "DIGITAL+",
+  "CA" : 6,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 108,
+    "Type" : "MPEG-2",
+    "Lang" : "spa",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 109,
+    "Type" : "MPEG-2",
+    "Lang" : "dos",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 1,
+    "Lang" : "spa",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 88,
+    "Lang" : "esl",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 2,
+    "Lang" : "eng",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 3,
+    "Lang" : "cat",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 4,
+    "Lang" : "eus",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 48,
+  "TPIndex" : 8,
+  "SID" : 29805,
+  "Name" : "M+ COMEDIA",
+  "VideoPID" : 163,
+  "PcrPID" : 5163,
+  "PmtPID" : 1037,
+  "TTXPID" : 41,
+  "Provider" : "Movistar+",
+  "CA" : 6,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 92,
+    "Type" : "MPEG-2",
+    "Lang" : "esl",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 93,
+    "Type" : "MPEG-2",
+    "Lang" : "dos",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 88,
+    "Lang" : "esl",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 1,
+    "Lang" : "spa",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 2,
+    "Lang" : "eng",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 3,
+    "Lang" : "cat",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 4,
+    "Lang" : "eus",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 49,
+  "TPIndex" : 8,
+  "SID" : 29806,
+  "Name" : "M+ DRAMA",
+  "VideoPID" : 170,
+  "PcrPID" : 5170,
+  "PmtPID" : 1038,
+  "TTXPID" : 62,
+  "Provider" : "Movistar+",
+  "CA" : 6,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 120,
+    "Type" : "MPEG-2",
+    "Lang" : "esl",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 121,
+    "Type" : "MPEG-2",
+    "Lang" : "dos",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 88,
+    "Lang" : "esl",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 1,
+    "Lang" : "spa",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 2,
+    "Lang" : "eng",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 3,
+    "Lang" : "cat",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 4,
+    "Lang" : "eus",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 50,
+  "TPIndex" : 8,
+  "SID" : 29807,
+  "Name" : "STAR Channel",
+  "VideoPID" : 169,
+  "PcrPID" : 5169,
+  "PmtPID" : 1031,
+  "TTXPID" : 59,
+  "Provider" : "FOXGE",
+  "CA" : 6,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 116,
+    "Type" : "MPEG-2",
+    "Lang" : "spa",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 117,
+    "Type" : "MPEG-2",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 1,
+    "Lang" : "spa",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 51,
+  "TPIndex" : 8,
+  "SID" : 29801,
+  "Name" : "NOVA",
+  "VideoPID" : 161,
+  "PcrPID" : 5161,
+  "PmtPID" : 1025,
+  "TTXPID" : null,
+  "Provider" : "DIGITAL+",
+  "CA" : 6,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 84,
+    "Type" : "MPEG-2",
+    "Lang" : "spa",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 85,
+    "Type" : "MPEG-2",
+    "Lang" : "dos",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 52,
+  "TPIndex" : 8,
+  "SID" : 29802,
+  "Name" : "IBERALIA TV",
+  "VideoPID" : 164,
+  "PcrPID" : 5164,
+  "PmtPID" : 1026,
+  "TTXPID" : null,
+  "Provider" : "DIGITAL+",
+  "CA" : 6,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 96,
+    "Type" : "MPEG-2",
+    "Lang" : "spa",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 53,
+  "TPIndex" : 8,
+  "SID" : 29803,
+  "Name" : "DISNEY JR",
+  "VideoPID" : 165,
+  "PcrPID" : 5165,
+  "PmtPID" : 1027,
+  "TTXPID" : 47,
+  "Provider" : "DIGITAL+",
+  "CA" : 6,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 100,
+    "Type" : "MPEG-2",
+    "Lang" : "spa",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 101,
+    "Type" : "MPEG-2",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 88,
+    "Lang" : "spa",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 54,
+  "TPIndex" : 8,
+  "SID" : 29804,
+  "Name" : "M+ ACCIÓN",
+  "VideoPID" : 162,
+  "PcrPID" : 5162,
+  "PmtPID" : 1036,
+  "TTXPID" : 38,
+  "Provider" : "Movistar+",
+  "CA" : 6,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 88,
+    "Type" : "MPEG-2",
+    "Lang" : "esl",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 89,
+    "Type" : "MPEG-2",
+    "Lang" : "dos",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ {
+    "PID" : 88,
+    "Lang" : "esl",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 1,
+    "Lang" : "spa",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 2,
+    "Lang" : "eng",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 3,
+    "Lang" : "cat",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  }, {
+    "PID" : 4,
+    "Lang" : "eus",
+    "Type" : 1,
+    "CompPageID" : 0,
+    "AnciPageID" : 0
+  } ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 55,
+  "TPIndex" : 10,
+  "SID" : 70,
+  "Name" : "Libya WTV SD",
+  "VideoPID" : 880,
+  "PcrPID" : 880,
+  "PmtPID" : 1392,
+  "TTXPID" : null,
+  "Provider" : "ViewMedia",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1136,
+    "Type" : "MPEG-2",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 56,
+  "TPIndex" : 1,
+  "SID" : 619,
+  "Name" : "CCTV-4",
+  "VideoPID" : 3901,
+  "PcrPID" : 3999,
+  "PmtPID" : 3998,
+  "TTXPID" : null,
+  "Provider" : "Globecast",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3911,
+    "Type" : "MPEG-2",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 57,
+  "TPIndex" : 8,
+  "SID" : 29800,
+  "Name" : "M+ Ellas V",
+  "VideoPID" : 160,
+  "PcrPID" : 5160,
+  "PmtPID" : 1024,
+  "TTXPID" : null,
+  "Provider" : "DIGITAL+",
+  "CA" : 6,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 80,
+    "Type" : "MPEG-2",
+    "Lang" : "spa",
+    "DolbyAC3" : 0
+  }, {
+    "PID" : 81,
+    "Type" : "MPEG-2",
+    "Lang" : "dos",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 58,
+  "TPIndex" : 10,
+  "SID" : 54,
+  "Name" : "Noursat",
+  "VideoPID" : 852,
+  "PcrPID" : 852,
+  "PmtPID" : 1364,
+  "TTXPID" : null,
+  "Provider" : "ViewMedia",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1108,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "TV",
+  "Index" : 59,
+  "TPIndex" : 10,
+  "SID" : 56,
+  "Name" : "Mosar3a 1",
+  "VideoPID" : 854,
+  "PcrPID" : 854,
+  "PmtPID" : 1366,
+  "TTXPID" : null,
+  "Provider" : "ViewMedia",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "MPEG-2",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1110,
+    "Type" : "MPEG-1",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 0,
+  "TPIndex" : 6,
+  "SID" : 13,
+  "Name" : "Dubai Radio",
+  "VideoPID" : null,
+  "PcrPID" : 603,
+  "PmtPID" : 600,
+  "TTXPID" : null,
+  "Provider" : "Du",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 603,
+    "Type" : "MPEG-1",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 1,
+  "TPIndex" : 12,
+  "SID" : 20190,
+  "Name" : "Outre-mer la 1ere",
+  "VideoPID" : null,
+  "PcrPID" : 490,
+  "PmtPID" : 4290,
+  "TTXPID" : null,
+  "Provider" : "ROM1 A",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 490,
+    "Type" : "MPEG-1",
+    "Lang" : "fra",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 2,
+  "TPIndex" : 7,
+  "SID" : 658,
+  "Name" : "Mowagahat-2",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : 158,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3151,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 3,
+  "TPIndex" : 7,
+  "SID" : 657,
+  "Name" : "Mowagahat-1",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : 157,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3141,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 4,
+  "TPIndex" : 7,
+  "SID" : 656,
+  "Name" : "ALWadi ALGaded",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : 156,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1233,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 5,
+  "TPIndex" : 7,
+  "SID" : 655,
+  "Name" : "Mowagahat-8",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : 155,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3121,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 6,
+  "TPIndex" : 7,
+  "SID" : 654,
+  "Name" : "BBC Horn of Africa",
+  "VideoPID" : null,
+  "PcrPID" : 3111,
+  "PmtPID" : 154,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3111,
+    "Type" : "MPEG-1",
+    "Lang" : "und",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 7,
+  "TPIndex" : 7,
+  "SID" : 653,
+  "Name" : "Aswan",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : 153,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3101,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 8,
+  "TPIndex" : 6,
+  "SID" : 21,
+  "Name" : "Noor Dubai Radio",
+  "VideoPID" : null,
+  "PcrPID" : 621,
+  "PmtPID" : 620,
+  "TTXPID" : null,
+  "Provider" : "Du",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 621,
+    "Type" : "MPEG-1",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 9,
+  "TPIndex" : 7,
+  "SID" : 652,
+  "Name" : "Bakous Alexandaria",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : 152,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3091,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 10,
+  "TPIndex" : 7,
+  "SID" : 651,
+  "Name" : "Test",
+  "VideoPID" : null,
+  "PcrPID" : 2016,
+  "PmtPID" : 151,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 2016,
+    "Type" : "MPEG-1",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 11,
+  "TPIndex" : 7,
+  "SID" : 650,
+  "Name" : "Radio Masr",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : 141,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 3092,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 12,
+  "TPIndex" : 2,
+  "SID" : 28,
+  "Name" : "ALAAN FM",
+  "VideoPID" : null,
+  "PcrPID" : 282,
+  "PmtPID" : 280,
+  "TTXPID" : null,
+  "Provider" : "DU",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 282,
+    "Type" : "MPEG-1",
+    "Lang" : "ara",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 13,
+  "TPIndex" : 8,
+  "SID" : 29814,
+  "Name" : null,
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : 1030,
+  "TTXPID" : null,
+  "Provider" : "",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 14,
+  "TPIndex" : 7,
+  "SID" : 676,
+  "Name" : "Test",
+  "VideoPID" : null,
+  "PcrPID" : 1223,
+  "PmtPID" : 119,
+  "TTXPID" : null,
+  "Provider" : "Nilesat",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1223,
+    "Type" : "MPEG-1",
+    "Lang" : "",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 15,
+  "TPIndex" : 7,
+  "SID" : 675,
+  "Name" : "Canal Radio",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : 118,
+  "TTXPID" : null,
+  "Provider" : "NILESAT",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 2020,
+    "Type" : "MPEG-1",
+    "Lang" : "eng",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 16,
+  "TPIndex" : 11,
+  "SID" : 42,
+  "Name" : "-R- Hayat FM",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : null,
+  "TTXPID" : null,
+  "Provider" : "",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 1060,
+    "Type" : "",
+    "Lang" : "Ara",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 17,
+  "TPIndex" : 12,
+  "SID" : 20152,
+  "Name" : "Radio Mayotte la 1ere",
+  "VideoPID" : null,
+  "PcrPID" : 502,
+  "PmtPID" : 4252,
+  "TTXPID" : null,
+  "Provider" : "ROM1 A",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 502,
+    "Type" : "MPEG-1",
+    "Lang" : "fra",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 18,
+  "TPIndex" : 12,
+  "SID" : 20151,
+  "Name" : "Radio Reunion la 1ere",
+  "VideoPID" : null,
+  "PcrPID" : 501,
+  "PmtPID" : 4251,
+  "TTXPID" : null,
+  "Provider" : "ROM1 A",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 501,
+    "Type" : "MPEG-1",
+    "Lang" : "fra",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
+{
+  "Type" : "ch",
+  "TVType" : "Radio",
+  "Index" : 19,
+  "TPIndex" : 11,
+  "SID" : 31,
+  "Name" : "Alrai Radio",
+  "VideoPID" : null,
+  "PcrPID" : null,
+  "PmtPID" : null,
+  "TTXPID" : null,
+  "Provider" : "",
+  "CA" : 0,
+  "Lock" : 0,
+  "Skip" : 0,
+  "Hide" : 0,
+  "VideoType" : "",
+  "t2miPg" : 0,
+  "t2miPlpId" : 0,
+  "t2miPayloadPid" : 0,
+  "Audio" : [ {
+    "PID" : 950,
+    "Type" : "",
+    "Lang" : "Ara",
+    "DolbyAC3" : 0
+  } ],
+  "Sub" : [ ]
+}
