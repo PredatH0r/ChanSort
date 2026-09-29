@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\ChanSortProject.props" />
+  <ItemGroup>
+    <None Update="TestFiles\musa.chl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChanSort.Api\ChanSort.Api.csproj" />
+    <ProjectReference Include="..\ChanSort.Loader.Chmax\ChanSort.Loader.Chmax.csproj" />
+    <ProjectReference Include="..\Test.Loader\Test.Loader.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" Version="4.4.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.4.1" />
+  </ItemGroup>
+  <Import Project="..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets')" />
+</Project>
