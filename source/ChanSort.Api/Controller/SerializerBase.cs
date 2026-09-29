@@ -75,6 +75,7 @@ namespace ChanSort.Api
 
     private Encoding defaultEncoding;
 
+    public bool DeveloperMode { get; set; }
     public string FileName { get; protected set; }
     public string SaveAsFileName { get; set; }
     public DataRoot DataRoot { get; protected set; }

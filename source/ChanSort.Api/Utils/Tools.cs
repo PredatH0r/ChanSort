@@ -9,11 +9,31 @@ namespace ChanSort.Api
 {
   public static class Tools
   {
+    #region TryGet()
     public static V TryGet<K, V>(this IDictionary<K, V> dict, K key, V defaultValue = default(V))
     {
       V val;
       return dict.TryGetValue(key, out val) ? val : defaultValue;
     }
+    #endregion
+
+    #region Try()
+    public static void Try(Action action, Action onError = null, Action onFinally = null)
+    {
+      try
+      {
+        action();
+      }
+      catch
+      {
+        onError?.Invoke();
+      }
+      finally
+      {
+        onFinally?.Invoke();
+      }
+    }
+    #endregion
 
     #region GetAnalogChannelNumber()
     public static string GetAnalogChannelNumber(int freq)

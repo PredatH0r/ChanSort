@@ -63,7 +63,7 @@ internal class SvlTable
   private int containerPos;
 
   public readonly List<byte[]> Records = new();
-  private readonly List<byte[]> names = new(); // raw name pool entry per record, null = no name
+  public readonly List<byte[]> Names = new(); // raw name pool entry per record, null = no name
 
   #region TryLoad()
   public static SvlTable TryLoad(byte[] serviceDatabase)
@@ -121,7 +121,7 @@ internal class SvlTable
       Array.Copy(svl, i * RecordSize, rec, 0, RecordSize);
       this.Records.Add(rec);
       var nameIdx = rec.GetInt16(42, false);
-      this.names.Add(nameIdx == 0 ? null : pool[nameIdx - 1]);
+      this.Names.Add(nameIdx == 0 ? null : pool[nameIdx - 1]);
     }
     return true;
   }
@@ -202,11 +202,11 @@ internal class SvlTable
     foreach (var i in order)
     {
       var rec = Records[i];
-      if (names[i] == null)
+      if (Names[i] == null)
         rec.SetInt16(42, 0, false);
       else
       {
-        poolEntries.Add(names[i]);
+        poolEntries.Add(Names[i]);
         rec.SetInt16(42, poolEntries.Count, false);
       }
       recData.Write(rec, 0, RecordSize);

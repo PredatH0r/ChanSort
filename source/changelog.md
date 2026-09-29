@@ -1,6 +1,10 @@
 ﻿ChanSort Change Log 
 ===================
 
+20206-09-29
+- Sony Bravia 7/8: now also updating the channel information inside the binary data of the XML file
+- added "Settings / Developer Mode" in the UI (which developers can query via SerializerBase.DeveloperMode)
+
 2026-09-28
 - Samsung .zip: fixed support for lists containing IP-TV channels with a missing "default_url" field
 - Samsung .zip: if there is more than 1 channel with the same program number, then all are shown now.

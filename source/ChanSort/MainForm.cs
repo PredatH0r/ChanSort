@@ -579,51 +579,60 @@ namespace ChanSort.Ui
         }
       }
 
+      this.Cursor = Cursors.WaitCursor;
       var errorMsgs = new StringBuilder();
-      foreach (var plugin in candidates)
+      try
       {
-        SerializerBase serializer = null;
-        try
+        foreach (var plugin in candidates)
         {
-          serializer = plugin.CreateSerializer(inputFileName);
-          if (serializer != null)
+          SerializerBase serializer = null;
+          try
           {
-            serializer.DefaultEncoding = this.defaultEncoding;
-            serializer.Load();
-            hint = plugin;
-            return serializer;
+            serializer = plugin.CreateSerializer(inputFileName);
+            if (serializer != null)
+            {
+              serializer.DeveloperMode = this.miDeveloperMode.Down;
+              serializer.DefaultEncoding = this.defaultEncoding;
+              serializer.Load();
+              hint = plugin;
+              return serializer;
+            }
           }
-        }
-        catch (Exception ex)
-        {
-          serializer?.Dispose();
-
-          string authoritveErrorMsg = null;
-          string informativeErrorMsg = null;
-
-          if (ex is LoaderException lex)
+          catch (Exception ex)
           {
-            if (lex.Recovery == LoaderException.RecoveryMode.Fail)
-              authoritveErrorMsg = ex.Message;
+            serializer?.Dispose();
+
+            string authoritveErrorMsg = null;
+            string informativeErrorMsg = null;
+
+            if (ex is LoaderException lex)
+            {
+              if (lex.Recovery == LoaderException.RecoveryMode.Fail)
+                authoritveErrorMsg = ex.Message;
+              else
+                informativeErrorMsg = ex.Message;
+            }
+            else if (ex is ArgumentException && ex.ToString().Contains("ZipFile..ctor()")) // broken .zip file can't be handled by any loader
+              authoritveErrorMsg = string.Format(Resources.MainForm_LoadTll_InvalidZip, inputFileName);
             else
-              informativeErrorMsg = ex.Message;
+              informativeErrorMsg = ex is FileLoadException ? ex.Message : ex.ToString();
+
+
+            if (authoritveErrorMsg != null)
+            {
+              XtraMessageBox.Show(this, authoritveErrorMsg);
+              return null;
+            }
+
+            // historically FileLoadExceptions were thrown deliberately by a loader to display a message (without stack trace) and proceed with the next loader
+            // other exceptions should display the stack trace for support purposes
+            errorMsgs.AppendLine($"{plugin.PluginName}: {informativeErrorMsg}\n\n");
           }
-          else if (ex is ArgumentException && ex.ToString().Contains("ZipFile..ctor()")) // broken .zip file can't be handled by any loader
-            authoritveErrorMsg = string.Format(Resources.MainForm_LoadTll_InvalidZip, inputFileName);
-          else
-            informativeErrorMsg = ex is FileLoadException ? ex.Message : ex.ToString();
-
-
-          if (authoritveErrorMsg != null)
-          {
-            XtraMessageBox.Show(this, authoritveErrorMsg);
-            return null;
-          }
-
-          // historically FileLoadExceptions were thrown deliberately by a loader to display a message (without stack trace) and proceed with the next loader
-          // other exceptions should display the stack trace for support purposes
-          errorMsgs.AppendLine($"{plugin.PluginName}: {informativeErrorMsg}\n\n");
         }
+      }
+      finally
+      {
+        this.Cursor = Cursors.Default;
       }
 
       XtraMessageBox.Show(this, string.Format(Resources.MainForm_LoadTll_SerializerNotFound, inputFileName) + "\n\n" + errorMsgs);
@@ -1507,6 +1516,7 @@ namespace ChanSort.Ui
       this.miSplitView.Down = Config.Default.SplitView;
       this.miLoadListAfterStart.Down = Config.Default.LoadLastListAfterStart;
       this.adjustWindowLocationOnScale = false;
+      this.miDeveloperMode.Down = Config.Default.DeveloperMode;
     }
     #endregion
 
@@ -3261,6 +3271,7 @@ namespace ChanSort.Ui
       config.ExplorerIntegration = this.miExplorerIntegration.Down;
       config.CheckForUpdates = this.miCheckUpdates.Down;
       config.SplitView = this.miSplitView.Down;
+      config.DeveloperMode = this.miDeveloperMode.Down;
 
       var updateVisible = !this.miAutoHideColumns.Down;
       this.SaveGridLayout(config.LeftColumns, this.gviewLeft.GetColumnOrder(), updateVisible);

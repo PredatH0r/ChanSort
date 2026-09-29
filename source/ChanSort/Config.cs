@@ -56,6 +56,7 @@ namespace ChanSort.Ui
 
     public static Config Default { get; set; }
 
+    public bool DeveloperMode { get; set; }
     public string Language { get; set; } = "";
     public string Encoding { get; set; } = "";
     public Size WindowSize { get; set; } = new Size(0,0);

@@ -276,7 +276,7 @@
     <value>gridLeft</value>
   </data>
   <data name="&gt;&gt;gridLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.9198.20671, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.9768.21003, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gridLeft.Parent" xml:space="preserve">
     <value>grpOutputList</value>
@@ -751,6 +751,12 @@
   <data name="miResetAndRestart.Hint" xml:space="preserve">
     <value>Resets all customized settings and restarts the program</value>
   </data>
+  <data name="miDeveloperMode.Caption" xml:space="preserve">
+    <value>Developer mode</value>
+  </data>
+  <data name="miDeveloperMode.Hint" xml:space="preserve">
+    <value>Developers can enable additional output while working on loaders for a channel list format</value>
+  </data>
   <data name="mnuAccessibility.Caption" xml:space="preserve">
     <value>&amp;Accessibility</value>
   </data>
@@ -841,52 +847,52 @@
   <assembly alias="DevExpress.XtraBars.v25.2" name="DevExpress.XtraBars.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="barManager1.Categories" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v25.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9u
-        PTI1LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0
-        OWEFAQAAACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRH
-        dWlkB1Zpc2libGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3Vp
-        ZAsAAAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgIC
-        AgICKaPJ5gsBeU2NTSFeXxl+0wEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9uPTI1
+        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEZpbGUE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
+        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICKaPJ5gsBeU2NTSFe
+        Xxl+0wEL
 </value>
   </data>
   <data name="barManager1.Categories1" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v25.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9u
-        PTI1LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0
-        OWEFAQAAACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRH
-        dWlkB1Zpc2libGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3Vp
-        ZAsAAAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgIC
-        AgICdEVVDegwMU2acNpwKphCYAEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9uPTI1
+        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEhlbHAE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
+        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICdEVVDegwMU2acNpw
+        KphCYAEL
 </value>
   </data>
   <data name="barManager1.Categories2" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v25.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9u
-        PTI1LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0
-        OWEFAQAAACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRH
-        dWlkB1Zpc2libGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3Vp
-        ZAsAAAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgIC
-        AgICZMTu18lZRU+IqmAuZMgcwAEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9uPTI1
+        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAABEVkaXQE/P///wtTeXN0ZW0uR3VpZAsAAAACX2ECX2IC
+        X2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICZMTu18lZRU+IqmAu
+        ZMgcwAEL
 </value>
   </data>
   <data name="barManager1.Categories3" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v25.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9u
-        PTI1LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0
-        OWEFAQAAACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRH
-        dWlkB1Zpc2libGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0u
-        R3VpZAsAAAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwIC
-        AgICAgICXJMOh9nzAkKcWIeWYGkVXQEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9uPTI1
+        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAAB09wdGlvbnME/P///wtTeXN0ZW0uR3VpZAsAAAACX2EC
+        X2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICXJMOh9nzAkKc
+        WIeWYGkVXQEL
 </value>
   </data>
   <data name="barManager1.Categories4" type="DevExpress.XtraBars.BarManagerCategory, DevExpress.XtraBars.v25.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9u
-        PTI1LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0
-        OWEFAQAAACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRH
-        dWlkB1Zpc2libGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAADUFjY2Vzc2liaWxpdHkE/P///wtT
-        eXN0ZW0uR3VpZAsAAAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAA
-        AAgHBwICAgICAgICeIvznH8WlU24SIo8kTIJxAEL
+        AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFCYXJzLnYyNS4yLCBWZXJzaW9uPTI1
+        LjIuNy4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAA
+        ACZEZXZFeHByZXNzLlh0cmFCYXJzLkJhck1hbmFnZXJDYXRlZ29yeQMAAAAETmFtZQRHdWlkB1Zpc2li
+        bGUBAwALU3lzdGVtLkd1aWQBAgAAAAYDAAAADUFjY2Vzc2liaWxpdHkE/P///wtTeXN0ZW0uR3VpZAsA
+        AAACX2ECX2ICX2MCX2QCX2UCX2YCX2cCX2gCX2kCX2oCX2sAAAAAAAAAAAAAAAgHBwICAgICAgICeIvz
+        nH8WlU24SIo8kTIJxAEL
 </value>
   </data>
   <data name="barDockControlTop.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1270,7 +1276,7 @@
     <value>gviewLeft</value>
   </data>
   <data name="&gt;&gt;gviewLeft.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.9198.20671, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.9768.21003, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;colIndex1.Name" xml:space="preserve">
     <value>colIndex1</value>
@@ -1354,13 +1360,13 @@
     <value>globalImageCollection1</value>
   </data>
   <data name="&gt;&gt;globalImageCollection1.Type" xml:space="preserve">
-    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.9198.20671, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.Ui.GlobalImageCollection, ChanSort, Version=1.0.9768.21003, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gviewRight.Name" xml:space="preserve">
     <value>gviewRight</value>
   </data>
   <data name="&gt;&gt;gviewRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridView, ChanSort, Version=1.0.9198.20671, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridView, ChanSort, Version=1.0.9768.21003, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;colIndex.Name" xml:space="preserve">
     <value>colIndex</value>
@@ -1614,11 +1620,17 @@
   <data name="&gt;&gt;miSave.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miSaveAs.Name" xml:space="preserve">
-    <value>miSaveAs</value>
+  <data name="&gt;&gt;miExcelExport.Name" xml:space="preserve">
+    <value>miExcelExport</value>
   </data>
-  <data name="&gt;&gt;miSaveAs.Type" xml:space="preserve">
+  <data name="&gt;&gt;miExcelExport.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;mnuFileAdvanced.Name" xml:space="preserve">
+    <value>mnuFileAdvanced</value>
+  </data>
+  <data name="&gt;&gt;mnuFileAdvanced.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;miSaveReferenceFile.Name" xml:space="preserve">
     <value>miSaveReferenceFile</value>
@@ -1632,10 +1644,10 @@
   <data name="&gt;&gt;miConvert.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
-  <data name="&gt;&gt;miExcelExport.Name" xml:space="preserve">
-    <value>miExcelExport</value>
+  <data name="&gt;&gt;miSaveAs.Name" xml:space="preserve">
+    <value>miSaveAs</value>
   </data>
-  <data name="&gt;&gt;miExcelExport.Type" xml:space="preserve">
+  <data name="&gt;&gt;miSaveAs.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="&gt;&gt;miOpenReferenceFile.Name" xml:space="preserve">
@@ -1980,6 +1992,12 @@
   <data name="&gt;&gt;miResetAndRestart.Type" xml:space="preserve">
     <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
+  <data name="&gt;&gt;miDeveloperMode.Name" xml:space="preserve">
+    <value>miDeveloperMode</value>
+  </data>
+  <data name="&gt;&gt;miDeveloperMode.Type" xml:space="preserve">
+    <value>DevExpress.XtraBars.BarButtonItem, DevExpress.XtraBars.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="&gt;&gt;mnuAccessibility.Name" xml:space="preserve">
     <value>mnuAccessibility</value>
   </data>
@@ -2154,12 +2172,6 @@
   <data name="&gt;&gt;timerSelectFocusedRow.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;mnuFileAdvanced.Name" xml:space="preserve">
-    <value>mnuFileAdvanced</value>
-  </data>
-  <data name="&gt;&gt;mnuFileAdvanced.Type" xml:space="preserve">
-    <value>DevExpress.XtraBars.BarSubItem, DevExpress.XtraBars.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
@@ -2167,7 +2179,7 @@
     <value>DevExpress.XtraEditors.XtraForm, DevExpress.Utils.v25.2, Version=25.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="SharedImageCollection.Timestamp" type="System.DateTime, mscorlib">
-    <value>03/08/2025 11:54:22</value>
+    <value>09/29/2026 11:43:38</value>
   </data>
   <data name="SharedImageCollection.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -3051,7 +3063,7 @@
     <value>gridRight</value>
   </data>
   <data name="&gt;&gt;gridRight.Type" xml:space="preserve">
-    <value>ChanSort.XGridControl, ChanSort, Version=1.0.9198.20671, Culture=neutral, PublicKeyToken=null</value>
+    <value>ChanSort.XGridControl, ChanSort, Version=1.0.9768.21003, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;gridRight.Parent" xml:space="preserve">
     <value>grpInputList</value>

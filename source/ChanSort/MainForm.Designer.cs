@@ -117,10 +117,11 @@
       this.miRestoreOriginal = new DevExpress.XtraBars.BarButtonItem();
       this.miDeleteBackup = new DevExpress.XtraBars.BarButtonItem();
       this.miSave = new DevExpress.XtraBars.BarButtonItem();
-      this.miSaveAs = new DevExpress.XtraBars.BarButtonItem();
+      this.miExcelExport = new DevExpress.XtraBars.BarButtonItem();
+      this.mnuFileAdvanced = new DevExpress.XtraBars.BarSubItem();
       this.miSaveReferenceFile = new DevExpress.XtraBars.BarButtonItem();
       this.miConvert = new DevExpress.XtraBars.BarButtonItem();
-      this.miExcelExport = new DevExpress.XtraBars.BarButtonItem();
+      this.miSaveAs = new DevExpress.XtraBars.BarButtonItem();
       this.miOpenReferenceFile = new DevExpress.XtraBars.BarButtonItem();
       this.miAddFromRefList = new DevExpress.XtraBars.BarButtonItem();
       this.miPrint = new DevExpress.XtraBars.BarButtonItem();
@@ -178,6 +179,7 @@
       this.miExplorerIntegration = new DevExpress.XtraBars.BarButtonItem();
       this.miCheckUpdates = new DevExpress.XtraBars.BarButtonItem();
       this.miResetAndRestart = new DevExpress.XtraBars.BarButtonItem();
+      this.miDeveloperMode = new DevExpress.XtraBars.BarButtonItem();
       this.mnuAccessibility = new DevExpress.XtraBars.BarSubItem();
       this.mnuGotoChannelList = new DevExpress.XtraBars.BarSubItem();
       this.mnuInputSource = new DevExpress.XtraBars.BarLinkContainerItem();
@@ -225,7 +227,6 @@
       this.popupInputSource = new DevExpress.XtraBars.PopupMenu(this.components);
       this.popupFavList = new DevExpress.XtraBars.PopupMenu(this.components);
       this.timerSelectFocusedRow = new System.Windows.Forms.Timer(this.components);
-      this.mnuFileAdvanced = new DevExpress.XtraBars.BarSubItem();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1.Panel1)).BeginInit();
       this.splitContainerControl1.Panel1.SuspendLayout();
@@ -1139,9 +1140,10 @@
             this.miConvert,
             this.miSaveAs,
             this.miLangIt,
-            this.mnuFileAdvanced});
+            this.mnuFileAdvanced,
+            this.miDeveloperMode});
       this.barManager1.MainMenu = this.bar1;
-      this.barManager1.MaxItemId = 124;
+      this.barManager1.MaxItemId = 125;
       this.barManager1.ShowFullMenus = true;
       this.barManager1.ShortcutItemClick += new DevExpress.XtraBars.ShortcutItemClickEventHandler(this.barManager1_ShortcutItemClick);
       // 
@@ -1254,12 +1256,25 @@
       this.miSave.Name = "miSave";
       this.miSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSave_ItemClick);
       // 
-      // miSaveAs
+      // miExcelExport
       // 
-      resources.ApplyResources(this.miSaveAs, "miSaveAs");
-      this.miSaveAs.Id = 121;
-      this.miSaveAs.Name = "miSaveAs";
-      this.miSaveAs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveAs_ItemClick);
+      resources.ApplyResources(this.miExcelExport, "miExcelExport");
+      this.miExcelExport.Id = 59;
+      this.miExcelExport.ImageOptions.ImageIndex = ((int)(resources.GetObject("miExcelExport.ImageOptions.ImageIndex")));
+      this.miExcelExport.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.C));
+      this.miExcelExport.Name = "miExcelExport";
+      this.miExcelExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miExcelExport_ItemClick);
+      // 
+      // mnuFileAdvanced
+      // 
+      resources.ApplyResources(this.mnuFileAdvanced, "mnuFileAdvanced");
+      this.mnuFileAdvanced.Id = 123;
+      this.mnuFileAdvanced.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miConvert),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs)});
+      this.mnuFileAdvanced.Name = "mnuFileAdvanced";
       // 
       // miSaveReferenceFile
       // 
@@ -1279,15 +1294,12 @@
       this.miConvert.Name = "miConvert";
       this.miConvert.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miConvert_ItemClick);
       // 
-      // miExcelExport
+      // miSaveAs
       // 
-      resources.ApplyResources(this.miExcelExport, "miExcelExport");
-      this.miExcelExport.Id = 59;
-      this.miExcelExport.ImageOptions.ImageIndex = ((int)(resources.GetObject("miExcelExport.ImageOptions.ImageIndex")));
-      this.miExcelExport.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-                | System.Windows.Forms.Keys.C));
-      this.miExcelExport.Name = "miExcelExport";
-      this.miExcelExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miExcelExport_ItemClick);
+      resources.ApplyResources(this.miSaveAs, "miSaveAs");
+      this.miSaveAs.Id = 121;
+      this.miSaveAs.Name = "miSaveAs";
+      this.miSaveAs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miSaveAs_ItemClick);
       // 
       // miOpenReferenceFile
       // 
@@ -1590,7 +1602,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.miAllowEditPredefinedLists),
             new DevExpress.XtraBars.LinkPersistInfo(this.miExplorerIntegration),
             new DevExpress.XtraBars.LinkPersistInfo(this.miCheckUpdates),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miResetAndRestart, true)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.miResetAndRestart, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miDeveloperMode)});
       this.mnuOptions.Name = "mnuOptions";
       // 
       // mnuLanguage
@@ -1851,6 +1864,13 @@
       this.miResetAndRestart.Id = 112;
       this.miResetAndRestart.Name = "miResetAndRestart";
       this.miResetAndRestart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miResetAndRestart_ItemClick);
+      // 
+      // miDeveloperMode
+      // 
+      this.miDeveloperMode.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.Check;
+      resources.ApplyResources(this.miDeveloperMode, "miDeveloperMode");
+      this.miDeveloperMode.Id = 124;
+      this.miDeveloperMode.Name = "miDeveloperMode";
       // 
       // mnuAccessibility
       // 
@@ -2281,16 +2301,6 @@
       // 
       this.timerSelectFocusedRow.Tick += new System.EventHandler(this.timerSelectFocusedRow_Tick);
       // 
-      // mnuFileAdvanced
-      // 
-      resources.ApplyResources(this.mnuFileAdvanced, "mnuFileAdvanced");
-      this.mnuFileAdvanced.Id = 123;
-      this.mnuFileAdvanced.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveReferenceFile),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miConvert),
-            new DevExpress.XtraBars.LinkPersistInfo(this.miSaveAs)});
-      this.mnuFileAdvanced.Name = "mnuFileAdvanced";
-      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -2552,6 +2562,7 @@
     private DevExpress.XtraBars.BarButtonItem miSaveAs;
     private DevExpress.XtraBars.BarButtonItem miLangIt;
     private DevExpress.XtraBars.BarSubItem mnuFileAdvanced;
+    private DevExpress.XtraBars.BarButtonItem miDeveloperMode;
   }
 }
 

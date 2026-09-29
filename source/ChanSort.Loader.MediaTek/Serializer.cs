@@ -57,13 +57,14 @@ public class Serializer : SerializerBase
   private readonly StringBuilder fileInfo = new();
   private bool splitTvRadioData; // controlled by the MultiBank setting inside the <scan> Java serialized stream; Philips=false, Sony=true
   private bool usesLcn;
+  private byte[] scanData;
   public readonly Dictionary<string, string> ScanParameters = new();
 
   private SvlTable svl;
+  private readonly List<byte[]> svlRecords = new();
   private readonly Dictionary<int, byte[]> svlRecordById = new();
   private XmlElement serviceDatabaseNode;
-  private List<byte[]> svlChannels = new();
-
+  private byte[] serviceDatabaseData;
 
   #region ctor()
   public Serializer(string inputFile) : base(inputFile)
@@ -123,6 +124,9 @@ public class Serializer : SerializerBase
         else if (childNode.LocalName == "service_database")
           ReadServiceDatabase(childNode);
       }
+
+      if (this.DeveloperMode)
+        this.WriteDebugFiles(this.FileName);
     }
 
     // now read the channels
@@ -149,6 +153,7 @@ public class Serializer : SerializerBase
      * To detect values, we look for: (uiLen "com.[mediatek|sony].dtv.broadcast.middleware.scan.engine.ScanSettings$<name>") \x00{8} \x12 \x00\x00\x78\x71 \x00\x7e \x00\x?? \x74 (uiLen "<value>")
      */
 
+    this.scanData = data;
     var str = Encoding.ASCII.GetString(data);
     for (int idx = str.IndexOf("com.", StringComparison.InvariantCulture); idx >= 2; idx = str.IndexOf("com.", idx, StringComparison.InvariantCulture))
     {
@@ -191,14 +196,16 @@ public class Serializer : SerializerBase
   private void ReadServiceDatabase(XmlNode xmlNode)
   {
     this.serviceDatabaseNode = (XmlElement)xmlNode;
-    this.svl = SvlTable.TryLoad(Convert.FromBase64String(xmlNode.InnerText));
+    this.serviceDatabaseData = Convert.FromBase64String(xmlNode.InnerText);
+
+    this.svl = SvlTable.TryLoad(serviceDatabaseData);
 
     var groupSet = new HashSet<int>();
     if (this.svl != null)
     {
       foreach (var rec in svl.Records)
       {
-        svlChannels.Add(rec);
+        svlRecords.Add(rec);
         svlRecordById[SvlTable.GetRecordId(rec)] = rec;
         groupSet.Add(SvlTable.GetGroup(rec));
       }
@@ -328,9 +335,9 @@ public class Serializer : SerializerBase
     // validate consistency with svl
     if (svl != null)
     {
-      if (idx >= svlChannels.Count)
+      if (idx >= svlRecords.Count)
         throw LoaderException.Fail($"Text data contains more channels than binary data: >={idx}");
-      var data = svlChannels[idx];
+      var data = svlRecords[idx];
       if (SvlTable.GetRecordId(data) != chan.RecordIndex)
         throw LoaderException.Fail($"Inconsistent record id in text and binary data ({chan.RecordIndex} vs {SvlTable.GetRecordId(data)})");
       if (SvlTable.GetProgramNr(data) != chan.OldProgramNr)
@@ -373,6 +380,9 @@ public class Serializer : SerializerBase
     w.Flush();
     File.WriteAllText(filePath, sw.ToString().Replace(" />", "/>"), settings.Encoding);
     this.FileName = filePath;
+
+    if (this.DeveloperMode)
+      this.WriteDebugFiles(this.FileName);
   }
   #endregion
 
@@ -488,6 +498,46 @@ public class Serializer : SerializerBase
 
     // 4) Base64 like Java's MIME encoder: 76 chars per line, "\n", trailing "\n"
     serviceDatabaseNode.InnerText = Convert.ToBase64String(serviceDatabase, Base64FormattingOptions.InsertLineBreaks).Replace("\r\n", "\n") + "\n";
+  }
+  #endregion
+
+  #region WriteDebugFiles()
+  internal void WriteDebugFiles(string baseName)
+  {
+    this.DeleteDebugFiles(baseName);
+    
+    if (this.serviceDatabaseData != null)
+      File.WriteAllBytes(baseName + "_service_database.bin", this.serviceDatabaseData);
+
+    if (this.scanData != null)
+      File.WriteAllBytes(this.FileName + "_scan.bin", this.scanData);
+
+
+    if (this.svl == null)
+      return;
+
+    using (var file = File.Create(baseName + "_service_records.bin"))
+    {
+      foreach (var rec in svl.Records)
+        file.Write(rec, 0, rec.Length);
+    }
+
+    using (var file = new StreamWriter(baseName + "_names.txt"))
+    {
+      foreach (var name in this.svl.Names)
+        file.WriteLine(name == null || name.Length < 2 ? null : Encoding.UTF8.GetString(name, 2, name.Length - 2)); // first 2 bytes are the length as u16-BE
+    }
+  }
+  #endregion
+
+  #region DeleteDebugFiles()
+  internal void DeleteDebugFiles(string baseName = null)
+  {
+    baseName ??= this.FileName;
+    Tools.Try(() => File.Delete(baseName + "_scan.bin"));
+    Tools.Try(() => File.Delete(baseName + "_service_database.bin"));
+    Tools.Try(() => File.Delete(baseName + "_names.txt"));
+    Tools.Try(() => File.Delete(baseName + "_service_records.bin"));
   }
   #endregion
 }
