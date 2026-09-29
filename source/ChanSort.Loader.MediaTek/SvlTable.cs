@@ -53,6 +53,7 @@ internal class SvlTable
   private static readonly byte[] CdbMagic = [0x0C, 0xDB, 0x0C, 0xDB];
   private static readonly byte[] ZipMagic = Encoding.ASCII.GetBytes("cl_Zip");
   private static readonly byte[] ContainerMagic = [0x5A, 0x49, 0x04, 0x32];
+  private static readonly byte[] ServiceListIdPrefix = Encoding.ASCII.GetBytes("SERVICE_LIST_");
 
   private byte[] data;
   private int namePos;     // "gfs_Svl_102" / "ffs_Svl_101"
@@ -62,36 +63,63 @@ internal class SvlTable
   private int chainEnd;    // X
   private int containerPos;
 
+  /// <summary>e.g. "SERVICE_LIST_GENERAL_SATELLITE/20", the prefix of the XML &lt;record_id&gt; values of this table</summary>
+  public string ServiceListId { get; private set; }
+
   public readonly List<byte[]> Records = new();
   public readonly List<byte[]> Names = new(); // raw name pool entry per record, null = no name
 
-  #region TryLoad()
+  #region TryLoad(), LoadAll()
+  /// <summary>
+  /// Loads the first Svl table. Files with more than one service list (e.g. satellite + terrestrial) contain one
+  /// Svl table per list, use LoadAll() for those.
+  /// </summary>
   public static SvlTable TryLoad(byte[] serviceDatabase)
   {
     var svl = new SvlTable();
-    return svl.Load(serviceDatabase) ? svl : null;
+    return svl.Load(serviceDatabase, 0) ? svl : null;
+  }
+
+  /// <summary>
+  /// Loads all Svl tables, one per &lt;service_list_info&gt;. Tables can be empty (e.g. a satellite list without
+  /// channels next to a cable list). Match them to the XML by ServiceListId, not by position.
+  /// </summary>
+  public static List<SvlTable> LoadAll(byte[] serviceDatabase)
+  {
+    var list = new List<SvlTable>();
+    for (int pos = 0; ;)
+    {
+      var svl = new SvlTable();
+      if (!svl.Load(serviceDatabase, pos))
+        return list;
+      list.Add(svl);
+      pos = svl.chainEnd;
+    }
   }
   #endregion
 
   #region Load()
-  private bool Load(byte[] serviceDatabase)
+  private bool Load(byte[] serviceDatabase, int searchFrom)
   {
     this.data = serviceDatabase;
-    this.namePos = IndexOf(data, SvlTableName, 0) - 1;
-    if (namePos < 8)
+    var nameIdx0 = IndexOf(data, SvlTableName, searchFrom);
+    if (nameIdx0 < 9)
       return false;
+    this.namePos = nameIdx0 - 1;
+    this.ServiceListId = GetServiceListId(namePos);
     this.cdbPos = IndexOf(data, CdbMagic, namePos);
     this.zipPos = IndexOf(data, ZipMagic, cdbPos);
-    this.containerPos = LastIndexOf(data, ContainerMagic, namePos - 16);
-    if (cdbPos < 0 || zipPos < 0 || containerPos < 4)
+    this.containerPos = LastIndexOf(data, ContainerMagic, namePos - 16, searchFrom); // missing for empty tables
+    if (cdbPos < 0 || zipPos < 0)
       return false;
 
-    // inflate all chunks
+    // inflate all chunks; the data section starting at "cl_Zip" ends at X
     var raw = new MemoryStream();
     int poolStart = -1;
     int off = zipPos + 16;
     this.chainStart = off;
-    while (true)
+    this.chainEnd = zipPos + data.GetInt32(zipPos - 4, false);
+    while (off < chainEnd)
     {
       var flag = data[off];
       var compLen = data.GetInt32(off + 1, false);
@@ -103,15 +131,16 @@ internal class SvlTable
         throw LoaderException.Fail("Svl: invalid chunk length");
       raw.Write(chunk, 0, chunk.Length);
       off += 9 + compLen;
-      if (flag != 0x81)
-        break;
     }
-    this.chainEnd = off;
+    if (off != chainEnd)
+      throw LoaderException.Fail("Svl: invalid data section length");
 
     if (!VerifyChecksums())
       throw LoaderException.Fail("Svl: invalid checksum");
 
     var svl = raw.ToArray();
+    if (svl.Length == 0)
+      return true; // empty list
     if (poolStart < 0 || poolStart % RecordSize != 0)
       throw LoaderException.Fail("Svl: missing name pool");
     var pool = ParsePool(svl, poolStart);
@@ -124,6 +153,25 @@ internal class SvlTable
       this.Names.Add(nameIdx == 0 ? null : pool[nameIdx - 1]);
     }
     return true;
+  }
+  #endregion
+
+  #region GetServiceListId()
+  private string GetServiceListId(int before)
+  {
+    // Java modified UTF-8 string (u16 length + chars) like "SERVICE_LIST_CABLE/12", written by TransferListData before
+    // the tables of each list. Other strings starting with SERVICE_LIST_ (list type, prefix) have no "/<number>".
+    for (var pos = LastIndexOf(data, ServiceListIdPrefix, before, 2); pos >= 2; pos = LastIndexOf(data, ServiceListIdPrefix, pos - 1, 2))
+    {
+      var len = data.GetInt16(pos - 2, false) & 0xFFFF;
+      if (len > 64 || pos + len > data.Length)
+        continue; // e.g. "KEY_SVL_SERVICE_LIST_PREFIX": the bytes before "SERVICE_LIST_" are not a length
+      var id = Encoding.ASCII.GetString(data, pos, len);
+      var slash = id.IndexOf('/');
+      if (slash > 0 && slash < id.Length - 1 && id.Substring(slash + 1).All(char.IsDigit) && id.Substring(0, slash).All(c => c == '_' || c >= 'A' && c <= 'Z'))
+        return id;
+    }
+    return null;
   }
   #endregion
 
@@ -187,14 +235,40 @@ internal class SvlTable
   /// Sorts the records by (program number, group) like the TV does, rebuilds the name pool, recompresses the table,
   /// updates all length fields and checksums. Returns the record_ids in their new order so that the caller can
   /// reorder the XML &lt;service_info&gt; elements accordingly (they must match 1:1).
+  /// Only for files with a single Svl table; use SaveAll() for the result of LoadAll().
   /// </summary>
   public List<int> Save(out byte[] serviceDatabase)
   {
+    return this.SaveInto(this.data, out serviceDatabase);
+  }
+
+  /// <summary>
+  /// Saves all tables returned by LoadAll() into one &lt;service_database&gt;. Returns the new record_id order per table.
+  /// The tables are processed from the end of the buffer to the start, so the offsets of the tables before remain valid.
+  /// Load the result again before saving another time.
+  /// </summary>
+  public static Dictionary<SvlTable, List<int>> SaveAll(byte[] serviceDatabase, IEnumerable<SvlTable> tables, out byte[] result)
+  {
+    var orders = new Dictionary<SvlTable, List<int>>();
+    result = serviceDatabase;
+    foreach (var svl in tables.OrderByDescending(t => t.namePos))
+      orders[svl] = svl.Records.Count == 0 ? new List<int>() : svl.SaveInto(result, out result);
+    return orders;
+  }
+
+  private List<int> SaveInto(byte[] data, out byte[] serviceDatabase)
+  {
+    if (this.Records.Count == 0)
+    {
+      serviceDatabase = data;
+      return new List<int>();
+    }
+    if (this.containerPos < 4)
+      throw LoaderException.Fail("Svl: container header not found");
+
+    // OrderBy is a stable sort: records with the same (number, group) keep their order.
+    // The TV itself exports such duplicates (e.g. two radio services with the same number), so they are not an error.
     var order = Enumerable.Range(0, Records.Count).OrderBy(i => GetProgramNr(Records[i])).ThenBy(i => GetGroup(Records[i])).ToList();
-    // numbers are unique per group only: e.g. a DVB-C export numbers TV, radio and data each from 1
-    var dup = order.GroupBy(i => (GetGroup(Records[i]), GetProgramNr(Records[i]))).FirstOrDefault(g => g.Count() > 1);
-    if (dup != null)
-      throw LoaderException.Fail($"Svl: program number {dup.Key.Item2} is used by record_ids {string.Join(", ", dup.Select(i => GetRecordId(Records[i])))} in group 0x{dup.Key.Item1:x2}");
 
     // records and name pool in new order
     var recData = new MemoryStream();
@@ -235,6 +309,7 @@ internal class SvlTable
     AddInt32(buf, namePos + 0x22, delta);           // outer meta: cdb block length (in Y)
     AddInt32(buf, zipPos - 4, delta);               // cdb meta: data section length (in X)
 
+    // positions of this table stay valid in buf (only bytes behind the chain moved)
     this.data = buf;
     this.chainEnd = chainStart + newChain.Length;
     buf.SetInt32(chainEnd, (int)CalcX(), false);
@@ -342,9 +417,9 @@ internal class SvlTable
     return -1;
   }
 
-  private static int LastIndexOf(byte[] buf, byte[] pattern, int before)
+  private static int LastIndexOf(byte[] buf, byte[] pattern, int before, int notBefore = 0)
   {
-    for (int i = Math.Min(before, buf.Length - pattern.Length); i >= 0; i--)
+    for (int i = Math.Min(before, buf.Length - pattern.Length); i >= notBefore; i--)
     {
       if (Tools.MemComp(buf, i, pattern) == 0)
         return i;

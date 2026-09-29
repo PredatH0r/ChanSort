@@ -60,9 +60,9 @@ public class Serializer : SerializerBase
   private byte[] scanData;
   public readonly Dictionary<string, string> ScanParameters = new();
 
-  private SvlTable svl;
-  private readonly List<byte[]> svlRecords = new();
-  private readonly Dictionary<int, byte[]> svlRecordById = new();
+  private List<SvlTable> svlTables; // one per service list (e.g. satellite + terrestrial), null if there is no binary data
+  private readonly Dictionary<string, SvlTable> svlByListId = new();
+  private readonly Dictionary<(string, int), byte[]> svlRecordById = new(); // key: (service list id, record_id)
   private XmlElement serviceDatabaseNode;
   private byte[] serviceDatabaseData;
 
@@ -135,7 +135,7 @@ public class Serializer : SerializerBase
 
     // verify that there is a 1:1 mapping between the number of service_info elements and the number of svl records
     var xmlChannelCount = this.DataRoot.ChannelLists.SelectMany(l => l.Channels).Count();
-    if (svl != null && svl.Records.Count != xmlChannelCount)
+    if (svlTables != null && svlTables.Sum(t => t.Records.Count) != xmlChannelCount)
       throw LoaderException.Fail("Mismatching channel count in text and binary data");
   }
   #endregion
@@ -198,21 +198,37 @@ public class Serializer : SerializerBase
     this.serviceDatabaseNode = (XmlElement)xmlNode;
     this.serviceDatabaseData = Convert.FromBase64String(xmlNode.InnerText);
 
-    this.svl = SvlTable.TryLoad(serviceDatabaseData);
-
-    var groupSet = new HashSet<int>();
-    if (this.svl != null)
+    this.LoadSvlTables();
+    if (this.svlTables != null)
     {
-      foreach (var rec in svl.Records)
-      {
-        svlRecords.Add(rec);
-        svlRecordById[SvlTable.GetRecordId(rec)] = rec;
-        groupSet.Add(SvlTable.GetGroup(rec));
-      }
-
       this.Features.ChannelNameEdit = ChannelNameEditMode.None; // names live in the binary name pool, untested
-      this.splitTvRadioData = groupSet.Count > 1;
+      this.splitTvRadioData = svlTables.SelectMany(t => t.Records).Select(SvlTable.GetGroup).Distinct().Count() > 1;
     }
+  }
+
+  private void LoadSvlTables()
+  {
+    var tables = SvlTable.LoadAll(serviceDatabaseData);
+    this.svlTables = tables.Count == 0 ? null : tables;
+    this.svlByListId.Clear();
+    this.svlRecordById.Clear();
+    foreach (var table in tables)
+    {
+      if (table.ServiceListId == null)
+        throw LoaderException.Fail("Svl: service list id not found");
+      svlByListId[table.ServiceListId] = table;
+      foreach (var rec in table.Records)
+        svlRecordById[(table.ServiceListId, SvlTable.GetRecordId(rec))] = rec;
+    }
+  }
+
+  /// <summary>"service://SERVICE_LIST_GENERAL_SATELLITE/17/1" -> "SERVICE_LIST_GENERAL_SATELLITE/17"</summary>
+  private static string GetServiceListId(XmlElement si)
+  {
+    var uri = si.GetElementString("record_id") ?? "";
+    var start = uri.IndexOf("://", StringComparison.Ordinal) + 3;
+    var end = uri.LastIndexOf('/');
+    return start >= 3 && end > start ? uri.Substring(start, end - start) : "";
   }
   #endregion
 
@@ -297,7 +313,8 @@ public class Serializer : SerializerBase
       chan.ChannelOrTransponder = LookupData.Instance.GetDvbcTransponder(chan.FreqInMhz).ToString();
 
 
-    if (svlRecordById.TryGetValue(recId, out var rec))
+    var listId = GetServiceListId(si);
+    if (svlRecordById.TryGetValue((listId, recId), out var rec))
     {
       chan.ServiceId = SvlTable.GetServiceId(rec);  // Sony XML has no <service_id>, useful for reference lists
       if (splitTvRadioData)                         // the TV numbers TV/radio/data by the group byte,
@@ -333,11 +350,13 @@ public class Serializer : SerializerBase
     list.ReadOnly |= elements.Count == 1 && elements[0].Attributes!["editable", si.NamespaceURI].InnerText == "false";
 
     // validate consistency with svl
-    if (svl != null)
+    if (svlTables != null)
     {
-      if (idx >= svlRecords.Count)
+      if (!svlByListId.TryGetValue(listId, out var table))
+        throw LoaderException.Fail($"No binary data for service list {listId}");
+      if (idx >= table.Records.Count)
         throw LoaderException.Fail($"Text data contains more channels than binary data: >={idx}");
-      var data = svlRecords[idx];
+      var data = table.Records[idx];
       if (SvlTable.GetRecordId(data) != chan.RecordIndex)
         throw LoaderException.Fail($"Inconsistent record id in text and binary data ({chan.RecordIndex} vs {SvlTable.GetRecordId(data)})");
       if (SvlTable.GetProgramNr(data) != chan.OldProgramNr)
@@ -365,7 +384,7 @@ public class Serializer : SerializerBase
   #region Save()
   public override void Save()
   {
-    if (this.svl != null)
+    if (this.svlTables != null)
       UpdateSvlAndXml();
     else
       UpdateXmlOnly();
@@ -452,8 +471,8 @@ public class Serializer : SerializerBase
     // 1) new numbers into the binary records (adjusts the per-record hash)
     //    - Map channel -> record by record_id (ch.RecordIndex = record_id from the XML, see ReadChannel),
     //      never by list position: with split TV/radio/data lists, list positions and record positions differ.
-    //    - NewProgramNr == -1 means "no new number" (unsorted channel). Such channels keep their current number;
-    //      if that collides with a new number, svl.Save() fails with the conflicting record_ids.
+    //    - NewProgramNr == -1 means "no new number" (unsorted channel). Such channels keep their current number.
+    //      Duplicate numbers are kept in their order; the TV exports such duplicates itself.
     //      Normally ChanSort appends unsorted channels before saving (DeleteMode.NotSupported).
     //    - Numbers must be unique per group (TV / radio / data = per list when splitTvRadioData is set).
     //      The same number may exist once per group: ChanSort's DVB-C test file numbers each group from 1,
@@ -463,7 +482,7 @@ public class Serializer : SerializerBase
     {
       foreach (var chan in list.Channels)
       {
-        if (chan is not Channel ch || ch.IsProxy || !svlRecordById.TryGetValue((int)ch.RecordIndex, out var rec))
+        if (chan is not Channel ch || ch.IsProxy || !svlRecordById.TryGetValue((GetServiceListId(ch.Xml), (int)ch.RecordIndex), out var rec))
           continue;
         if (ch.NewProgramNr < 1)
           continue;
@@ -473,31 +492,38 @@ public class Serializer : SerializerBase
       }
     }
 
-    // 2) sort, recompress, fix lengths and checksums
-    var order = svl.Save(out var serviceDatabase);
+    // 2) sort, recompress, fix lengths and checksums (all tables of all service lists)
+    var orders = SvlTable.SaveAll(serviceDatabaseData, svlTables, out var serviceDatabase);
 
-    // 3) reorder <service_info> elements to match the binary record order
-    var byId = new Dictionary<int, XmlElement>();
-    XmlElement parent = null;
+    // 3) reorder <service_info> elements of each service list to match the binary record order
+    var byId = new Dictionary<(string, int), XmlElement>();
     foreach (var list in this.DataRoot.ChannelLists)
     {
       foreach (var chan in list.Channels)
       {
         if (chan is Channel ch && !ch.IsProxy)
-        {
-          byId[(int)ch.RecordIndex] = ch.Xml;
-          parent ??= (XmlElement)ch.Xml.ParentNode;
-        }
+          byId[(GetServiceListId(ch.Xml), (int)ch.RecordIndex)] = ch.Xml;
       }
     }
 
-    foreach (var el in byId.Values)
-      parent!.RemoveChild(el);
-    foreach (var id in order)
-      parent!.AppendChild(byId[id]);
+    foreach (var table in svlTables)
+    {
+      var order = orders[table];
+      if (order.Count == 0)
+        continue;
+      var parent = (XmlElement)byId[(table.ServiceListId, order[0])].ParentNode;
+      foreach (var id in order)
+        parent!.RemoveChild(byId[(table.ServiceListId, id)]);
+      foreach (var id in order)
+        parent!.AppendChild(byId[(table.ServiceListId, id)]);
+    }
 
     // 4) Base64 like Java's MIME encoder: 76 chars per line, "\n", trailing "\n"
     serviceDatabaseNode.InnerText = Convert.ToBase64String(serviceDatabase, Base64FormattingOptions.InsertLineBreaks).Replace("\r\n", "\n") + "\n";
+
+    // 5) reload the tables: after SaveAll() the offsets of all but the last table are outdated
+    this.serviceDatabaseData = serviceDatabase;
+    this.LoadSvlTables();
   }
   #endregion
 
@@ -513,18 +539,18 @@ public class Serializer : SerializerBase
       File.WriteAllBytes(this.FileName + "_scan.bin", this.scanData);
 
 
-    if (this.svl == null)
+    if (this.svlTables == null)
       return;
 
     using (var file = File.Create(baseName + "_service_records.bin"))
     {
-      foreach (var rec in svl.Records)
+      foreach (var rec in svlTables.SelectMany(t => t.Records))
         file.Write(rec, 0, rec.Length);
     }
 
     using (var file = new StreamWriter(baseName + "_names.txt"))
     {
-      foreach (var name in this.svl.Names)
+      foreach (var name in this.svlTables.SelectMany(t => t.Names))
         file.WriteLine(name == null || name.Length < 2 ? null : Encoding.UTF8.GetString(name, 2, name.Length - 2)); // first 2 bytes are the length as u16-BE
     }
   }
