@@ -96,7 +96,7 @@ namespace ChanSort.Loader.Philips
     A separate Loader module is used for this file to keep data in-sync.
 
    */
-  class XmlSerializer : SerializerBase
+  public class XmlSerializer : SerializerBase
   {
     private readonly ChannelList analogChannels = new ChannelList(SignalSource.AnalogCT, "Analog C/T");
     private readonly ChannelList dvbtChannels = new ChannelList(SignalSource.DvbT, "DVB-T");
@@ -112,6 +112,7 @@ namespace ChanSort.Loader.Philips
     private IniFile.Section iniMapSection;
     private string polarizationValueForHorizontal = "1";
     private MediaTek.Serializer mtkSerializer;
+    public bool DecodeMediaTekSvl { get; set; } = true; // set to false by the PhilipsXmlStatsCollector
 
     #region ctor()
     public XmlSerializer(string inputFile) : base(inputFile)
@@ -710,6 +711,7 @@ namespace ChanSort.Loader.Philips
         return;
       
       this.mtkSerializer = new Serializer(path);
+      this.mtkSerializer.DecodeSvl = this.DecodeMediaTekSvl;
       this.mtkSerializer.Load();
       foreach (var list1 in this.DataRoot.ChannelLists)
       {

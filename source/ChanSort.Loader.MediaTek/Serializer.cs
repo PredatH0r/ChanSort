@@ -59,6 +59,7 @@ public class Serializer : SerializerBase
   private bool usesLcn;
   private byte[] scanData;
   public readonly Dictionary<string, string> ScanParameters = new();
+  public bool DecodeSvl { get; set; } = true; // used with StatsCollector tools to ignore errors in the binary data
 
   private List<SvlTable> svlTables; // one per service list (e.g. satellite + terrestrial), null if there is no binary data
   private readonly Dictionary<string, SvlTable> svlByListId = new();
@@ -195,6 +196,8 @@ public class Serializer : SerializerBase
   #region ReadServiceDatabase()
   private void ReadServiceDatabase(XmlNode xmlNode)
   {
+    if (!this.DecodeSvl)
+      return;
     this.serviceDatabaseNode = (XmlElement)xmlNode;
     this.serviceDatabaseData = Convert.FromBase64String(xmlNode.InnerText);
 

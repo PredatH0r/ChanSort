@@ -2,11 +2,15 @@
 ===================
 
 2026-09-30
+- TCL \*.db lists: fixed satellite information not showing in UI
+- added support for .sdx JSON files (e.g. Anadol Izybox 4K receiver)
+
+2026-09-29 (pre-release)
 - Sony Bravia 7/8: improved support for lists with multiple input sources (sat + cable/antenna)
 - added support for DVBViewer .ini channel lists
 - added support for chmax .chl channel list format
 
-2026-09-29
+2026-09-29 (test-release)
 - Sony Bravia 7/8: now also updating the channel information inside the binary data of the XML file
 - added "Settings / Developer Mode" in the UI (which developers can query via SerializerBase.DeveloperMode)
 

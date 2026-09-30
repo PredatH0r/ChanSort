@@ -9,7 +9,7 @@
   <ItemGroup>
     <None Include="ChecksumFinder.cs" />
     <None Include="MediaTekStatsCollector.cs" />
-    <None Include="PhilipsXmlStatsCollector.cs" />
+    <None Include="PanasonicStatsCollector.cs" />
     <None Include="TechnisatDecrypt.cs" />
     <None Include="WebOs5StatsCollector.cs" />
   </ItemGroup>
@@ -29,7 +29,7 @@
   <ItemGroup>
     <Compile Remove="ChecksumFinder.cs" />
     <Compile Remove="MediaTekStatsCollector.cs" />
-    <Compile Remove="PhilipsXmlStatsCollector.cs" />
+    <Compile Remove="PanasonicStatsCollector.cs" />
     <Compile Remove="TechnisatDecrypt.cs" />
     <Compile Remove="WebOs5StatsCollector.cs" />
   </ItemGroup>
