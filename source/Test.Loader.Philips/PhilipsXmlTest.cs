@@ -36,6 +36,16 @@ namespace Test.Loader.Philips
     }
     #endregion
 
+    #region TestChannelMap125FormatCableChannelsAddedToCorrectLists
+    [TestMethod]
+    public void TestChannelMap125FormatCableChannelsAddedToCorrectLists()
+    {
+      // format 125 also contains a MtkChannelList.xml with MultiBank=COMMON, which must be loaded as one list per source
+      var file = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles\\ChannelMap_125") + "\\ChannelList\\chanLst.bin";
+      this.TestChannelsAddedToCorrectLists(file, SignalSource.DvbC, 382, 236, 143);
+    }
+    #endregion
+
 
     #region TestChannelsAddedToCorrectList
     private void TestChannelsAddedToCorrectLists(string filePath, SignalSource signalSource, int expectedTotal, int expectedTv, int expectedRadio)
@@ -107,6 +117,15 @@ namespace Test.Loader.Philips
     public void TestChannelAndFavListEditing_100()
     {
       var tempFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles\\ChannelMap_100\\ChannelList") + "\\chanLst.bin";
+      RoundtripTest.TestChannelAndFavListEditing(tempFile, new PhilipsPlugin());
+    }
+    #endregion
+
+    #region TestChannelAndFavListEditing_125
+    [TestMethod]
+    public void TestChannelAndFavListEditing_125()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles\\ChannelMap_125") + "\\ChannelList\\chanLst.bin";
       RoundtripTest.TestChannelAndFavListEditing(tempFile, new PhilipsPlugin());
     }
     #endregion

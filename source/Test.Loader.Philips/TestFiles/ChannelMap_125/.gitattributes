@@ -1,0 +1,2 @@
+# keep the original files byte-identical (mixed LF/CRLF line endings, MtkChannelList.xml is validated against binary data)
+* -text

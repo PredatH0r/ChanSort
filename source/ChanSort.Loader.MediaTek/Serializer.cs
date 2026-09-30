@@ -205,7 +205,12 @@ public class Serializer : SerializerBase
     if (this.svlTables != null)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.None; // names live in the binary name pool, untested
-      this.splitTvRadioData = svlTables.SelectMany(t => t.Records).Select(SvlTable.GetGroup).Distinct().Count() > 1;
+      // Philips exports MultiBank=COMMON and numbers TV/radio/data in one range, its XmlSerializer expects a single list per source even though the records have different groups.
+      // MultiBank alone isn't reliable, so COMMON is only trusted when no program number is used by more than one group
+      var isCommon = this.ScanParameters.TryGetValue("MultiBank", out var multiBank) && multiBank == "COMMON"
+        && svlTables.All(t => t.Records.Where(r => SvlTable.GetProgramNr(r) > 0).GroupBy(SvlTable.GetProgramNr).All(g => g.Select(SvlTable.GetGroup).Distinct().Count() == 1));
+      if (!isCommon)
+        this.splitTvRadioData = svlTables.SelectMany(t => t.Records).Select(SvlTable.GetGroup).Distinct().Count() > 1;
     }
   }
 
