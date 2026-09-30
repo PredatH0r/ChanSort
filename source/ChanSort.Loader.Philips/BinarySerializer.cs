@@ -1114,6 +1114,7 @@ namespace ChanSort.Loader.Philips
       foreach (var table in tables)
       {
         // not all files contain an AnalogTable table
+        cmd.Parameters.Clear();
         cmd.CommandText = $"select count(1) from sqlite_master where type='table' and name='{table}'";
         if ((long)cmd.ExecuteScalar() == 0)
           continue;
@@ -1121,9 +1122,11 @@ namespace ChanSort.Loader.Philips
         cmd.CommandText = $"update {table} set PresetNumber = @prNum where Dbindex = @dbindex";
         cmd.Parameters.Add("@prNum", SqliteType.Text);
         cmd.Parameters.Add("@dbindex", SqliteType.Integer);
+        var isAnalogTable = table == "AnalogTable";
         foreach(var channel in list.Channels)
         {
-          if (!(channel is Channel ch) || ch.Map30ChannelMapsDbindex < 0)
+          // Dbindex values of AnalogTable and DigSrvTable are independent, so each channel must only update the table it was loaded from
+          if (!(channel is Channel ch) || ch.Map30ChannelMapsDbindex < 0 || ((ch.SignalSource & SignalSource.Analog) != 0) != isAnalogTable)
             continue;
           cmd.Parameters["@dbindex"].Value = ch.Map30ChannelMapsDbindex;
           cmd.Parameters["@prNum"].Value = ch.NewProgramNr.ToString();

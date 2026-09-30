@@ -1,0 +1,3 @@
+# keep the original binary files byte-identical
+# (tv.db was reduced from 8 MB: channels.logo set to NULL and table watched_programs emptied, both are not used by ChanSort)
+* -text
