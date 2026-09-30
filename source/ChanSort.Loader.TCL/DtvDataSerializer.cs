@@ -270,7 +270,7 @@ namespace ChanSort.Loader.TCL
             eastWest = "W";
           }
 
-          sat.OrbitalPosition = $"{pos / 100}.{pos % 100}{eastWest}";
+          sat.OrbitalPosition = $"{pos / 100}.{pos % 100 / 10}{eastWest}";
         }
 
         sat.Name = r.GetString(1);
@@ -283,7 +283,8 @@ namespace ChanSort.Loader.TCL
     private void ReadTransponders(SqliteCommand cmd)
     {
       //cmd.CommandText = "select TransponderId, SateliteId, Freq, Polarisation, SymbolRate from TransponderInfoTbl";
-      cmd.CommandText = "select u16MuxTblID, SatTblID, Freq, null, SymbolRate, TransportStreamId, OriginalNetworkId from MuxInfoTbl";
+      // SatTblID is always NULL in all known sample files, SatId references SateliteInfoTbl.SateliteID (0 for non-satellite muxes)
+      cmd.CommandText = "select u16MuxTblID, SatId, Freq, null, SymbolRate, TransportStreamId, OriginalNetworkId from MuxInfoTbl";
       using var r = cmd.ExecuteReader();
       while (r.Read())
       {
@@ -313,7 +314,8 @@ select
   p.u32Index, p.ProgNum, p.ServiceName, p.ShortServiceName, p.ServiceID, p.VideoType, p.PCRPID, p.VideoPID, p.unlockedFlag, p.LCN, p.LCNAssignmentType, p.EditFlag,
   m.OriginalNetworkId, m.TransportStreamId, m.Freq, m.SymbolRate,
   c.RouteName,
-  a.RealServiceType, a.IsScramble, a.VisibleFlag, a.IsDelete, a.IsSkipped, a.IsLock, a.IsFavor, a.IsRename, a.IsMove, a.NumSelectFlag, a.FavChannelNo
+  a.RealServiceType, a.IsScramble, a.VisibleFlag, a.IsDelete, a.IsSkipped, a.IsLock, a.IsFavor, a.IsRename, a.IsMove, a.NumSelectFlag, a.FavChannelNo,
+  m.u16MuxTblID
 from ProgramInfoTbl p 
 left outer join AtrributeTbl a on a.u32index=p.u32index
 left outer join MuxInfoTbl m on m.u16MuxTblID=p.u16MuxTblID
@@ -345,6 +347,7 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
         var ixD = 12;
         var ixC = ixD + 4;
         var ixA = ixC + 1;
+        var ixM = ixA + 11;
         if (!r.IsDBNull(ixD))
         {
           channel.OriginalNetworkId = r.GetInt32(ixD + 0);
@@ -353,6 +356,17 @@ left outer join CurCIOPSerType c on c.u8DtvRoute=p.u8DtvRoute
           channel.SymbolRate = r.GetInt32(ixD + 3);
           if (channel.FreqInMhz > 10000)
             channel.FreqInMhz = (int) channel.FreqInMhz;
+        }
+
+        if (!r.IsDBNull(ixM))
+        {
+          channel.Transponder = this.DataRoot.Transponder.TryGet(r.GetInt32(ixM));
+          var sat = channel.Transponder?.Satellite;
+          if (sat != null)
+          {
+            channel.Satellite = sat.Name;
+            channel.SatPosition = sat.OrbitalPosition;
+          }
         }
 
         // get signal source from CurCIOPSerType table
