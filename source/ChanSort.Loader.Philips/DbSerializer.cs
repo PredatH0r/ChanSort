@@ -133,12 +133,12 @@ namespace ChanSort.Loader.Philips
             break;
           case "flash_dtvinfo_s_fta":
             if (dvbsFtaChannels.Count == 0 && dvbsPkgChannels.Count > 0)
-              LoadFlash(file, lowercaseFileName, dvbsPkgChannels, pkgChannelRecordLength); // weird case where _pkg.db must be combined with FLASH_FTA
+              LoadFlash(file, lowercaseFileName, dvbsPkgChannels, ftaChannelRecordLength); // weird case where _pkg.db must be combined with FLASH_FTA
             else
               LoadFlash(file, lowercaseFileName, dvbsFtaChannels, ftaChannelRecordLength);
             break;
           case "flash_dtvinfo_s_pkg":
-            if (dvbsPkgChannels.Count > 0)
+            if (dvbsPkgChannels.Count > 0 && dvbsFtaChannels.Count != 0) // don't load again in the "weird case"
               LoadFlash(file, lowercaseFileName, dvbsPkgChannels, pkgChannelRecordLength);
             break;
         }
