@@ -1,0 +1,2 @@
+# keep the original LF line endings, the file header contains the size of the file content in bytes
+*.sdx -text
