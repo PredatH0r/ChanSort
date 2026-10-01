@@ -38,7 +38,7 @@ internal class SvlTable
    * +4  u16 record_id (same as in the XML record_id)
    * +6  u16 program number << 2 (lower 2 bits must be kept)
    * +9  u8  group: 0x81 = TV, 0x82 = radio, 0x83 = data
-   * +22 u32 record hash (x31 hash, adjusted by delta(+6) * 31^6)
+   * +22 u32 record hashcode (x31 hash over name, +6..+9, type, +30..+31, service id; see CalcHashcode)
    * +26 u16 service id
    * +42 u16 1-based index into the name pool (0 = no name)
    *
@@ -47,7 +47,6 @@ internal class SvlTable
 
   public const int RecordSize = 504;
   private const int ChunkSize = 32768 / RecordSize * RecordSize;
-  private const uint HashFactor = 887503681; // 31^6
 
   private static readonly byte[] SvlTableName = Encoding.ASCII.GetBytes("fs_Svl_10"); // gfs_Svl_102, ffs_Svl_101
   private static readonly byte[] CdbMagic = [0x0C, 0xDB, 0x0C, 0xDB];
@@ -68,6 +67,9 @@ internal class SvlTable
 
   public readonly List<byte[]> Records = new();
   public readonly List<byte[]> Names = new(); // raw name pool entry per record, null = no name
+  // Whether the stored hashcode of each record follows CalcHashcode(). Only those are updated on save;
+  // see CalcHashcode() for why some records cannot be recomputed.
+  private readonly List<bool> hashcodeKnown = new();
 
   #region TryLoad(), LoadAll()
   /// <summary>
@@ -150,7 +152,9 @@ internal class SvlTable
       Array.Copy(svl, i * RecordSize, rec, 0, RecordSize);
       this.Records.Add(rec);
       var nameIdx = rec.GetInt16(42, false);
-      this.Names.Add(nameIdx == 0 ? null : pool[nameIdx - 1]);
+      var name = nameIdx == 0 ? null : pool[nameIdx - 1];
+      this.Names.Add(name);
+      this.hashcodeKnown.Add(CalcHashcode(rec, name) == (uint)rec.GetInt32(22, false));
     }
     return true;
   }
@@ -214,7 +218,35 @@ internal class SvlTable
   public static int GetServiceId(byte[] rec) => rec.GetInt16(26, false) & 0xFFFF;
 
   /// <summary>
-  /// Sets the program number (keeping the lower 2 bits) and adjusts the record hash at +22 by delta(raw) * 31^6.
+  /// The hashcode stored at +22: a Java-style 31-hash over the service name, the u32 at +6 (number and group),
+  /// the broadcast type, the u16 at +30 and the service id, with every multi-byte value in little endian.
+  /// It reproduces the stored value for 15821 of the 16986 records of 18 Sony and Philips exports, and for all
+  /// records of five of those files. The rest are pay-TV services whose hash covers a second, short name that
+  /// the export does not contain, so for those the value cannot be recomputed from the file.
+  /// </summary>
+  /// <param name="namePoolEntry">raw name pool entry (u16 length + bytes) of the record, null = no name</param>
+  public static uint CalcHashcode(byte[] rec, byte[] namePoolEntry)
+  {
+    uint h = 0;
+    if (namePoolEntry != null)
+    {
+      var len = Math.Min(namePoolEntry.Length - 2, 65);
+      for (int i = 0; i < len; i++)
+        h = unchecked(h * 31 + namePoolEntry[2 + i]);
+    }
+    for (int i = 9; i >= 6; i--)                    // u32 at +6, little endian
+      h = unchecked(h * 31 + rec[i]);
+    h = unchecked(h * 31 + 2);                      // broadcast type: DVB
+    h = unchecked(h * 31 + rec[31]);                // u16 at +30, little endian
+    h = unchecked(h * 31 + rec[30]);
+    h = unchecked(h * 31 + rec[27]);                // service id at +26, little endian
+    h = unchecked(h * 31 + rec[26]);
+    return h;
+  }
+
+  /// <summary>
+  /// Sets the program number, keeping the lower 2 bits. The hashcode at +22 is not touched here; Save() updates
+  /// it for every record whose stored value follows CalcHashcode().
   /// Only valid numbers 1..16383 are accepted; ChanSort's -1 for "no new number" must be resolved by the caller.
   /// </summary>
   public static void SetProgramNr(byte[] rec, int nr)
@@ -222,11 +254,7 @@ internal class SvlTable
     if (nr < 1 || nr > 0x3FFF)
       throw LoaderException.Fail($"Svl: invalid program number {nr} for record_id {GetRecordId(rec)}");
     var oldRaw = rec.GetInt16(6, false) & 0xFFFF;
-    var newRaw = (nr << 2) | (oldRaw & 3);
-    rec.SetInt16(6, newRaw, false);
-    var hash = (uint)rec.GetInt32(22, false);
-    hash = unchecked(hash + (uint)(newRaw - oldRaw) * HashFactor);
-    rec.SetInt32(22, (int)hash, false);
+    rec.SetInt16(6, (nr << 2) | (oldRaw & 3), false);
   }
   #endregion
 
@@ -283,6 +311,10 @@ internal class SvlTable
         poolEntries.Add(Names[i]);
         rec.SetInt16(42, poolEntries.Count, false);
       }
+      // The hashcode covers the number, so it has to follow any renumbering. The name pool index does not
+      // enter it, which is why re-sorting alone leaves it unchanged.
+      if (this.hashcodeKnown[i])
+        rec.SetInt32(22, (int)CalcHashcode(rec, Names[i]), false);
       recData.Write(rec, 0, RecordSize);
     }
 
@@ -363,7 +395,10 @@ internal class SvlTable
   private static void WriteChunk(Stream chain, byte flag, byte[] raw, int off, int len)
   {
     var comp = new MemoryStream();
-    // any valid raw deflate stream works because X covers the written bytes; SmallestSize (zlib level 9) reproduces the TV's output
+    // Any valid raw deflate stream works, because X is computed over the bytes actually written.
+    // Do not expect the TV's own bytes: rebuilding an unmodified export is byte-identical on some
+    // platforms and not on others (macOS .NET 10 yes, Windows ARM64 .NET 10.0.401 no), and zlib at
+    // level 9 reproduces only part of the chunks as well. Compare decompressed data, not files.
 #if NETFRAMEWORK
     using (var deflate = new DeflateStream(comp, CompressionLevel.Optimal, true))
 #else
