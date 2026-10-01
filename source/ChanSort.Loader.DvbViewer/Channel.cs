@@ -20,6 +20,11 @@ namespace ChanSort.Loader.DvbViewer
     public int Frequency { get; set; }
     public int TunerType { get; set; }
 
+    /// <summary>
+    /// "LCN" value from the file, 0 if missing
+    /// </summary>
+    public int Lcn { get; set; }
+
     public Channel(SignalSource source, int index, int oldProgNr, string name, List<string> lines) : base(source, index, oldProgNr, name)
     {
       this.Lines = lines;

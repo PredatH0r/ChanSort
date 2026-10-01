@@ -10,9 +10,13 @@ namespace ChanSort.Loader.DvbViewer
 {
   /*
    * This serializer reads channel lists exported by DVBViewer as .ini file.
-   * Each channel is stored in a [ChannelN] section with N being the 0-based position in the list. There is no separate channel number.
-   * Additional audio tracks of a service are stored as separate [ChannelN] entries (flag 128) right after the main entry of the service.
-   * The loader keeps all key=value lines untouched and only renumbers the sections and updates the Name when saving.
+   * Each channel is stored in a [ChannelN] section with N being the 0-based position in the list.
+   * The channel number is the optional "LCN" value. Without it DVBViewer doesn't assign a number at all, so number keys can't be used.
+   * Additional audio tracks of a service are stored as separate [ChannelN] entries (flag 128) right after the main entry of the service
+   * and share its LCN.
+   * When loading, channels without LCN are numbered in file order after the highest LCN (or from 1 when the file has no LCN at all).
+   * The loader keeps all key=value lines untouched and only renumbers the sections and updates Name and LCN when saving.
+   * An LCN line is added after the Name line to all sections which don't have one yet.
    */
   class Serializer : SerializerBase
   {
@@ -25,6 +29,7 @@ namespace ChanSort.Loader.DvbViewer
     private const int FlagAdditionalAudioTrack = 0x80;
 
     private readonly ChannelList allChannels = new ChannelList(0, "All");
+    private readonly List<Channel> mainChannels = new List<Channel>();
 
     private Encoding overrideEncoding;
     private string newLine = "\r\n";
@@ -95,6 +100,24 @@ namespace ChanSort.Loader.DvbViewer
       if (lines == null)
         throw LoaderException.TryNext("Not a DVBViewer channel list: no [Channel0] section found");
       this.ReadChannel(sectionIndex - 1, lines);
+
+      this.AssignProgramNumbers();
+    }
+    #endregion
+
+    #region AssignProgramNumbers()
+    private void AssignProgramNumbers()
+    {
+      // numbers are assigned after reading all sections, because channels without LCN are appended after the highest LCN
+      int nextNr = 1;
+      foreach (var chan in this.mainChannels)
+        nextNr = Math.Max(nextNr, chan.Lcn + 1);
+
+      foreach (var chan in this.mainChannels)
+      {
+        chan.OldProgramNr = chan.Lcn > 0 ? chan.Lcn : nextNr++;
+        this.DataRoot.AddChannel(this.allChannels, chan);
+      }
     }
     #endregion
 
@@ -147,6 +170,7 @@ namespace ChanSort.Loader.DvbViewer
       chan.PcrPid = this.ParseInt(Get("PCRPID"));
       chan.SymbolRate = this.ParseInt(Get("Symbolrate"));
       chan.Frequency = this.ParseInt(Get("Frequency"));
+      chan.Lcn = Math.Max(0, this.ParseInt(Get("LCN")));
 
       if (tunerType == 1)
       {
@@ -168,9 +192,9 @@ namespace ChanSort.Loader.DvbViewer
       }
 
       // attach additional audio tracks to the main entry of the service
-      if ((flags & FlagAdditionalAudioTrack) != 0 && this.allChannels.Channels.Count > 0)
+      if ((flags & FlagAdditionalAudioTrack) != 0 && this.mainChannels.Count > 0)
       {
-        var main = (Channel)this.allChannels.Channels[this.allChannels.Channels.Count - 1];
+        var main = this.mainChannels[this.mainChannels.Count - 1];
         if (main.TunerType == chan.TunerType && main.Frequency == chan.Frequency && main.OriginalNetworkId == chan.OriginalNetworkId
             && main.TransportStreamId == chan.TransportStreamId && main.ServiceId == chan.ServiceId)
         {
@@ -180,8 +204,7 @@ namespace ChanSort.Loader.DvbViewer
         }
       }
 
-      chan.OldProgramNr = this.allChannels.Channels.Count + 1;
-      this.DataRoot.AddChannel(this.allChannels, chan);
+      this.mainChannels.Add(chan);
     }
     #endregion
 
@@ -204,19 +227,26 @@ namespace ChanSort.Loader.DvbViewer
         if (channel is not Channel chan || channel.IsDeleted)
           continue;
 
-        WriteSection(file, index++, chan);
+        WriteSection(file, index++, chan, chan.NewProgramNr);
         foreach (var track in chan.AudioTracks)
-          WriteSection(file, index++, track);
+          WriteSection(file, index++, track, chan.NewProgramNr);
       }
     }
 
-    private void WriteSection(StreamWriter file, int index, Channel chan)
+    private void WriteSection(StreamWriter file, int index, Channel chan, int lcn)
     {
       file.WriteLine("[Channel" + index + "]");
+      var hasLcn = chan.Lines.Exists(line => line.StartsWith("LCN=", StringComparison.OrdinalIgnoreCase));
       foreach (var line in chan.Lines)
       {
         if (line.StartsWith("Name=", StringComparison.OrdinalIgnoreCase))
+        {
           file.WriteLine("Name=" + chan.Name);
+          if (!hasLcn)
+            file.WriteLine("LCN=" + lcn);
+        }
+        else if (line.StartsWith("LCN=", StringComparison.OrdinalIgnoreCase))
+          file.WriteLine("LCN=" + lcn);
         else
           file.WriteLine(line);
       }
