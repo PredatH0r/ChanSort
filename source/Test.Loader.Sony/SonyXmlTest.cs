@@ -1,5 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using ChanSort.Api;
+using ChanSort.Loader.MediaTek;
 using ChanSort.Loader.Sony;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -60,6 +64,55 @@ namespace Test.Loader.Sony
       this.TestChannelsAddedToCorrectLists("mediatek-sdb.xml", SignalSource.DvbC | SignalSource.Tv, 237, 237, 0);
       this.TestChannelsAddedToCorrectLists("mediatek-sdb.xml", SignalSource.DvbC | SignalSource.Radio, 138, 0, 138);
       this.TestChannelsAddedToCorrectLists("mediatek-sdb.xml", SignalSource.DvbC | SignalSource.Data, 0, 0, 0);
+    }
+
+    [TestMethod]
+    public void TestMediatekHashcodeFollowsRenumbering()
+    {
+      // The hashcode at record offset +22 covers the program number, so it must follow a renumbering.
+      // Moving channels to numbers above 64 changes the upper byte of the number field, which the
+      // previous delta rule did not account for.
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\mediatek_sdb-cable.xml");
+      var plugin = new SonyPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      var validBefore = CountValidHashcodes(tempFile, out var recordsBefore);
+      Assert.IsTrue(validBefore > 0, "no record with a computable hashcode");
+
+      var tv = data.GetChannelList(SignalSource.DvbC | SignalSource.Tv);
+      var nr = tv.Channels.Max(ch => ch.OldProgramNr) + 1;
+      Assert.IsTrue(nr > 64, "the test file does not reach numbers above 64");
+      foreach (var ch in tv.Channels.Where(ch => ch.OldProgramNr > 0).OrderBy(ch => ch.OldProgramNr))
+        ch.NewProgramNr = nr++;
+      ser.Save();
+
+      var validAfter = CountValidHashcodes(tempFile, out var recordsAfter);
+      Assert.AreEqual(recordsBefore, recordsAfter);
+      Assert.AreEqual(validBefore, validAfter, "the hashcode of some records does not match after renumbering");
+    }
+
+    /// <summary>Number of Svl records whose stored hashcode is reproduced by SvlTable.CalcHashcode().</summary>
+    private static int CountValidHashcodes(string sdbXmlPath, out int records)
+    {
+      var xml = File.ReadAllText(sdbXmlPath);
+      var base64 = Regex.Match(xml, "<service_database>(.*?)</service_database>", RegexOptions.Singleline).Groups[1].Value;
+      var tables = SvlTable.LoadAll(Convert.FromBase64String(base64));
+      var valid = 0;
+      records = 0;
+      foreach (var table in tables)
+      {
+        for (int i = 0; i < table.Records.Count; i++)
+        {
+          records++;
+          if (SvlTable.CalcHashcode(table.Records[i], table.Names[i]) == (uint)table.Records[i].GetInt32(22, false))
+            valid++;
+        }
+      }
+      return valid;
     }
     #endregion
 
