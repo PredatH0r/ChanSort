@@ -60,6 +60,7 @@ public class Serializer : SerializerBase
   private byte[] scanData;
   public readonly Dictionary<string, string> ScanParameters = new();
   public bool DecodeSvl { get; set; } = true; // used with StatsCollector tools to ignore errors in the binary data
+  public bool CanHideViaSvl { get; set; } // set by the loaders for which hiding through the binary table is confirmed on a TV (Sony)
 
   private List<SvlTable> svlTables; // one per service list (e.g. satellite + terrestrial), null if there is no binary data
   private readonly Dictionary<string, SvlTable> svlByListId = new();
@@ -75,7 +76,7 @@ public class Serializer : SerializerBase
     this.Features.FavoritesMode = FavoritesMode.None;
     this.Features.CanSkipChannels = false;
     this.Features.CanLockChannels = true;
-    this.Features.CanHideChannels = false; // unclear how "visible_service" works (3 for normal channels, 1 for hidden?)
+    this.Features.CanHideChannels = false; // enabled in Load() when CanHideViaSvl is set and the file has a binary table
     this.Features.CanSaveAs = true;
   }
   #endregion
@@ -205,6 +206,7 @@ public class Serializer : SerializerBase
     if (this.svlTables != null)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.None; // names live in the binary name pool, untested
+      this.Features.CanHideChannels = this.CanHideViaSvl; // the TV takes the hidden state from the binary record, not from the XML
       // Philips exports MultiBank=COMMON and numbers TV/radio/data in one range, its XmlSerializer expects a single list per source even though the records have different groups.
       // MultiBank alone isn't reliable, so COMMON is only trusted when no program number is used by more than one group
       var isCommon = this.ScanParameters.TryGetValue("MultiBank", out var multiBank) && multiBank == "COMMON"
@@ -325,6 +327,7 @@ public class Serializer : SerializerBase
     if (svlRecordById.TryGetValue((listId, recId), out var rec))
     {
       chan.ServiceId = SvlTable.GetServiceId(rec);  // Sony XML has no <service_id>, useful for reference lists
+      chan.Hidden = SvlTable.GetHidden(rec);        // the TV uses the binary flag; visible_service can be stale in files edited by older tools
       if (splitTvRadioData)                         // the TV numbers TV/radio/data by the group byte,
       {                                             // not by sdt_service_type (e.g. types 4, 27, 32 are TV)
         ss |= SvlTable.GetGroup(rec) switch 
@@ -476,7 +479,7 @@ public class Serializer : SerializerBase
   #region UpdateSvlAndXml()
   private void UpdateSvlAndXml()
   {
-    // 1) new numbers into the binary records (adjusts the per-record hash)
+    // 1) new numbers and the hidden flag into the binary records (SvlTable.Save() updates the hashcodes)
     //    - Map channel -> record by record_id (ch.RecordIndex = record_id from the XML, see ReadChannel),
     //      never by list position: with split TV/radio/data lists, list positions and record positions differ.
     //    - NewProgramNr == -1 means "no new number" (unsorted channel). Such channels keep their current number.
@@ -492,6 +495,12 @@ public class Serializer : SerializerBase
       {
         if (chan is not Channel ch || ch.IsProxy || !svlRecordById.TryGetValue((GetServiceListId(ch.Xml), (int)ch.RecordIndex), out var rec))
           continue;
+        if (this.Features.CanHideChannels && SvlTable.SetHidden(rec, ch.Hidden))
+        {
+          var visibleService = ch.Xml["visible_service"];
+          if (visibleService != null)
+            visibleService.InnerText = ch.Hidden ? "1" : "3"; // the TV writes the same values when it exports
+        }
         if (ch.NewProgramNr < 1)
           continue;
         SvlTable.SetProgramNr(rec, ch.NewProgramNr);

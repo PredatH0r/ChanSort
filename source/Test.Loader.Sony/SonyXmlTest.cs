@@ -95,6 +95,118 @@ namespace Test.Loader.Sony
       Assert.AreEqual(validBefore, validAfter, "the hashcode of some records does not match after renumbering");
     }
 
+    [TestMethod]
+    public void TestMediatekHiddenIsReadFromBinaryTable()
+    {
+      // The TV takes the hidden state from byte +13 of the binary record. Files that were edited by older tools
+      // can have a different visible_service in the XML, so make the XML claim that nothing is hidden.
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\mediatek-sdb.xml");
+      var xml = File.ReadAllText(tempFile);
+      Assert.IsTrue(xml.Contains("<visible_service>1</visible_service>"));
+      File.WriteAllText(tempFile, xml.Replace("<visible_service>1</visible_service>", "<visible_service>3</visible_service>"));
+
+      var plugin = new SonyPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      Assert.IsTrue(ser.Features.CanHideChannels);
+
+      var tv = ser.DataRoot.GetChannelList(SignalSource.DvbC | SignalSource.Tv);
+      var hidden = tv.Channels.Where(ch => ch.Hidden).Select(ch => ch.Name).OrderBy(n => n, StringComparer.Ordinal).ToList();
+      CollectionAssert.AreEqual(new[] { "Netflix", "Prime Sportsbar", "RTLSport 1", "RTLSport 2" }, hidden);
+    }
+
+    [TestMethod]
+    public void TestMediatekHidingChannel()
+    {
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\mediatek_sdb-cable.xml");
+      var plugin = new SonyPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+      var validHashcodes = CountValidHashcodes(tempFile, out _);
+
+      var tv = data.GetChannelList(SignalSource.DvbC | SignalSource.Tv);
+      var chan = tv.Channels.First(ch => !ch.Hidden && ch.OldProgramNr > 0);
+      var recordId = (int)chan.RecordIndex;
+      var nr = chan.OldProgramNr;
+      Assert.AreEqual((byte)0x0F, GetSvlRecord(tempFile, recordId)[13]);
+
+      chan.Hidden = true;
+      ser.Save();
+
+      // the binary flag is set, the XML mirrors it, and the hashcode does not depend on it
+      Assert.AreEqual((byte)0x09, GetSvlRecord(tempFile, recordId)[13]);
+      Assert.AreEqual("1", GetVisibleService(tempFile, recordId));
+      Assert.AreEqual(validHashcodes, CountValidHashcodes(tempFile, out _));
+
+      // a hidden channel keeps its number
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+      tv = data.GetChannelList(SignalSource.DvbC | SignalSource.Tv);
+      chan = tv.Channels.First(ch => (int)ch.RecordIndex == recordId);
+      Assert.IsTrue(chan.Hidden);
+      Assert.AreEqual(nr, chan.OldProgramNr);
+
+      // and back
+      chan.Hidden = false;
+      ser.Save();
+      Assert.AreEqual((byte)0x0F, GetSvlRecord(tempFile, recordId)[13]);
+      Assert.AreEqual("3", GetVisibleService(tempFile, recordId));
+    }
+
+    [TestMethod]
+    public void TestMediatekUnsortedChannelsAreAppendedAndHidden()
+    {
+      // Deleting is not supported for this format, so "append" is the only way the UI offers to handle a channel
+      // that was removed from the list. ChanSort then gives it the next free number and sets Hidden.
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\mediatek_sdb-cable.xml");
+      var plugin = new SonyPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      var tv = data.GetChannelList(SignalSource.DvbC | SignalSource.Tv);
+      var chan = tv.Channels.First(ch => !ch.Hidden && ch.OldProgramNr > 0);
+      var recordId = (int)chan.RecordIndex;
+      var maxNr = tv.Channels.Max(ch => ch.OldProgramNr);
+
+      chan.NewProgramNr = -1;
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.AppendInOrder);
+      ser.Save();
+
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      tv = data.GetChannelList(SignalSource.DvbC | SignalSource.Tv);
+      chan = tv.Channels.First(ch => (int)ch.RecordIndex == recordId);
+      Assert.AreEqual(maxNr + 1, chan.OldProgramNr);
+      Assert.IsTrue(chan.Hidden);
+      Assert.AreEqual((byte)0x09, GetSvlRecord(tempFile, recordId)[13]);
+    }
+
+    private static byte[] GetSvlRecord(string sdbXmlPath, int recordId)
+    {
+      var xml = File.ReadAllText(sdbXmlPath);
+      var base64 = Regex.Match(xml, "<service_database>(.*?)</service_database>", RegexOptions.Singleline).Groups[1].Value;
+      return SvlTable.LoadAll(Convert.FromBase64String(base64)).SelectMany(t => t.Records).First(r => SvlTable.GetRecordId(r) == recordId);
+    }
+
+    private static string GetVisibleService(string sdbXmlPath, int recordId)
+    {
+      var xml = File.ReadAllText(sdbXmlPath);
+      var serviceInfo = Regex.Matches(xml, "<service_info>.*?</service_info>", RegexOptions.Singleline).Cast<Match>()
+        .First(m => Regex.IsMatch(m.Value, "<record_id>[^<]*/" + recordId + "</record_id>"));
+      return Regex.Match(serviceInfo.Value, "<visible_service>([^<]*)</visible_service>").Groups[1].Value;
+    }
+
     /// <summary>Number of Svl records whose stored hashcode is reproduced by SvlTable.CalcHashcode().</summary>
     private static int CountValidHashcodes(string sdbXmlPath, out int records)
     {
