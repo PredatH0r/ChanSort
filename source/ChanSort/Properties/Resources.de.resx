@@ -312,4 +312,7 @@ Anderfalls ist eine manuelle Eingabe nötig um TV- und Radio-Sendern bestimmte S
   <data name="MainForm_miConvert_MessageHeader" xml:space="preserve">
     <value>Senderliste konvertieren</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Unsortierte Sender am Ende der Liste anhängen und ausblenden</value>
+  </data>
 </root>

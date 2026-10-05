@@ -86,6 +86,13 @@ namespace ChanSort.Api
     }
     #endregion
 
+    #region RemoveChannelList()
+    public void RemoveChannelList(ChannelList channelList)
+    {
+      this.channelLists.Remove(channelList);
+    }
+    #endregion
+
 
     #region GetChannelList()
     public ChannelList GetChannelList(SignalSource searchMask)
@@ -192,7 +199,7 @@ namespace ChanSort.Api
           {
             if (mode == UnsortedChannelMode.Delete)
               appChannel.IsDeleted = true;
-            else // append (hidden if possible)
+            else if (mode == UnsortedChannelMode.AppendAndHide)// append (hidden if possible)
             {
               appChannel.Hidden = true;
               appChannel.Skip = true;
@@ -223,7 +230,7 @@ namespace ChanSort.Api
         return "Z" + channel.RecordIndex.ToString("d5");
 
       // eventually append in old order
-      if (mode == UnsortedChannelMode.AppendInOrder)
+      if (mode == UnsortedChannelMode.Append || mode == UnsortedChannelMode.AppendAndHide)
         return "B" + channel.OldProgramNr.ToString("d5");
 
       // sort alphabetically, with "." and "" on the bottom

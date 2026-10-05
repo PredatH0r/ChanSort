@@ -121,6 +121,6 @@
     <value>Как вы хотите продолжить?</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Выберите действие…</value>
+    <value>Выберите действие...</value>
   </data>
 </root>

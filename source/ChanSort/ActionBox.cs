@@ -47,6 +47,11 @@ namespace ChanSort.Ui
       this.AddAction(text, (object)result, image, isDefault);
     }
 
+    public void AddAction(string text, Enum result, Image image = null, bool isDefault = false)
+    {
+      this.AddAction(text, (object)result, image, isDefault);
+    }
+
     private void AddAction(string text, object result, Image image = null, bool isDefault = false)
     {
       int scaled20 = this.ScaleHelper.ScaleHorizontal(20);
@@ -88,6 +93,12 @@ namespace ChanSort.Ui
     /// Returns the action selected by the user
     /// </summary>
     public int SelectedAction { get; protected set; }
+
+    public T GetSelectedAction<T>() where T : Enum
+    {
+      return (T)Enum.ToObject(typeof(T), this.SelectedAction);
+    }
+
     #endregion
 
     #region OnCreateControl()

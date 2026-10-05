@@ -293,4 +293,7 @@ veya yeni bir kanal taraması yapmadan ürün yazılımını güncelleyin.
 TV'ler genellikle bozuk dosyaları NTFS dosya sistemiyle biçimlendirilmiş USB belleklerle dışa aktarır.
 Lütfen FAT32 ile biçimlendirilmiş bir bellekle aktarmayı deneyin</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Sıralanmamış kanalları listenin sonuna ekle ve gizle</value>
+  </data>
 </root>

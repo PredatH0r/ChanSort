@@ -294,4 +294,7 @@
 Телевизоры нередко экспортируют с ошибками файлы на USB-накопители с файловой системой NTFS.
 Попробуйте выполнить экспорт на USB-флешку, отформатированную в FAT32.</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Добавить неотсортированные каналы в конец списка и скрыть их</value>
+  </data>
 </root>

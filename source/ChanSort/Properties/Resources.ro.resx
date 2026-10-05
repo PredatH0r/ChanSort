@@ -295,4 +295,7 @@ sau actualizări ale firmware-ului fără a efectua o nouă scanare a canalelor.
 Televizorii exportă adesea fișiere corupte pe stick-uri USB formatate cu sistemul de fișiere NTFS.
 Încercați să exportați un stick formatat cu FAT32</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Adaugă canalele nesortate la sfârșitul listei și ascunde-le</value>
+  </data>
 </root>

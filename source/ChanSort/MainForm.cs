@@ -365,8 +365,9 @@ namespace ChanSort.Ui
         this.colShortName.OptionsColumn.AllowEdit = this.currentTvSerializer.Features.AllowShortNameEdit;
         this.UpdateMenu(true);
 
+        // show warnings
         if (this.DataRoot.Warnings.Length > 0 && this.miShowWarningsAfterLoad.Checked)
-          this.BeginInvoke((Action) this.ShowFileInformation);
+          this.BeginInvoke((Action)(() => InfoBox.Show(this, this.DataRoot.Warnings.ToString(), "")));
 
         this.BeginInvoke((Action) this.InitInitialChannelOrder);
       }
@@ -957,20 +958,18 @@ namespace ChanSort.Ui
       if (hasUnsorted)
       {
         var msg = Resources.MainForm_PromptHandlingOfUnsortedChannels_Question;
-        DialogResult res;
-        using (var dlg = new ActionBoxDialog(msg))
-        {
-          dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Append, DialogResult.Yes, dlg.FullList);
-          if (this.currentTvSerializer.Features.DeleteMode != SerializerBase.DeleteMode.NotSupported)
-            dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Delete, DialogResult.No, dlg.Delete);
-          dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
-          res = dlg.ShowDialog(this);
-        }
-
-        if (res == DialogResult.Cancel)
+        using var dlg = new ActionBoxDialog(msg);
+        dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Append, UnsortedChannelMode.Append, dlg.FullList);
+        if (this.currentTvSerializer.Features.CanHideChannels)
+          dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide, UnsortedChannelMode.AppendAndHide, dlg.Discard);
+        if (this.currentTvSerializer.Features.DeleteMode != SerializerBase.DeleteMode.NotSupported)
+          dlg.AddAction(Resources.MainForm_PromptHandlingOfUnsortedChannels_Delete, UnsortedChannelMode.Delete, dlg.Delete);
+          
+        dlg.AddAction(Resources.MainForm_Cancel, DialogResult.Cancel, dlg.Cancel);
+        if (dlg.ShowDialog(this) == DialogResult.Cancel)
           return false;
-        if (res == DialogResult.Yes)
-          mode = UnsortedChannelMode.AppendInOrder;
+
+        mode = dlg.GetSelectedAction<UnsortedChannelMode>();
       }
 
       // ensure unsorted and deleted channels have a valid program number

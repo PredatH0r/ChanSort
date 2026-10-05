@@ -293,4 +293,7 @@ A tipikus ok, ha az USB memóriakártya NTFS fájlrendszerű (próbáljon inkáb
 A tévék gyakran sérült fájlokat exportálnak az NTFS fájlrendszerrel formázott USB-meghajtókra.
 Kérjük, próbáljon meg exportálni egy FAT32 formátumú tárolóra</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>A rendezetlen csatornák hozzáfűzése a lista végéhez és elrejtésük</value>
+  </data>
 </root>

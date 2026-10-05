@@ -285,4 +285,7 @@ lub aktualizacje oprogramowania układowego bez uruchamiania nowego skanowania k
     <value>Plik nie jest prawidłowym archiwum .zip. Telewizory często eksportują uszkodzone pliki do pamięci USB sformatowanej w systemie plików NTFS.
 Spróbuj wyeksportować do pamięci sformatowanej za pomocą FAT32</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Dołącz nieposortowane kanały na końcu listy i ukryj je</value>
+  </data>
 </root>

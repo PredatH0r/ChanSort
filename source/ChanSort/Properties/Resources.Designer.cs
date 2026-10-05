@@ -349,11 +349,22 @@ namespace ChanSort.Ui.Properties {
                 return ResourceManager.GetString("MainForm_PromptHandlingOfUnsortedChannels_Append", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Delete unsorted channels from the list.
+        ///   Looks up a localized string similar to Append unsorted channels the end of the list.
         /// </summary>
-        internal static string MainForm_PromptHandlingOfUnsortedChannels_Delete {
+        internal static string MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide
+        {
+          get
+          {
+            return ResourceManager.GetString("MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide", resourceCulture);
+          }
+        }
+
+    /// <summary>
+    ///   Looks up a localized string similar to Delete unsorted channels from the list.
+    /// </summary>
+    internal static string MainForm_PromptHandlingOfUnsortedChannels_Delete {
             get {
                 return ResourceManager.GetString("MainForm_PromptHandlingOfUnsortedChannels_Delete", resourceCulture);
             }

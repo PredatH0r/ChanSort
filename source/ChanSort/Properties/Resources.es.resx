@@ -284,4 +284,7 @@ o bien se ha actualizado el firmware sin hacer una nueva búsqueda de canales.
 A menudo las TV exportan archivos corruptos a memorias USB formateadas en NTFS.
 Por favor trate de exportarlo a una memoria USB con formato FAT32</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Añadir los canales no ordenados al final de la lista y ocultarlos</value>
+  </data>
 </root>

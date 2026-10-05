@@ -81,7 +81,7 @@ namespace Test.Loader.Hisense.ChannelDb
       Assert.IsFalse(orf2e.IsDeleted);
 
       orf2e.NewProgramNr = -1;
-      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.AppendInOrder);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Append);
 
       Assert.IsFalse(orf2e.IsDeleted);
       Assert.IsTrue(orf2e.NewProgramNr > 0);

@@ -316,4 +316,7 @@ Otherwise manual input is needed to assign TV/radio channels to specific startin
   <data name="MainForm_miConvert_MessageHeader" xml:space="preserve">
     <value>Convert channel list</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Append unsorted channels at the end of the list  and hide them</value>
+  </data>
 </root>

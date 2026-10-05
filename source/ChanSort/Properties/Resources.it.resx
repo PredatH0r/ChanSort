@@ -293,4 +293,7 @@ o aggiornamenti del firmware senza eseguire una nuova scansione dei canali.
 I televisori spesso esportano file danneggiati su chiavette USB formattate con il file system NTFS.
 Prova ad esportare su una chiavetta formattata con FAT32</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Aggiungi i canali non ordinati in fondo all'elenco e nascondili</value>
+  </data>
 </root>

@@ -265,4 +265,7 @@ Chybová zpráva je následující:</value>
     <value>K dispozici je novější verze: v {0}.
 Chcete otevřít stránku ke stažení?</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Připojit neseřazené kanály na konec seznamu a skrýt je</value>
+  </data>
 </root>

@@ -152,30 +152,6 @@ o un file di dati da un'altra TV (SCM, TLL, DB, BIN, …)</value>
   <data name="labelControl6.Text" xml:space="preserve">
     <value>(ad es. lasciare che i canali radio inizino a 5000 per evitare conflitti con i numeri dei canali TV)</value>
   </data>
-  <data name="comboPrNr.EditValue" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="comboPrNr.Properties.Items" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="comboPrNr.Properties.Items1" xml:space="preserve">
-    <value>100</value>
-  </data>
-  <data name="comboPrNr.Properties.Items2" xml:space="preserve">
-    <value>500</value>
-  </data>
-  <data name="comboPrNr.Properties.Items3" xml:space="preserve">
-    <value>1000</value>
-  </data>
-  <data name="comboPrNr.Properties.Items4" xml:space="preserve">
-    <value>2000</value>
-  </data>
-  <data name="comboPrNr.Properties.Items5" xml:space="preserve">
-    <value>5000</value>
-  </data>
-  <data name="comboPrNr.Properties.Items6" xml:space="preserve">
-    <value>7000</value>
-  </data>
   <data name="cbConsecutive.Properties.Caption" xml:space="preserve">
     <value>Utilizzare numeri consecutivi (rimuovere gli spazi dalla lista di riferimento Pr#)</value>
   </data>
@@ -195,7 +171,7 @@ o un file di dati da un'altra TV (SCM, TLL, DB, BIN, …)</value>
     <value>Cavo</value>
   </data>
   <data name="labelControl9.Text" xml:space="preserve">
-    <value>Tipo di segnale</value>
+    <value>Tipo di segnale:</value>
   </data>
   <data name="cbAnalog.Properties.Caption" xml:space="preserve">
     <value>Analogico</value>
@@ -204,7 +180,7 @@ o un file di dati da un'altra TV (SCM, TLL, DB, BIN, …)</value>
     <value>Digitale</value>
   </data>
   <data name="labelControl7.Text" xml:space="preserve">
-    <value>Tipo di canale</value>
+    <value>Tipo di canale:</value>
   </data>
   <data name="btnApply.Text" xml:space="preserve">
     <value>Applica</value>

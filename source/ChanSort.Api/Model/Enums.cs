@@ -104,8 +104,8 @@ namespace ChanSort.Api
   #region enum UnsortedChannelMode
   public enum UnsortedChannelMode
   {
-    AppendInOrder=0,
-    AppendAlphabetically=1,
+    Append=0,
+    AppendAndHide=1,
     Delete=2
   }
   #endregion

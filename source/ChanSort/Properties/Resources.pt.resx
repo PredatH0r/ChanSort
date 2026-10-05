@@ -67,4 +67,7 @@
   <data name="MainForm_PromptHandlingOfUnsortedChannels_Delete" xml:space="preserve">
     <value>Apagar</value>
   </data>
+  <data name="MainForm_PromptHandlingOfUnsortedChannels_AppendAndHide" xml:space="preserve">
+    <value>Adicionar canais não classificados no final da lista e ocultá-los</value>
+  </data>
 </root>

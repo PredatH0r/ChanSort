@@ -17,11 +17,11 @@ namespace ChanSort.Loader.Philips
   
   Lots of data is duplicated between FLASH_* and *.db files and must be updated in both.
   It seems that the .db file contains valid channels and the index of a channel record in this file is used as an index in the ChannelIdMappingTable of the FLASH file
-  where IDs for for the channel and transponder are stored, which are used to find channels and transponders in the FLASH file. 
+  where IDs for the channel and transponder are stored, which are used to find channels and transponders in the FLASH file. 
   The data records in the FLASH file are then looked up by their IDs, not by index.
 
   A full satellite scan usually populates the mgr_chan_s_fta.db + FLASH_DTVINFO_S_FTA files. A preset list fills mgr_chan_s_pkg.db and FLASH_DTVINFO_S_PKG.
-  However there is also an example where a preset list uses mgr_chan_s_pkg.db + FLASH_DTVINFO_S_FTA.
+  There was an example where a preset list uses mgr_chan_s_pkg.db + FLASH_DTVINFO_S_FTA. Experimental support for it was removed after more inconsistencies were found.
 
   A preset list has a .db file where records are ordered by the desired channel order. The corresponding FLASH file however has a different channel record order
   and the ID-mapping table is used to resolve references.
@@ -46,6 +46,7 @@ namespace ChanSort.Loader.Philips
     private int pkgChannelRecordLength;
     private readonly bool reorderPhysically;
 
+    private readonly StringBuilder debugInfo = new();
 
     #region ctor()
     public DbSerializer(string inputFile) : base(inputFile)
@@ -115,31 +116,44 @@ namespace ChanSort.Loader.Philips
             LoadVersion(file);
             break;
           case "mgr_chan_dvbt.db":
-            LoadDvb(file, lowercaseFileName, dvbtChannels, ref dvbtChannelRecordLength);
-            validList = true;
+            //LoadDvb(file, lowercaseFileName, dvbtChannels, ref dvbtChannelRecordLength);
+            //debugInfo.AppendLine($"DVB-T record channel Length: {dvbtChannelRecordLength}");
+            //validList = true;
+            if (new FileInfo(file).Length > 0)
+              this.DataRoot.Warnings.AppendLine("DVB-T isn't supported for this channel list format.");
             break;
           case "mgr_chan_dvbc.db":
             // no sample file with DVB-C data yet, so this here is a guess based on DVB-T
-            LoadDvb(file, lowercaseFileName, dvbcChannels, ref dvbcChannelRecordLength);
-            validList = true;
+            //LoadDvb(file, lowercaseFileName, dvbcChannels, ref dvbcChannelRecordLength);
+            //debugInfo.AppendLine($"DVB-C record channel Length: {dvbcChannelRecordLength}");
+            //validList = true;
+            if (new FileInfo(file).Length > 0)
+              this.DataRoot.Warnings.AppendLine("DVB-C isn't supported for this channel list format.");
             break;
           case "mgr_chan_s_fta.db":
             LoadDvb(file, lowercaseFileName, dvbsFtaChannels, ref ftaChannelRecordLength);
+            debugInfo.AppendLine($"FTA record channel Length: {ftaChannelRecordLength}");
             validList = true;
             break;
           case "mgr_chan_s_pkg.db":
             LoadDvb(file, lowercaseFileName, dvbsPkgChannels, ref pkgChannelRecordLength);
+            debugInfo.AppendLine($"PKG record channel Length: {pkgChannelRecordLength}");
             validList = true;
             break;
           case "flash_dtvinfo_s_fta":
-            if (dvbsFtaChannels.Count == 0 && dvbsPkgChannels.Count > 0)
-              LoadFlash(file, lowercaseFileName, dvbsPkgChannels, ftaChannelRecordLength); // weird case where _pkg.db must be combined with FLASH_FTA
-            else
+            if (dvbsFtaChannels.Count > 0)
               LoadFlash(file, lowercaseFileName, dvbsFtaChannels, ftaChannelRecordLength);
+            // no longer supporting the "weird case" where flash_fta must be joined with pkg.db
             break;
           case "flash_dtvinfo_s_pkg":
-            if (dvbsPkgChannels.Count > 0 && dvbsFtaChannels.Count != 0) // don't load again in the "weird case"
+            if (dvbsPkgChannels.Count > 0) // don't load again in the "weird case"
               LoadFlash(file, lowercaseFileName, dvbsPkgChannels, pkgChannelRecordLength);
+            break;
+          case "flash_dtvinfo_tc":
+            //if (dvbtChannelRecordLength > 0)
+            //  LoadFlash(file, lowercaseFileName, dvbtChannels, dvbtChannelRecordLength);
+            //else if (dvbcChannelRecordLength > 0)
+            //  LoadFlash(file, lowercaseFileName, dvbcChannels, dvbcChannelRecordLength);
             break;
         }
       }
@@ -147,13 +161,17 @@ namespace ChanSort.Loader.Philips
       if (!validList)
         throw LoaderException.TryNext(this.FileName + " is not a supported Philips Repair/channel_db_ver.db channel list");
 
-      foreach (var channelList in this.DataRoot.ChannelLists)
+      foreach (var channelList in this.DataRoot.ChannelLists.ToArray())
       {
         foreach (var channelInfo in channelList.Channels)
         {
           var ch = (Channel)channelInfo;
           if (ch.FlashFileOffset == 0)
-            this.DataRoot.Warnings.AppendLine($"Channel with index {ch.RecordIndex:d4} in .db file ({ch.OldProgramNr} - {ch.Name}) has no entry in FLASH files");
+          {
+            this.DataRoot.Warnings.AppendLine($"The list \"{channelList.ShortCaption}\" was skipped:\n Channel \"#{ch.OldProgramNr} {ch.Name}\" at index {ch.RecordIndex:d4} in .db file has no entry in FLASH file");
+            this.DataRoot.RemoveChannelList(channelList);
+            break;
+          }
         }
       }
     }
@@ -199,7 +217,7 @@ namespace ChanSort.Loader.Philips
 
       if (!GetValuesFromDvbFileHeader(sec, data, out var lenHeader, out var lenEntry, out var records, out var offChecksum))
       {
-        this.DataRoot.Warnings.AppendLine($"{sectionName} was not loaded because data record size could not be determined");
+        debugInfo.AppendLine($"{sectionName} was not loaded because data record size could not be determined");
         return;
       }
 
@@ -442,9 +460,13 @@ namespace ChanSort.Loader.Philips
         }
 
         if (hasDiff)
-          this.DataRoot.Warnings.AppendLine($"Channel record in {filename}, block {block}, index {i:d4} does not match data in .db file: " +
+        {
+          // The "weird case" list, where data was present in the FLASH_FTA and pkg.db seems to have a different FLASH layout, where the progNr is at its normal offset +1, despite same record length.
+          // To be on the save side, stop loading lists where any data mismatch between FLASH and .db is found
+          throw LoaderException.Fail($"Channel record in {filename}, block {block}, index {i:d4} does not match data in .db file:\n" +
                                             $"ProgNr={progNr}|{ch.OldProgramNr}, onid={tp?.OriginalNetworkId}|{ch.OriginalNetworkId}, tsid={tp?.TransportStreamId}|{ch.TransportStreamId}, " +
                                             $"sid={sid}|{ch.ServiceId}, freq={tp?.FrequencyInMhz}|{ch.FreqInMhz}");
+        }
       }
     }
     #endregion
@@ -617,6 +639,13 @@ namespace ChanSort.Loader.Philips
         this.TransponderId = transponderId;
         this.Flags = flags;
       }
+    }
+    #endregion
+
+    #region GetFileInformation()
+    public override string GetFileInformation()
+    {
+      return  base.GetFileInformation() + "\n\n" + debugInfo;
     }
     #endregion
   }

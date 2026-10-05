@@ -200,7 +200,14 @@ namespace ChanSort.Api
     #region GetDvbtTransponder()
     public int GetDvbtTransponder(decimal freqInMhz)
     {
-      return (int)(freqInMhz - 306)/8;
+      if (freqInMhz >=54 && freqInMhz < 88+7) // VHF low band 54-88 MHz with 7 MHz bandwidth(channels 2-6) 
+        return ((int)freqInMhz - 54) / 7 + 2;
+      if (freqInMhz >= 174 && freqInMhz < 216 + 7) // VHF high band 174-216 MHz with 7 MHz bandwidth (channels 7-13)
+        return ((int)freqInMhz - 174) / 7 + 7;
+      if (freqInMhz >= 470 && freqInMhz < 951 + 8) // UHF 470-862 MHz with 8 MHz bandwidth (channels 21-81)
+        return (int)(freqInMhz - 470)/8 + 21;
+
+      return 0; // other frequencies are used by cable TV only and may differ in bandwidth
     }
     #endregion   
 
