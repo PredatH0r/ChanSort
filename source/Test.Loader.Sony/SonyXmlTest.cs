@@ -178,7 +178,7 @@ namespace Test.Loader.Sony
       var maxNr = tv.Channels.Max(ch => ch.OldProgramNr);
 
       chan.NewProgramNr = -1;
-      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.AppendInOrder);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.AppendAndHide);
       ser.Save();
 
       ser = plugin.CreateSerializer(tempFile);
@@ -210,7 +210,7 @@ namespace Test.Loader.Sony
       var maxNr = tv.Channels.Max(ch => ch.OldProgramNr);
 
       chan.NewProgramNr = -1;
-      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.AppendInOrder, false);
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.Append);
       ser.Save();
 
       ser = plugin.CreateSerializer(tempFile);
