@@ -178,8 +178,8 @@ namespace ChanSort.Api
     #endregion
 
     #region AssignNumbersToUnsortedAndDeletedChannels()
-
-    public void AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode mode)
+    /// <param name="mode">what to do with channels that have no new program number</param>
+    public void AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode mode, bool hideAppended)
     {
       foreach (var list in this.ChannelLists)
       {

@@ -17,7 +17,7 @@ namespace ChanSort.Loader.Sony
         var line1 = rdr.ReadLine() ?? "";
         var line2 = rdr.ReadLine() ?? "";
         if (line1.Contains("<service_list_transfer>") || line2.Contains("<service_list_transfer>"))
-          return new MediaTek.Serializer(inputFile);
+          return new MediaTek.Serializer(inputFile) { CanHideViaSvl = true }; // hiding was confirmed on a BRAVIA 7
       }
 
       // older versions use Sony's proprietary XML
