@@ -1,6 +1,11 @@
 ﻿ChanSort Change Log 
 ===================
 
+2026-10-05
+- Sony Bravia 7/8 improvements
+- Philips 120-125 experimental: When loading the list with active setting "Developer Mode", a channel's "hidden"-flag will be saved.
+- Philips mgr_db lists: Disabled support for DVB-T, DVB-C and lists with inconsistent preset and free-scan files (to avoid corrupted lists)
+
 2026-09-30
 - TCL \*.db lists: fixed satellite information not showing in UI
 - added support for .sdx JSON files (e.g. Anadol Izybox 4K receiver)
