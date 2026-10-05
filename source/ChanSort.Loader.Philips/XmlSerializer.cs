@@ -712,6 +712,7 @@ namespace ChanSort.Loader.Philips
       
       this.mtkSerializer = new Serializer(path);
       this.mtkSerializer.DecodeSvl = this.DecodeMediaTekSvl;
+      this.mtkSerializer.CanHideViaSvl = this.DeveloperMode; // also write Hidden into the binary table; not tested on a Philips TV yet
       this.mtkSerializer.Load();
       foreach (var list1 in this.DataRoot.ChannelLists)
       {

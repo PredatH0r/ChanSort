@@ -38,6 +38,7 @@ internal class SvlTable
    * +4  u16 record_id (same as in the XML record_id)
    * +6  u16 program number << 2 (lower 2 bits must be kept)
    * +9  u8  group: 0x81 = TV, 0x82 = radio, 0x83 = data
+   * +13 u8  visibility: 0x0F = visible, 0x09 = hidden (the XML visible_service 3 / 1 mirrors it)
    * +22 u32 record hashcode (x31 hash over name, +6..+9, type, +30..+31, service id; see CalcHashcode)
    * +26 u16 service id
    * +42 u16 1-based index into the name pool (0 = no name)
@@ -47,6 +48,8 @@ internal class SvlTable
 
   public const int RecordSize = 504;
   private const int ChunkSize = 32768 / RecordSize * RecordSize;
+  private const byte VisibleFlag = 0x0F;
+  private const byte HiddenFlag = 0x09;
 
   private static readonly byte[] SvlTableName = Encoding.ASCII.GetBytes("fs_Svl_10"); // gfs_Svl_102, ffs_Svl_101
   private static readonly byte[] CdbMagic = [0x0C, 0xDB, 0x0C, 0xDB];
@@ -216,6 +219,25 @@ internal class SvlTable
 
   /// <summary>DVB service ID at +26 (not contained in the Sony XML)</summary>
   public static int GetServiceId(byte[] rec) => rec.GetInt16(26, false) & 0xFFFF;
+
+  /// <summary>
+  /// Visibility flag at +13: 0x0F = visible, 0x09 = hidden. The TV mirrors it into the XML as
+  /// &lt;visible_service&gt; 3 / 1 when it exports, but on import it only uses the binary value.
+  /// A hidden channel keeps its program number. The flag is not an input of the hashcode at +22.
+  /// </summary>
+  public static bool GetHidden(byte[] rec) => rec[13] == HiddenFlag;
+
+  /// <summary>
+  /// Sets or clears the hidden flag at +13. Only the two values found in TV exports are changed; a record with
+  /// any other value is left alone and false is returned.
+  /// </summary>
+  public static bool SetHidden(byte[] rec, bool hidden)
+  {
+    if (rec[13] != VisibleFlag && rec[13] != HiddenFlag)
+      return false;
+    rec[13] = hidden ? HiddenFlag : VisibleFlag;
+    return true;
+  }
 
   /// <summary>
   /// The hashcode stored at +22: a Java-style 31-hash over the service name, the u32 at +6 (number and group),

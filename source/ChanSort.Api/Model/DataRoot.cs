@@ -174,6 +174,13 @@ namespace ChanSort.Api
 
     public void AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode mode)
     {
+      this.AssignNumbersToUnsortedAndDeletedChannels(mode, true);
+    }
+
+    /// <param name="mode">what to do with channels that have no new program number</param>
+    /// <param name="hideAppended">when such channels are appended: also mark them as hidden and skipped, which takes effect for loaders that support it</param>
+    public void AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode mode, bool hideAppended)
+    {
       foreach (var list in this.ChannelLists)
       {
         if (list.IsMixedSourceFavoritesList)
@@ -192,7 +199,7 @@ namespace ChanSort.Api
           {
             if (mode == UnsortedChannelMode.Delete)
               appChannel.IsDeleted = true;
-            else // append (hidden if possible)
+            else if (hideAppended) // append (hidden if possible)
             {
               appChannel.Hidden = true;
               appChannel.Skip = true;
