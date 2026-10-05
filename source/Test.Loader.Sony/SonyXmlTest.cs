@@ -192,6 +192,38 @@ namespace Test.Loader.Sony
       Assert.AreEqual((byte)0x09, GetSvlRecord(tempFile, recordId)[13]);
     }
 
+    [TestMethod]
+    public void TestMediatekUnsortedChannelsCanBeAppendedWithoutHiding()
+    {
+      // The caller decides whether appended channels are hidden too, so that the user can be asked.
+      var tempFile = TestUtils.DeploymentItem("Test.Loader.Sony\\TestFiles\\mediatek_sdb-cable.xml");
+      var plugin = new SonyPlugin();
+      var ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      var data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      data.ApplyCurrentProgramNumbers();
+
+      var tv = data.GetChannelList(SignalSource.DvbC | SignalSource.Tv);
+      var chan = tv.Channels.First(ch => !ch.Hidden && ch.OldProgramNr > 0);
+      var recordId = (int)chan.RecordIndex;
+      var maxNr = tv.Channels.Max(ch => ch.OldProgramNr);
+
+      chan.NewProgramNr = -1;
+      data.AssignNumbersToUnsortedAndDeletedChannels(UnsortedChannelMode.AppendInOrder, false);
+      ser.Save();
+
+      ser = plugin.CreateSerializer(tempFile);
+      ser.Load();
+      data = ser.DataRoot;
+      data.ValidateAfterLoad();
+      tv = data.GetChannelList(SignalSource.DvbC | SignalSource.Tv);
+      chan = tv.Channels.First(ch => (int)ch.RecordIndex == recordId);
+      Assert.AreEqual(maxNr + 1, chan.OldProgramNr);
+      Assert.IsFalse(chan.Hidden);
+      Assert.AreEqual((byte)0x0F, GetSvlRecord(tempFile, recordId)[13]);
+    }
+
     private static byte[] GetSvlRecord(string sdbXmlPath, int recordId)
     {
       var xml = File.ReadAllText(sdbXmlPath);
