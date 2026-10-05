@@ -60,7 +60,7 @@ public class Serializer : SerializerBase
   private byte[] scanData;
   public readonly Dictionary<string, string> ScanParameters = new();
   public bool DecodeSvl { get; set; } = true; // used with StatsCollector tools to ignore errors in the binary data
-  public bool CanHideViaSvl { get; set; } // set by the loaders for which hiding through the binary table is confirmed on a TV (Sony)
+  public bool CanHideViaSvl { get; set; } // set by loaders that want the hidden flag written to the binary table: Sony always, Philips in developer mode
 
   private List<SvlTable> svlTables; // one per service list (e.g. satellite + terrestrial), null if there is no binary data
   private readonly Dictionary<string, SvlTable> svlByListId = new();
@@ -76,7 +76,7 @@ public class Serializer : SerializerBase
     this.Features.FavoritesMode = FavoritesMode.None;
     this.Features.CanSkipChannels = false;
     this.Features.CanLockChannels = true;
-    this.Features.CanHideChannels = false; // enabled in Load() when CanHideViaSvl is set and the file has a binary table
+    this.Features.CanHideChannels = false; // enabled in Load() for files with a binary table, see CanHideViaSvl
     this.Features.CanSaveAs = true;
   }
   #endregion
@@ -206,7 +206,9 @@ public class Serializer : SerializerBase
     if (this.svlTables != null)
     {
       this.Features.ChannelNameEdit = ChannelNameEditMode.None; // names live in the binary name pool, untested
-      this.Features.CanHideChannels = this.CanHideViaSvl; // the TV takes the hidden state from the binary record, not from the XML
+      // The TV takes the hidden state from the binary record, not from the XML. Writing it is confirmed on a TV for
+      // Sony only; for everything else it is limited to developer mode until someone has tested it.
+      this.Features.CanHideChannels = this.CanHideViaSvl || this.DeveloperMode;
       // Philips exports MultiBank=COMMON and numbers TV/radio/data in one range, its XmlSerializer expects a single list per source even though the records have different groups.
       // MultiBank alone isn't reliable, so COMMON is only trusted when no program number is used by more than one group
       var isCommon = this.ScanParameters.TryGetValue("MultiBank", out var multiBank) && multiBank == "COMMON"

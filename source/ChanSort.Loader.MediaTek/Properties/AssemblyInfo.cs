@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: InternalsVisibleTo("Test.Loader.Sony")]
+[assembly: InternalsVisibleTo("Test.Loader.Philips")]
 
 [assembly: AssemblyTitle("ChanSort.Loader.MediaTek")]
 [assembly: AssemblyDescription("")]
