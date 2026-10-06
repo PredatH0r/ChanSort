@@ -32,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="System.IO.Hashing" Version="11.0.0-rc.1.26425.128" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Utils\ChannelMappingBase.cs" />

@@ -33,6 +33,7 @@ namespace Test.Loader.Samsung.Scm
     #endregion
 
     #region TestSamsungScmLoader()
+    [Ignore] // un-ignore to load all files in the TestFiles_Samsung folder and collect stats
     [TestMethod]
     [DeploymentItem("ChanSort.Loader.Samsung\\ChanSort.Loader.Samsung.ini")]
     public void TestSamsungScmLoader()

@@ -13,7 +13,7 @@ namespace ChanSort.Loader.MediaTek;
 /// Sony BRAVIA 8 II ignores &lt;major_channel_number&gt; and only uses this binary table.
 /// This class only modifies an existing TV export (renumber + re-sort), it cannot create records.
 /// </summary>
-internal class SvlTable
+public class SvlTable
 {
   /*
    * Layout (all values big endian):
@@ -187,12 +187,14 @@ internal class SvlTable
   {
     var count = svl.GetInt32(start, false) / 4;
     var stringsStart = start + 8 + count * 4;
-    var list = new List<byte[]>();
+    var list = new List<byte[]>(count);
     for (int i = 0; i < count; i++)
     {
       var from = stringsStart + svl.GetInt32(start + 8 + i * 4, false);
       var to = i + 1 < count ? stringsStart + svl.GetInt32(start + 12 + i * 4, false) : svl.Length;
-      list.Add(svl.Skip(from).Take(to - from).ToArray());
+      var name = new byte[to - from];
+      Tools.MemCopy(svl, from, name, 0, name.Length);
+      list.Add(name);
     }
     return list;
   }

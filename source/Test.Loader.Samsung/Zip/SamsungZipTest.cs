@@ -143,6 +143,7 @@ namespace Test.Loader.Samsung.Zip
     #endregion
 
     #region TestSamsungZipLoader()
+    [Ignore] // un-ignore to run a test that loads all Samsung zip files in the TestFiles_Samsung directory and collects stats
     [TestMethod]
     public void TestSamsungZipLoader()
     {

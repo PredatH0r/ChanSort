@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -54,13 +55,16 @@ namespace ChanSort.Api
 
     public static int GetInt16(this byte[] data, int offset, bool littleEndian = true)
     {
-      return littleEndian ? BitConverter.ToInt16(data, offset) : (data[offset] << 8) + data[offset + 1];
+      if (littleEndian)
+        return BinaryPrimitives.ReadInt16LittleEndian(data.AsSpan(offset));
+      return BinaryPrimitives.ReadInt16BigEndian(data.AsSpan(offset));
     }
 
     public static int GetInt32(this byte[] data, int offset, bool littleEndian = true)
     {
-      return littleEndian ? BitConverter.ToInt32(data, offset) :
-        (data[offset] << 24) + (data[offset + 1] << 16) + (data[offset + 2] << 8) + data[offset + 3];
+      if (littleEndian)
+        return BinaryPrimitives.ReadInt32LittleEndian(data.AsSpan(offset));
+      return BinaryPrimitives.ReadInt32BigEndian(data.AsSpan(offset));
     }
     #endregion
 
@@ -69,33 +73,17 @@ namespace ChanSort.Api
     public static void SetInt16(this byte[] data, int offset, int value, bool littleEndian = true)
     {
       if (littleEndian)
-      {
-        data[offset + 0] = (byte) value;
-        data[offset + 1] = (byte) (value >> 8);
-      }
+        BinaryPrimitives.WriteInt16LittleEndian(data.AsSpan(offset), (short)value);
       else
-      {
-        data[offset + 0] = (byte)(value >> 8);
-        data[offset + 1] = (byte) value;
-      }
+        BinaryPrimitives.WriteInt16BigEndian(data.AsSpan(offset), (short)value);
     }
 
     public static void SetInt32(this byte[] data, int offset, int value, bool littleEndian = true)
     {
       if (littleEndian)
-      {
-        data[offset + 0] = (byte) value;
-        data[offset + 1] = (byte) (value >> 8);
-        data[offset + 2] = (byte) (value >> 16);
-        data[offset + 3] = (byte) (value >> 24);
-      }
+        BinaryPrimitives.WriteInt32LittleEndian(data.AsSpan(offset), value);
       else
-      {
-        data[offset + 0] = (byte)(value >> 24);
-        data[offset + 1] = (byte)(value >> 16);
-        data[offset + 2] = (byte)(value >> 8);
-        data[offset + 3] = (byte)value;        
-      }
+        BinaryPrimitives.WriteInt32BigEndian(data.AsSpan(offset), value);
     }
     #endregion
 
@@ -152,12 +140,12 @@ namespace ChanSort.Api
     #region ReverseByteOrder()
     public static ushort ReverseByteOrder(ushort input)
     {
-      return (ushort)(((input & 0x00FF) << 8) | (input >> 8));
+      return BinaryPrimitives.ReverseEndianness(input);
     }
 
     public static uint ReverseByteOrder(uint input)
     {
-      return ((input & 0x000000FF) << 24) | ((input & 0x0000FF00) << 8) | ((input & 0x00FF0000) >> 8) | ((input & 0xFF000000) >> 24);
+      return BinaryPrimitives.ReverseEndianness(input);
     }
     #endregion
 
