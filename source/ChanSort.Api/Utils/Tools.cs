@@ -3,6 +3,7 @@ using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml;
 
@@ -11,6 +12,7 @@ namespace ChanSort.Api
   public static class Tools
   {
     #region TryGet()
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static V TryGet<K, V>(this IDictionary<K, V> dict, K key, V defaultValue = default(V))
     {
       V val;
@@ -19,6 +21,7 @@ namespace ChanSort.Api
     #endregion
 
     #region Try()
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Try(Action action, Action onError = null, Action onFinally = null)
     {
       try
@@ -53,6 +56,7 @@ namespace ChanSort.Api
 
     #region GetInt16/32()
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int GetInt16(this byte[] data, int offset, bool littleEndian = true)
     {
       if (littleEndian)
@@ -60,6 +64,7 @@ namespace ChanSort.Api
       return BinaryPrimitives.ReadInt16BigEndian(data.AsSpan(offset));
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int GetInt32(this byte[] data, int offset, bool littleEndian = true)
     {
       if (littleEndian)
@@ -70,6 +75,7 @@ namespace ChanSort.Api
 
     #region SetInt16/32()
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetInt16(this byte[] data, int offset, int value, bool littleEndian = true)
     {
       if (littleEndian)
@@ -78,6 +84,7 @@ namespace ChanSort.Api
         BinaryPrimitives.WriteInt16BigEndian(data.AsSpan(offset), (short)value);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetInt32(this byte[] data, int offset, int value, bool littleEndian = true)
     {
       if (littleEndian)
@@ -89,6 +96,7 @@ namespace ChanSort.Api
 
     #region MemCopy(), MemSet()
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void MemCopy(byte[] source, int sourceIndex, byte[] dest, int destIndex, int count)
     {
       if (destIndex + count > dest.Length)
@@ -102,6 +110,7 @@ namespace ChanSort.Api
       Array.Copy(source, sourceIndex, dest, destIndex, count);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void MemSet(this byte[] data, int offset, byte value, int count)
     {
       if (offset + count > data.Length)
@@ -121,6 +130,7 @@ namespace ChanSort.Api
     /// <returns>
     /// &lt;0 if <param name="arr1"></param>[i] &lt; <param name="with"></param>[i] or ends earlier
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int MemComp(byte[] arr1, int idx1, byte[] with)
     {
       int i = idx1;
@@ -138,11 +148,13 @@ namespace ChanSort.Api
     #endregion
 
     #region ReverseByteOrder()
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort ReverseByteOrder(ushort input)
     {
       return BinaryPrimitives.ReverseEndianness(input);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static uint ReverseByteOrder(uint input)
     {
       return BinaryPrimitives.ReverseEndianness(input);
@@ -285,14 +297,45 @@ namespace ChanSort.Api
     {
       if (node is not XmlElement element)
         return null;
-      var children = element.GetElementsByTagName(localName, node.NamespaceURI);
-      return children.Count >= 1 ? children[0] as XmlElement : null;
+
+      // DO NOT USE GetElementsByTagName() !
+      // In .NET Framework 4.8 (as of 2026-10-07) it causes an enormous amount of event listeners with excessive GC CPU usage
+      // bringing any later DOM tree modifications to a grinding halt
+
+      foreach(var child in element.ChildNodes)
+      {
+        if (child is XmlElement el && el.LocalName == localName)
+          return el;
+      }
+
+      return null;
     }
 
     public static string GetElementString(this XmlNode node, string localName) => GetElement(node, localName)?.InnerText;
     public static int GetElementInt(this XmlNode node, string localName, int defaultValue = 0) => int.TryParse(GetElementString(node, localName), out var value) ? value : defaultValue;
 
     #endregion
+
+    #region XmlNode: GetAttribute(), GetAttributeString(), GetAttributeInt()
+    public static XmlAttribute GetAttribute(this XmlNode node, string localName)
+    {
+      if (node is not XmlElement element)
+        return null;
+
+      foreach (var child in element.ChildNodes)
+      {
+        if (child is XmlAttribute at && at.LocalName == localName)
+          return at;
+      }
+
+      return null;
+    }
+
+    public static string GetAttributeString(this XmlNode node, string localName) => GetAttribute(node, localName)?.Value;
+    public static int GetAttributeInt(this XmlNode node, string localName, int defaultValue = 0) => int.TryParse(GetAttributeString(node, localName), out var value) ? value : defaultValue;
+
+    #endregion
+
 
     #region SqlConnectionString()
     /// <summary>

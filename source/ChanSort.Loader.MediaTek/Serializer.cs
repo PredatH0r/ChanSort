@@ -359,8 +359,7 @@ public class Serializer : SerializerBase
       this.DataRoot.AddChannelList(list);
     }
 
-    var elements = si.GetElementsByTagName("major_channel_number", si.NamespaceURI);
-    list.ReadOnly |= elements.Count == 1 && elements[0].Attributes!["editable", si.NamespaceURI].InnerText == "false";
+    list.ReadOnly |= si.GetAttributeString("editable") == "false";
 
     // validate consistency with svl
     if (svlTables != null)
@@ -531,6 +530,8 @@ public class Serializer : SerializerBase
       if (order.Count == 0)
         continue;
       var parent = (XmlElement)byId[(table.ServiceListId, order[0])].ParentNode;
+
+      // if there was ever any call to XmlNode.GetElementsByTagName() any DOM tree manipulation blow will take an eternity (caused by a massive amount of event listeners and GC)
       foreach (var id in order)
         parent!.RemoveChild(byId[(table.ServiceListId, id)]);
       foreach (var id in order)
