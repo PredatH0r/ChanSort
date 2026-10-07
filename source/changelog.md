@@ -1,6 +1,9 @@
 ﻿ChanSort Change Log 
 ===================
 
+2026-10-07
+- Sony Bravia 7/8 and Philips 120-125 lists: improved performance for loading and saving the list
+
 2026-10-05
 - Sony Bravia 7/8 improvements
 - Philips 120-125 experimental: When loading the list with active setting "Developer Mode", a channel's "hidden"-flag will be saved.
