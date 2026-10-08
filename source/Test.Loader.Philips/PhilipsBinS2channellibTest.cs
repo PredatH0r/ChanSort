@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using ChanSort.Api;
 using ChanSort.Loader.Philips;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,13 +6,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test.Loader.Philips
 {
   [TestClass]
+  [DeploymentItem("ChanSort.Loader.Philips\\ChanSort.Loader.Philips.ini")]
   public class PhilipsBinS2channellibTest
   {
     [TestMethod]
     public void TestFiles1()
     {
-      var baseDir = Path.GetDirectoryName(this.GetType().Assembly.Location);
-      var baseFile = Path.Combine(baseDir, "TestFiles1\\Repair\\ChannelList\\chanLst.bin");
+      var baseFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles1\\Repair\\ChannelList") + "\\chanLst.bin";
+
       var plugin = new ChanSort.Loader.Philips.PhilipsPlugin();
       var loader = plugin.CreateSerializer(baseFile);
       loader.Load();
@@ -42,8 +42,7 @@ namespace Test.Loader.Philips
     [TestMethod]
     public void TestFiles2()
     {
-      var baseDir = Path.GetDirectoryName(this.GetType().Assembly.Location);
-      var baseFile = Path.Combine(baseDir, "TestFiles2\\Repair\\ChannelList\\chanLst.bin");
+      var baseFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles2\\Repair\\ChannelList") + "\\chanLst.bin";
       var plugin = new ChanSort.Loader.Philips.PhilipsPlugin();
       var loader = plugin.CreateSerializer(baseFile);
       loader.Load();

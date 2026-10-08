@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\Test.Loader\InitSqlite.cs" Link="InitSqlite.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="4.4.1" />
     <PackageReference Include="MSTest.TestFramework" Version="4.4.1" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />

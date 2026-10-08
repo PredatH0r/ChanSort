@@ -1,6 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\ChanSortProject.props" />
   <ItemGroup>
+    <Compile Include="..\Test.Loader\InitSqlite.cs" Link="InitSqlite.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="TestFiles\sat-astra28.tar">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

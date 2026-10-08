@@ -6,6 +6,9 @@
     <ProjectReference Include="..\Test.Loader\Test.Loader.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Test.Loader\InitSqlite.cs" Link="InitSqlite.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="TestFiles\ChannelMap_100\ChannelList\channellib\DVBT.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

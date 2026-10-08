@@ -1,8 +1,6 @@
 using System.Linq;
-using ChanSort.Api;
 using ChanSort.Loader.TCL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Test.Loader;
 
 namespace Test.Loader.TCL
 {

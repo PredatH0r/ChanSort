@@ -6,6 +6,7 @@ using ChanSort.Loader.CmdbBin;
 namespace Test.Loader.CmdbBin
 {
   [TestClass]
+  [DeploymentItem("ChanSort.Loader.CmdbBin\\ChanSort.Loader.CmdbBin.ini")]
   public class CmdbBinTest
   {
     #region TestGrundigAnalogCable()

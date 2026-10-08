@@ -14,6 +14,7 @@ namespace Test.Loader
   public class LgTest : LoaderTestBase
   {
     #region TestLgTllLoader()
+    [Ignore] // un-ignore to test all LG files in a directory structure
     [TestMethod]
     [DeploymentItem("ChanSort.Loader.LG\\ChanSort.Loader.LG.ini")]
     public void TestLgTllLoader()

@@ -33,7 +33,7 @@ namespace Test.Loader.Toshiba
       if (expectedTv > 0)
       {
         Assert.IsNotNull(tv);
-        Assert.AreEqual(expectedTv, tv?.Channels.Count ?? 0);
+        Assert.AreEqual(expectedTv, tv.Channels.Count);
       }
 
       if (expectedRadio > 0)

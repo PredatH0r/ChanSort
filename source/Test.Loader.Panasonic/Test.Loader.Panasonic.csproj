@@ -12,6 +12,9 @@
     <PackageReference Include="MSTest.TestFramework" Version="4.4.1" />
     <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.13" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Test.Loader\InitSqlite.cs" Link="InitSqlite.cs" />
+  </ItemGroup>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\net48\NETStandard.Library.targets')" />
   <PropertyGroup>
     <PostBuildEvent>

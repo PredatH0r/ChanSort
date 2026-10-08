@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test.Loader.Sony
 {
   [TestClass]
+  [DeploymentItem("ChanSort.Loader.Sony\\ChanSort.Loader.Sony.ini")]
   public class SonyXmlTest
   {
     // Android OS seems to use the "FormateVer" XML element, KDL 2012 and 2014 use "FormatVer"

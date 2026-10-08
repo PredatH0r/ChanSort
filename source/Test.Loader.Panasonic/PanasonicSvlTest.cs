@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using ChanSort.Api;
 using ChanSort.Loader.Panasonic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

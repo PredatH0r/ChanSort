@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test.Loader.Samsung.Scm
 {
   [TestClass]
+  [DeploymentItem("ChanSort.Loader.Samsung.ini")]
   public class FileFormatDetectionTest
   {
     [TestMethod]

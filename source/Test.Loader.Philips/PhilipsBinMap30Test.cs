@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test.Loader.Philips
 {
   [TestClass]
+  [DeploymentItem("ChanSort.Loader.Philips\\ChanSort.Loader.Philips.ini")]
   public class PhilipsBinMap30Test
   {
     #region TestChannelAndFavListEditing

@@ -7,13 +7,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test.Loader.Philips
 {
   [TestClass]
+  [DeploymentItem("ChanSort.Loader.Philips\\ChanSort.Loader.Philips.ini")]
   public class PhilipsBinChannellibTest
   {
     [TestMethod]
     public void TestFiles1()
     {
-      var baseDir = Path.GetDirectoryName(this.GetType().Assembly.Location);
-      var baseFile = Path.Combine(baseDir, "TestFiles1\\Repair\\ChannelList\\chanLst.bin");
+      var baseFile = TestUtils.DeploymentItem("Test.Loader.Philips\\TestFiles1\\Repair\\ChannelList") + "\\chanLst.bin";
       var plugin = new ChanSort.Loader.Philips.PhilipsPlugin();
       var loader = plugin.CreateSerializer(baseFile);
       loader.Load();
